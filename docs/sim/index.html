@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emoji Simulator Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local sim replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Emoji Simulator</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/sim/</code> keeps the relaunched emoji-based cellular
+        automata editor, local save or share links, export flow, and preset model loader while limiting
+        public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../sim/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/sim/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/sim" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>ed10f69dd24a4ff5cb8d67efa8d121a5fbde8198</code><br>
+        License artifact: <a href="../../sim/LICENSE.txt">LICENSE.txt</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/sim</code> static tree. The local copy keeps the
+          upstream editor runtime, preset models, compressed share-link flow, and JSON export behavior while
+          removing static creator, repo, and Patreon copy from the public shell.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://ncase.me/sim/</code> on 2026-03-10.</li>
+          <li>The shipped route keeps the original model editor layout and script structure instead of re-skinning the tool.</li>
+          <li>Visible example text inside shipped model JSON files was localized so the preset descriptions no longer point at upstream URLs.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>sim/index.html</code> provides the local shell, metadata, editor mount, and shared footer hook.</li>
+          <li><code>sim/scripts/engine/</code> keeps the original control bar, editor, grid, save, load, and UI runtime.</li>
+          <li><code>sim/models/</code> preserves the upstream preset JSONs, with local link cleanup in the visible description text.</li>
+          <li><code>sim/styles/</code> and the emoji helper scripts remain vendored so the tool behaves under the same relative layout as upstream.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The static metadata and visible editor copy no longer reference creator handles, TinyURL, GitHub promo copy, or Patreon language.</li>
+          <li>The preset example text in <code>forest.json</code> now uses local <code>./?s=...</code> links.</li>
+          <li>The Schelling preset now points readers to the shipped local <code>../polygons/</code> route instead of the upstream site.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the upstream tree first, then patch the shell metadata, editor copy, and visible preset descriptions without rewriting the engine modules.</li>
+          <li>Keep the original relative file layout because the load and save helpers assume the shipped <code>models/</code>, <code>scripts/</code>, and <code>styles/</code> paths.</li>
+          <li>Extend the shared smoke bundle instead of creating a one-off runner so future editor changes still exercise the same validation path.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

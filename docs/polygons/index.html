@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Polygons Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local polygons replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Parable of the Polygons</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/polygons/</code> keeps the original long-form
+        narrative page and its iframe-based playable modules, then layers in a separate docs route
+        and a shared reference footer without converting the page into a framework app.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../polygons/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/polygons/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/polygons" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>3ec3fd74a52ce24f74790a47f117d1a3abefbbb7</code><br>
+        License: <a href="../../polygons/LICENSE.txt">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section" id="source-snapshot">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/polygons</code> site tree. The local copy
+          keeps the narrative <code>index.html</code>, <code>css/</code>, root helper scripts, and the
+          full <code>play/</code> subtree that powers the intro, manual board, automatic sims, mini scenes,
+          and outro.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/polygons/</code> on 2026-03-10.</li>
+          <li>CC0 license is preserved locally, with repo and license provenance kept here in docs rather than on the public page body.</li>
+          <li>Subpath compatibility relied on retaining upstream relative iframe paths wherever possible.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>polygons/index.html</code> preserves the page-level narrative, iframe placement, and references.</li>
+          <li><code>polygons/js/</code> handles scroll/cartoon behavior and high-level page interactions.</li>
+          <li><code>polygons/play/manual/</code> contains the draggable neighborhood board.</li>
+          <li><code>polygons/play/automatic/</code> contains autoplay, sliders, graph behavior, and sandbox variants.</li>
+          <li><code>polygons/play/mini/</code>, <code>play/intro/</code>, and <code>play/outro/</code> preserve the narrative micro-scenes.</li>
+          <li><code>docs/polygons/translator/translator.html</code> now holds the technical image-translation generator that was removed from the published public tree.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>A shared footer now carries the single original-page reference link on the top-level route.</li>
+          <li>Open Graph image and URL metadata now resolve relative to the local page instead of hard-coding the original host.</li>
+          <li>The public-facing donation, translation, and other upstream self-promo blocks were removed from the top-level page and outro panel.</li>
+          <li>The intro iframe translation strip was blanked locally so the public route no longer advertises upstream translation pages.</li>
+          <li>The old <code>/polygons/translator/</code> helper was relocated under docs so the public replica tree no longer exposes technical translation tooling.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Prefer vendoring the published iframe tree wholesale, then fix only the top-level metadata and local docs hooks.</li>
+          <li>Test from the final subpath early so nested <code>play/...</code> routes are exercised before visual cleanup.</li>
+          <li>If you still need the translation image generator, keep it under <code>docs/</code> or <code>tools/</code> rather than the public replica surface.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after cleanup edits so upstream translation or promo links do not creep back into the public bundle.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

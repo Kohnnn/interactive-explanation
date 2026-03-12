@@ -1,0 +1,94 @@
+[
+  {
+    "moduleId": "editor-shell-and-control-bar",
+    "originalBehavior": "The relaunched Emoji Simulator opens directly into a grid editor with reset, pause, speed, step, and draw controls above the canvas.",
+    "localStatus": "The local route keeps the original control bar, grid mount, and editor sidebar structure with only metadata and footer cleanup at the shell level.",
+    "sourceFiles": [
+      "index.html",
+      "scripts/engine/UI.js",
+      "scripts/engine/Grid.js",
+      "styles/model.css"
+    ],
+    "notes": [
+      "The local shell still mounts the upstream editor runtime without wrapping the controls in a different app framework.",
+      "Public provenance is limited to the shared footer reference link to the live route."
+    ],
+    "evidence": [
+      "The current plan treats reset, pause, speed, step, and draw controls as parity-critical behavior for this route.",
+      "Local smoke coverage exercises the control bar directly under the shipped <code>/interactive-explanation/sim/</code> path."
+    ]
+  },
+  {
+    "moduleId": "draw-edit-and-rule-authoring",
+    "originalBehavior": "Readers can draw states onto the grid, edit state descriptions and rules, and reshape the world proportions from the editor sidebar.",
+    "localStatus": "The editor sidebar remains upstream-driven, including brush cycling, rule editing, and proportion controls, while creator or promo copy was removed from the tail of the panel.",
+    "sourceFiles": [
+      "scripts/engine/Editor.js",
+      "scripts/engine/UI.js",
+      "scripts/engine/Actions.js",
+      "scripts/engine/Model.js"
+    ],
+    "notes": [
+      "The local cleanup avoided rewriting the editor data model or the DOM it generates.",
+      "Only the visible helper copy around save or export was neutralized for the public route."
+    ],
+    "evidence": [
+      "The plan explicitly called out draw or edit mode as parity-critical.",
+      "Local smoke coverage checks brush changes and sidebar-driven state under the shipped route."
+    ]
+  },
+  {
+    "moduleId": "preset-model-loading-and-localized-descriptions",
+    "originalBehavior": "The tool supports loading built-in preset models from query parameters and exposes visible example links inside the default description text.",
+    "localStatus": "Preset loading remains upstream-driven through <code>?s=...</code>, while visible example text in the shipped JSON descriptions now uses local links and local cross-route references.",
+    "sourceFiles": [
+      "scripts/engine/Load.js",
+      "models/forest.json",
+      "models/schelling.json"
+    ],
+    "notes": [
+      "The default forest preset still acts as the landing example, but its visible links no longer point to the upstream domain.",
+      "The Schelling preset now points to the local <code>../polygons/</code> route because that interactive is already shipped locally."
+    ],
+    "evidence": [
+      "The current plan explicitly called out model selection or model-loading behavior as part of parity coverage.",
+      "Local smoke coverage opens the <code>?s=schelling</code> preset and verifies the description text uses the localized cross-link."
+    ]
+  },
+  {
+    "moduleId": "local-save-link-and-json-export",
+    "originalBehavior": "The relaunched tool can generate local compressed share URLs and export the current model as JSON in a new tab.",
+    "localStatus": "The original compressed <code>?lz=...</code> save flow and JSON export behavior remain intact, with public helper copy stripped down to neutral instructions.",
+    "sourceFiles": [
+      "scripts/engine/Save.js",
+      "scripts/engine/Editor.js",
+      "scripts/libraries/lz-string.min.js"
+    ],
+    "notes": [
+      "The local route still computes save links from <code>window.location</code> so they stay inside the GitHub Pages-style subpath.",
+      "The public route no longer advertises TinyURL, GitHub promo copy, or Patreon-style credits."
+    ],
+    "evidence": [
+      "The current plan requires local model loading and export behavior where supported by the shipped repo.",
+      "Local smoke coverage verifies the saved link contains a local <code>?lz=...</code> URL and that export still opens a JSON data URL."
+    ]
+  },
+  {
+    "moduleId": "subpath-hosting-and-footer-policy",
+    "originalBehavior": "The published bundle expects to run as a standalone static site rooted at <code>/sim/</code>.",
+    "localStatus": "The local shell normalizes canonical and Open Graph URLs to the current page, preserves relative asset loading under the nested subpath, and adds the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route still loads its assets relatively from the shipped folder instead of relying on root-path hosting.",
+      "The shared footer is injected at document level only and does not alter the grid or editor runtime."
+    ],
+    "evidence": [
+      "The route now loads under <code>/interactive-explanation/sim/</code> with local canonical metadata.",
+      "Audit coverage passes with the shipped <code>sim</code> route included in the public-surface sweep."
+    ]
+  }
+]

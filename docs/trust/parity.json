@@ -1,0 +1,135 @@
+[
+  {
+    "moduleId": "slideshow-flow",
+    "originalBehavior": "Chapter-based slideshow progression with scratch transitions, sound controls, slide selection, and the original pacing across intro, one-off, iterated, tournament, distrust, noise, sandbox, conclusion, credits, and footnotes.",
+    "localStatus": "Vendored from upstream and kept structurally intact; metadata, share URL handling, footer-only reference links, and public comment cleanup were applied around the runtime.",
+    "sourceFiles": [
+      "index.html",
+      "js/main.js",
+      "js/core/Slideshow.js",
+      "js/core/Scratcher.js",
+      "js/slides/*.js"
+    ],
+    "notes": [
+      "Narrative order still comes from upstream slide modules rather than a rewritten wrapper.",
+      "Translation-guide and original-English comment blocks were removed from the public HTML while docs retain provenance.",
+      "Auxiliary footnotes and credits remain in the vendored trust subtree."
+    ],
+    "evidence": [
+      "Local audit notes in compilations/ncase-trust.md.",
+      "Live page walkthrough cross-checked at https://ncase.me/trust/ on 2026-03-10."
+    ]
+  },
+  {
+    "moduleId": "payoff-board",
+    "originalBehavior": "One-off prisoner's dilemma payoff combinations update scores, labels, and visible outcomes while the user explores cooperate versus defect choices.",
+    "localStatus": "Preserved from upstream with the original payoff UI assets and one-off simulation code.",
+    "sourceFiles": [
+      "js/sims/PD.js",
+      "js/core/PayoffsUI.js",
+      "js/slides/1_Slides_OneOff.js",
+      "assets/ui/payoffs_ui.png"
+    ],
+    "notes": [
+      "Payoff interactions still live inside the original slide-specific orchestration.",
+      "No local refactor was introduced before parity smoke tests."
+    ],
+    "evidence": [
+      "Behavior called out in the local audit inventory as the payoff board module.",
+      "Upstream source snapshot commit 6ec45d73befdb922bd40654dd1c1c903a953562f."
+    ]
+  },
+  {
+    "moduleId": "strategy-selector",
+    "originalBehavior": "Strategy controls switch between copycat, always cheat, always cooperate, random, and other predefined behaviors that immediately change round outcomes and narration.",
+    "localStatus": "Strategy selection is still driven by upstream slide logic and button controls.",
+    "sourceFiles": [
+      "js/sims/PD.js",
+      "js/slides/1_Slides_OneOff.js",
+      "js/core/Button.js"
+    ],
+    "notes": [
+      "Button timing, text reveals, and score changes are upstream behavior.",
+      "The local page does not wrap or replace the strategy state machine."
+    ],
+    "evidence": [
+      "Local audit module inventory lists strategy selection as a core interaction.",
+      "Live page behavior confirmed visually during implementation review."
+    ]
+  },
+  {
+    "moduleId": "iterated-rounds",
+    "originalBehavior": "Repeated-round sequences show retaliation, forgiveness, and exploitation over multiple turns with scoreboards, animations, and sound cues.",
+    "localStatus": "Iterated play remains mapped to the original simulation and slide choreography.",
+    "sourceFiles": [
+      "js/sims/Iterated.js",
+      "js/slides/2_Slides_Iterated.js",
+      "assets/iterated/*"
+    ],
+    "notes": [
+      "Round progression and replay are controlled by the vendored iterated module.",
+      "Supporting art and scoreboard assets stay in their upstream relative locations."
+    ],
+    "evidence": [
+      "Local audit notes describe the repeated-round simulator and history updates.",
+      "Source tree contains dedicated iterated assets and slide module wiring."
+    ]
+  },
+  {
+    "moduleId": "tournament-and-evolution",
+    "originalBehavior": "Population tournament and evolution sections pit mixed strategies against each other, update standings over many interactions, and transition into the broader trust narrative.",
+    "localStatus": "Tournament and evolution scenes are imported directly from the upstream slideshow stack.",
+    "sourceFiles": [
+      "js/sims/Tournament.js",
+      "js/slides/3_Slides_Tournament.js",
+      "js/slides/4_Slides_Evolution.js",
+      "assets/tournament/*"
+    ],
+    "notes": [
+      "Population visuals, ranking updates, and chapter transitions remain upstream-driven.",
+      "No SPA router or page shell intercepts the tournament runtime."
+    ],
+    "evidence": [
+      "Tournament and evolution modules are explicitly separated in the upstream source tree.",
+      "Audit notes list population tournament behavior and dominance changes."
+    ]
+  },
+  {
+    "moduleId": "noise-controls",
+    "originalBehavior": "Noise or miscommunication sections inject mistakes into repeated games so cooperation stability rises or collapses depending on the error rate.",
+    "localStatus": "Noise behavior is preserved via the vendored trust slides and shared simulation logic.",
+    "sourceFiles": [
+      "js/slides/6_Slides_Noise.js",
+      "js/sims/Iterated.js",
+      "js/core/Slider.js"
+    ],
+    "notes": [
+      "The local port keeps the original slider-driven explanation rather than rewriting it into separate widgets.",
+      "Path fixes were completed before any copy or styling edits."
+    ],
+    "evidence": [
+      "Local audit notes identify noise and miscommunication controls as a dedicated module.",
+      "Live page comparison on 2026-03-10 showed the same narrative placement."
+    ]
+  },
+  {
+    "moduleId": "policy-sandbox",
+    "originalBehavior": "The later sandbox lets users vary forgiveness, punishment, and related policy controls to test which interventions can rebuild trust under noisy conditions.",
+    "localStatus": "Sandbox UI and policy controls stay in the original upstream files, with only the surrounding replica note added.",
+    "sourceFiles": [
+      "js/slides/7_Slides_Sandbox.js",
+      "js/sims/SandboxUI.js",
+      "js/core/IncDecNumber.js",
+      "assets/ui/sandbox_*"
+    ],
+    "notes": [
+      "Increment/decrement controls and tabs are still provided by the upstream UI art and scripts.",
+      "This section was kept late in the porting sequence so interaction parity could be checked first.",
+      "Reachable public subroutes such as notes and peeps now use the same single-link footer pattern."
+    ],
+    "evidence": [
+      "Local audit notes call out policy sandbox behavior and long-run equilibrium changes.",
+      "Upstream source separates sandbox slide scripting from shared numeric controls."
+    ]
+  }
+]

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trust Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local trust replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>The Evolution of Trust</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/trust/</code> vendors the upstream public-domain source
+        and keeps the original slideshow/runtime architecture intact before adding local metadata fixes,
+        a shared reference footer, and docs links.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../trust/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/trust/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/trust" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>6ec45d73befdb922bd40654dd1c1c903a953562f</code><br>
+        License: <a href="../../trust/LICENSE">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section" id="source-snapshot">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>gh-pages</code>-style tree in
+          <code>ncase/trust</code>. The copied local page keeps <code>index.html</code>,
+          <code>words.html</code>, <code>notes/</code>, <code>peeps/</code>, the original
+          asset folders, and the slide/simulation scripts.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/trust/</code> on 2026-03-10.</li>
+          <li>License remains CC0; provenance stays in docs while the public page uses a shared reference footer.</li>
+          <li>Behavior-first approach: pathing and metadata were adjusted before the footer-only cleanup and comment stripping pass.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>trust/index.html</code> and <code>trust/words.html</code> preserve the main narrative and text source.</li>
+          <li><code>trust/js/core/</code> contains slideshow, loading, controls, sound, and UI primitives.</li>
+          <li><code>trust/js/sims/</code> contains the one-off, iterated, tournament, and sandbox simulation logic.</li>
+          <li><code>trust/js/slides/</code> maps chapters to runtime scenes and pacing.</li>
+          <li><code>trust/assets/</code>, <code>trust/css/</code>, and <code>trust/social/</code> remain vendored as-is.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>A shared footer now carries the single original-page reference link on the public route and its reachable subpages.</li>
+          <li>Metadata and share URLs now resolve relative to the local page instead of the original host.</li>
+          <li>Translation-guide and source-comment blocks were removed from <code>trust/index.html</code> and <code>trust/words.html</code>, including the commented original-English callout.</li>
+          <li><code>trust/peeps/</code> was neutralized into a portrait-gallery route so it no longer advertises supporters or original-release framing.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Clone upstream, copy the published site tree into a dedicated page folder, and keep relative asset paths intact.</li>
+          <li>Patch only pathing, metadata, and shared-footer hooks until the full narrative flow works locally.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after cleanup edits so public HTML/JS stay footer-only.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crowds Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local crowds replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>The Wisdom and/or Madness of Crowds</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/crowds/</code> vendors the original chapter-based
+        slideshow, network simulation engine, and media assets with only local metadata fixes,
+        translation cleanup, and the shared public reference footer layered on top.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../crowds/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/crowds/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/crowds" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>9c475822142b6457767c94481b3ad66766e94bf1</code><br>
+        License: <a href="../../crowds/LICENSE">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/crowds</code> site tree. The local copy
+          keeps the chapter-based slideshow HTML, simulation scripts, audio library, and sprites,
+          while replacing the old supporter-facing route with a neutral local stub.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/crowds/</code> on 2026-03-10.</li>
+          <li>CC0 provenance stays documented here while the public route exposes only the shared reference footer.</li>
+          <li>Translation listings, alternate links, and supporter affordances were pared back locally so the shipped route does not advertise missing or external pages.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>crowds/index.html</code> preserves the slideshow shell, hidden words/reference content, and navigation markup.</li>
+          <li><code>crowds/js/chapters/</code> maps each chapter to its simulation and pacing logic.</li>
+          <li><code>crowds/js/sim/</code> contains peeps, connections, cutting tools, and the simulation engine.</li>
+          <li><code>crowds/js/slideshow/</code> controls navigation, modal behavior, audio preloading, and sandbox UI.</li>
+          <li><code>crowds/audio/</code>, <code>crowds/social/</code>, and <code>crowds/sprites/</code> stay vendored as source assets, while <code>crowds/supporters/</code> now serves a neutral local stub.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route now uses the shared footer instead of any in-page provenance or creator callouts.</li>
+          <li>The credits chapter was trimmed so it keeps music attribution and further reading while dropping repo/supporter promo.</li>
+          <li><code>rel=&quot;alternate&quot;</code> links, translation-guide comments, and upstream translation callouts were removed from the public entry HTML.</li>
+          <li>In-body links to Trust and Polygons now point to the local replica routes, and the supporters modal path was removed from <code>js/slideshow/Modal.js</code>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Keep the chapter scripts and hidden words/reference blocks together; they form one tightly coupled runtime.</li>
+          <li>Preserve the audio and sprite paths exactly, because the preloader hard-codes them throughout the slideshow.</li>
+          <li>Audit credits, translations, and modal routes separately from the chapter flow, then run <code>node interactive-explanation/tools/check-public-surface.mjs</code>.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

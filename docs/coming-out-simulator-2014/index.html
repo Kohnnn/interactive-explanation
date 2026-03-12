@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coming Out Simulator 2014 Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local Coming Out Simulator 2014 replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Coming Out Simulator 2014</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/coming-out-simulator-2014/</code> keeps the original
+        branching conversation runtime, dinner scenes, and multi-ending outro while moving provenance to docs
+        and the shared footer and neutralizing shell credits or upstream share surfaces.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../coming-out-simulator-2014/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.itch.io/coming-out-simulator-2014" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/coming-out-simulator-2014" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>69918f33e749117586ebd0fb57d9ec6ab047e7a3</code><br>
+        License artifact: <a href="../../coming-out-simulator-2014/UNLICENSE">UNLICENSE</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>gh-pages</code> tree of
+          <code>ncase/coming-out-simulator-2014</code>. The local copy preserves the original branching
+          dialogue structure, loading flow, audio cues, and end-state scene controller while trimming creator,
+          design-doc, and static share callouts from the public shell.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://ncase.itch.io/coming-out-simulator-2014</code> on 2026-03-10.</li>
+          <li>The public route keeps exactly one original-page reference in the shared footer.</li>
+          <li>Static shell credits and the upstream social-share bar were removed rather than re-hosted with itch links.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>coming-out-simulator-2014/index.html</code> keeps the original loading, dialogue, choice, and end-screen containers.</li>
+          <li><code>coming-out-simulator-2014/js/core/</code> still drives the queue system, popups, and choice rendering.</li>
+          <li><code>coming-out-simulator-2014/js/game/</code> preserves the menu, Jack, dinner, and outro branches with local text cleanup in the framing scenes.</li>
+          <li><code>coming-out-simulator-2014/css/</code>, <code>img/</code>, <code>icons/</code>, and <code>sounds/</code> remain vendored so timing and scene presentation stay close to upstream.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The end-screen shell now shows neutral replay guidance instead of creator, repo, and design-document links.</li>
+          <li>The old static share bar was removed so no itch or upstream share URLs remain in public HTML before runtime begins.</li>
+          <li>Opening menu branches were reworded to remove creator or provenance callouts while keeping the same branching structure and pacing.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the published bundle first, then patch the shell and opening-note dialogue instead of rewriting the branching scene files wholesale.</li>
+          <li>Keep the original relative asset layout; the choice and art config expects the upstream folder structure.</li>
+          <li>Run both the public-surface audit and smoke runner after touching <code>js/game/menu.js</code> because that file contains user-visible framing copy and branch setup.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

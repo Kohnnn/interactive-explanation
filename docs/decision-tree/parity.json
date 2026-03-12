@@ -1,0 +1,86 @@
+[
+  {
+    "moduleId": "sticky-scrollytelling-shell",
+    "originalBehavior": "The published article uses a sticky text-and-visual scrollytelling shell where section progression drives changes in the tree and scatter visuals.",
+    "localStatus": "The local route keeps the published scroll observer and chart containers, with only shell-level cleanup for metadata, branding, and footer policy.",
+    "sourceFiles": [
+      "index.html",
+      "main.37eaf4da.css",
+      "js.0203594f.js"
+    ],
+    "notes": [
+      "The section IDs and data-index markers were preserved so the original scroll-driven transitions still fire.",
+      "The route continues to load as a vendored static build under the nested GitHub Pages-style subpath."
+    ],
+    "evidence": [
+      "The current plan treats story progression and chart-text synchronization as parity-critical behavior.",
+      "Shared smoke coverage scrolls through the route and confirms later decision-tree states render after the observer advances."
+    ]
+  },
+  {
+    "moduleId": "split-boundary-and-tree-growth",
+    "originalBehavior": "The opening walkthrough grows the tree step by step while the feature-space partition chart updates to match each new split.",
+    "localStatus": "The local route keeps the original decision-tree and scatter modules, including the stepwise split rectangles and deeper tree labels.",
+    "sourceFiles": [
+      "js.0203594f.js"
+    ],
+    "notes": [
+      "The cleaned public shell does not rewrite the training or animation logic.",
+      "Only the introductory branding wrapper was simplified."
+    ],
+    "evidence": [
+      "The shared smoke runner scrolls to later sections and verifies deeper split labels appear in the chart.",
+      "The parity target explicitly calls out split-boundary interaction and tree-growth behavior."
+    ]
+  },
+  {
+    "moduleId": "entropy-sandbox",
+    "originalBehavior": "Readers can add or remove positive and negative samples to see the bubble composition and entropy metric update together.",
+    "localStatus": "The original entropy bubble and button handlers remain intact, including the center labels, bounding circle, and composition-driven entropy line.",
+    "sourceFiles": [
+      "js.0203594f.js"
+    ],
+    "notes": [
+      "The button IDs and chart container structure were preserved exactly.",
+      "No footer or shell cleanup runs inside the sandbox SVG."
+    ],
+    "evidence": [
+      "Shared smoke coverage clicks the shipped entropy controls directly and checks the positive-class label updates.",
+      "The current plan treats entropy visuals and inline control response as parity-critical."
+    ]
+  },
+  {
+    "moduleId": "information-gain-visuals",
+    "originalBehavior": "The information-gain section synchronizes a draggable or hoverable split view with entropy-left, entropy-right, and gain labels.",
+    "localStatus": "The local route keeps the published information-gain line and scatter charts, including the hover overlay that updates tooltip values and split highlighting.",
+    "sourceFiles": [
+      "js.0203594f.js"
+    ],
+    "notes": [
+      "The chart IDs and tooltip IDs were left unchanged so the linked D3 modules still communicate.",
+      "KaTeX equation rendering remains in place through the vendored helper bundle."
+    ],
+    "evidence": [
+      "Shared smoke coverage moves across the information-gain overlay and asserts the tooltip values change from their initial state.",
+      "The plan explicitly calls out information-gain visuals and chart-label synchronization."
+    ]
+  },
+  {
+    "moduleId": "closing-cleanup-and-local-handoff",
+    "originalBehavior": "The published page ends with source-oriented closing copy, author contact links, and a future random-forest handoff.",
+    "localStatus": "The local route replaces source or promo copy with a neutral close, keeps the educational references, and reroutes the handoff to the local <code>../random-forest/</code> page.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Public provenance is limited to the shared footer reference link to the live original page.",
+      "Repo and creator references remain available only in the docs layer."
+    ],
+    "evidence": [
+      "The public-surface audit now includes MLU family checks and passes with this route included.",
+      "The route ships with local canonical metadata and a single footer reference surface."
+    ]
+  }
+]

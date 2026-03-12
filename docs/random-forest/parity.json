@@ -1,0 +1,87 @@
+[
+  {
+    "moduleId": "condorcet-scrollytelling-and-slider-shell",
+    "originalBehavior": "The article opens with a sticky scrollytelling scene where the number-of-trees and tree-accuracy sliders drive a Condorcet-style ensemble visualization.",
+    "localStatus": "The local route keeps the published slider scene, sticky figure layout, and label updates while only patching shell metadata and footer policy.",
+    "sourceFiles": [
+      "index.html",
+      "styles.0f8a2143.css",
+      "js.a8267221.js"
+    ],
+    "notes": [
+      "The original slider IDs and text labels were preserved so the compiled handlers still bind without rewrites.",
+      "The local shell no longer includes analytics or branding wrappers from the original public page."
+    ],
+    "evidence": [
+      "The current plan treats bagging and feature-randomness scenes plus chart-text synchronization as parity-critical.",
+      "Shared smoke coverage changes both sliders and checks that the visible labels update."
+    ]
+  },
+  {
+    "moduleId": "bagging-feature-selection-and-tree-build",
+    "originalBehavior": "The core random-forest scrollytelling sequence steps through bagging, feature selection, and the gradual construction of multiple trees.",
+    "localStatus": "The local route keeps the published scrollytelling section markers and the compiled tree-building runtime without refactoring the scene controller.",
+    "sourceFiles": [
+      "indexRF.7579dc6d.js"
+    ],
+    "notes": [
+      "The route still uses the original data sample, feature cards, and section-driven state transitions.",
+      "Public cleanup was limited to the intro, cross-links, and closing text."
+    ],
+    "evidence": [
+      "Shared smoke coverage scrolls to the late random-forest section and verifies the click-to-predict prompt becomes active.",
+      "The parity target explicitly calls out bagging and feature-randomness scenes."
+    ]
+  },
+  {
+    "moduleId": "click-to-predict-and-majority-vote",
+    "originalBehavior": "Readers can click sign examples and watch each tree vote before the article reveals the majority prediction.",
+    "localStatus": "The local route keeps the original test-data bag, tree traversal, prediction texts, and majority-vote display, including the interactive replay state for later examples.",
+    "sourceFiles": [
+      "indexRF.7579dc6d.js"
+    ],
+    "notes": [
+      "The click targets and vote text IDs were preserved exactly.",
+      "The local route continues to rely on the original compiled animation code rather than a rewritten controller."
+    ],
+    "evidence": [
+      "Shared smoke coverage clicks a shipped test sign after the late section activates and verifies the majority label updates.",
+      "The current plan treats click-to-predict interaction and aggregation behavior as parity-critical."
+    ]
+  },
+  {
+    "moduleId": "barcode-and-variance-explanation-panels",
+    "originalBehavior": "Later sections render barcode-style and grid-style ensemble panels that explain tree variance, feature importance, and prediction disagreement.",
+    "localStatus": "The local route keeps the published barcode and cantor-style panels, with the local shell only rerouting the decision-tree links and cleaning public provenance copy.",
+    "sourceFiles": [
+      "indexBarcode.c0641541.js",
+      "index.html"
+    ],
+    "notes": [
+      "The container IDs for barcode and cantor views were preserved so the compiled bundle still mounts into the original targets.",
+      "The educational reference list remains available in the public route because it is part of the article content."
+    ],
+    "evidence": [
+      "Shared smoke coverage waits for the barcode and cantor containers to populate under the shipped route.",
+      "The parity target explicitly calls out barcode-style explanation panels and aggregation visuals."
+    ]
+  },
+  {
+    "moduleId": "local-cross-links-and-footer-policy",
+    "originalBehavior": "The published page links back to the family decision-tree article and ends with source-oriented closing copy.",
+    "localStatus": "The local route reroutes decision-tree references to <code>../decision-tree/</code>, removes creator or repo callouts from the public body, and uses the shared footer as the single original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route keeps local canonical metadata and no longer embeds upstream-only promo links in the body.",
+      "Technical provenance remains available in docs only."
+    ],
+    "evidence": [
+      "The public-surface audit now includes MLU family checks and passes with this route included.",
+      "Shared smoke coverage confirms the shipped decision-tree link resolves to the local route."
+    ]
+  }
+]

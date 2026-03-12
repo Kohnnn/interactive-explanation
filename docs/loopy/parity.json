@@ -1,0 +1,114 @@
+[
+  {
+    "moduleId": "editor-shell-and-canvas",
+    "originalBehavior": "The main route opens an editable systems canvas with toolbars, sidebar controls, modal overlays, and URL-loaded model state.",
+    "localStatus": "The upstream v1.1 editor remains intact and now serves as the route root, with only metadata cleanup and the shared footer layered around it.",
+    "sourceFiles": [
+      "index.html",
+      "js/Loopy.js",
+      "js/PageUI.js",
+      "css/loopy.css"
+    ],
+    "notes": [
+      "The local port preserves the editor-first workflow instead of shipping the upstream marketing landing page.",
+      "Canvas sizing, modal behavior, and edit-play mode switching remain owned by the original runtime."
+    ],
+    "evidence": [
+      "Local route walkthrough on 2026-03-10 confirmed the editor opens directly and loads blank or encoded models.",
+      "Source tree still centers the runtime on Loopy.js plus the modal and page UI helpers."
+    ]
+  },
+  {
+    "moduleId": "node-label-authoring",
+    "originalBehavior": "Users add nodes and labels, rename them inline, tune starting values, and reposition the system diagram by drawing and dragging directly on the canvas.",
+    "localStatus": "Node, label, and drag authoring remain in the upstream toolchain without a wrapper rewrite.",
+    "sourceFiles": [
+      "js/Node.js",
+      "js/Label.js",
+      "js/Ink.js",
+      "js/Dragger.js",
+      "js/Sidebar.js"
+    ],
+    "notes": [
+      "The sidebar still edits labels, colors, and starting values through the original component system.",
+      "The local cleanup touched copy only, not the creation or manipulation handlers."
+    ],
+    "evidence": [
+      "Parity scope includes authoring because the route is primarily a live modeling tool.",
+      "Source files explicitly separate ink, drag, erase, label, and sidebar editing concerns."
+    ]
+  },
+  {
+    "moduleId": "edge-sign-and-strength-tuning",
+    "originalBehavior": "Users draw arrows between nodes, flip them positive or negative, and vary effect strength through the sidebar to change feedback-loop behavior.",
+    "localStatus": "Signed-edge editing and repeated-arrow strength logic stay in the original upstream model and sidebar code.",
+    "sourceFiles": [
+      "js/Edge.js",
+      "js/Sidebar.js",
+      "css/sliders/strength.png"
+    ],
+    "notes": [
+      "Relationship tuning still uses the upstream slider art and edge serialization model.",
+      "The local route preserves delayed relationships by keeping arrow geometry and timing logic unchanged."
+    ],
+    "evidence": [
+      "The routed editor still supports positive and negative loops plus repeated arrows for stronger effects.",
+      "Source orientation notes in compilations/ncase-loopy.md call out signed link tuning as a core module."
+    ]
+  },
+  {
+    "moduleId": "play-reset-and-speed-controls",
+    "originalBehavior": "The model can switch between edit and play mode, run signals through the graph, reset state, and change simulation speed with transport controls.",
+    "localStatus": "Play mode, reset behavior, and speed tuning remain in the original control bar and model update loop.",
+    "sourceFiles": [
+      "js/PlayControls.js",
+      "js/Model.js",
+      "js/Edge.js",
+      "js/Loopy.js"
+    ],
+    "notes": [
+      "Edit-to-play transitions still reset or preserve the same state transitions as upstream.",
+      "Embedded remix mode continues to use the upstream query-string-driven play controls."
+    ],
+    "evidence": [
+      "Local smoke testing covers play, reset, and speed changes because they are the tool's main feedback loop.",
+      "The upstream runtime still uses the same 30 FPS update cycle and signal speed slider."
+    ]
+  },
+  {
+    "moduleId": "example-gallery-and-remix",
+    "originalBehavior": "Users can open sample models, load them into the editor, and immediately remix them through the same live toolchain.",
+    "localStatus": "The example gallery remains modal-driven, but its cards now target local <code>?data=...</code> URLs instead of the original host.",
+    "sourceFiles": [
+      "pages/examples/index.html",
+      "js/Modal.js",
+      "js/Sidebar.js"
+    ],
+    "notes": [
+      "The built-in sample models remain available and still open at the route root for remixing.",
+      "External user-made example listings were intentionally removed from the public surface."
+    ],
+    "evidence": [
+      "The local examples modal still loads sample systems and returns control to the main editor.",
+      "The recheck plan explicitly called out example loading as a parity target for loopy."
+    ]
+  },
+  {
+    "moduleId": "share-embed-and-export",
+    "originalBehavior": "The tool serializes models into query strings for saving, remixing, and embedding, and also exports or imports plain-text model files.",
+    "localStatus": "Serialization, embed generation, and file import-export remain upstream-driven, with URLs now resolving from the local route root.",
+    "sourceFiles": [
+      "js/Loopy.js",
+      "js/Modal.js",
+      "js/PlayControls.js"
+    ],
+    "notes": [
+      "Saved links and embed code now point to the local GitHub Pages-safe subpath automatically.",
+      "The neutral about panel replaces the old public credit page, but save, embed, and export flows stay intact."
+    ],
+    "evidence": [
+      "Smoke review targeted save-link and embed output because the tool depends on URL serialization for sharing.",
+      "The upstream code still generates <code>?data=...</code> and <code>?embed=1&amp;data=...</code> links from <code>window.location</code>."
+    ]
+  }
+]

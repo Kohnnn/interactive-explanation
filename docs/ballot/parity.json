@@ -1,0 +1,124 @@
+[
+  {
+    "moduleId": "spatial-voter-models",
+    "originalBehavior": "Early draggable scenes let users move voters and candidates in issue space to see how proximity changes vote choice and aggregate outcomes.",
+    "localStatus": "The one-voter and many-voter diagrams remain in the upstream iframe modules with no wrapper rewrite.",
+    "sourceFiles": [
+      "index.html",
+      "play/model1.html",
+      "play/model2.html",
+      "play/js/main_ballot_original.js",
+      "play/img/*"
+    ],
+    "notes": [
+      "The article still teaches by dragging live entities instead of replacing them with screenshots or static charts.",
+      "Candidate and voter icons remain in their vendored upstream art locations."
+    ],
+    "evidence": [
+      "Local route walkthrough on 2026-03-10 matched the original opening electorate scenes.",
+      "Top-level article text still introduces these modules as the first interaction surface."
+    ]
+  },
+  {
+    "moduleId": "ballot-method-switchers",
+    "originalBehavior": "Separate ballot modules explain FPTP, ranked, approval, and score systems with the same electorate and live updates to the displayed ballot state.",
+    "localStatus": "The method-specific ballot pages remain embedded from the original route structure.",
+    "sourceFiles": [
+      "play/ballot1.html",
+      "play/ballot2.html",
+      "play/ballot3.html",
+      "play/ballot4.html",
+      "play/js/main_ballot.js"
+    ],
+    "notes": [
+      "Each ballot system still has its own upstream HTML wrapper rather than a merged local component.",
+      "Counting visuals and candidate markers remain owned by the original JS runtime."
+    ],
+    "evidence": [
+      "The local article still walks through FPTP, ranked, approval, and score sections in order.",
+      "Source tree preserves the original ballot module split across four dedicated files."
+    ]
+  },
+  {
+    "moduleId": "spoiler-and-failure-scenarios",
+    "originalBehavior": "Dedicated election comparison scenes demonstrate spoiler effects, monotonicity failures, reverse spoilers, and other method-specific edge cases.",
+    "localStatus": "Election comparison modules are vendored directly from the original set of playable iframe scenes.",
+    "sourceFiles": [
+      "play/election1.html",
+      "play/election2.html",
+      "play/election3.html",
+      "play/election4.html",
+      "play/election5.html",
+      "play/js/main_election.js"
+    ],
+    "notes": [
+      "The staged examples still rely on dragging the same electorate into edge cases to reveal winner flips.",
+      "No local state bridge was added between scenarios; each remains isolated like upstream."
+    ],
+    "evidence": [
+      "Parity scope includes spoiler and failure demos because they are the article's main comparative proof points.",
+      "The original route structure keeps each experiment as its own HTML file."
+    ]
+  },
+  {
+    "moduleId": "count-explanation-flow",
+    "originalBehavior": "The article pairs each playable ballot scene with count-explanation copy describing the exact tally process for that method.",
+    "localStatus": "Narrative text and playable modules stay interleaved in the original article HTML, with public cleanup covering both the opening translation links and the closing promo/share sections.",
+    "sourceFiles": [
+      "index.html",
+      "play/ballot2.html",
+      "play/ballot3.html",
+      "play/ballot4.html"
+    ],
+    "notes": [
+      "Explanation copy remains inline in the article instead of being split into a local docs layer.",
+      "Local cleanup deliberately avoided rewriting the explanatory sequencing around the ballot modules.",
+      "Static share anchors were neutralized in HTML so no upstream URL leaks before the runtime recalculates local targets."
+    ],
+    "evidence": [
+      "Method sections still include the original 'How To Count' walkthrough text next to the interactive embeds.",
+      "The local article keeps the original section order from intro through conclusion and sandbox."
+    ]
+  },
+  {
+    "moduleId": "simulation-summary-sections",
+    "originalBehavior": "Later sections compare methods across repeated scenarios and synthesis paragraphs so readers can contrast strengths and failure modes before the conclusion.",
+    "localStatus": "Comparison narrative remains in the vendored article body, with only self-promo and repo/license copy removed from the public surface.",
+    "sourceFiles": [
+      "index.html",
+      "play/election1.html",
+      "play/election2.html",
+      "play/election3.html",
+      "play/election4.html",
+      "play/election5.html"
+    ],
+    "notes": [
+      "This project mixes prose-heavy synthesis with interactivity, so parity depends on both the scenes and their article placement.",
+      "The local cleanup preserved that pacing while trimming only non-essential upstream promo blocks."
+    ],
+    "evidence": [
+      "The original article still transitions from method intros into repeated comparison experiments before the closing appeal.",
+      "Live smoke review on 2026-03-10 confirmed the comparison embeds still load under the local route."
+    ]
+  },
+  {
+    "moduleId": "sandbox-and-shareable-models",
+    "originalBehavior": "The standalone sandbox allows up to five candidates, custom voter placement, method switching, and sharable URL-encoded scenarios.",
+    "localStatus": "The sandbox remains a dedicated subroute with local save-link generation and the shared public footer added on top.",
+    "sourceFiles": [
+      "sandbox/index.html",
+      "sandbox/sandbox.html",
+      "play/js/main_sandbox.js",
+      "play/js/model.js"
+    ],
+    "notes": [
+      "Saved models now point to the local <code>/interactive-explanation/ballot/sandbox/</code> route instead of the original host.",
+      "Public-facing tweet-me copy was removed, but the scenario builder itself stays intact.",
+      "The public article no longer ships translation or original-site link blocks outside the footer."
+    ],
+    "evidence": [
+      "The upstream sandbox route is preserved locally and still exposes a generated save link.",
+      "Local patching touched save-link generation specifically to satisfy subpath-safe sharing."
+    ]
+  }
+]

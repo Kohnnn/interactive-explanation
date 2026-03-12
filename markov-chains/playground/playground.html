@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Markov Chains Playground</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Local Markov chain playground with editable transition matrices and live state-diagram feedback.">
+    <meta property="og:title" content="Markov Chains Playground">
+    <meta property="og:description" content="Local Markov chain playground with editable transition matrices and live state-diagram feedback.">
+    <meta property="og:url" content="./playground.html">
+    <link rel="canonical" href="./playground.html">
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="./style.css" type="text/css" rel="stylesheet">
+    <link href="../../shared/public-footer.css" type="text/css" rel="stylesheet">
+    <script src="./d3.min.js"></script>
+    <script src="./vector.js"></script>
+    <script src="./angular.min.js" charset="utf-8"></script>
+    <style>
+body {
+  background-color: transparent;
+  color: #333;
+}
+.controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.st-diagram {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.st-diagram .nodes {
+  pointer-events: all;
+}
+.matrixInput {
+  display: block;
+  height: 100%;
+  width: 50%;
+  right: 0;
+  position: absolute;
+}
+.matrixInput textarea {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: red;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  outline: none;
+}
+.matrixInput textarea.valid {
+  color: inherit;
+}
+.matrix table {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  table-layout: fixed;
+}
+.matrix table td {
+  width: 33.33%;
+}
+.matrix table td input {
+  pointer-events: all;
+  width: 80%;
+}
+@media (max-width: 900px) {
+  .controls {
+    left: 0;
+  }
+  .st-diagram {
+    height: 320px;
+  }
+  .matrixInput {
+    top: 380px;
+  }
+}
+</style>
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-canonical-url="./playground.html"
+    data-reference-url="https://setosa.io/markov/playground.html"
+    data-reference-text="Markov Playground"
+    data-footer-label="Original page"
+  >
+    <main class="playground-shell">
+      <st-diagram
+        center="diagramCenter"
+        states="states"
+        transition-matrix="transitionMatrix"
+        duration="duration"
+        selected-transition="selectedTransition"
+      ></st-diagram>
+      <div class="matrixInput">
+        <p>edit below this line</p>
+        <textarea ng-class="{ 'valid' : validTransitionMatrix }" ng-model="transitionMatrixJSON">{{transitionMatrix | json}}</textarea>
+      </div>
+      <div class="controls">
+        <input class="speedRange" type="range" ng-model="speedRange" min="1" max="20" step="1">
+        <label> speed </label>
+      </div>
+    </main>
+    <script>
+
+var myApp = angular.module('myApp', []);
+
+myApp.controller('MainCtrl', function($scope, utils, $window) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  $scope.diagramCenter = [0.40, 0.5];
+  $scope.isSelectedTransition = function(i, j) {
+    return !!$scope.selectedTransition;
+    if (!$scope.selectedTransition) return false;
+    return $scope.selectedTransition[0] === i
+      && $scope.selectedTransition[1] === j;
+  };
+  $scope.speedRange = 2;
+  $scope.$watch('speedRange', function(speed) {
+    $scope.duration = 2000 / +speed;
+  });
+  $scope.updateTransitionMatrix = function(matrix) {
+    var prev = $scope.transitionMatrix;
+    $scope.transitionMatrix = matrix;
+    if($scope.states && matrix.length === prev.length) return;
+    $scope.states = matrix.map(function(d, i) {
+      return { label: String.fromCharCode(65 + i), index: i };
+    });
+    utils.setHash({ tm: matrix });
+  };
+  var hash = utils.getHash();
+  if(hash && hash.tm) $scope.updateTransitionMatrix(hash.tm);
+  else $scope.updateTransitionMatrix([
+    [0.5, 0.5],
+    [0.5, 0.5]
+  ]);
+
+  $scope.transitionMatrixJSON = JSON.stringify($scope.transitionMatrix)
+    .replace(',[', ',\n[');
+  $scope.$watch('transitionMatrixJSON', function(str) {
+    var valid = false;
+    try{
+      var matrix = JSON.parse(str);
+      valid = matrix[0].length === matrix.length;
+      var sum = matrix.reduce(function(c, row) {
+        return c + row.reduce(function(p, c){ return p + c; }, 0);
+      }, 0);
+      var r = sum / matrix.length;
+      valid = valid && r < (1 + 1e-9) && r > (1 - 1e-9);
+      if (valid) {
+        $scope.updateTransitionMatrix(matrix);
+      }
+    }catch(e) {}
+    $scope.validTransitionMatrix = valid;
+  });
+});
+</script>
+    <script src="./common.js" charset="utf-8"></script>
+    <script src="../../shared/public-footer.js"></script>
+  </body>
+</html>

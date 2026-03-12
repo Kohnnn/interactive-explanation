@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulating Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local simulating launcher plus its nested legacy surfaces.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Simulating</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/simulating/</code> mirrors the current launcher behavior
+        while also shipping the legacy explorable article at <code>/simulating/original/</code> and the legacy
+        model editor at <code>/simulating/model/</code>. Public provenance is limited to the shared footer on
+        each surface.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../simulating/">Open launcher</a>
+        <a class="action-link secondary" href="../../simulating/original/">Open legacy article</a>
+        <a class="action-link ghost" href="../../simulating/model/">Open legacy model editor</a>
+        <a class="action-link secondary" href="https://ncase.me/simulating/" target="_blank" rel="noreferrer">Open original launcher</a>
+        <a class="action-link ghost" href="https://github.com/ncase/simulating" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>04d456c0ee045d79a5c5214a3092d5822bf41206</code><br>
+        Public-domain marker: <a href="../../simulating/PUBLIC_DOMAIN">PUBLIC_DOMAIN</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/simulating</code> static tree. The local copy
+          keeps the current launcher, the original <code>index_old.html</code> article, the nested
+          <code>model/</code> editor, and the shared scripts or styles those surfaces depend on.
+        </p>
+        <ul class="plain-list">
+          <li>Live original launcher, legacy article, and model editor were verified against <code>https://ncase.me/simulating/</code>, <code>https://ncase.me/simulating/index_old.html</code>, and <code>https://ncase.me/simulating/model/</code> on 2026-03-10.</li>
+          <li>The launcher keeps the current two-link structure, but points locally to <code>../sim/</code> and <code>./original/</code>.</li>
+          <li>The public article removes the old share, creator, repo, and supporter tail while preserving the main explorable flow and educational reading links.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>simulating/index.html</code> is the local launcher shell with shared footer wiring.</li>
+          <li><code>simulating/original/index.html</code> keeps the legacy article markup and embedded <code>../model/</code> iframes.</li>
+          <li><code>simulating/model/</code> preserves the original editor runtime, Firebase-backed remote save hook, and JSON export behavior.</li>
+          <li><code>simulating/scripts/</code>, <code>simulating/styles/</code>, and <code>simulating/social/</code> remain vendored so the legacy article and model editor can keep their upstream folder assumptions.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The legacy article now exposes only educational references plus local internal links to the legacy model editor and current Emoji Simulator.</li>
+          <li>All original article iframe paths were rewritten from <code>model?... </code> to the nested local <code>../model/?...</code> route.</li>
+          <li>Metadata, canonical URLs, and the shared footer now resolve under the local GitHub Pages-style subpath for the launcher, article, and model editor separately.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Keep the legacy article nested under <code>simulating/original/</code> so its embedded editor route can stay a sibling at <code>../model/</code>.</li>
+          <li>Patch the launcher and footer at the shell level first, then only rewrite legacy article paths or promo-heavy closing sections as needed.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching the article shell or the editor runtime.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remember Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local remember replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>How To Remember Anything Forever-ish</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/remember/</code> keeps the original comic-plus-simulation
+        structure, preserves the spaced-repetition demos and practice flows, and trims the public route down
+        to the footer-only reference policy.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../remember/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/remember/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/remember" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>c42502c36f7abf658cf7b33fc10af76287b3bb81</code><br>
+        License: <a href="../../remember/LICENSE">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/remember</code> site tree. The local copy keeps
+          the main comic page, the iframe-backed simulations, audio, printable PDFs, and sharing assets while
+          removing public translation, supporter, and source-promo surface from the route.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/remember/</code> on 2026-03-10.</li>
+          <li>Public provenance now lives only in the shared footer, while CC0 and repo details remain here in docs.</li>
+          <li>The shipped route is English-only and intentionally omits the old translation index and supporters iframe.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>remember/index.html</code> keeps the comic shell, panel markup, chapter anchors, and share block.</li>
+          <li><code>remember/js/comic.js</code> still drives panel rendering, iframe lazy-loading, audio, and local share buttons.</li>
+          <li><code>remember/sims/</code> preserves splash, forgetting-curve, calendar, single-card, multi-card, Leitner, and download helpers.</li>
+          <li><code>remember/pdf/</code>, <code>remember/pics/</code>, and <code>remember/audio/</code> remain vendored so the printable and media flows still resolve locally.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route removes creator, repo, translation, public-domain, and supporter callouts from the visible comic and credits flow.</li>
+          <li>The old translation picker and translation prompt logic were removed from the shipped JS so the local route no longer depends on <code>translations.txt</code>.</li>
+          <li>The ending keeps subject-matter reading links and share controls, but drops the supporters iframe and self-promo closing block.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the published comic tree first, then remove translation and supporter surfaces without changing the panel or iframe runtime.</li>
+          <li>Keep the share buttons wired from <code>window.location</code> so the route stays GitHub Pages-safe under nested subpaths.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after touching the ending credits area or any share markup.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

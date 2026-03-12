@@ -1,0 +1,119 @@
+[
+  {
+    "moduleId": "slideshow-flow",
+    "originalBehavior": "A chapter-based slideshow advances through introduction, networks, contagions, bonding, small-world, conclusion, credits, and sandbox sections with scratch transitions and audio cues.",
+    "localStatus": "The original slideshow shell remains intact, with metadata cleanup, local-route cross-links, supporters-route removal, and the shared public footer added around it.",
+    "sourceFiles": [
+      "index.html",
+      "js/main.js",
+      "js/slideshow/Slideshow.js",
+      "js/slideshow/Scratch.js",
+      "js/chapters/*.js"
+    ],
+    "notes": [
+      "Words, references, and bonus-box content still live in the vendored HTML rather than a local CMS or framework.",
+      "Chapter order remains upstream-defined through the original JS chapter modules.",
+      "Public HTML no longer ships alternate-language head links or translation-guide/source comments."
+    ],
+    "evidence": [
+      "Local walkthrough on 2026-03-10 matched the original chapter progression and transition structure.",
+      "The source tree still separates chapters, slideshow plumbing, and simulation logic in the same upstream pattern."
+    ]
+  },
+  {
+    "moduleId": "network-drawing-puzzles",
+    "originalBehavior": "Users draw and erase connections directly on the network canvas to explore friendship structure, majority illusion, and threshold puzzles.",
+    "localStatus": "Drawing and cutting behavior remains in the original network chapters with no host-page interception.",
+    "sourceFiles": [
+      "js/chapters/C_Networks.js",
+      "js/slideshow/Pencil.js",
+      "js/slideshow/Boxes.js",
+      "js/sim/Connection.js",
+      "sprites/chapter3/*"
+    ],
+    "notes": [
+      "The local route still relies on the original doodle-first pedagogy rather than replacing it with static illustrations.",
+      "Connection editing remains tied to chapter state, not a reusable widget wrapper."
+    ],
+    "evidence": [
+      "Parity scope includes drawing and erasing because they drive the first major interactive puzzle arc.",
+      "Source files explicitly separate connection rendering from chapter text and navigation."
+    ]
+  },
+  {
+    "moduleId": "simple-contagion-sim",
+    "originalBehavior": "Users seed a simple contagion and run, pause, or reset spread dynamics to watch information cascades move through the network.",
+    "localStatus": "The simple contagion scene remains wired into the original simulation runtime and transport controls.",
+    "sourceFiles": [
+      "js/chapters/D_Simple_Contagion.js",
+      "js/slideshow/SimUI.js",
+      "js/sim/Peep.js",
+      "js/sim/Simulations.js"
+    ],
+    "notes": [
+      "Run-state, tick updates, and infection visuals stay owned by the upstream simulation engine.",
+      "No local wrapper replaces the original play, pause, or redraw controls."
+    ],
+    "evidence": [
+      "The local article still presents the simple contagion chapter before the complex-threshold variant.",
+      "Source files contain dedicated chapter and UI modules for simulation transport."
+    ]
+  },
+  {
+    "moduleId": "complex-contagion-thresholds",
+    "originalBehavior": "Later chapters model threshold-driven spread so users can see how repeated exposure changes whether behaviors propagate across the network.",
+    "localStatus": "Complex contagion and volunteering thresholds remain in the original chapter modules and shared simulation runtime.",
+    "sourceFiles": [
+      "js/chapters/E_Complex_Contagion.js",
+      "js/sim/Simulations.js",
+      "js/slideshow/Boxes.js"
+    ],
+    "notes": [
+      "Threshold behavior still depends on the original hidden words blocks and chapter-specific state transitions.",
+      "Local public cleanup intentionally avoided rewriting the chapter pedagogy."
+    ],
+    "evidence": [
+      "The original complex-contagion puzzle flow is preserved locally and remains a parity-critical chapter.",
+      "Source tree isolates this behavior in its own chapter module."
+    ]
+  },
+  {
+    "moduleId": "bonding-bridging-and-small-world",
+    "originalBehavior": "Mid-to-late chapters explore bonding, bridging, and small-world structures through preset networks and controlled rewiring behavior.",
+    "localStatus": "These chapter presets remain in the upstream chapter scripts with their original simulation hooks and explanatory pacing.",
+    "sourceFiles": [
+      "js/chapters/F_Bonding_And_Bridging.js",
+      "js/chapters/G_Small_World.js",
+      "js/sim/Simulations.js",
+      "sprites/*"
+    ],
+    "notes": [
+      "Preset loading still happens inside the original chapter runtime rather than a local route switcher.",
+      "The local copy preserved both the chapter split and the original sprite assets."
+    ],
+    "evidence": [
+      "Parity targets include bonding/bridging and small-world sections because they are central to the article's conclusion.",
+      "Source tree includes dedicated chapter files for both sections."
+    ]
+  },
+  {
+    "moduleId": "sandbox-and-edit-tools",
+    "originalBehavior": "The sandbox opens the full tool palette: add person, infect seed, drag, delete, draw, cut connections, and rerun the simulation in an open-ended environment.",
+    "localStatus": "Sandbox mode remains in the original chapter/runtime pair, with translation promo removed, supporters modal wiring disabled, and editing tools intact.",
+    "sourceFiles": [
+      "js/chapters/J_Sandbox.js",
+      "js/slideshow/SandboxUI.js",
+      "js/sim/ConnectorCutter.js",
+      "js/sim/Simulations.js"
+    ],
+    "notes": [
+      "Keyboard shortcuts and toolbar actions still come from the original sandbox and cutter code.",
+      "The shared footer sits outside the slideshow so it does not interfere with canvas sizing or input capture.",
+      "The old supporters iframe route was replaced with a neutral local stub so no public UI path reopens the supporter panel."
+    ],
+    "evidence": [
+      "Local smoke testing targets sandbox mode because it exercises the broadest tool set on the route.",
+      "Source files explicitly separate the sandbox UI from the base simulation transport."
+    ]
+  }
+]

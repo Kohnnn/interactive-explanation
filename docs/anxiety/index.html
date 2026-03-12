@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anxiety Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local anxiety replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Adventures With Anxiety!</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/anxiety/</code> preserves the original story-game scene
+        stack, audio pacing, and options flow while stripping the public route down to neutral UI, local share
+        behavior, and the shared footer reference.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../anxiety/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/anxiety/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/anxiety" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>ba2421f7bc46125f0fedfebcc3171c73ef0e01f4</code><br>
+        License: <a href="../../anxiety/LICENSE.txt">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/anxiety</code> site tree. The local copy keeps
+          the scene scripts, audio, sprites, share media, and option overlays while removing creator, translation,
+          source-code, and supporter-facing public text from the route shell.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/anxiety/</code> on 2026-03-10.</li>
+          <li>The local route retains the mental-health resource handoff, but public provenance is limited to the shared footer.</li>
+          <li>The media-pack page remains reachable under <code>anxiety/sharing/</code> and now follows the same footer-only reference rule.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>anxiety/index.html</code> keeps the game canvas, overlays, corner UI, and script loading order.</li>
+          <li><code>anxiety/scenes/*.md</code> provides the story script and chapter text consumed by the original scene engine at runtime.</li>
+          <li><code>anxiety/scripts/game/</code> contains the loader, scene container, HP meter, options, about modal, content notes, and share logic.</li>
+          <li><code>anxiety/scripts/act1-4/</code>, <code>intro/</code>, <code>intermission/</code>, and <code>credits/</code> preserve the branching narrative runtime.</li>
+          <li><code>anxiety/sharing/</code>, <code>sounds/</code>, <code>sprites/</code>, and <code>styles/</code> remain vendored as runtime assets.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public shell now removes creator, translation, CC0, and source-code corner panels, replacing them with neutral controls and resource framing.</li>
+          <li>Static share anchors now start from local placeholders and are recalculated at runtime from the local route root.</li>
+          <li>The about overlay keeps replay and mental-health resources, but no longer includes Patreon, soundtrack promotion, or self-promo links.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Preserve the original scene-script load order; the route relies on that sequencing for story progression and audio cues.</li>
+          <li>When cleaning the shell, prefer emptying or neutralizing corner panels instead of rewriting the core scene scripts.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after touching share markup or overlay copy.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

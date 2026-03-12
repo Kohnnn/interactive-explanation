@@ -1,0 +1,117 @@
+[
+  {
+    "moduleId": "article-shell-and-stage-map",
+    "originalBehavior": "The live page is a long-form article with a splash banner, embedded simulation stages, inline diagrams, and footnotes that support the learning flow.",
+    "localStatus": "The article shell, embedded stage iframes, splash banner, and littlefoot-driven footnotes remain intact while translation, share, and supporter UI were removed from the public shell.",
+    "sourceFiles": [
+      "index.html",
+      "js/blerp.js",
+      "css/index.css",
+      "banners/splash.html",
+      "words/words.html"
+    ],
+    "notes": [
+      "The local shell still uses the original article markup and iframe stage layout instead of rebuilding the narrative in a different framework.",
+      "Footer-only provenance is handled by the shared footer hook, while the old public sidebars and closing credits block are omitted."
+    ],
+    "evidence": [
+      "Local verification on 2026-03-10 confirmed the article route loads with the shared footer and the expected stage iframes.",
+      "The vendored page still embeds the original stage sequence from epidemiology basics through the sandbox."
+    ]
+  },
+  {
+    "moduleId": "seir-playable-simulation",
+    "originalBehavior": "Core epidemiology sections let readers start, pause, reset, and replay simplified outbreak models that show S, E, I, and R curves over time.",
+    "localStatus": "The SEIR and related graph simulations remain upstream-driven, with the original controls, curve rendering, and recorded-scenario behavior preserved.",
+    "sourceFiles": [
+      "sim/index.html",
+      "sim/js/Model.js",
+      "sim/js/Controls.js",
+      "sim/js/Params.js",
+      "sim/js/main.js"
+    ],
+    "notes": [
+      "The local cleanup did not rewrite the simulation math or the button-driven play, pause, continue, and reset flow.",
+      "Stage presets still arrive via query parameters so the same sim bundle powers the article's many embedded sections."
+    ],
+    "evidence": [
+      "The current plan treats the SEIR simulation as parity-critical and requires start or reset behavior to remain functional.",
+      "Source files still isolate model updates, control handlers, and render loops in the original runtime layout."
+    ]
+  },
+  {
+    "moduleId": "reproduction-number-calculators",
+    "originalBehavior": "Two calculator modules let readers change infection and recovery assumptions to see how R0 and effective R respond in real time.",
+    "localStatus": "The calculator stages still run from the shared simulation bundle, preserving slider-driven updates to R0, R, and herd-immunity visuals.",
+    "sourceFiles": [
+      "sim/js/Stages.js",
+      "sim/js/Controls.js",
+      "sim/js/Model.js",
+      "sim/js/main.js"
+    ],
+    "notes": [
+      "The calc views still depend on the original frozen-time stage presets rather than a separate local implementation.",
+      "Public-shell cleanup did not change the slider or canvas math used by the calculators."
+    ],
+    "evidence": [
+      "The article still embeds <code>epi-6a</code> and <code>epi-6b</code> as dedicated calculator stages.",
+      "Local smoke coverage updates the calculator sliders and confirms the displayed R values change."
+    ]
+  },
+  {
+    "moduleId": "intervention-scenarios-and-lockdown-editor",
+    "originalBehavior": "Mid-article stages compare do-nothing, distancing, tracing, mask, and intermittent-lockdown scenarios, including recorded schedules that readers can replay or edit.",
+    "localStatus": "Intervention presets, recorded scenarios, and editable slider schedules remain in the original stage definitions and controls runtime.",
+    "sourceFiles": [
+      "sim/js/Stages.js",
+      "sim/js/Controls.js",
+      "sim/js/Model.js"
+    ],
+    "notes": [
+      "The local port keeps the original stage IDs such as <code>int-4</code>, <code>int-5</code>, and <code>int-7</code> so article embeds continue to map directly to the upstream sim bundle.",
+      "Readers can still replay the built-in schedule and then change intervention sliders without leaving the article flow."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out the lockdown schedule editor and scenario selector as parity-critical modules.",
+      "Current stage definitions still include the original recorded intervention timelines and slider visibility rules."
+    ]
+  },
+  {
+    "moduleId": "icu-capacity-and-long-horizon-curves",
+    "originalBehavior": "Later stages extend the simulation across years, add ICU capacity overlays, and show recurring waves under changing immunity or policy assumptions.",
+    "localStatus": "The ICU threshold line, multi-year curve rendering, and hospital-capacity controls remain in the original model and stage configuration files.",
+    "sourceFiles": [
+      "sim/js/Stages.js",
+      "sim/js/Model.js",
+      "sim/js/Controls.js"
+    ],
+    "notes": [
+      "The years-focused stages still use the same hospital-capacity slider and black threshold overlay rendered on the graph canvas.",
+      "Long-horizon stages were preserved as direct stage presets instead of being collapsed into one simplified demo."
+    ],
+    "evidence": [
+      "The article still embeds the later <code>yrs-*</code> stages for immunity loss, oscillations, and capacity-sensitive outcomes.",
+      "Local smoke coverage now verifies the hospital-capacity control and a long-horizon stage respond under the local route."
+    ]
+  },
+  {
+    "moduleId": "sandbox-and-subpath-hosting",
+    "originalBehavior": "The article closes with a full sandbox that exposes more knobs at once and relies on the same relative asset structure as the rest of the site.",
+    "localStatus": "The sandbox remains vendored as the original <code>SB</code> stage and is served unchanged aside from subpath-safe hosting and footer-only provenance on the article shell.",
+    "sourceFiles": [
+      "sim/index.html",
+      "sim/js/Stages.js",
+      "sim/js/simplebar.min.js",
+      "index.html",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "The sandbox still boots through query parameters and SimpleBar setup rather than a route-specific rewrite.",
+      "Canonical and footer behavior now resolve to the local GitHub Pages-style route while keeping the sim assets relative."
+    ],
+    "evidence": [
+      "The plan requires a long-term strategy sandbox that works under the nested <code>/interactive-explanation/</code> base path.",
+      "The local bundle keeps the original sandbox stage and serves all assets relative to the route root."
+    ]
+  }
+]

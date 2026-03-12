@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulating</title>
+  <meta
+    name="description"
+    content="Local launcher for the current Emoji Simulator and the legacy original Simulating explorable article."
+  >
+  <meta property="og:title" content="Simulating">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="./">
+  <meta
+    property="og:description"
+    content="Local launcher for the current Emoji Simulator and the legacy original Simulating explorable article."
+  >
+  <link rel="canonical" href="./">
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 88, 0.2), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(73, 149, 116, 0.22), transparent 28%),
+        linear-gradient(180deg, #f7f2ea 0%, #efe7da 100%);
+      color: #241b16;
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+    }
+
+    main {
+      width: min(760px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 48px 0 40px;
+    }
+
+    .panel {
+      padding: 28px;
+      border: 1px solid rgba(36, 27, 22, 0.14);
+      border-radius: 28px;
+      background: rgba(255, 250, 244, 0.9);
+      box-shadow: 0 18px 44px rgba(42, 30, 23, 0.12);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #8d4f35;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 7vw, 4.1rem);
+      line-height: 0.94;
+    }
+
+    p {
+      margin: 18px 0 0;
+      color: #65574d;
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    .links {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .links a {
+      display: block;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #fff8ef;
+      color: inherit;
+      text-decoration: none;
+      box-shadow: inset 0 0 0 1px rgba(36, 27, 22, 0.1);
+    }
+
+    .links strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+    }
+
+    .links span {
+      color: #65574d;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(100vw - 20px, 760px);
+        padding: 20px 0 24px;
+      }
+
+      .panel {
+        padding: 20px;
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body data-reference-url="https://ncase.me/simulating/" data-reference-text="Simulating">
+  <main>
+    <section class="panel">
+      <p class="eyebrow">Launcher replica</p>
+      <h1>New Site Who Dis</h1>
+      <p>
+        The current Simulating launcher now points to the relaunched Emoji Simulator, while the
+        original long-form explorable article remains available as a legacy route in this local bundle.
+      </p>
+      <div class="links">
+        <a href="../sim/">
+          <strong>Open the current Emoji Simulator</strong>
+          <span>More example models, local save or share links, and the refreshed editor runtime.</span>
+        </a>
+        <a href="./original/">
+          <strong>Open the original article</strong>
+          <span>The legacy long-form explorable article and its embedded emoji simulation examples.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

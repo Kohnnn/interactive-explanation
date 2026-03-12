@@ -1,0 +1,96 @@
+[
+  {
+    "moduleId": "comic-shell-and-chapter-flow",
+    "originalBehavior": "The route opens as a long-form interactive comic with a splash scene, chapter dividers, anchor links, and scroll-driven reveals.",
+    "localStatus": "The comic shell, chapter anchors, and splash flow remain intact, with public provenance removed from the visible header and credits surface.",
+    "sourceFiles": [
+      "index.html",
+      "js/comic.js",
+      "css/comic.css",
+      "sims/splash/index.html"
+    ],
+    "notes": [
+      "Panel markup and scroll-triggered iframe loading still come from the original runtime.",
+      "The header now keeps only the route title and timing details, while the shared footer carries the original-page reference."
+    ],
+    "evidence": [
+      "Local walkthrough on 2026-03-10 confirmed the splash and chapter progression still run under the route root.",
+      "The vendored index continues to embed the original panel markup and iframe placeholders."
+    ]
+  },
+  {
+    "moduleId": "forgetting-curve-and-spacing-sims",
+    "originalBehavior": "The comic uses embedded simulations to show forgetting curves, spacing intervals, and why timed review beats cramming.",
+    "localStatus": "The Ebbinghaus and calendar simulations remain upstream-driven and still load through the original iframe structure.",
+    "sourceFiles": [
+      "sims/ebbinghaus/index.html",
+      "sims/ebbinghaus/ebbinghaus.js",
+      "sims/calendar/index.html",
+      "sims/calendar/calendar.js"
+    ],
+    "notes": [
+      "The local port did not rewrite the core spacing or decay math.",
+      "These sections remain central to the article's teach-by-doing pacing."
+    ],
+    "evidence": [
+      "Parity targets in the recheck plan explicitly called out forgetting-curve and active-recall timing scenes.",
+      "Source files still isolate the Ebbinghaus and calendar demos into their original simulation bundles."
+    ]
+  },
+  {
+    "moduleId": "active-recall-and-flashcard-practice",
+    "originalBehavior": "Readers flip cards, type answers, and interact with flashcard examples to practice active recall instead of passive review.",
+    "localStatus": "Single-card, multi-card, and typed-card practice flows remain in the original simulation modules without host-page rewrites.",
+    "sourceFiles": [
+      "sims/singlecard/index.html",
+      "sims/singlecard/singlecard.js",
+      "sims/multicard/index.html",
+      "sims/type/index.html"
+    ],
+    "notes": [
+      "The local cleanup focused on public attribution blocks, not the practice widgets themselves.",
+      "Share and footer changes do not alter the embedded flashcard controls."
+    ],
+    "evidence": [
+      "The route still exposes the same practice-oriented card sections and typed prompts after vendoring.",
+      "Imported simulation directories match the published runtime layout."
+    ]
+  },
+  {
+    "moduleId": "leitner-box-workflow",
+    "originalBehavior": "A guided Leitner-box section demonstrates review buckets, promotion or demotion rules, and spaced scheduling around a physical-card workflow.",
+    "localStatus": "The Leitner-box interactive remains intact and still runs from the original HTML, CSS, and JS bundle.",
+    "sourceFiles": [
+      "sims/leitner/index.html",
+      "sims/leitner/leitner.js",
+      "sims/leitner/leitner.css"
+    ],
+    "notes": [
+      "The tutorial still uses the upstream bucket visuals and card-movement logic.",
+      "No local cleanup was applied inside the Leitner runtime itself."
+    ],
+    "evidence": [
+      "The recheck plan named the Leitner workflow as a parity-critical target for this route.",
+      "Local source retains the original dedicated Leitner simulation files."
+    ]
+  },
+  {
+    "moduleId": "downloads-and-practice-resources",
+    "originalBehavior": "The comic closes with printable cards, download helpers, and extra practice resources that support taking the system offline.",
+    "localStatus": "Printable PDFs and the download helper remain locally available, while the surrounding credits area now omits supporter and source-promo blocks.",
+    "sourceFiles": [
+      "pdf/",
+      "sims/downloads/all.html",
+      "sims/downloads/download_all.js",
+      "sharing/"
+    ],
+    "notes": [
+      "The local route keeps practical study resources reachable without preserving the upstream supporter panel.",
+      "Share controls remain available at the end of the article and now resolve from the local route root."
+    ],
+    "evidence": [
+      "The vendored tree still contains PDF assets and the bundled download helper scripts.",
+      "The ending sequence in the local page retains the same resource-oriented structure after cleanup."
+    ]
+  }
+]

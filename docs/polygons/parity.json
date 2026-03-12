@@ -1,0 +1,136 @@
+[
+  {
+    "moduleId": "narrative-flow",
+    "originalBehavior": "The page interleaves long-form explanatory text with intro and outro vignettes, cartoon cues, and embedded playable sections in a fixed narrative order.",
+    "localStatus": "Top-level page structure is vendored from upstream; the only top-level additions are metadata updates and the shared reference footer, while the intro translation strip was removed from the public iframe flow and the translator helper was relocated into docs.",
+    "sourceFiles": [
+      "index.html",
+      "css/index.css",
+      "js/intro.js",
+      "js/Mouse.js",
+      "play/intro/*",
+      "play/outro/*"
+    ],
+    "notes": [
+      "The local page keeps the original iframe layout rather than collapsing the content into separate modules.",
+      "Narrative rhythm remains owned by the original HTML document.",
+      "The intro iframe no longer advertises upstream translation pages, but the playable sequence stays in the same order.",
+      "Technical translation tooling now lives under docs instead of the published polygons route."
+    ],
+    "evidence": [
+      "Local audit notes emphasize page-level parity rather than module-only replication.",
+      "Live page walkthrough cross-checked at https://ncase.me/polygons/ on 2026-03-10."
+    ]
+  },
+  {
+    "moduleId": "neighborhood-board",
+    "originalBehavior": "Users drag unhappy triangles and squares to random empty spots until no one wants to move, with immediate happiness recalculation after each drop.",
+    "localStatus": "Manual board remains in the upstream iframe and supporting scripts, loaded under the local subpath without a rewritten host wrapper.",
+    "sourceFiles": [
+      "play/manual/manual.html",
+      "play/manual/manual.js",
+      "play/lib/Mouse.js",
+      "play/img/*"
+    ],
+    "notes": [
+      "Drop handling and local mood updates still happen inside the original manual module.",
+      "The outer replica page does not intercept drag interactions."
+    ],
+    "evidence": [
+      "Local audit inventory calls out drag-and-drop neighborhood behavior and immediate happy/unhappy updates.",
+      "Upstream manual board lives in its own iframe-backed module."
+    ]
+  },
+  {
+    "moduleId": "autoplay-simulation",
+    "originalBehavior": "Unhappy shapes automatically move to random empty spots over time so users can observe segregation emerge across repeated runs.",
+    "localStatus": "Autoplay behavior is preserved through the vendored automatic simulation module.",
+    "sourceFiles": [
+      "play/automatic/automatic.html",
+      "play/automatic/automatic.js",
+      "play/automatic/automatic.css"
+    ],
+    "notes": [
+      "The local copy keeps the original iframe dimensions and runtime structure.",
+      "No framework wrapper was added around the autoplay state machine."
+    ],
+    "evidence": [
+      "Local audit notes describe repeated autoplay runs and macro-pattern emergence.",
+      "Upstream source isolates autoplay into the automatic module."
+    ]
+  },
+  {
+    "moduleId": "segregation-graph",
+    "originalBehavior": "Automatic simulations plot a segregation metric over time alongside the board so local moves can be compared with the macro trend.",
+    "localStatus": "Graph updates remain bundled with the original automatic simulation logic.",
+    "sourceFiles": [
+      "play/automatic/automatic.js",
+      "play/img/stats.png",
+      "play/automatic/automatic.html"
+    ],
+    "notes": [
+      "Graph rendering and board updates still share the same upstream runtime.",
+      "The docs contract tracks the graph separately because it is a parity-critical output."
+    ],
+    "evidence": [
+      "Local audit notes explicitly call out the segregation graph module.",
+      "Live page review confirmed the graph still appears in the same chapter position."
+    ]
+  },
+  {
+    "moduleId": "bias-threshold-controls",
+    "originalBehavior": "Slider-driven sections change the individual bias threshold and visibly shift segregation outcomes once the preference crosses key tipping points.",
+    "localStatus": "Bias slider sections remain in the upstream automatic variants and shared double-slider utilities.",
+    "sourceFiles": [
+      "play/automatic/automatic2.html",
+      "play/automatic/automatic3.html",
+      "play/automatic/doubleslider.js",
+      "play/automatic/doubleslider.css"
+    ],
+    "notes": [
+      "Separate upstream HTML files preserve the staged narrative about 33 percent and 50 percent thresholds.",
+      "Pathing changes were limited to hosting compatibility."
+    ],
+    "evidence": [
+      "Local audit notes mention slider threshold changes and tipping-point behavior.",
+      "Source tree includes multiple automatic variants dedicated to threshold scenarios."
+    ]
+  },
+  {
+    "moduleId": "anti-bias-controls",
+    "originalBehavior": "Later sections introduce anti-bias or diversity-demand controls that show how even slight active preference for diversity can de-segregate the world.",
+    "localStatus": "Anti-bias scenarios continue to use the original automatic module variants and slider utilities.",
+    "sourceFiles": [
+      "play/automatic/automatic4.html",
+      "play/automatic/automatic.js",
+      "play/automatic/doubleslider.js",
+      "play/mini/mini_nonconform.html"
+    ],
+    "notes": [
+      "The local replica keeps the original pairing of mini-scene explanation plus full-size simulation.",
+      "No separate state bridge was introduced between the mini and automatic sections."
+    ],
+    "evidence": [
+      "Local audit notes identify anti-bias controls and de-segregation behavior as a distinct module.",
+      "Live observation on 2026-03-10 confirmed the same sequence of mini and full-scale sections."
+    ]
+  },
+  {
+    "moduleId": "large-sandbox",
+    "originalBehavior": "A large sandbox at the end lets users freely vary parameters and explore the segregation model after the guided story concludes.",
+    "localStatus": "Sandbox behavior remains in the vendored upstream iframe, with only the host page footer added externally.",
+    "sourceFiles": [
+      "play/automatic/automatic_sandbox.html",
+      "play/automatic/automatic_start_segregated.js",
+      "play/automatic/automatic.js"
+    ],
+    "notes": [
+      "The sandbox stays in its original chapter position after the cooperation section.",
+      "Reset and playback behavior remain owned by the upstream simulation script."
+    ],
+    "evidence": [
+      "Local audit notes explicitly call out the large sandbox as a final module.",
+      "Smoke testing targeted the sandbox route because it stresses the nested iframe pathing."
+    ]
+  }
+]

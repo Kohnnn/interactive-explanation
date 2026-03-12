@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loopy Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local loopy replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>LOOPY</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/loopy/</code> promotes the upstream
+        <code>v1.1</code> editor app to the route root, keeping the drawing and simulation runtime
+        intact while moving public provenance into the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../loopy/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/loopy/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/loopy" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>2d8e13f0a006f4024f27ad1712d7f9c2c1ad7cd9</code><br>
+        License: <a href="../../loopy/LICENSE.txt">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/loopy</code> site tree. The local copy
+          uses the upstream <code>v1.1/</code> app as the route root, keeps the editor scripts and
+          modal pages, and carries over the social thumbnails and license file for docs parity.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/loopy/</code> on 2026-03-10.</li>
+          <li>CC0 provenance stays in docs while the public route exposes only the shared reference footer.</li>
+          <li>The route intentionally skips the old marketing landing page and ships the editor-first experience directly.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>loopy/index.html</code> is the promoted editor entry point from upstream <code>v1.1</code>.</li>
+          <li><code>loopy/js/</code> contains model serialization, drawing tools, play controls, and modal UI.</li>
+          <li><code>loopy/pages/examples/</code>, <code>pages/howto.html</code>, and <code>pages/gif.html</code> remain reachable helper subpages.</li>
+          <li><code>loopy/css/</code> and <code>loopy/social/</code> preserve the upstream runtime assets and social previews.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route opens directly into the editor app instead of the upstream landing page.</li>
+          <li>Example cards were rewritten to load local <code>?data=...</code> URLs, preserving remix behavior without upstream leaks.</li>
+          <li>The old creator, Patreon, and supporter-facing credit panel was replaced with a neutral local about page.</li>
+          <li>Reachable helper subpages now use the shared footer and no longer expose extra creator or source callouts.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the published editor tree wholesale and promote the app entry point before making any cleanup edits.</li>
+          <li>Localize sample-model links before smoke testing, because example loading is a parity-critical flow.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after editing modal pages or sidebar copy.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

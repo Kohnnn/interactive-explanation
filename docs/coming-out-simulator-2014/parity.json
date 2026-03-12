@@ -1,0 +1,103 @@
+[
+  {
+    "moduleId": "menu-framing-and-intro-branches",
+    "originalBehavior": "The route opens in a coffeehouse framing scene with branching intro choices that establish tone before the main 2010 story begins.",
+    "localStatus": "The coffeehouse menu, choice structure, and branch bookkeeping remain in the original runtime with local wording cleanup in the notes branches.",
+    "sourceFiles": [
+      "index.html",
+      "js/game/menu.js",
+      "js/core/Choose.js",
+      "js/core/ChooseView.js",
+      "js/main.js"
+    ],
+    "notes": [
+      "The local port preserves the three-option opening menu and the branch flags it seeds for later dialogue.",
+      "Creator and provenance callouts in the framing branches were replaced with neutral story notes."
+    ],
+    "evidence": [
+      "The current route still opens with the coffeehouse setup and menu-driven first choices.",
+      "Source structure keeps the original menu controller rather than replacing it with a custom shell."
+    ]
+  },
+  {
+    "moduleId": "jack-and-dinner-dialogue-tree",
+    "originalBehavior": "Players move through the Jack conversation and the multi-scene dinner sequence, with choices remembered and reflected by later dialogue.",
+    "localStatus": "Jack, dinner, and parent-response branches stay in the original scene files with no local flattening of the conversation tree.",
+    "sourceFiles": [
+      "js/game/jack_1.js",
+      "js/game/dinner_1.js",
+      "js/game/dinner_2.js",
+      "js/game/dinner_3.js",
+      "js/game/dinner_4.js",
+      "js/game/dinner_5.js"
+    ],
+    "notes": [
+      "Choice ordering, stored flags, and later callbacks still depend on the original runtime globals.",
+      "The local cleanup was intentionally limited to framing copy, not the central family-conversation branches."
+    ],
+    "evidence": [
+      "Parity scope for this port centered on preserving the dinner-table branching path and consequence mapping.",
+      "The vendored scene files still hold the original branch logic and remembered-state checks."
+    ]
+  },
+  {
+    "moduleId": "choice-memory-and-consequence-mapping",
+    "originalBehavior": "Dialogue options set state that later scenes recall, changing responses, callbacks, and which closure paths become available.",
+    "localStatus": "Global choice state and conditional callbacks remain upstream-driven through the same scene-global object and queue system.",
+    "sourceFiles": [
+      "js/core/Choose.js",
+      "js/core/ChooseView.js",
+      "js/game/menu.js",
+      "js/game/dinner_4.js",
+      "js/game/dinner_5.js",
+      "js/game/outro.js"
+    ],
+    "notes": [
+      "The route still relies on remembered state rather than independent isolated scenes.",
+      "No local wrapper was added around the choice engine, so the original consequence mapping still drives progression."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out consequence mapping as a parity target for this route.",
+      "Source still stores path decisions in the original runtime state object and reuses them across later scenes."
+    ]
+  },
+  {
+    "moduleId": "outro-story-trio-and-replay-flow",
+    "originalBehavior": "The ending moves into an outro with multiple post-coming-out story variants, then reaches a final credits screen that supports replay by restarting the route.",
+    "localStatus": "The lie, truth, and half-truth outro structure remains intact, while the visible end-screen copy was cleaned up for the local shell.",
+    "sourceFiles": [
+      "js/game/outro.js",
+      "index.html",
+      "js/main.js"
+    ],
+    "notes": [
+      "The three-story closure loop and final scene transition remain in the original outro controller.",
+      "The public end screen keeps neutral replay guidance instead of external promo or creator links."
+    ],
+    "evidence": [
+      "Current source still routes the ending to the same <code>screen=\"credits\"</code> state as upstream.",
+      "Outro branches remain split across the original lie, truth, and half-truth sequences."
+    ]
+  },
+  {
+    "moduleId": "audio-loading-and-local-shell",
+    "originalBehavior": "The route loads audio, art, and dialogue assets into a lightweight shell with a loading bar before handing off to the conversation runtime.",
+    "localStatus": "The loading screen, audio config, and scene shell remain upstream-driven, with local metadata and footer behavior layered on the document shell.",
+    "sourceFiles": [
+      "index.html",
+      "js/config/art.js",
+      "js/config/sounds.js",
+      "js/main.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "The old static share bar was removed because it was not part of the core conversation runtime.",
+      "Canonical metadata and the shared footer are now handled at the outer shell only."
+    ],
+    "evidence": [
+      "The route still opens with the original loading container and asset bootstrap sequence.",
+      "The local shell now resolves cleanly under <code>/interactive-explanation/coming-out-simulator-2014/</code>."
+    ]
+  }
+]

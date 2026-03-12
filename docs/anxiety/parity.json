@@ -1,0 +1,124 @@
+[
+  {
+    "moduleId": "intro-and-content-note-flow",
+    "originalBehavior": "The route opens with content notes, loading overlays, click-to-advance hints, and an intro scene before the main branching story begins.",
+    "localStatus": "The content-note, loading, pause, and intro flow remain intact, with only the public framing copy neutralized for the local route.",
+    "sourceFiles": [
+      "index.html",
+      "scripts/game/Loader.js",
+      "scripts/game/ContentNotes.js",
+      "scripts/intro/Intro_SceneSetup.js",
+      "scenes/intro.md"
+    ],
+    "notes": [
+      "The story still starts from the same staged overlay and intro sequencing as upstream.",
+      "The local cleanup changes visible copy but not the gating behavior for the opening notes."
+    ],
+    "evidence": [
+      "Local smoke testing on 2026-03-10 confirmed the route still opens with the content note and progresses into the story scene stack.",
+      "Source structure keeps the original dedicated loader and content-note modules."
+    ]
+  },
+  {
+    "moduleId": "branching-dialogue-and-choice-pacing",
+    "originalBehavior": "Players advance through branching dialogue, timing beats, and choice prompts that change how the anxiety voice escalates or backs off.",
+    "localStatus": "Dialogue sequencing and choice flow remain in the original scene runtime, with no rewrite of the act scripts or timing helpers.",
+    "sourceFiles": [
+      "scenes/act1.md",
+      "scenes/act2.md",
+      "scenes/act3.md",
+      "scenes/act4.md",
+      "scripts/act1/Act1_Hong.js",
+      "scripts/act2/Act2_Hong.js",
+      "scripts/act3/Act3_Hong.js",
+      "scripts/act4/Act4_Hong.js"
+    ],
+    "notes": [
+      "The local port preserves the branching structure and button timing that define the story-game pacing.",
+      "Public cleanup was confined to shell copy and sharing markup."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out branching dialogue and options flow as parity targets.",
+      "The vendored scene files still divide narrative logic across the original act modules."
+    ]
+  },
+  {
+    "moduleId": "anxiety-and-health-state",
+    "originalBehavior": "The story tracks anxiety or health state changes through the HUD and reacts to player decisions across several acts.",
+    "localStatus": "State changes and HUD behavior remain upstream-driven through the original HP and scene systems.",
+    "sourceFiles": [
+      "scenes/act1.md",
+      "scenes/act4.md",
+      "scripts/game/HP.js",
+      "scripts/game/Game.js",
+      "scripts/act1/Act1_Beebee.js",
+      "scripts/act4/Act4_Beebee.js"
+    ],
+    "notes": [
+      "The route still uses the original health meter and scene-state triggers.",
+      "No local changes were made to the main anxiety or recovery mechanics."
+    ],
+    "evidence": [
+      "Smoke review included decision branches and HP changes because they anchor the story's feedback loop.",
+      "The imported runtime still wires those systems through the original game and act scripts."
+    ]
+  },
+  {
+    "moduleId": "options-pause-and-accessibility-controls",
+    "originalBehavior": "Players can pause, adjust text speed, switch automatic advance behavior, and control audio volume while the story is running.",
+    "localStatus": "Options, pause behavior, and pacing controls stay in the original UI scripts and remain available through the same gear-driven overlay.",
+    "sourceFiles": [
+      "scripts/game/Options.js",
+      "scripts/game/Sounds.js",
+      "scripts/game/About.js",
+      "styles/game.css"
+    ],
+    "notes": [
+      "The shell cleanup keeps these controls visible because they are core to accessibility and pacing.",
+      "The about panel now focuses on replay and support resources instead of promo links."
+    ],
+    "evidence": [
+      "The recheck plan specifically called out pause and content-note overlays as required behaviors.",
+      "Current source still centers these controls in the original game UI modules."
+    ]
+  },
+  {
+    "moduleId": "ending-resource-handoff-and-replay",
+    "originalBehavior": "The story concludes with an ending sequence, then offers support resources, replay, and post-story navigation options.",
+    "localStatus": "Replay, close, and resource handoff still exist, while self-promo and supporter-facing about content was removed from the public overlay.",
+    "sourceFiles": [
+      "scenes/credits.md",
+      "scripts/credits/Credits_SceneSetup.js",
+      "scripts/credits/Credits_BG.js",
+      "scripts/game/About.js",
+      "index.html"
+    ],
+    "notes": [
+      "The local route keeps the mental-health resource link live as part of the story's subject-matter handoff.",
+      "Replay remains surfaced through the original about overlay container."
+    ],
+    "evidence": [
+      "End-state review verified that the route still reaches the ending and exposes replay behavior.",
+      "The credits and about modules remain vendored from the published runtime."
+    ]
+  },
+  {
+    "moduleId": "local-share-and-media-pack",
+    "originalBehavior": "Players can share the story through social links and open a separate media pack containing trailer, GIF, and screenshot assets.",
+    "localStatus": "Share links now recalculate from the local subpath, and the media-pack page remains reachable with the shared footer layered on top.",
+    "sourceFiles": [
+      "scripts/game/Sharing.js",
+      "index.html",
+      "sharing/index.html",
+      "sharing/screenshots/"
+    ],
+    "notes": [
+      "Static upstream share URLs were replaced with neutral local placeholders before JS enhancement runs.",
+      "The local media-pack route stays available as a public subpage under the same footer-only reference policy."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out corrected local share behavior and any new subpages.",
+      "Current source rewrites share URLs from <code>window.location</code> and retains the shipped media assets."
+    ]
+  }
+]

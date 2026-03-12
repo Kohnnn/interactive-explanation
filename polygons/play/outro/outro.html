@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+	body{
+		margin:0;
+		font-family: sans-serif;
+		font-weight: 100;
+	}
+	a{
+		color: #888;
+	}
+	a:hover{
+		color: #bbb;
+	}
+	#share_text > a{
+		color: #999;
+		text-decoration: none;
+		position: relative;
+		top:5px;
+		opacity: 0.5;
+		cursor: pointer;
+	}
+	#share_text > a:hover{
+		color: #ddd;
+		opacity: 1.0;
+	}
+	#intro{
+		width:1280px; height:560px; background:#000; position:relative; overflow:hidden
+	}
+	#intro > #intro_shading{
+		position: absolute;
+		background:url(intro_banner.png);
+		width:1280px; height:560px;
+	}
+	#intro > #share_text{
+		color: #555;
+		text-align: center;
+		width: 600px;
+		font-size: 60px;
+		font-weight: 100;
+		position: absolute;
+		width:100%;
+		top: 70px;
+		letter-spacing: 2px;
+	}
+	#intro > #pd_text{
+		color: #555;
+		text-align: center;
+		width: 600px;
+		font-size: 20px;
+		font-weight: 100;
+		position: absolute;
+		width:100%;
+		top: 170px;
+		letter-spacing: 2px;
+	}
+	</style>
+</head>
+<body>
+	<div id="intro">
+		<canvas id="canvas" width="1280" height="300" style="position:absolute;bottom:0"></canvas>
+		<div id="intro_shading"></div>
+		<div id="share_text">
+
+			SHARE<span style="position:relative;top:-5px">:</span>
+
+			<a data-popup-share="facebook"
+				data-popup-width="626" data-popup-height="436"
+				onclick="return sharePopup.call(this,event);">
+				<img src="icons/facebook.png" width="60" height="60"/></a>
+
+			<a data-popup-share="twitter"
+				data-popup-width="640" data-popup-height="400"
+				onclick="return sharePopup.call(this,event);">
+				<img src="icons/twitter.png" width="60" height="60"/></a>
+
+			<a data-popup-share="google"
+				data-popup-width="600" data-popup-height="460"
+				onclick="return sharePopup.call(this,event);">
+				<img src="icons/googleplus.png" width="60" height="60"/></a>
+
+			<a data-popup-share="tumblr"
+				data-popup-width="446" data-popup-height="430"
+				onclick="return sharePopup.call(this,event);">
+				<img src="icons/tumblr.png" width="60" height="60"/></a>
+
+			<a href="http://www.reddit.com/submit" onclick="window.open('http://www.reddit.com/submit?v=5&amp;noui&amp;jump=close&amp;url='+encodeURIComponent(window.POLYGONS_SHARE_URL)+'&amp;title='+encodeURIComponent(document.title), 'The Parable of the Polygons','toolbar=no,width=840,height=750'); return false;">
+        		<img src="icons/reddit.png" alt="submit to reddit" width="60" height="60" border="0"/></a>
+
+			<a id="stumble_link" href="http://www.stumbleupon.com/submit" target="_blank">
+        		<img style="border: 0pt none;" src="icons/stumbleupon.png" border="0" alt="stumble" width="60" height="60" /></a>
+
+		</div>
+		<div id="pd_text"></div>
+
+	</div>
+</body>
+</html>
+<script src="MouseBlah.js"></script>
+<script src="outro.js"></script>
+<script src="popup.js"></script>
+<script>
+window.POLYGONS_SHARE_URL = new URL("../../", window.location.href).href;
+
+document.querySelector('[data-popup-share="facebook"]').dataset.popupUrl =
+	"https://www.facebook.com/sharer.php?u=" +
+	encodeURIComponent(window.POLYGONS_SHARE_URL) +
+	"&t=" +
+	encodeURIComponent("Parable of the Polygons: a playable post on how harmless choices can make a harmful world.");
+
+document.querySelector('[data-popup-share="twitter"]').dataset.popupUrl =
+	"https://twitter.com/share?url=" +
+	encodeURIComponent(window.POLYGONS_SHARE_URL) +
+	"&text=" +
+	encodeURIComponent("Parable of the Polygons: how harmless choices can make a harmful world.");
+
+document.querySelector('[data-popup-share="google"]').dataset.popupUrl =
+	"https://plus.google.com/share?url=" +
+	encodeURIComponent(window.POLYGONS_SHARE_URL);
+
+document.querySelector('[data-popup-share="tumblr"]').dataset.popupUrl =
+	"https://www.tumblr.com/share/link?url=" +
+	encodeURIComponent(window.POLYGONS_SHARE_URL) +
+	"&name=" +
+	encodeURIComponent("Parable of the Polygons") +
+	"&description=" +
+	encodeURIComponent("A playable post on how harmless choices can make a harmful world.");
+
+document.getElementById("stumble_link").href =
+	"http://www.stumbleupon.com/submit?url=" + encodeURIComponent(window.POLYGONS_SHARE_URL);
+</script>
+
+
+
+
+

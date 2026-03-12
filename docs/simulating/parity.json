@@ -1,0 +1,94 @@
+[
+  {
+    "moduleId": "launcher-shell-and-local-routing",
+    "originalBehavior": "The current live simulating route is a lightweight launcher that points readers to the new Emoji Simulator and the old original version.",
+    "localStatus": "The local launcher keeps that lightweight two-link behavior while routing to the local top-level <code>sim/</code> route and the nested legacy <code>original/</code> route.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.js",
+      "../shared/public-footer.css"
+    ],
+    "notes": [
+      "The launcher intentionally stays simpler than the article or editor surfaces.",
+      "Public provenance for the launcher is limited to the shared footer reference link."
+    ],
+    "evidence": [
+      "Live launcher behavior was verified against <code>https://ncase.me/simulating/</code> on 2026-03-10.",
+      "Local smoke coverage checks that the launcher links route to the local <code>sim/</code> and <code>simulating/original/</code> paths."
+    ]
+  },
+  {
+    "moduleId": "legacy-article-shell",
+    "originalBehavior": "The old original version is a long-form explorable article with splash art, text sections, and several embedded playable simulations.",
+    "localStatus": "The local legacy article keeps the original narrative flow, splash section, and long-form markup while moving metadata and provenance to the local shell plus shared footer.",
+    "sourceFiles": [
+      "original/index.html",
+      "scripts/index.js",
+      "styles/index.css",
+      "social/thumbnail.png"
+    ],
+    "notes": [
+      "The local copy keeps the article content intact rather than rebuilding it in a different framework.",
+      "The visible byline, share block, creator promo, and supporter-heavy ending were removed from the public surface."
+    ],
+    "evidence": [
+      "The copied article still mounts the same splash and example structure from the upstream release.",
+      "Local smoke coverage verifies that the article route loads and that the zoo example switcher still updates the active embedded model."
+    ]
+  },
+  {
+    "moduleId": "embedded-model-routing-and-zoo-switcher",
+    "originalBehavior": "The legacy article embeds multiple iframes from the sibling model editor and updates example links as readers switch between zoo presets.",
+    "localStatus": "All embedded article iframes now point to the nested local <code>../model/</code> surface, and the zoo example link generation remains upstream-driven through the original helper script.",
+    "sourceFiles": [
+      "original/index.html",
+      "scripts/index.js",
+      "model/index.html"
+    ],
+    "notes": [
+      "The local port kept the original <code>scripts/index.js</code> behavior instead of reimplementing the zoo picker or embed helper.",
+      "Static article markup was patched so the generated open-in-new-tab and embed URLs stay under the local subpath."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out <code>simulating/original/</code> and <code>simulating/model/</code> as nested parity targets.",
+      "Local smoke coverage checks that the zoo iframe source changes and that the generated example link points to the local nested model route."
+    ]
+  },
+  {
+    "moduleId": "legacy-model-editor-and-export",
+    "originalBehavior": "The legacy model editor lets readers play, pause, reset, draw, edit rule text, save remote links, and export JSON.",
+    "localStatus": "The local nested model editor preserves the original control bar, editor sidebar, remote-save hook, and JSON export behavior while removing public GitHub promo copy.",
+    "sourceFiles": [
+      "model/index.html",
+      "model/scripts/engine/UI.js",
+      "model/scripts/engine/Editor.js",
+      "model/scripts/engine/Save.js",
+      "model/scripts/engine/Load.js"
+    ],
+    "notes": [
+      "The Firebase-backed remote save code remains in place because it is part of the original editor runtime.",
+      "The local cleanup only neutralized the export helper copy and added footer-aware shell metadata."
+    ],
+    "evidence": [
+      "The current plan treats the nested model editor as parity-critical for the Simulating bundle.",
+      "Local smoke coverage exercises play or pause, brush changes, a stubbed save-success flow, and JSON export from the nested editor."
+    ]
+  },
+  {
+    "moduleId": "educational-reading-links-and-local-cross-links",
+    "originalBehavior": "The original article ended with educational reading links plus creator, share, and supporter callouts.",
+    "localStatus": "The public tail now keeps only educational references plus local internal links to the nested model editor and the current Emoji Simulator.",
+    "sourceFiles": [
+      "original/index.html",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Subject-matter references were preserved because they are part of the article content.",
+      "Creator, repo, contact, and supporter blocks were removed to enforce the footer-only provenance rule."
+    ],
+    "evidence": [
+      "The current public-surface policy allows educational references but removes original-site promo or supporter surfaces.",
+      "Audit coverage now includes the shipped <code>simulating</code> route tree and its nested HTML or JS files."
+    ]
+  }
+]

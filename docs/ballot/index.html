@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ballot Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local ballot replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>To Build a Better Ballot</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/ballot/</code> vendors the original article,
+        playable election modules, and sandbox with only hosting-safe metadata fixes and the shared
+        public reference footer layered on top.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../ballot/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/ballot/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/ballot" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>fc9716c57467b5889eac64dd6bcf3512a4e298c3</code><br>
+        License: <a href="../../ballot/LICENSE">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/ballot</code> site tree. The local copy
+          keeps the article-scale <code>index.html</code>, the <code>play/</code> election modules,
+          the standalone <code>sandbox/</code> route, and the original media assets.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/ballot/</code> on 2026-03-10.</li>
+          <li>CC0 provenance stays in docs while the public page uses only the shared reference footer.</li>
+          <li>Share URLs, metadata, and subpath handling were fixed before any public-surface cleanup.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>ballot/index.html</code> preserves the long-form narrative and embeds each election module in sequence.</li>
+          <li><code>ballot/play/*.html</code> contains the draggable voter/candidate scenes and comparison experiments.</li>
+          <li><code>ballot/play/js/</code> contains election logic, counting visuals, and the sandbox runtime.</li>
+          <li><code>ballot/sandbox/</code> preserves the standalone scenario builder and sharable model route.</li>
+          <li><code>ballot/img/</code>, <code>ballot/social/</code>, and <code>ballot/splash/</code> stay vendored as-is.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public article and sandbox now use the shared footer instead of any floating provenance UI.</li>
+          <li>Top-level self-promo, repo, and supporter blocks were removed from the public page body.</li>
+          <li>Static share anchors and sandbox save links now resolve to the local replica routes instead of embedding the original host.</li>
+          <li>Top-of-page translation and original-site link blocks were removed so the public route stays footer-only.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the original article tree first, then verify each embedded election scene before cleanup edits.</li>
+          <li>Preserve the sandbox as a separate route so saved scenarios keep working under the local subpath.</li>
+          <li>Audit both the opening translation blocks and closing share markup, then run <code>node interactive-explanation/tools/check-public-surface.mjs</code>.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

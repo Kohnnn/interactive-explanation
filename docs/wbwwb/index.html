@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WBWWB Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local wbwwb replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>We Become What We Behold</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/wbwwb/</code> keeps the original camera-first escalation
+        runtime, crowd feedback loop, and replay ending while moving public provenance to the shared footer and
+        replacing the upstream creator or supporter credits with neutral local end cards.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../wbwwb/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.itch.io/wbwwb" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/wbwwb" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>7c68c7e44e66b5be95ebd07d22391de707090397</code><br>
+        Provenance and license notes remain in docs; the public route keeps only the footer reference link.
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/wbwwb</code> bundle tree. The local copy keeps
+          the original PIXI scene stack, peep behaviors, TV chyron logic, and camera capture loop while
+          neutralizing the public credits and post-credits promo surfaces.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://ncase.itch.io/wbwwb</code> on 2026-03-10.</li>
+          <li>The shipped route uses a single explicit English runtime text map instead of the full translation bundle.</li>
+          <li>Public creator, supporter, and external-share surfaces were removed from the ending flow and replaced with a replay-only closeout.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>wbwwb/index.html</code> provides the local shell, metadata, WebGL stage mount, and shared footer hook.</li>
+          <li><code>wbwwb/js/core/</code> and <code>wbwwb/js/game/</code> keep the original scene manager, world, camera, and TV runtime.</li>
+          <li><code>wbwwb/js/scenes/</code> preserves the upstream preload, quote, escalation, peace, and replay structure with local cleanup in the credits scenes.</li>
+          <li><code>wbwwb/sprites/</code> and <code>wbwwb/sounds/</code> remain vendored so the visual and audio pacing stays close to upstream.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The route ships one English text bundle instead of the original multi-language translation file.</li>
+          <li>The creator, playtester, Patreon, and external social-share scenes were replaced with neutral thank-you and replay cards.</li>
+          <li><code>window.SHARE_URL</code> now resolves from the local route instead of relying on an empty or upstream-specific share target.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Vendor the published bundle first, then localize the shell and scene cleanup without rewriting the underlying camera or crowd systems.</li>
+          <li>Keep the GitHub Pages-safe relative asset layout intact; the PIXI runtime expects the original folder structure.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after touching text bundles or ending scenes because the audit scans those files directly.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

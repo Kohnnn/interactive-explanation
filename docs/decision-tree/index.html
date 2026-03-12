@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Decision Trees Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local decision-tree replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Decision Trees</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/decision-tree/</code> keeps the published scrollytelling
+        walkthrough, D3-driven split visuals, entropy sandbox, and information-gain charts while limiting
+        public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../decision-tree/">Open replica</a>
+        <a class="action-link secondary" href="https://mlu-explain.github.io/decision-tree/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/aws-samples/aws-mlu-explain" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>1ef330e547786940623b4016dd278d46befba691</code><br>
+        Source family: <code>aws-samples/aws-mlu-explain</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published static <code>decision-tree/</code> build from the MLU family.
+          The shipped copy keeps the hashed assets, KaTeX math rendering, sticky scrollytelling layout, and
+          D3 interactions intact while removing public creator, repo, analytics, and upstream promo copy from
+          the public shell.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://mlu-explain.github.io/decision-tree/</code> on 2026-03-10.</li>
+          <li>The route was adapted from the built page tree rather than rebuilt from source.</li>
+          <li>The public intro and outro were neutralized, but the teaching flow and educational references remain.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>MLU adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Keep the built hashed CSS and JS files in place so the scrollytelling runtime still binds to the expected IDs.</li>
+          <li>Patch only the shell metadata, home link, and closing content needed for footer-only public provenance.</li>
+          <li>Normalize canonical metadata and let the shared footer supply the single live-page reference link.</li>
+          <li>Extend the shared audit and smoke runner instead of introducing a family-specific validator.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>decision-tree/index.html</code> now owns the local shell metadata, footer hook, and upstream-copy cleanup.</li>
+          <li><code>decision-tree/main.37eaf4da.css</code> preserves the published layout, sticky panes, and typography.</li>
+          <li><code>decision-tree/js.0203594f.js</code> keeps the main scrollytelling runtime, entropy bubble, and information-gain visuals.</li>
+          <li><code>decision-tree/annotatedTree.53ab4bb5.js</code> and <code>decision-tree/katexCalls.5eeadbac.js</code> preserve the annotated tree and KaTeX rendering.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows author bylines, analytics, MLU branding, repo links, or contact calls outside the shared footer.</li>
+          <li>The old link to the unshipped bias-variance page is now plain explanatory text.</li>
+          <li>The closing handoff now points to the local <code>../random-forest/</code> route because that companion explainer is shipped locally.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

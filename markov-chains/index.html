@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markov Chains</title>
+    <meta name="description" content="Interactive Markov chain explainer with transition matrices, state evolution, and a local playground.">
+    <meta property="og:title" content="Markov Chains">
+    <meta property="og:description" content="Interactive Markov chain explainer with transition matrices, state evolution, and a local playground.">
+    <meta property="og:image" content="./fb-thumb.png">
+    <meta property="og:url" content="./">
+    <link rel="canonical" href="./">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../ev/scripts/d3.js" charset="utf-8"></script>
+    <script src="../ev/scripts/angular.js" charset="utf-8"></script>
+    <script src="../ev/scripts/common.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
+    <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-reference-url="https://setosa.io/ev/markov-chains/"
+    data-reference-text="Markov Chains"
+    data-footer-label="Original page"
+  >
+    <section class="menu"><a href="../">Back to replicas</a></section>
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Markov Chains</h1>
+        <h3 class="by-line">Interactive explainer</h3>
+      </div>
+      <p>Markov chains, named after <a href="https://en.wikipedia.org/wiki/Andrey_Markov">Andrey Markov</a>, are mathematical systems that hop from one &quot;state&quot; (a situation or set of values) to another. For example, if you made a Markov chain model of a baby&#39;s behavior, you might include &quot;playing,&quot; &quot;eating&quot;, &quot;sleeping,&quot; and &quot;crying&quot; as states, which together with other behaviors could form a &#39;state space&#39;: a list of all possible states. In addition, on top of the state space, a Markov chain tells you the probabilitiy of hopping, or &quot;transitioning,&quot; from one state to any other state---e.g., the chance that a baby currently playing will fall asleep in the next five minutes without crying first.</p>
+      <p>A simple, two-state Markov chain is shown below.</p>
+    </section>
+
+      <p ng-controller="NoControlsCtrl">
+        <input type="range" ng-model="speedRange" min="1" max="20" step="1" class="speedRange">
+        <label>speed</label>
+        <st-diagram states="states" transition-matrix="transitionMatrix" style="width:100%;height:230px;display:block;" center="diagramCenter" duration="duration"></st-diagram>
+      </p><p>With two states (A and B) in our state space, there are 4 possible transitions (not 2, because a state can transition back into itself). If we&#39;re at &#39;A&#39; we could transition to &#39;B&#39; or stay at &#39;A&#39;. If we&#39;re at &#39;B&#39; we could transition to &#39;A&#39; or stay at &#39;B&#39;. In this two state diagram, the probability of transitioning from any state to any other state is 0.5.</p>
+<p>Of course, real modelers don&#39;t always draw out Markov chain diagrams. Instead they use a &quot;transition matrix&quot; to tally the transition probabilities. Every state in the state space is included once as a row and again as a column, and each cell in the matrix tells you the probability of transitioning from its row&#39;s state to its column&#39;s state. So, in the matrix, the cells do the same job that the arrows do in the diagram.</p>
+
+      <div ng-controller="TransitionMatrixCtrl" style="position: relative; height: 230px;margin-bottom:0px">
+        <div class="controls" style="position: absolute; top: 0">
+          <input class="speedRange" type="range" ng-model="speedRange"
+            min="1" max="20" step="1">
+          <label> speed </label>
+        </div>
+        <st-diagram center="diagramCenter" states="states"
+          transition-matrix="transitionMatrix" duration="duration"
+          selected-transition="selected.transition"></st-diagram>
+        <grid class="matrix">
+          <row>
+            <cell></cell>
+            <cell style="line-height:{{height}}px;background-color:{{color('A')}}">A</cell>
+            <cell style="line-height:{{height}}px;background-color:{{color('B')}}">B</cell>
+          </row>
+          <row>
+          <div ng-style="{'background-color': color('A')}"
+              style="width:100%;height:100%">
+              <cell>
+                <div style="text-align: center; line-height:{{height}}px"> A </div>
+              </cell>
+              <cell ng-mouseover="selected.transition = [0, 0]"
+                ng-mouseout="selected.transition = null">
+                <div class="desc">
+                  P(A|A): {{ transitionMatrix[0][0] | number:2 }}
+                </div>
+                <div class="control">
+                  <input type="range" min="0" max="1" step="0.01"
+                    ng-change="onChangeMatrixValue(0, 0)"
+                    ng-model="transitionMatrix[0][0]">
+                </div>
+              </cell>
+              <cell ng-mouseover="selected.transition = [0, 1]"
+                ng-mouseout="selected.transition = null">
+                <div class="desc">
+                  P(B|A): {{ transitionMatrix[0][1] | number:2 }}
+                </div>
+                <div class="control">
+                  <input type="range" min="0" max="1" step="0.01"
+                    ng-change="onChangeMatrixValue(0, 1)"
+                    ng-model="transitionMatrix[0][1]">
+                </div>
+              </cell>
+            </div>
+          </row>
+          <row>
+            <div ng-style="{'background-color': color('B')}"
+                style="width:100%;height:100%">
+              <cell>
+                <div style="text-align: center; line-height:{{height}}px"> B </div>
+              </cell>
+              <cell ng-mouseover="selected.transition = [1, 0]"
+                ng-mouseout="selected.transition = null">
+                <div class="desc">
+                  P(A|B): {{ transitionMatrix[1][0] | number:2 }}
+                </div>
+                <div class="control">
+                  <input type="range" min="0" max="1" step="0.01"
+                    ng-change="onChangeMatrixValue(1, 0)"
+                    ng-model="transitionMatrix[1][0]">
+                </div>
+              </cell>
+              <cell ng-mouseover="selected.transition = [1, 1]"
+                ng-mouseout="selected.transition = null">
+                <div class="desc">
+                  P(B|B): {{ transitionMatrix[1][1] | number:2 }}
+                </div>
+                <div class="control">
+                  <input type="range" min="0" max="1" step="0.01"
+                    ng-change="onChangeMatrixValue(1, 1)"
+                    ng-model="transitionMatrix[1][1]">
+                </div>
+              </cell>
+            </div>
+          </row>
+        </grid>
+      </div><p>If the state space adds one state, we add one row and one column, adding one cell to every existing column and row. This means the number of cells grows quadratically as we add states to our Markov chain. Thus, a transition matrix comes in handy pretty quickly, unless you want to draw a jungle gym Markov chain diagram.</p>
+<p>One use of Markov chains is to include real-world phenomena in computer simulations. For example, we might want to check how frequently a new dam will overflow, which depends on the number of rainy days in a row. To build this model, we start out with the following pattern of rainy (R) and sunny (S) days:</p>
+
+      <div ng-controller="RandomSequenceCtrl" style="width:100%; height: 100px">
+        <div class="sequence"></div>
+      </div><p>One way to simulate this weather would be to just say &quot;Half of the days are rainy. Therefore, every day in our simulation will have a fifty percent chance of rain.&quot; This rule would generate the following sequence in simulation:</p>
+
+      <div ng-controller="RandomSequenceCtrl50" style="width:100%; height: 100px">
+        <div class="sequence"></div>
+      </div><p>Did you notice how the above sequence doesn&#39;t look quite like the original? The second sequence seems to jump around, while the first one (the real data) seems to have a &quot;stickyness&quot;. In the real data, if it&#39;s sunny (S) one day, then the next day is also much more likely to be sunny.</p>
+<p>We can minic this &quot;stickyness&quot; with a two-state Markov chain. When the Markov chain is in state &quot;R&quot;, it has a 0.9 probability of staying put and a 0.1 chance of leaving for the &quot;S&quot; state. Likewise, &quot;S&quot; state has 0.9 probability of staying put and a 0.1 chance of transitioning to the &quot;R&quot; state.</p>
+
+      <div ng-controller="RandomSequenceMarkovCtrl" style="width:100%; height: 230px;position: relative">
+        <div class="controls" style="position: absolute; top: 0">
+          <input class="speedRange" type="range" ng-model="speedRange"
+            min="1" max="10" step="1">
+          <label> speed </label>
+        </div>
+        <st-diagram center="diagramCenter" states="states"
+          transition-matrix="transitionMatrix" duration="duration"
+          state="state"
+          selected-transition="selected.transition"
+          style="pointer-events:none;position:absolute;z-index:1;left: 0;width: 100%;"></st-diagram>
+        <div class="sequence" step-1="70%" step-2="60%"></div>
+        
+      </div><p>In the hands of metereologists, ecologists, computer scientists, financial engineers and other people who need to model big phenomena, Markov chains can get to be quite large and powerful. For example, the algorithm Google uses to determine the order of search results, called <a href="https://en.wikipedia.org/wiki/PageRank">PageRank</a>, is a type of Markov chain.</p>
+<iframe scrolling="no" class="playground" style="display: block; float: left; border: none" width="100%" height="500" src="./playground/playground.html"></iframe>
+
+<p>Above, we&#39;ve included a Markov chain &quot;playground&quot;, where you can make your own Markov chains by messing around with a transition matrix. Here&#39;s a few to work from as an example: <a href="javascript:update_playground('long')">ex1</a>, <a href="javascript:update_playground('large')">ex2</a>, <a href="javascript:update_playground('three')">ex3</a> or generate one <a href="javascript:update_playground('random')">randomly</a>. The transition matrix text will turn red if the provided matrix isn&#39;t a valid transition matrix. <em>The rows of the transition matrix must total to 1.</em> There also has to be the same number of rows as columns.</p>
+<p>You can also open the local fullscreen playground at <a href="./playground/playground.html">markov-chains/playground/playground.html</a>.</p>
+<script>
+function randomMatrix(){
+  var n = Math.floor(Math.random() * 9) + 1;
+  return d3.range(n).map(function() {
+    var row = d3.range(n).map(function(){ return 0; });
+    // place 100, '0.01' pieces into random `row` indices.
+    d3.range(10).forEach(function(d) {
+      row[Math.floor(Math.random() * n)] += 0.1;
+    });
+    row = row.map(function(d){ return Math.round(d * 10) / 10; });
+    return row;
+  });
+}
+function update_playground(type){
+  var matrix;
+  if (type === 'three')
+    matrix = [[0.3,0.3,0.4], [0.3,0.5,0.2], [0.4,0.4,0.2]];
+  else if (type === 'large')
+    matrix = [[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+             [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]];
+  else if(type === 'long')
+    matrix = [[0.6,0.2,0,0,0,0.2], [0.2,0.6,0.2,0,0,0],[0,0.2,0.6,0.2,0,0],
+     [0,0,0.2,0.6,0.2,0],[0,0,0,0.2,0.6,0.2],[0.2,0,0,0,0.2,0.6]];
+  else if(type === 'random')
+    matrix = randomMatrix();
+  var hash = { tm: matrix };
+  d3.select('.playground').attr('src', './playground/playground.html?'
+    + (+new Date()) + '#' + encodeURIComponent(JSON.stringify(hash, null, 2)));
+}
+update_playground('three');
+</script>
+    </section>
+    <section>
+      <p class="or">Use the embedded playground for quick preset swaps, then open the local fullscreen view to edit the full matrix directly.</p>
+    </section>
+  <script type="text/javascript">
+    'use strict'
+    var myApp = angular.module('myApp', [])
+    myApp.controller('MainCtrl', function($scope, $window) {
+      angular.element($window).on('resize', function() { $scope.$apply(); });
+    })
+  </script>
+  <script type="text/javascript">
+
+myApp.factory('utils', function() {
+  var utils = {};
+  utils.getHash = function() {
+    var hash = window.location.hash;
+    if(!hash) return;
+    hash = hash.slice(1); // remove the '#'
+    try { return JSON.parse(decodeURIComponent(hash)); }catch(e) {};
+  };
+  utils.setHash = function(obj) {
+    window.location.hash = encodeURIComponent(JSON.stringify(obj));
+  };
+  utils.sample = function(probs) {
+    var t = 0;
+    var r = Math.random();
+    for(var i = 0; i < probs.length; i++) {
+      t = t + probs[i];
+      if (r <= t) return i;
+    }
+    throw new Error('invalid distribution');
+  };
+  utils.normalizeTransitionMatrix = function(matrix, idx1, idx2) {
+    // The next states this state will transition to.
+    var states = matrix[idx1];
+
+    // Convert to numbers.
+    states.forEach(function(d, i){ states[i] = +d; });
+
+    // We need to re-normalize the transitions for each state so that they
+    // add to one.
+
+    // `val` - The selected next state value.
+    var val = states[idx2];
+
+    if(val === 1) return states.forEach(function(d, i) {
+      if(i === idx2) return;
+      states[i] = 0;
+    });
+
+    // `r` - The remaining state probability.
+    var r = states.reduce(function(total, state, i){
+      return total + (i === idx2 ? 0 : state);
+    }, 0);
+
+    if(r === 0) r = states.length - 1, states.forEach(function(d, i) {
+      if(i === idx2) return;
+      states[i] = 1;
+    });
+
+    // normalize the remaining states and then multiply by the remaining
+    // probability, `( 1 - val)`.
+    states.forEach(function(d, i) {
+      if(i === idx2) return;
+      states[i] = states[i] / r * (1 - val);
+    });
+  };
+  return utils;
+});
+
+
+
+myApp.directive('stDiagram', function($compile) {
+  function link(scope, el, attr) {
+    el = d3.select(el[0]);
+    calcResize();
+    var svg = el.select('svg');
+    var alignG = svg.append('g');
+    var centerG = alignG.append('g');
+    var color = d3.scale.category10();
+    var links = centerG.append('g').attr('class', 'links').selectAll('paths');
+    var nodes = centerG.append('g').attr('class', 'nodes').selectAll('g');
+    var markers = svg.append('defs').selectAll('.linkMarker');
+    var currentStateG = centerG.append('g').attr('class', 'currentState')
+      .attr('transform', 'translate(' + [w / 2, h / 2] + ')')
+      .style('opacity', 0);
+    var w, h, r = 20;
+    var linkElements = {};
+    var force = d3.layout.force()
+      .linkDistance(function(d){ return w / 16 + (1 - d.value) * 200 * w / 1200 })
+      .charge(-4000);
+
+    currentStateG
+      .append('circle')
+      .attr('r', 10);
+
+    function calcResize() {
+      return w = el.node().clientWidth, h = el.node().clientHeight, w + h;
+    }
+    scope.$watch(calcResize, resize);
+    scope.$watch('center', resize, true);
+    scope.$watch('states', update, true);
+    scope.$watch('transitionMatrix', update, true);
+    scope.$watch('selectedTransition', update);
+
+    function resize() {
+      force.size([w, h]);
+      svg.attr({width: w, height: h});
+      var center = scope.center;
+      var cx = (center && angular.isDefined(center[0])) ? center[0] : 0.5;
+      var cy = (center && angular.isDefined(center[1])) ? center[1] : 0.5;
+      alignG.attr('transform', 'translate(' + [ w * cx, h * cy ] + ')');
+      centerG.attr('transform', 'translate(' + [ - w / 2, - h / 2] + ')');
+    }
+
+    function update() {
+      var linksData = [];
+      var enter;
+      scope.transitionMatrix.forEach(function(transitions, idx1) {
+        // idx1 - the index of the currently state
+        // transitions - an array of the next state probabilities were
+        // each index in the array coorisponds to a state in `scope.states`.
+        transitions.forEach(function(prob, idx2) {
+          if(prob === 0) return;
+          linksData.push({
+            source: scope.states[idx1],
+            target: scope.states[idx2],
+            value: +prob
+          });
+        });
+      });
+      nodes = nodes.data(scope.states);
+      enter = nodes.enter().append('g')
+        .attr('class', 'node')
+        .style('fill', function(d){ return color(d.index); })
+        .call(force.drag);
+      enter.append('circle')
+        .attr('r', r);
+      enter.append('text')
+        .attr('transform', 'translate(' + [0, 5] + ')')
+      nodes.exit().remove();
+
+      var linkKey = function(d) {
+        return (d.source && d.source.index) + ':'
+          + (d.target && d.target.index);
+      };
+      links = links.data(linksData, linkKey)
+      links.enter().append('path')
+        .attr('marker-end', function(d) {
+          if(!d.source || !d.target) debugger;
+          return 'url(#linkMarker-' + d.source.index + '-' + d.target.index + ')';
+        }).classed('link', true)
+        .style('stroke', function(d){ return color(d.source.index); })
+      links.exit().remove();
+      links.each(function(d, i) {
+        linkElements[d.source.index + ':' +d.target.index] = this;
+        var active = false, inactive = false;
+        if (scope.selectedTransition) {
+          active = scope.selectedTransition[0] === d.source.index
+            && scope.selectedTransition[1] === d.target.index;
+          inactive = !active;
+        }
+        d3.select(this)
+          .classed('active', active)
+          .classed('inactive', inactive);
+      });
+
+      markers = markers.data(linksData, linkKey);
+      markers.enter().append('marker')
+        .attr('class', 'linkMarker')
+        .attr('id', function(d) {
+          return 'linkMarker-' + d.source.index + '-' + d.target.index })
+        .attr('orient', 'auto')
+        .attr({markerWidth: 2, markerHeight: 4})
+        .attr({refX: 0, refY: 2})
+        .append('path')
+          .attr('d', 'M0,0 V4 L2,2 Z')
+          .style('fill', function(d){ return color(d.source.index); });
+      markers.exit().remove();
+
+      force.nodes(scope.states)
+        .links(linksData)
+        .start();
+    }
+
+    force.on('tick', function() {
+      var _r = r;
+      links
+        .style('stroke-width', function(d) {
+          return Math.sqrt(100 * d.value || 2); })
+        .attr('d', function(d) {
+          var r = _r;
+          var p1 = vector(d.source.x, d.source.y);
+          var p2 = vector(d.target.x, d.target.y);
+          var dir = p2.sub(p1);
+          var u = dir.unit();
+          if(d.source !== d.target) {
+            r *= 2;
+            var right = dir.rot(Math.PI /2).unit().scale(50);
+            var m = p1.add(u.scale(dir.len() / 2)).add(right);
+            u = p2.sub(m);
+            l = u.len();
+            u = u.unit();
+            p2 = m.add(u.scale(l - r));
+            u = p1.sub(m);
+            l = u.len();
+            u = u.unit();
+            p1 = m.add(u.scale(l - r));
+            return 'M' + p1.array() + 'S' + m.array() + ' ' + p2.array();
+          }else{
+            var s = 50, rot = Math.PI / 8;
+            r = r * 1.5;
+            p1 = p1.add(vector(1, -1).unit().scale(r - 10))
+            p2 = p2.add(vector(1, 1).unit().scale(r))
+            var c1 = p1.add(vector(1, 0).rot(-rot).unit().scale(s));
+            var c2 = p2.add(vector(1, 0).rot(rot).unit().scale(s - 10));
+            return 'M' + p1.array() + ' C' + c1.array() + ' '
+              + c2.array() + ' ' + p2.array();
+          }
+        });
+      nodes.attr('transform', function(d) {
+        return 'translate(' + [d.x, d.y] + ')';
+      }).select('text').text(function(d){ return d.label; })
+    });
+
+    var currentState = 0;
+    function loop() {
+      var i = currentState;
+      var nextStates = scope.transitionMatrix[i];
+      var nextState = -1;
+      var rand = Math.random();
+      var total = 0;
+      for(var j = 0; j < nextStates.length; j++) {
+        total += nextStates[j];
+        if(rand < total) {
+          nextState = j;
+          break;
+        }
+      }
+      var cur = scope.states[currentState];
+      var next = scope.states[nextState];
+      var path = linkElements[cur.index + ':' + next.index];
+      scope.$apply(function() {
+        scope.$emit('stateChange', next);
+      });
+      currentStateG
+        .transition().duration(+scope.duration * 0.25)
+        .style('opacity', 1)
+        .ease('cubic-in')
+        .attrTween('transform', function() {
+          var m = d3.transform(d3.select(this).attr('transform'));
+          var start = vector.apply(null, m.translate);
+          var scale = m.scale;
+          var s = d3.interpolateArray(scale, [1, 1]);
+          return function(t) {
+            var end = path.getPointAtLength(0);
+            end = vector(end.x, end.y);
+            var p = start.add(end.sub(start).scale(t));
+            return 'translate(' + p.array() + ') scale(' + s(t) + ')';
+          };
+        })
+        .transition().duration(+scope.duration * 0.5)
+        .ease('linear')
+        .attrTween('transform', function() {
+          var l = path.getTotalLength();
+          return function(t) {
+            var p = path.getPointAtLength(t * l);
+            return 'translate(' + [p.x, p.y] + ') scale(1)';
+          };
+        })
+        .transition().duration(+scope.duration * 0.25)
+        .ease('bounce-in')
+        .attrTween('transform', function() {
+          var m = d3.transform(d3.select(this).attr('transform'));
+          var translation = vector.apply(null, m.translate);
+          var scale = m.scale;
+          var s = d3.interpolateArray(scale, [2, 2]);
+          return function(t) {
+            var end = vector(next.x, next.y);
+            var p = translation.add(end.sub(translation).scale(t));
+            return 'translate(' + p.array() + ') scale(' + s(t) + ')';
+          };
+        })
+        .each('end', function() {
+          loop();
+        })
+      currentState = nextState;
+    }
+    setTimeout(loop, +scope.duration);
+  }
+  return {
+    link: link,
+    restrict: 'E',
+    replace: true,
+    scope: {
+      states: '=',
+      center: '=',
+      transitionMatrix: '=',
+      duration: '=',
+      selectedTransition: '=',
+      state: '=?'
+    },
+    template: ''
+      + '<div class="st-diagram">'
+        + '<svg>' + '</svg>'
+      + '</div>'
+  };
+});
+myApp.directive('cell', function() {
+  function link(scope, el, attr) {
+    scope.$parent.numCells++;
+    scope.$on('destroy', function() {
+      scope.$parent.numCells--;
+    });
+    scope.$parent.$watch('width + height', function(){
+      scope.width = scope.$parent.width / scope.$parent.numCells;
+      scope.height = scope.$parent.height;
+    });
+  }
+  return {
+    link: link,
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="cell"'
+      + "ng-style=\"{width: width + 'px', height: height + 'px'}\""
+      + 'ng-transclude>' + '</div>'
+  };
+});
+myApp.directive('row', function() {
+  function preLink(scope, el, attr) {
+    scope.numCells = 0;
+  }
+  function postLink(scope, el, attr) {
+    scope.$parent.numRows++;
+    scope.$on('destroy', function() {
+      scope.$parent.numRows--;
+    });
+    scope.$parent.$watch('width + height', function(){
+      scope.width = scope.$parent.width;
+      scope.height = scope.$parent.height / scope.$parent.numRows;
+    });
+  }
+  return {
+    link: { pre: preLink, post: postLink },
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="row"'
+      + "ng-style=\"{width: width + 'px', height: height + 'px'}\""
+      + 'ng-transclude>' + '</div>'
+  };
+});
+myApp.directive('grid', function() {
+  function preLink(scope, el, attr, controllers) {
+    scope.numRows = 0;
+  }
+  function postLink(scope, el, attr, controllers) {
+    var sel = d3.select(el[0]);
+    var w, h;
+    scope.name = 'victor';
+    scope.numberOfRows = 0;
+    scope.$watch(function() {
+      return w = sel.node().clientWidth, h = sel.node().clientHeight, w + h;
+    }, function() {
+      scope.width = w, scope.height = h;
+    });
+  }
+  return {
+    link: { pre: preLink, post: postLink },
+    restrict: 'E',
+    transclude: true,
+    replace: true,
+    template: ''
+      + '<div style="overflow:hidden" class="grid">'
+      + '<div ng-transclude></div>'
+      + '</div>'
+  };
+});
+
+myApp.directive('sequence', function() {
+  function link(scope, el, attr) {
+    var sel = d3.select(el[0]);
+    var w, h;
+    scope.$watch(function() {
+      return w = sel.node().clientWidth, h = sel.node().clientHeight, w + h;
+    }, function() {
+      scope.width = w, scope.height = h;
+      sel.style('line-height', h + 'px');
+    });
+    scope.$on('stateChange', function(e, state) {
+      sel.append('span').text(state.text).style('position', 'absolute')
+        .style('color', state.color)
+        .style('opacity', 0)
+        .transition()
+        .duration(2000)
+        .ease('cubic-in')
+        .style('opacity', 1)
+        .styleTween('left', function() { return d3.interpolate(attr.step1 || '90%', attr.step2 || '80%');})
+        .transition()
+        .duration(15000)
+        .ease('linear')
+        .styleTween('left', function() { return d3.interpolate(attr.step2 || '80%', '10%'); })
+        .remove();
+    });
+  }
+  return {
+    link: link, restrict: 'C'
+  };
+});
+
+myApp.controller('NoControlsCtrl', function($scope) {
+  $scope.states = [
+    { label: 'A', index: 0 },
+    { label: 'B', index: 1 }
+  ];
+
+  $scope.diagramCenter = [0.5, 0.5];
+  
+  $scope.speedRange = 2;
+  $scope.$watch('speedRange', function(speed) {
+    $scope.duration = 2000 / +speed;
+  });
+
+  $scope.transitionMatrix = [
+    [0.5, 0.5],
+    [0.5, 0.5]
+  ];
+});
+
+myApp.controller('TransitionMatrixCtrl', function($scope, utils, $window) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  $scope.diagramCenter = [0.5, 0.5];
+  $scope.selected = { transition: null };
+  $scope.color = d3.scale.category10();
+  $scope.isSelectedTransition = function(i, j) {
+    return !!$scope.selected.transition;
+  };
+  $scope.states = [
+    { label: 'A', index: 0 },
+    { label: 'B', index: 1 }
+  ];
+  $scope.speedRange = 2;
+  $scope.$watch('speedRange', function(speed) {
+    $scope.duration = 2000 / +speed;
+  });
+
+  $scope.transitionMatrix = [
+    [0.5, 0.5],
+    [0.5, 0.5]
+  ];
+
+  $scope.onChangeMatrixValue = function(idx1, idx2) {
+    utils.normalizeTransitionMatrix($scope.transitionMatrix, idx1, idx2);
+  };
+});
+
+
+myApp.controller('RandomSequenceCtrl', function($scope, utils, $window, $interval) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  var c = 0;
+  var s = ['R', 'S'];
+  var t = [ [0.9, 0.2], [0.2, 0.9] ];
+  var color = d3.scale.category10();
+  $interval(function() {
+    c = utils.sample(t[c]);
+    $scope.$broadcast('stateChange', { text: s[c], color: color(s[c]) });
+  }, 500);
+});
+
+myApp.controller('RandomSequenceCtrl50', function($scope, utils, $window, $interval) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  var s = ['R', 'S'];
+  var color = d3.scale.category10();
+  $interval(function() {
+    var c = Math.random() < 0.5 ? 1 : 0;
+    $scope.$broadcast('stateChange', { text: s[c], color: color(s[c]) });
+  }, 500);
+});
+
+
+myApp.controller('RandomSequenceMarkovCtrl', function($scope, utils, $window) {
+  angular.element($window).on('resize', function() { $scope.$apply(); });
+  $scope.diagramCenter = [0.8, 0.5];
+  $scope.state = { current: null };
+  $scope.selected = { transition: null };
+  var labels = ['R', 'S'];
+  var color = d3.scale.category10();
+  $scope.states = labels.map(function(label, i) {
+    return { text: label, label: label, index: i, color: color(label) };
+  });
+  $scope.transitionMatrix = [
+    [0.9, 0.1],
+    [0.1, 0.9]
+  ];
+  $scope.duration = 1000;
+  $scope.speedRange = 2;
+  $scope.$watch('speedRange', function(speed) {
+    $scope.duration = 2000 / +speed;
+  });
+});
+  </script>
+  <script src="../shared/public-footer.js"></script>
+  </body>
+</html>

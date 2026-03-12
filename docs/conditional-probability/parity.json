@@ -1,0 +1,70 @@
+[
+  {
+    "moduleId": "sample-space-geometry",
+    "originalBehavior": "The explainer renders two movable event shelves over a shared sample space and keeps their overlap geometry visible while values change.",
+    "localStatus": "The local route keeps the original waterfall geometry and overlap calculations unchanged, with only shell-level cleanup around the interactive.",
+    "sourceFiles": [
+      "index.html",
+      "style.css",
+      "../ev/scripts/common.js"
+    ],
+    "notes": [
+      "The page still uses the original custom waterfall directive and overlap math.",
+      "Relative EV asset paths were patched so the geometry renders under nested subpath hosting."
+    ],
+    "evidence": [
+      "The implementation plan treats sample-space visualization and overlap manipulation as parity-critical.",
+      "Shared smoke coverage updates the sliders and waits for the rendered waterfall and bars to stay in sync."
+    ]
+  },
+  {
+    "moduleId": "conditional-lens-and-perspective-toggle",
+    "originalBehavior": "Readers can switch perspective between the full world, P(B|A), and P(A|B), which changes the visible sample-space window and interpretation text together.",
+    "localStatus": "The local route keeps the original perspective buttons and domain zoom logic, including the conditional-lens transitions driven by the Angular watchers.",
+    "sourceFiles": [
+      "index.html"
+    ],
+    "notes": [
+      "The button labels and watcher logic were preserved exactly.",
+      "No footer or shell cleanup runs inside the interactive controls."
+    ],
+    "evidence": [
+      "The parity target explicitly calls out the conditioning lens and reverse-conditioning comparison flow.",
+      "Smoke coverage toggles the perspective buttons and checks the active state changes."
+    ]
+  },
+  {
+    "moduleId": "synchronized-probability-readouts",
+    "originalBehavior": "Slider changes update the displayed probabilities, conditional formulas, expected bars, and actual bars together.",
+    "localStatus": "The local route keeps the original Angular bindings for P(A), P(B), P(A n B), P(B|A), and P(A|B), plus both bar charts.",
+    "sourceFiles": [
+      "index.html"
+    ],
+    "notes": [
+      "The formula image and value text remain in their original positions.",
+      "The local shell removes only upstream share and promo copy."
+    ],
+    "evidence": [
+      "The current plan requires synchronized probability, table, and formula updates.",
+      "Shared smoke coverage changes the sliders and verifies the conditional values and chart elements update together."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, author bylines, social widgets, newsletter prompts, analytics, and comment embeds around the explainer.",
+    "localStatus": "The local route removes those public-shell additions and uses the shared footer as the only live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance remains in docs only.",
+      "The public back link now routes to the local replica hub."
+    ],
+    "evidence": [
+      "The public-surface audit now scans Setosa EV routes for creator names, upstream domains, and widget leaks.",
+      "The replica ships with local canonical metadata and a single footer reference link."
+    ]
+  }
+]

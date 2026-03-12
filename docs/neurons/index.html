@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neurons Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local neurons replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Neurotic Neurons</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/neurons/</code> keeps the original iframe-plus-canvas
+        structure and scene runtime, while trimming the public article and narration surfaces down to the
+        footer-only reference policy.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../neurons/">Open replica</a>
+        <a class="action-link secondary" href="https://ncase.me/neurons/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/ncase/neurons" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>1051f60b504740d1ca05e74b34679ad99e831b69</code><br>
+        License: <a href="../../neurons/LICENSE">CC0 1.0</a>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Vendor baseline came from the published <code>ncase/neurons</code> site tree. The local copy
+          keeps the top-level article shell, the iframe-hosted canvas runtime, narrator/state scripts,
+          captions controls, and the original media assets.
+        </p>
+        <ul class="plain-list">
+          <li>Live page verified against <code>https://ncase.me/neurons/</code> on 2026-03-10.</li>
+          <li>CC0 provenance stays in docs while the public route exposes only the shared reference footer.</li>
+          <li>The route preserves the original scene engine even though the public article copy and credits flow were pared back locally.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>neurons/index.html</code> keeps the article shell and iframe-based interactive layout.</li>
+          <li><code>neurons/interactive.html</code> loads the canvas runtime, controls, and captions UI.</li>
+          <li><code>neurons/scripts/core/</code> contains neurons, connections, narration, preloading, and controls.</li>
+          <li><code>neurons/scripts/scenes/</code> maps propagation, anxiety, therapy, story, and credits scenes.</li>
+          <li><code>neurons/assets/</code>, <code>neurons/social/</code>, and <code>neurons/styles/</code> remain vendored as runtime assets.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public article body was trimmed to neutral framing and subject-matter reading links, dropping creator, repo, translation, and share blocks.</li>
+          <li>The public captions bundle now ships English only, which removes translation credits and Patreon copy from shipped JS.</li>
+          <li>The intro narration skips the self-introduction segment, and the credits chapter now starts at the later neutral outro portion of the original audio file.</li>
+          <li>The credits scene no longer opens external sponsor or upstream-link cards, but the scene transition and finale timing remain intact.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Reproduction notes</h2>
+        <ul class="plain-list">
+          <li>Keep the iframe shell and canvas runtime split; the route depends on that separation for sizing and controls.</li>
+          <li>When trimming narration, prefer skipping upstream-only audio segments over rewriting scene order or interaction triggers.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code> after editing captions or narrator files.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

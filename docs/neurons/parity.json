@@ -1,0 +1,116 @@
+[
+  {
+    "moduleId": "article-and-iframe-shell",
+    "originalBehavior": "The route combines a top-level article page with an iframe-hosted interactive animation so descriptive reading and the canvas runtime stay on one page.",
+    "localStatus": "The split article-and-iframe structure is preserved, with the public article body reduced to neutral framing, educational links, and the shared footer.",
+    "sourceFiles": [
+      "index.html",
+      "interactive.html",
+      "styles/index.css",
+      "styles/interactive.css"
+    ],
+    "notes": [
+      "The interactive still loads through the original iframe path instead of being folded into a new app shell.",
+      "Public creator, translation, and share sections were removed from the article body without changing the iframe runtime."
+    ],
+    "evidence": [
+      "Local route walkthrough on 2026-03-10 confirmed the page still opens with the same iframe-first layout.",
+      "Source orientation in compilations/ncase-neurons.md treats the mixed article-plus-interactive shell as a parity-critical part of the experience."
+    ]
+  },
+  {
+    "moduleId": "propagation-and-triggering",
+    "originalBehavior": "Early scenes let users click neurons, watch signals propagate, and transition from a generic firing model into anxiety-linked trigger pathways.",
+    "localStatus": "Propagation and trigger-response scenes remain in the original runtime, with the intro narration now starting after the self-introduction voice segment.",
+    "sourceFiles": [
+      "scripts/scenes/Scene_Neurons.js",
+      "scripts/narrator/0_intro.js",
+      "scripts/core/Neuron.js",
+      "scripts/core/Interactive.js"
+    ],
+    "notes": [
+      "The click-to-fire interaction, scene interrupts, and progression into the anxiety map remain upstream-driven.",
+      "Skipping the first spoken self-intro lines avoids public creator callouts without altering the click-gated narrative flow."
+    ],
+    "evidence": [
+      "Smoke review targeted the first click interrupts and propagation sequence because they anchor the entire route.",
+      "Narrator state transitions still use the original INTRO, PROP_INTERRUPTABLE, and FEAR sequence."
+    ]
+  },
+  {
+    "moduleId": "hebbian-learning-builder",
+    "originalBehavior": "Users build new neural links by firing neurons together, visually strengthening or creating connections through a guided Hebbian-learning chapter.",
+    "localStatus": "The Hebbian chapter remains in the original scene and narrator runtime, with no local rewrite of the connection-building rules.",
+    "sourceFiles": [
+      "scripts/scenes/Scene_Neurons.js",
+      "scripts/narrator/1_hebb.js",
+      "scripts/core/Neuron.js",
+      "scripts/core/Connection.js"
+    ],
+    "notes": [
+      "Connection creation, highlighting, and progression checks still depend on the upstream neuron runtime.",
+      "The local port preserved the guided challenge structure instead of flattening it into a free sandbox immediately."
+    ],
+    "evidence": [
+      "Parity scope includes the Hebbian lesson because it is the route's first major teach-by-doing mechanic.",
+      "Source files still isolate Hebbian narration and scene logic as separate upstream modules."
+    ]
+  },
+  {
+    "moduleId": "anti-hebbian-unlearning",
+    "originalBehavior": "A later chapter weakens existing connections when users fire neurons out of sync, demonstrating anti-Hebbian unlearning through repeated interaction.",
+    "localStatus": "Anti-Hebbian behavior remains intact in the original scene and narrator stack, sharing the same neuron and connection engine as upstream.",
+    "sourceFiles": [
+      "scripts/narrator/2_antihebb.js",
+      "scripts/core/Neuron.js",
+      "scripts/core/Connection.js",
+      "scripts/scenes/Scene_Neurons.js"
+    ],
+    "notes": [
+      "The route still requires users to find valid outgoing connections and wait through weakening cycles.",
+      "Local cleanup avoided changing the anti-Hebbian state machine or chapter timing."
+    ],
+    "evidence": [
+      "Live smoke testing confirmed connection weakening and deletion still trigger the next scene transitions.",
+      "The upstream narrator and scene files continue to coordinate the anti-Hebbian lesson without host-page intervention."
+    ]
+  },
+  {
+    "moduleId": "therapy-rewiring-and-outro",
+    "originalBehavior": "The therapy section asks users to retrain an anxious network, then transitions into a calmer outro and optional extra scene once the rewiring task is complete.",
+    "localStatus": "Therapy, rewiring, and the outro remain in the original anxiety and story scenes, using the same win-condition and state transitions as upstream.",
+    "sourceFiles": [
+      "scripts/scenes/Scene_Anxiety.js",
+      "scripts/scenes/Scene_Story.js",
+      "scripts/narrator/3_therapy.js",
+      "scripts/narrator/5_extra.js"
+    ],
+    "notes": [
+      "Rewiring still depends on the same trigger-response graph rather than a simplified static retelling.",
+      "The local article copy mentions the sandbox and further reading, but the therapy progression itself is unchanged."
+    ],
+    "evidence": [
+      "Parity targets in compilations/ncase-neurons.md call out therapy and trigger-response scenes as core interactions.",
+      "Source files still split anxiety, therapy, and outro logic across the original scene modules."
+    ]
+  },
+  {
+    "moduleId": "credits-finale-and-caption-controls",
+    "originalBehavior": "The route ends with a credits sequence, keeps caption and playback controls available, and lets users replay or revisit the sandbox after the guided story.",
+    "localStatus": "Playback and captions controls remain intact, while the credits chapter now uses only the later neutral segment of the original audio and no longer opens external credit cards.",
+    "sourceFiles": [
+      "scripts/narrator/4_credits.js",
+      "scripts/scenes/Scene_Credits.js",
+      "scripts/core/Controls.js",
+      "scripts/captions.js"
+    ],
+    "notes": [
+      "The shipped captions bundle was reduced to English only so public JS no longer carries translation-credit or Patreon strings.",
+      "The finale scene still plays, but the clickable sponsor and upstream-link cards were removed from the public route."
+    ],
+    "evidence": [
+      "Smoke review targeted the end-of-route controls and credits progression because that is where most public-surface cleanup was required.",
+      "The recheck plan explicitly called out footer-only references and narration cleanup for the new explorable article route."
+    ]
+  }
+]

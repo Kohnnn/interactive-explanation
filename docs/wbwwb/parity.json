@@ -1,0 +1,100 @@
+[
+  {
+    "moduleId": "camera-capture-loop",
+    "originalBehavior": "Players move a camera over the crowd, snap photos of notable moments, and feed those moments back into the TV broadcast loop.",
+    "localStatus": "The original camera, director, and TV runtime remain vendored with no structural rewrite.",
+    "sourceFiles": [
+      "index.html",
+      "js/game/Camera.js",
+      "js/game/Director.js",
+      "js/game/TV.js",
+      "js/scenes/Scene_Game.js"
+    ],
+    "notes": [
+      "The route still depends on the upstream PIXI scene graph and camera callbacks instead of a DOM reimplementation.",
+      "Relative asset paths were preserved so the capture loop works under the GitHub Pages subpath."
+    ],
+    "evidence": [
+      "Local smoke testing on 2026-03-10 confirmed the stage loads and progresses into the camera-driven play scene.",
+      "Scene and game modules still wire photo callbacks through the original director and TV logic."
+    ]
+  },
+  {
+    "moduleId": "headline-amplification",
+    "originalBehavior": "Captured moments become TV chyron headlines that escalate the crowd's mood and push later scenes toward panic or violence.",
+    "localStatus": "Headline selection, chyron text, and escalation logic remain in the upstream scene scripts with an explicit local English text map.",
+    "sourceFiles": [
+      "js/textStrings.js",
+      "js/game/TV.js",
+      "js/scenes/Act_I.js",
+      "js/scenes/Act_II.js",
+      "js/scenes/Act_III.js"
+    ],
+    "notes": [
+      "The translation bundle was collapsed into one explicit runtime map so public JS no longer carries creator or supporter text.",
+      "The TV and chyron system still uses the original world-state checks and scene callbacks."
+    ],
+    "evidence": [
+      "Parity scope for this route depends on headline escalation because it is the entire thesis of the game.",
+      "Current source still drives those transitions through the upstream Act I to Act III scene stack."
+    ]
+  },
+  {
+    "moduleId": "crowd-feedback-escalation",
+    "originalBehavior": "Different peep behaviors react to headlines, fear, and violence so the crowd progressively spirals from curiosity into hostility.",
+    "localStatus": "Peep classes, watcher replacement, panic propagation, and violent escalation remain in the original runtime modules.",
+    "sourceFiles": [
+      "js/peeps/CrazyPeep.js",
+      "js/peeps/NervousPeep.js",
+      "js/peeps/SnobbyPeep.js",
+      "js/peeps/AngryPeep.js",
+      "js/peeps/MurderPeep.js",
+      "js/scenes/Act_II.js",
+      "js/scenes/Act_III.js"
+    ],
+    "notes": [
+      "The local cleanup avoided changing the escalation rules or the crowd replacement choreography.",
+      "Audio and screen-shake effects still come from the original scene and peep modules."
+    ],
+    "evidence": [
+      "The recheck plan explicitly called out crowd feedback escalation as a parity target for this port.",
+      "The vendored route still escalates through the same peep classes and Act III sequence."
+    ]
+  },
+  {
+    "moduleId": "peace-scene-and-ending",
+    "originalBehavior": "After the violent spiral, the route shifts into a quiet post-credits peace scene before landing on the final replay screen.",
+    "localStatus": "The peace scene remains upstream-driven, while the public credits and post-post-credits screens were replaced with neutral local equivalents.",
+    "sourceFiles": [
+      "js/scenes/Scene_Credits.js",
+      "js/scenes/Scene_Post_Credits.js",
+      "js/scenes/Scene_Post_Post_Credits.js"
+    ],
+    "notes": [
+      "The quiet candlelit scene and photo-triggered transition stay in place because they are part of the original emotional arc.",
+      "Creator, supporter, and external social-share surfaces were removed and replaced with a replay-only ending card."
+    ],
+    "evidence": [
+      "Local route review preserved the post-escalation calm scene and the replay button target.",
+      "The local ending scenes now keep only neutral closeout copy plus replay behavior."
+    ]
+  },
+  {
+    "moduleId": "local-shell-and-footer-policy",
+    "originalBehavior": "The published bundle lives as a standalone game shell with minimal outer chrome and no site-wide wrapper.",
+    "localStatus": "The local shell keeps that lightweight structure while adding canonical metadata and the shared reference footer at the document level only.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Public provenance is now limited to the shared footer reference link to the original live page.",
+      "The local shell leaves the canvas runtime untouched instead of trying to inject controls inside the PIXI stage."
+    ],
+    "evidence": [
+      "The route now loads under <code>/interactive-explanation/wbwwb/</code> with a shared footer and local canonical metadata.",
+      "Audit coverage passes with the route included in the public-surface sweep."
+    ]
+  }
+]

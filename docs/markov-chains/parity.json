@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "transition-graph-and-matrix-sync",
+    "originalBehavior": "The article introduces a two-state transition graph and a matching transition matrix whose rows stay normalized as readers move the controls.",
+    "localStatus": "The local route keeps the original D3 state-diagram and matrix controls, including the normalization helper that updates paired values automatically.",
+    "sourceFiles": [
+      "index.html",
+      "style.css",
+      "../ev/scripts/common.js"
+    ],
+    "notes": [
+      "The original transition-matrix controller and normalization logic remain intact.",
+      "The local shell changes only metadata, public copy, and route handoffs."
+    ],
+    "evidence": [
+      "The current plan treats split matrix controls and synchronized visuals as parity-critical behavior.",
+      "Shared smoke coverage updates a matrix slider and verifies the paired transition values respond."
+    ]
+  },
+  {
+    "moduleId": "sequence-and-autoplay-evolution",
+    "originalBehavior": "The explainer advances through one-step and repeated-step examples with animated state changes and sequence outputs that show the system's stickiness over time.",
+    "localStatus": "The local route preserves the original autoplay diagrams, random-sequence examples, and sequence emitters that animate the R and S states over time.",
+    "sourceFiles": [
+      "index.html"
+    ],
+    "notes": [
+      "The original controllers for the random and Markov-driven weather sequences were left untouched.",
+      "The chart containers and sequence nodes keep their original IDs and structure."
+    ],
+    "evidence": [
+      "The parity target explicitly calls out one-step state evolution and multi-step distribution updates.",
+      "Route smoke coverage waits for the main diagrams and sequence blocks to render before interaction checks."
+    ]
+  },
+  {
+    "moduleId": "embedded-playground-and-local-handoff",
+    "originalBehavior": "The published page embeds a standalone playground hosted on a separate upstream path and links to a fullscreen version on that same host.",
+    "localStatus": "The local route rewires both the iframe and the fullscreen handoff to the nested local <code>markov-chains/playground/playground.html</code> surface.",
+    "sourceFiles": [
+      "index.html",
+      "playground/playground.html",
+      "playground/common.js"
+    ],
+    "notes": [
+      "Example preset links still populate the playground by rewriting its query and hash state.",
+      "The nested playground keeps the editable matrix textarea and live diagram feedback."
+    ],
+    "evidence": [
+      "The implementation plan treats preset switching and local route handoff as parity-critical.",
+      "Shared smoke coverage checks that the iframe and fullscreen link stay on the local route."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page wrapped the article with EV branding, author callouts, share widgets, analytics, newsletter prompts, and comment embeds.",
+    "localStatus": "The local route removes those extras and uses the shared footer as the only public original-page reference surface on both the article and the reachable playground page.",
+    "sourceFiles": [
+      "index.html",
+      "playground/playground.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance remains in docs only.",
+      "Educational links such as the Markov and PageRank Wikipedia references remain in the article flow."
+    ],
+    "evidence": [
+      "The public-surface audit now scans Setosa EV routes for creator names, upstream domains, and widget leaks.",
+      "The local pages ship with canonical metadata and footer-only live-page references."
+    ]
+  }
+]
