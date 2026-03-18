@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exponentiation Replica Docs</title>
+  <meta
+    name="description"
+    content="Provenance, parity notes, and implementation references for the local exponentiation replica."
+  >
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Exponentiation</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/exponentiation/</code> keeps the published
+        Setosa EV inline Angular runtime, growth demos, and virus toy model while moving provenance
+        and source references out of the public page body.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../exponentiation/">Open replica</a>
+        <a class="action-link secondary" href="https://setosa.io/ev/exponentiation/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-14</code><br>
+        Source family: <code>setosa.io/ev</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published Exponentiation page HTML, stylesheet, and inline
+          script, then patches asset paths and public-shell chrome so the original EV runtime works
+          under the <code>/interactive-explanation/</code> subpath.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://setosa.io/ev/exponentiation/</code> on 2026-03-14.</li>
+          <li>The local copy removes EV branding, bylines, share widgets, newsletter prompts, analytics, and comments.</li>
+          <li>The controller logic and directives remain inline, matching the published page structure instead of being extracted for v1.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Shared EV layer</h2>
+        <ul class="plain-list">
+          <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> are reused unchanged.</li>
+          <li><code>../ev/styles/style.css</code> stays the common EV base layer.</li>
+          <li><code>exponentiation/style.css</code> now adds lightweight overflow handling for the wide growth and virus demos.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>exponentiation/index.html</code> owns local metadata, footer wiring, and the published inline Angular runtime.</li>
+          <li><code>exponentiation/style.css</code> keeps the original custom-element sizing and adds local scroll wrappers.</li>
+          <li><code>exponentiation/fb-thumb.png</code> is vendored for subpath-safe metadata and sharing previews.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows EV branding, author credits, share widgets, newsletter forms, analytics, or comments.</li>
+          <li>The published live page verified on 2026-03-14 does not ship a standalone comparison panel, so the replica keeps the same simple, linear, exponential, and virus sections instead of inventing one.</li>
+          <li>The live HTML also ships the linear demo rate control as a broken <code>&lt;selct&gt;</code> typo; the local route repairs that one tag so the intended rate dropdown works.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

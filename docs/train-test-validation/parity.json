@@ -1,0 +1,72 @@
+[
+  {
+    "moduleId": "split-narrative-scrollytelling-shell",
+    "originalBehavior": "The published article advances through introduction, split, train, model, validation, test, and summary scenes while a sticky chart shell stays synchronized with the active section.",
+    "localStatus": "The local route keeps the original section order, chart shell, feature buttons, and scroll-linked state changes from the published bundle.",
+    "sourceFiles": [
+      "index.html",
+      "js.6c47f979.js",
+      "main.67dee0d6.css"
+    ],
+    "notes": [
+      "The published section IDs and feature buttons were preserved so the compiled route logic can continue to target them directly.",
+      "Only shell metadata and provenance-facing copy were changed around the shipped runtime."
+    ],
+    "evidence": [
+      "The implementation plan treats scroll-linked transitions across the data-splitting narrative as parity-critical.",
+      "Shared smoke coverage scrolls through model, validation, and test scenes and verifies the chart shell remains synchronized."
+    ]
+  },
+  {
+    "moduleId": "draggable-training-set-and-boundary-feedback",
+    "originalBehavior": "Readers can drag examples in the training set and see the active logistic-regression boundary update in response to the changed training data.",
+    "localStatus": "The local route keeps the published draggable training examples, boundary line updates, and feature-selection buttons without rewriting the compiled interaction logic.",
+    "sourceFiles": [
+      "index.html",
+      "js.6c47f979.js"
+    ],
+    "notes": [
+      "The original chart group structure and training-item transforms were preserved.",
+      "The public page still exposes the published feature toggles for none, weight, fluffiness, and both."
+    ],
+    "evidence": [
+      "The implementation plan marks the draggable training scene and boundary updates as parity-critical.",
+      "Shared smoke coverage switches to the combined feature model, drags a training example, and verifies the active boundary changes."
+    ]
+  },
+  {
+    "moduleId": "validation-and-test-performance-tables",
+    "originalBehavior": "As the narrative reaches validation and test scenes, the route presents split-specific performance tables that stay synchronized with the active feature selection and model state.",
+    "localStatus": "The local route keeps the published validation and test table rendering, accuracy calculations, and scene-specific table growth from the compiled bundle.",
+    "sourceFiles": [
+      "js.6c47f979.js",
+      "main.67dee0d6.css"
+    ],
+    "notes": [
+      "The validation table appears first, then the test scene adds the final evaluation row while retaining the validation row.",
+      "The active feature button remains synchronized with the table labels and accuracy values."
+    ],
+    "evidence": [
+      "The implementation plan treats explicit train, validation, and test split transitions plus model-performance scenes as parity-critical.",
+      "Shared smoke coverage verifies the validation table shows the combined-feature result and that the test scene adds the final evaluation row."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, and upstream home or promo links inside the public shell.",
+    "localStatus": "The local route removes those public-shell references, localizes the nav and summary copy, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public route no longer includes hardcoded upstream share or promo surfaces in the body."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
+      "The route now exposes only the shared-footer link back to the live original page."
+    ]
+  }
+]

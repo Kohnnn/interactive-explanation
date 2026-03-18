@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logistic Regression Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local logistic-regression replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Logistic Regression</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/logistic-regression/</code> keeps the published
+        binary-classification walkthrough, sigmoid and threshold visuals, and linked probability
+        controls while limiting public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../logistic-regression/">Open replica</a>
+        <a class="action-link secondary" href="https://mlu-explain.github.io/logistic-regression/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/aws-samples/aws-mlu-explain" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-14</code><br>
+        Source family: <code>aws-samples/aws-mlu-explain</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published static <code>logistic-regression/</code> build from
+          the MLU family, then adapts only the shell and asset paths needed for local static
+          hosting under <code>/interactive-explanation/</code>.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://mlu-explain.github.io/logistic-regression/</code> on 2026-03-14.</li>
+          <li>The local copy keeps the compiled Svelte app, including the sigmoid chart, threshold scene, and linked probability readouts.</li>
+          <li>Branding, author bylines, analytics, and upstream-only promo surfaces were removed from the public route and preserved in docs instead.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>MLU adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Keep the compiled bundle structure unchanged so the original app still mounts directly into <code>document.body</code>.</li>
+          <li>Patch only the string-level metadata, logo link, and byline surfaces that leak upstream project references into the public page.</li>
+          <li>Reuse the vendored MLU and KaTeX fonts already shipped with <code>decision-tree/</code> through relative font-face paths.</li>
+          <li>Let the shared footer handle the single live original-page reference link.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>logistic-regression/index.html</code> owns the local metadata shell, footer hook, and relative asset paths.</li>
+          <li><code>logistic-regression/build/bundle.js</code> keeps the original scrollytelling scenes, sigmoid plot, threshold interactions, and probability outputs.</li>
+          <li><code>logistic-regression/build/bundle.css</code> preserves the sticky chart shell, slider styling, and component layout.</li>
+          <li><code>logistic-regression/assets/styles/font.css</code> now points to the already-vendored MLU and KaTeX font assets shipped with <code>decision-tree/</code>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows MLU branding, creator bylines, analytics, or upstream-only promo links outside the shared footer.</li>
+          <li>The logo and intro attribution were localized to the replica site while leaving the teaching flow and interactive scenes untouched.</li>
+          <li>The public page continues to use the original local chart and slider controls without adding new classification tooling beyond the published surface.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

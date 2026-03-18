@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "interactive-2d-pca-sandbox",
+    "originalBehavior": "Readers drag 2D sample points and the page immediately recomputes the PCA basis, projected coordinates, and axis overlays.",
+    "localStatus": "The local route keeps the original draggable nobs, PCA recomputation flow, and mirrored original-vs-PCA plots unchanged.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "../ev/scripts/common.js",
+      "../ev/scripts/numeric.js"
+    ],
+    "notes": [
+      "The original Angular scope still owns the sample list, derived PCA state, and redraw broadcasts.",
+      "Only asset paths and surrounding page chrome were patched for local hosting."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders the draggable 2D scatter alongside the PCA output plot.",
+      "Smoke coverage drags a point and waits for both the sample coordinates and projected PCA coordinates to change."
+    ]
+  },
+  {
+    "moduleId": "three-dimensional-pca-viewer",
+    "originalBehavior": "The 3D section initializes a Three.js point cloud, supports trackball rotation of the projected view, and exposes Show PCA and reset controls.",
+    "localStatus": "The local route keeps the original Three.js viewer, orthographic trackball controls, overlay canvas, and PCA/reset camera flows.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "../ev/scripts/three.js",
+      "../ev/scripts/OrthographicTrackballControls.js"
+    ],
+    "notes": [
+      "The page still uses the published shader snippets and projection overlay logic.",
+      "Shared EV scripts were extended locally with the route's required Three.js dependencies."
+    ],
+    "evidence": [
+      "The published page still includes Show PCA and reset buttons wired to the 3D directive.",
+      "Smoke coverage checks that the overlay canvas changes after Show PCA, after manual camera drag, and after reset."
+    ]
+  },
+  {
+    "moduleId": "uk-food-dataset-projections",
+    "originalBehavior": "The UK-food walkthrough shows the 17D source table plus fixed 1D and 2D PCA projections with country labels and axis labels.",
+    "localStatus": "The local route keeps the original DEFRA table and both projection views, including the fixed country labels and PC1/PC2 annotations.",
+    "sourceFiles": [
+      "index.html",
+      "script.js"
+    ],
+    "notes": [
+      "The live page exposes fixed defra-d1 and defra-d2 projections rather than a component-pair switcher, so the replica mirrors that exact surface.",
+      "Responsive wrapper styles were added around the wide table and plots without changing the plot math."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 renders a single DEFRA table, one 1D PCA plot, and one 2D PCA plot with no switching controls.",
+      "Smoke coverage verifies the table rectangles, four country labels, and both projection plots render together."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, author bylines, share widgets, newsletter prompts, analytics, and comments around the explainer.",
+    "localStatus": "The local route removes those public-shell elements and uses the shared footer as the only live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance stays in docs only.",
+      "The public menu now routes back to the local replica index."
+    ],
+    "evidence": [
+      "Public-surface auditing blocks creator names, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping pages.",
+      "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  }
+]

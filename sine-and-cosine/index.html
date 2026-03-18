@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sine and Cosine</title>
+    <meta
+      name="description"
+      content="Interactive trigonometry explainer with similar triangles, sine and cosine autoplay transforms, and linked polar-cartesian views."
+    >
+    <meta property="og:title" content="Sine and Cosine">
+    <meta
+      property="og:description"
+      content="Interactive trigonometry explainer with similar triangles, sine and cosine autoplay transforms, and linked polar-cartesian views."
+    >
+    <meta property="og:image" content="./fb-thumb.png">
+    <meta property="og:url" content="./">
+    <link rel="canonical" href="./">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../ev/scripts/d3.js" charset="utf-8"></script>
+    <script src="../ev/scripts/angular.js" charset="utf-8"></script>
+    <script src="../ev/scripts/common.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
+    <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ["script","noscript","style","textarea","code"]
+        }
+      });
+    </script>
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-reference-url="https://setosa.io/ev/sine-and-cosine/"
+    data-reference-text="Sine and Cosine"
+    data-footer-label="Original page"
+  >
+    <section class="menu"><a href="../">Back to replicas</a></section>
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Sine and Cosine</h1>
+        <h3 class="by-line">Interactive explainer</h3>
+      </div>
+    </section>
+    <section>
+      <p>
+        Sine and cosine, a.k.a. sin(θ) and cos(θ), are functions revealing the shape of a right
+        triangle. Looking out from a vertex with angle θ, sin(θ) is the ratio of the
+        <span class="direct" style="background-color: #2ecc71;">opposite</span> side to the
+        <span class="direct" style="background-color: #9b59b6;">hypotenuse</span>, while cos(θ) is
+        the ratio of the <span class="direct" style="background-color: #3498db;">adjacent</span>
+        side to the <span class="direct" style="background-color: #9b59b6;">hypotenuse</span>. No
+        matter the size of the triangle, the values of sin(θ) and cos(θ) are the same for a given
+        θ, as illustrated below.
+      </p>
+    </section>
+    <section>
+      <div class="viz-scroll">
+        <similar-triangles></similar-triangles>
+      </div>
+      <p>
+        Look at the left-most figure above, the unit circle. The triangle's hypotenuse has length
+        1, and so the ratio of its adjacent to its hypotenuse is cos(θ), while the ratio of its
+        opposite to its hypotenuse is sin(θ). By placing triangles at the point (0,0) of the x/y
+        plane, the functions sin(θ) and cos(θ) can be found by recording the values of x and y for
+        every θ. Below, click play to see this process unfold. Angles are in
+        <a href="http://en.wikipedia.org/wiki/Radian" target="_blank" rel="noreferrer">radians</a>.
+      </p>
+      <h1>Sin(θ)</h1>
+      <div class="viz-scroll">
+        <div ng-controller="SineAnimationCtrl">
+          <ev-play-button is-playing="opts.isPlaying" style="width:100%; height: 200px">
+            <trig-transform func="sine"></trig-transform>
+          </ev-play-button>
+        </div>
+      </div>
+    </section>
+    <section ng-controller="CosineAnimationCtrl">
+      <h1>Cos(θ)</h1>
+      <div class="viz-scroll">
+        <ev-play-button is-playing="opts.isPlaying" style="width:100%; height: 200px">
+          <trig-transform func="cosine"></trig-transform>
+        </ev-play-button>
+      </div>
+    </section>
+    <section class="math-copy">
+      <p>
+        Of course, computers and calculators don't actually draw circles to find sine and cosine.
+        Instead, they use approximations like the
+        <a href="http://en.wikipedia.org/wiki/Taylor_series" target="_blank" rel="noreferrer">Taylor series</a>:
+        \[\begin{aligned}
+          \sin{\theta} = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} -  \frac{\theta^7}{7!} \cdots \\
+          \cos{\theta} = 1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} -  \frac{\theta^6}{6!} \cdots
+        \end{aligned}\]
+      </p>
+    </section>
+    <section ng-controller="SineCosineLinkedCtrl">
+      <p>
+        Using sine and cosine, it's possible to describe any
+        (<span style="color: #3498db;">x</span>,<span style="color: #2ecc71;">y</span>) point as
+        an alternative, (<span style="color: #9b59b6;">r</span>,<span style="color: #c0392b;">θ</span>)
+        point, where <span style="color: #9b59b6;">r</span> is the length of a segment from (0,0)
+        to the point and <span style="color: #c0392b;">θ</span> is the angle between that segment
+        and the x-axis. This is called the
+        <a href="http://en.wikipedia.org/wiki/Polar_coordinate_system" target="_blank" rel="noreferrer">polar coordinate system</a>,
+        and the conversion rule is
+        (<span style="color: #3498db;">x</span>,<span style="color: #2ecc71;">y</span>) =
+        (<span style="color: #9b59b6;">r</span>cos(<span style="color: #c0392b;">θ</span>),
+        <span style="color: #9b59b6;">r</span>sin(<span style="color: #c0392b;">θ</span>)). Play
+        with the figures below to see real-time conversion between
+        <a href="http://en.wikipedia.org/wiki/Cartesian_coordinate_system" target="_blank" rel="noreferrer">Cartesian</a>
+        and polar coordinates.
+      </p>
+    </section>
+    <section>
+      <div class="viz-scroll">
+        <linked-coordinates></linked-coordinates>
+      </div>
+      <p class="local-note">
+        Replica notes and parity details live separately in
+        <a href="../docs/sine-and-cosine/">docs</a>.
+      </p>
+    </section>
+    <script src="../ev/scripts/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script>
+    <script src="./script.js"></script>
+    <script src="../shared/public-footer.js"></script>
+  </body>
+</html>

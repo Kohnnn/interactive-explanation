@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pi (π)</title>
+    <meta
+      name="description"
+      content="Interactive pi explainer with draggable circle geometry, circumference unwrapping, and synchronized ratio readouts."
+    >
+    <meta property="og:title" content="Pi (π)">
+    <meta
+      property="og:description"
+      content="Interactive pi explainer with draggable circle geometry, circumference unwrapping, and synchronized ratio readouts."
+    >
+    <meta property="og:image" content="./fb-thumb.png">
+    <meta property="og:url" content="./">
+    <link rel="canonical" href="./">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../ev/scripts/d3.js" charset="utf-8"></script>
+    <script src="../ev/scripts/angular.js" charset="utf-8"></script>
+    <script src="../ev/scripts/common.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
+    <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-reference-url="https://setosa.io/ev/pi/"
+    data-reference-text="Pi (π)"
+    data-footer-label="Original page"
+  >
+    <section class="menu"><a href="../">Back to replicas</a></section>
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Pi (π)</h1>
+        <h3 class="by-line">Interactive explainer</h3>
+      </div>
+    </section>
+    <section>
+      <p>
+        Before we define π, let's define a circle. A circle is a set of points that all lie an
+        equal distance away from a single center point. The distance from the center point is
+        called the <evt label="radius"></evt>, and the distance along the outer edge of the circle
+        is called the <evt label="circumference"></evt>. The <evt label="diameter"></evt> is the
+        thickness of the circle at its widest and is 2 times the <evt label="radius"></evt>.
+      </p>
+      <div class="viz-scroll">
+        <circle-demo></circle-demo>
+      </div>
+    </section>
+    <section>
+      <p>
+        π is the ratio of the <evt label="circumference"></evt> to the
+        <evt label="diameter"></evt>, and this ratio holds true for all circle sizes. Because of
+        this, π is a constant and equal to approximately 3.14. But don't get hung up on the idea
+        that the decimal number representation of 3.14 is somehow special or mystical. It could
+        have instead been defined as the <evt label="circumference"></evt> over the
+        <evt label="radius"></evt>, and in fact this might have made more sense. See
+        <a href="http://www.tauday.com/" target="_blank" rel="noreferrer">Tau Day</a>.
+      </p>
+    </section>
+    <section>
+      <div class="viz-scroll">
+        <pi-demo></pi-demo>
+      </div>
+      <div class="control-strip">
+        <label>
+          <span>wrap</span>
+          <input type="range" min="0" max="1" step="0.01" ng-model="opts.fold">
+        </label>
+        <label>
+          <span>size</span>
+          <input type="range" min="0.5" max="2" step="0.1" ng-model="opts.diameter">
+        </label>
+      </div>
+      <p class="local-note">
+        Replica notes and parity details live separately in
+        <a href="../docs/pi/">docs</a>.
+      </p>
+    </section>
+    <script src="./script.js"></script>
+    <script src="../shared/public-footer.js"></script>
+  </body>
+</html>

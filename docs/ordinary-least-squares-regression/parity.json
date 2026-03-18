@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "main-scatter-and-fitted-line-scene",
+    "originalBehavior": "The published route mounts a scatterplot with a fitted line and keeps the coefficient readout synchronized as sample points move.",
+    "localStatus": "The local route keeps the original scatterplot, fitted line, draggable points, and coefficient panel from the published bundle with only shell-level cleanup around it.",
+    "sourceFiles": [
+      "index.html",
+      "_bundle.js",
+      "../ev/_build/js/common-shared.js"
+    ],
+    "notes": [
+      "The published React runtime still owns point dragging, beta recomputation, and chart redraws.",
+      "Only page chrome, metadata, and local asset paths were patched for nested hosting."
+    ],
+    "evidence": [
+      "The implementation plan treats the first-load scatter-plus-line scene and synchronized coefficient readout as parity-critical.",
+      "Shared smoke coverage verifies the chart mounts and that dragging a sample point changes the active line geometry and beta values."
+    ]
+  },
+  {
+    "moduleId": "squared-error-and-line-control-sandbox",
+    "originalBehavior": "Readers can adjust a candidate regression line and compare the resulting squared-error geometry and loss value as the line changes.",
+    "localStatus": "The local route keeps the original line controls, squared-error rendering, and loss-surface interactions without rewriting the published bundle.",
+    "sourceFiles": [
+      "_bundle.js",
+      "style.css",
+      "../ev/_build/js/common-shared.js"
+    ],
+    "notes": [
+      "The candidate-line interaction still uses the published draggable regression controls and dial components.",
+      "The squared-error scene remains mounted by the original React components rather than a local recreation."
+    ],
+    "evidence": [
+      "The implementation plan marks immediate line updates plus residual or loss synchronization as parity-critical.",
+      "Shared smoke coverage changes a regression control and verifies both the line geometry and error state update."
+    ]
+  },
+  {
+    "moduleId": "best-fit-solver-and-parameter-panels",
+    "originalBehavior": "The published explainer exposes beta or parameter panels plus additional OLS views, including a 3D loss-surface walkthrough tied to the same regression concepts.",
+    "localStatus": "The local route keeps the original parameter panels and extended OLS walkthrough modules, including the loss-surface scenes driven by the published bundle.",
+    "sourceFiles": [
+      "_bundle.js",
+      "../ev/_build/js/common-shared.js"
+    ],
+    "notes": [
+      "The page still ships the published secondary explanatory modules rather than flattening them into static prose.",
+      "The local copy vendors the shared EV runtime in the same relative path the page expects."
+    ],
+    "evidence": [
+      "The implementation plan treats solve or reset behavior, objective readouts, and formula or coefficient panels as parity-critical where present.",
+      "Shared smoke coverage verifies the route stays runtime-stable while the OLS modules update."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-asset-handoff",
+    "originalBehavior": "The published page included EV branding, author bylines, share widgets, newsletter prompts, analytics, comments, and root-relative asset references into the live Setosa tree.",
+    "localStatus": "The local route removes those public-shell surfaces, uses the shared footer as the only live original-page reference surface, and resolves both the page bundle and shared EV runtime locally.",
+    "sourceFiles": [
+      "index.html",
+      "_bundle.js",
+      "../ev/_build/js/common-shared.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance remains in docs only.",
+      "The public page now loads the tutorial GIFs and shared EV runtime from local relative paths."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping pages.",
+      "The implementation plan treats the local handoff for both _bundle.js and common-shared.js as parity-critical."
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+.full-width-visualization,
+variance-demo {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+.full-width-visualization svg text {
+  font-family: 'helvetica Neue';
+}
+variance-demo {
+  height: 400px;
+}
+.viz-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.viz-scroll image-as-matrix,
+.viz-scroll kernel-matrix,
+.viz-scroll kernel-inspect,
+.viz-scroll kernel-playground {
+  min-width: 1000px;
+}
+.control-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+.control-strip select {
+  min-width: 180px;
+}
+.local-note {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}

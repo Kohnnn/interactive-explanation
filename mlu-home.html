@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>MLU-Explain</title>
+    <meta name="description" content="MLU-Explain" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="MLU-Explain" />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/mluexplain-homepage-ogimage.png"
+    />
+    <meta
+      property="og:description"
+      content="Visual explanations of core machine learning concepts."
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <link rel="icon" href="./assets/mlu_robot.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <section id="intro">
+        <div class="wrapper">
+          <div id="intro-container">
+            <div id="intro-text">
+              <span class="intro-icon-container">
+                <span class="icon">
+                  <svg
+                    width="60"
+                    height="100"
+                    viewBox="0 0 300 180"
+                    fill="none"
+                    xmlns="https://www.w3.org/2000/svg"
+                    id="mlu-icon"
+                  >
+                    <g id="mlu_robot 1" clip-path="url(#clip0)">
+                      <g>
+                        <g id="eyes">
+                          <path
+                            id="Vector"
+                            d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
+                            fill="#232F3E"
+                          ></path>
+                          <path
+                            id="Vector_2"
+                            d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
+                            fill="#232F3E"
+                          ></path>
+                        </g>
+                        <path
+                          id="Vector_3"
+                          d="M163.586
+                    159.402H173.609V122.641H163.586V159.402Z"
+                          fill="#232F3E"
+                        ></path>
+                        <path
+                          id="Vector_4"
+                          d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
+                          fill="#232F3E"
+                        ></path>
+                        <g id="Group">
+                          <path
+                            id="Vector_5"
+                            d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
+                            fill="#232F3E"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0">
+                        <rect
+                          width="233.97"
+                          height="215.58"
+                          fill="white"
+                        ></rect>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+                <span class="text"
+                  ><h1>MLU-EXPL<span id="ai">AI</span>N</h1></span
+                >
+              </span>
+              <h3 class="subtitle">
+                Visual explanations of core machine learning concepts
+              </h3>
+              <br />
+              <p>
+                <a
+                  href="https://aws.amazon.com/machine-learning/mlu/"
+                  id="mlu-link"
+                  >Machine Learning University (<span id="mlu-acronym">MLU</span
+                  >)</a
+                >
+                is an education initiative from Amazon designed to teach machine
+                learning theory and practical application.
+                <br /><br />
+                As part of that goal,
+                <span class="havy">MLU-Explain</span> exists to teach important
+                machine learning concepts through visual essays in a fun,
+                informative, and accessible manner.
+                <br />
+              </p>
+            </div>
+            <div id="image-container">
+              <img
+                id="intro-image"
+                src="./assets/mlu-drawing-transparent.png"
+                alt="MLU Robot Deriving Beta Coefficient For Least Squares on Whiteboard"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="articles-section">
+        <p class="section-segue">Explore Published Articles...</p>
+        <br />
+        <br />
+        <div class="articles-container">
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./neural-networks/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-neural-networks.jpg"
+                alt="Neural Networks Article Image (A computational graph, with two input nodes, multiple nodes in some hidden layers, and two output nodes)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Neural Networks</h2>
+              <p class="article-description">
+                Learn about neural networks, the backbone of many popular
+                algorithms today, such as ChatGPT, Stable-Diffusion, and many
+                others
+              </p>
+              <button class="content-button">
+                <a href="./neural-networks/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./equality-of-odds/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-equality-of-odds.jpg"
+                alt="Equality of Odds Article Image (A Scatterplot on the left with a decision boundary corresponding to a stacked column chart on the right)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Equality of Odds</h2>
+              <p class="article-description">
+                Explore equality of odds, a metric used to quantify unfairness
+                and remove bias from machine learning models.
+              </p>
+              <button class="content-button">
+                <a href="./equality-of-odds/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./logistic-regression/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-logistic-regression.jpg"
+                alt="Logistic Regression Article Image (A Scatterplot showing points for Sunny and Rainy days plotted by Temperature in degrees Fahrenheit and the predicted probability as a sigmoid curve)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Logistic Regression</h2>
+              <p class="article-description">
+                Learn how logistic regression can be used for binary
+                classification in machine learning through an interactive
+                example.
+              </p>
+              <button class="content-button">
+                <a href="./logistic-regression/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./linear-regression/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-linear-regression.jpg"
+                alt="Linear Regression Article Image (A Scatterplot showing orange points and a black line on the right. On the left math equations for The Normal Equation)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Linear Regression</h2>
+              <p class="article-description">
+                Interactively learn about linear regression models as they're
+                commonly used in the context of machine learning.
+              </p>
+              <button class="content-button">
+                <a href="./linear-regression/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./reinforcement-learning/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-reinforcement-learning.jpg"
+                alt="Reinforcement Learning Article Image (Grid with arrows, bananas, a robot, and a cactus)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Reinforcement Learning</h2>
+              <p class="article-description">
+                Learn about Reinforcement Learning (RL) and the
+                exploration-exploitation dilemma with this interactive article.
+              </p>
+              <button class="content-button">
+                <a href="./reinforcement-learning/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./roc-auc/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-roc-auc.jpg"
+                alt="ROC & AUC Article Image (A Scatterplot showing three ROC curves: one labeled Perfect Classifier (line hugging left and top of plot), one labeled Our Classifier (bumpy line), and one labeled Random Classifier (diagonal line))."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">ROC & AUC</h2>
+              <p class="article-description">
+                A visual explanation of the Receiver Operating Characteristic
+                Curve (ROC) curve, how it works with a live interactive example,
+                and how it relates to Area Under The Curve (AUC).
+              </p>
+              <button class="content-button">
+                <a href="./roc-auc/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./cross-validation/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-cross-validation.jpg"
+                alt="Cross-Validation Article Image."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Cross-Validation</h2>
+              <p class="article-description">
+                K-Fold Cross-Validation: a resampling technique to help improve
+                estimates of test error rates compared to a simple validation
+                set.
+              </p>
+              <button class="content-button">
+                <a href="./cross-validation/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./train-test-validation/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-train-test-validation.jpg"
+                alt="Train, Test, Validation Article Image (Groups of cats/dogs in circles)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Train, Test, And Validation Sets</h2>
+              <p class="article-description">
+                Learn why it is best practice to split your data into training,
+                testing, and validation sets, and explore the utility of each
+                with a live machine learning model.
+              </p>
+              <button class="content-button">
+                <a href="./train-test-validation/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./precision-recall/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-precision-recall.jpg"
+                alt="Precision Recall Article Image (Beeswarm Plot)."
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Precision & Recall</h2>
+              <p class="article-description">
+                When it comes to evaluating classification models, accuracy is
+                often a poor metric. This article covers two common
+                alternatives, Precision and Recall, as well as the F1-score and
+                Confusion Matrices.
+              </p>
+              <button class="content-button">
+                <a href="./precision-recall/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./random-forest/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-random-forest.jpg"
+                alt="Decision Tree Title Image"
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Random Forest</h2>
+              <p class="article-description">
+                Learn how the majority vote and well-placed randomness can
+                extend the decision tree model to one of machine learning's most
+                widely-used algorithms, the Random Forest.
+              </p>
+              <button class="content-button">
+                <a href="./random-forest/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./decision-tree/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-decision-tree.jpg"
+                alt="Decision Tree Title Image"
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">Decision Trees</h2>
+              <p class="article-description">
+                Explore one of machine learning's most popular supervised
+                algorithms: the Decision Tree. Learn how the tree makes its
+                splits, the concepts of Entropy and Information Gain, and why
+                going too deep is problematic.
+              </p>
+              <button class="content-button">
+                <a href="./decision-tree/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./bias-variance/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-bias-variance.jpg"
+                alt="Bias Variance Title Image"
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">The Bias Variance Tradeoff</h2>
+              <p class="article-description">
+                Understand the tradeoff between under- and over-fitting models,
+                how it relates to bias and variance, and explore interactive
+                examples related to LOESS and KNN.
+              </p>
+              <button class="content-button">
+                <a href="./bias-variance/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./double-descent/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-double-descent.jpg"
+                alt="Double Descent Title Image"
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">
+                Double Descent: A Visual Introduction
+              </h2>
+              <p class="article-description">
+                Meet the double descent phenomenon in modern machine learning:
+                what it is, how it relates to the bias-variance tradeoff, the
+                importance of the interpolation regime, and a theory of what
+                lies behind.
+              </p>
+              <button class="content-button">
+                <a href="./double-descent/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./double-descent2/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-double-descent2.jpg"
+                alt="Double Descent 2 Title Image"
+              />
+            </div>
+            <div class="content">
+              <h2 class="article-title">
+                Double Descent: A Mathematical Explanation
+              </h2>
+              <p class="article-description">
+                Deepen your understanding of the double descent phenomenon. The
+                article builds on the cubic spline example introduced in
+                <span class="bold">Double Descent 1</span>, describing in
+                mathematical detail what is happening.
+              </p>
+              <button class="content-button">
+                <a href="./double-descent2/">Dive In</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+        </div>
+      </section>
+    </main>
+    <br /><br />
+    <br /><br />
+
+    <script src="js/rough-notation.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

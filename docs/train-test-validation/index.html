@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Train, Test, and Validation Sets Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local train-test-validation replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Train, Test, and Validation Sets</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/train-test-validation/</code> keeps the
+        published split narrative, draggable training examples, decision-boundary updates, and
+        validation-versus-test performance tables while limiting public provenance to the shared
+        footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../train-test-validation/">Open replica</a>
+        <a class="action-link secondary" href="https://mlu-explain.github.io/train-test-validation/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/aws-samples/aws-mlu-explain" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-17</code><br>
+        Source family: <code>aws-samples/aws-mlu-explain</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published static <code>train-test-validation/</code> build
+          from the MLU family, then patches shell metadata, local paths, and public-facing
+          provenance surfaces for nested static hosting.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://mlu-explain.github.io/train-test-validation/</code> on 2026-03-17.</li>
+          <li>The local copy keeps the published chart shell, draggable animal instances, split transitions, and performance-table rendering intact.</li>
+          <li>Creator names, MLU branding, analytics, and upstream promo links were removed from the public route and retained in docs only.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>MLU adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Keep the published compiled bundles in place so the original D3 interactions still bind to the shipped chart and table containers.</li>
+          <li>Patch only metadata, nav branding, intro attribution, and summary copy that leak upstream provenance into the public body.</li>
+          <li>Preserve the training, validation, and test section IDs plus button structure so the published scroll and feature-selection logic still works.</li>
+          <li>Let the shared footer provide the only live original-page reference link.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>train-test-validation/index.html</code> owns the local metadata shell, cleaned nav and summary copy, footer hook, and relative asset paths.</li>
+          <li><code>train-test-validation/js.6c47f979.js</code> keeps the published chart construction, draggable-example logic, boundary updates, and validation or test table rendering.</li>
+          <li><code>train-test-validation/roughAnnotations.51d9685b.js</code> preserves the original annotation overlays used across the split narrative.</li>
+          <li><code>train-test-validation/main.67dee0d6.css</code> preserves the sticky layout, chart styling, mobile variants, and route typography.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows MLU branding, creator bylines, analytics, or upstream promo links outside the shared footer.</li>
+          <li>The nav, intro, and summary copy were localized to the replica site while leaving the split walkthrough and interactions unchanged.</li>
+          <li>The public surface keeps the original logistic-regression explainer link and icon credit, but provenance and source mapping stay in docs only.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

@@ -16,6 +16,7 @@ const ignoredPathFragments = [
   `${path.sep}js${path.sep}lib${path.sep}`,
   `${path.sep}angular.js`,
   `${path.sep}angular.min.js`,
+  `${path.sep}mathjax${path.sep}`,
 ];
 
 const checks = [

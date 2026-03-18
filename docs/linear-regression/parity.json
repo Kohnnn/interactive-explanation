@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "scrollytelling-fit-line-shell",
+    "originalBehavior": "The published article opens with a scroll-linked introduction where the chart state changes as readers move through staged explanations of lines, residuals, and prediction behavior.",
+    "localStatus": "The local route keeps the original sticky chart shell, data-index sections, and scroll observer so the compiled scene transitions still drive the visuals in order.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The route still mounts from the original compiled bundle into an otherwise empty document body.",
+      "Only metadata and public-shell branding were patched around the app."
+    ],
+    "evidence": [
+      "The implementation plan treats scrollytelling step-to-visual transitions as parity-critical.",
+      "Shared smoke coverage scrolls into later steps and waits for the residual overlay state to appear."
+    ]
+  },
+  {
+    "moduleId": "residual-and-loss-views",
+    "originalBehavior": "Readers can inspect a fitted line against the scatter plot, see residual markers update, and move into MSE and related loss explanations that recalculate with coefficient changes.",
+    "localStatus": "The local route keeps the original scatter, residual rectangles and lines, MSE formula updates, and linked coefficient-driven redraws from the compiled app.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The original component IDs and slider wiring were preserved so residual and loss views still recompute from the same stores.",
+      "KaTeX rendering continues through the vendored MLU math stack."
+    ],
+    "evidence": [
+      "The current plan calls residual or loss visualization parity-critical.",
+      "Shared smoke coverage changes the bias and weight sliders and verifies the rendered MSE readout changes."
+    ]
+  },
+  {
+    "moduleId": "coefficient-controls-and-prediction-probes",
+    "originalBehavior": "The article exposes coefficient sliders, tabbed scenes, and prediction or interpretation views that stay synchronized with the currently selected model state.",
+    "localStatus": "The local route keeps the original manual coefficient controls, tabbed regression scenes, and prediction-linked chart updates without rewriting the compiled logic.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The coefficient sliders still update the same Svelte stores used by the charts and equations.",
+      "The bundled resources and references remain where the teaching flow expects them."
+    ],
+    "evidence": [
+      "The plan explicitly calls out formula and coefficient synchronization plus pointer-based prediction behavior.",
+      "Shared smoke coverage moves at least one coefficient slider and waits for the equation text and chart output to change together."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, repo and promo links, and upstream route handoffs inside the public body.",
+    "localStatus": "The local route removes those public-shell references, localizes the remaining navigation, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public close keeps educational references but no longer advertises the original project surface."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, and promo links in shipped route code.",
+      "The route now advertises only the shared footer link back to the live original page."
+    ]
+  }
+]

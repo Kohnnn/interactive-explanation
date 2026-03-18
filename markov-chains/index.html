@@ -145,10 +145,10 @@
         <div class="sequence" step-1="70%" step-2="60%"></div>
         
       </div><p>In the hands of metereologists, ecologists, computer scientists, financial engineers and other people who need to model big phenomena, Markov chains can get to be quite large and powerful. For example, the algorithm Google uses to determine the order of search results, called <a href="https://en.wikipedia.org/wiki/PageRank">PageRank</a>, is a type of Markov chain.</p>
-<iframe scrolling="no" class="playground" style="display: block; float: left; border: none" width="100%" height="500" src="./playground/playground.html"></iframe>
+<iframe scrolling="no" class="playground" style="display: block; float: left; border: none" width="100%" height="500" src="./playground/"></iframe>
 
 <p>Above, we&#39;ve included a Markov chain &quot;playground&quot;, where you can make your own Markov chains by messing around with a transition matrix. Here&#39;s a few to work from as an example: <a href="javascript:update_playground('long')">ex1</a>, <a href="javascript:update_playground('large')">ex2</a>, <a href="javascript:update_playground('three')">ex3</a> or generate one <a href="javascript:update_playground('random')">randomly</a>. The transition matrix text will turn red if the provided matrix isn&#39;t a valid transition matrix. <em>The rows of the transition matrix must total to 1.</em> There also has to be the same number of rows as columns.</p>
-<p>You can also open the local fullscreen playground at <a href="./playground/playground.html">markov-chains/playground/playground.html</a>.</p>
+<p>You can also open the local fullscreen playground at <a href="./playground/">markov-chains/playground/</a>.</p>
 <script>
 function randomMatrix(){
   var n = Math.floor(Math.random() * 9) + 1;
@@ -183,7 +183,7 @@ function update_playground(type){
   else if(type === 'random')
     matrix = randomMatrix();
   var hash = { tm: matrix };
-  d3.select('.playground').attr('src', './playground/playground.html?'
+  d3.select('.playground').attr('src', './playground/?'
     + (+new Date()) + '#' + encodeURIComponent(JSON.stringify(hash, null, 2)));
 }
 update_playground('three');

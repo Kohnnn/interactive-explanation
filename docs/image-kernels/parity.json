@@ -1,0 +1,107 @@
+[
+  {
+    "moduleId": "image-as-matrix-intro",
+    "originalBehavior": "The opening scene renders a face image as both a grayscale matrix and a magnified pixel grid, with a shared cursor highlighting the selected pixel in every view.",
+    "localStatus": "The local route keeps the published MainCtrl image load plus the image-as-matrix directive, including the synchronized enlarged views and hover-selected pixel state.",
+    "sourceFiles": [
+      "index.html",
+      "../../image-kernels/script.js",
+      "../../image-kernels/resources/lxe.jpg"
+    ],
+    "notes": [
+      "The vendored intro image now loads from ./resources/lxe.jpg for subpath-safe hosting.",
+      "The public route only adds horizontal-scroll wrappers on narrow screens."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still loads a local face image and renders the image-as-matrix custom element first.",
+      "Smoke coverage waits for the intro canvas and checks the shared selected-pixel state updates."
+    ]
+  },
+  {
+    "moduleId": "preset-kernel-matrix-sync",
+    "originalBehavior": "The preset selector updates the named kernel, the displayed 3x3 matrix values, and the downstream filtered output together.",
+    "localStatus": "The local route keeps the published selectedKernel watcher, preset lists, and kernel-matrix directive so the visible matrix stays synchronized with the active preset.",
+    "sourceFiles": [
+      "index.html",
+      "../../image-kernels/script.js"
+    ],
+    "notes": [
+      "The first selector still excludes the custom kernel, matching the published selectableKernels split.",
+      "No additional presets were added locally."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders a preset select above kernel-matrix.",
+      "Smoke coverage changes the selected preset locally and checks the scope kernel values and visible matrix text respond."
+    ]
+  },
+  {
+    "moduleId": "hover-driven-neighborhood-inspector",
+    "originalBehavior": "The inspector scene updates the highlighted 3x3 neighborhood, kernel arithmetic, and output pixel preview as readers hover over the input or output image.",
+    "localStatus": "The local route keeps the published kernel-inspect directive, including shared hover state, arithmetic labels, and the output block readout.",
+    "sourceFiles": [
+      "index.html",
+      "../../image-kernels/script.js"
+    ],
+    "notes": [
+      "The inspector still uses the shared d1SelPixel state from MainCtrl.",
+      "The duplicate preset selector inside the inspector is preserved."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still places a kernel-inspect surface between the preset matrix and the playground.",
+      "Smoke coverage hovers the local inspector and checks the selected-pixel state plus arithmetic output change."
+    ]
+  },
+  {
+    "moduleId": "boundary-handling-breakdown",
+    "originalBehavior": "The inspector treats out-of-bounds neighbors as black along the image edges, showing question marks in the arithmetic panel and visibly different border output.",
+    "localStatus": "The local route keeps the published boundary behavior, including black edge fill, missing-neighbor placeholders, and zeroed outer pixels in the filtered image data.",
+    "sourceFiles": [
+      "../../image-kernels/script.js"
+    ],
+    "notes": [
+      "This behavior is part of the original teaching surface, not a local hosting fix.",
+      "The docs call it out because the border rule is easy to miss when porting the demo."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still explains the edge-handling rule directly in the article copy.",
+      "Smoke coverage moves the local inspector to a border pixel and checks the arithmetic panel shows missing-neighbor placeholders."
+    ]
+  },
+  {
+    "moduleId": "custom-kernel-playground",
+    "originalBehavior": "The playground updates the output image when readers switch presets, edit kernel cells, upload an image, or use live video when supported.",
+    "localStatus": "The local route keeps the published kernel-playground directive, custom-kernel editor, upload input, and optional live-video button, with one local path repair for the default image.",
+    "sourceFiles": [
+      "index.html",
+      "../../image-kernels/script.js",
+      "../../image-kernels/resources/library.jpg",
+      "../../ev/scripts/exif.js"
+    ],
+    "notes": [
+      "The default playground image now loads from ./resources/library.jpg for subpath-safe hosting.",
+      "EXIF is vendored locally so orientation handling keeps working for uploaded images."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still includes the editable 3x3 grid, preset selector, file input, and conditional live-video path.",
+      "Smoke coverage edits a local kernel cell and checks the selectedKernel flips to custom and the rendered output changes."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, creator links, share widgets, newsletter prompts, analytics, and comments around the explainer.",
+    "localStatus": "The local route removes those public-shell surfaces and uses the shared footer as the only original-page reference link.",
+    "sourceFiles": [
+      "index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance stays in docs only.",
+      "The public menu now routes back to the local replica index."
+    ],
+    "evidence": [
+      "Public-surface auditing blocks creator promo, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping routes.",
+      "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  }
+]

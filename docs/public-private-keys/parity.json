@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "keypair-generation-and-cookie-backed-loading",
+    "originalBehavior": "The published keys page generates a secp256k1 keypair, lets readers randomize or edit the private key, derives the public key, and persists the active keys in cookies for the rest of the demo.",
+    "localStatus": "The local root keeps the published keypair generation flow, editable private key field, derived public key, and cookie-backed persistence under the flattened top-level slug.",
+    "sourceFiles": [
+      "../../public-private-keys/index.html",
+      "../../public-private-keys/keys/index.html",
+      "../../public-private-keys/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "The local root intentionally maps to the upstream keys scene so the interactive demo is the public entry point.",
+      "The vendored elliptic, BigInteger, Buffer, and cookie libraries remain in the route-local asset tree."
+    ],
+    "evidence": [
+      "Implementation planning treated keypair generation or loading as parity-critical behavior.",
+      "Shared smoke coverage verifies the keys page initializes, then uses the Random control to change the active private and public keys locally."
+    ]
+  },
+  {
+    "moduleId": "signature-creation-and-verification",
+    "originalBehavior": "The published signatures page signs a message with the active private key, carries the signature and public key into the verification tab, and updates the card state when verification succeeds or fails.",
+    "localStatus": "The local route keeps the published sign and verify workflow, including the synchronized signature field and alert-state verification card.",
+    "sourceFiles": [
+      "../../public-private-keys/signatures/index.html",
+      "../../public-private-keys/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "The verification page still uses the published tabs and inline DOM updates instead of a local rewrite.",
+      "Tampering behavior remains visible through the original success and danger card classes."
+    ],
+    "evidence": [
+      "Implementation planning marked signature creation, verification status updates, and payload tampering as parity-critical.",
+      "Shared smoke coverage signs a message, verifies it successfully, then mutates the message and checks that verification flips to the failure state."
+    ]
+  },
+  {
+    "moduleId": "transaction-and-signed-blockchain-scenes",
+    "originalBehavior": "The published demo extends the same active keys into a transaction signing scene and a richer blockchain page with signed transaction fields and mined blocks.",
+    "localStatus": "The local route keeps both supporting pages under the flattened slug so transaction and signed-blockchain readouts still follow the active key state locally.",
+    "sourceFiles": [
+      "../../public-private-keys/transaction/index.html",
+      "../../public-private-keys/blockchain/index.html",
+      "../../public-private-keys/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "The transaction page still hydrates sender and verifier fields from the active keys and cookies.",
+      "The blockchain page continues to use the published signed transaction and mining markup rather than a new local implementation."
+    ],
+    "evidence": [
+      "Implementation planning treated transaction, wallet, or signing readouts as parity-critical where the live demo exposed them.",
+      "Shared smoke coverage loads the transaction and blockchain pages and verifies those supporting scenes initialize locally without broken asset paths."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-asset-handoff",
+    "originalBehavior": "The published family used root-relative nested asset paths and shipped a separate landing page with upstream bylines, repo links, and videos outside the interactive scenes.",
+    "localStatus": "The local copy rewrites nested asset paths, canonical metadata, and navbar links for the flattened local slug while leaving the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../public-private-keys/index.html",
+      "../../public-private-keys/signatures/index.html",
+      "../../public-private-keys/stylesheets/public-key-private-key.css",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The public entry route no longer exposes the upstream landing page, repo ribbon, or creator callouts.",
+      "Each local page resolves its own vendored CSS and JS tree rather than depending on root-relative upstream paths."
+    ],
+    "evidence": [
+      "The public-surface audit blocks hardcoded upstream promo or share surfaces outside approved footer configuration.",
+      "Implementation planning called for keeping each demo's asset tree self-contained on the first pass rather than deduping libraries."
+    ]
+  }
+]

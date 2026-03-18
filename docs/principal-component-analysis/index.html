@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Principal Component Analysis Replica Docs</title>
+  <meta
+    name="description"
+    content="Provenance, parity notes, and implementation references for the local principal-component-analysis replica."
+  >
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Principal Component Analysis</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/principal-component-analysis/</code> keeps the
+        published Setosa EV 2D drag sandbox, 3D PCA viewer, and UK-food walkthrough while moving
+        provenance and route policy out of the public narrative.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../principal-component-analysis/">Open replica</a>
+        <a class="action-link secondary" href="https://setosa.io/ev/principal-component-analysis/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-14</code><br>
+        Source family: <code>setosa.io/ev</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published PCA page HTML, stylesheet, and page script, then
+          patches asset paths and page chrome so the runtime works cleanly under the
+          <code>/interactive-explanation/</code> subpath.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://setosa.io/ev/principal-component-analysis/</code> on 2026-03-14.</li>
+          <li>The local copy removes EV branding, bylines, share widgets, newsletter prompts, analytics, and comments.</li>
+          <li>The interactive math and visualization flow still rely on the original Angular, D3, Three.js, and numeric.js runtime.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Shared EV layer</h2>
+        <ul class="plain-list">
+          <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> remain shared across Setosa EV routes.</li>
+          <li><code>../ev/scripts/three.js</code>, <code>OrthographicTrackballControls.js</code>, and <code>numeric.js</code> were added locally for this route.</li>
+          <li><code>principal-component-analysis/style.css</code> now adds wrapper-level overflow handling so the wide visualizations stay usable on smaller screens.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>principal-component-analysis/index.html</code> owns local metadata, cleaned public shell, and relative asset paths.</li>
+          <li><code>principal-component-analysis/script.js</code> keeps the original PCA math, 2D drag logic, 3D projection viewer, and UK-food plots.</li>
+          <li><code>principal-component-analysis/fb-thumb.png</code> and the shared EV scripts are vendored for subpath-safe static hosting.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows EV branding, author credits, share widgets, newsletter forms, analytics, or comments.</li>
+          <li>The local page adds a small docs link and shared footer, but leaves the interactive runtime unchanged.</li>
+          <li>The live PCA page currently ships fixed UK-food <code>defra-d1</code> and <code>defra-d2</code> views rather than a component-pair switcher, and the replica preserves that published surface.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Kernels</title>
+    <meta
+      name="description"
+      content="Interactive image-processing explainer with kernel presets, hoverable pixel math, a custom kernel playground, uploads, and live video."
+    >
+    <meta property="og:title" content="Image Kernels">
+    <meta
+      property="og:description"
+      content="Interactive image-processing explainer with kernel presets, hoverable pixel math, a custom kernel playground, uploads, and live video."
+    >
+    <meta property="og:image" content="./fb-thumb.png">
+    <meta property="og:url" content="./">
+    <link rel="canonical" href="./">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../ev/scripts/d3.js" charset="utf-8"></script>
+    <script src="../ev/scripts/angular.js" charset="utf-8"></script>
+    <script src="../ev/scripts/common.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
+    <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-reference-url="https://setosa.io/ev/image-kernels/"
+    data-reference-text="Image Kernels"
+    data-footer-label="Original page"
+  >
+    <section class="menu"><a href="../">Back to replicas</a></section>
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Image Kernels</h1>
+        <h3 class="by-line">Interactive explainer</h3>
+      </div>
+    </section>
+
+    <section>
+      <p>
+        An image kernel is a small matrix used to apply effects such as blurring, sharpening,
+        outlining, or embossing. Kernels also show up in machine learning for feature extraction
+        and other convolution-style operations.
+      </p>
+      <p>
+        Start with a black-and-white image. The matrix on the left contains brightness values
+        between 0 and 255 for each pixel in a face image. The enlarged view makes the arithmetic
+        easier to inspect.
+      </p>
+      <div class="viz-scroll">
+        <image-as-matrix></image-as-matrix>
+      </div>
+
+      <p>
+        Let's walk through applying the following 3×3 <strong>{{selectedKernel}}</strong> kernel to
+        the face from above.
+      </p>
+      <div class="control-strip">
+        <select ng-options="key as key for (key, value) in selectableKernels" ng-model="selectedKernel"></select>
+      </div>
+      <div class="viz-scroll">
+        <kernel-matrix></kernel-matrix>
+      </div>
+
+      <p>
+        For each 3×3 block of pixels in the image on the left, multiply each pixel by the
+        corresponding kernel entry and sum the results. That sum becomes a new pixel in the image
+        on the right. Hover over a pixel on either image to see how the value is computed.
+      </p>
+      <div class="viz-scroll">
+        <div style="position: relative; width: 1000px; min-height: 430px">
+          <kernel-inspect></kernel-inspect>
+          <div style="display: block; position: absolute; top: 360px; left: 450px">
+            <select ng-options="key as key for (key, value) in selectableKernels" ng-model="selectedKernel"></select>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        One subtlety is what to do at the edges. The top-left pixel only has three neighbors inside
+        the image. This demo handles those missing values by treating the out-of-bounds region as
+        black, which makes the boundary behavior easy to inspect.
+      </p>
+      <p>
+        Here's a playground where you can switch kernel presets, edit the 3×3 matrix directly, and
+        see the result on the example image. The published page also supports uploading your own
+        image and, where supported, live video.
+      </p>
+      <div class="viz-scroll">
+        <div style="position: relative; width: 1000px; min-height: 430px">
+          <div style="display: block; position: absolute; width: 260px; height: 260px; top: 85px; left: 65px;">
+            <div style="display: block; width: 33.33%; height: 33.33%; float: left;" ng-repeat="(idx, val) in kernel track by $id(idx)">
+              <input style="width: 100%; height: 100%; font-size: 20px; text-align: center" type="number" ng-model="kernel[idx]" min="-10" max="10" step="0.1" ng-change="modifiedKernel()">
+            </div>
+          </div>
+          <div style="display: block; position: absolute; top: 360px; left: 145px">
+            <select ng-options="key as key for (key, value) in kernels" ng-model="selectedKernel"></select>
+          </div>
+          <kernel-playground></kernel-playground>
+        </div>
+      </div>
+
+      <div ng-show="selectedKernel === 'sharpen'">
+        <p>
+          The <strong>sharpen</strong> kernel emphasizes differences in adjacent pixel values,
+          making the image look more vivid.
+        </p>
+      </div>
+      <div ng-show="selectedKernel === 'blur'">
+        <p>The <strong>blur</strong> kernel de-emphasizes differences in adjacent pixel values.</p>
+      </div>
+      <div ng-show="selectedKernel.indexOf('emboss') !== -1">
+        <p>
+          The <strong>emboss</strong> kernel gives the illusion of depth by emphasizing pixel
+          differences along a direction from the top left to the bottom right.
+        </p>
+      </div>
+      <div ng-show="selectedKernel === 'identity'">
+        <p>The <strong>identity</strong> kernel leaves the image unchanged.</p>
+      </div>
+      <div ng-show="selectedKernel === 'custom'">
+        <p>The <strong>custom</strong> kernel is whatever you build in the editor.</p>
+      </div>
+      <div ng-show="selectedKernel.indexOf('sobel') !== -1">
+        <p>
+          <strong>Sobel</strong> kernels highlight only the differences in adjacent pixel values in
+          a chosen direction.
+        </p>
+      </div>
+      <div ng-show="selectedKernel === 'outline'">
+        <p>
+          The <strong>outline</strong> kernel highlights large local differences, turning edges
+          bright while leaving flat regions dark.
+        </p>
+      </div>
+
+      <p>
+        For more, Gimp's
+        <a href="http://docs.gimp.org/en/plug-in-convmatrix.html" target="_blank" rel="noreferrer">convolution matrix guide</a>
+        is a good companion reference.
+      </p>
+      <p class="local-note">
+        Replica notes and parity details live separately in
+        <a href="../docs/image-kernels/">docs</a>.
+      </p>
+    </section>
+
+    <script src="../ev/scripts/exif.js" charset="utf-8"></script>
+    <script src="./script.js"></script>
+    <script src="../shared/public-footer.js"></script>
+  </body>
+</html>

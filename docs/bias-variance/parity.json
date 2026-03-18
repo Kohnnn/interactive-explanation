@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "scrollytelling-error-shell",
+    "originalBehavior": "The published article advances through underfitting, overfitting, and error-decomposition scenes with a sticky chart shell whose state changes as readers move through the steps.",
+    "localStatus": "The local route keeps the original step containers, scroll-linked chart shell, and compiled transitions so the narrative still drives the visuals in order.",
+    "sourceFiles": [
+      "index.html",
+      "js.63b32ab2.js",
+      "styles.565b223c.css"
+    ],
+    "notes": [
+      "The local route preserves the published DOM IDs that the compiled D3 runtime expects.",
+      "Only metadata, intro attribution, and closing promo copy were localized around the shipped build."
+    ],
+    "evidence": [
+      "The implementation plan treats top-plot and bottom error-decomposition synchronization as parity-critical.",
+      "Shared smoke coverage scrolls into the decomposition and complexity scenes and verifies the active labels change with the narrative."
+    ]
+  },
+  {
+    "moduleId": "bias-variance-decomposition-sync",
+    "originalBehavior": "Mid-article scenes switch from train and test error views into bias, variance, and noise decompositions while the chart labels and bars update together.",
+    "localStatus": "The local route keeps the original decomposition chart, KaTeX equation blocks, and synchronized state changes from the published bundle.",
+    "sourceFiles": [
+      "js.63b32ab2.js",
+      "katexCalls.eb206bfb.js",
+      "katex.min.3c2484b0.css"
+    ],
+    "notes": [
+      "The equation hydration still uses the published KaTeX helper bundle.",
+      "The chart transitions remain bound to the original scroll steps rather than a rewritten local controller."
+    ],
+    "evidence": [
+      "The plan explicitly calls the error-decomposition sync and aggregated trend view parity-critical.",
+      "Shared smoke coverage verifies the decomposition labels appear before the complexity-trend view is activated."
+    ]
+  },
+  {
+    "moduleId": "loess-and-knn-interactive-sandboxes",
+    "originalBehavior": "Later sections expose LOESS smoothing controls plus a K-nearest-neighbors decision-region scene that updates as readers change the active hyperparameters.",
+    "localStatus": "The local route keeps the published LOESS slider and KNN slider, along with their linked fit and prediction visuals, without rewriting the compiled interaction logic.",
+    "sourceFiles": [
+      "index.html",
+      "js.63b32ab2.js",
+      "styles.565b223c.css"
+    ],
+    "notes": [
+      "The original sandbox containers and slider IDs were preserved for the compiled runtime.",
+      "The page still ships the published double-descent chart immediately after the sandbox sections."
+    ],
+    "evidence": [
+      "The implementation plan marks the LOESS or smoothing controls and any KNN scene as parity-critical.",
+      "Shared smoke coverage changes the LOESS smoothness and KNN K value and verifies that the rendered state updates."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, repo references, and promotional cross-links inside the public body.",
+    "localStatus": "The local route removes those public-shell references, localizes the remaining shell copy, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public route no longer includes hardcoded upstream share or promo surfaces in the body."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
+      "The route now exposes only the shared-footer link back to the live original page."
+    ]
+  }
+]

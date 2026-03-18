@@ -1,0 +1,110 @@
+[
+  {
+    "moduleId": "similar-triangles-unit-circle",
+    "originalBehavior": "The opening similar-triangles scene keeps four scaled right triangles synchronized as readers drag the angle around the unit circle, updating side labels and sine/cosine ratios together.",
+    "localStatus": "The local route keeps the published MainCtrl state and similar-triangles directive, including shared angle updates, side labels, and the ratio equations for every triangle size.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css",
+      "../ev/scripts/common.js"
+    ],
+    "notes": [
+      "The shared opts.pos state still drives both the introductory triangle view and the later linked-coordinate sandbox.",
+      "The public route only wraps the visualization for narrower screens."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders a similar-triangles custom element ahead of the autoplay sections.",
+      "Smoke coverage updates opts.pos locally and checks the triangle labels and linked-coordinate markers move together."
+    ]
+  },
+  {
+    "moduleId": "sine-autoplay-transform",
+    "originalBehavior": "The sine autoplay panel expands a moving unit-circle sample into a plotted sine wave, then returns the play surface to its ready state when the sequence finishes.",
+    "localStatus": "The local route keeps the published SineAnimationCtrl and trig-transform directive, including the play-button event flow, moving unit marker, staged axis expansion, and sine path render.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css"
+    ],
+    "notes": [
+      "The live page ships a single play control for this section rather than separate pause or reset buttons.",
+      "No autoplay timings were refactored for v1."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still nests trig-transform func=\"sine\" inside ev-play-button under SineAnimationCtrl.",
+      "Smoke coverage triggers the local play button, waits for the sine path to render, and checks the controller returns to its ready state."
+    ]
+  },
+  {
+    "moduleId": "cosine-autoplay-transform",
+    "originalBehavior": "The cosine autoplay panel repeats the same staged transform for cosine, rotating the geometry and revealing the cosine wave over angle.",
+    "localStatus": "The local route keeps the published CosineAnimationCtrl and trig-transform directive, including the rotated cosine expansion and play-state lifecycle.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css"
+    ],
+    "notes": [
+      "The cosine section remains independent from the sine autoplay panel, matching the published page structure.",
+      "The local route preserves the original controller names and broadcast events."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders trig-transform func=\"cosine\" inside a separate CosineAnimationCtrl section.",
+      "Smoke coverage triggers the local cosine panel and checks the cosine path appears."
+    ]
+  },
+  {
+    "moduleId": "linked-cartesian-polar-sandbox",
+    "originalBehavior": "The linked-coordinate section synchronizes the polar point, sine plot, and cosine plot while readers drag between Cartesian and angular controls.",
+    "localStatus": "The local route keeps the published linked-coordinates directive, including the shared point state, polar arc, sine and cosine trace arms, and hover rotation on the cosine panel.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css"
+    ],
+    "notes": [
+      "The live page couples this sandbox to the body-level opts.pos state rather than a new controller-local model.",
+      "Responsive wrappers only affect overflow and do not alter the coordinate logic."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders linked-coordinates as the final interactive surface.",
+      "Smoke coverage updates the shared point locally and checks the polar, sine, and cosine markers all move."
+    ]
+  },
+  {
+    "moduleId": "local-mathjax-formula-render",
+    "originalBehavior": "The Taylor-series section renders display math between the autoplay panels and the linked-coordinate sandbox.",
+    "localStatus": "The local route keeps the published formula block and tex2jax configuration while loading MathJax from a local vendor copy instead of the retired remote CDN.",
+    "sourceFiles": [
+      "index.html",
+      "../ev/scripts/mathjax/MathJax.js"
+    ],
+    "notes": [
+      "The local route points at MathJax 2.7.9 packaged under the EV shared asset tree.",
+      "This is the only new shared dependency layer introduced in this batch."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still points at cdn.mathjax.org with inline tex2jax config.",
+      "Smoke coverage waits for the local MathJax display render and verifies no external asset is required at runtime."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, creator bylines, share widgets, newsletter prompts, analytics, and comments around the explainer.",
+    "localStatus": "The local route removes those public-shell elements and uses the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance remains in docs only.",
+      "The top menu now routes back to the local replica index."
+    ],
+    "evidence": [
+      "Public-surface auditing blocks creator promo, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping routes.",
+      "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  }
+]

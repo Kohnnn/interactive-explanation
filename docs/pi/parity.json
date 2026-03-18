@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "circle-geometry-demo",
+    "originalBehavior": "The opening circle demo animates a point around the circumference, highlights radius, circumference, and diameter, and lets readers drag the point to resize the circle.",
+    "localStatus": "The local route keeps the published MainCtrl and circle-demo directive, including the drag behavior, radius and diameter coupling, and animated circumference sweep.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css",
+      "../ev/scripts/common.js"
+    ],
+    "notes": [
+      "The live demo derives diameter from the current radius and rewrites opts.pos onto the circle on every size change.",
+      "The public route only changes surrounding shell and metadata."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still exposes the circle-demo custom element and shared opts state.",
+      "Smoke coverage checks the SVG renders and that changing size updates the geometry labels and path state."
+    ]
+  },
+  {
+    "moduleId": "circumference-unwrap-demo",
+    "originalBehavior": "The lower demo folds and unfolds a polygonal approximation of the circumference while keeping the diameter guide, circumference guide, and π ratio display synchronized.",
+    "localStatus": "The local route keeps the published pi-demo directive and its wrap slider, using the same circumference path generation and label updates.",
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "style.css"
+    ],
+    "notes": [
+      "The live page labels this control as wrap and pairs it with a separate size slider.",
+      "The polygon segment count stays fixed at the published value of 64 for v1."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still binds ng-model=\"opts.fold\" to the unwrap scene.",
+      "Smoke coverage changes fold locally and checks the path data changes with it."
+    ]
+  },
+  {
+    "moduleId": "size-and-ratio-readouts",
+    "originalBehavior": "Changing the circle size updates the diameter and circumference labels while keeping the displayed π ratio constant.",
+    "localStatus": "The local route keeps the published diameter watcher and label text generation so D and C update together as size changes.",
+    "sourceFiles": [
+      "index.html",
+      "script.js"
+    ],
+    "notes": [
+      "The public route uses a cleaned local control layout, but the underlying ng-model and redraw logic are unchanged.",
+      "The π text stays the published fixed approximation in the rendered fraction label."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still binds ng-model=\"opts.diameter\" to both demos.",
+      "Smoke coverage changes size locally and checks the D and C labels update together."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, author bylines, share widgets, newsletter prompts, analytics, and comments around the explainer.",
+    "localStatus": "The local route removes those public-shell elements and uses the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance remains in docs only.",
+      "The top menu now routes back to the local replica index."
+    ],
+    "evidence": [
+      "Public-surface auditing blocks EV branding, creator promo, share widgets, newsletter embeds, analytics, and comments from shipping routes.",
+      "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  }
+]

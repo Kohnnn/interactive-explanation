@@ -1,0 +1,77 @@
+[
+  {
+    "moduleId": "main-blockchain-chain-editor",
+    "originalBehavior": "The published blockchain page exposes five editable blocks where changing a block field recalculates that block hash, propagates previous-hash updates downstream, and marks invalid blocks visually until they are re-mined.",
+    "localStatus": "The local root keeps the published chain editor, hash recalculation, mining controls, and downstream invalidation behavior intact under the top-level blockchain slug.",
+    "sourceFiles": [
+      "../../blockchain/index.html",
+      "../../blockchain/blockchain.html",
+      "../../blockchain/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "The local root intentionally maps to the upstream blockchain scene rather than the video landing page.",
+      "Editable block number, nonce, data, previous-hash, hash, and mine-button fields still use the published jQuery handlers."
+    ],
+    "evidence": [
+      "Implementation planning treated live hash updates, nonce mining, and visible validity changes as parity-critical behavior.",
+      "Shared smoke coverage edits block data, verifies the root hash and downstream previous-hash values change, then mines the first block and checks the validity classes update."
+    ]
+  },
+  {
+    "moduleId": "hash-and-single-block-warmup-pages",
+    "originalBehavior": "The published demo also includes earlier warmup pages for a standalone SHA256 hash and a single editable block before the full chain view.",
+    "localStatus": "The local route keeps those supporting pages as sibling files under the same route tree so the original demo progression remains available locally.",
+    "sourceFiles": [
+      "../../blockchain/hash.html",
+      "../../blockchain/block.html",
+      "../../blockchain/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "These pages keep the published field IDs and inline handlers instead of being rewritten as new components.",
+      "The hash and block scenes share the same vendored legacy runtime as the main blockchain page."
+    ],
+    "evidence": [
+      "The local navigation still exposes Hash and Block alongside the main Blockchain page.",
+      "Route coverage verifies the supporting local pages load under the nested static mount."
+    ]
+  },
+  {
+    "moduleId": "distributed-token-and-coinbase-variants",
+    "originalBehavior": "The published family extends the basic chain into distributed, token, and coinbase views with multiple peer chains and richer transaction fields.",
+    "localStatus": "The local route keeps those additional scenes under the blockchain asset tree so peer-comparison and transaction-heavy pages remain available locally.",
+    "sourceFiles": [
+      "../../blockchain/distributed.html",
+      "../../blockchain/tokens.html",
+      "../../blockchain/coinbase.html",
+      "../../blockchain/javascripts/blockchain.js"
+    ],
+    "notes": [
+      "The distributed view still mounts multiple peer chains from the original markup.",
+      "Token and coinbase pages continue to rely on the published block and transaction serialization logic."
+    ],
+    "evidence": [
+      "Implementation planning treated any distributed-ledger or multi-chain comparison view as parity-critical when the live demo shipped it.",
+      "Shared smoke coverage loads the distributed page locally and verifies the peer-chain mount points render without broken asset paths."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-asset-handoff",
+    "originalBehavior": "The published family used root-relative blockchain asset paths and also shipped a separate video landing page with author and repo callouts outside the interactive scenes.",
+    "localStatus": "The local copy rewrites page-local asset paths, canonical metadata, and navbar links for the subpath-hosted replica while leaving the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../blockchain/index.html",
+      "../../blockchain/distributed.html",
+      "../../blockchain/stylesheets/blockchain.css",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The public entry route no longer surfaces the upstream landing page, GitHub ribbon, or donation copy.",
+      "Each vendored HTML page now loads its own local CSS and JS tree instead of root-relative Anders paths."
+    ],
+    "evidence": [
+      "The public-surface audit blocks hardcoded upstream promo or share surfaces outside approved footer configuration.",
+      "Implementation planning called for patching only shell and URL behavior while keeping the legacy runtime intact."
+    ]
+  }
+]

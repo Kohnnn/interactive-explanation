@@ -1,0 +1,582 @@
+span.primary {
+  color: #3498db;
+}
+span.secondary {
+  color: #2ecc71;
+}
+span.tertiary {
+  color: #e74c3c;
+}
+li {
+  font-size: 18px;
+  height: 20px;
+}
+playground {
+  width: 100%;
+  height: 300px;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+playground .plot .basis {
+  stroke: black;
+  stroke-width: 2;
+}
+.full-width-visualization,
+sf-to-ny-migration-map,
+sf-to-ny-data-as-vectors,
+migration-vector-notation,
+migration-linear-combination,
+migration-repeated-linear-combination,
+matrix-as-image-transform,
+eigen-vectors,
+eigen-space,
+stochastic-matrix-multiplication,
+repeated-matrix-multiplication,
+migration {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+.full-width-visualization svg text {
+  font-family: 'helvetica Neue';
+}
+sf-to-ny-migration-map .us-bg {
+  fill: rgba(0, 0, 0, 0.1);
+}
+sf-to-ny-migration-map .arrow {
+  stroke-width: 10;
+  fill: none;
+  stroke: black;
+}
+migration-vector-notation {
+  height: 100px;
+}
+migration-vector-notation svg path {
+  shape-rendering: crispEdges;
+}
+migration-linear-combination,
+migration-repeated-linear-combination {
+  height: 250px;
+}
+matrix-as-image-transform {
+  height: 500px;
+}
+eigen-vectors {
+  height: 320px;
+}
+eigen-vectors .a1 {
+  color: #3498db;
+}
+eigen-vectors .a2 {
+  color: #2ecc71;
+}
+eigen-vectors .x0,
+eigen-vectors .y0 {
+  color: #e74c3c;
+}
+eigen-vectors .x1,
+eigen-vectors .y1 {
+  color: #9b59b6;
+}
+eigen-vectors .vectors .vector {
+  stroke-width: 4;
+}
+eigen-vectors,
+matrix-as-image-transform {
+  position: relative;
+}
+eigen-vectors .equation,
+matrix-as-image-transform .equation {
+  width: 100%;
+  text-align: center;
+  font-family: 'helvetica Neue';
+  transition: 0.25s all;
+}
+eigen-vectors .equation .symbol,
+matrix-as-image-transform .equation .symbol,
+eigen-vectors .equation .vector,
+matrix-as-image-transform .equation .vector {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 24px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+eigen-vectors .equation .symbol,
+matrix-as-image-transform .equation .symbol {
+  position: relative;
+}
+eigen-vectors .equation .symbol .label,
+matrix-as-image-transform .equation .symbol .label,
+eigen-vectors .equation .symbol .value,
+matrix-as-image-transform .equation .symbol .value {
+  transition: 0.25s all;
+}
+eigen-vectors .equation .symbol .value,
+matrix-as-image-transform .equation .symbol .value {
+  opacity: 0;
+}
+eigen-vectors .equation .symbol .label,
+matrix-as-image-transform .equation .symbol .label {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+eigen-vectors .equation .vector .top,
+matrix-as-image-transform .equation .vector .top,
+eigen-vectors .equation .vector .bottom,
+matrix-as-image-transform .equation .vector .bottom {
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+}
+eigen-vectors .equation .vector .top .symbol,
+matrix-as-image-transform .equation .vector .top .symbol,
+eigen-vectors .equation .vector .top .value,
+matrix-as-image-transform .equation .vector .top .value,
+eigen-vectors .equation .vector .bottom .symbol,
+matrix-as-image-transform .equation .vector .bottom .symbol,
+eigen-vectors .equation .vector .bottom .value,
+matrix-as-image-transform .equation .vector .bottom .value {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+}
+eigen-vectors .equation .vector .top .value,
+matrix-as-image-transform .equation .vector .top .value,
+eigen-vectors .equation .vector .bottom .value,
+matrix-as-image-transform .equation .vector .bottom .value {
+  top: 0;
+  position: absolute;
+}
+eigen-vectors .equation .vector .border-l,
+matrix-as-image-transform .equation .vector .border-l,
+eigen-vectors .equation .vector .border-r,
+matrix-as-image-transform .equation .vector .border-r {
+  width: 12px;
+  height: 100px;
+  display: block;
+  float: left;
+}
+eigen-vectors .equation .vector .border-l,
+matrix-as-image-transform .equation .vector .border-l {
+  border: 3px solid #333333;
+  border-right: none;
+}
+eigen-vectors .equation .vector .center,
+matrix-as-image-transform .equation .vector .center {
+  display: block;
+  float: left;
+}
+eigen-vectors .equation .vector .border-r,
+matrix-as-image-transform .equation .vector .border-r {
+  border: 3px solid #333333;
+  border-left: none;
+}
+eigen-vectors .equation .vector .border-l,
+matrix-as-image-transform .equation .vector .border-l,
+eigen-vectors .equation .vector .border-r,
+matrix-as-image-transform .equation .vector .border-r {
+  transition: 0.25s all;
+}
+eigen-vectors .equation .vector .symbol,
+matrix-as-image-transform .equation .vector .symbol {
+  opacity: 1;
+  transition: 0.25s all;
+}
+eigen-vectors .equation .vector .value,
+matrix-as-image-transform .equation .vector .value {
+  opacity: 0;
+  transition: 0.25s all;
+}
+eigen-vectors .equation .vector.b1,
+matrix-as-image-transform .equation .vector.b1 {
+  color: #3498db;
+}
+eigen-vectors .equation .vector.b1 .border-l,
+matrix-as-image-transform .equation .vector.b1 .border-l,
+eigen-vectors .equation .vector.b1 .border-r,
+matrix-as-image-transform .equation .vector.b1 .border-r {
+  border-color: #3498db;
+}
+eigen-vectors .equation .vector.b2,
+matrix-as-image-transform .equation .vector.b2 {
+  color: #2ecc71;
+}
+eigen-vectors .equation .vector.b2 .border-l,
+matrix-as-image-transform .equation .vector.b2 .border-l,
+eigen-vectors .equation .vector.b2 .border-r,
+matrix-as-image-transform .equation .vector.b2 .border-r {
+  border-color: #2ecc71;
+}
+eigen-vectors .equation .vector.x1,
+matrix-as-image-transform .equation .vector.x1 {
+  color: #9b59b6;
+}
+eigen-vectors .equation .vector.x1 .border-l,
+matrix-as-image-transform .equation .vector.x1 .border-l,
+eigen-vectors .equation .vector.x1 .border-r,
+matrix-as-image-transform .equation .vector.x1 .border-r {
+  border-color: #9b59b6;
+}
+eigen-vectors .equation .x0,
+matrix-as-image-transform .equation .x0,
+eigen-vectors .equation .x1,
+matrix-as-image-transform .equation .x1,
+eigen-vectors .equation .y0,
+matrix-as-image-transform .equation .y0,
+eigen-vectors .equation .y1,
+matrix-as-image-transform .equation .y1 {
+  transition: 0.25s all;
+}
+eigen-vectors .equation.dim,
+matrix-as-image-transform .equation.dim {
+  color: rgba(0, 0, 0, 0.2);
+}
+eigen-vectors .equation.dim .x0,
+matrix-as-image-transform .equation.dim .x0,
+eigen-vectors .equation.dim .x1,
+matrix-as-image-transform .equation.dim .x1 {
+  color: rgba(0, 0, 0, 0.2);
+}
+eigen-vectors .equation.dim .y0,
+matrix-as-image-transform .equation.dim .y0,
+eigen-vectors .equation.dim .y1,
+matrix-as-image-transform .equation.dim .y1 {
+  color: rgba(0, 0, 0, 0.2);
+}
+eigen-vectors .equation.dim .vector,
+matrix-as-image-transform .equation.dim .vector,
+eigen-vectors .equation.dim .vector.b1,
+matrix-as-image-transform .equation.dim .vector.b1,
+eigen-vectors .equation.dim .vector.b2,
+matrix-as-image-transform .equation.dim .vector.b2 {
+  color: rgba(0, 0, 0, 0.2);
+}
+eigen-vectors .equation.dim .vector .border-l,
+matrix-as-image-transform .equation.dim .vector .border-l,
+eigen-vectors .equation.dim .vector.b1 .border-l,
+matrix-as-image-transform .equation.dim .vector.b1 .border-l,
+eigen-vectors .equation.dim .vector.b2 .border-l,
+matrix-as-image-transform .equation.dim .vector.b2 .border-l,
+eigen-vectors .equation.dim .vector .border-r,
+matrix-as-image-transform .equation.dim .vector .border-r,
+eigen-vectors .equation.dim .vector.b1 .border-r,
+matrix-as-image-transform .equation.dim .vector.b1 .border-r,
+eigen-vectors .equation.dim .vector.b2 .border-r,
+matrix-as-image-transform .equation.dim .vector.b2 .border-r {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+eigen-vectors .equation.dim.b1 .vector.b1,
+matrix-as-image-transform .equation.dim.b1 .vector.b1 {
+  color: #3498db;
+}
+eigen-vectors .equation.dim.b1 .vector.b1 .border-l,
+matrix-as-image-transform .equation.dim.b1 .vector.b1 .border-l,
+eigen-vectors .equation.dim.b1 .vector.b1 .border-r,
+matrix-as-image-transform .equation.dim.b1 .vector.b1 .border-r {
+  border-color: #3498db;
+}
+eigen-vectors .equation.dim.b1 .vector.b1 .symbol,
+matrix-as-image-transform .equation.dim.b1 .vector.b1 .symbol {
+  opacity: 0;
+}
+eigen-vectors .equation.dim.b1 .vector.b1 .value,
+matrix-as-image-transform .equation.dim.b1 .vector.b1 .value {
+  opacity: 1;
+}
+eigen-vectors .equation.dim.b2 .vector.b2,
+matrix-as-image-transform .equation.dim.b2 .vector.b2 {
+  color: #2ecc71;
+}
+eigen-vectors .equation.dim.b2 .vector.b2 .border-l,
+matrix-as-image-transform .equation.dim.b2 .vector.b2 .border-l,
+eigen-vectors .equation.dim.b2 .vector.b2 .border-r,
+matrix-as-image-transform .equation.dim.b2 .vector.b2 .border-r {
+  border-color: #2ecc71;
+}
+eigen-vectors .equation.dim.b2 .vector.b2 .symbol,
+matrix-as-image-transform .equation.dim.b2 .vector.b2 .symbol {
+  opacity: 0;
+}
+eigen-vectors .equation.dim.b2 .vector.b2 .value,
+matrix-as-image-transform .equation.dim.b2 .vector.b2 .value {
+  opacity: 1;
+}
+eigen-vectors .equation.dim.sample .x0,
+matrix-as-image-transform .equation.dim.sample .x0,
+eigen-vectors .equation.dim.sample .y0,
+matrix-as-image-transform .equation.dim.sample .y0 {
+  color: #e74c3c;
+}
+eigen-vectors .equation.dim.sample .x1,
+matrix-as-image-transform .equation.dim.sample .x1,
+eigen-vectors .equation.dim.sample .y1,
+matrix-as-image-transform .equation.dim.sample .y1 {
+  color: #9b59b6;
+}
+eigen-vectors .equation.dim.sample .symbol .value,
+matrix-as-image-transform .equation.dim.sample .symbol .value {
+  opacity: 1;
+}
+eigen-vectors .equation.dim.sample .symbol .label,
+matrix-as-image-transform .equation.dim.sample .symbol .label {
+  opacity: 0;
+}
+eigen-vectors .basis,
+matrix-as-image-transform .basis {
+  stroke-width: 4;
+}
+eigen-vectors .basis.basis-1,
+matrix-as-image-transform .basis.basis-1 {
+  stroke: #3498db;
+}
+eigen-vectors .basis.basis-2,
+matrix-as-image-transform .basis.basis-2 {
+  stroke: #2ecc71;
+}
+eigen-vectors .point,
+matrix-as-image-transform .point {
+  fill: rgba(0, 0, 0, 0.6);
+}
+eigen-vectors .sample-difference,
+matrix-as-image-transform .sample-difference {
+  stroke-width: 4;
+  stroke-dasharray: 2, 2;
+  stroke: #e74c3c;
+  opacity: 0.5;
+}
+eigen-vectors .coord,
+matrix-as-image-transform .coord {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.nob {
+  transition: 0.25s all;
+}
+.nob circle {
+  fill: rgba(0, 0, 0, 0.04);
+  stroke: rgba(0, 0, 0, 0.04);
+}
+.nob:hover {
+  fill: rgba(0, 0, 0, 0.2);
+}
+repeated-matrix-multiplication .sample-path {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.3);
+  stroke-dasharray: 2,2;
+}
+matrix-equation {
+  height: 50px;
+  display: block;
+  text-align: center;
+  font-family: 'helvetica Neue';
+  font-family: "STIXGeneral-Italic";
+}
+matrix-equation .element,
+matrix-equation .vector,
+matrix-equation .matrix {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 18px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+matrix-equation .vector .top,
+matrix-equation .matrix .top,
+matrix-equation .vector .bottom,
+matrix-equation .matrix .bottom {
+  height: 25px;
+  line-height: 25px;
+  position: relative;
+}
+matrix-equation .vector .top .label,
+matrix-equation .matrix .top .label,
+matrix-equation .vector .top .value,
+matrix-equation .matrix .top .value,
+matrix-equation .vector .bottom .label,
+matrix-equation .matrix .bottom .label,
+matrix-equation .vector .bottom .value,
+matrix-equation .matrix .bottom .value {
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+}
+matrix-equation .vector .top .label,
+matrix-equation .matrix .top .label,
+matrix-equation .vector .bottom .label,
+matrix-equation .matrix .bottom .label {
+  top: 0;
+  position: absolute;
+}
+matrix-equation .vector .top .left,
+matrix-equation .matrix .top .left,
+matrix-equation .vector .bottom .left,
+matrix-equation .matrix .bottom .left,
+matrix-equation .vector .top .right,
+matrix-equation .matrix .top .right,
+matrix-equation .vector .bottom .right,
+matrix-equation .matrix .bottom .right {
+  float: left;
+  position: relative;
+}
+matrix-equation .vector .top .left,
+matrix-equation .matrix .top .left,
+matrix-equation .vector .bottom .left,
+matrix-equation .matrix .bottom .left {
+  margin-right: 5px;
+}
+matrix-equation .vector .border-l,
+matrix-equation .matrix .border-l,
+matrix-equation .vector .border-r,
+matrix-equation .matrix .border-r {
+  width: 8px;
+  height: 50px;
+  display: block;
+  float: left;
+}
+matrix-equation .vector .border-l,
+matrix-equation .matrix .border-l {
+  border: 2px solid #333333;
+  border-right: none;
+}
+matrix-equation .vector .center,
+matrix-equation .matrix .center {
+  display: block;
+  float: left;
+}
+matrix-equation .vector .border-r,
+matrix-equation .matrix .border-r {
+  border: 2px solid #333333;
+  border-left: none;
+}
+matrix-equation .vector .label,
+matrix-equation .matrix .label {
+  opacity: 1;
+  transition: 0.25s all;
+}
+matrix-equation .vector .value,
+matrix-equation .matrix .value {
+  opacity: 0;
+  transition: 0.25s all;
+}
+matrix-equation .element.dim,
+matrix-equation .vector.dim,
+matrix-equation .matrix.dim {
+  opacity: 0.3;
+}
+matrix-equation .element.active .label,
+matrix-equation .vector.active .label,
+matrix-equation .matrix.active .label {
+  opacity: 0;
+}
+matrix-equation .element.active .value,
+matrix-equation .vector.active .value,
+matrix-equation .matrix.active .value {
+  opacity: 1;
+}
+matrix-equation .element.primary {
+  color: #3498db;
+}
+matrix-equation .element.secondary {
+  color: #2ecc71;
+}
+matrix-equation .element.tertiary {
+  color: #e74c3c;
+}
+matrix-equation .vector.primary {
+  color: #3498db;
+}
+matrix-equation .vector.primary .border-l,
+matrix-equation .vector.primary .border-r {
+  border-color: #3498db;
+}
+matrix-equation .vector.secondary {
+  color: #2ecc71;
+}
+matrix-equation .vector.secondary .border-l,
+matrix-equation .vector.secondary .border-r {
+  border-color: #2ecc71;
+}
+matrix-equation .vector.tertiary {
+  color: #e74c3c;
+}
+matrix-equation .vector.tertiary .border-l,
+matrix-equation .vector.tertiary .border-r {
+  border-color: #e74c3c;
+}
+matrix-equation .matrix.primary-and-secondary .left {
+  color: #3498db;
+}
+matrix-equation .matrix.primary-and-secondary .right {
+  color: #2ecc71;
+}
+migration {
+  transition: 0.25s all;
+  position: relative;
+}
+migration:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+migration svg,
+migration canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+migration .travel-path {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke: none;
+  stroke-width: 2;
+}
+.matrix-equation-highlight {
+  width: 100%;
+  height: 70px;
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.element-spotlight {
+  background-color: #f1c40f;
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
+  position: absolute;
+  transition: 1s left;
+}
+.viz-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.viz-stage {
+  min-width: 960px;
+}
+.bacteria-stage {
+  min-width: 960px;
+}
+.migration-stage {
+  min-width: 960px;
+}
+.four-quad-stage {
+  min-width: 960px;
+}
+.local-note {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}
+@media (max-width: 980px) {
+  section {
+    overflow-wrap: anywhere;
+  }
+}

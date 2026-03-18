@@ -117,5 +117,124 @@
     "summary": "Interactive article about transition matrices, state evolution, stochastic sequences, and a local playground.",
     "referenceUrl": "https://setosa.io/ev/markov-chains/",
     "docsUrl": "./docs/markov-chains/"
+  },
+  {
+    "slug": "principal-component-analysis",
+    "title": "Principal Component Analysis",
+    "summary": "Interactive PCA explainer with draggable samples, a 3D projection view, and fixed UK-food dataset projections.",
+    "referenceUrl": "https://setosa.io/ev/principal-component-analysis/",
+    "docsUrl": "./docs/principal-component-analysis/"
+  },
+  {
+    "slug": "exponentiation",
+    "title": "Exponentiation",
+    "summary": "Interactive explainer about repeated addition, repeated multiplication, and a virus-spread toy model.",
+    "referenceUrl": "https://setosa.io/ev/exponentiation/",
+    "docsUrl": "./docs/exponentiation/"
+  },
+  {
+    "slug": "pi",
+    "title": "Pi (π)",
+    "summary": "Interactive pi explainer with draggable circle geometry, circumference unwrapping, and synchronized ratio readouts.",
+    "referenceUrl": "https://setosa.io/ev/pi/",
+    "docsUrl": "./docs/pi/"
+  },
+  {
+    "slug": "sine-and-cosine",
+    "title": "Sine and Cosine",
+    "summary": "Interactive trigonometry explainer with similar triangles, autoplay transforms, and linked polar-cartesian views.",
+    "referenceUrl": "https://setosa.io/ev/sine-and-cosine/",
+    "docsUrl": "./docs/sine-and-cosine/"
+  },
+  {
+    "slug": "eigenvectors-and-eigenvalues",
+    "title": "Eigenvectors and Eigenvalues",
+    "summary": "Interactive linear algebra explainer with draggable matrix columns, Fibonacci growth, steady-state migration, and complex spirals.",
+    "referenceUrl": "https://setosa.io/ev/eigenvectors-and-eigenvalues/",
+    "docsUrl": "./docs/eigenvectors-and-eigenvalues/"
+  },
+  {
+    "slug": "image-kernels",
+    "title": "Image Kernels",
+    "summary": "Interactive image-kernel explainer with preset filters, hoverable pixel arithmetic, a custom kernel playground, uploads, and live video.",
+    "referenceUrl": "https://setosa.io/ev/image-kernels/",
+    "docsUrl": "./docs/image-kernels/"
+  },
+  {
+    "slug": "ordinary-least-squares-regression",
+    "title": "Ordinary Least Squares Regression",
+    "summary": "Interactive explainer about fitted lines, squared error, draggable points, and coefficient readouts in ordinary least squares.",
+    "referenceUrl": "https://setosa.io/ev/ordinary-least-squares-regression/",
+    "docsUrl": "./docs/ordinary-least-squares-regression/"
+  },
+  {
+    "slug": "blockchain",
+    "title": "Blockchain",
+    "summary": "Interactive blockchain demo with editable block fields, nonce mining, downstream invalidation, and multi-chain comparison views.",
+    "referenceUrl": "https://andersbrownworth.com/Blockchain/blockchain.html",
+    "docsUrl": "./docs/blockchain/"
+  },
+  {
+    "slug": "public-private-keys",
+    "title": "Public / Private Keys",
+    "summary": "Interactive signing demo with keypair generation, message signatures, transaction flows, and blockchain records backed by public-key cryptography.",
+    "referenceUrl": "https://andersbrownworth.com/blockchain/public-private-keys/keys",
+    "docsUrl": "./docs/public-private-keys/"
+  },
+  {
+    "slug": "linear-regression",
+    "title": "Linear Regression",
+    "summary": "Interactive article about fitted lines, residuals, MSE, coefficient updates, and scroll-linked regression scenes.",
+    "referenceUrl": "https://mlu-explain.github.io/linear-regression/",
+    "docsUrl": "./docs/linear-regression/"
+  },
+  {
+    "slug": "logistic-regression",
+    "title": "Logistic Regression",
+    "summary": "Interactive article about binary classification, sigmoid probabilities, thresholding, and linked logistic-regression scenes.",
+    "referenceUrl": "https://mlu-explain.github.io/logistic-regression/",
+    "docsUrl": "./docs/logistic-regression/"
+  },
+  {
+    "slug": "precision-recall",
+    "title": "Precision & Recall",
+    "summary": "Interactive article about confusion matrices, precision and recall tradeoffs, thresholding, and F1 score.",
+    "referenceUrl": "https://mlu-explain.github.io/precision-recall/",
+    "docsUrl": "./docs/precision-recall/"
+  },
+  {
+    "slug": "roc-auc",
+    "title": "ROC & AUC",
+    "summary": "Interactive article about ROC curves, threshold sweeps, AUC interpretation, and classifier comparison scenes.",
+    "referenceUrl": "https://mlu-explain.github.io/roc-auc/",
+    "docsUrl": "./docs/roc-auc/"
+  },
+  {
+    "slug": "bias-variance",
+    "title": "Bias-Variance Tradeoff",
+    "summary": "Interactive article about underfitting, overfitting, error decomposition, model complexity, LOESS smoothing, and K-nearest neighbors.",
+    "referenceUrl": "https://mlu-explain.github.io/bias-variance/",
+    "docsUrl": "./docs/bias-variance/"
+  },
+  {
+    "slug": "train-test-validation",
+    "title": "Train, Test, and Validation Sets",
+    "summary": "Interactive article about data splitting, draggable training examples, logistic-regression boundaries, and validation versus test evaluation.",
+    "referenceUrl": "https://mlu-explain.github.io/train-test-validation/",
+    "docsUrl": "./docs/train-test-validation/"
+  },
+  {
+    "slug": "double-descent",
+    "title": "Double Descent",
+    "summary": "Interactive article about classical and interpolation regimes, complexity-driven error curves, model smoothness, and the interpolation gap.",
+    "referenceUrl": "https://mlu-explain.github.io/double-descent/",
+    "docsUrl": "./docs/double-descent/"
+  },
+  {
+    "slug": "double-descent2",
+    "title": "Double Descent, Part 2",
+    "summary": "Interactive mathematical walkthrough of interpolation thresholds, spline limits, local KaTeX derivations, and charted double-descent examples.",
+    "referenceUrl": "https://mlu-explain.github.io/double-descent2/",
+    "docsUrl": "./docs/double-descent2/"
   }
 ]

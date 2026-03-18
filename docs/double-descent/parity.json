@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "intro-double-descent-scrolly-chart",
+    "originalBehavior": "The published article opens with a sticky chart in #doubledescent-container whose training and test error state changes as readers move through the five introductory steps.",
+    "localStatus": "The local route keeps the original step containers, top chart mount, and compiled scrollytelling transitions so the main double-descent narrative still advances in order.",
+    "sourceFiles": [
+      "index.html",
+      "scrollCenter.9b85e06e.js",
+      "styles.758827dc.css"
+    ],
+    "notes": [
+      "The local route preserves the published DOM structure that the top Scrollama controller expects.",
+      "Only metadata, attribution, and provenance-facing shell copy were localized around the shipped runtime."
+    ],
+    "evidence": [
+      "The implementation plan treats the top scrollytelling chart in #doubledescent-container and its five intro steps as parity-critical.",
+      "Shared smoke coverage scrolls across the intro steps and verifies the mounted chart state changes under the published runtime."
+    ]
+  },
+  {
+    "moduleId": "scatter-error-and-complexity-slider-sync",
+    "originalBehavior": "The side narrative coordinates a fitted-model view, an error curve, and a complexity slider so the active model complexity changes the scatter fit and error state together.",
+    "localStatus": "The local route keeps the published #scatter-container, #error-container, #slider-container, and slider-linked updates without rewriting the compiled interaction logic.",
+    "sourceFiles": [
+      "index.html",
+      "scrollSide.ff79d116.js",
+      "styles.758827dc.css"
+    ],
+    "notes": [
+      "The original slider and chart container IDs were preserved so the runtime can continue targeting them directly.",
+      "The public page still exposes the published progression from low-complexity models to interpolation-regime fits."
+    ],
+    "evidence": [
+      "The implementation plan marks the side narrative scene and complexity slider synchronization as parity-critical.",
+      "Shared smoke coverage scrolls through the side narrative, changes the slider value, and verifies the active model label and fitted line update."
+    ]
+  },
+  {
+    "moduleId": "interpolation-gap-scene-and-local-media",
+    "originalBehavior": "The published article uses a local animated media asset in the gap section to show how interpolating models change between training points after the interpolation threshold.",
+    "localStatus": "The local route keeps the original gap section, explanatory copy, and local GIF asset so the visual explanation still lands without upstream fetches.",
+    "sourceFiles": [
+      "index.html",
+      "line.9ddf65b2.gif",
+      "styles.758827dc.css"
+    ],
+    "notes": [
+      "The gap media remains bundled with the route instead of hotlinking the original site.",
+      "The surrounding explanation remains part of the shipped public page."
+    ],
+    "evidence": [
+      "The implementation plan treats the interpolation-gap section and its local media asset as parity-critical.",
+      "Shared smoke coverage verifies the gap-section media loads from the local route."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-crosslinks",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, and inter-article references that pointed back to the upstream public site.",
+    "localStatus": "The local route removes those public-shell provenance surfaces, localizes the remaining inter-article links, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public route now links locally to bias-variance and double-descent2 where local equivalents exist."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
+      "The route now exposes only the shared-footer reference link back to the original page."
+    ]
+  }
+]

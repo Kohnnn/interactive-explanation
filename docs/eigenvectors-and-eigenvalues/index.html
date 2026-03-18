@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eigenvectors and Eigenvalues Replica Docs</title>
+  <meta
+    name="description"
+    content="Provenance, parity notes, and implementation references for the local eigenvectors and eigenvalues replica."
+  >
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Eigenvectors and Eigenvalues</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/eigenvectors-and-eigenvalues/</code> keeps the
+        published Setosa EV linear-algebra narrative while moving provenance and implementation
+        notes out of the public page body.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../eigenvectors-and-eigenvalues/">Open replica</a>
+        <a class="action-link secondary" href="https://setosa.io/ev/eigenvectors-and-eigenvalues/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-14</code><br>
+        Source family: <code>setosa.io/ev</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published page HTML, stylesheet, script, map data, and
+          required shared scripts, then patches pathing and public-shell markup so the original
+          Angular runtime works under the <code>/interactive-explanation/</code> subpath.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://setosa.io/ev/eigenvectors-and-eigenvalues/</code> on 2026-03-14.</li>
+          <li>The local copy removes EV branding, creator bylines, share widgets, newsletter prompts, analytics, and comments.</li>
+          <li>The main controller and directive logic remain in the published <code>eigenvectors-and-eigenvalues/script.js</code> file for v1.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Shared EV layer</h2>
+        <ul class="plain-list">
+          <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> are reused as the main runtime layer.</li>
+          <li><code>../ev/scripts/topojson.js</code> is vendored locally for the migration-map scene.</li>
+          <li><code>../ev/scripts/mathjax/MathJax.js</code> replaces the retired CDN dependency used by the published page.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>eigenvectors-and-eigenvalues/index.html</code> owns the cleaned public shell, metadata, local Markov cross-link, and footer wiring.</li>
+          <li><code>eigenvectors-and-eigenvalues/script.js</code> keeps the published controllers and directives for the basis, Fibonacci, migration, and spiral scenes.</li>
+          <li><code>eigenvectors-and-eigenvalues/resources/us.json</code> supplies the local map geometry for the steady-state migration demo.</li>
+          <li><code>eigenvectors-and-eigenvalues/style.css</code> preserves the original styling and adds only narrow-screen overflow helpers.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows EV branding, creator links, share widgets, newsletter forms, analytics, or comments.</li>
+          <li>The published Markov cross-link is rewritten to the local <code>../markov-chains/</code> route so the narrative stays inside the replica site.</li>
+          <li>MathJax now loads from the local EV asset tree, and the US map JSON loads from <code>./resources/us.json</code> instead of the original site root.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+.nob {
+  transition: 0.25s all;
+}
+.nob circle {
+  fill: rgba(0, 0, 0, 0.04);
+  stroke: rgba(0, 0, 0, 0.04);
+}
+.nob:hover {
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+pca-d2,
+pca-d1,
+pca-three-plot,
+defra-table,
+defra-d1,
+defra-d2 {
+  display: block;
+  margin: 0 auto;
+}
+
+pca-three-plot {
+  min-height: 350px;
+}
+
+defra-table {
+  min-height: 400px;
+}
+
+defra-d1 {
+  min-height: 75px;
+}
+
+defra-d2 {
+  min-height: 300px;
+}
+
+.viz-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.local-note {
+  margin: 2rem 0 0;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .two-up-copy,
+  .dataset-copy,
+  .dataset-table-shell {
+    width: 100% !important;
+    float: none !important;
+    clear: both !important;
+    padding: 0 !important;
+  }
+
+  .dataset-copy {
+    margin-bottom: 1.5rem;
+  }
+}

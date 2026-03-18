@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "classification-scrollytelling-shell",
+    "originalBehavior": "The published article uses a staged scrollytelling shell where the explanation panes drive the scatter, curve, boundary, and example-prediction visuals.",
+    "localStatus": "The local route keeps the original step containers, sticky chart shell, and scroll observer so the compiled scene transitions still advance in order.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The route still mounts from the original compiled app into an otherwise empty document body.",
+      "Only shell metadata and public-facing branding were patched around the app."
+    ],
+    "evidence": [
+      "The current plan treats scrollytelling step-to-visual transitions as parity-critical.",
+      "Shared smoke coverage scrolls through later steps and waits for the threshold boundary and prediction example to appear."
+    ]
+  },
+  {
+    "moduleId": "sigmoid-probability-and-threshold-sync",
+    "originalBehavior": "Readers see the binary scatter, logistic sigmoid, and threshold-based boundary update together as the narrative reveals each concept.",
+    "localStatus": "The local route keeps the original plotted points, sigmoid curve, threshold line, classification arrows, and synchronized label updates from the compiled app.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The original threshold and temperature sliders still drive the same stores that feed the chart and readouts.",
+      "The predicted class label remains tied to the same probability comparison used in the source build."
+    ],
+    "evidence": [
+      "The implementation plan calls sigmoid mapping, threshold changes, and label synchronization parity-critical.",
+      "Shared smoke coverage changes both the temperature and threshold sliders and waits for the prediction text to update."
+    ]
+  },
+  {
+    "moduleId": "linked-loss-and-equation-scenes",
+    "originalBehavior": "The published article continues past the introduction into likelihood, loss, and equation scenes that reuse the same teaching shell and chart styling.",
+    "localStatus": "The local route keeps the original compiled lower sections, including the logistic-loss chart and explanatory math blocks, without extracting or rewriting them.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "KaTeX rendering continues through the vendored MLU math stack.",
+      "The route preserves the published section order and component layout so later scenes still line up with the scroll flow."
+    ],
+    "evidence": [
+      "The plan explicitly calls out equation-display synchronization and active-scene consistency.",
+      "Shared smoke coverage waits for the loss chart to render after the route initializes."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, and upstream metadata or image references in the public shell.",
+    "localStatus": "The local route removes those public-shell references, localizes the remaining navigation, and uses the shared footer as the only live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public route keeps the teaching content intact but no longer points back to creator or project promo surfaces inside the body."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, and analytics from shipped route code.",
+      "The route now exposes a single shared-footer reference link to the live original page."
+    ]
+  }
+]

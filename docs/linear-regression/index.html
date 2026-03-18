@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linear Regression Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local linear-regression replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Linear Regression</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/linear-regression/</code> keeps the published
+        linear-regression scrollytelling flow, fit-line visuals, residual and loss views, and
+        coefficient controls while limiting public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../linear-regression/">Open replica</a>
+        <a class="action-link secondary" href="https://mlu-explain.github.io/linear-regression/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/aws-samples/aws-mlu-explain" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>public-built site capture verified 2026-03-14</code><br>
+        Source family: <code>aws-samples/aws-mlu-explain</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published static <code>linear-regression/</code> build from
+          the MLU family, then patches shell metadata, local paths, and public-facing branding so
+          the compiled runtime works cleanly under the nested replica site.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://mlu-explain.github.io/linear-regression/</code> on 2026-03-14.</li>
+          <li>The local copy keeps the compiled Svelte runtime, KaTeX math blocks, scrollytelling observer, and chart IDs intact.</li>
+          <li>Creator names, MLU branding, analytics, and promo links were removed from the public route and kept in docs only.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>MLU adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Keep the compiled <code>build/bundle.js</code> and <code>build/bundle.css</code> in place so the original app still mounts into <code>document.body</code>.</li>
+          <li>Patch only the string-level shell surfaces that leak upstream branding, bylines, or promo links into the public route.</li>
+          <li>Reuse the existing vendored MLU font payload from <code>decision-tree/</code> through relative font-face paths instead of introducing a new shared family layer.</li>
+          <li>Let the shared footer provide the only live original-page reference link.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>linear-regression/index.html</code> owns the local metadata shell, footer hook, and GitHub Pages-safe relative asset paths.</li>
+          <li><code>linear-regression/build/bundle.js</code> keeps the published chart logic, scroll-driven scene changes, residual overlays, loss views, and coefficient controls.</li>
+          <li><code>linear-regression/build/bundle.css</code> preserves the route layout, sticky chart regions, and component styling.</li>
+          <li><code>linear-regression/assets/styles/font.css</code> now points at the already-vendored MLU and KaTeX fonts shipped with <code>decision-tree/</code>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer shows MLU branding, author bylines, analytics, or upstream promo links outside the shared footer.</li>
+          <li>The opening logo and closing link cluster were localized to the replica site while leaving the teaching scenes and charts unchanged.</li>
+          <li>The public surface keeps educational reference links that are part of the lesson, but provenance and source mapping stay in docs only.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

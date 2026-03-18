@@ -11,6 +11,7 @@ const baseUrl = `http://${host}:${port}${mountPath}`;
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
+  ".eot": "application/vnd.ms-fontobject",
   ".html": "text/html; charset=utf-8",
   ".ico": "image/x-icon",
   ".jpeg": "image/jpeg",
@@ -20,9 +21,11 @@ const contentTypes = {
   ".m4a": "audio/mp4",
   ".md": "text/markdown; charset=utf-8",
   ".mp3": "audio/mpeg",
+  ".otf": "font/otf",
   ".opus": "audio/ogg",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".ttf": "font/ttf",
   ".txt": "text/plain; charset=utf-8",
   ".wav": "audio/wav",
   ".webm": "video/webm",
@@ -116,12 +119,71 @@ async function assertRoute(page, relativePath, selector) {
   console.log(`OK route ${relativePath}`);
 }
 
+function createRuntimeMonitor(page) {
+  const issues = [];
+
+  page.on("pageerror", (error) => {
+    issues.push(`pageerror: ${error.message}`);
+  });
+
+  page.on("requestfailed", (request) => {
+    if (!request.url().startsWith(baseUrl)) {
+      return;
+    }
+
+    const failure = request.failure();
+    if (failure?.errorText === "net::ERR_ABORTED" && request.resourceType() === "document") {
+      return;
+    }
+    issues.push(`requestfailed: ${request.url()} ${failure?.errorText || ""}`.trim());
+  });
+
+  page.on("response", (response) => {
+    if (!response.url().startsWith(baseUrl) || response.status() < 400) {
+      return;
+    }
+
+    issues.push(`response ${response.status()}: ${response.url()}`);
+  });
+
+  return function assertRuntimeClean(label) {
+    assert(issues.length === 0, `${label} had runtime issues:\n${issues.join("\n")}`);
+  };
+}
+
 async function setRangeValue(page, selector, value) {
   await page.locator(selector).evaluate((element, nextValue) => {
     element.value = String(nextValue);
     element.dispatchEvent(new Event("input", { bubbles: true }));
     element.dispatchEvent(new Event("change", { bubbles: true }));
   }, value);
+}
+
+async function assertViewportUsable(page, label) {
+  const metrics = await page.evaluate(() => {
+    const doc = document.documentElement;
+    const body = document.body;
+    return {
+      innerWidth: window.innerWidth,
+      scrollWidth: Math.max(doc?.scrollWidth || 0, body?.scrollWidth || 0),
+    };
+  });
+  assert(
+    metrics.scrollWidth <= metrics.innerWidth + 32,
+    `${label} overflowed at ${metrics.innerWidth}px (${metrics.scrollWidth}px content width vs ${metrics.innerWidth}px viewport)`,
+  );
+}
+
+async function assertRouteViewportUsable(context, relativePath, selector, readySelector, label, width, height) {
+  const page = await context.newPage();
+  await page.setViewportSize({ width, height });
+  await assertRoute(page, relativePath, selector);
+  if (readySelector) {
+    await page.waitForSelector(readySelector, { timeout: 30000 });
+  }
+  await page.waitForTimeout(1000);
+  await assertViewportUsable(page, label);
+  await page.close();
 }
 
 async function clickChoice(page, text) {
@@ -937,6 +999,7 @@ async function smokeConditionalProbability(context) {
 
 async function smokeMarkovChains(context) {
   const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "markov-chains/", "#reference-footer");
   await page.waitForFunction(() => {
     return document.querySelectorAll(".st-diagram svg").length >= 2 &&
@@ -945,7 +1008,7 @@ async function smokeMarkovChains(context) {
 
   const initialSrc = await page.locator("iframe.playground").getAttribute("src");
   assert(
-    (initialSrc || "").startsWith("./playground/playground.html"),
+    (initialSrc || "").startsWith("./playground/"),
     "markov-chains iframe did not localize to the local playground",
   );
 
@@ -959,24 +1022,1400 @@ async function smokeMarkovChains(context) {
   await page.locator("a").filter({ hasText: "ex1" }).click();
   await page.waitForFunction((previousSrc) => {
     const currentSrc = document.querySelector("iframe.playground")?.getAttribute("src") || "";
-    return currentSrc !== previousSrc && currentSrc.includes("./playground/playground.html?");
+    return currentSrc !== previousSrc && currentSrc.includes("./playground/?");
   }, initialSrc, { timeout: 5000 });
 
-  const fullscreenHref = await page.locator('a[href="./playground/playground.html"]').getAttribute("href");
-  assert(fullscreenHref === "./playground/playground.html", "markov-chains fullscreen handoff did not localize");
+  const fullscreenHref = await page.locator('a[href="./playground/"]').getAttribute("href");
+  assert(fullscreenHref === "./playground/", "markov-chains fullscreen handoff did not localize");
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("markov-chains article");
   console.log("OK markov-chains article handoff");
   await page.close();
 
-  const playgroundPage = await context.newPage();
-  await assertRoute(playgroundPage, "markov-chains/playground/playground.html", "#reference-footer");
-  await playgroundPage.waitForSelector(".matrixInput textarea", { timeout: 15000 });
-  await playgroundPage.locator(".matrixInput textarea").fill("[[0.3,0.3,0.4],[0.3,0.5,0.2],[0.4,0.4,0.2]]");
-  await playgroundPage.waitForFunction(() => {
+  const directoryPlaygroundPage = await context.newPage();
+  const assertDirectoryRuntimeClean = createRuntimeMonitor(directoryPlaygroundPage);
+  await assertRoute(directoryPlaygroundPage, "markov-chains/playground/", "#reference-footer");
+  await directoryPlaygroundPage.waitForSelector(".matrixInput textarea", { timeout: 15000 });
+  await directoryPlaygroundPage.locator(".matrixInput textarea").fill("[[0.3,0.3,0.4],[0.3,0.5,0.2],[0.4,0.4,0.2]]");
+  await directoryPlaygroundPage.waitForFunction(() => {
     const scope = angular.element(document.body).scope();
     return scope.validTransitionMatrix === true && Array.isArray(scope.states) && scope.states.length === 3;
   }, null, { timeout: 5000 });
-  console.log("OK markov-chains playground editor");
+  await directoryPlaygroundPage.waitForTimeout(250);
+  assertDirectoryRuntimeClean("markov-chains directory playground");
+  console.log("OK markov-chains directory playground editor");
+  await directoryPlaygroundPage.close();
+
+  const playgroundPage = await context.newPage();
+  const assertDirectRuntimeClean = createRuntimeMonitor(playgroundPage);
+  await assertRoute(playgroundPage, "markov-chains/playground/playground.html", "#reference-footer");
+  await playgroundPage.waitForSelector(".matrixInput textarea", { timeout: 15000 });
+  await playgroundPage.waitForTimeout(250);
+  assertDirectRuntimeClean("markov-chains direct playground");
+  console.log("OK markov-chains direct playground route");
   await playgroundPage.close();
+}
+
+async function smokePrincipalComponentAnalysis(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "principal-component-analysis/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("pca-d2 svg") &&
+      document.querySelector("pca-d1 svg") &&
+      document.querySelector("defra-table svg") &&
+      document.querySelector("defra-d1 svg") &&
+      document.querySelector("defra-d2 svg") &&
+      document.querySelectorAll("pca-three-plot canvas").length >= 3;
+  }, null, { timeout: 30000 });
+
+  const beforeDrag = await page.evaluate(() => {
+    const scope = angular.element(document.body).scope();
+    return {
+      sample: scope.samples[0].c.slice(),
+      pcaSample: scope.pcaSamples[0].slice(),
+      pcaVector: scope.pcaVectors[0].slice(),
+    };
+  });
+  await page.waitForSelector("pca-d2 .nob", { timeout: 15000 });
+  await page.evaluate(() => {
+    const scope = angular.element(document.body).scope();
+    scope.$apply(() => {
+      scope.updateSample(scope.samples[0], [4.8, 6.1]);
+    });
+  });
+  await page.waitForFunction((before) => {
+    const scope = angular.element(document.body).scope();
+    return Math.abs(scope.samples[0].c[0] - before.sample[0]) > 0.05 &&
+      Math.abs(scope.samples[0].c[1] - before.sample[1]) > 0.05 &&
+      Math.abs(scope.pcaSamples[0][0] - before.pcaSample[0]) > 0.05 &&
+      Math.abs(scope.pcaVectors[0][0] - before.pcaVector[0]) > 0.01;
+  }, beforeDrag, { timeout: 5000 });
+  console.log("OK principal-component-analysis 2D recompute");
+
+  async function overlaySignature() {
+    return page.evaluate(() => {
+      const canvas = document.querySelectorAll("pca-three-plot canvas")[2];
+      const context = canvas?.getContext("2d");
+      if (!canvas || !context) {
+        return null;
+      }
+
+      const data = context.getImageData(0, 0, canvas.width, canvas.height).data;
+      let total = 0;
+      for (let index = 0; index < data.length; index += 97) {
+        total = (total + data[index] + data[index + 1] * 3 + data[index + 2] * 5 + data[index + 3] * 7) % 2147483647;
+      }
+      return total;
+    });
+  }
+
+  const initialOverlay = await overlaySignature();
+  assert(initialOverlay !== null, "principal-component-analysis 3D overlay canvas did not render");
+  await page.locator("button").filter({ hasText: /^show PCA$/i }).click();
+  await page.waitForTimeout(1200);
+  const afterShowPca = await overlaySignature();
+  assert(afterShowPca !== initialOverlay, "principal-component-analysis show PCA button did not change the projected overlay");
+
+  const projectionCanvas = page.locator("pca-three-plot canvas").nth(1);
+  const projectionCanvasBox = await projectionCanvas.boundingBox();
+  assert(projectionCanvasBox, "principal-component-analysis 3D projection canvas did not render");
+  await page.mouse.move(projectionCanvasBox.x + projectionCanvasBox.width / 2, projectionCanvasBox.y + projectionCanvasBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    projectionCanvasBox.x + projectionCanvasBox.width / 2 + 54,
+    projectionCanvasBox.y + projectionCanvasBox.height / 2 - 30,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForTimeout(900);
+  const afterCameraDrag = await overlaySignature();
+  assert(afterCameraDrag !== afterShowPca, "principal-component-analysis 3D drag did not change the projected overlay");
+
+  await page.locator("button").filter({ hasText: /^reset$/i }).click();
+  await page.waitForTimeout(1200);
+  const afterReset = await overlaySignature();
+  assert(afterReset !== afterCameraDrag, "principal-component-analysis reset button did not change the projected overlay");
+  console.log("OK principal-component-analysis 3D controls");
+
+  const datasetState = await page.evaluate(() => {
+    const text = Array.from(document.querySelectorAll("defra-table svg text, defra-d1 svg text, defra-d2 svg text"))
+      .map((node) => (node.textContent || "").trim())
+      .filter(Boolean);
+    return {
+      tableRects: document.querySelectorAll("defra-table svg rect").length,
+      d1Points: document.querySelectorAll("defra-d1 svg circle").length,
+      d2Points: document.querySelectorAll("defra-d2 svg circle").length,
+      text,
+    };
+  });
+  assert(datasetState.tableRects >= 60, "principal-component-analysis DEFRA table did not render its data cells");
+  assert(datasetState.d1Points === 4, "principal-component-analysis 1D DEFRA plot did not render four country points");
+  assert(datasetState.d2Points === 4, "principal-component-analysis 2D DEFRA plot did not render four country points");
+  assert(datasetState.text.includes("England"), "principal-component-analysis DEFRA labels are missing England");
+  assert(datasetState.text.includes("Wales"), "principal-component-analysis DEFRA labels are missing Wales");
+  assert(datasetState.text.includes("Scotland"), "principal-component-analysis DEFRA labels are missing Scotland");
+  assert(datasetState.text.includes("N Ireland"), "principal-component-analysis DEFRA labels are missing N Ireland");
+  assert(datasetState.text.includes("pc1"), "principal-component-analysis DEFRA plots are missing the pc1 label");
+  assert(datasetState.text.includes("pc2"), "principal-component-analysis DEFRA plots are missing the pc2 label");
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("principal-component-analysis route");
+  console.log("OK principal-component-analysis dataset views");
+  await page.close();
+}
+
+async function smokeExponentiation(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "exponentiation/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("simple-growth svg") &&
+      document.querySelectorAll("growth-demo svg").length === 2 &&
+      document.querySelector("virus-demo canvas") &&
+      document.querySelector("virus-demo svg");
+  }, null, { timeout: 30000 });
+
+  await page.waitForFunction(() => document.querySelectorAll("simple-growth .block").length >= 4, null, { timeout: 10000 });
+  await page.locator('div[ng-controller="SimpleGrowthCtrl"] select').selectOption({ label: "x4" });
+  await setRangeValue(page, 'div[ng-controller="SimpleGrowthCtrl"] input[ng-model="opts.steps"]', 3);
+  await setRangeValue(page, 'div[ng-controller="SimpleGrowthCtrl"] input[ng-model="opts.speed"]', 10);
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="SimpleGrowthCtrl"]')).scope();
+    const text = document.querySelector('[ng-controller="SimpleGrowthCtrl"] p')?.textContent || "";
+    return +scope.opts.rate === 4 &&
+      +scope.opts.steps === 3 &&
+      +scope.opts.speed === 10 &&
+      /quadrupling/i.test(text);
+  }, null, { timeout: 5000 });
+  await page.locator('div[ng-controller="SimpleGrowthCtrl"] button').click();
+  await page.waitForTimeout(300);
+  await page.waitForFunction(() => document.querySelectorAll("simple-growth .block").length >= 4, null, { timeout: 5000 });
+  console.log("OK exponentiation simple growth controls");
+
+  await page.waitForFunction(() => {
+    return document.querySelectorAll('[ng-controller="LinearGrowthDemoCtrl"] growth-demo rect.block').length >= 2;
+  }, null, { timeout: 10000 });
+  await page.locator('div[ng-controller="LinearGrowthDemoCtrl"] select').selectOption({ label: "+5" });
+  await setRangeValue(page, 'div[ng-controller="LinearGrowthDemoCtrl"] input[ng-model="opts.steps"]', 12);
+  await setRangeValue(page, 'div[ng-controller="LinearGrowthDemoCtrl"] input[ng-model="opts.speed"]', 20);
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="LinearGrowthDemoCtrl"]')).scope();
+    const labels = Array.from(document.querySelectorAll('[ng-controller="LinearGrowthDemoCtrl"] growth-demo text'))
+      .map((node) => node.textContent || "");
+    return +scope.opts.rate === 5 &&
+      +scope.opts.steps === 12 &&
+      +scope.opts.speed === 20 &&
+      labels.some((label) => /\+5/.test(label));
+  }, null, { timeout: 5000 });
+  await page.locator('div[ng-controller="LinearGrowthDemoCtrl"] button').click();
+  await page.waitForTimeout(300);
+  await page.waitForFunction(() => {
+    return document.querySelectorAll('[ng-controller="LinearGrowthDemoCtrl"] growth-demo rect.block').length >= 1;
+  }, null, { timeout: 5000 });
+  console.log("OK exponentiation linear growth controls");
+
+  await page.waitForFunction(() => {
+    return document.querySelectorAll('[ng-controller="ExponentialGrowthDemoCtrl"] growth-demo rect.block').length >= 2;
+  }, null, { timeout: 10000 });
+  await page.locator('div[ng-controller="ExponentialGrowthDemoCtrl"] select').selectOption({ label: "x4" });
+  await setRangeValue(page, 'div[ng-controller="ExponentialGrowthDemoCtrl"] input[ng-model="opts.steps"]', 6);
+  await setRangeValue(page, 'div[ng-controller="ExponentialGrowthDemoCtrl"] input[ng-model="opts.speed"]', 20);
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="ExponentialGrowthDemoCtrl"]')).scope();
+    const labels = Array.from(document.querySelectorAll('[ng-controller="ExponentialGrowthDemoCtrl"] growth-demo text'))
+      .map((node) => node.textContent || "");
+    return +scope.opts.rate === 4 &&
+      +scope.opts.steps === 6 &&
+      +scope.opts.speed === 20 &&
+      labels.some((label) => /x4/.test(label));
+  }, null, { timeout: 5000 });
+  await page.locator('div[ng-controller="ExponentialGrowthDemoCtrl"] button').click();
+  await page.waitForTimeout(300);
+  await page.waitForFunction(() => {
+    const labels = Array.from(document.querySelectorAll('[ng-controller="ExponentialGrowthDemoCtrl"] growth-demo text'))
+      .map((node) => node.textContent || "");
+    return labels.some((label) => /x4/.test(label));
+  }, null, { timeout: 5000 });
+  console.log("OK exponentiation exponential growth controls");
+
+  await page.waitForFunction(() => {
+    return Array.isArray(window.nodes) &&
+      window.nodes.some((node) => node.generation === 0) &&
+      document.querySelectorAll("virus-demo .values line").length >= 2;
+  }, null, { timeout: 10000 });
+  await setRangeValue(page, 'div[ng-controller="ViralDemoCtrl"] input[ng-model="opts.speed"]', 10);
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="ViralDemoCtrl"]')).scope();
+    return +scope.opts.speed === 10;
+  }, null, { timeout: 5000 });
+  await page.locator('div[ng-controller="ViralDemoCtrl"] button').click();
+  await page.waitForFunction(() => {
+    return Array.isArray(window.nodes) &&
+      window.nodes.filter((node) => node.generation === 0).length === 1 &&
+      window.nodes.filter((node) => node.infection > 0).length <= 1;
+  }, null, { timeout: 5000 });
+  await page.waitForFunction(() => {
+    return Array.isArray(window.nodes) &&
+      window.nodes.filter((node) => node.infection > 0).length > 1 &&
+      document.querySelectorAll("virus-demo .values line").length >= 2;
+  }, null, { timeout: 10000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("exponentiation route");
+  console.log("OK exponentiation virus demo");
+  await page.close();
+}
+
+async function smokePi(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "pi/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("circle-demo svg circle.circle") &&
+      document.querySelector("pi-demo svg path.circum") &&
+      document.querySelectorAll('input[ng-model="opts.fold"], input[ng-model="opts.diameter"]').length === 2;
+  }, null, { timeout: 15000 });
+
+  const before = await page.evaluate(() => ({
+    circumferencePath: document.querySelector("pi-demo .circum")?.getAttribute("d") || "",
+    diameterLabel: document.querySelector("pi-demo .diameter-label-g text")?.textContent || "",
+    circumferenceLabel: document.querySelector("pi-demo .circum-label-g text")?.textContent || "",
+  }));
+
+  await setRangeValue(page, 'input[ng-model="opts.fold"]', 0.78);
+  await setRangeValue(page, 'input[ng-model="opts.diameter"]', 1.9);
+  await page.waitForFunction((previous) => {
+    const scope = angular.element(document.body).scope();
+    const circumferencePath = document.querySelector("pi-demo .circum")?.getAttribute("d") || "";
+    const diameterLabel = document.querySelector("pi-demo .diameter-label-g text")?.textContent || "";
+    const circumferenceLabel = document.querySelector("pi-demo .circum-label-g text")?.textContent || "";
+    return Math.abs(+scope.opts.fold - 0.78) < 0.001 &&
+      Math.abs(+scope.opts.diameter - 1.9) < 0.001 &&
+      circumferencePath !== previous.circumferencePath &&
+      diameterLabel !== previous.diameterLabel &&
+      circumferenceLabel !== previous.circumferenceLabel &&
+      /D = 1\.9/.test(diameterLabel) &&
+      /C = 5\.96/.test(circumferenceLabel);
+  }, before, { timeout: 5000 });
+
+  const circumDashOpacity = await page.locator("pi-demo .circum-dash").evaluate((element) => {
+    return window.getComputedStyle(element).opacity;
+  });
+  assert(Number(circumDashOpacity) < 1, "pi wrap control did not reduce the circumference guide opacity");
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("pi route");
+  console.log("OK pi geometry and wrap controls");
+  await page.close();
+}
+
+async function smokeSineAndCosine(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "sine-and-cosine/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("similar-triangles svg") &&
+      document.querySelectorAll("trig-transform svg").length === 2 &&
+      document.querySelector("linked-coordinates svg") &&
+      window.MathJax;
+  }, null, { timeout: 30000 });
+
+  const mathJaxSrc = await page.locator('script[src*="MathJax.js"]').getAttribute("src");
+  assert(
+    mathJaxSrc && mathJaxSrc.startsWith("../ev/scripts/mathjax/"),
+    "sine-and-cosine did not load MathJax from the local EV asset tree",
+  );
+
+  await page.waitForFunction(() => {
+    return document.querySelector(".MathJax_Display") || document.querySelector(".MathJax");
+  }, null, { timeout: 30000 });
+
+  const before = await page.evaluate(() => ({
+    labelA: document.querySelector("similar-triangles .label-a")?.textContent || "",
+    labelB: document.querySelector("similar-triangles .label-b")?.textContent || "",
+    polarNob: document.querySelector("linked-coordinates .polar-g .nob")?.getAttribute("transform") || "",
+    sineNob: document.querySelector("linked-coordinates .sine-g .nob")?.getAttribute("transform") || "",
+    cosineNob: document.querySelector("linked-coordinates .cosine-g .nob")?.getAttribute("transform") || "",
+  }));
+
+  await page.evaluate(() => {
+    const scope = angular.element(document.body).scope();
+    scope.$apply(() => {
+      scope.opts.pos = [1.6, -0.7];
+    });
+  });
+  await page.waitForFunction((previous) => {
+    return (document.querySelector("similar-triangles .label-a")?.textContent || "") !== previous.labelA &&
+      (document.querySelector("similar-triangles .label-b")?.textContent || "") !== previous.labelB &&
+      (document.querySelector("linked-coordinates .polar-g .nob")?.getAttribute("transform") || "") !== previous.polarNob &&
+      (document.querySelector("linked-coordinates .sine-g .nob")?.getAttribute("transform") || "") !== previous.sineNob &&
+      (document.querySelector("linked-coordinates .cosine-g .nob")?.getAttribute("transform") || "") !== previous.cosineNob;
+  }, before, { timeout: 5000 });
+  console.log("OK sine-and-cosine linked coordinate sync");
+
+  await page.locator('[ng-controller="SineAnimationCtrl"] > ev-play-button > div > svg').click();
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="SineAnimationCtrl"]')).scope();
+    return scope?.opts?.isPlaying === true;
+  }, null, { timeout: 5000 });
+  await page.waitForFunction(() => {
+    const path = document.querySelector('[ng-controller="SineAnimationCtrl"] trig-transform .sin-path');
+    return (path?.getAttribute("d") || "").length > 20;
+  }, null, { timeout: 18000 });
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="SineAnimationCtrl"]')).scope();
+    return scope?.opts?.isPlaying === false;
+  }, null, { timeout: 22000 });
+  console.log("OK sine-and-cosine sine autoplay");
+
+  await page.locator('[ng-controller="CosineAnimationCtrl"] ev-play-button > div > svg').click();
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="CosineAnimationCtrl"]')).scope();
+    return scope?.opts?.isPlaying === true;
+  }, null, { timeout: 5000 });
+  await page.waitForFunction(() => {
+    const path = document.querySelector('[ng-controller="CosineAnimationCtrl"] trig-transform .cos-path');
+    return (path?.getAttribute("d") || "").length > 20;
+  }, null, { timeout: 18000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("sine-and-cosine route");
+  console.log("OK sine-and-cosine cosine autoplay");
+  await page.close();
+}
+
+async function smokeEigenvectorsAndEigenvalues(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "eigenvectors-and-eigenvalues/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelectorAll("simple-plot svg").length >= 3 &&
+      document.querySelector("bacteria-simulation svg") &&
+      document.querySelector("sf-to-ny-migration-map svg path.us-bg") &&
+      document.querySelector("migration svg") &&
+      document.querySelector("stochastic-matrix-multiplication svg") &&
+      document.querySelector("four-quad-plot svg") &&
+      window.MathJax;
+  }, null, { timeout: 30000 });
+
+  const mathJaxSrc = await page.locator('script[src*="MathJax.js"]').getAttribute("src");
+  assert(
+    mathJaxSrc && mathJaxSrc.startsWith("../ev/scripts/mathjax/"),
+    "eigenvectors-and-eigenvalues did not load MathJax from the local EV asset tree",
+  );
+
+  await page.waitForFunction(() => {
+    return document.querySelector(".MathJax_Display") || document.querySelector(".MathJax");
+  }, null, { timeout: 30000 });
+  await page.waitForFunction(() => {
+    const pathData = document.querySelector("sf-to-ny-migration-map .us-bg")?.getAttribute("d") || "";
+    return pathData.length > 100;
+  }, null, { timeout: 30000 });
+
+  const basisBefore = await page.evaluate(() => {
+    const basisScope = angular.element(document.querySelector('[ng-controller="BasisCtrl"]')).scope();
+    return {
+      basis1: [...basisScope.opt.basis1],
+      basis2: [...basisScope.opt.basis2],
+      pos0: [...basisScope.opt.pos0],
+      nobs: Array.from(document.querySelectorAll('[ng-controller="BasisCtrl"] .nobs > g'))
+        .map((node) => node.getAttribute("transform") || ""),
+      vectors: Array.from(document.querySelectorAll('[ng-controller="BasisCtrl"] .vectors line'))
+        .map((node) => [node.getAttribute("x1"), node.getAttribute("y1"), node.getAttribute("x2"), node.getAttribute("y2")].join(",")),
+    };
+  });
+  await page.evaluate(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="BasisCtrl"]')).scope();
+    scope.$apply(() => {
+      scope.opt.basis1 = [2.4, 1.1];
+      scope.opt.basis2 = [0.8, 3.6];
+      scope.opt.pos0 = [1.4, 2.7];
+    });
+  });
+  await page.waitForFunction((previous) => {
+    const scope = angular.element(document.querySelector('[ng-controller="BasisCtrl"]')).scope();
+    const nobs = Array.from(document.querySelectorAll('[ng-controller="BasisCtrl"] .nobs > g'))
+      .map((node) => node.getAttribute("transform") || "");
+    const vectors = Array.from(document.querySelectorAll('[ng-controller="BasisCtrl"] .vectors line'))
+      .map((node) => [node.getAttribute("x1"), node.getAttribute("y1"), node.getAttribute("x2"), node.getAttribute("y2")].join(","));
+    return Math.abs(scope.opt.basis1[0] - previous.basis1[0]) > 0.2 &&
+      Math.abs(scope.opt.basis2[1] - previous.basis2[1]) > 0.2 &&
+      Math.abs(scope.opt.pos0[0] - previous.pos0[0]) > 0.2 &&
+      nobs.join("|") !== previous.nobs.join("|") &&
+      vectors.join("|") !== previous.vectors.join("|");
+  }, basisBefore, { timeout: 5000 });
+  console.log("OK eigenvectors-and-eigenvalues basis editor");
+
+  const bacteriaBefore = await page.evaluate(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="BacteriaCtrl"]')).scope();
+    return {
+      curGen: scope.opt.curGen,
+      readout: document.querySelector('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]')?.textContent || "",
+    };
+  });
+  await page.locator('[ng-controller="BacteriaCtrl"] button').filter({ hasText: /^forward$/i }).click();
+  await page.waitForFunction((previous) => {
+    const scope = angular.element(document.querySelector('[ng-controller="BacteriaCtrl"]')).scope();
+    const readout = document.querySelector('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]')?.textContent || "";
+    return scope.opt.curGen > previous.curGen && readout !== previous.readout;
+  }, bacteriaBefore, { timeout: 5000 });
+  console.log("OK eigenvectors-and-eigenvalues Fibonacci controls");
+
+  const migrationBefore = await page.evaluate(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="StochasticMatrixMultiplicationCtrl"]')).scope();
+    return {
+      samplesLength: scope.opts.samples.length,
+      sampleCount: document.querySelectorAll("stochastic-matrix-multiplication .samples .sample").length,
+    };
+  });
+  await page.locator("migration svg").hover();
+  await page.waitForFunction((previous) => {
+    const scope = angular.element(document.querySelector('[ng-controller="StochasticMatrixMultiplicationCtrl"]')).scope();
+    return scope.opts.samples.length > previous.samplesLength &&
+      document.querySelectorAll("stochastic-matrix-multiplication .samples .sample").length > previous.sampleCount;
+  }, migrationBefore, { timeout: 15000 });
+  console.log("OK eigenvectors-and-eigenvalues steady-state migration");
+
+  const spiralBefore = await page.evaluate(() => ({
+    stepCount: angular.element(document.querySelector('[ng-controller="FourQuadCtrl"]')).scope().opt.n,
+    nobs: Array.from(document.querySelectorAll('[ng-controller="FourQuadCtrl"] .nobs > g'))
+      .map((node) => node.getAttribute("transform") || ""),
+    evPoints: Array.from(document.querySelectorAll("four-quad-plot .ev-point"))
+      .map((node) => node.getAttribute("transform") || ""),
+    trailCount: document.querySelectorAll("four-quad-plot .points g").length,
+  }));
+  await page.evaluate(() => {
+    const scope = angular.element(document.querySelector('[ng-controller="FourQuadCtrl"]')).scope();
+    scope.$apply(() => {
+      scope.opt.basis1 = [1.1, -1.3];
+      scope.opt.basis2 = [1.0, 0.8];
+      scope.opt.pos0 = [1.8, 0.7];
+      scope.opt.n = 18;
+    });
+  });
+  await page.waitForFunction((previous) => {
+    const scope = angular.element(document.querySelector('[ng-controller="FourQuadCtrl"]')).scope();
+    const nobs = Array.from(document.querySelectorAll('[ng-controller="FourQuadCtrl"] .nobs > g'))
+      .map((node) => node.getAttribute("transform") || "");
+    const evPoints = Array.from(document.querySelectorAll("four-quad-plot .ev-point"))
+      .map((node) => node.getAttribute("transform") || "");
+    return scope.opt.n === 18 &&
+      nobs.join("|") !== previous.nobs.join("|") &&
+      evPoints.join("|") !== previous.evPoints.join("|") &&
+      document.querySelectorAll("four-quad-plot .points g").length === 18;
+  }, spiralBefore, { timeout: 5000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("eigenvectors-and-eigenvalues route");
+  console.log("OK eigenvectors-and-eigenvalues complex spiral");
+  await page.close();
+}
+
+async function smokeImageKernels(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "image-kernels/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("image-as-matrix canvas") &&
+      document.querySelector("kernel-matrix svg") &&
+      document.querySelector("kernel-inspect canvas") &&
+      document.querySelector("kernel-playground canvas") &&
+      angular.element(document.body).scope()?.data1?.length > 0 &&
+      typeof window.EXIF !== "undefined";
+  }, null, { timeout: 30000 });
+
+  const exifSrc = await page.locator('script[src*="exif.js"]').getAttribute("src");
+  assert(exifSrc && exifSrc.startsWith("../ev/scripts/exif.js"), "image-kernels did not load exif.js from the local EV asset tree");
+
+  await page.waitForFunction(() => {
+    const canvas = document.querySelector("kernel-playground canvas");
+    if (!canvas) {
+      return false;
+    }
+    const ctx = canvas.getContext("2d");
+    const sample = ctx.getImageData(760, 200, 2, 2).data;
+    return Array.from(sample).some((value) => value !== 0);
+  }, null, { timeout: 15000 });
+
+  const playgroundSignature = async () => page.evaluate(() => {
+    const canvas = document.querySelector("kernel-playground canvas");
+    const ctx = canvas.getContext("2d");
+    const samplePoints = [
+      [650, 120],
+      [760, 210],
+      [900, 320],
+    ];
+    return samplePoints
+      .map(([x, y]) => Array.from(ctx.getImageData(x, y, 1, 1).data).join(","))
+      .join("|");
+  });
+
+  const presetBefore = await playgroundSignature();
+  await page.locator('select[ng-model="selectedKernel"]').first().selectOption({ label: "blur" });
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.body).scope();
+    return scope.selectedKernel === "blur" &&
+      Array.isArray(scope.kernel) &&
+      scope.kernel.some((value) => Math.abs(+value - 0.25) < 0.001);
+  }, null, { timeout: 5000 });
+  const presetAfter = await playgroundSignature();
+  assert(presetAfter !== presetBefore, "image-kernels blur preset did not change the rendered playground output");
+  console.log("OK image-kernels preset switching");
+
+  const customBefore = presetAfter;
+  await page.locator('input[ng-model^="kernel["]').nth(0).evaluate((element) => {
+    element.value = "2";
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.body).scope();
+    return scope.selectedKernel === "custom" && Math.abs(+scope.kernel[0] - 2) < 0.001;
+  }, null, { timeout: 5000 });
+  const customAfter = await playgroundSignature();
+  assert(customAfter !== customBefore, "image-kernels custom kernel edit did not change the rendered playground output");
+  console.log("OK image-kernels custom kernel editor");
+
+  const inspector = page.locator("kernel-inspect svg");
+  await inspector.scrollIntoViewIfNeeded();
+  const inspectorBox = await inspector.boundingBox();
+  assert(inspectorBox, "image-kernels inspector SVG did not render");
+  await inspector.hover({ position: { x: 48, y: 48 } });
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.body).scope();
+    return Array.isArray(scope.d1SelPixel) && scope.d1SelPixel[0] <= 4 && scope.d1SelPixel[1] <= 4;
+  }, null, { timeout: 5000 });
+  console.log("OK image-kernels hover inspector");
+
+  await inspector.hover({ position: { x: 4, y: 4 } });
+  await page.waitForFunction(() => {
+    const scope = angular.element(document.body).scope();
+    return Array.isArray(scope.d1SelPixel) && scope.d1SelPixel[0] === 0 && scope.d1SelPixel[1] === 0;
+  }, null, { timeout: 5000 });
+  const hasBoundaryPlaceholder = await page.evaluate(() => {
+    const texts = Array.from(document.querySelectorAll("kernel-inspect svg text"))
+      .map((node) => (node.textContent || "").trim())
+      .filter(Boolean);
+    return texts.includes("?");
+  });
+  assert(hasBoundaryPlaceholder, "image-kernels edge handling did not expose missing-neighbor placeholders");
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("image-kernels route");
+  console.log("OK image-kernels boundary handling");
+  await page.close();
+}
+
+async function smokeOrdinaryLeastSquaresRegression(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "ordinary-least-squares-regression/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector(".myApp") &&
+      document.querySelectorAll("svg").length >= 3 &&
+      document.querySelector(".line-ols") &&
+      document.querySelectorAll(".point-nobs .nob").length >= 7 &&
+      document.querySelectorAll(".error-squares rect").length >= 7;
+  }, null, { timeout: 30000 });
+
+  const sharedSrc = await page.evaluate(() => {
+    return document.querySelector('script[src*="common-shared.js"]')?.getAttribute("src") || "";
+  });
+  assert(
+    sharedSrc === "../ev/_build/js/common-shared.js",
+    "ordinary-least-squares-regression did not load common-shared.js from the local EV asset tree",
+  );
+
+  const initialState = await page.evaluate(() => ({
+    equation: Array.from(document.querySelectorAll("svg text"))
+      .map((node) => (node.textContent || "").trim())
+      .find((text) => /^-?\d+\.\d+ \+ -?\d+\.\d+ \* hand size = height$/.test(text)) || "",
+    line: (() => {
+      const node = document.querySelector(".line-ols");
+      return node
+        ? [node.getAttribute("x1"), node.getAttribute("y1"), node.getAttribute("x2"), node.getAttribute("y2")].join(",")
+        : "";
+    })(),
+    errorSignature: Array.from(document.querySelectorAll(".error-squares rect"))
+      .slice(0, 7)
+      .map((node) => [node.getAttribute("transform"), node.getAttribute("width"), node.getAttribute("height")].join("|"))
+      .join("||"),
+    images: Array.from(document.querySelectorAll(".myApp img"))
+      .map((node) => node.getAttribute("src") || ""),
+  }));
+  assert(initialState.line.length > 0, "ordinary-least-squares-regression did not render a fitted line on first load");
+  assert(
+    initialState.images.includes("./resources/dial-tutorial.gif") &&
+      initialState.images.includes("./resources/point-tutorial.gif"),
+    "ordinary-least-squares-regression did not localize tutorial media",
+  );
+
+  const pointNob = page.locator(".point-nobs .nob").first();
+  const pointBox = await pointNob.boundingBox();
+  assert(pointBox, "ordinary-least-squares-regression did not expose a draggable point control");
+  await page.mouse.move(pointBox.x + pointBox.width / 2, pointBox.y + pointBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(pointBox.x + pointBox.width / 2 + 35, pointBox.y + pointBox.height / 2 - 25, { steps: 12 });
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const equation = Array.from(document.querySelectorAll("svg text"))
+      .map((node) => (node.textContent || "").trim())
+      .find((text) => /^-?\d+\.\d+ \+ -?\d+\.\d+ \* hand size = height$/.test(text)) || "";
+    const node = document.querySelector(".line-ols");
+    const line = node
+      ? [node.getAttribute("x1"), node.getAttribute("y1"), node.getAttribute("x2"), node.getAttribute("y2")].join(",")
+      : "";
+    const errorSignature = Array.from(document.querySelectorAll(".error-squares rect"))
+      .slice(0, 7)
+      .map((rect) => [rect.getAttribute("transform"), rect.getAttribute("width"), rect.getAttribute("height")].join("|"))
+      .join("||");
+    return equation !== previous.equation &&
+      line !== previous.line &&
+      errorSignature !== previous.errorSignature;
+  }, initialState, { timeout: 5000 });
+  console.log("OK ordinary-least-squares-regression point drag");
+
+  await assertViewportUsable(page, "ordinary-least-squares-regression route");
+  await assertRouteViewportUsable(
+    context,
+    "ordinary-least-squares-regression/",
+    "#reference-footer",
+    ".line-ols",
+    "ordinary-least-squares-regression route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("ordinary-least-squares-regression route");
+  console.log("OK ordinary-least-squares-regression responsive shell");
+  await page.close();
+}
+
+async function smokeBlockchain(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "blockchain/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#block1chain1data") &&
+      document.querySelector("#block1chain1hash") &&
+      document.querySelector("#block2chain1previous") &&
+      document.querySelector("#block1chain1mineButton");
+  }, null, { timeout: 30000 });
+
+  const initialState = await page.evaluate(() => ({
+    block1Hash: document.querySelector("#block1chain1hash")?.value || "",
+    block2Prev: document.querySelector("#block2chain1previous")?.value || "",
+    block1Class: document.querySelector("#block1chain1well")?.className || "",
+    block2Class: document.querySelector("#block2chain1well")?.className || "",
+  }));
+  assert(initialState.block1Hash.length > 0, "blockchain did not render the first block hash on load");
+
+  await page.evaluate(() => {
+    const textarea = document.querySelector("#block1chain1data");
+    textarea.value = "local smoke tamper";
+    textarea.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: "e" }));
+  });
+  await page.waitForFunction((previous) => {
+    const block1Hash = document.querySelector("#block1chain1hash")?.value || "";
+    const block2Prev = document.querySelector("#block2chain1previous")?.value || "";
+    const block1Class = document.querySelector("#block1chain1well")?.className || "";
+    const block2Class = document.querySelector("#block2chain1well")?.className || "";
+    return block1Hash !== previous.block1Hash &&
+      block2Prev !== previous.block2Prev &&
+      /well-error/.test(block1Class) &&
+      /well-error/.test(block2Class);
+  }, initialState, { timeout: 5000 });
+
+  const tamperedState = await page.evaluate(() => ({
+    block1Hash: document.querySelector("#block1chain1hash")?.value || "",
+    block2Prev: document.querySelector("#block2chain1previous")?.value || "",
+  }));
+  await page.locator("#block1chain1mineButton").click();
+  await page.waitForFunction((previous) => {
+    const block1Hash = document.querySelector("#block1chain1hash")?.value || "";
+    const block1Class = document.querySelector("#block1chain1well")?.className || "";
+    const block2Class = document.querySelector("#block2chain1well")?.className || "";
+    return block1Hash !== previous.block1Hash &&
+      block1Hash.startsWith("0000") &&
+      /well-success/.test(block1Class) &&
+      /well-error/.test(block2Class);
+  }, tamperedState, { timeout: 10000 });
+  console.log("OK blockchain hash and mining flow");
+
+  await assertRoute(page, "blockchain/distributed.html", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#block1chain1well") &&
+      document.querySelector("#block1chain2well") &&
+      document.querySelector("#block1chain3well");
+  }, null, { timeout: 10000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("blockchain route");
+  console.log("OK blockchain distributed scene");
+  await page.close();
+}
+
+async function smokePublicPrivateKeys(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "public-private-keys/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#privateKey") &&
+      document.querySelector("#publicKey") &&
+      document.querySelector("#randomButton");
+  }, null, { timeout: 30000 });
+
+  const initialKeys = await page.evaluate(() => ({
+    privateKey: document.querySelector("#privateKey")?.value || "",
+    publicKey: document.querySelector("#publicKey")?.value || "",
+  }));
+  assert(initialKeys.publicKey.length > 100, "public-private-keys did not derive an initial public key");
+  await page.locator("#randomButton").click();
+  await page.waitForFunction((previous) => {
+    const privateKey = document.querySelector("#privateKey")?.value || "";
+    const publicKey = document.querySelector("#publicKey")?.value || "";
+    return privateKey !== previous.privateKey &&
+      publicKey !== previous.publicKey &&
+      publicKey.length > 100;
+  }, initialKeys, { timeout: 5000 });
+  console.log("OK public-private-keys key generation");
+
+  await assertRoute(page, "public-private-keys/signatures/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#sign-message") &&
+      document.querySelector("#sign-button") &&
+      document.querySelector("#verify-tab") &&
+      document.querySelector("#sign-signature");
+  }, null, { timeout: 10000 });
+  const message = "local signature smoke";
+  await page.locator("#sign-message").fill(message);
+  await page.locator("#sign-button").click();
+  await page.waitForFunction(() => {
+    return (document.querySelector("#sign-signature")?.value || "").length > 100 &&
+      (document.querySelector("#publicKey")?.value || "").length > 100;
+  }, null, { timeout: 5000 });
+  await page.locator("#verify-tab").click();
+  await page.locator("#verify-message").fill(message);
+  await page.locator("#verify-button").click();
+  await page.waitForFunction(() => {
+    return /alert-success/.test(document.querySelector("#card")?.className || "");
+  }, null, { timeout: 5000 });
+  await page.locator("#verify-message").fill(`${message} tampered`);
+  await page.locator("#verify-button").click();
+  await page.waitForFunction(() => {
+    return /alert-danger/.test(document.querySelector("#card")?.className || "");
+  }, null, { timeout: 5000 });
+  console.log("OK public-private-keys signature workflow");
+
+  await assertRoute(page, "public-private-keys/transaction/", "#reference-footer");
+  await page.waitForFunction(() => {
+    const signFrom = document.querySelector("#sign-from")?.value || "";
+    const verifyFrom = document.querySelector("#verify-from")?.value || "";
+    return signFrom.length > 100 &&
+      verifyFrom.length > 100 &&
+      document.querySelector("#sign-button") &&
+      document.querySelector("#verify-button");
+  }, null, { timeout: 10000 });
+  console.log("OK public-private-keys transaction scene");
+
+  await assertRoute(page, "public-private-keys/blockchain/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#block1chain1coinbaseto") &&
+      document.querySelector("#block2chain1tx0sig") &&
+      document.querySelector("#block1chain1mineButton");
+  }, null, { timeout: 10000 });
+  await assertRouteViewportUsable(
+    context,
+    "public-private-keys/",
+    "#reference-footer",
+    "#publicKey",
+    "public-private-keys route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("public-private-keys route");
+  console.log("OK public-private-keys blockchain scene");
+  await page.close();
+}
+
+async function smokeLinearRegression(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "linear-regression/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#scatter-chart svg") &&
+      document.querySelector("#input-container input[type='range']") &&
+      document.querySelector("#mse-container #bias-slider input[type='range']") &&
+      document.querySelector("#mse-container #weight-slider input[type='range']") &&
+      document.querySelector("#gd-container button");
+  }, null, { timeout: 30000 });
+
+  const probeBefore = await page.evaluate(() => {
+    const chart = document.querySelector("#scatter-chart");
+    const probeCircle = Array.from(chart?.querySelectorAll("circle") || [])
+      .find((node) => Number(node.getAttribute("r") || 0) > 7);
+    return {
+      label: document.querySelector("#input-container")?.innerText || "",
+      probeCx: probeCircle?.getAttribute("cx") || "",
+    };
+  });
+  await setRangeValue(page, "#input-container input[type='range']", 700);
+  await page.waitForFunction((previous) => {
+    const chart = document.querySelector("#scatter-chart");
+    const probeCircle = Array.from(chart?.querySelectorAll("circle") || [])
+      .find((node) => Number(node.getAttribute("r") || 0) > 7);
+    const label = document.querySelector("#input-container")?.innerText || "";
+    return label !== previous.label &&
+      /700/.test(label) &&
+      (probeCircle?.getAttribute("cx") || "") !== previous.probeCx;
+  }, probeBefore, { timeout: 5000 });
+  console.log("OK linear-regression prediction probe");
+
+  await page.locator("#mse-container").scrollIntoViewIfNeeded();
+  const mseBefore = await page.evaluate(() => ({
+    text: document.querySelector("#mse-container")?.innerText || "",
+    path: document.querySelector("#mse-chart-regression path")?.getAttribute("d") || "",
+  }));
+  await setRangeValue(page, "#mse-container #bias-slider input[type='range']", 10);
+  await setRangeValue(page, "#mse-container #weight-slider input[type='range']", 0.5);
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#mse-container")?.innerText || "";
+    const path = document.querySelector("#mse-chart-regression path")?.getAttribute("d") || "";
+    return text !== previous.text &&
+      path !== previous.path &&
+      /10\.00/.test(text) &&
+      /0\.50/.test(text) &&
+      /41\.13/.test(text);
+  }, mseBefore, { timeout: 5000 });
+  console.log("OK linear-regression mse controls");
+
+  await page.locator("#gd-container").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  const gdBefore = await page.evaluate(() => ({
+    text: document.querySelector("#gd-container")?.innerText || "",
+  }));
+  await page.locator("#gd-container button").filter({ hasText: /^25 Steps$/ }).click();
+  await page.waitForTimeout(2500);
+  const gdAfter = await page.evaluate(() => ({
+    text: document.querySelector("#gd-container")?.innerText || "",
+  }));
+  assert(gdAfter.text !== gdBefore.text, "linear-regression gradient descent controls did not update the section text");
+  assert(/Weight/i.test(gdAfter.text), "linear-regression gradient descent output is missing the weight readout");
+  assert(/Bias/i.test(gdAfter.text), "linear-regression gradient descent output is missing the bias readout");
+  assert(/0\.977/.test(gdAfter.text), "linear-regression 25-step run did not reach the expected weight readout");
+  assert(/0\.234/.test(gdAfter.text), "linear-regression 25-step run did not reach the expected bias readout");
+  assert(/0\.801/.test(gdAfter.text), "linear-regression 25-step run did not update the displayed error");
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("linear-regression route");
+  console.log("OK linear-regression gradient descent");
+  await page.close();
+}
+
+async function smokeLogisticRegression(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "logistic-regression/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#tempSlider") &&
+      document.querySelector("#boundarySlider") &&
+      document.querySelector("#scatter-chart svg") &&
+      document.querySelector("#ll-container select") &&
+      document.querySelector("#ll-container #probability-slider input[type='range']") &&
+      document.querySelector("#gd-container button");
+  }, null, { timeout: 30000 });
+
+  const predictionState = () => page.evaluate(() => {
+    const predictionPanel = document.querySelector(".step[data-index='4']");
+    const predictionMatch = predictionPanel?.innerText.match(/The prediction is a\s+([^\.\n]+)/);
+    const exampleCircle = document.querySelector("#scatter-chart .example-circle");
+    const boundaryGroup = document.querySelector("#scatter-chart .boundary-line")?.parentElement;
+    return {
+      temp: document.querySelector("#tempSlider")?.value || "",
+      boundary: document.querySelector("#boundarySlider")?.value || "",
+      prediction: predictionMatch?.[1]?.trim() || "",
+      exampleCx: exampleCircle?.getAttribute("cx") || "",
+      boundaryTransform: boundaryGroup?.getAttribute("transform") || "",
+    };
+  });
+
+  const introBefore = await predictionState();
+  await setRangeValue(page, "#tempSlider", 65);
+  await page.waitForFunction((previous) => {
+    const predictionPanel = document.querySelector(".step[data-index='4']");
+    const predictionMatch = predictionPanel?.innerText.match(/The prediction is a\s+([^\.\n]+)/);
+    const exampleCircle = document.querySelector("#scatter-chart .example-circle");
+    return document.querySelector("#tempSlider")?.value === "65" &&
+      (predictionMatch?.[1]?.trim() || "") === "Sunny Day" &&
+      (exampleCircle?.getAttribute("cx") || "") !== previous.exampleCx;
+  }, introBefore, { timeout: 5000 });
+
+  const thresholdBefore = await predictionState();
+  await setRangeValue(page, "#boundarySlider", 0.9);
+  await page.waitForFunction((previous) => {
+    const predictionPanel = document.querySelector(".step[data-index='4']");
+    const predictionMatch = predictionPanel?.innerText.match(/The prediction is a\s+([^\.\n]+)/);
+    const boundaryGroup = document.querySelector("#scatter-chart .boundary-line")?.parentElement;
+    return document.querySelector("#boundarySlider")?.value === "0.9" &&
+      (predictionMatch?.[1]?.trim() || "") === "Rainy Day" &&
+      (boundaryGroup?.getAttribute("transform") || "") !== previous.boundaryTransform;
+  }, thresholdBefore, { timeout: 5000 });
+  console.log("OK logistic-regression threshold scene");
+
+  await page.locator("#ll-container").scrollIntoViewIfNeeded();
+  const llBefore = await page.evaluate(() => ({
+    text: document.querySelector("#ll-container")?.innerText || "",
+  }));
+  await page.locator("#ll-container select").selectOption({ index: 1 });
+  await setRangeValue(page, "#ll-container #probability-slider input[type='range']", 0.8);
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#ll-container")?.innerText || "";
+    return text !== previous.text &&
+      /Probability:\s*0\.8/.test(text) &&
+      /0\.22/.test(text);
+  }, llBefore, { timeout: 5000 });
+  console.log("OK logistic-regression log-loss controls");
+
+  await page.locator("#gd-container").scrollIntoViewIfNeeded();
+  const gdBefore = await page.evaluate(() => ({
+    text: document.querySelector("#gd-container")?.innerText || "",
+    path: document.querySelector("#gd-chart-error path")?.getAttribute("d") || "",
+  }));
+  await page.locator("#gd-container button").filter({ hasText: /^10 Steps$/ }).click();
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#gd-container")?.innerText || "";
+    const path = document.querySelector("#gd-chart-error path")?.getAttribute("d") || "";
+    return text !== previous.text &&
+      path !== previous.path &&
+      /Weight:/i.test(text) &&
+      /Bias:/i.test(text) &&
+      /13\.64/.test(text);
+  }, gdBefore, { timeout: 10000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("logistic-regression route");
+  console.log("OK logistic-regression gradient descent");
+  await page.close();
+}
+
+async function smokePrecisionRecall(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "precision-recall/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#heatmap-container") &&
+      document.querySelector("#f1-container") &&
+      document.querySelector("#error-chart") &&
+      document.querySelector("#dragline") &&
+      document.querySelector("#dragme") &&
+      document.querySelectorAll("input[type='range']").length >= 2;
+  }, null, { timeout: 30000 });
+
+  const metricsBefore = await page.evaluate(() => ({
+    heatmapText: document.querySelector("#heatmap-container")?.innerText || "",
+    f1Text: document.querySelector("#f1-container")?.innerText || "",
+  }));
+  await page.locator("input[type='range']").nth(0).evaluate((element, nextValue) => {
+    element.value = String(nextValue);
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  }, 0.8);
+  await page.waitForFunction((previous) => {
+    const heatmapText = document.querySelector("#heatmap-container")?.innerText || "";
+    const f1Text = document.querySelector("#f1-container")?.innerText || "";
+    return heatmapText !== previous.heatmapText &&
+      f1Text !== previous.f1Text &&
+      /F1-Score:\s*0\.62/.test(heatmapText) &&
+      /Precision:\s*0\.80/.test(heatmapText) &&
+      /Recall:\s*0\.50/.test(heatmapText);
+  }, metricsBefore, { timeout: 5000 });
+  console.log("OK precision-recall precision control");
+
+  const recallBefore = await page.evaluate(() => ({
+    heatmapText: document.querySelector("#heatmap-container")?.innerText || "",
+    f1Text: document.querySelector("#f1-container")?.innerText || "",
+  }));
+  await page.locator("input[type='range']").nth(1).evaluate((element, nextValue) => {
+    element.value = String(nextValue);
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  }, 0.2);
+  await page.waitForFunction((previous) => {
+    const heatmapText = document.querySelector("#heatmap-container")?.innerText || "";
+    const f1Text = document.querySelector("#f1-container")?.innerText || "";
+    return heatmapText !== previous.heatmapText &&
+      f1Text !== previous.f1Text &&
+      /F1-Score:\s*0\.32/.test(heatmapText) &&
+      /Precision:\s*0\.80/.test(heatmapText) &&
+      /Recall:\s*0\.20/.test(heatmapText);
+  }, recallBefore, { timeout: 5000 });
+  console.log("OK precision-recall recall control");
+
+  await page.locator("#error-chart").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const thresholdText = document.querySelector("#error-chart")?.innerText || "";
+    return /DECISION BOUNDARY THRESHOLD/.test(thresholdText) &&
+      /RECALL/.test(thresholdText) &&
+      /PRECISION/.test(thresholdText) &&
+      /F1-SCORE/.test(thresholdText) &&
+      (document.querySelector("#dragme")?.textContent || "").includes("Drag The Line!");
+  }, null, { timeout: 5000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("precision-recall route");
+  console.log("OK precision-recall threshold tradeoff");
+  await page.close();
+}
+
+async function smokeRocAuc(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "roc-auc/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#roc-scatter-chart svg") &&
+      document.querySelector("#roc-chart") &&
+      document.querySelector("#auc-chart") &&
+      document.querySelector("#perfect-line") &&
+      document.querySelector("#random-line") &&
+      document.querySelector("#our-line");
+  }, null, { timeout: 30000 });
+
+  const topState = await page.evaluate(() => ({
+    highlightText: (document.querySelector("#highlight-text")?.textContent || "").replace(/\s+/g, " ").trim(),
+    scatterCircles: document.querySelectorAll("#roc-scatter-chart circle").length,
+  }));
+
+  await page.evaluate(() => window.scrollTo(0, 3200));
+  await page.waitForFunction((previous) => {
+    const highlightText = (document.querySelector("#highlight-text")?.textContent || "").replace(/\s+/g, " ").trim();
+    const scatterCircles = document.querySelectorAll("#roc-scatter-chart circle").length;
+    return highlightText !== previous.highlightText &&
+      /TPR:\s*0\.85/.test(highlightText) &&
+      /FPR:\s*0\.45/.test(highlightText) &&
+      scatterCircles > previous.scatterCircles;
+  }, topState, { timeout: 10000 });
+  console.log("OK roc-auc threshold sweep");
+
+  await page.locator("#auc-chart").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const areaPath = document.querySelector("#auc-chart path.path-area");
+    const conclusionText = document.querySelector("#conclusion")?.innerText || "";
+    return Boolean(areaPath) &&
+      /precision and recall explainer/i.test(conclusionText) &&
+      document.querySelectorAll("#auc-chart path").length >= 3;
+  }, null, { timeout: 10000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("roc-auc route");
+  console.log("OK roc-auc auc scene");
+  await page.close();
+}
+
+async function smokeBiasVariance(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "bias-variance/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#scroll-viz svg") &&
+      document.querySelector("#errorBarSvg") &&
+      document.querySelector("#loess-slider") &&
+      document.querySelector("#slider-container input[type='range']") &&
+      document.querySelector("#button-loess") &&
+      document.querySelector("#button-knn") &&
+      document.querySelector("#dd-container svg");
+  }, null, { timeout: 30000 });
+
+  for (const y of [1200, 2200, 3200, 4200, 5200, 6200]) {
+    await page.evaluate((nextY) => window.scrollTo(0, nextY), y);
+    await page.waitForTimeout(350);
+  }
+  await page.waitForFunction(() => {
+    const text = Array.from(document.querySelectorAll("#errorBarSvg text"))
+      .map((node) => node.textContent || "")
+      .join(" ");
+    return /Test Error Decomposition/.test(text) &&
+      /Bias/i.test(text) &&
+      /Variance/i.test(text) &&
+      /Noise/i.test(text);
+  }, null, { timeout: 10000 });
+  console.log("OK bias-variance decomposition scene");
+
+  for (const y of [7200, 8200, 9200, 10200]) {
+    await page.evaluate((nextY) => window.scrollTo(0, nextY), y);
+    await page.waitForTimeout(350);
+  }
+  await page.waitForFunction(() => {
+    const text = Array.from(document.querySelectorAll("#errorBarSvg text"))
+      .map((node) => node.textContent || "")
+      .join(" ");
+    return /Model Complexity/.test(text) && /Test Error/.test(text);
+  }, null, { timeout: 10000 });
+  console.log("OK bias-variance complexity trend");
+
+  await page.locator("#button-loess").scrollIntoViewIfNeeded();
+  const loessBefore = await page.evaluate(() => ({
+    text: document.querySelector("#loess-text")?.textContent || "",
+    path: document.querySelector("#loess-line")?.getAttribute("d") || "",
+  }));
+  await setRangeValue(page, "#loess-slider", 0.8);
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#loess-text")?.textContent || "";
+    const path = document.querySelector("#loess-line")?.getAttribute("d") || "";
+    return text !== previous.text &&
+      path !== previous.path &&
+      /0\.80/.test(text);
+  }, loessBefore, { timeout: 5000 });
+  console.log("OK bias-variance loess control");
+
+  await page.locator("#button-knn").scrollIntoViewIfNeeded();
+  const knnBefore = await page.evaluate(() => ({
+    text: document.querySelector("#k-text")?.textContent || "",
+    signature: Array.from(document.querySelectorAll("#predict-container .hex-cell"))
+      .slice(0, 120)
+      .map((node) => node.getAttribute("fill") || "")
+      .join("|"),
+  }));
+  await setRangeValue(page, "#slider-container input[type='range']", 25);
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#k-text")?.textContent || "";
+    const signature = Array.from(document.querySelectorAll("#predict-container .hex-cell"))
+      .slice(0, 120)
+      .map((node) => node.getAttribute("fill") || "")
+      .join("|");
+    return text !== previous.text &&
+      signature !== previous.signature &&
+      /K:\s*25/.test(text);
+  }, knnBefore, { timeout: 5000 });
+  console.log("OK bias-variance knn control");
+
+  await page.locator("#dd-container").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const text = Array.from(document.querySelectorAll("#dd-container text"))
+      .map((node) => node.textContent || "")
+      .join(" ");
+    return /Expected Test Error/.test(text) &&
+      /Model Complexity/.test(text) &&
+      document.querySelectorAll("#dd-container path").length >= 5;
+  }, null, { timeout: 5000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("bias-variance route");
+  console.log("OK bias-variance double descent scene");
+  await page.close();
+}
+
+async function smokeTrainTestValidation(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "train-test-validation/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#chart svg") &&
+      document.querySelector("#line-decision-boundary") &&
+      document.querySelectorAll(".button").length >= 4 &&
+      document.querySelector("#model") &&
+      document.querySelector("#validation") &&
+      document.querySelector("#test");
+  }, null, { timeout: 30000 });
+
+  await page.locator("#model").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1000);
+  const modelBefore = await page.evaluate(() => ({
+    active: document.querySelector(".button.active")?.textContent?.trim() || "",
+    boundary: document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "",
+  }));
+  await page.locator("button").filter({ hasText: /^Both$/ }).click();
+  await page.waitForFunction((previous) => {
+    const active = document.querySelector(".button.active")?.textContent?.trim() || "";
+    const boundary = document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "";
+    return active === "Both" && boundary !== previous.boundary;
+  }, modelBefore, { timeout: 5000 });
+  console.log("OK train-test-validation feature switch");
+
+  const dragBefore = await page.evaluate(() => ({
+    transform: document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "",
+    boundary: document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "",
+  }));
+  const trainBubble = page.locator("#chart .bubble-animal[group='train']").first();
+  const box = await trainBubble.boundingBox();
+  assert(box, "train-test-validation did not expose a draggable training example");
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 + 50, box.y + box.height / 2 - 20, { steps: 12 });
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const transform = document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "";
+    const boundary = document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "";
+    return transform !== previous.transform && boundary !== previous.boundary;
+  }, dragBefore, { timeout: 5000 });
+  console.log("OK train-test-validation draggable training scene");
+
+  await page.locator("#validation").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const text = document.querySelector("#table")?.innerText || "";
+    return /validation/.test(text) && /both/.test(text);
+  }, null, { timeout: 5000 });
+  console.log("OK train-test-validation validation table");
+
+  await page.locator("#test").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const text = document.querySelector("#table")?.innerText || "";
+    return /test/.test(text) && /validation/.test(text) && /\d+\.\d%/.test(text);
+  }, null, { timeout: 5000 });
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("train-test-validation route");
+  console.log("OK train-test-validation test table");
+  await page.close();
+}
+
+async function smokeDoubleDescent(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "double-descent/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#doubledescent-container svg") &&
+      document.querySelector("#scatter-container svg") &&
+      document.querySelector("#error-container svg") &&
+      document.querySelector("#error-slider") &&
+      document.querySelector("#error-text") &&
+      document.querySelector("#gap-container img");
+  }, null, { timeout: 30000 });
+
+  await page.locator("#scrolly article .step").first().scrollIntoViewIfNeeded();
+  await page.waitForTimeout(700);
+  const introBefore = await page.evaluate(() => ({
+    separatorY2: document.querySelector("#line-separator")?.getAttribute("y2") || "",
+    interpolationOpacity: document.querySelector("#text-interpolation-threshold")?.getAttribute("opacity") || "",
+    overlayOpacity: document.querySelector("#rect-interpolate")?.getAttribute("fill-opacity") || "",
+    text: Array.from(document.querySelectorAll("#doubledescent-container text"))
+      .map((node) => node.textContent || "")
+      .join(" "),
+  }));
+  await page.locator("#scrolly article .step").nth(3).scrollIntoViewIfNeeded();
+  await page.waitForFunction((previous) => {
+    const separatorY2 = document.querySelector("#line-separator")?.getAttribute("y2") || "";
+    const interpolationOpacity = document.querySelector("#text-interpolation-threshold")?.getAttribute("opacity") || "";
+    const overlayOpacity = document.querySelector("#rect-interpolate")?.getAttribute("fill-opacity") || "";
+    const text = Array.from(document.querySelectorAll("#doubledescent-container text"))
+      .map((node) => node.textContent || "")
+      .join(" ");
+    return separatorY2 !== previous.separatorY2 &&
+      interpolationOpacity !== previous.interpolationOpacity &&
+      overlayOpacity !== previous.overlayOpacity &&
+      /InterpolationThreshold/.test(text) &&
+      /Measure of Model Complexity/.test(text) &&
+      /Prediction Error/.test(text) &&
+      /Train/.test(text) &&
+      /Test/.test(text);
+  }, introBefore, { timeout: 10000 });
+  await page.locator("#scrolly article .step").nth(4).scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    return document.querySelector("#line-separator")?.getAttribute("y2") === "0" &&
+      document.querySelector("#text-interpolation-threshold")?.getAttribute("opacity") === "1" &&
+      document.querySelector("#rect-interpolate")?.getAttribute("fill-opacity") === "0";
+  }, null, { timeout: 10000 });
+  console.log("OK double-descent intro scrolly");
+
+  await page.locator("#scrolly-side article .step-side").first().scrollIntoViewIfNeeded();
+  await page.waitForTimeout(700);
+  const sideBefore = await page.evaluate(() => ({
+    scatterLine: document.querySelector("#scatter-line")?.getAttribute("d") || "",
+  }));
+  await page.locator("#scrolly-side article .step-side").nth(4).scrollIntoViewIfNeeded();
+  await page.waitForFunction((previous) => {
+    const scatterLine = document.querySelector("#scatter-line")?.getAttribute("d") || "";
+    return scatterLine !== previous.scatterLine;
+  }, sideBefore, { timeout: 10000 });
+  console.log("OK double-descent side narrative");
+
+  await page.locator("#error-slider").scrollIntoViewIfNeeded();
+  const sliderBefore = await page.evaluate(() => ({
+    text: document.querySelector("#error-text")?.textContent || "",
+    scatterLine: document.querySelector("#scatter-line")?.getAttribute("d") || "",
+  }));
+  await setRangeValue(page, "#error-slider", 64);
+  await page.waitForFunction((previous) => {
+    const text = document.querySelector("#error-text")?.textContent || "";
+    const scatterLine = document.querySelector("#scatter-line")?.getAttribute("d") || "";
+    return text !== previous.text && scatterLine !== previous.scatterLine && /K=64/.test(text);
+  }, sliderBefore, { timeout: 5000 });
+  console.log("OK double-descent complexity slider");
+
+  await page.locator("#gap").scrollIntoViewIfNeeded();
+  await page.waitForFunction((expectedSrcPrefix) => {
+    const image = document.querySelector("#gap-container img");
+    return Boolean(image) &&
+      image.getAttribute("src") === "line.9ddf65b2.gif" &&
+      image.currentSrc.startsWith(expectedSrcPrefix);
+  }, new URL("double-descent/", baseUrl).href, { timeout: 5000 });
+  console.log("OK double-descent gap media");
+
+  await assertViewportUsable(page, "double-descent route");
+  await assertRouteViewportUsable(
+    context,
+    "double-descent/",
+    "#reference-footer",
+    "#doubledescent-container svg",
+    "double-descent route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("double-descent route");
+  console.log("OK double-descent responsive shell");
+  await page.close();
+}
+
+async function smokeDoubleDescent2(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "double-descent2/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelectorAll(".katex").length > 20 &&
+      document.querySelector("#chart1 svg") &&
+      document.querySelector("#chart4 svg") &&
+      document.querySelector("#animation-chart svg") &&
+      document.querySelector("#chart5 svg") &&
+      document.querySelector("#delta-chart svg") &&
+      document.querySelector("#chart6 svg");
+  }, null, { timeout: 30000 });
+
+  const initialStats = await page.evaluate(() => ({
+    katexCount: document.querySelectorAll(".katex").length,
+    chart1Paths: document.querySelectorAll("#chart1 path").length,
+    chart4Paths: document.querySelectorAll("#chart4 path").length,
+    animationPaths: document.querySelectorAll("#animation-chart path").length,
+    chart5Paths: document.querySelectorAll("#chart5 path").length,
+    deltaPaths: document.querySelectorAll("#delta-chart path").length,
+    chart6Paths: document.querySelectorAll("#chart6 path").length,
+  }));
+  assert(initialStats.katexCount > 20, "double-descent2 did not hydrate KaTeX locally");
+  assert(initialStats.chart1Paths >= 3, "double-descent2 chart1 did not mount");
+  assert(initialStats.chart4Paths >= 3, "double-descent2 chart4 did not mount");
+  assert(initialStats.animationPaths >= 3, "double-descent2 animation chart did not mount");
+  assert(initialStats.chart5Paths >= 3, "double-descent2 chart5 did not mount");
+  assert(initialStats.deltaPaths >= 2, "double-descent2 delta chart did not mount");
+  assert(initialStats.chart6Paths >= 3, "double-descent2 chart6 did not mount");
+  console.log("OK double-descent2 core charts");
+
+  for (const selector of ["#chart4", "#animation-chart", "#chart5", "#delta-chart", "#chart6"]) {
+    await page.locator(selector).scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+  }
+  await page.waitForFunction(() => {
+    const deltaText = Array.from(document.querySelectorAll("#delta-chart text"))
+      .map((node) => node.textContent || "")
+      .join(" ");
+    return /t/.test(deltaText) &&
+      /δ/.test(deltaText) &&
+      /Δ/.test(deltaText) &&
+      document.querySelectorAll("#chart6 circle").length >= 6;
+  }, null, { timeout: 5000 });
+  console.log("OK double-descent2 interpolation and spline scenes");
+
+  await assertViewportUsable(page, "double-descent2 route");
+  await assertRouteViewportUsable(
+    context,
+    "double-descent2/",
+    "#reference-footer",
+    "#chart1 svg",
+    "double-descent2 route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("double-descent2 route");
+  console.log("OK double-descent2 responsive shell");
+  await page.close();
 }
 
 async function main() {
@@ -1046,8 +2485,77 @@ async function main() {
     }
     if (exists("markov-chains")) {
       routeChecks.push(["markov-chains/", "#reference-footer"]);
+      routeChecks.push(["markov-chains/playground/", "#reference-footer"]);
       routeChecks.push(["markov-chains/playground/playground.html", "#reference-footer"]);
       routeChecks.push(["docs/markov-chains/", "[data-parity-list]"]);
+    }
+    if (exists("principal-component-analysis")) {
+      routeChecks.push(["principal-component-analysis/", "#reference-footer"]);
+      routeChecks.push(["docs/principal-component-analysis/", "[data-parity-list]"]);
+    }
+    if (exists("exponentiation")) {
+      routeChecks.push(["exponentiation/", "#reference-footer"]);
+      routeChecks.push(["docs/exponentiation/", "[data-parity-list]"]);
+    }
+    if (exists("pi")) {
+      routeChecks.push(["pi/", "#reference-footer"]);
+      routeChecks.push(["docs/pi/", "[data-parity-list]"]);
+    }
+    if (exists("sine-and-cosine")) {
+      routeChecks.push(["sine-and-cosine/", "#reference-footer"]);
+      routeChecks.push(["docs/sine-and-cosine/", "[data-parity-list]"]);
+    }
+    if (exists("eigenvectors-and-eigenvalues")) {
+      routeChecks.push(["eigenvectors-and-eigenvalues/", "#reference-footer"]);
+      routeChecks.push(["docs/eigenvectors-and-eigenvalues/", "[data-parity-list]"]);
+    }
+    if (exists("image-kernels")) {
+      routeChecks.push(["image-kernels/", "#reference-footer"]);
+      routeChecks.push(["docs/image-kernels/", "[data-parity-list]"]);
+    }
+    if (exists("ordinary-least-squares-regression")) {
+      routeChecks.push(["ordinary-least-squares-regression/", "#reference-footer"]);
+      routeChecks.push(["docs/ordinary-least-squares-regression/", "[data-parity-list]"]);
+    }
+    if (exists("blockchain")) {
+      routeChecks.push(["blockchain/", "#reference-footer"]);
+      routeChecks.push(["docs/blockchain/", "[data-parity-list]"]);
+    }
+    if (exists("public-private-keys")) {
+      routeChecks.push(["public-private-keys/", "#reference-footer"]);
+      routeChecks.push(["docs/public-private-keys/", "[data-parity-list]"]);
+    }
+    if (exists("linear-regression")) {
+      routeChecks.push(["linear-regression/", "#reference-footer"]);
+      routeChecks.push(["docs/linear-regression/", "[data-parity-list]"]);
+    }
+    if (exists("logistic-regression")) {
+      routeChecks.push(["logistic-regression/", "#reference-footer"]);
+      routeChecks.push(["docs/logistic-regression/", "[data-parity-list]"]);
+    }
+    if (exists("precision-recall")) {
+      routeChecks.push(["precision-recall/", "#reference-footer"]);
+      routeChecks.push(["docs/precision-recall/", "[data-parity-list]"]);
+    }
+    if (exists("roc-auc")) {
+      routeChecks.push(["roc-auc/", "#reference-footer"]);
+      routeChecks.push(["docs/roc-auc/", "[data-parity-list]"]);
+    }
+    if (exists("bias-variance")) {
+      routeChecks.push(["bias-variance/", "#reference-footer"]);
+      routeChecks.push(["docs/bias-variance/", "[data-parity-list]"]);
+    }
+    if (exists("train-test-validation")) {
+      routeChecks.push(["train-test-validation/", "#reference-footer"]);
+      routeChecks.push(["docs/train-test-validation/", "[data-parity-list]"]);
+    }
+    if (exists("double-descent")) {
+      routeChecks.push(["double-descent/", "#reference-footer"]);
+      routeChecks.push(["docs/double-descent/", "[data-parity-list]"]);
+    }
+    if (exists("double-descent2")) {
+      routeChecks.push(["double-descent2/", "#reference-footer"]);
+      routeChecks.push(["docs/double-descent2/", "[data-parity-list]"]);
     }
 
     for (const [relativePath, selector] of routeChecks) {
@@ -1083,6 +2591,57 @@ async function main() {
     }
     if (exists("markov-chains")) {
       await smokeMarkovChains(context);
+    }
+    if (exists("principal-component-analysis")) {
+      await smokePrincipalComponentAnalysis(context);
+    }
+    if (exists("exponentiation")) {
+      await smokeExponentiation(context);
+    }
+    if (exists("pi")) {
+      await smokePi(context);
+    }
+    if (exists("sine-and-cosine")) {
+      await smokeSineAndCosine(context);
+    }
+    if (exists("eigenvectors-and-eigenvalues")) {
+      await smokeEigenvectorsAndEigenvalues(context);
+    }
+    if (exists("image-kernels")) {
+      await smokeImageKernels(context);
+    }
+    if (exists("ordinary-least-squares-regression")) {
+      await smokeOrdinaryLeastSquaresRegression(context);
+    }
+    if (exists("blockchain")) {
+      await smokeBlockchain(context);
+    }
+    if (exists("public-private-keys")) {
+      await smokePublicPrivateKeys(context);
+    }
+    if (exists("linear-regression")) {
+      await smokeLinearRegression(context);
+    }
+    if (exists("logistic-regression")) {
+      await smokeLogisticRegression(context);
+    }
+    if (exists("precision-recall")) {
+      await smokePrecisionRecall(context);
+    }
+    if (exists("roc-auc")) {
+      await smokeRocAuc(context);
+    }
+    if (exists("bias-variance")) {
+      await smokeBiasVariance(context);
+    }
+    if (exists("train-test-validation")) {
+      await smokeTrainTestValidation(context);
+    }
+    if (exists("double-descent")) {
+      await smokeDoubleDescent(context);
+    }
+    if (exists("double-descent2")) {
+      await smokeDoubleDescent2(context);
     }
   } finally {
     await context.close();

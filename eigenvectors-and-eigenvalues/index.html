@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eigenvectors and Eigenvalues</title>
+    <meta
+      name="description"
+      content="Interactive linear algebra explainer with draggable matrix columns, eigenvector tests, Fibonacci growth, Markov steady states, and complex spirals."
+    >
+    <meta property="og:title" content="Eigenvectors and Eigenvalues">
+    <meta
+      property="og:description"
+      content="Interactive linear algebra explainer with draggable matrix columns, eigenvector tests, Fibonacci growth, Markov steady states, and complex spirals."
+    >
+    <meta property="og:image" content="./fb-thumb.png">
+    <meta property="og:url" content="./">
+    <link rel="canonical" href="./">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../ev/scripts/d3.js" charset="utf-8"></script>
+    <script src="../ev/scripts/angular.js" charset="utf-8"></script>
+    <script src="../ev/scripts/common.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
+    <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ["script","noscript","style","textarea","code"]
+        }
+      });
+    </script>
+  </head>
+  <body
+    ng-app="myApp"
+    ng-controller="MainCtrl"
+    data-reference-url="https://setosa.io/ev/eigenvectors-and-eigenvalues/"
+    data-reference-text="Eigenvectors and Eigenvalues"
+    data-footer-label="Original page"
+  >
+    <section class="menu"><a href="../">Back to replicas</a></section>
+    <section class="title">
+      <div class="title-region">
+        <h1 class="title">Eigenvectors and Eigenvalues</h1>
+        <h3 class="by-line">Interactive explainer</h3>
+      </div>
+      <p>
+        Eigenvalues and eigenvectors help explain how step-by-step systems evolve, from repeated
+        linear transforms to population models, migration dynamics, and oscillating spirals.
+      </p>
+    </section>
+
+    <section ng-controller="IntroCtrl">
+      <p>
+        Eigenvalues and eigenvectors are instrumental to understanding electrical circuits,
+        mechanical systems, ecology, and even Google's
+        <a href="http://www.rose-hulman.edu/~bryan/googleFinalVersionFixed.pdf" target="_blank" rel="noreferrer">PageRank</a>
+        algorithm. Visualization helps make these ideas more intuitive.
+      </p>
+      <p>
+        To begin, let $v$ be a vector (shown as a point) and $A$ be a matrix with columns $a_1$
+        and $a_2$ (shown as arrows). If we multiply $v$ by $A$, then $A$ sends $v$ to a new vector
+        $Av$.
+      </p>
+      <div class="viz-scroll">
+        <div ng-controller="BasisCtrl" class="viz-stage" style="position: relative">
+          <simple-plot></simple-plot>
+          <div style="position: absolute; right: 95px; top: 50px;">
+            <matrix-equation>
+              <eq-element label="'Α'"></eq-element>
+              <eq-element label="'='"></eq-element>
+              <eq-matrix values="[ [opt.basis1[0], opt.basis2[0]], [opt.basis1[1], opt.basis2[1]]]" labels="[['a₁,x', 'a₂,x'], ['a₁,y', 'a₂,y']]" active="false" class="primary-and-secondary"></eq-matrix>
+              <eq-element label="'='"></eq-element>
+              <eq-matrix clasifs="primary-and-secondary" values="[ [opt.basis1[0], opt.basis2[0]], [opt.basis1[1], opt.basis2[1]]]" active="true"></eq-matrix>
+            </matrix-equation>
+          </div>
+          <div style="position: absolute; right: 224px; top: 125px;">
+            <matrix-equation>
+              <eq-element label="'v'" class="tertiary"></eq-element>
+              <eq-element label="'='"></eq-element>
+              <eq-vector values="opt.pos0" labels="['v, x', 'v, y']" active="true" class="tertiary"></eq-vector>
+            </matrix-equation>
+          </div>
+          <div style="position: absolute; right: 224px; top: 200px;">
+            <matrix-equation>
+              <eq-element label="'Αv'" class="tertiary"></eq-element>
+              <eq-element label="'='"></eq-element>
+              <eq-vector values="opt.pos1" labels="['v, x', 'v, y']" active="true" class="tertiary"></eq-vector>
+            </matrix-equation>
+          </div>
+        </div>
+      </div>
+      <p>
+        If you can draw a line through the three points $(0,0)$, $v$, and $Av$, then $Av$ is just
+        $v$ multiplied by a number $\lambda$; that is, $Av = \lambda v$. In this case, $\lambda$
+        is an <strong>eigenvalue</strong> and $v$ is an <strong>eigenvector</strong>. For example,
+        here $(1,2)$ is an eigenvector and $5$ is an eigenvalue.
+      </p>
+      <script type="math/tex; mode=display">
+        A v =
+        \begin{pmatrix}
+          1 & 2 \\
+          8 & 1
+        \end{pmatrix}
+        \cdot
+        \begin{pmatrix}
+          1 \\ 2
+        \end{pmatrix}
+        =
+        5
+        \begin{pmatrix}
+          1 \\ 2
+        \end{pmatrix}
+        = \lambda v.
+      </script>
+      <p>
+        Below, change the columns of $A$ and drag $v$ to be an eigenvector. Every point on the
+        same line as an eigenvector is an eigenvector, so those lines are eigenspaces. If you place
+        $v$ on an eigenspace with $\lambda &lt; 1$, then $Av$ moves closer to $(0,0)$; when
+        $\lambda &gt; 1$, it moves farther away.
+      </p>
+      <div class="viz-scroll">
+        <div class="viz-stage">
+          <div ng-controller="TransCtrl">
+            <simple-plot></simple-plot>
+            <h3>What are eigenvalues and eigenvectors good for?</h3>
+            <p>
+              If you keep multiplying $v$ by $A$, you get a sequence ${ v, Av, A^2v, }$ and so on.
+              Eigenspaces attract that sequence, while eigenvalues tell you whether it collapses to
+              $(0,0)$ or runs away. These values tell us about systems that evolve one step at a
+              time.
+            </p>
+            <div ng-controller="PopulationCtrl">
+              <simple-plot></simple-plot>
+            </div>
+            <p>Let's explore a few applications and properties of those sequences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section ng-controller="BacteriaCtrl">
+      <h3>Fibonacci Sequence</h3>
+      <p>
+        Suppose you have some amoebas in a petri dish. Every minute, each adult amoeba produces one
+        child amoeba and each child grows into an adult. If $t$ is a minute, the system is:
+      </p>
+      <script type="math/tex; mode=display">
+        \begin{eqnarray}
+          \text{adults}_{t+1} & = & \text{adults}_{t} + \text{children}_{t} \\
+          \text{children}_{t+1} & = & \text{adults}_{t}
+        \end{eqnarray}
+      </script>
+      <p>In matrix form:</p>
+      <script type="math/tex; mode=display">
+        \begin{eqnarray}
+        v_{t+1} &=& A & \cdot & v_t
+        \\
+          \begin{pmatrix}
+            \text{adults}_{t+1} \\ \text{children}_{t+1}
+          \end{pmatrix}
+          &=&
+          \begin{pmatrix}
+            1 & 1 \\
+            1 & 0
+          \end{pmatrix}
+          & \cdot &
+          \begin{pmatrix}
+            \text{adults}_{t} \\
+            \text{children}_{t}
+          \end{pmatrix}
+        \end{eqnarray}
+      </script>
+      <p>
+        Press <strong>forward</strong> to step ahead one minute. The total population follows the
+        <a href="http://en.wikipedia.org/wiki/Fibonacci_number" target="_blank" rel="noreferrer">Fibonacci sequence</a>.
+      </p>
+      <div class="viz-scroll">
+        <div class="bacteria-stage">
+          <div>
+            <bacteria-simulation style="float: left; display: block"></bacteria-simulation>
+            <div ng-controller="BacteriaPlotCtrl" style="display: inline-block">
+              <bacteria-plot></bacteria-plot>
+            </div>
+          </div>
+          <div style="text-align: center">
+            <button ng-click="reset()" class="btn primary">reset</button>
+            <button ng-click="forward()" class="btn primary">forward</button>
+          </div>
+          <br><br>
+          <div style="text-align: center">
+            {{opt.pos[opt.curGen][0]}} {{opt.pos[opt.curGen][0] === 1 ? 'child' : 'children' }} +
+            {{opt.pos[opt.curGen][1]}} {{opt.pos[opt.curGen][1] === 1 ? 'adult' : 'adults' }} =
+            {{opt.pos[opt.curGen][0] + opt.pos[opt.curGen][1]}}
+            <fibonacci-sequence></fibonacci-sequence>
+          </div>
+        </div>
+      </div>
+      <p>
+        As you can see, the system heads toward the grey line, an eigenspace with
+        $\lambda = (1+\sqrt 5)/2 &gt; 1$.
+      </p>
+    </section>
+
+    <section ng-controller="MigrationCtrl">
+      <h3>Steady States</h3>
+      <p>
+        Suppose that each year a fraction $p$ of New Yorkers move to California and a fraction $q$
+        of Californians move to New York. Drag the circles to set those fractions and the starting
+        populations.
+      </p>
+      <div class="viz-scroll">
+        <div class="migration-stage">
+          <sf-to-ny-migration-map></sf-to-ny-migration-map>
+        </div>
+      </div>
+      <p>To understand the system, write it in matrix form:</p>
+      <script type="math/tex; mode=display">
+        \begin{eqnarray}
+         v_{t+1} & = & Av_t
+        \\
+        \begin{pmatrix}
+          \text{New York}_{t+1} \\ \text{California}_{t+1}
+        \end{pmatrix}
+        &=&
+        \begin{pmatrix}
+          1-p & q \\
+          p & 1-q
+        \end{pmatrix}
+        \cdot
+        \begin{pmatrix}
+          \text{New York}_{t} \\
+          \text{California}_{t}
+        \end{pmatrix}
+        \end{eqnarray}
+      </script>
+      <p>
+        A matrix like $A$, whose entries are positive and whose columns add to one, is a Markov
+        matrix. It always has $\lambda = 1$ as its largest eigenvalue, so there is a value of
+        $v_t$ for which $Av_t = v_t$. At that steady state, the same number of people move in each
+        direction and the populations stop changing. Hover over the animation to watch it converge.
+      </p>
+      <div class="viz-scroll">
+        <div ng-controller="StochasticMatrixMultiplicationCtrl" class="migration-stage" style="position: relative">
+          <migration style="width: 70%; float: left"></migration>
+          <stochastic-matrix-multiplication style="width: 30%; float: left"></stochastic-matrix-multiplication>
+          <div style="clear: both"></div>
+        </div>
+      </div>
+      <p>
+        For more on Markov matrices, see the local
+        <a href="../markov-chains/">Markov Chains</a>
+        replica.
+      </p>
+    </section>
+
+    <section ng-controller="FourQuadCtrl">
+      <h3>Complex Eigenvalues</h3>
+      <p>
+        So far the examples use real eigenvalues. But in the equation $Av = \lambda v$, $\lambda$
+        and $v$ can also have imaginary parts. For example:
+      </p>
+      <script type="math/tex; mode=display">
+        \begin{pmatrix}
+          1 & 1 \\
+          -1 & 1
+        \end{pmatrix}
+        \cdot
+        \begin{pmatrix}
+          1 \\ i
+        \end{pmatrix}
+        =
+        (1+i)
+        \cdot
+        \begin{pmatrix}
+          1 \\ i
+        \end{pmatrix}.
+      </script>
+      <p>
+        Here, $1+i$ is an eigenvalue and $(1, i)$ is an eigenvector. If a matrix has complex
+        eigenvalues, repeated multiplication spirals around $(0,0)$. Drag $A$'s columns until the
+        sequence spirals; the eigenvalues appear in the real-imaginary plane on the right.
+      </p>
+      <div>
+        steps:
+        <input type="range" min="2" max="opt.maxPoints" ng-model="opt.n">
+      </div>
+      <div class="viz-scroll">
+        <div class="four-quad-stage">
+          <four-quad-plot></four-quad-plot>
+        </div>
+      </div>
+      <p>
+        For more background, Gilbert Strang's
+        <a href="http://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/eigenvalues-and-eigenvectors/" target="_blank" rel="noreferrer">Linear Algebra</a>
+        course and MIT's
+        <a href="http://ocw.mit.edu/courses/mathematics/18-03sc-differential-equations-fall-2011/" target="_blank" rel="noreferrer">Differential Equations</a>
+        course go deeper.
+      </p>
+      <p class="local-note">
+        Replica notes and parity details live separately in
+        <a href="../docs/eigenvectors-and-eigenvalues/">docs</a>.
+      </p>
+    </section>
+
+    <div class="layer tooltips"></div>
+
+    <script src="../ev/scripts/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script>
+    <script src="../ev/scripts/topojson.js" charset="utf-8"></script>
+    <script src="./script.js"></script>
+    <script src="../shared/public-footer.js"></script>
+  </body>
+</html>

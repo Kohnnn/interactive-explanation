@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Public / Private Keys Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local public-private-keys replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Public / Private Keys</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/public-private-keys/</code> flattens the
+        nested Anders signing demo to a top-level slug while keeping the keys, signatures,
+        transaction, and blockchain pages available as local sibling routes under the same asset
+        tree.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../public-private-keys/">Open replica</a>
+        <a class="action-link secondary" href="https://andersbrownworth.com/blockchain/public-private-keys/keys" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/anders94/blockchain-demo/" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-18</code><br>
+        Source family: <code>anders94/blockchain-demo</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the interactive key and signing pages directly rather than the
+          upstream video landing. The local root maps to the keys page, while signatures,
+          transaction, and blockchain variants remain available as nested local routes.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://andersbrownworth.com/blockchain/public-private-keys/keys</code> on 2026-03-18.</li>
+          <li>The local root intentionally flattens the upstream nested demo to the top-level slug <code>public-private-keys</code>.</li>
+          <li>The public route keeps the original Bootstrap, jQuery, cookie, BigInteger, Buffer, elliptic, and SHA256 runtime intact.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Anders adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Use the interactive keys page as the local route root instead of the upstream video landing page.</li>
+          <li>Vendor the demo-specific <code>javascripts/</code> and <code>stylesheets/</code> trees directly under <code>public-private-keys/</code> without deduping libraries on the first pass.</li>
+          <li>Patch only asset paths, navbar links, canonical metadata, and footer configuration for nested hosting.</li>
+          <li>Keep signatures, transaction, and blockchain pages available under the flattened local slug so the original demo flow still works.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>public-private-keys/index.html</code> is the flattened local root and mirrors the upstream keys scene.</li>
+          <li><code>public-private-keys/signatures/index.html</code> keeps the sign and verify workflow, including the verification-state card styling.</li>
+          <li><code>public-private-keys/transaction/index.html</code> and <code>public-private-keys/blockchain/index.html</code> preserve the richer transaction and signed-blockchain flows.</li>
+          <li><code>public-private-keys/javascripts/blockchain.js</code> keeps the published cookie-backed key loading, signing, verification, and transaction logic.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public entry route no longer surfaces the upstream video landing, author byline, or repo ribbon.</li>
+          <li>The local root is intentionally flattened to <code>/interactive-explanation/public-private-keys/</code> even though the original demo lived under <code>/blockchain/public-private-keys/</code>.</li>
+          <li>The shared footer is the only public original-page reference surface on shipped pages.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

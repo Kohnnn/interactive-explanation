@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blockchain Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local blockchain replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Blockchain</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/blockchain/</code> flattens the Anders
+        blockchain demo to a top-level slug while keeping the editable chain, mining flow,
+        distributed comparison page, and supporting hash or token views under the same local asset
+        tree.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../blockchain/">Open replica</a>
+        <a class="action-link secondary" href="https://andersbrownworth.com/Blockchain/blockchain.html" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/anders94/blockchain-demo/" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-18</code><br>
+        Source family: <code>anders94/blockchain-demo</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the interactive HTML pages from the legacy blockchain demo rather
+          than the upstream landing page, then patches only the shell metadata, local navigation,
+          and public provenance surfaces needed for nested static hosting.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://andersbrownworth.com/Blockchain/blockchain.html</code> on 2026-03-18.</li>
+          <li>The local root intentionally maps to the main blockchain scene, while sibling pages like <code>hash.html</code>, <code>block.html</code>, <code>distributed.html</code>, <code>tokens.html</code>, and <code>coinbase.html</code> remain alongside it.</li>
+          <li>The public route keeps the original Bootstrap and jQuery runtime intact and limits original-page provenance to the shared footer.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Anders adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Use the interactive blockchain page as the local route root instead of the upstream video landing page.</li>
+          <li>Vendor the demo-specific <code>javascripts/</code> and <code>stylesheets/</code> trees directly under <code>blockchain/</code> without deduping legacy libraries.</li>
+          <li>Rewrite navbar links, CSS paths, JS paths, canonical metadata, and footer config so the route works from the GitHub Pages subpath.</li>
+          <li>Keep distributed, token, and coinbase variants available as local sibling pages under the same route tree.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>blockchain/index.html</code> is the local blockchain root and mirrors the published <code>blockchain.html</code> scene with local footer metadata.</li>
+          <li><code>blockchain/hash.html</code> and <code>blockchain/block.html</code> preserve the earlier hash and single-block warmup pages.</li>
+          <li><code>blockchain/distributed.html</code>, <code>blockchain/tokens.html</code>, and <code>blockchain/coinbase.html</code> keep the broader chain variants and comparison scenes.</li>
+          <li><code>blockchain/javascripts/blockchain.js</code> keeps the published hash recomputation, mining loop, and downstream invalidation logic.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The local route removes the upstream video landing, GitHub ribbon, author byline, and donation callouts from the public entry surface.</li>
+          <li>Canonical metadata and navbar links now point at local equivalents under <code>/interactive-explanation/blockchain/</code>.</li>
+          <li>The shared footer is the only public original-page reference surface on shipped pages.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

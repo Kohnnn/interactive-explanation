@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "threshold-sweep-scenes",
+    "originalBehavior": "The published article walks readers through changing classification thresholds and shows how each threshold alters true-positive and false-positive outcomes before the full ROC curve is introduced.",
+    "localStatus": "The local route keeps the original scroll-linked threshold sweep scenes, highlighted threshold point, and linked explanatory copy from the compiled app.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The route still mounts from the original compiled bundle into an otherwise empty document body.",
+      "Only metadata and public-shell branding were patched around the app."
+    ],
+    "evidence": [
+      "The implementation plan treats threshold-point movement on the ROC curve as parity-critical.",
+      "Shared smoke coverage will advance the route and verify the active ROC threshold point changes."
+    ]
+  },
+  {
+    "moduleId": "roc-curve-construction-and-comparison",
+    "originalBehavior": "The article builds the ROC curve from threshold examples, then compares the model curve against baseline and ideal references to explain what makes a strong classifier.",
+    "localStatus": "The local route keeps the original ROC chart rendering, random and perfect comparison lines, and the published comparison scene ordering without rewriting the compiled logic.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The original chart IDs and line layers were preserved so the published line comparisons still render in place.",
+      "No new comparison scenes were invented beyond what the live page ships."
+    ],
+    "evidence": [
+      "The implementation plan explicitly calls out ROC curve rendering and classifier comparison if the live page ships one.",
+      "Shared smoke coverage will verify the main ROC scene initializes and the comparison layers render without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "auc-interpretation-overlay",
+    "originalBehavior": "Later scenes explain the area under the ROC curve with shaded or highlighted overlays and accompanying interpretation text about classifier quality.",
+    "localStatus": "The local route keeps the original AUC chart, shaded interpretation region, and explanation text from the published bundle.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The published route does not expose standalone slider controls in the public body; the threshold and AUC scenes are scroll-linked.",
+      "The local route preserves that structure rather than inventing new controls."
+    ],
+    "evidence": [
+      "The implementation plan treats AUC shading or interpretation overlays as parity-critical.",
+      "Shared smoke coverage will verify the AUC scene renders and its highlighted interpretation state appears as the page advances."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, repo and promo links, and contributor callouts inside the public body.",
+    "localStatus": "The local route removes those public-shell references, localizes the remaining navigation, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public page no longer exposes creator or project promo surfaces outside the footer."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, promo links, and contributor callouts in shipped route code.",
+      "The route now advertises only the shared footer link back to the live original page."
+    ]
+  }
+]

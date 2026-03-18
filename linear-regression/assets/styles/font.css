@@ -1,0 +1,122 @@
+/*
+			This font software is the property of Amazon.
+
+			You may not modify the font software, use it on another website, or install it on a computer.
+
+			License information is available at http://commercialtype.com/eula
+			For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
+
+			Copyright (C) 2017 Schwartzco Inc.
+			License: 1704-GNCLGK
+*/
+
+/*
+********************
+	Amazon Fonts (for text)
+********************
+*/
+
+@font-face {
+  /* font-family: 'amazon_ember_displaylight'; */
+  font-family: "Amazon Ember Display Light";
+  src: url("../../../decision-tree/AmazonEmberDisplay_Lt.f86edd2b.otf")
+      format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amazon Ember";
+  src: url("../../../decision-tree/AmazonEmber_Rg.917bc755.otf")
+      format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Amazon Ember Display Heavy";
+  src: url("../../../decision-tree/AmazonEmberDisplay_He.5fe08b02.otf")
+      format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Amazon Ember Mono";
+  src: url("../../../decision-tree/AmazonEmberMono_Rg.946f1427.otf")
+      format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+********************
+	KaTeX Fonts (for math equations)
+********************
+*/
+
+@font-face {
+  font-family: KaTeX_Main;
+  src: url("../../../decision-tree/KaTeX_Main-Bold.29ec3114.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Main-Bold.498c8e41.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Main-Bold.25a8191e.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: KaTeX_Main;
+  src: url("../../../decision-tree/KaTeX_Main-BoldItalic.d324210a.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Main-BoldItalic.ee616b37.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Main-BoldItalic.6afd3380.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: KaTeX_Main;
+  src: url("../../../decision-tree/KaTeX_Main-Italic.2946f665.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Main-Italic.0bd034bd.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Main-Italic.867780a3.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: KaTeX_Main;
+  src: url("../../../decision-tree/KaTeX_Main-Regular.742ae9d8.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Main-Regular.b277995e.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Main-Regular.9a292d57.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: KaTeX_Math;
+  src: url("../../../decision-tree/KaTeX_Math-BoldItalic.d324210a.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Math-BoldItalic.ee616b37.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Math-BoldItalic.6afd3380.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: KaTeX_Math;
+  src: url("../../../decision-tree/KaTeX_Math-Italic.6a496cb7.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Math-Italic.a7566ed4.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Math-Italic.2c1a6a52.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: KaTeX_Size1;
+  src: url("../../../decision-tree/KaTeX_Size1-Regular.d2e2a833.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Size1-Regular.338d2ed1.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Size1-Regular.8fbfd405.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: KaTeX_Size2;
+  src: url("../../../decision-tree/KaTeX_Size2-Regular.5b918280.woff2") format("woff2"),
+    url("../../../decision-tree/KaTeX_Size2-Regular.1e10c0ae.woff") format("woff"),
+    url("../../../decision-tree/KaTeX_Size2-Regular.6fec5ac8.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}

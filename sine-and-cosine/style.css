@@ -1,0 +1,287 @@
+.direct {
+  padding: 0px 4px 2px 4px;
+  font-weight: bold;
+  color: white;
+}
+linked-coordinates,
+unit-circle {
+  display: block;
+  width: 100%;
+  height: 300px;
+  cursor: pointer;
+}
+linked-coordinates .arm,
+unit-circle .arm {
+  stroke: #9b59b6;
+  stroke-width: 4;
+}
+linked-coordinates .arc,
+unit-circle .arc {
+  fill: none;
+  stroke: #e74c3c;
+  stroke-width: 4;
+}
+linked-coordinates .nob,
+unit-circle .nob {
+  fill: #fff;
+  stroke: rgba(0, 0, 0, 0.7);
+}
+linked-coordinates .axis,
+unit-circle .axis {
+  font-size: 12px;
+  pointer-events: none;
+}
+linked-coordinates .axis path,
+unit-circle .axis path,
+linked-coordinates .axis line,
+unit-circle .axis line {
+  stroke: #666;
+}
+linked-coordinates .axis text,
+unit-circle .axis text {
+  fill: #000000;
+}
+linked-coordinates .tick-arc,
+unit-circle .tick-arc {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+}
+linked-coordinates .cos-arm,
+unit-circle .cos-arm {
+  stroke: #3498db;
+  stroke-width: 4;
+}
+linked-coordinates .sin-arm,
+unit-circle .sin-arm {
+  stroke: #2ecc71;
+  stroke-width: 4;
+}
+linked-coordinates .cos-arm,
+unit-circle .cos-arm,
+linked-coordinates .sin-arm,
+unit-circle .sin-arm {
+  stroke-width: 8;
+}
+linked-coordinates .sine-g .sin,
+unit-circle .sine-g .sin,
+linked-coordinates .cosine-g .sin,
+unit-circle .cosine-g .sin {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-dasharray: 2, 2;
+}
+linked-coordinates .sine-g .cos,
+unit-circle .sine-g .cos,
+linked-coordinates .cosine-g .cos,
+unit-circle .cosine-g .cos {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-dasharray: 2, 2;
+}
+unit-circle {
+  display: block;
+  width: 400px;
+  height: 300px;
+}
+unit-circle .ticks line {
+  stroke: rgba(0, 0, 0, 0.1);
+  shape-rendering: crispEdges;
+}
+unit-circle .coord-label {
+  pointer-events: none;
+  font-size: 15px;
+}
+unit-circle .cos-arm,
+unit-circle .sin-arm,
+unit-circle .arm,
+unit-circle .arc {
+  stroke-width: 4;
+}
+unit-circle.polar .cos-arm,
+unit-circle.polar .sin-arm {
+  opacity: 0.1;
+}
+unit-circle.polar .t1 {
+  stroke: #9b59b6;
+}
+unit-circle.polar .t2 {
+  stroke: #e74c3c;
+}
+unit-circle.cartesian .arc,
+unit-circle.cartesian .arm {
+  opacity: 0.1;
+}
+unit-circle.cartesian .t1 {
+  stroke: #3498db;
+}
+unit-circle.cartesian .t2 {
+  stroke: #2ecc71;
+}
+trig-transform {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+trig-transform .cos-arm,
+trig-transform .sin-arm {
+  stroke-width: 4;
+}
+trig-transform .ray-arm {
+  stroke: #9b59b6;
+}
+trig-transform .cos-arm {
+  stroke: #3498db;
+}
+trig-transform .sin-arm {
+  stroke: #2ecc71;
+}
+trig-transform.sine .cos-arm {
+  stroke: none;
+}
+trig-transform.cosine .sin-arm {
+  stroke: none;
+}
+trig-transform .center {
+  fill: #555;
+}
+trig-transform .unit-circle circle {
+  fill: none;
+  stroke: #888;
+}
+trig-transform .unit-circle text {
+  text-anchor: middle;
+  fill: #777;
+  font-size: 14px;
+}
+trig-transform .unit-circle .nob {
+  stroke: none;
+  fill: #e74c3c;
+}
+trig-transform .triangle {
+  fill: rgba(0, 0, 0, 0.1);
+}
+trig-transform .axis line,
+trig-transform .axis path {
+  stroke: #aaa;
+}
+trig-transform .axis text {
+  font-size: 10px;
+  fill: black;
+}
+trig-transform .x-axis text {
+  font-size: 12px;
+}
+trig-transform .y-axis .tick line {
+  stroke: rgba(0, 0, 0, 0.1);
+}
+trig-transform .sin-path {
+  stroke: #2ecc71;
+  stroke-width: 4;
+  fill: none;
+}
+trig-transform .cos-path {
+  stroke: #3498db;
+  stroke-width: 4;
+  fill: none;
+}
+trig-transform .axis-zero {
+  stroke: rgba(0, 0, 0, 0.1);
+  stroke-width: 1;
+}
+similar-triangles {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+similar-triangles .outline {
+  fill: rgba(0, 0, 0, 0);
+  /* prides a click region */
+  stroke: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+similar-triangles .triangle {
+  fill: rgba(0, 0, 0, 0.1);
+  stroke: none;
+  cursor: pointer;
+}
+similar-triangles .side-a {
+  stroke: #3498db;
+}
+similar-triangles .side-b {
+  stroke: #2ecc71;
+}
+similar-triangles .side-c {
+  stroke: #9b59b6;
+}
+similar-triangles .side-a,
+similar-triangles .side-b,
+similar-triangles .side-c {
+  stroke-width: 2;
+}
+similar-triangles .label-a {
+  fill: #3498db;
+  text-anchor: middle;
+}
+similar-triangles .label-b {
+  fill: #2ecc71;
+  text-anchor: middle;
+}
+similar-triangles .label-c {
+  fill: #9b59b6;
+  text-anchor: middle;
+}
+similar-triangles .corner-square {
+  fill: rgba(255, 255, 255, 0.8);
+  stroke: rgba(0, 0, 0, 0.2);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+similar-triangles text {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+similar-triangles :hover text {
+  opacity: 1;
+}
+similar-triangles .equation {
+  text-anchor: middle;
+}
+similar-triangles .equation .value {
+  font-weight: bold;
+}
+similar-triangles .equation.sine .numerator {
+  fill: #3498db;
+}
+similar-triangles .equation.sine .denominator {
+  fill: #9b59b6;
+}
+similar-triangles .equation.cosine .numerator {
+  fill: #2ecc71;
+}
+similar-triangles .equation.cosine .denominator {
+  fill: #9b59b6;
+}
+.direct {
+  border-radius: 4px;
+  display: inline-block;
+}
+.viz-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.viz-scroll similar-triangles,
+.viz-scroll linked-coordinates {
+  min-width: 820px;
+}
+.viz-scroll trig-transform {
+  min-width: 760px;
+}
+.math-copy .MathJax_Display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+}
+.local-note {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}

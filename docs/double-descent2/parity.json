@@ -1,0 +1,76 @@
+[
+  {
+    "moduleId": "katex-and-core-chart-mounts",
+    "originalBehavior": "The published mathematical follow-up hydrates KaTeX throughout the article and mounts a series of charts from #chart1 through #chart6 plus #animation-chart and #delta-chart.",
+    "localStatus": "The local route keeps the original KaTeX assets, chart mount IDs, and compiled rendering logic so the mathematical narrative still appears in the published order.",
+    "sourceFiles": [
+      "index.html",
+      "js.47ac2d4d.js",
+      "katexCalls.a524eba6.js",
+      "katex.min.3c2484b0.css",
+      "styles.d50a6b6f.css"
+    ],
+    "notes": [
+      "The local route preserves the published KaTeX placeholders and chart containers instead of reauthoring them.",
+      "Only shell metadata and provenance-facing copy were changed around the shipped runtime."
+    ],
+    "evidence": [
+      "The implementation plan treats local KaTeX rendering and the major chart mounts as parity-critical.",
+      "Shared smoke coverage verifies that KaTeX hydrates locally and that the primary chart mounts render under the local bundle."
+    ]
+  },
+  {
+    "moduleId": "interpolation-threshold-walkthrough",
+    "originalBehavior": "The published route advances from a static interpolation-threshold example into an animated left-knot shift and then into a more extreme follow-up example to explain why the threshold fit can be unstable.",
+    "localStatus": "The local route keeps the original chart4 to animation-chart to chart5 progression and surrounding copy so the interpolation-threshold walkthrough remains synchronized.",
+    "sourceFiles": [
+      "index.html",
+      "js.47ac2d4d.js",
+      "styles.d50a6b6f.css"
+    ],
+    "notes": [
+      "The static and animated scenes still mount in the same order as the published article.",
+      "The walkthrough remains driven by the published bundle rather than a local reimplementation."
+    ],
+    "evidence": [
+      "The implementation plan marks the static-to-animated progression from chart4 to animation-chart to chart5 as parity-critical.",
+      "Shared smoke coverage verifies those scenes mount cleanly and stay runtime-stable."
+    ]
+  },
+  {
+    "moduleId": "delta-diagram-and-spline-limit-scene",
+    "originalBehavior": "Later sections show a delta diagram for the cubic-spline argument and conclude with a natural-cubic-spline endpoint scene that illustrates the infinitely large-model limit.",
+    "localStatus": "The local route keeps the published delta-chart and chart6 scenes, including the corresponding explanatory math and rendered charts, under local assets.",
+    "sourceFiles": [
+      "index.html",
+      "js.47ac2d4d.js",
+      "katexCalls.a524eba6.js"
+    ],
+    "notes": [
+      "The spline-limit scene remains mounted in #chart6.",
+      "The delta diagram stays paired with the surrounding derivation instead of being flattened into static markup."
+    ],
+    "evidence": [
+      "The implementation plan treats the delta-chart walkthrough and natural-cubic-spline endpoint scene as parity-critical.",
+      "Shared smoke coverage verifies both the delta diagram and chart6 mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-series-link",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, and series references that pointed back to the upstream public site.",
+    "localStatus": "The local route removes those public-shell provenance surfaces, localizes the series references to the local double-descent page, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public route now points back to the local part 1 route where the local equivalent exists."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
+      "The route now exposes only the shared-footer reference link back to the original page."
+    ]
+  }
+]

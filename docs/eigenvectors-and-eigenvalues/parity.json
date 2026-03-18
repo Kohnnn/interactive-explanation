@@ -1,0 +1,109 @@
+[
+  {
+    "moduleId": "basis-column-editor",
+    "originalBehavior": "The opening matrix scene lets readers drag the two basis-column arrows and the sample vector while the transformed point, matrix equation, and Av vector all stay synchronized.",
+    "localStatus": "The local route keeps the published IntroCtrl and BasisCtrl structure, including the draggable nobs, matrix-equation overlays, and transformed vector updates.",
+    "sourceFiles": [
+      "index.html",
+      "../../eigenvectors-and-eigenvalues/script.js",
+      "../../eigenvectors-and-eigenvalues/style.css"
+    ],
+    "notes": [
+      "The public route only wraps the wide visualization for narrow screens.",
+      "No controller logic was extracted or refactored for v1."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders the opening simple-plot scene with two matrix-column drags and one sample-vector drag.",
+      "Smoke coverage updates the local basis state and checks the plotted basis/vector geometry changes."
+    ]
+  },
+  {
+    "moduleId": "eigenvector-test-and-readouts",
+    "originalBehavior": "The second plot shows eigenvector alignment, eigenvalue readouts, eigenspace guides, and repeated-multiplication behavior while the candidate vector moves.",
+    "localStatus": "The local route keeps the published TransCtrl and PopulationCtrl views, including eigenvalue labels, eigenspace overlays, and multi-step trajectory updates.",
+    "sourceFiles": [
+      "index.html",
+      "../../eigenvectors-and-eigenvalues/script.js"
+    ],
+    "notes": [
+      "The published labels λ₁, λ₂, s₁, and s₂ still come from the original Angular watchers.",
+      "The local route preserves the original nested controller layout instead of splitting the plots apart."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still places the eigenvalue labels and repeated-sequence plot directly below the basis scene.",
+      "Smoke coverage checks that changing the candidate-vector state updates the visible geometry and eigen-alignment feedback."
+    ]
+  },
+  {
+    "moduleId": "fibonacci-amoeba-sequence",
+    "originalBehavior": "The amoeba section advances generation by generation, updates the simulation and side plot together, and shows the Fibonacci totals in the readout below.",
+    "localStatus": "The local route keeps the published BacteriaCtrl, BacteriaPlotCtrl, bacteria-simulation, bacteria-plot, and fibonacci-sequence directives, including reset and forward controls.",
+    "sourceFiles": [
+      "index.html",
+      "../../eigenvectors-and-eigenvalues/script.js"
+    ],
+    "notes": [
+      "The local route keeps the original forward-step cadence and count text.",
+      "Only overflow wrappers were added around the two-up visual stage."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still ships reset and forward buttons below the bacteria simulation.",
+      "Smoke coverage advances the local generation counter and checks the simulation state and textual counts change."
+    ]
+  },
+  {
+    "moduleId": "steady-state-markov-migration",
+    "originalBehavior": "The migration section combines a draggable population/probability map with a hover-to-play steady-state animation and a synchronized stochastic-matrix multiplication panel.",
+    "localStatus": "The local route keeps the published MigrationCtrl, sf-to-ny-migration-map, migration, and stochastic-matrix-multiplication surfaces, with one local path repair for the map JSON.",
+    "sourceFiles": [
+      "index.html",
+      "../../eigenvectors-and-eigenvalues/script.js",
+      "../../eigenvectors-and-eigenvalues/resources/us.json",
+      "../../ev/scripts/topojson.js"
+    ],
+    "notes": [
+      "The local copy loads the US map data from ./resources/us.json so the page works from a GitHub Pages subpath.",
+      "The original upstream cross-link to Setosa's Markov page is replaced with the local replica route."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still requests /ev/scripts/topojson.js and ../resources/us.json for the migration scene.",
+      "Smoke coverage waits for the local map SVG to render and checks the hover-driven steady-state animation produces sample history."
+    ]
+  },
+  {
+    "moduleId": "complex-eigenvalue-spiral-demo",
+    "originalBehavior": "The closing scene lets readers drag the matrix columns, adjust the number of steps, and watch the transformed point spiral while the complex eigenvalues update in the companion plane.",
+    "localStatus": "The local route keeps the published FourQuadCtrl and four-quad-plot directive, including the step slider, complex-plane readout, and draggable basis vectors.",
+    "sourceFiles": [
+      "index.html",
+      "../../eigenvectors-and-eigenvalues/script.js"
+    ],
+    "notes": [
+      "The local route preserves the original step slider label and point-trail behavior.",
+      "No alternate controls were added for v1."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still ends with a steps slider above the four-quad plot.",
+      "Smoke coverage changes the local basis state and confirms the complex-plane or spiral geometry updates."
+    ]
+  },
+  {
+    "moduleId": "local-mathjax-and-footer-cleanup",
+    "originalBehavior": "The published page depended on remote MathJax and surrounded the explainer with EV branding, creator links, share widgets, newsletter prompts, analytics, and comments.",
+    "localStatus": "The local route loads MathJax from the shared local EV asset tree and uses the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../../ev/scripts/mathjax/MathJax.js",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance stays in docs only.",
+      "The body now routes back to the local replica index instead of /ev/."
+    ],
+    "evidence": [
+      "The published page verified 2026-03-14 still points to cdnjs for MathJax and includes the old EV public chrome.",
+      "Public-surface auditing blocks that chrome from shipping on local routes."
+    ]
+  }
+]

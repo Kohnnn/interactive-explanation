@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "confusion-matrix-threshold-sandbox",
+    "originalBehavior": "The published article opens with a threshold-driven classifier scene that updates a confusion-matrix style grid as the reader changes the cutoff for binary predictions.",
+    "localStatus": "The local route keeps the original threshold slider, draggable threshold marker, and linked confusion-state rendering from the compiled app.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The route still mounts from the original compiled bundle into an otherwise empty document body.",
+      "Only metadata and public-shell branding were patched around the app."
+    ],
+    "evidence": [
+      "The implementation plan treats the confusion-matrix sandbox and threshold tradeoff scene as parity-critical.",
+      "Shared smoke coverage will move a threshold control and verify the confusion-state output changes."
+    ]
+  },
+  {
+    "moduleId": "precision-recall-and-f1-readouts",
+    "originalBehavior": "Precision, recall, and F1 explanations stay synchronized with the currently active threshold and visible numerator or denominator breakdowns.",
+    "localStatus": "The local route keeps the original metric readouts, formula text, and F1 chart updates without rewriting the compiled logic.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css",
+      "assets/styles/katex.css"
+    ],
+    "notes": [
+      "KaTeX rendering continues through the vendored MLU math stack.",
+      "The metric values still update from the same internal stores as the threshold scenes."
+    ],
+    "evidence": [
+      "The plan explicitly calls out precision and recall readouts plus formula synchronization as parity-critical.",
+      "Shared smoke coverage will verify that metric values and labels update together after threshold changes."
+    ]
+  },
+  {
+    "moduleId": "scroll-linked-tradeoff-scenes",
+    "originalBehavior": "The article advances through accuracy, precision, recall, F1, and tradeoff sections with scroll-linked instructional state changes and chart transitions.",
+    "localStatus": "The local route keeps the original section order, compiled scroll behavior, and scene-specific chart or legend updates from the published bundle.",
+    "sourceFiles": [
+      "build/bundle.js",
+      "build/bundle.css"
+    ],
+    "notes": [
+      "The original section IDs and chart containers were preserved so the published scene progression still drives the page.",
+      "No new explanatory steps or local-only controls were added."
+    ],
+    "evidence": [
+      "The implementation plan treats scroll-linked instructional state changes as parity-critical.",
+      "Shared smoke coverage will verify the main scene initializes cleanly and the threshold-driven metric state remains synchronized."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published route included MLU branding, creator bylines, analytics, repo and promo links, and contributor callouts inside the public body.",
+    "localStatus": "The local route removes those public-shell references, localizes the remaining navigation, and uses the shared footer as the single live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Docs retain the upstream repo and provenance notes.",
+      "The public page no longer exposes creator or project promo surfaces outside the footer."
+    ],
+    "evidence": [
+      "The public-surface audit blocks creator names, MLU branding, upstream domains, promo links, and contributor callouts in shipped route code.",
+      "The route now advertises only the shared footer link back to the live original page."
+    ]
+  }
+]

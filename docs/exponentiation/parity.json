@@ -1,0 +1,89 @@
+[
+  {
+    "moduleId": "simple-growth-stepper",
+    "originalBehavior": "The opening demo restarts automatically and lets readers change the multiplication rate, number of steps, and playback speed while the colored block layout updates.",
+    "localStatus": "The local route keeps the original SimpleGrowth controller and directive inline, including the restart button, rate label updates, step cap logic, and animated block growth.",
+    "sourceFiles": [
+      "index.html",
+      "style.css",
+      "../ev/scripts/common.js"
+    ],
+    "notes": [
+      "The original rateLabel and otherRateLabels copy still come from the published Angular watcher.",
+      "No logic was extracted from the inline script for v1."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still exposes Restart, rate, steps, and speed controls above the simple-growth element.",
+      "Smoke coverage updates those controls locally and checks both the scope values and visible copy respond."
+    ]
+  },
+  {
+    "moduleId": "linear-growth-demo",
+    "originalBehavior": "The linear growth section restarts repeated addition and updates the plotted staircase according to its rate, steps, and speed controls.",
+    "localStatus": "The local route keeps the published GrowthDemo directive and LinearGrowthDemo controller, with one local repair to the rate dropdown tag so the intended control is actually usable.",
+    "sourceFiles": [
+      "index.html",
+      "style.css"
+    ],
+    "notes": [
+      "The live HTML verified on 2026-03-14 ships this control as <selct>; the local route changes it to <select> without otherwise refactoring the section.",
+      "The local scroll wrapper only affects overflow behavior on smaller screens."
+    ],
+    "evidence": [
+      "The published page still renders the linear section with restart, steps, and speed controls, but the rate control tag is misspelled in the live DOM.",
+      "Smoke coverage updates the repaired local dropdown and checks the controller state plus visible +rate markers update."
+    ]
+  },
+  {
+    "moduleId": "exponential-growth-demo",
+    "originalBehavior": "The exponential growth section replays repeated multiplication and updates the plotted blocks, labels, and rate markers as controls change.",
+    "localStatus": "The local route keeps the original ExponentialGrowthDemo controller and shared GrowthDemo directive, including the x-rate markers and animated block stacking.",
+    "sourceFiles": [
+      "index.html",
+      "style.css"
+    ],
+    "notes": [
+      "The local route preserves the original inline directive logic rather than extracting it to a separate asset.",
+      "The wide growth demo is wrapped for horizontal scrolling on narrow screens."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still exposes rate, steps, and speed controls above the exponential growth-demo element.",
+      "Smoke coverage updates those controls and checks the x-rate markers and scope values respond."
+    ]
+  },
+  {
+    "moduleId": "virus-spread-toy-model",
+    "originalBehavior": "The virus example restarts an infection simulation, updates the network canvas over time, and grows the infected-over-time chart deterministically from patient zero.",
+    "localStatus": "The local route keeps the original canvas-plus-SVG virus demo, restart behavior, speed control, and infection history chart.",
+    "sourceFiles": [
+      "index.html",
+      "style.css"
+    ],
+    "notes": [
+      "The published toy model still seeds patient zero from the center-most visible node on restart.",
+      "The local route removes only surrounding promo surfaces, not the simulation logic."
+    ],
+    "evidence": [
+      "Live source verified 2026-03-14 still renders a virus-demo element with a restart button and speed slider.",
+      "Smoke coverage restarts the local virus model, waits for the infection history chart to regrow, and checks the scope speed updates."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-cleanup",
+    "originalBehavior": "The published page included EV branding, author bylines, share widgets, newsletter prompts, analytics, and comments around the explainer.",
+    "localStatus": "The local route removes those public-shell elements and uses the shared footer as the only live original-page reference surface.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/public-footer.css",
+      "../shared/public-footer.js"
+    ],
+    "notes": [
+      "Technical provenance stays in docs only.",
+      "The public menu now routes back to the local replica index."
+    ],
+    "evidence": [
+      "Public-surface auditing blocks creator names, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping pages.",
+      "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  }
+]

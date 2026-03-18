@@ -1,0 +1,41 @@
+.nob {
+  transition: 0.25s all;
+}
+.nob circle {
+  fill: rgba(0, 0, 0, 0.04);
+  stroke: rgba(0, 0, 0, 0.04);
+}
+.nob:hover {
+  fill: rgba(0, 0, 0, 0.2);
+}
+section.title .title {
+  font-size: 4em;
+}
+h3 {
+  font-size: 1.75em;
+  font-weight: bold;
+}
+.myApp img {
+  max-width: 100%;
+  height: auto;
+}
+.myApp section > svg {
+  display: block;
+  width: 100% !important;
+  max-width: 620px;
+  height: auto !important;
+  margin: 0 auto 1rem;
+}
+.myApp > div::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.local-note {
+  color: rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 720px) {
+  section.title .title {
+    font-size: 3.2em;
+  }
+}
