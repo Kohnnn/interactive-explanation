@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-sound-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and sound scripts, then initializes many inline keyboard, waveform, particle, and pressure-wave sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../sound/index.html",
+      "../../sound/css/base.css",
+      "../../sound/js/base.js",
+      "../../sound/js/sound.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the core interactive sections mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "keyboard-and-waveform-scenes",
+    "originalBehavior": "The published article introduces keyboard-driven sound scenes in which clicking keys or pressing W, E, and R triggers plate motion, waveform changes, and synthesized audio output.",
+    "localStatus": "The local route keeps the published keyboard widgets, key-state handling, waveform plots, and synthesized audio behavior for the early sound and waveform scenes.",
+    "sourceFiles": [
+      "../../sound/index.html",
+      "../../sound/js/sound.js"
+    ],
+    "notes": [
+      "The keyboard scenes still rely on the original KeyBoard and Drawer runtime rather than a local rewrite.",
+      "The route remains usable when autoplay is blocked because the published runtime warms the audio graph only after user interaction."
+    ],
+    "evidence": [
+      "Implementation planning treated click-driven keyboard input and W/E/R keyboard input as smoke-critical.",
+      "Shared smoke coverage verifies a waveform keyboard click redraws the scene and that W routes to the published top-of-viewport keyboard with the expected pressed-state behavior."
+    ]
+  },
+  {
+    "moduleId": "particle-pressure-and-addition-controls",
+    "originalBehavior": "The published article continues into particle simulations, pressure-box resizing scenes, slider-driven waveform controls, and later additive-wave visualizations with play or pause controls.",
+    "localStatus": "The local route keeps the particle drag scenes, pressure and length sliders, waveform-addition visualizations, and published animation controls without replacing them with custom local components.",
+    "sourceFiles": [
+      "../../sound/index.html",
+      "../../sound/js/sound.js"
+    ],
+    "notes": [
+      "The particle and pressure scenes still rely on the original canvas and GL drawer runtime.",
+      "Published play or pause controls remain in place for the animated scenes that expose them."
+    ],
+    "evidence": [
+      "Implementation planning treated one early drag scene, one pressure or box-length slider scene, one additive waveform scene, and one play or pause control as parity-critical.",
+      "Shared smoke coverage verifies a particle canvas redraws on drag, a pressure-box slider redraws the active scene, a later waveform-addition slider updates the plot, and a published play or pause button toggles state."
+    ]
+  },
+  {
+    "moduleId": "local-helper-assets-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-local helper sprites and shared control icons while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the helper sprites locally, keeps the keyboard and control surfaces intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../sound/index.html",
+      "../../sound/images/anchor.png",
+      "../../sound/images/play_pause.png",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The route synthesizes sound in-browser and does not require separate upstream audio file requests at runtime."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the route loads locally without upstream asset requests while keeping the interactive controls usable."
+    ]
+  }
+]

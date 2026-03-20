@@ -1,0 +1,72 @@
+[
+  {
+    "moduleId": "map-boot-and-local-vector-assets",
+    "originalBehavior": "The published map scene loads a US vector map with local CSS, JavaScript, and custom jvm assets so the coloring demo initializes immediately on first render.",
+    "localStatus": "The local route keeps the published map-first runtime and vendors the Bootstrap, jQuery, jvectormap, custom jvm, and US-map assets directly under the route tree for subpath hosting.",
+    "sourceFiles": [
+      "../../zero-knowledge-proof-demo/index.html",
+      "../../zero-knowledge-proof-demo/js/lib/jvm/map.js",
+      "../../zero-knowledge-proof-demo/js/lib/jquery-jvectormap-us-merc-en.js",
+      "../../zero-knowledge-proof-demo/css/map-custom.css"
+    ],
+    "notes": [
+      "The local root intentionally maps to the interactive map scene instead of the upstream promo landing page.",
+      "The shared footer handles public provenance so the shipped body stays focused on the demo."
+    ],
+    "evidence": [
+      "Implementation planning treated map initialization with local vector-map assets as parity-critical.",
+      "Shared smoke coverage verifies the map container mounts and the vendored vector-map runtime initializes without broken asset loads."
+    ]
+  },
+  {
+    "moduleId": "show-hide-and-palette-shuffle-controls",
+    "originalBehavior": "The published demo starts with hidden region fills, exposes a Show Colors toggle that reveals the coloring overlay, and lets readers reshuffle the visible palette while keeping the scene interactive.",
+    "localStatus": "The local route keeps the published hidden-color default state, Show Colors or Hide Colors toggle, and Shuffle Colors button with the original palette-offset logic.",
+    "sourceFiles": [
+      "../../zero-knowledge-proof-demo/index.html"
+    ],
+    "notes": [
+      "The local copy reuses the published palette and button-label flow instead of rewriting the interaction model.",
+      "Color reshuffling only affects currently visible regions, matching the shipped map scene."
+    ],
+    "evidence": [
+      "Implementation planning treated Show Colors, Hide Colors, and Shuffle Colors behavior as parity-critical.",
+      "Shared smoke coverage toggles the color overlay, checks the button text update, then verifies a shuffle changes at least one visible region fill."
+    ]
+  },
+  {
+    "moduleId": "region-selection-and-background-reset",
+    "originalBehavior": "The published map lets readers select regions to reveal their color classes, then clears the selection and returns to the hidden-color state when the background is clicked.",
+    "localStatus": "The local route keeps the published region-selection handler, per-region fill updates, and background-click reset behavior intact under the local asset tree.",
+    "sourceFiles": [
+      "../../zero-knowledge-proof-demo/index.html",
+      "../../zero-knowledge-proof-demo/js/lib/jquery-jvectormap-2.0.5.min.js"
+    ],
+    "notes": [
+      "Selected regions still use the published color indexing instead of a local remapping.",
+      "Background reset restores both the hidden-color state and the Show Colors button label."
+    ],
+    "evidence": [
+      "Implementation planning treated region selection and background reset as parity-critical behavior.",
+      "Shared smoke coverage selects a region, verifies the fill state changes, then clicks the map background and checks that the scene returns to its default hidden-color state."
+    ]
+  },
+  {
+    "moduleId": "footer-only-reference-and-local-shell-metadata",
+    "originalBehavior": "The published family exposed GitHub-ribbon and promo-style provenance surfaces in the public body while using route-local CSS and JavaScript paths from the site root.",
+    "localStatus": "The local copy rewrites canonical metadata and asset paths for the subpath-hosted route, removes the body-level provenance surfaces, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../zero-knowledge-proof-demo/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The shipped body no longer exposes the upstream GitHub ribbon or video-link navigation.",
+      "The local route keeps its own vendored asset tree instead of depending on root-relative upstream paths."
+    ],
+    "evidence": [
+      "The public-surface audit blocks body-level creator, source, or promo links outside approved shared-footer configuration.",
+      "Implementation planning called for patching only shell metadata and nested-hosting behavior while preserving the published runtime first."
+    ]
+  }
+]

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color Spaces Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local color-spaces replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Color Spaces</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/color-spaces/</code> vendors the published
+        Ciechanowski article, keeps its slider, plot, and gamut runtime intact, and limits public
+        provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../color-spaces/">Open replica</a>
+        <a class="action-link secondary" href="https://ciechanow.ski/color-spaces/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-20</code><br>
+        Source family: <code>ciechanow.ski</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published article HTML, shared article CSS, page-local CSS,
+          scripts, WebGL textures, and article images, then patches only the subpath-hosting shell
+          and provenance surfaces needed for the public replica.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://ciechanow.ski/color-spaces/</code> on 2026-03-20.</li>
+          <li>The local copy removes the upstream banner, blog navigation, analytics, Patreon prompt, and social links from the public body.</li>
+          <li>The published slider, matrix, 3D plot, and gamut interactions remain driven by the vendored scripts rather than a local rewrite.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>color-spaces/index.html</code> owns the local metadata shell, shared footer hook, and relative article asset paths.</li>
+          <li><code>color-spaces/css/base.css</code> and <code>color-spaces/css/color_spaces.css</code> preserve the published article layout and interaction styling with subpath-safe image URLs.</li>
+          <li><code>color-spaces/js/base.js</code> and <code>color-spaces/js/color_spaces.js</code> keep the original slider, 3D plot, WebGL gamut, and chromaticity scene logic.</li>
+          <li><code>color-spaces/images/</code> contains the article-local diagrams, helper sprites, and gamut textures required by the published page and scripts.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer includes the author banner, Patreon prompt, X/Twitter, Instagram, e-mail, RSS, or Google Analytics surfaces.</li>
+          <li>The local copy uses local fallback font stacks instead of runtime Google Fonts requests so the route stays self-contained.</li>
+          <li>The shared footer is the only public original-page reference surface on the shipped route.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the article structure intact; future edits should patch the published shell, not rewrite the interactions into a condensed local version.</li>
+          <li>Extend the shared smoke bundle instead of creating a one-off validator so later Ciechanowski routes can reuse the same family path.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching article shell copy or any vendored runtime files.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

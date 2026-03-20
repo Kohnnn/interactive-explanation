@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and color spaces scripts, then initializes many inline slider, plot, and gamut sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../color-spaces/index.html",
+      "../../color-spaces/css/base.css",
+      "../../color-spaces/js/base.js",
+      "../../color-spaces/js/color_spaces.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the major interactive sections mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "slider-driven-pickers-and-intensity-sections",
+    "originalBehavior": "The published article opens with multiple RGB picker scenes and early intensity-mismatch sections in which slider movement updates compared color plates and supporting visual output.",
+    "localStatus": "The local route keeps the early picker runtime, including the side-by-side matcher scenes, picker labels, and intensity-mismatch sections driven by the published slider controls.",
+    "sourceFiles": [
+      "../../color-spaces/index.html",
+      "../../color-spaces/js/color_spaces.js"
+    ],
+    "notes": [
+      "The picker scenes still rely on the original ColorMatcher runtime and its published DOM IDs.",
+      "The route keeps the article's inline plate and mismatch sections in their original order rather than flattening them into a custom demo."
+    ],
+    "evidence": [
+      "Implementation planning treated one early slider-driven picker scene and one intensity-focused scene as smoke-critical.",
+      "Shared smoke coverage verifies a color-picker slider changes both compared plates and that a later synchronized plot scene updates from slider input."
+    ]
+  },
+  {
+    "moduleId": "matrix-conversion-plots-and-draggable-views",
+    "originalBehavior": "The published article continues into matrix conversion scenes, synchronized 3D plots, chromaticity views, and draggable gamut or cube visualizations later in the article.",
+    "localStatus": "The local route keeps the matrix and conversion sections, the synchronized plot updates, draggable 3D plot canvases, and the later gamut visualization with its texture cycling and slider-driven boundary view.",
+    "sourceFiles": [
+      "../../color-spaces/index.html",
+      "../../color-spaces/js/color_spaces.js"
+    ],
+    "notes": [
+      "The later scenes still rely on the original Color3DPlot and GLEditor runtime rather than a local rewrite.",
+      "The WebGL gamut canvas keeps its published image cycling behavior and the paired gamut-boundary overlay remains tied to the slider state."
+    ],
+    "evidence": [
+      "Implementation planning treated one matrix or conversion scene, one drag-driven 3D plot, and the later gamut scene as parity-critical.",
+      "Shared smoke coverage verifies a synchronized plot scene updates from slider input, a later plot canvas redraws on drag, and the gamut scene cycles textures and updates its boundary overlay."
+    ]
+  },
+  {
+    "moduleId": "local-images-textures-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-local diagrams, helper sprites, and gamut textures while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the article images, helper sprites, and gamut texture images locally, keeps the diagrams and interactive canvases intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../color-spaces/index.html",
+      "../../color-spaces/images/color_show_0.jpg",
+      "../../color-spaces/images/color_matching.svg",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "Article diagrams, anchor icons, and interactive textures resolve from the local route tree under the GitHub Pages subpath."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the article images, WebGL textures, and canvases load locally without upstream asset requests."
+    ]
+  }
+]

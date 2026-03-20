@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zero Knowledge Proof Demo Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local zero-knowledge-proof-demo replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Zero Knowledge Proof Demo</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/zero-knowledge-proof-demo/</code> uses the
+        interactive map scene as the public entry point while keeping the Anders vector-map runtime
+        and local asset tree intact for subpath hosting.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../zero-knowledge-proof-demo/">Open replica</a>
+        <a class="action-link secondary" href="https://andersbrownworth.com/zero-knowledge-proof-demo/" target="_blank" rel="noreferrer">Open original</a>
+        <a class="action-link ghost" href="https://github.com/anders94/zero-knowledge-proof-demo/" target="_blank" rel="noreferrer">Upstream repo</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-18</code><br>
+        Source family: <code>anders94/zero-knowledge-proof-demo</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published interactive map scene directly rather than the
+          upstream video-first landing page. The public root is intentionally the selectable map so
+          the core zero-knowledge coloring interaction is available on first load.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://andersbrownworth.com/zero-knowledge-proof-demo/</code> on 2026-03-18.</li>
+          <li>The shipped local root preserves the upstream <code>map.html</code> runtime and removes the GitHub ribbon and other body-level provenance surfaces.</li>
+          <li>The vendored route keeps the original jQuery, Bootstrap, vector-map, and custom <code>jvm/map.js</code> asset handoff local to the route tree.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Anders adaptation checklist</h2>
+        <ul class="plain-list">
+          <li>Use the interactive map scene as the route root instead of the upstream video landing page.</li>
+          <li>Vendor the route-local <code>css/</code>, <code>js/</code>, and vector-map assets directly under <code>zero-knowledge-proof-demo/</code> without introducing a shared custom runtime.</li>
+          <li>Patch only asset paths, canonical metadata, and public provenance surfaces needed for the GitHub Pages subpath.</li>
+          <li>Keep the shared footer as the only public original-page reference surface on the shipped route.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset and source map</h2>
+        <ul class="plain-list">
+          <li><code>zero-knowledge-proof-demo/index.html</code> is the local route root and mirrors the published map scene with local footer metadata.</li>
+          <li><code>zero-knowledge-proof-demo/js/lib/jvm/map.js</code> and <code>zero-knowledge-proof-demo/js/lib/jquery-jvectormap-us-merc-en.js</code> keep the published vector-map runtime and US-region data local.</li>
+          <li><code>zero-knowledge-proof-demo/css/map-custom.css</code> preserves the upstream fullscreen map shell and zoom-control positioning.</li>
+          <li><code>zero-knowledge-proof-demo/js/lib/jquery-jvectormap-2.0.5.min.js</code> remains vendored route-local so region selection, fills, and reset behavior work without upstream requests.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route removes the upstream GitHub ribbon and video-link navigation surfaces from the body.</li>
+          <li>The local root intentionally opens on the interactive map instead of the upstream promo-first landing page.</li>
+          <li>The shared footer is the only public original-page reference surface on the shipped page.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

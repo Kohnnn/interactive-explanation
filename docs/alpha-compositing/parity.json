@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-script-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and alpha compositing scripts, then initializes multiple inline canvas and slider sections under a single longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../alpha-compositing/index.html",
+      "../../alpha-compositing/css/base.css",
+      "../../alpha-compositing/js/base.js",
+      "../../alpha-compositing/js/alpha_compositing.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated both published scripts and the article shell as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and multiple canvas-backed scenes mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "opacity-coverage-and-alpha-controls",
+    "originalBehavior": "The published article opens with draggable opacity scenes, triangle coverage demonstrations, bit-depth examples, and an alpha slider that updates the RGB plot and interpolated result.",
+    "localStatus": "The local route keeps the early drag and slider interactions, including the rose glasses scene, coverage plots, bit-depth canvases, and the alpha lerper chart.",
+    "sourceFiles": [
+      "../../alpha-compositing/index.html",
+      "../../alpha-compositing/js/alpha_compositing.js"
+    ],
+    "notes": [
+      "The drag scenes still use the published canvas redraw logic and DOM IDs expected by the original script.",
+      "The alpha slider remains wired through the published shared slider helper rather than a local custom control."
+    ],
+    "evidence": [
+      "Implementation planning treated one early drag scene, the triangle coverage scene, and the alpha slider chart as smoke-critical.",
+      "Shared smoke coverage drags an early scene, drags the geometry coverage scene, and verifies the alpha slider changes the active chart output."
+    ]
+  },
+  {
+    "moduleId": "intermediate-buffer-and-porter-duff-scenes",
+    "originalBehavior": "The published article continues into intermediate-buffer visuals, Porter-Duff operator examples with draggable heart and club symbols, and a step-driven compositing example later in the article.",
+    "localStatus": "The local route keeps the later compositing scenes, including at least one intermediate-buffer update, the draggable Porter-Duff operator examples, and the step-driven nautical composition sequence.",
+    "sourceFiles": [
+      "../../alpha-compositing/index.html",
+      "../../alpha-compositing/js/alpha_compositing.js"
+    ],
+    "notes": [
+      "The later scenes still rely on the original PorterDuffer and PDExample runtime rather than a local rewrite.",
+      "The click-driven sequence keeps the published step labels and scene progression."
+    ],
+    "evidence": [
+      "Implementation planning treated one later drag scene and the Porter-Duff in Action sequence as parity-critical.",
+      "Shared smoke coverage verifies one later compositing scene updates on interaction and that the step-driven example advances without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "local-images-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-local diagrams and textures while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the article images and helper sprites locally, keeps diagram and canvas rendering intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../alpha-compositing/index.html",
+      "../../alpha-compositing/images/alpha_landscape.jpg",
+      "../../alpha-compositing/images/alpha_compositing.svg",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "Article diagrams and anchor icons resolve from the local route tree under the GitHub Pages subpath."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the article images and canvas scenes load locally without upstream asset requests."
+    ]
+  }
+]

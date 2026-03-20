@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" data-bs-theme="blue">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive zero-knowledge proof demo with a selectable US map and palette-based coloring logic.">
+  <meta property="og:title" content="Zero Knowledge Proof Demo">
+  <meta property="og:description" content="Interactive zero-knowledge proof demo with a selectable US map and palette-based coloring logic.">
+  <meta property="og:url" content="./">
+  <link rel="canonical" href="./">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <title>Zero Knowledge Proof Demo</title>
+  <link rel="stylesheet" href="./css/lib/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/site.css">
+  <link rel="stylesheet" href="./css/lib/jquery-jvectormap-2.0.5.css">
+  <link rel="stylesheet" href="./css/map-custom.css">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <script src="./js/lib/bootstrap.bundle.min.js"></script>
+  <script src="./js/lib/jquery.min.js"></script>
+  <script src="./js/lib/jquery-jvectormap-2.0.5.min.js"></script>
+  <script src="./js/lib/jvm/map.js"></script>
+  <script src="./js/lib/jquery-jvectormap-us-merc-en.js"></script>
+  <script defer src="../shared/public-footer.js"></script>
+  <script>
+    let map;
+
+    $(() => {
+      const palette = ["#FF8888", "#8888FF", "#88FF88", "#FFFF88"];
+      let offset = Math.floor(Math.random() * palette.length);
+      let show = false;
+      const colors = {};
+
+      const allColors = () => {
+        for (const key in map.regions) {
+          colors[key] = palette[(offset + map.mapData.paths[key].color) % palette.length];
+        }
+      };
+
+      const noColors = () => {
+        for (const key in map.regions) {
+          colors[key] = "#FFFFFF";
+        }
+      };
+
+      map = new jvm.Map({
+        map: "us_merc_en",
+        container: $("#map"),
+        series: {
+          regions: [{
+            attribute: "fill",
+          }],
+        },
+        onRegionTipShow(event) {
+          event.preventDefault();
+        },
+        backgroundColor: "#DDDDDD",
+        regionsSelectable: true,
+        regionStyle: {
+          selected: {
+            fill: "#AAAAAA",
+          },
+        },
+        onRegionSelected: (event, region, isSelected, selectedRegions) => {
+          if (!isSelected) {
+            return;
+          }
+
+          show = false;
+          $("#show-hide-colors-button").text("Show Colors");
+
+          for (const key in map.regions) {
+            if (selectedRegions.includes(key)) {
+              colors[key] = palette[(offset + map.mapData.paths[key].color) % palette.length];
+            } else {
+              colors[key] = "#FFFFFF";
+            }
+          }
+
+          map.series.regions[0].setValues(colors);
+
+          if (selectedRegions.length === 2) {
+            map.clearSelectedRegions();
+          }
+
+          if (selectedRegions.length > 2) {
+            noColors();
+          }
+        },
+      });
+
+      noColors();
+
+      $("#shuffle-colors-button").on("click", (event) => {
+        event.preventDefault();
+        offset = (offset + 1 + Math.floor(Math.random() * (palette.length - 2))) % palette.length;
+
+        for (const key in map.regions) {
+          if (colors[key] !== "#FFFFFF") {
+            colors[key] = palette[(offset + map.mapData.paths[key].color) % palette.length];
+          }
+        }
+
+        map.series.regions[0].setValues(colors);
+      });
+
+      $("#show-hide-colors-button").on("click", (event) => {
+        event.preventDefault();
+
+        if (show) {
+          noColors();
+          show = false;
+          $("#show-hide-colors-button").text("Show Colors");
+        } else {
+          allColors();
+          show = true;
+          $("#show-hide-colors-button").text("Hide Colors");
+        }
+
+        map.series.regions[0].setValues(colors);
+      });
+
+      $(document).on("click", (event) => {
+        if (
+          $(event.target).is(".jvectormap-container") ||
+          $(event.target).is("svg") ||
+          $(event.target).is("path.jvectormap-background")
+        ) {
+          map.clearSelectedRegions();
+          noColors();
+          show = false;
+          $("#show-hide-colors-button").text("Show Colors");
+          map.series.regions[0].setValues(colors);
+        }
+      });
+    });
+  </script>
+</head>
+<body data-reference-url="https://andersbrownworth.com/zero-knowledge-proof-demo/" data-reference-text="Zero Knowledge Proof Demo" data-footer-label="Original page">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="./">Zero Knowledge Proof Demo</a>
+    </div>
+  </nav>
+
+  <main class="container content-container">
+    <div class="card">
+      <div id="map" aria-label="Zero knowledge proof map demo"></div>
+      <div class="card-footer text-center">
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-secondary" id="show-hide-colors-button" type="button">Show Colors</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-secondary" id="shuffle-colors-button" type="button">Shuffle Colors</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

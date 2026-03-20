@@ -29,13 +29,14 @@ const checks = [
   { label: "upstream domain reference", regex: /https?:\/\/ncase\.me\/|https?:\/\/mlu-explain\.github\.io\/|https?:\/\/setosa\.io\//i },
   {
     label: "creator self-link",
-    regex: /https?:\/\/github\.com\/ncase|https?:\/\/(?:www\.)?twitter\.com\/ncasenmare|https?:\/\/blog\.ncase\.me|https?:\/\/(?:www\.)?twitter\.com\/jdwlbr|https?:\/\/(?:www\.)?twitter\.com\/lusantala|https?:\/\/hjyeon\.github\.io\/?|https?:\/\/github\.com\/aws-samples\/aws-mlu-explain|https?:\/\/(?:www\.)?twitter\.com\/vicapow|https?:\/\/(?:www\.)?twitter\.com\/lewislehe/i,
+    regex: /https?:\/\/github\.com\/ncase|https?:\/\/(?:www\.)?twitter\.com\/ncasenmare|https?:\/\/blog\.ncase\.me|https?:\/\/(?:www\.)?twitter\.com\/jdwlbr|https?:\/\/(?:www\.)?twitter\.com\/lusantala|https?:\/\/hjyeon\.github\.io\/?|https?:\/\/github\.com\/aws-samples\/aws-mlu-explain|https?:\/\/(?:www\.)?twitter\.com\/vicapow|https?:\/\/(?:www\.)?twitter\.com\/lewislehe|https?:\/\/(?:www\.)?twitter\.com\/bciechanowski|https?:\/\/(?:www\.)?instagram\.com\/bartoszciechanowski\/?|https?:\/\/(?:www\.)?patreon\.com\/ciechanowski|mailto:bartosz@ciechanow\.ski|https?:\/\/ciechanow\.ski\/atom\.xml/i,
   },
-  { label: "upstream share url", regex: /facebook\.com\/sharer\/sharer\.php[^"'>\n]*(?:ncase\.me|setosa\.io)|twitter\.com\/intent\/tweet[^"'>\n]*(?:ncase\.me|setosa\.io)|mailto:\?[^"'>\n]*(?:ncase\.me|setosa\.io)/i },
+  { label: "upstream share url", regex: /facebook\.com\/sharer\/sharer\.php[^"'>\n]*(?:ncase\.me|setosa\.io|ciechanow\.ski)|twitter\.com\/intent\/tweet[^"'>\n]*(?:ncase\.me|setosa\.io|ciechanow\.ski)|mailto:\?[^"'>\n]*(?:ncase\.me|setosa\.io|ciechanow\.ski)/i },
   { label: "upstream promo link", regex: /https?:\/\/aws\.amazon\.com\/machine-learning\/mlu\/|https?:\/\/(?:www\.)?youtube\.com\/channel\/UC12LqyqTQYbXatYS9AA7Nuw/i },
   { label: "upstream contributor callout", regex: /A special thanks goes out to Brent Werness/i },
+  { label: "creator name", regex: /\bBartosz Ciechanowski\b/i },
   { label: "supporter branding", regex: /\bPatreon\b|\bpatreons?\b|Patreon Supporters|My Patreon Supporters|supporters\/|SHOWING_SUPPORTERS|Playtesting support for this release included|<!--\s*Playtesters\s*-->|reference id="supporters"|reference id="playtesters"|ref_id=="supporters"/i },
-  { label: "external promo widget", regex: /setosa\.us9\.list-manage\.com|disqus\.com|google-analytics\.com|twitter-share-button|facebook\.com\/plugins\/like\.php/i },
+  { label: "external promo widget", regex: /setosa\.us9\.list-manage\.com|disqus\.com|google-analytics\.com|googletagmanager\.com|twitter-share-button|facebook\.com\/plugins\/like\.php/i },
 ];
 
 const issues = [];

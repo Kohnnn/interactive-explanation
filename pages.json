@@ -171,15 +171,43 @@
     "slug": "blockchain",
     "title": "Blockchain",
     "summary": "Interactive blockchain demo with editable block fields, nonce mining, downstream invalidation, and multi-chain comparison views.",
-    "referenceUrl": "https://andersbrownworth.com/Blockchain/blockchain.html",
+    "referenceUrl": "https://andersbrownworth.com/blockchain/",
     "docsUrl": "./docs/blockchain/"
   },
   {
     "slug": "public-private-keys",
     "title": "Public / Private Keys",
     "summary": "Interactive signing demo with keypair generation, message signatures, transaction flows, and blockchain records backed by public-key cryptography.",
-    "referenceUrl": "https://andersbrownworth.com/blockchain/public-private-keys/keys",
+    "referenceUrl": "https://andersbrownworth.com/blockchain/public-private-keys/",
     "docsUrl": "./docs/public-private-keys/"
+  },
+  {
+    "slug": "zero-knowledge-proof-demo",
+    "title": "Zero Knowledge Proof Demo",
+    "summary": "Interactive zero-knowledge proof demo with a selectable US map, hidden color classes, palette shuffling, and resettable region selection.",
+    "referenceUrl": "https://andersbrownworth.com/zero-knowledge-proof-demo/",
+    "docsUrl": "./docs/zero-knowledge-proof-demo/"
+  },
+  {
+    "slug": "alpha-compositing",
+    "title": "Alpha Compositing",
+    "summary": "Interactive article about opacity, coverage, premultiplied alpha, Porter-Duff operators, and layered compositing.",
+    "referenceUrl": "https://ciechanow.ski/alpha-compositing/",
+    "docsUrl": "./docs/alpha-compositing/"
+  },
+  {
+    "slug": "color-spaces",
+    "title": "Color Spaces",
+    "summary": "Interactive article about RGB pickers, tone response curves, matrix conversions, gamuts, chromaticity diagrams, and white points.",
+    "referenceUrl": "https://ciechanow.ski/color-spaces/",
+    "docsUrl": "./docs/color-spaces/"
+  },
+  {
+    "slug": "sound",
+    "title": "Sound",
+    "summary": "Interactive article about sound synthesis, particle motion in air, pressure waves, waveforms, harmonics, and acoustic interference.",
+    "referenceUrl": "https://ciechanow.ski/sound/",
+    "docsUrl": "./docs/sound/"
   },
   {
     "slug": "linear-regression",
