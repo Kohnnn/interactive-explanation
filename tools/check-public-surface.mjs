@@ -43,6 +43,10 @@ const issues = [];
 
 function allowKnownReferenceConfig(relativePath, source) {
   if (relativePath !== "pages.json") {
+    if (relativePath === path.join("reading-qr-codes-without-a-computer", "assets", "index-m4DBYcND.js")) {
+      return source.replace(/\bto translate\b/gi, "ALLOWED_TRANSLATE_VERB");
+    }
+
     return source;
   }
 

@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "html-shell-and-hashed-runtime-handoff",
+    "originalBehavior": "The published QR explainer loads through a tiny HTML shell that mounts a bundled app from hashed JS and CSS assets, then renders the full anatomy and decoding walkthrough inside one app root.",
+    "localStatus": "The local route keeps the published shell shape and hashed bundle output while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook for the replica.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/index.html",
+      "../../reading-qr-codes-without-a-computer/assets/index-m4DBYcND.js",
+      "../../reading-qr-codes-without-a-computer/assets/index-s1eyThQf.css"
+    ],
+    "notes": [
+      "The route stays in the published app runtime instead of translating the walkthrough into the Ciechanowski longform article shell.",
+      "The hashed bundle remains vendored as shipped, with only route-level asset path fixes for subpath hosting."
+    ],
+    "evidence": [
+      "Implementation planning treated the full hashed assets tree and published state flow as parity-critical.",
+      "Shared smoke coverage verifies the local HTML shell loads the hashed bundle from route-local assets and the walkthrough initializes successfully."
+    ]
+  },
+  {
+    "moduleId": "structure-mask-and-read-order-sections",
+    "originalBehavior": "The published walkthrough highlights QR structure, format information, mask selection, and the zig-zag reading order using synchronized SVG states and explanatory text sections.",
+    "localStatus": "The local route keeps the anatomy, mask, encoding, and reading-order sections, including the synchronized QR visuals, format bits, and mask explanation text driven by the published app state.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/assets/index-m4DBYcND.js"
+    ],
+    "notes": [
+      "The route preserves the region-highlight and mask walkthrough as rendered by the published Svelte bundle.",
+      "The mask and structure panels continue to update when the current QR example changes."
+    ],
+    "evidence": [
+      "Implementation planning treated one structure-highlight step and one mask transition as smoke-critical.",
+      "Shared smoke coverage verifies the anatomy SVG and the mask section text both update after the published Random code flow changes the active QR example."
+    ]
+  },
+  {
+    "moduleId": "bytes-length-and-payload-reconstruction",
+    "originalBehavior": "The published tutorial continues into bytes, length decoding, content decoding, and error-correction explanation, showing extracted bits, byte values, and reconstructed ASCII payload characters.",
+    "localStatus": "The local route keeps the bytes, length, content, ASCII reference, error-correction, and congratulations sections with the published bitstream, byte, and payload reconstruction outputs.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/assets/index-m4DBYcND.js",
+      "../../reading-qr-codes-without-a-computer/qr-cheat-sheet.pdf"
+    ],
+    "notes": [
+      "The printable cheat sheet remains available locally from the same route root expected by the published tutorial copy.",
+      "The length bits, byte bits, and decoded characters continue to update when the current QR example changes."
+    ],
+    "evidence": [
+      "Implementation planning treated one bit-extraction progression and one final payload update as parity-critical.",
+      "Shared smoke coverage verifies the length section readout and the first decoded content byte both change after the published Random code flow updates the active QR payload."
+    ]
+  },
+  {
+    "moduleId": "footer-only-provenance-and-local-font-assets",
+    "originalBehavior": "The published app relies on route-local font files and also renders creator and source-promo copy around the walkthrough body.",
+    "localStatus": "The local copy vendors the font files locally, keeps the walkthrough bundle intact, and leaves the shared footer as the only original-page reference surface on the public route.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/index.html",
+      "../../reading-qr-codes-without-a-computer/fonts/Bungee-Regular.ttf",
+      "../../reading-qr-codes-without-a-computer/fonts/Roboto-Regular.ttf",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route does not require upstream asset URLs at runtime once the fonts and hashed bundle are vendored locally.",
+      "The workshop credit line and Codeberg bug or feature prompt are removed after render so they do not remain visible in the public body."
+    ],
+    "evidence": [
+      "The public-surface audit verifies the route ships without hardcoded upstream runtime asset URLs in the static shell.",
+      "Shared smoke coverage verifies the route remains usable after the promo cleanup and that the shared footer is present as the surviving provenance surface."
+    ]
+  }
+]

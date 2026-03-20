@@ -210,6 +210,34 @@
     "docsUrl": "./docs/sound/"
   },
   {
+    "slug": "cameras-and-lenses",
+    "title": "Cameras and Lenses",
+    "summary": "Interactive article about exposure, pinhole cameras, refraction, waves, focus, depth of field, and optical aberrations.",
+    "referenceUrl": "https://ciechanow.ski/cameras-and-lenses/",
+    "docsUrl": "./docs/cameras-and-lenses/"
+  },
+  {
+    "slug": "lights-and-shadows",
+    "title": "Lights and Shadows",
+    "summary": "Interactive article about emitted power, radiance, solid angles, reflections, area lights, color, and shadowing.",
+    "referenceUrl": "https://ciechanow.ski/lights-and-shadows/",
+    "docsUrl": "./docs/lights-and-shadows/"
+  },
+  {
+    "slug": "tesseract",
+    "title": "Tesseract",
+    "summary": "Interactive article about building cubes across dimensions, projecting a tesseract, 4D rotation planes, and 3D slices through 4D space.",
+    "referenceUrl": "https://ciechanow.ski/tesseract/",
+    "docsUrl": "./docs/tesseract/"
+  },
+  {
+    "slug": "reading-qr-codes-without-a-computer",
+    "title": "Reading QR Codes Without a Computer!",
+    "summary": "Interactive QR explainer about anatomy, masking, reading order, bytes, error correction, and reconstructing payloads by hand.",
+    "referenceUrl": "https://qr.blinry.org/",
+    "docsUrl": "./docs/reading-qr-codes-without-a-computer/"
+  },
+  {
     "slug": "linear-regression",
     "title": "Linear Regression",
     "summary": "Interactive article about fitted lines, residuals, MSE, coefficient updates, and scroll-linked regression scenes.",

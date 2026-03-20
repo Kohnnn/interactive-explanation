@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-optics-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and lenses scripts, then initializes many inline exposure, optics, wave, and lens sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../cameras-and-lenses/index.html",
+      "../../cameras-and-lenses/css/base.css",
+      "../../cameras-and-lenses/js/base.js",
+      "../../cameras-and-lenses/js/lenses.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the major interactive sections mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "exposure-drag-and-pinhole-scenes",
+    "originalBehavior": "The published article opens with exposure-time detector scenes, drag-driven scene-view handoff, and pinhole-camera controls in which hole diameter and sensor distance update the rendered image.",
+    "localStatus": "The local route keeps the early exposure and drag scenes, including the detector timing controls, the rotatable scene view, and the pinhole camera's paired diameter and distance controls.",
+    "sourceFiles": [
+      "../../cameras-and-lenses/index.html",
+      "../../cameras-and-lenses/js/lenses.js"
+    ],
+    "notes": [
+      "The early scenes still rely on the original slider and drag runtime rather than a local rewrite.",
+      "The pinhole sections keep the published inversion, field-of-view, brightness, and sharpness interactions tied to the paired controls."
+    ],
+    "evidence": [
+      "Implementation planning treated one exposure slider scene, one early drag scene, and the pinhole dual-slider scene as smoke-critical.",
+      "Shared smoke coverage verifies the detector exposure scene redraws from slider input, the early scene responds to drag, and both pinhole sliders update the captured-image scene."
+    ]
+  },
+  {
+    "moduleId": "glass-wave-and-later-lens-scenes",
+    "originalBehavior": "The published article continues into glass and ray-deflection scenes, animated wave demonstrations with play or pause controls, and later lens and aberration sections with optical sliders.",
+    "localStatus": "The local route keeps the glass thickness and source-position controls, the draggable glass ray scene, the published wave play/pause path, and the later lens or aberration scenes such as prism and chromatic-aberration controls.",
+    "sourceFiles": [
+      "../../cameras-and-lenses/index.html",
+      "../../cameras-and-lenses/js/lenses.js"
+    ],
+    "notes": [
+      "The glass and later lens scenes still rely on the original Drawer runtime and published play/pause controls.",
+      "The route keeps the published global wave animation toggle in the article copy rather than replacing it with a local control scheme."
+    ],
+    "evidence": [
+      "Implementation planning treated one glass scene, one play/pause control, and one later lens or aberration scene as parity-critical.",
+      "Shared smoke coverage verifies a glass-ray slider and drag interaction redraw the active scene, a published play/pause control toggles state, and a later chromatic-aberration slider updates its canvas."
+    ]
+  },
+  {
+    "moduleId": "local-helper-assets-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-local helper sprites and shared control icons while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the helper sprites locally, keeps the control surfaces intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../cameras-and-lenses/index.html",
+      "../../cameras-and-lenses/images/anchor.png",
+      "../../cameras-and-lenses/images/play_pause.png",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The route does not require upstream media requests at runtime beyond the local helper assets and published scripts."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the route loads locally without upstream asset requests while keeping the interactive controls usable."
+    ]
+  }
+]

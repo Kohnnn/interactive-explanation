@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading QR Codes Without a Computer Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local QR explainer replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Reading QR Codes Without a Computer!</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/reading-qr-codes-without-a-computer/</code>
+        vendors the published QR tutorial app, keeps its hashed bundle and step-by-step decode
+        flow intact, and limits public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../reading-qr-codes-without-a-computer/">Open replica</a>
+        <a class="action-link secondary" href="https://qr.blinry.org/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
+        Source family: <code>qr.blinry.org</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published HTML shell, hashed JS and CSS bundles, fonts, and
+          printable cheat sheet, then patches only the subpath-hosting shell and public provenance
+          surfaces needed for the replica.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://qr.blinry.org/</code> on 2026-03-21.</li>
+          <li>The local copy keeps the published anatomy, mask, reading-order, bytes, length, content, and congratulations sections intact.</li>
+          <li>The top workshop credit line and bottom Codeberg bug or feature prompt are removed so the shared footer remains the only provenance surface.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>reading-qr-codes-without-a-computer/index.html</code> owns the local metadata shell, shared footer hook, and route-relative hashed asset paths.</li>
+          <li><code>reading-qr-codes-without-a-computer/assets/</code> preserves the published hashed bundle output without reauthoring the tutorial into another shell.</li>
+          <li><code>reading-qr-codes-without-a-computer/fonts/</code> contains the vendored Bungee, Roboto, and Iosevka files expected by the published CSS.</li>
+          <li><code>reading-qr-codes-without-a-computer/qr-cheat-sheet.pdf</code> preserves the published printable helper linked from the walkthrough.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
+          <li>The shared footer is the only original-page reference surface on the public route.</li>
+          <li>The top workshop credit and the bottom source-code request block are pruned after the app mounts, but the decode walkthrough itself remains unchanged.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the hashed bundle intact; future edits should patch the shell or vendored assets rather than rewriting the explainer into another runtime family.</li>
+          <li>Extend the shared smoke bundle instead of adding a one-off harness so later non-Ciechanowski app replicas can reuse the same route checks.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching bundle paths, shell cleanup, or runtime asset files.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

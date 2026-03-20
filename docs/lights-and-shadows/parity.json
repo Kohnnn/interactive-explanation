@@ -1,0 +1,76 @@
+[
+  {
+    "moduleId": "article-shell-and-local-light-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and light scripts, then initializes many inline lighting, radiance, reflection, and shadow sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../lights-and-shadows/index.html",
+      "../../lights-and-shadows/css/base.css",
+      "../../lights-and-shadows/js/base.js",
+      "../../lights-and-shadows/js/light.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the major lighting sections mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "opening-light-power-and-drag-scenes",
+    "originalBehavior": "The published article opens with a rectangular-light scene that supports drag rotation and source-size changes, then moves into power and position sections with slider-driven brightness and shading changes.",
+    "localStatus": "The local route keeps the opening drag scene, the source-position and size controls, and the early power scenes in which slider changes still redraw the emitted-light and shaded-surface visuals.",
+    "sourceFiles": [
+      "../../lights-and-shadows/index.html",
+      "../../lights-and-shadows/js/light.js"
+    ],
+    "notes": [
+      "The opening and early scenes still rely on the original Drawer runtime rather than a local rewrite.",
+      "The power and position sections keep the published slider-to-canvas synchronization for emitted power, distance, and angle."
+    ],
+    "evidence": [
+      "Implementation planning treated one opening slider scene, one early drag scene, and one power or brightness scene as smoke-critical.",
+      "Shared smoke coverage verifies the opening scene redraws from slider input and drag interaction, and an early power scene updates from its published slider."
+    ]
+  },
+  {
+    "moduleId": "solid-angle-radiance-and-later-light-transport-scenes",
+    "originalBehavior": "The published article continues into radians, steradians, projected solid angles, radiance, reflections, shadowing, color mixing, and bounce-light demonstrations with synchronized geometry and numeric readouts.",
+    "localStatus": "The local route keeps the projected-solid-angle and radiance sections, plus later mirror, shadow, bounce, and ambient-occlusion scenes driven by the original article runtime.",
+    "sourceFiles": [
+      "../../lights-and-shadows/index.html",
+      "../../lights-and-shadows/js/light.js"
+    ],
+    "notes": [
+      "The later scenes still rely on the original slider and drag behaviors rather than custom local controls.",
+      "The route preserves the published order of radiance, reflection, shadow, color, bounce, and sphere-of-light sections."
+    ],
+    "evidence": [
+      "Implementation planning treated one projected-solid-angle or radiance scene and one later reflection, shadow, or bounce scene as parity-critical.",
+      "Shared smoke coverage verifies a projected-solid-angle scene remains synchronized and a later bounce-light scene redraws from the published slider."
+    ]
+  },
+  {
+    "moduleId": "local-helper-assets-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-local helper textures and shared control icons while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the helper textures and control sprites locally, keeps the interactive scenes intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../lights-and-shadows/index.html",
+      "../../lights-and-shadows/images/anchor.png",
+      "../../lights-and-shadows/images/light_shadow/bounce.png",
+      "../../lights-and-shadows/images/light_shadow/noise.png",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The route does not require upstream media requests at runtime beyond the local helper assets and published scripts."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the route loads locally without upstream asset requests while keeping the interactive controls usable."
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Interactive walkthrough for manually reading QR codes, including structure, masking, bit extraction, and payload decoding." />
+        <meta property="og:title" content="Reading QR Codes Without a Computer!" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="./" />
+        <meta property="og:description" content="Interactive walkthrough for manually reading QR codes, including structure, masking, bit extraction, and payload decoding." />
+        <link rel="canonical" href="./" />
+        <title>Reading QR codes without a computer!</title>
+        <link rel="icon" type="image/png" href="../favicon.png" />
+        <link rel="stylesheet" href="../shared/public-footer.css" />
+        <style>
+          #reference-footer .public-footer__inner {
+            width: min(40em, calc(100vw - 32px));
+          }
+        </style>
+
+      <script type="module" crossorigin src="./assets/index-m4DBYcND.js"></script>
+      <link rel="stylesheet" crossorigin href="./assets/index-s1eyThQf.css">
+      <script defer src="../shared/public-footer.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const app = document.getElementById("app");
+          if (!app) {
+            return;
+          }
+
+          function prunePromoSurfaces() {
+            for (const node of Array.from(app.children)) {
+              if (node.textContent?.trim() === "Made in love by Piko and blinry for 37C3") {
+                node.remove();
+              }
+            }
+
+            for (const heading of Array.from(app.querySelectorAll("h2"))) {
+              if (heading.textContent?.trim() !== "Found a bug? Feature request?") {
+                continue;
+              }
+              const next = heading.nextElementSibling;
+              heading.remove();
+              if (next?.tagName === "P") {
+                next.remove();
+              }
+            }
+          }
+
+          prunePromoSurfaces();
+          new MutationObserver(prunePromoSurfaces).observe(app, { childList: true, subtree: true });
+        });
+      </script>
+    </head>
+    <body data-reference-url="https://qr.blinry.org/" data-reference-text="Reading QR codes without a computer!" data-footer-label="Original page">
+        <div id="app"></div>
+    </body>
+</html>

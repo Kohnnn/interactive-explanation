@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "article-shell-and-local-tesseract-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and tesseract scripts, then initializes many inline 4D geometry, projection, and slicing sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../tesseract/index.html",
+      "../../tesseract/css/base.css",
+      "../../tesseract/js/base.js",
+      "../../tesseract/js/tesseract.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the major geometry sections mount without runtime errors."
+    ]
+  },
+  {
+    "moduleId": "opening-and-dimensional-construction-scenes",
+    "originalBehavior": "The published article opens with a slider-driven tesseract projection scene, then builds from a point to a line, square, cube, and tesseract through early slider and drag-driven construction scenes.",
+    "localStatus": "The local route keeps the opening projection slider plus the early construction sections that progressively build higher-dimensional cubes from lower-dimensional ones.",
+    "sourceFiles": [
+      "../../tesseract/index.html",
+      "../../tesseract/js/tesseract.js"
+    ],
+    "notes": [
+      "The opening and early construction scenes still rely on the original Drawer and Slider runtime rather than a local rewrite.",
+      "The route keeps the published sequence from lower-dimensional construction to rotatable 3D cube examples."
+    ],
+    "evidence": [
+      "Implementation planning treated one opening slider scene and one early construction scene as smoke-critical.",
+      "Shared smoke coverage verifies the opening tesseract scene redraws from slider input and an early construction scene updates from its published slider."
+    ]
+  },
+  {
+    "moduleId": "ambiguous-view-rotation-and-slicing-scenes",
+    "originalBehavior": "The published article continues into ambiguous-view examples, rotation-plane scenes, xw-plane tesseract rotation, and the later 3D slicing payoff with multiple sliders and drag-driven viewing-angle changes.",
+    "localStatus": "The local route keeps the ambiguous-view scene, the plane-of-rotation section, the xw rotation scene, and the later 3D slice demonstrations driven by the original article runtime.",
+    "sourceFiles": [
+      "../../tesseract/index.html",
+      "../../tesseract/js/tesseract.js"
+    ],
+    "notes": [
+      "The later scenes still rely on the original slider, segmented-control, and drag behaviors rather than custom local controls.",
+      "The route preserves the published order of projection, shadow, plane-of-rotation, in-and-out, and final slicing sections."
+    ],
+    "evidence": [
+      "Implementation planning treated one ambiguous-view drag scene, one plane-of-rotation slider scene, and one later intersection or slicing scene as parity-critical.",
+      "Shared smoke coverage verifies a drag-driven perspective scene updates, a rotation-plane control redraws, and a later 3D slice scene remains interactive."
+    ]
+  },
+  {
+    "moduleId": "local-helper-assets-and-footer-only-provenance",
+    "originalBehavior": "The published page relies on article-shell helper sprites and shared control icons while also exposing author promo links, RSS, and supporter surfaces around the article shell.",
+    "localStatus": "The local copy vendors the helper sprites locally, keeps the interactive geometry scenes intact, and leaves the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../tesseract/index.html",
+      "../../tesseract/images/anchor.png",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The route does not require upstream media requests at runtime beyond the local helper assets and published scripts."
+    ],
+    "evidence": [
+      "The public-surface audit blocks author-promo, analytics, and supporter surfaces from shipping in the route body.",
+      "Shared smoke coverage and route checks verify the route loads locally without upstream asset requests while keeping the interactive controls usable."
+    ]
+  }
+]

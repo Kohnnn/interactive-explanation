@@ -2281,6 +2281,545 @@ async function smokeSound(context) {
   await page.close();
 }
 
+async function smokeCamerasAndLenses(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "cameras-and-lenses/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#lens_detector canvas") &&
+      document.querySelector("#lens_detector_sl0 .slider_knob") &&
+      document.querySelector("#lens_scene canvas") &&
+      document.querySelector("#lens_film canvas") &&
+      document.querySelector("#lens_film_sl0 .slider_knob") &&
+      document.querySelector("#lens_film_sl1 .slider_knob") &&
+      document.querySelector("#lens_glass_rays canvas") &&
+      document.querySelector("#lens_glass_rays_sl0 .slider_knob") &&
+      document.querySelector(".play_pause_button") &&
+      document.querySelector("#lens_chromatic canvas") &&
+      document.querySelector("#lens_chromatic_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  const scriptSources = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("script[src]"))
+      .map((node) => node.getAttribute("src") || "")
+      .filter(Boolean);
+  });
+  assert(
+    scriptSources.includes("./js/base.js") &&
+      scriptSources.includes("./js/lenses.js"),
+    "cameras-and-lenses did not load both published scripts from local assets",
+  );
+
+  const detectorCanvas = page.locator("#lens_detector canvas").first();
+  await detectorCanvas.scrollIntoViewIfNeeded();
+  const detectorBefore = await detectorCanvas.evaluate((canvas) => canvas.toDataURL());
+  const detectorKnob = page.locator("#lens_detector_sl0 .slider_knob");
+  await detectorKnob.scrollIntoViewIfNeeded();
+  const detectorKnobBox = await detectorKnob.boundingBox();
+  assert(detectorKnobBox, "cameras-and-lenses did not expose the detector exposure slider");
+  await page.mouse.move(
+    detectorKnobBox.x + detectorKnobBox.width / 2,
+    detectorKnobBox.y + detectorKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    detectorKnobBox.x + detectorKnobBox.width / 2 + 90,
+    detectorKnobBox.y + detectorKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lens_detector canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, detectorBefore, { timeout: 5000 });
+  console.log("OK cameras-and-lenses detector exposure scene");
+
+  await dragCanvasUntilChanged(page, "#lens_scene canvas", [
+    { from: { x: 0.5, y: 0.5 }, to: { x: 0.68, y: 0.38 } },
+    { from: { x: 0.55, y: 0.45 }, to: { x: 0.32, y: 0.62 } },
+  ], "cameras-and-lenses early drag scene");
+  console.log("OK cameras-and-lenses early drag scene");
+
+  const filmCanvas = page.locator("#lens_film canvas").first();
+  await filmCanvas.scrollIntoViewIfNeeded();
+  const filmBefore = await filmCanvas.evaluate((canvas) => canvas.toDataURL());
+  const filmDiameterKnob = page.locator("#lens_film_sl0 .slider_knob");
+  await filmDiameterKnob.scrollIntoViewIfNeeded();
+  const filmDiameterKnobBox = await filmDiameterKnob.boundingBox();
+  assert(filmDiameterKnobBox, "cameras-and-lenses did not expose the pinhole diameter slider");
+  await page.mouse.move(
+    filmDiameterKnobBox.x + filmDiameterKnobBox.width / 2,
+    filmDiameterKnobBox.y + filmDiameterKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    filmDiameterKnobBox.x + filmDiameterKnobBox.width / 2 + 80,
+    filmDiameterKnobBox.y + filmDiameterKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lens_film canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, filmBefore, { timeout: 5000 });
+
+  const filmMid = await filmCanvas.evaluate((canvas) => canvas.toDataURL());
+  const filmDistanceKnob = page.locator("#lens_film_sl1 .slider_knob");
+  await filmDistanceKnob.scrollIntoViewIfNeeded();
+  const filmDistanceKnobBox = await filmDistanceKnob.boundingBox();
+  assert(filmDistanceKnobBox, "cameras-and-lenses did not expose the pinhole distance slider");
+  await page.mouse.move(
+    filmDistanceKnobBox.x + filmDistanceKnobBox.width / 2,
+    filmDistanceKnobBox.y + filmDistanceKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    filmDistanceKnobBox.x + filmDistanceKnobBox.width / 2 + 80,
+    filmDistanceKnobBox.y + filmDistanceKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lens_film canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, filmMid, { timeout: 5000 });
+  console.log("OK cameras-and-lenses pinhole dual-slider scene");
+
+  const glassCanvas = page.locator("#lens_glass_rays canvas").first();
+  await glassCanvas.scrollIntoViewIfNeeded();
+  const glassBefore = await glassCanvas.evaluate((canvas) => canvas.toDataURL());
+  const glassKnob = page.locator("#lens_glass_rays_sl0 .slider_knob");
+  await glassKnob.scrollIntoViewIfNeeded();
+  const glassKnobBox = await glassKnob.boundingBox();
+  assert(glassKnobBox, "cameras-and-lenses did not expose the glass-ray slider");
+  await page.mouse.move(
+    glassKnobBox.x + glassKnobBox.width / 2,
+    glassKnobBox.y + glassKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    glassKnobBox.x + glassKnobBox.width / 2 + 70,
+    glassKnobBox.y + glassKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lens_glass_rays canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, glassBefore, { timeout: 5000 });
+  await dragCanvasUntilChanged(page, "#lens_glass_rays canvas", [
+    { from: { x: 0.5, y: 0.5 }, to: { x: 0.66, y: 0.4 } },
+    { from: { x: 0.55, y: 0.45 }, to: { x: 0.36, y: 0.58 } },
+  ], "cameras-and-lenses glass drag scene");
+  console.log("OK cameras-and-lenses glass ray scene");
+
+  const playButton = page.locator(".play_pause_button").first();
+  await playButton.scrollIntoViewIfNeeded();
+  const playBefore = await playButton.getAttribute("class");
+  await playButton.click();
+  await page.waitForFunction((previous) => {
+    const classes = document.querySelector(".play_pause_button")?.className || "";
+    return classes !== previous;
+  }, playBefore || "", { timeout: 5000 });
+  console.log("OK cameras-and-lenses play-pause control");
+
+  const chromaticCanvas = page.locator("#lens_chromatic canvas").first();
+  await chromaticCanvas.scrollIntoViewIfNeeded();
+  const chromaticBefore = await chromaticCanvas.evaluate((canvas) => canvas.toDataURL());
+  const chromaticKnob = page.locator("#lens_chromatic_sl0 .slider_knob");
+  await chromaticKnob.scrollIntoViewIfNeeded();
+  const chromaticKnobBox = await chromaticKnob.boundingBox();
+  assert(chromaticKnobBox, "cameras-and-lenses did not expose the chromatic aberration slider");
+  await page.mouse.move(
+    chromaticKnobBox.x + chromaticKnobBox.width / 2,
+    chromaticKnobBox.y + chromaticKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    chromaticKnobBox.x + chromaticKnobBox.width / 2 + 90,
+    chromaticKnobBox.y + chromaticKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lens_chromatic canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, chromaticBefore, { timeout: 5000 });
+  console.log("OK cameras-and-lenses later lens scene");
+
+  await assertViewportUsable(page, "cameras-and-lenses route");
+  await assertRouteViewportUsable(
+    context,
+    "cameras-and-lenses/",
+    "#reference-footer",
+    "#lens_detector_sl0 .slider_knob",
+    "cameras-and-lenses route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("cameras-and-lenses route");
+  console.log("OK cameras-and-lenses responsive shell");
+  await page.close();
+}
+
+async function smokeLightsAndShadows(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "lights-and-shadows/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#lns_shadow2 canvas") &&
+      document.querySelector("#lns_shadow2_rot_y_slider_container .slider_knob") &&
+      document.querySelector("#lns_power canvas") &&
+      document.querySelector("#lns_power_slider_container .slider_knob") &&
+      document.querySelector("#lns_hemisphere_proj canvas") &&
+      document.querySelector("#lns_hemisphere_proj_1_slider_container .slider_knob") &&
+      document.querySelector("#lns_bounce canvas") &&
+      document.querySelector("#lns_bounce_slider_container .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  const scriptSources = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("script[src]"))
+      .map((node) => node.getAttribute("src") || "")
+      .filter(Boolean);
+  });
+  assert(
+    scriptSources.includes("./js/base.js") &&
+      scriptSources.includes("./js/light.js"),
+    "lights-and-shadows did not load both published scripts from local assets",
+  );
+
+  const openingCanvas = page.locator("#lns_shadow2 canvas").first();
+  await openingCanvas.scrollIntoViewIfNeeded();
+  const openingBefore = await openingCanvas.evaluate((canvas) => canvas.toDataURL());
+  const openingKnob = page.locator("#lns_shadow2_rot_y_slider_container .slider_knob");
+  await openingKnob.scrollIntoViewIfNeeded();
+  const openingKnobBox = await openingKnob.boundingBox();
+  assert(openingKnobBox, "lights-and-shadows did not expose the opening light-size slider");
+  await page.mouse.move(
+    openingKnobBox.x + openingKnobBox.width / 2,
+    openingKnobBox.y + openingKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    openingKnobBox.x + openingKnobBox.width / 2 + 90,
+    openingKnobBox.y + openingKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lns_shadow2 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, openingBefore, { timeout: 5000 });
+  await dragCanvasUntilChanged(page, "#lns_shadow2 canvas", [
+    { from: { x: 0.55, y: 0.5 }, to: { x: 0.72, y: 0.36 } },
+    { from: { x: 0.5, y: 0.45 }, to: { x: 0.32, y: 0.62 } },
+  ], "lights-and-shadows opening drag scene");
+  console.log("OK lights-and-shadows opening light scene");
+
+  const powerCanvas = page.locator("#lns_power canvas").first();
+  await powerCanvas.scrollIntoViewIfNeeded();
+  const powerBefore = await powerCanvas.evaluate((canvas) => canvas.toDataURL());
+  const powerKnob = page.locator("#lns_power_slider_container .slider_knob");
+  await powerKnob.scrollIntoViewIfNeeded();
+  const powerKnobBox = await powerKnob.boundingBox();
+  assert(powerKnobBox, "lights-and-shadows did not expose the power slider");
+  await page.mouse.move(
+    powerKnobBox.x + powerKnobBox.width / 2,
+    powerKnobBox.y + powerKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    powerKnobBox.x + powerKnobBox.width / 2 + 90,
+    powerKnobBox.y + powerKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lns_power canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, powerBefore, { timeout: 5000 });
+  console.log("OK lights-and-shadows power scene");
+
+  const projectedCanvas = page.locator("#lns_hemisphere_proj canvas").first();
+  await projectedCanvas.scrollIntoViewIfNeeded();
+  const projectedBefore = await projectedCanvas.evaluate((canvas) => canvas.toDataURL());
+  const projectedKnob = page.locator("#lns_hemisphere_proj_1_slider_container .slider_knob");
+  await projectedKnob.scrollIntoViewIfNeeded();
+  const projectedKnobBox = await projectedKnob.boundingBox();
+  assert(projectedKnobBox, "lights-and-shadows did not expose the projected-solid-angle slider");
+  await page.mouse.move(
+    projectedKnobBox.x + projectedKnobBox.width / 2,
+    projectedKnobBox.y + projectedKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    projectedKnobBox.x + projectedKnobBox.width / 2 + 75,
+    projectedKnobBox.y + projectedKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lns_hemisphere_proj canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, projectedBefore, { timeout: 5000 });
+  console.log("OK lights-and-shadows projected solid-angle scene");
+
+  const bounceCanvas = page.locator("#lns_bounce canvas").first();
+  await bounceCanvas.scrollIntoViewIfNeeded();
+  const bounceBefore = await bounceCanvas.evaluate((canvas) => canvas.toDataURL());
+  const bounceKnob = page.locator("#lns_bounce_slider_container .slider_knob");
+  await bounceKnob.scrollIntoViewIfNeeded();
+  const bounceKnobBox = await bounceKnob.boundingBox();
+  assert(bounceKnobBox, "lights-and-shadows did not expose the bounce-light slider");
+  await page.mouse.move(
+    bounceKnobBox.x + bounceKnobBox.width / 2,
+    bounceKnobBox.y + bounceKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    bounceKnobBox.x + bounceKnobBox.width / 2 + 90,
+    bounceKnobBox.y + bounceKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#lns_bounce canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, bounceBefore, { timeout: 5000 });
+  console.log("OK lights-and-shadows later bounce scene");
+
+  await assertViewportUsable(page, "lights-and-shadows route");
+  await assertRouteViewportUsable(
+    context,
+    "lights-and-shadows/",
+    "#reference-footer",
+    "#lns_shadow2_rot_y_slider_container .slider_knob",
+    "lights-and-shadows route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("lights-and-shadows route");
+  console.log("OK lights-and-shadows responsive shell");
+  await page.close();
+}
+
+async function smokeTesseract(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "tesseract/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#ts_3D_demo_slice_container canvas") &&
+      document.querySelector("#ts_3D_demo_slice_slider_container .slider_knob") &&
+      document.querySelector("#ts_3D_cube_container canvas") &&
+      document.querySelector("#ts_3D_cube_slider_container .slider_knob") &&
+      document.querySelector("#ts_3D_proj_rot_container canvas") &&
+      document.querySelector("#ts_3D_projxw_slider_container .slider_knob") &&
+      document.querySelector("#ts_3D_slice_container canvas") &&
+      document.querySelector("#ts_3D_slice_xw_rot_slider_container .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  const scriptSources = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("script[src]"))
+      .map((node) => node.getAttribute("src") || "")
+      .filter(Boolean);
+  });
+  assert(
+    scriptSources.includes("./js/base.js") &&
+      scriptSources.includes("./js/tesseract.js"),
+    "tesseract did not load both published scripts from local assets",
+  );
+
+  const openingCanvas = page.locator("#ts_3D_demo_slice_container canvas").first();
+  await openingCanvas.scrollIntoViewIfNeeded();
+  const openingBefore = await openingCanvas.evaluate((canvas) => canvas.toDataURL());
+  const openingKnob = page.locator("#ts_3D_demo_slice_slider_container .slider_knob");
+  await openingKnob.scrollIntoViewIfNeeded();
+  const openingKnobBox = await openingKnob.boundingBox();
+  assert(openingKnobBox, "tesseract did not expose the opening slider scene");
+  await page.mouse.move(
+    openingKnobBox.x + openingKnobBox.width / 2,
+    openingKnobBox.y + openingKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    openingKnobBox.x + openingKnobBox.width / 2 + 90,
+    openingKnobBox.y + openingKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ts_3D_demo_slice_container canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, openingBefore, { timeout: 5000 });
+  console.log("OK tesseract opening slider scene");
+
+  const constructionCanvas = page.locator("#ts_3D_cube_container canvas").first();
+  await constructionCanvas.scrollIntoViewIfNeeded();
+  const constructionBefore = await constructionCanvas.evaluate((canvas) => canvas.toDataURL());
+  const constructionKnob = page.locator("#ts_3D_cube_slider_container .slider_knob");
+  await constructionKnob.scrollIntoViewIfNeeded();
+  const constructionKnobBox = await constructionKnob.boundingBox();
+  assert(constructionKnobBox, "tesseract did not expose the early construction slider");
+  await page.mouse.move(
+    constructionKnobBox.x + constructionKnobBox.width / 2,
+    constructionKnobBox.y + constructionKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    constructionKnobBox.x + constructionKnobBox.width / 2 + 85,
+    constructionKnobBox.y + constructionKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ts_3D_cube_container canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, constructionBefore, { timeout: 5000 });
+  console.log("OK tesseract early construction scene");
+
+  await dragCanvasUntilChanged(page, "#ts_3D_proj_rot_container canvas", [
+    { from: { x: 0.55, y: 0.5 }, to: { x: 0.72, y: 0.35 } },
+    { from: { x: 0.45, y: 0.5 }, to: { x: 0.28, y: 0.66 } },
+  ], "tesseract perspective drag scene");
+  console.log("OK tesseract perspective drag scene");
+
+  const rotationCanvas = page.locator("#ts_3D_proj_rot_container canvas").first();
+  await rotationCanvas.scrollIntoViewIfNeeded();
+  const rotationBefore = await rotationCanvas.evaluate((canvas) => canvas.toDataURL());
+  const rotationKnob = page.locator("#ts_3D_projxw_slider_container .slider_knob");
+  await rotationKnob.scrollIntoViewIfNeeded();
+  const rotationKnobBox = await rotationKnob.boundingBox();
+  assert(rotationKnobBox, "tesseract did not expose the xw-plane rotation slider");
+  await page.mouse.move(
+    rotationKnobBox.x + rotationKnobBox.width / 2,
+    rotationKnobBox.y + rotationKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    rotationKnobBox.x + rotationKnobBox.width / 2 + 90,
+    rotationKnobBox.y + rotationKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ts_3D_proj_rot_container canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, rotationBefore, { timeout: 5000 });
+  console.log("OK tesseract plane-of-rotation scene");
+
+  const sliceCanvas = page.locator("#ts_3D_slice_container canvas").first();
+  await sliceCanvas.scrollIntoViewIfNeeded();
+  const sliceBefore = await sliceCanvas.evaluate((canvas) => canvas.toDataURL());
+  const sliceKnob = page.locator("#ts_3D_slice_xw_rot_slider_container .slider_knob");
+  await sliceKnob.scrollIntoViewIfNeeded();
+  const sliceKnobBox = await sliceKnob.boundingBox();
+  assert(sliceKnobBox, "tesseract did not expose the later 3D slice rotation slider");
+  await page.mouse.move(
+    sliceKnobBox.x + sliceKnobBox.width / 2,
+    sliceKnobBox.y + sliceKnobBox.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    sliceKnobBox.x + sliceKnobBox.width / 2 + 90,
+    sliceKnobBox.y + sliceKnobBox.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ts_3D_slice_container canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, sliceBefore, { timeout: 5000 });
+  console.log("OK tesseract later slice scene");
+
+  await assertViewportUsable(page, "tesseract route");
+  await assertRouteViewportUsable(
+    context,
+    "tesseract/",
+    "#reference-footer",
+    "#ts_3D_demo_slice_slider_container .slider_knob",
+    "tesseract route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("tesseract route");
+  console.log("OK tesseract responsive shell");
+  await page.close();
+}
+
+async function smokeReadingQrCodesWithoutAComputer(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "reading-qr-codes-without-a-computer/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("input[type='text']") &&
+      Array.from(document.querySelectorAll("button")).some((node) => /Random code/i.test(node.textContent || "")) &&
+      document.getElementById("anatomy") &&
+      document.getElementById("mask") &&
+      document.getElementById("length") &&
+      document.getElementById("content") &&
+      document.querySelectorAll("svg").length > 10;
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  const assetState = await page.evaluate(() => ({
+    scripts: Array.from(document.querySelectorAll("script[src]")).map((node) => node.getAttribute("src") || ""),
+    styles: Array.from(document.querySelectorAll("link[rel='stylesheet']")).map((node) => node.getAttribute("href") || ""),
+    bodyText: document.body.innerText,
+  }));
+  assert(
+    assetState.scripts.includes("./assets/index-m4DBYcND.js") &&
+      assetState.styles.includes("./assets/index-s1eyThQf.css"),
+    "reading-qr-codes-without-a-computer did not load the published hashed bundle from local assets",
+  );
+  assert(
+    !/Made in love by Piko and blinry for 37C3/i.test(assetState.bodyText) &&
+      !/Found a bug\? Feature request\?/i.test(assetState.bodyText) &&
+      !/Codeberg/i.test(assetState.bodyText),
+    "reading-qr-codes-without-a-computer left body-level promo or source surfaces visible",
+  );
+
+  const before = await page.evaluate(() => ({
+    anatomySvg: document.getElementById("anatomy")?.nextElementSibling?.nextElementSibling?.outerHTML || "",
+    maskText: document.getElementById("mask")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "",
+    lengthText: document.getElementById("length")?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "",
+    contentText: document.getElementById("content")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "",
+  }));
+
+  await page.getByRole("button", { name: "Random code" }).click();
+  await page.waitForFunction((previous) => {
+    const anatomySvg = document.getElementById("anatomy")?.nextElementSibling?.nextElementSibling?.outerHTML || "";
+    const maskText = document.getElementById("mask")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
+    const lengthText = document.getElementById("length")?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
+    const contentText = document.getElementById("content")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
+    return anatomySvg !== previous.anatomySvg &&
+      maskText !== previous.maskText &&
+      lengthText !== previous.lengthText &&
+      contentText !== previous.contentText;
+  }, before, { timeout: 5000 });
+  console.log("OK reading-qr-codes-without-a-computer synced random-code flow");
+
+  await assertViewportUsable(page, "reading-qr-codes-without-a-computer route");
+  await assertRouteViewportUsable(
+    context,
+    "reading-qr-codes-without-a-computer/",
+    "#reference-footer",
+    "#anatomy",
+    "reading-qr-codes-without-a-computer route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("reading-qr-codes-without-a-computer route");
+  console.log("OK reading-qr-codes-without-a-computer responsive shell");
+  await page.close();
+}
+
 async function smokeLinearRegression(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
@@ -2989,6 +3528,22 @@ async function main() {
       routeChecks.push(["sound/", "#reference-footer"]);
       routeChecks.push(["docs/sound/", "[data-parity-list]"]);
     }
+    if (exists("cameras-and-lenses")) {
+      routeChecks.push(["cameras-and-lenses/", "#reference-footer"]);
+      routeChecks.push(["docs/cameras-and-lenses/", "[data-parity-list]"]);
+    }
+    if (exists("lights-and-shadows")) {
+      routeChecks.push(["lights-and-shadows/", "#reference-footer"]);
+      routeChecks.push(["docs/lights-and-shadows/", "[data-parity-list]"]);
+    }
+    if (exists("tesseract")) {
+      routeChecks.push(["tesseract/", "#reference-footer"]);
+      routeChecks.push(["docs/tesseract/", "[data-parity-list]"]);
+    }
+    if (exists("reading-qr-codes-without-a-computer")) {
+      routeChecks.push(["reading-qr-codes-without-a-computer/", "#reference-footer"]);
+      routeChecks.push(["docs/reading-qr-codes-without-a-computer/", "[data-parity-list]"]);
+    }
     if (exists("linear-regression")) {
       routeChecks.push(["linear-regression/", "#reference-footer"]);
       routeChecks.push(["docs/linear-regression/", "[data-parity-list]"]);
@@ -3094,6 +3649,18 @@ async function main() {
     }
     if (exists("sound")) {
       await smokeSound(context);
+    }
+    if (exists("cameras-and-lenses")) {
+      await smokeCamerasAndLenses(context);
+    }
+    if (exists("lights-and-shadows")) {
+      await smokeLightsAndShadows(context);
+    }
+    if (exists("tesseract")) {
+      await smokeTesseract(context);
+    }
+    if (exists("reading-qr-codes-without-a-computer")) {
+      await smokeReadingQrCodesWithoutAComputer(context);
     }
     if (exists("linear-regression")) {
       await smokeLinearRegression(context);
