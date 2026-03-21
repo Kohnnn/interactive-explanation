@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "article-shell-and-local-nuxt-runtime-handoff",
+    "originalBehavior": "The published article loads through a Nuxt shell with a large vendored chunk graph, route-local fonts, many interactive mounts, and a longform markdown body rendered into one page.",
+    "localStatus": "The local route keeps the published article structure, Nuxt runtime, and chunk graph while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",
+    "sourceFiles": [
+      "../../rigid-body-collisions/index.html",
+      "../../rigid-body-collisions/_nuxt/D4VqJVMa.js",
+      "../../rigid-body-collisions/_nuxt/_id_.pb_gld3k.css"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream RSS, Twitter, e-mail, or Fathom provenance surfaces.",
+      "The route keeps the original article structure instead of condensing the collision walkthrough into a custom rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the flattened route root, full local chunk graph, and local font handoff as parity-critical.",
+      "Shared smoke coverage verifies the Nuxt runtime loads locally, the article mounts on the local root, and the route stays runtime-clean without upstream asset dependencies."
+    ]
+  },
+  {
+    "moduleId": "opening-collision-canvas-and-time-controls",
+    "originalBehavior": "The published article opens with a large collision canvas and early time or velocity controls that introduce the basic scene and frame-by-frame collision intuition.",
+    "localStatus": "The local route keeps the opening collision canvas and early control surfaces under the original published runtime.",
+    "sourceFiles": [
+      "../../rigid-body-collisions/index.html",
+      "../../rigid-body-collisions/_nuxt/D4VqJVMa.js"
+    ],
+    "notes": [
+      "The opening canvas remains mounted on first load at the local route root.",
+      "The route still exposes the published button and range-control surfaces instead of replacing them with static screenshots."
+    ],
+    "evidence": [
+      "The route-specific smoke contract includes the opening canvas, local essay fonts, and early control presence as explicit route checks.",
+      "Shared smoke coverage verifies the article boots on the flattened root without the vendored not-found card surfacing in the public body."
+    ]
+  },
+  {
+    "moduleId": "later-vector-normal-and-dot-product-sections",
+    "originalBehavior": "The published article continues with vector, normal, and dot-product sections that combine canvas scenes, inline formulas, and later control paths across the longform page.",
+    "localStatus": "The local route keeps the later interactive sections, inline formulas, and article-long runtime mounted under the original vendored assets.",
+    "sourceFiles": [
+      "../../rigid-body-collisions/index.html",
+      "../../rigid-body-collisions/_nuxt/",
+      "../../rigid-body-collisions/fonts/Essays1743.woff"
+    ],
+    "notes": [
+      "The article’s later interactive and formula sections remain in the same order and typography as the published page.",
+      "The local route keeps the custom essay fonts local so the longform styling and section headings remain intact under subpath hosting."
+    ],
+    "evidence": [
+      "Implementation planning treated the later collision-normal and dot-product article flow as parity-sensitive route behavior.",
+      "Shared smoke coverage verifies the route stays responsive, keeps local script and font handoff intact, and remains free of upstream runtime requests."
+    ]
+  }
+]

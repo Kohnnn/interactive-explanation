@@ -1,0 +1,1 @@
+import{_ as o}from"./DlAUqK2U.js";import{o as s,c as t,l as r}from"./D4VqJVMa.js";const a={},c={class:"absolute inset-0 h-auto"};function n(e,l){return s(),t("div",c,[r(e.$slots,"default")])}const d=o(a,[["render",n]]);export{d as default};

@@ -1,13 +1,29 @@
 async function initHome() {
   const mount = document.querySelector("[data-page-list]");
+  const quickLinksMount = document.querySelector("[data-quick-links]");
 
-  if (!mount) {
+  if (!mount && !quickLinksMount) {
     return;
   }
 
   try {
     const response = await fetch("./pages.json", { cache: "no-store" });
     const pages = await response.json();
+
+    if (quickLinksMount) {
+      quickLinksMount.innerHTML = "";
+      pages.forEach(function (page, index) {
+        const link = document.createElement("a");
+        link.className = "action-link" + (index % 3 === 1 ? " secondary" : index % 3 === 2 ? " ghost" : "");
+        link.href = "./" + page.slug + "/";
+        link.textContent = "Open " + page.title;
+        quickLinksMount.appendChild(link);
+      });
+    }
+
+    if (!mount) {
+      return;
+    }
 
     mount.innerHTML = "";
 
@@ -35,8 +51,14 @@ async function initHome() {
       mount.appendChild(article);
     });
   } catch (error) {
-    mount.innerHTML =
-      '<div class="empty-state">The page manifest could not be loaded. Serve this folder over HTTP to use the generated navigation.</div>';
+    if (quickLinksMount) {
+      quickLinksMount.innerHTML =
+        '<div class="empty-state">The page manifest could not be loaded. Serve this folder over HTTP to use the generated quick links.</div>';
+    }
+    if (mount) {
+      mount.innerHTML =
+        '<div class="empty-state">The page manifest could not be loaded. Serve this folder over HTTP to use the generated navigation.</div>';
+    }
   }
 }
 

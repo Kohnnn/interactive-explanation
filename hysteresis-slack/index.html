@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>hysteresis &amp; slack</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive explanation of hysteresis, slack, path dependence, and input-output memory.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="canonical" href="https://localhost/interactive-explanation/hysteresis-slack/">
+    <meta property="og:title" content="Hysteresis &amp; Slack">
+    <meta property="og:description" content="Interactive explanation of hysteresis, slack, path dependence, and input-output memory.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://localhost/interactive-explanation/hysteresis-slack/">
+    <link href="./bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="../shared/public-footer.css">
+    <style>
+      body {
+        font-size: 16px;
+        margin-bottom: 50px;
+      }
+
+      .vcenter {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .above-chart {
+        height: 80px;
+        margin-bottom: 20px;
+      }
+
+      .output-color {
+        background-color: pink;
+      }
+
+      .output-color-path {
+        color: #ff0f39;
+        font-weight: bold;
+      }
+
+      .output-color-region {
+        background-color: #ffd4db;
+      }
+
+      .input-color {
+        background-color: lightblue;
+      }
+
+      .input-color-path {
+        color: #44a6c6;
+        font-weight: bold;
+      }
+
+      .little-slider {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .spacer {
+        height: 50px;
+      }
+
+      svg,
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      @media (max-width: 767px) {
+        .above-chart {
+          height: auto;
+          min-height: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body data-reference-url="https://joshuahhh.com/projects/hysteresis/" data-reference-text="Hysteresis &amp; Slack" data-footer-label="Original page">
+    <div class="container" style='max-width: 900px'>
+
+      <div class="spacer"></div>
+
+      <h1>hysteresis &amp; slack</h1>
+
+      <div class="spacer"></div>
+
+      <div class="row">
+      <div class="col-md-8">
+      <p>Hysteresis is a fancy word for a simple idea.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Hysteresis">Wikipedia</a> says: <i>Hysteresis is the dependence of the state of a system on its history</i>.</p>
+      <p>But you can just say: <i>Hysteresis is when a system has <b>slack</b></i>.</p>
+      </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <h3>Here are two machines you can control.</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="above-chart">
+            <p>
+              In this one, the <span class="output-color">output pin</span> of the slider is
+              <b>rigidly connected</b> to the <span class="input-color">input pin</span>.
+            </p>
+            <p>
+              <b>Try dragging the <span class="input-color">input pin</span>.</b>
+            </p>
+          </div>
+          <svg id="slider1"></svg>
+          <svg id="chart1"></svg>
+        </div>
+        <div class="col-md-6">
+          <div class="above-chart">
+            <p>
+              In this one, the <span class="output-color">output pin</span> of the slider is
+              connected to the <span class="input-color">input pin</span>, but it's not a rigid
+              connection: there's <b>slack</b>.
+            </p>
+            <p>
+              <b>Try dragging the <span class="input-color">input pin</span>.</b>
+            </p>
+          </div>
+          <svg id="slider2"></svg>
+          <svg id="chart2"></svg>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <p>These charts show the way that the input pin (<i>x</i>) determines the output pin (<i>y</i>). But they look very different.</p>
+
+      <div class="row">
+      <div class="col-md-6">
+
+      <p>The first plot is a simple curve. Every vertical line hits only one
+      point, which means that the position of the output pin is a
+      <i>function</i> of the position of the input pin. Knowing where the
+      input pin is, at some instant of time, is all you need to know to
+      determine exactly where the output pin is.</p>
+
+      <svg id="slider1-a" class="little-slider"></svg>
+      <svg id="slider1-b" class="little-slider"></svg>
+
+      </div>
+      <div class="col-md-6">
+
+      <p>But the second plot is made out of loops. At a fixed <i>x</i>-position
+      (corresponding to a fixed input-pin position), there are multiple
+      possible <i>y</i>-positions (corresponding to multiple output-pin
+      positions). If you want to know where the output pin is at some instant of
+      time, knowing the input pin's location is not enough.</p>
+
+      <svg id="slider2-a" class="little-slider"></svg>
+      <svg id="slider2-b" class="little-slider"></svg>
+
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-md-8">
+
+      <p>When a system has <b>slack</b>, the current input doesn't directly determine the current output. That's all that hysteresis is.</p>
+
+      <div class="spacer"></div>
+
+      <p>A lot of other things in the world work the same way as these sliders,
+      even if they don't look the same at first glance. Here's one metaphor I
+      like: Suppose the track is a happiness scale. The location of the <span
+      class="input-color">input pin</span> represents the external
+      circumstances of your life. The <span class="output-color">output
+      pin</span> measures your internal mood.</p>
+
+      <ul>
+
+      <li><p>The slackless system, on the left, models a world where your mood
+      depends directly on what's going around you at every instant. How happy
+      are you right now? We can find out by looking at what's going on in your
+      life, and computing from that data alone.</p></li>
+
+      <li><p>The system with slack, on the right, models a world where external
+      circumstances push your mood around, but don't directly determine it. If
+      the external situation is much better or worse than your present mood
+      calls for, your mood will shift to stay within range, but your mood
+      generally just tries to stay put. There's some kind of inertia at
+      work.</p></li>
+
+      </ul>
+
+      <p>Which of these models do you think better describes the dynamics of
+      your moods? Do either of them even come close? What other phenomena are
+      these systems missing, which would help them represent your emotional
+      life?</p>
+
+      <div class="spacer"></div>
+
+      <p>It feels right to say that, when your system has slack, the
+      output just isn't determined by the input <i>at all</i>. But the Wikipedia
+      definition at the top says something different. It says something about
+      the output being determined by "history".</p>
+
+      <p>So let's give the computer some "history" to play
+      with.</p>
+
+      <h3>Set a trajectory for the input pin.</h3>
+
+      <p>Click &amp; drag to define the <span class="input-color-path">path of the input pin</span> over time.
+      Hover to see the <span class="output-color-path">future trajectory of the output pin</span> from the point you've selected.
+      The <span class="output-color-region">shaded region</span> shows the region
+      where the output pin could possibly end up, given the movement of the input pin.
+      </p>
+
+      <div>
+        <svg id="timeline"></svg>
+      </div>
+
+      <p>Experiment a bit. How does the trajectory of the input pin affect the
+      possible trajectories of the output pin? When is the trajectory of the
+      input pin enough to determine where the output pin ends up?</p>
+
+      <div class="spacer"></div>
+
+      <p>I think there are two ways the input pin can be said to completely
+      determine the output pin, despite our earlier sense that they were not so
+      tightly bound together:</p>
+
+      <ul>
+
+        <li><p>First of all, if you know where the output pin was at one moment
+        in time, and you know how the <span class="input-color-path">input pin moved since then</span>, you can
+        figure out how the output pin will move. That's the reason why we can
+        draw the <span class="output-color-path">future trajectory of the output
+        pin</span> (given a starting point) as a curve, rather than a shaded
+        region.</p><p>One way to put it &mdash; the slider has <i>a memory</i>
+        (the position of the output pin), which has its own existence,
+        independent of the input. But the way this memory changes over time
+        <i>is</i> determined by the input.</p></li>
+
+        <li><p>But also, once the input pin moves back and forth enough, it
+        doesn't matter where it started. The <span class="output-color-region">shaded
+        region</span> of possibility funnels down to a single curve.</p><p>So,
+        if the external forces are strong enough, the slider's memory is
+        overwhelmed. It doesn't matter where the memory started out &mdash;
+        enough has happened input-wise since then that the memory is
+        irrelevant.</p></li>
+
+      </ul>
+
+      <div class="spacer"></div>
+
+      <p>Chains have slack, and moods have memories. But many systems in the
+      natural world exhibit hysteresis, without looking obviously like they
+      should have slack or memory. For instance: If you take a piece of metal,
+      and expose it to a magnetic field <i>H</i> (by charging up an
+      electromagnet next to it, or just bringing a powerful magnet nearby), the
+      natural mini-magnets of the metal will align with the field, giving the
+      metal a magnetization <i>M</i> it didn't have before. But then, if you
+      turn off the outside field, the mini-magnets will <i>stay</i> aligned, so
+      <i>M</i> will stick around even without <i>H</i>.</p>
+
+      <p> It's like <i>H</i> is the <span class="input-color">input pin</span>
+      and <i>M</i> is the <span class="output-color">output pin</span> in some
+      weird slider system.</p>
+
+      <p>So the dark loop in the center of this diagram (from <a
+      href="http://hyperphysics.phy-astr.gsu.edu/hbase/solids/hyst.html">HyperPhysics</a>) should
+      look familiar:</p>
+
+      <img src="images/hyloop.gif" />
+
+      </div>
+      </div>
+
+      <div class="spacer"></div>
+      <script src="./build/bundle.js"></script>
+    </div>
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

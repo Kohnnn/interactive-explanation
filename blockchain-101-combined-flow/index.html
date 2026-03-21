@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Combined Blockchain Flow</title>
+  <meta name="description" content="Local teaching flow that links the shipped blockchain, signing, and zero-knowledge routes into one end-to-end sequence.">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="canonical" href="https://localhost/interactive-explanation/blockchain-101-combined-flow/">
+  <meta property="og:title" content="Combined Blockchain Flow">
+  <meta property="og:description" content="Local teaching flow that links the shipped blockchain, signing, and zero-knowledge routes into one end-to-end sequence.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://localhost/interactive-explanation/blockchain-101-combined-flow/">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <style>
+    .chapter-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 24px;
+    }
+
+    .chapter-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 250, 241, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .chapter-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fffaf4;
+      font-weight: 700;
+    }
+
+    .chapter-card h2 {
+      margin: 14px 0 0;
+      font-size: 1.5rem;
+    }
+
+    .stat-row {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 24px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 250, 241, 0.82);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.6rem;
+    }
+  </style>
+</head>
+<body
+  data-reference-url="https://andersbrownworth.com/blockchain/"
+  data-reference-text="Blockchain Demo"
+  data-footer-label="Original page"
+>
+  <main class="site-page">
+    <a class="back-link" href="../">Back to replicas</a>
+
+    <header class="hero">
+      <p class="eyebrow">Local learning flow</p>
+      <h1>Combined Blockchain Flow</h1>
+      <p class="lead">
+        This local page stitches the shipped hashing, signing, and proof routes into one guided
+        sequence. It keeps the heavy demos in their original route silos while giving the whole
+        topic a clearer start-to-finish path.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="./#chapter-hash">Start the flow</a>
+        <a class="action-link secondary" href="../blockchain/">Open hashing demo</a>
+        <a class="action-link ghost" href="../docs/blockchain-101-combined-flow/">Docs</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <strong>3</strong>
+          linked chapters
+        </div>
+        <div class="stat-card">
+          <strong>4</strong>
+          local replica routes in the learning path
+        </div>
+        <div class="stat-card">
+          <strong>1</strong>
+          consistent sequence for a first walkthrough
+        </div>
+      </div>
+    </header>
+
+    <section class="chapter-grid">
+      <article class="chapter-card" id="chapter-hash">
+        <span class="chapter-step">1</span>
+        <h2>Hashing and linked blocks</h2>
+        <p class="meta-line">
+          Begin with block fields, nonce updates, and the tamper cascade. This chapter builds the
+          intuition for why changing one block invalidates everything downstream.
+        </p>
+        <ul class="plain-list">
+          <li>Start with the editable block fields and the mining button.</li>
+          <li>Move into the distributed-chain view once the single-chain behavior feels clear.</li>
+          <li>Use this chapter to anchor later signing and proof ideas in a concrete chain state.</li>
+        </ul>
+        <div class="action-row">
+          <a class="action-link" href="../blockchain/">Open chapter</a>
+          <a class="action-link secondary" href="../blockchain/distributed.html">Open distributed view</a>
+        </div>
+      </article>
+
+      <article class="chapter-card" id="chapter-signatures">
+        <span class="chapter-step">2</span>
+        <h2>Keys, signatures, and transactions</h2>
+        <p class="meta-line">
+          Continue into key generation, signing, verification, and transaction flow. This chapter
+          explains how authenticity gets attached to data before it becomes part of a chain.
+        </p>
+        <ul class="plain-list">
+          <li>Generate a keypair and observe how the public identity changes with the private key.</li>
+          <li>Sign a payload, then mutate it to watch verification fail.</li>
+          <li>Finish by tracing how signed transactions feed the blockchain-focused scenes.</li>
+        </ul>
+        <div class="action-row">
+          <a class="action-link" href="../public-private-keys/">Open chapter</a>
+          <a class="action-link secondary" href="../public-private-keys/signatures/">Jump to signatures</a>
+          <a class="action-link ghost" href="../public-private-keys/transaction/">Open transaction view</a>
+        </div>
+      </article>
+
+      <article class="chapter-card" id="chapter-zkp">
+        <span class="chapter-step">3</span>
+        <h2>Proof without disclosure</h2>
+        <p class="meta-line">
+          End with the map-based proof scene. It shifts the lesson from authenticity to privacy by
+          showing how repeated verification can build confidence without exposing the secret path.
+        </p>
+        <ul class="plain-list">
+          <li>Toggle the hidden coloring overlay to see the secret partition.</li>
+          <li>Shuffle the palette and test different region choices without changing the logic.</li>
+          <li>Reset the scene to compare visible evidence with hidden structure.</li>
+        </ul>
+        <div class="action-row">
+          <a class="action-link" href="../zero-knowledge-proof-demo/">Open chapter</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="note-grid" style="margin-top: 24px;">
+      <article class="note-section">
+        <h2>Suggested order</h2>
+        <p>
+          The recommended first pass is hashing, then signing, then proof. That order keeps the
+          state model simple: first immutable records, then authenticity, then privacy.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Local-only navigation</h2>
+        <p>
+          Every route link on this page points at local replicas. The public body avoids upstream
+          chapter links so the flow stays self-contained under the shipped site shell.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>What this page is for</h2>
+        <p>
+          This route is intentionally a roadmap, not a rewrite of the demos. It helps readers move
+          through the existing replicas with a more coherent teaching sequence.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

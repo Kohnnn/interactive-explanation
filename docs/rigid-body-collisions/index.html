@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rigid Body Collisions Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local rigid body collisions replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Rigid Body Collisions</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/rigid-body-collisions/</code> vendors the
+        published Nuxt article for part one of the rigid-body collision series, keeps the canvas,
+        sliders, and article runtime intact, and limits public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../rigid-body-collisions/">Open replica</a>
+        <a class="action-link secondary" href="https://www.sassnow.ski/rigid-body-collisions/1" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
+        Source family: <code>sassnow.ski</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published Nuxt HTML shell, the full route-local
+          <code>_nuxt/</code> chunk tree, the Essays1743 essay fonts, and the article runtime,
+          then patches only the subpath-hosting shell and provenance surfaces needed for the
+          public replica.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://www.sassnow.ski/rigid-body-collisions/1</code> on 2026-03-21.</li>
+          <li>The local copy removes the body-level RSS, Twitter, e-mail, and Fathom provenance surfaces from the public body.</li>
+          <li>The opening collision scenes, later vector examples, and article-long interactive runtime remain driven by the vendored published assets.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>rigid-body-collisions/index.html</code> owns the local metadata shell, shared footer hook, font rewrites, and the final route-cleanup hook for the local root.</li>
+          <li><code>rigid-body-collisions/_nuxt/</code> contains the full vendored Nuxt chunk graph, route CSS, and runtime dependencies required by the article.</li>
+          <li><code>rigid-body-collisions/fonts/</code> keeps the Essays1743 essay fonts local so the typography and route CSS no longer depend on the upstream root.</li>
+          <li><code>rigid-body-collisions/_nuxt/D4VqJVMa.js</code> retains the published app runtime while localizing lazy asset references and disabling the dormant analytics CDN handoff.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
+          <li>A tiny local cleanup hook removes the vendored document-driven not-found card that appears when the published Nuxt route is flattened to the top-level local slug.</li>
+          <li>The shared footer is the only public original-page reference surface.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the published article structure intact; future edits should patch the shell and vendored chunks rather than rewriting the article into a new runtime family.</li>
+          <li>Extend the shared smoke bundle instead of creating a one-off harness so later Nuxt-backed replicas can reuse the same route checks.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching shell cleanup, font paths, or the vendored chunk tree.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

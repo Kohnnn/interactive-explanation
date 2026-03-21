@@ -1,0 +1,76 @@
+[
+  {
+    "moduleId": "article-shell-and-local-gps-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and gps scripts, then initializes many inline trilateration, orbital-motion, timing, and signal-processing sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, route-local textures, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../gps/css/base.css",
+      "../../gps/js/base.js",
+      "../../gps/js/gps.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell, Earth textures, and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the drag, time, and orbital scenes remain interactive."
+    ]
+  },
+  {
+    "moduleId": "trilateration-and-clock-bias-scenes",
+    "originalBehavior": "The published article opens with draggable positioning scenes, then steps through time-of-flight, sound-based ranging, clock bias, and pseudorange explanations driven by sliders and synchronized canvases.",
+    "localStatus": "The local route keeps the early drag scenes, time sliders, and clock-bias demonstrations under the original published runtime.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../gps/js/gps.js"
+    ],
+    "notes": [
+      "The route preserves the published transition from visual trilateration to time-based ranging instead of flattening those sections into static diagrams.",
+      "The smoke contract treats one early drag scene and one time-slider scene as required parity behavior."
+    ],
+    "evidence": [
+      "Post-gears rollout planning explicitly called for one drag scene and one time-slider progression in the GPS pilot.",
+      "Shared smoke coverage verifies the early landscape scene responds to drag and a drone timeline slider updates the rendered output."
+    ]
+  },
+  {
+    "moduleId": "orbital-and-keplerian-geometry",
+    "originalBehavior": "The published article continues through orbit period, geosynchronous motion, GPS constellation views, and Keplerian-element scenes with slider-driven globe and orbit geometry updates.",
+    "localStatus": "The local route keeps the orbital-period, inclination, and related geometry sections intact through the original article canvas and slider runtime.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../gps/js/gps.js",
+      "../../gps/images/gps/land0.jpg",
+      "../../gps/images/gps/clouds0.jpg",
+      "../../gps/images/gps/outline0.jpg"
+    ],
+    "notes": [
+      "The published WebGL Earth scenes now load their texture assets from the route-local GPS image tree instead of the upstream root path.",
+      "In-body Ciechanowski article links are rewritten locally when available or neutralized when the target route is not shipped yet."
+    ],
+    "evidence": [
+      "Implementation planning treated one orbital or inclination scene as parity-critical for the second Bartosz pilot.",
+      "Shared smoke coverage verifies an orbital-inclination scene updates from slider input without runtime asset failures."
+    ]
+  },
+  {
+    "moduleId": "signal-propagation-and-footer-only-provenance",
+    "originalBehavior": "The published article closes with atmospheric delay, navigation-message, PRN, and signal-correlation scenes, followed by an upstream footer that includes supporter messaging and author provenance.",
+    "localStatus": "The local route keeps the later signal sections through the original scripts while leaving the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
+    ],
+    "evidence": [
+      "The hardened Ciechanowski audit now flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "Shared smoke coverage verifies the route stays responsive and runtime-clean without upstream asset dependencies."
+    ]
+  }
+]

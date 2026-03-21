@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-watch-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and watch scripts, then initializes many inline watch-movement scenes under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, route-local watch model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../mechanical-watch/index.html",
+      "../../mechanical-watch/css/base.css",
+      "../../mechanical-watch/js/base.js",
+      "../../mechanical-watch/js/watch.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell, the watch model data, and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the opening, spring, automatic-winding, and final-size scenes remain interactive."
+    ]
+  },
+  {
+    "moduleId": "opening-movement-and-power-scenes",
+    "originalBehavior": "The published article opens with a draggable assembled movement view, then steps through coil spring, torsion spring, mainspring, winding, and barrel scenes with linked sliders and animated cross-sections.",
+    "localStatus": "The local route keeps the opening movement scene and the early spring and winding demonstrations under the original published runtime.",
+    "sourceFiles": [
+      "../../mechanical-watch/index.html",
+      "../../mechanical-watch/js/watch.js"
+    ],
+    "notes": [
+      "The smoke contract treats one opening slider path and one early power scene as required parity behavior.",
+      "The route preserves the published progression from the assembled movement into the mainspring and barrel mechanics instead of flattening those sections into static diagrams."
+    ],
+    "evidence": [
+      "Post-engine rollout planning called for one movement scene and one early power or spring slider path.",
+      "Shared smoke coverage verifies the opening hero scene and coil-spring scene update from slider input."
+    ]
+  },
+  {
+    "moduleId": "gear-train-escapement-and-automatic-winding-sections",
+    "originalBehavior": "The published article continues through the gear train, escapement, balance, motion works, date, keyless works, and automatic winding sections with linked 3D views, highlighted parts, and synchronized slider updates.",
+    "localStatus": "The local route keeps the later automatic winding, reversing wheel, and keyless-works scenes intact through the original article canvas and slider runtime.",
+    "sourceFiles": [
+      "../../mechanical-watch/index.html",
+      "../../mechanical-watch/js/watch.js",
+      "../../mechanical-watch/models/watch_vertices.dat",
+      "../../mechanical-watch/models/watch_indices.dat"
+    ],
+    "notes": [
+      "The published 3D watch scenes now load their geometry from the route-local model tree instead of the upstream root path.",
+      "The shipped `gears` references are rewritten locally in the public body."
+    ],
+    "evidence": [
+      "Implementation planning treated one later automatic-winding or escapement scene and one final-size scene as parity-critical for the watch batch.",
+      "Shared smoke coverage verifies the automatic-behavior scene and credit-card-size scene update from slider input without runtime asset failures."
+    ]
+  },
+  {
+    "moduleId": "footer-only-provenance-and-local-family-links",
+    "originalBehavior": "The published article closes with further-reading sections and an upstream footer that includes supporter messaging and author provenance, while also referring back to other Bartosz articles by upstream URL.",
+    "localStatus": "The local route keeps the published closing sections while leaving the shared footer as the only public original-page reference surface and rewriting available local cross-links.",
+    "sourceFiles": [
+      "../../mechanical-watch/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
+    ],
+    "evidence": [
+      "The hardened Ciechanowski audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "Route cleanup rewrote the local `gears` links so the family continues converging toward local intra-family navigation."
+    ]
+  }
+]

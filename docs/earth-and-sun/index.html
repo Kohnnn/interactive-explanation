@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Earth and Sun Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local Earth and Sun replica.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Earth and Sun</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/earth-and-sun/</code> vendors the published
+        Ciechanowski article, keeps its orbit, axial-tilt, seasonal, and time-tracking scenes
+        intact, and limits public provenance to the shared footer.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../earth-and-sun/">Open replica</a>
+        <a class="action-link secondary" href="https://ciechanow.ski/earth-and-sun/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
+        Source family: <code>ciechanow.ski</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published article HTML, shared article CSS, page-local CSS,
+          route-local globe textures, and scripts, then patches only the subpath-hosting shell and
+          provenance surfaces needed for the public replica.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://ciechanow.ski/earth-and-sun/</code> on 2026-03-21.</li>
+          <li>The local copy removes the upstream banner, blog navigation, analytics, Patreon prompt, and social links from the public body.</li>
+          <li>The orbit, day-length, axial-tilt, precession, and seasonal scenes remain driven by the vendored scripts rather than a local rewrite.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>earth-and-sun/index.html</code> owns the local metadata shell, shared footer hook, and relative article asset paths.</li>
+          <li><code>earth-and-sun/css/base.css</code> and <code>earth-and-sun/css/earth_sun.css</code> preserve the published article layout and interaction styling with subpath-safe helper image URLs.</li>
+          <li><code>earth-and-sun/js/base.js</code> and <code>earth-and-sun/js/earth_sun.js</code> keep the original globe, orbit, slider, and play-pause runtime.</li>
+          <li><code>earth-and-sun/images/earth_sun/</code> contains the route-local Earth textures, border sprites, and outline asset requested by the published runtime.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route no longer includes the author banner, Patreon prompt, X/Twitter, Instagram, e-mail, RSS, or Google Analytics surfaces.</li>
+          <li>The local copy uses local fallback font stacks instead of runtime Google Fonts requests so the route stays self-contained.</li>
+          <li>Later Bartosz routes can now rewrite local `earth-and-sun` references directly instead of neutralizing them in the public body.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the article structure intact; future edits should patch the published shell, not rewrite the interactions into a condensed local experience.</li>
+          <li>Extend the shared smoke bundle through the Ciechanowski family helpers instead of creating a one-off validator.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching article shell copy or any vendored runtime files.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

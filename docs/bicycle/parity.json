@@ -1,0 +1,76 @@
+[
+  {
+    "moduleId": "article-shell-and-local-bicycle-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and bicycle scripts, then initializes many inline rider, force, wheel, stability, and frame sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, route-local model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../bicycle/index.html",
+      "../../bicycle/css/base.css",
+      "../../bicycle/js/base.js",
+      "../../bicycle/js/bicycle.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell, the local bicycle model assets, and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the drag, play-pause, force, slip, and later torsion scenes remain interactive."
+    ]
+  },
+  {
+    "moduleId": "opening-rider-and-force-scenes",
+    "originalBehavior": "The published article opens with a rider-controlled bicycle view, then steps through crate-force examples with slider-driven motion, restart controls, and synchronized vector and speed readouts.",
+    "localStatus": "The local route keeps the opening rider scene, dragable viewpoint, early force sliders, and restartable motion demonstrations under the original published runtime.",
+    "sourceFiles": [
+      "../../bicycle/index.html",
+      "../../bicycle/js/bicycle.js"
+    ],
+    "notes": [
+      "The smoke contract treats one opening drag path, one play-pause path, and one early force-slider path as required parity behavior.",
+      "The route preserves the published progression from rider overview into Newtonian force examples instead of flattening those sections into static diagrams."
+    ],
+    "evidence": [
+      "Post-earth-and-sun rollout planning explicitly called for one rider or force slider, one play-pause or restart path, and responsive-shell validation.",
+      "Shared smoke coverage verifies the opening hero scene responds to drag, the published play-pause control toggles state, and an early force scene updates from slider input."
+    ]
+  },
+  {
+    "moduleId": "wheel-slip-and-stability-sections",
+    "originalBehavior": "The published article continues through longitudinal, lateral, slip-angle, cornering, and stability sections with linked bicycle geometry, wheel contact, and slider-driven state changes.",
+    "localStatus": "The local route keeps the wheel, slip, and stability scenes intact through the original article canvas and slider runtime.",
+    "sourceFiles": [
+      "../../bicycle/index.html",
+      "../../bicycle/js/bicycle.js",
+      "../../bicycle/models/bicycle_vertices.dat",
+      "../../bicycle/models/bicycle_indices.dat"
+    ],
+    "notes": [
+      "The published 3D bicycle scenes now load their model data from the route-local model tree instead of the upstream root path.",
+      "The shipped `gears` reference is rewritten locally while not-yet-shipped Bartosz article links remain neutralized in the public body."
+    ],
+    "evidence": [
+      "Implementation planning treated one wheel or slip scene as parity-critical for the bicycle batch.",
+      "Shared smoke coverage verifies a slip-angle scene updates from slider input without runtime asset failures."
+    ]
+  },
+  {
+    "moduleId": "later-torsion-frame-and-footer-only-provenance",
+    "originalBehavior": "The published article closes with wheel-structure, frame-stress, bending, torsion, and FEM sections, followed by an upstream footer that includes supporter messaging and author provenance.",
+    "localStatus": "The local route keeps the later mechanical sections through the original scripts while leaving the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../bicycle/index.html",
+      "../../bicycle/js/bicycle.js",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
+    ],
+    "evidence": [
+      "The hardened Ciechanowski audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "Shared smoke coverage verifies a later torsion scene remains interactive and the route stays responsive without upstream asset dependencies."
+    ]
+  }
+]

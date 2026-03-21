@@ -1,0 +1,1 @@
+import{c as x,e as l,r as p}from"./bHzPANiV.js";function y(t,a,s){const e=new x(t.geometry,new l({color:s})),o=new p().setFromObject(t),c=o.max.x-o.min.x,n=o.max.y-o.min.y,i=(c-a)/c,r=(n-a)/n;return e.scale.copy(t.scale),t.scale.set(i,r,1),t.position.z=1,e.add(t),e}export{y as c};

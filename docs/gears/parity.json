@@ -1,0 +1,73 @@
+[
+  {
+    "moduleId": "article-shell-and-local-gears-runtime-handoff",
+    "originalBehavior": "The published article loads through a shared article shell plus the page-local base and gears scripts, then initializes many inline rotational-motion, torque, tooth-profile, and transmission sections under one longform page.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "sourceFiles": [
+      "../../gears/index.html",
+      "../../gears/css/base.css",
+      "../../gears/js/base.js",
+      "../../gears/js/gears.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell and both scripts as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, both scripts initialize, and the opening, ratio, and compound-gear scenes remain interactive."
+    ]
+  },
+  {
+    "moduleId": "angular-velocity-torque-and-ratio-scenes",
+    "originalBehavior": "The published article opens with animated spinning and angular-velocity scenes, then continues through disc-contact, torque, and gear-ratio sections driven by sliders and synchronized canvas updates.",
+    "localStatus": "The local route keeps the opening motion scenes, the play-pause controls, the angular-velocity slider interactions, and the later ratio and torque demonstrations under the original published runtime.",
+    "sourceFiles": [
+      "../../gears/index.html",
+      "../../gears/js/gears.js"
+    ],
+    "notes": [
+      "The route preserves the published slider-driven explanations for angular velocity, torque, and tooth-size-adjusted ratio scenes.",
+      "The animations still use the original play-pause controls rather than replacement local UI."
+    ],
+    "evidence": [
+      "Implementation planning treated one opening slider scene, one play-pause path, and one ratio scene as smoke-critical.",
+      "Shared smoke coverage verifies the opening angular-velocity scene redraws, a play-pause control toggles, and the ratio scene updates from slider input."
+    ]
+  },
+  {
+    "moduleId": "involute-profiles-and-force-geometry",
+    "originalBehavior": "The published article transitions from pitch circles into tangent-and-normal geometry, involute profiles, and force-offset sections with sliders and synchronized geometry views.",
+    "localStatus": "The local route keeps the tangent-normal, involute, and force-geometry sections intact through the original article canvas and slider runtime.",
+    "sourceFiles": [
+      "../../gears/index.html",
+      "../../gears/js/gears.js"
+    ],
+    "notes": [
+      "The route preserves the published progression from pitch circles to involute tooth shapes rather than collapsing the middle sections into static diagrams.",
+      "Ciechanowski cross-links in the public body are rewritten locally when available or neutralized when no local replica exists."
+    ],
+    "evidence": [
+      "Batch policy hardening introduced explicit audit coverage for ordinary in-body Ciechanowski article links.",
+      "The local route keeps the original geometry sections while the public-surface audit enforces footer-only provenance."
+    ]
+  },
+  {
+    "moduleId": "compound-gears-jam-scene-and-footer-only-provenance",
+    "originalBehavior": "The published article closes with multi-gear train examples, a four-gear reduction scene, a jammed-gears segmented-control example, and an upstream footer that includes supporter messaging and author provenance.",
+    "localStatus": "The local route keeps the later multi-gear and jam scenes through the original scripts while leaving the shared footer as the only public original-page reference surface.",
+    "sourceFiles": [
+      "../../gears/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The local copy uses local fallback font stacks so the route does not depend on runtime Google Fonts requests.",
+      "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
+    ],
+    "evidence": [
+      "Implementation planning treated one later compound-gear scene as parity-critical.",
+      "Shared smoke coverage verifies the four-gear scene remains interactive and the route stays responsive without upstream runtime dependencies."
+    ]
+  }
+]

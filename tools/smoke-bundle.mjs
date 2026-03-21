@@ -3,11 +3,61 @@ import path from "node:path";
 import http from "node:http";
 import { chromium } from "playwright";
 
-const rootDir = path.resolve(process.argv[2] || path.join(process.cwd(), "interactive-explanation"));
+const cliArgs = process.argv.slice(2);
+
+function hasFlag(flag) {
+  return cliArgs.includes(flag);
+}
+
+function getArgValues(flag) {
+  const values = [];
+
+  cliArgs.forEach((arg, index) => {
+    if (arg.startsWith(`${flag}=`)) {
+      values.push(arg.slice(flag.length + 1));
+      return;
+    }
+
+    if (arg === flag) {
+      const next = cliArgs[index + 1];
+      if (next && !next.startsWith("--")) {
+        values.push(next);
+      }
+    }
+  });
+
+  return values
+    .flatMap((value) => value.split(","))
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+const explicitRootArg = cliArgs.find((arg, index) => {
+  if (arg.startsWith("--")) {
+    return false;
+  }
+
+  const previous = cliArgs[index - 1];
+  return !previous || !previous.startsWith("--");
+});
+
+const rootDir = path.resolve(explicitRootArg || path.join(process.cwd(), "interactive-explanation"));
 const port = Number(process.env.SMOKE_PORT || 4173);
 const host = "127.0.0.1";
 const mountPath = "/interactive-explanation/";
 const baseUrl = `http://${host}:${port}${mountPath}`;
+const verbose = hasFlag("--verbose") || process.env.SMOKE_VERBOSE === "1";
+const rawConsoleLog = console.log.bind(console);
+
+console.log = (...args) => {
+  if (verbose) {
+    rawConsoleLog(...args);
+  }
+};
+
+function phaseLog(message) {
+  rawConsoleLog(message);
+}
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -20,6 +70,7 @@ const contentTypes = {
   ".json": "application/json; charset=utf-8",
   ".m4a": "audio/mp4",
   ".md": "text/markdown; charset=utf-8",
+  ".mjs": "application/javascript; charset=utf-8",
   ".mp3": "audio/mpeg",
   ".otf": "font/otf",
   ".opus": "audio/ogg",
@@ -50,8 +101,74 @@ const rememberDownloadCardNames = [
   "you_when",
 ];
 
+const routeManifestPath = path.join(rootDir, "routes.manifest.json");
+const routeManifest = fs.existsSync(routeManifestPath)
+  ? JSON.parse(fs.readFileSync(routeManifestPath, "utf8"))
+  : [];
+const routeFamilyBySlug = new Map(routeManifest.map((route) => [route.slug, inferRouteFamily(route)]));
+const selectedGroups = new Set(getArgValues("--group"));
+const selectedRoutes = new Set(getArgValues("--route"));
+
+function inferRouteFamily(route) {
+  if (["blockchain-101-combined-flow", "primary-interactive-hub"].includes(route.slug)) {
+    return "custom";
+  }
+
+  const referenceUrl = route.referenceUrl || "";
+
+  if (/ncase\.me|ncase\.itch\.io|github\.com\/ncase/i.test(referenceUrl)) {
+    return "ncase";
+  }
+  if (/mlu-explain\.github\.io/i.test(referenceUrl)) {
+    return "mlu";
+  }
+  if (/setosa\.io/i.test(referenceUrl)) {
+    return "setosa";
+  }
+  if (/andersbrownworth\.com/i.test(referenceUrl)) {
+    return "anders";
+  }
+  if (/ciechanow\.ski/i.test(referenceUrl)) {
+    return "ciechanowski";
+  }
+  if (/samwho\.dev/i.test(referenceUrl)) {
+    return "samwho";
+  }
+  if (/joshuahhh\.com/i.test(referenceUrl)) {
+    return "horowitz";
+  }
+  if (/sassnow\.ski/i.test(referenceUrl)) {
+    return "sassnowski";
+  }
+
+  return "custom";
+}
+
+function shouldRunSlug(slug) {
+  if (!slug) {
+    return true;
+  }
+
+  if (selectedRoutes.size > 0 && !selectedRoutes.has(slug)) {
+    return false;
+  }
+
+  if (selectedGroups.size === 0) {
+    return true;
+  }
+
+  const family = routeFamilyBySlug.get(slug) || "custom";
+  return selectedGroups.has("all") || selectedGroups.has(slug) || selectedGroups.has(family);
+}
+
 function exists(relativePath) {
-  return fs.existsSync(path.join(rootDir, relativePath));
+  const fullPath = path.join(rootDir, relativePath);
+  if (!fs.existsSync(fullPath)) {
+    return false;
+  }
+
+  const slug = relativePath.split(/[\\/]/)[0];
+  return shouldRunSlug(slug);
 }
 
 function serveFile(req, res) {
@@ -184,6 +301,79 @@ async function assertRouteViewportUsable(context, relativePath, selector, readyS
   await page.waitForTimeout(1000);
   await assertViewportUsable(page, label);
   await page.close();
+}
+
+async function assertLocalScriptSources(page, expectedSources, label) {
+  const scriptSources = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("script[src]"))
+      .map((node) => node.getAttribute("src") || "")
+      .filter(Boolean);
+  });
+
+  for (const expectedSource of expectedSources) {
+    assert(
+      scriptSources.includes(expectedSource),
+      `${label} did not load ${expectedSource} from local assets`,
+    );
+  }
+}
+
+async function setRangeControlByLabel(page, scopeSelector, labelText, value) {
+  await page.locator(scopeSelector).evaluate((scope, payload) => {
+    const wrapper = Array.from(scope.querySelectorAll("div")).find((candidate) => {
+      return candidate.querySelector("label")?.textContent?.trim() === payload.labelText;
+    });
+    const input = wrapper?.querySelector("input[type='range']");
+    if (!input) {
+      throw new Error(`Missing range control for ${payload.labelText}`);
+    }
+    input.value = String(payload.value);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  }, { labelText, value });
+}
+
+async function setSelectControlByLabel(page, scopeSelector, labelText, value) {
+  await page.locator(scopeSelector).evaluate((scope, payload) => {
+    const wrapper = Array.from(scope.querySelectorAll("div")).find((candidate) => {
+      return candidate.querySelector("label")?.textContent?.trim() === payload.labelText;
+    });
+    const select = wrapper?.querySelector("select");
+    if (!select) {
+      throw new Error(`Missing select control for ${payload.labelText}`);
+    }
+    select.value = payload.value;
+    select.dispatchEvent(new Event("input", { bubbles: true }));
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  }, { labelText, value });
+}
+
+async function assertCiechanowskiResponsiveShell(context, page, relativePath, readySelector, label) {
+  await assertViewportUsable(page, label);
+  await assertRouteViewportUsable(
+    context,
+    relativePath,
+    "#reference-footer",
+    readySelector,
+    label,
+    390,
+    844,
+  );
+}
+
+async function dragKnob(page, knobSelector, deltaX, deltaY, label) {
+  const knob = page.locator(knobSelector).first();
+  await knob.scrollIntoViewIfNeeded();
+  const knobBox = await knob.boundingBox();
+  assert(knobBox, `${label} did not expose ${knobSelector}`);
+  await page.mouse.move(knobBox.x + knobBox.width / 2, knobBox.y + knobBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    knobBox.x + knobBox.width / 2 + deltaX,
+    knobBox.y + knobBox.height / 2 + deltaY,
+    { steps: 12 },
+  );
+  await page.mouse.up();
 }
 
 async function dragCanvasUntilChanged(page, canvasSelector, drags, label) {
@@ -1954,16 +2144,7 @@ async function smokeAlphaCompositing(context) {
       document.querySelector("#alpha_lerper_slider_container .slider_knob");
   }, null, { timeout: 30000 });
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/alpha_compositing.js"),
-    "alpha-compositing did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/alpha_compositing.js"], "alpha-compositing");
 
   await dragCanvasUntilChanged(page, "#alpha_rose_glasses_container canvas", [
     { from: { x: 0.45, y: 0.45 }, to: { x: 0.7, y: 0.3 } },
@@ -2018,15 +2199,12 @@ async function smokeAlphaCompositing(context) {
     const pdExampleAfter = (await page.locator("#alpha_pd_example_step").textContent())?.trim() || "";
     if (pdExampleAfter && pdExampleAfter !== pdExampleBefore) {
       console.log("OK alpha-compositing step-driven Porter-Duff scene");
-      await assertViewportUsable(page, "alpha-compositing route");
-      await assertRouteViewportUsable(
+      await assertCiechanowskiResponsiveShell(
         context,
+        page,
         "alpha-compositing/",
-        "#reference-footer",
         "#alpha_rose_glasses_container canvas",
         "alpha-compositing route",
-        390,
-        844,
       );
       await page.waitForTimeout(250);
       assertPageRuntimeClean("alpha-compositing route");
@@ -2051,16 +2229,7 @@ async function smokeColorSpaces(context) {
       document.querySelector("#color_gamut_canvas_slider_container .slider_knob");
   }, null, { timeout: 30000 });
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/color_spaces.js"),
-    "color-spaces did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/color_spaces.js"], "color-spaces");
 
   const earlyKnob = page.locator("#color_plain_linear_quadratic_slider_container .color_slider_knob").first();
   await earlyKnob.scrollIntoViewIfNeeded();
@@ -2121,15 +2290,12 @@ async function smokeColorSpaces(context) {
   }, gamutBefore, { timeout: 5000 });
   console.log("OK color-spaces gamut scene");
 
-  await assertViewportUsable(page, "color-spaces route");
-  await assertRouteViewportUsable(
+  await assertCiechanowskiResponsiveShell(
     context,
+    page,
     "color-spaces/",
-    "#reference-footer",
     "#color_plain_linear_quadratic_slider_container .color_slider_knob",
     "color-spaces route",
-    390,
-    844,
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("color-spaces route");
@@ -2155,16 +2321,7 @@ async function smokeSound(context) {
   }, null, { timeout: 30000 });
   await page.waitForTimeout(2000);
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/sound.js"),
-    "sound did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/sound.js"], "sound");
 
   const waveformButton = page.locator("#waveform1_keyboard .keyboard_button").first();
   const waveformCanvas = page.locator("#waveform1 canvas");
@@ -2265,15 +2422,12 @@ async function smokeSound(context) {
   }, playBefore || "", { timeout: 5000 });
   console.log("OK sound play-pause control");
 
-  await assertViewportUsable(page, "sound route");
-  await assertRouteViewportUsable(
+  await assertCiechanowskiResponsiveShell(
     context,
+    page,
     "sound/",
-    "#reference-footer",
     "#hero_keyboard .keyboard_button",
     "sound route",
-    390,
-    844,
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("sound route");
@@ -2300,16 +2454,7 @@ async function smokeCamerasAndLenses(context) {
   }, null, { timeout: 30000 });
   await page.waitForTimeout(2500);
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/lenses.js"),
-    "cameras-and-lenses did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/lenses.js"], "cameras-and-lenses");
 
   const detectorCanvas = page.locator("#lens_detector canvas").first();
   await detectorCanvas.scrollIntoViewIfNeeded();
@@ -2448,15 +2593,12 @@ async function smokeCamerasAndLenses(context) {
   }, chromaticBefore, { timeout: 5000 });
   console.log("OK cameras-and-lenses later lens scene");
 
-  await assertViewportUsable(page, "cameras-and-lenses route");
-  await assertRouteViewportUsable(
+  await assertCiechanowskiResponsiveShell(
     context,
+    page,
     "cameras-and-lenses/",
-    "#reference-footer",
     "#lens_detector_sl0 .slider_knob",
     "cameras-and-lenses route",
-    390,
-    844,
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("cameras-and-lenses route");
@@ -2480,16 +2622,7 @@ async function smokeLightsAndShadows(context) {
   }, null, { timeout: 30000 });
   await page.waitForTimeout(2500);
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/light.js"),
-    "lights-and-shadows did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/light.js"], "lights-and-shadows");
 
   const openingCanvas = page.locator("#lns_shadow2 canvas").first();
   await openingCanvas.scrollIntoViewIfNeeded();
@@ -2591,15 +2724,12 @@ async function smokeLightsAndShadows(context) {
   }, bounceBefore, { timeout: 5000 });
   console.log("OK lights-and-shadows later bounce scene");
 
-  await assertViewportUsable(page, "lights-and-shadows route");
-  await assertRouteViewportUsable(
+  await assertCiechanowskiResponsiveShell(
     context,
+    page,
     "lights-and-shadows/",
-    "#reference-footer",
     "#lns_shadow2_rot_y_slider_container .slider_knob",
     "lights-and-shadows route",
-    390,
-    844,
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("lights-and-shadows route");
@@ -2623,16 +2753,7 @@ async function smokeTesseract(context) {
   }, null, { timeout: 30000 });
   await page.waitForTimeout(2500);
 
-  const scriptSources = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("script[src]"))
-      .map((node) => node.getAttribute("src") || "")
-      .filter(Boolean);
-  });
-  assert(
-    scriptSources.includes("./js/base.js") &&
-      scriptSources.includes("./js/tesseract.js"),
-    "tesseract did not load both published scripts from local assets",
-  );
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/tesseract.js"], "tesseract");
 
   const openingCanvas = page.locator("#ts_3D_demo_slice_container canvas").first();
   await openingCanvas.scrollIntoViewIfNeeded();
@@ -2736,19 +2857,695 @@ async function smokeTesseract(context) {
   }, sliceBefore, { timeout: 5000 });
   console.log("OK tesseract later slice scene");
 
-  await assertViewportUsable(page, "tesseract route");
-  await assertRouteViewportUsable(
+  await assertCiechanowskiResponsiveShell(
     context,
+    page,
     "tesseract/",
-    "#reference-footer",
     "#ts_3D_demo_slice_slider_container .slider_knob",
     "tesseract route",
-    390,
-    844,
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("tesseract route");
   console.log("OK tesseract responsive shell");
+  await page.close();
+}
+
+async function smokeGears(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "gears/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#gears_demo canvas") &&
+      document.querySelector("#gears_demo .play_pause_button") &&
+      document.querySelector("#gears_angular_velocity canvas") &&
+      document.querySelector("#gears_angular_velocity_slider_container .slider_knob") &&
+      document.querySelector("#gears_resize canvas") &&
+      document.querySelector("#gears_resize_slider_container .slider_knob") &&
+      document.querySelector("#gears_four canvas") &&
+      document.querySelector("#gears_four_slider_container .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/gears.js"], "gears");
+
+  const openingCanvas = page.locator("#gears_angular_velocity canvas").first();
+  await openingCanvas.scrollIntoViewIfNeeded();
+  const openingBefore = await openingCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#gears_angular_velocity_slider_container .slider_knob", 90, 0, "gears opening slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#gears_angular_velocity canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, openingBefore, { timeout: 5000 });
+  console.log("OK gears opening angular-velocity scene");
+
+  const playButton = page.locator("#gears_demo .play_pause_button").first();
+  await playButton.scrollIntoViewIfNeeded();
+  await playButton.click();
+  await page.waitForFunction(() => {
+    const button = document.querySelector("#gears_demo .play_pause_button");
+    return button && !button.classList.contains("playing");
+  }, null, { timeout: 5000 });
+  await playButton.click();
+  await page.waitForFunction(() => {
+    const button = document.querySelector("#gears_demo .play_pause_button");
+    return button && button.classList.contains("playing");
+  }, null, { timeout: 5000 });
+  console.log("OK gears play-pause control");
+
+  const ratioCanvas = page.locator("#gears_resize canvas").first();
+  await ratioCanvas.scrollIntoViewIfNeeded();
+  const ratioBefore = await ratioCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#gears_resize_slider_container .slider_knob", 90, 0, "gears ratio slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#gears_resize canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, ratioBefore, { timeout: 5000 });
+  console.log("OK gears ratio scene");
+
+  const compoundCanvas = page.locator("#gears_four canvas").first();
+  await compoundCanvas.scrollIntoViewIfNeeded();
+  const compoundBefore = await compoundCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#gears_four_slider_container .slider_knob", 90, 0, "gears compound slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#gears_four canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, compoundBefore, { timeout: 5000 });
+  console.log("OK gears compound-gear scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "gears/",
+    "#gears_angular_velocity_slider_container .slider_knob",
+    "gears route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("gears route");
+  console.log("OK gears responsive shell");
+  await page.close();
+}
+
+async function smokeGps(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "gps/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#gps_orbits_hero canvas") &&
+      document.querySelector("#map0 canvas") &&
+      document.querySelector("#map_drone0 canvas") &&
+      document.querySelector("#map_drone0_sl0 .slider_knob") &&
+      document.querySelector("#orbital_inclination canvas") &&
+      document.querySelector("#orbital_inclination_sl1 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/gps.js"], "gps");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#map0 canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.45 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.4 } },
+    ],
+    "gps simple positioning drag scene",
+  );
+  console.log("OK gps drag scene");
+
+  const timeCanvas = page.locator("#map_drone0 canvas").first();
+  await timeCanvas.scrollIntoViewIfNeeded();
+  const timeBefore = await timeCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#map_drone0_sl0 .slider_knob", 120, 0, "gps time slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#map_drone0 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, timeBefore, { timeout: 5000 });
+  console.log("OK gps time slider scene");
+
+  const orbitCanvas = page.locator("#orbital_inclination canvas").first();
+  await orbitCanvas.scrollIntoViewIfNeeded();
+  const orbitBefore = await orbitCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#orbital_inclination_sl1 .slider_knob", 120, 0, "gps inclination slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#orbital_inclination canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, orbitBefore, { timeout: 5000 });
+  console.log("OK gps orbital inclination scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "gps/",
+    "#map0 canvas",
+    "gps route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("gps route");
+  console.log("OK gps responsive shell");
+  await page.close();
+}
+
+async function smokeEarthAndSun(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "earth-and-sun/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#es_earth_sunlight canvas") &&
+      document.querySelector("#es_earth_sunlight_date_slider_container .slider_knob") &&
+      document.querySelector("#es_earth_sunlight_time_slider_container .slider_knob") &&
+      document.querySelector("#es_plane canvas") &&
+      document.querySelector("#es_tropical_year canvas") &&
+      document.querySelector("#es_tropical_year_slider_container .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/earth_sun.js"], "earth-and-sun");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#es_earth_sunlight canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "earth-and-sun opening globe drag scene",
+  );
+  console.log("OK earth-and-sun opening globe drag scene");
+
+  const sunlightCanvas = page.locator("#es_earth_sunlight canvas").first();
+  await sunlightCanvas.scrollIntoViewIfNeeded();
+  const timeBefore = await sunlightCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(
+    page,
+    "#es_earth_sunlight_time_slider_container .slider_knob",
+    120,
+    0,
+    "earth-and-sun opening time slider",
+  );
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#es_earth_sunlight canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, timeBefore, { timeout: 5000 });
+  console.log("OK earth-and-sun opening time slider");
+
+  const tropicalCanvas = page.locator("#es_tropical_year canvas").first();
+  await tropicalCanvas.scrollIntoViewIfNeeded();
+  const tropicalBefore = await tropicalCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(
+    page,
+    "#es_tropical_year_slider_container .slider_knob",
+    120,
+    0,
+    "earth-and-sun tropical-year slider",
+  );
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#es_tropical_year canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, tropicalBefore, { timeout: 5000 });
+  console.log("OK earth-and-sun tropical-year scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "earth-and-sun/",
+    "#es_earth_sunlight canvas",
+    "earth-and-sun route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("earth-and-sun route");
+  console.log("OK earth-and-sun responsive shell");
+  await page.close();
+}
+
+async function smokeBicycle(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "bicycle/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#hero canvas") &&
+      document.querySelector("#hero .play_pause_button") &&
+      document.querySelector("#hero_sl0 .slider_knob") &&
+      document.querySelector("#force1 canvas") &&
+      document.querySelector("#force1_sl0 .slider_knob") &&
+      document.querySelector("#slip_angle2 canvas") &&
+      document.querySelector("#slip_angle2_sl0 .slider_knob") &&
+      document.querySelector("#torsion1 canvas") &&
+      document.querySelector("#torsion1_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/bicycle.js"], "bicycle");
+
+  const heroPlayButton = page.locator("#hero .play_pause_button").first();
+  await heroPlayButton.scrollIntoViewIfNeeded();
+  await heroPlayButton.click();
+  await page.waitForFunction(() => {
+    const button = document.querySelector("#hero .play_pause_button");
+    return button && !button.classList.contains("playing");
+  }, null, { timeout: 5000 });
+  await dragCanvasUntilChanged(
+    page,
+    "#hero canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "bicycle opening hero drag scene",
+  );
+  await heroPlayButton.click();
+  await page.waitForFunction(() => {
+    const button = document.querySelector("#hero .play_pause_button");
+    return button && button.classList.contains("playing");
+  }, null, { timeout: 5000 });
+  console.log("OK bicycle opening hero scene");
+
+  const forceCanvas = page.locator("#force1 canvas").first();
+  await forceCanvas.scrollIntoViewIfNeeded();
+  const forceBefore = await forceCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#force1_sl0 .slider_knob", 90, 0, "bicycle force slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#force1 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, forceBefore, { timeout: 5000 });
+  console.log("OK bicycle force scene");
+
+  const slipCanvas = page.locator("#slip_angle2 canvas").first();
+  await slipCanvas.scrollIntoViewIfNeeded();
+  const slipBefore = await slipCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#slip_angle2_sl0 .slider_knob", 90, 0, "bicycle slip-angle slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#slip_angle2 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, slipBefore, { timeout: 5000 });
+  console.log("OK bicycle slip-angle scene");
+
+  const torsionCanvas = page.locator("#torsion1 canvas").first();
+  await torsionCanvas.scrollIntoViewIfNeeded();
+  const torsionBefore = await torsionCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#torsion1_sl0 .slider_knob", 90, 0, "bicycle torsion slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#torsion1 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, torsionBefore, { timeout: 5000 });
+  console.log("OK bicycle torsion scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "bicycle/",
+    "#hero canvas",
+    "bicycle route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("bicycle route");
+  console.log("OK bicycle responsive shell");
+  await page.close();
+}
+
+async function smokeAirfoil(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "airfoil/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#hero_fvm canvas") &&
+      document.querySelector("#hero_fvm_sl0 .slider_knob") &&
+      document.querySelector("#fdm_hero canvas") &&
+      document.querySelector("#fdm_hero_sl0 .slider_knob") &&
+      document.querySelector("#particles1 canvas") &&
+      document.querySelector("#airfoil_fvm2 canvas") &&
+      document.querySelector("#airfoil_fvm2_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/airfoil.js"], "airfoil");
+
+  const heroCanvas = page.locator("#hero_fvm canvas").first();
+  await heroCanvas.scrollIntoViewIfNeeded();
+  const heroBefore = await heroCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#hero_fvm_sl0 .slider_knob", 90, 0, "airfoil opening slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#hero_fvm canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, heroBefore, { timeout: 5000 });
+  console.log("OK airfoil opening airfoil scene");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#particles1 canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "airfoil particle drag scene",
+  );
+  console.log("OK airfoil particle drag scene");
+
+  const viscosityCanvas = page.locator("#fdm_hero canvas").first();
+  await viscosityCanvas.scrollIntoViewIfNeeded();
+  const viscosityBefore = await viscosityCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#fdm_hero_sl0 .slider_knob", 90, 0, "airfoil viscosity slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#fdm_hero canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, viscosityBefore, { timeout: 5000 });
+  console.log("OK airfoil viscosity scene");
+
+  const laterCanvas = page.locator("#airfoil_fvm2 canvas").first();
+  await laterCanvas.scrollIntoViewIfNeeded();
+  const laterBefore = await laterCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#airfoil_fvm2_sl0 .slider_knob", 90, 0, "airfoil later airfoil slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#airfoil_fvm2 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, laterBefore, { timeout: 5000 });
+  console.log("OK airfoil later airfoil scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "airfoil/",
+    "#hero_fvm canvas",
+    "airfoil route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("airfoil route");
+  console.log("OK airfoil responsive shell");
+  await page.close();
+}
+
+async function smokeCurvesAndSurfaces(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "curves-and-surfaces/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#cs_control_points canvas") &&
+      document.querySelector("#cs_linear_segment canvas") &&
+      document.querySelector("#cs_linear_segment_sl0 .slider_knob") &&
+      document.querySelector("#cs_curve_subdiv_topo canvas") &&
+      document.querySelector("#cs_curve_subdiv_topo_sl0 .slider_knob") &&
+      document.querySelector("#cs_subdiv0 canvas") &&
+      document.querySelector("#cs_subdiv0_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(2500);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/curves.js"], "curves-and-surfaces");
+
+  const controlCanvas = page.locator("#cs_control_points canvas").first();
+  await controlCanvas.scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    return typeof control_points !== "undefined" && control_points?.[0]?.visible === true;
+  }, null, { timeout: 5000 });
+  const controlBox = await controlCanvas.boundingBox();
+  assert(controlBox, "curves-and-surfaces control-point drag scene did not expose its canvas");
+  let dragOrigin = null;
+  for (let yi = 1; yi <= 15 && !dragOrigin; yi += 1) {
+    for (let xi = 1; xi <= 19 && !dragOrigin; xi += 1) {
+      const x = controlBox.x + (controlBox.width * xi / 20);
+      const y = controlBox.y + (controlBox.height * yi / 16);
+      await page.mouse.move(x, y);
+      const cursor = await controlCanvas.evaluate((element) => element.style.cursor || getComputedStyle(element).cursor);
+      if (cursor === "move" || cursor === "pointer") {
+        dragOrigin = { x, y };
+      }
+    }
+  }
+  assert(dragOrigin, "curves-and-surfaces control-point drag scene did not expose a draggable hotspot");
+  const controlBefore = await page.evaluate(() => JSON.stringify(control_points[0].points()));
+  await page.mouse.move(dragOrigin.x, dragOrigin.y);
+  await page.mouse.down();
+  await page.mouse.move(dragOrigin.x + 40, dragOrigin.y - 30, { steps: 12 });
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    return JSON.stringify(control_points[0].points()) !== previous;
+  }, controlBefore, { timeout: 5000 });
+  console.log("OK curves-and-surfaces control-point scene");
+
+  const segmentCanvas = page.locator("#cs_linear_segment canvas").first();
+  await segmentCanvas.scrollIntoViewIfNeeded();
+  const segmentBefore = await segmentCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#cs_linear_segment_sl0 .slider_knob", 100, 0, "curves-and-surfaces linear slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#cs_linear_segment canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, segmentBefore, { timeout: 5000 });
+  console.log("OK curves-and-surfaces linear interpolation scene");
+
+  const splineCanvas = page.locator("#cs_curve_subdiv_topo canvas").first();
+  await splineCanvas.scrollIntoViewIfNeeded();
+  const splineBefore = await splineCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#cs_curve_subdiv_topo_sl0 .slider_knob", 100, 0, "curves-and-surfaces subdivision curve slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#cs_curve_subdiv_topo canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, splineBefore, { timeout: 5000 });
+  console.log("OK curves-and-surfaces subdivision curve scene");
+
+  const surfaceCanvas = page.locator("#cs_subdiv0 canvas").first();
+  await surfaceCanvas.scrollIntoViewIfNeeded();
+  const surfaceBefore = await surfaceCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#cs_subdiv0_sl0 .slider_knob", 100, 0, "curves-and-surfaces surface subdivision slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#cs_subdiv0 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, surfaceBefore, { timeout: 5000 });
+  console.log("OK curves-and-surfaces surface subdivision scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "curves-and-surfaces/",
+    "#cs_control_points canvas",
+    "curves-and-surfaces route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("curves-and-surfaces route");
+  console.log("OK curves-and-surfaces responsive shell");
+  await page.close();
+}
+
+async function smokeInternalCombustionEngine(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "internal-combustion-engine/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#ice_hero canvas") &&
+      document.querySelector("#ice_cannon canvas") &&
+      document.querySelector("#ice_cannon_sl0 .slider_knob") &&
+      document.querySelector("#ice_pressure canvas") &&
+      document.querySelector("#ice_pressure_sl0 .slider_knob") &&
+      document.querySelector("#ice_starter canvas") &&
+      document.querySelector("#ice_starter_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/ice.js"], "internal-combustion-engine");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#ice_hero canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "internal-combustion-engine opening hero drag scene",
+  );
+  console.log("OK internal-combustion-engine opening hero scene");
+
+  const cannonCanvas = page.locator("#ice_cannon canvas").first();
+  await cannonCanvas.scrollIntoViewIfNeeded();
+  const cannonBefore = await cannonCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#ice_cannon_sl0 .slider_knob", 90, 0, "internal-combustion-engine cannon slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ice_cannon canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, cannonBefore, { timeout: 5000 });
+  console.log("OK internal-combustion-engine cannon scene");
+
+  const pressureCanvas = page.locator("#ice_pressure canvas").first();
+  await pressureCanvas.scrollIntoViewIfNeeded();
+  const pressureBefore = await pressureCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#ice_pressure_sl0 .slider_knob", 90, 0, "internal-combustion-engine pressure slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ice_pressure canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, pressureBefore, { timeout: 5000 });
+  console.log("OK internal-combustion-engine pressure scene");
+
+  const starterCanvas = page.locator("#ice_starter canvas").first();
+  await starterCanvas.scrollIntoViewIfNeeded();
+  const starterBefore = await starterCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#ice_starter_sl0 .slider_knob", 90, 0, "internal-combustion-engine starter slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#ice_starter canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, starterBefore, { timeout: 5000 });
+  console.log("OK internal-combustion-engine starter scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "internal-combustion-engine/",
+    "#ice_hero canvas",
+    "internal-combustion-engine route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("internal-combustion-engine route");
+  console.log("OK internal-combustion-engine responsive shell");
+  await page.close();
+}
+
+async function smokeMechanicalWatch(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "mechanical-watch/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#hero canvas") &&
+      document.querySelector("#hero_sl0 .slider_knob") &&
+      document.querySelector("#coil_spring canvas") &&
+      document.querySelector("#coil_spring_sl0 .slider_knob") &&
+      document.querySelector("#automatic_behavior canvas") &&
+      document.querySelector("#automatic_behavior_sl0 .slider_knob") &&
+      document.querySelector("#credit_card_size canvas") &&
+      document.querySelector("#credit_card_size_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/watch.js"], "mechanical-watch");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#hero canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "mechanical-watch opening movement drag scene",
+  );
+  console.log("OK mechanical-watch opening movement scene");
+
+  const springCanvas = page.locator("#coil_spring canvas").first();
+  await springCanvas.scrollIntoViewIfNeeded();
+  const springBefore = await springCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#coil_spring_sl0 .slider_knob", 90, 0, "mechanical-watch coil spring slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#coil_spring canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, springBefore, { timeout: 5000 });
+  console.log("OK mechanical-watch power scene");
+
+  const automaticCanvas = page.locator("#automatic_behavior canvas").first();
+  await automaticCanvas.scrollIntoViewIfNeeded();
+  const automaticBefore = await automaticCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#automatic_behavior_sl0 .slider_knob", 90, 0, "mechanical-watch automatic winding slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#automatic_behavior canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, automaticBefore, { timeout: 5000 });
+  console.log("OK mechanical-watch automatic winding scene");
+
+  const sizeCanvas = page.locator("#credit_card_size canvas").first();
+  await sizeCanvas.scrollIntoViewIfNeeded();
+  const sizeBefore = await sizeCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#credit_card_size_sl0 .slider_knob", 90, 0, "mechanical-watch size slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#credit_card_size canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, sizeBefore, { timeout: 5000 });
+  console.log("OK mechanical-watch final size scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "mechanical-watch/",
+    "#hero canvas",
+    "mechanical-watch route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("mechanical-watch route");
+  console.log("OK mechanical-watch responsive shell");
+  await page.close();
+}
+
+async function smokeNavalArchitecture(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "naval-architecture/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#na_syringe_pressure canvas") &&
+      document.querySelector("#na_syringe_pressure_sl0 .slider_knob") &&
+      document.querySelector("#na_3d_forces canvas") &&
+      document.querySelector("#na_wind_tilt canvas") &&
+      document.querySelector("#na_wind_tilt_sl0 .slider_knob") &&
+      document.querySelector("#na_free_surface canvas") &&
+      document.querySelector("#na_free_surface_sl1 .slider_knob") &&
+      document.querySelector("#na_propeller_pitch canvas") &&
+      document.querySelector("#na_propeller_pitch_sl0 .slider_knob");
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(3000);
+
+  await assertLocalScriptSources(page, ["./js/base.js", "./js/navarch.js"], "naval-architecture");
+
+  const pressureCanvas = page.locator("#na_syringe_pressure canvas").first();
+  await pressureCanvas.scrollIntoViewIfNeeded();
+  const pressureBefore = await pressureCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#na_syringe_pressure_sl0 .slider_knob", 90, 0, "naval-architecture pressure slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#na_syringe_pressure canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, pressureBefore, { timeout: 5000 });
+  console.log("OK naval-architecture pressure scene");
+
+  await dragCanvasUntilChanged(
+    page,
+    "#na_3d_forces canvas",
+    [
+      { from: { x: 0.35, y: 0.45 }, to: { x: 0.7, y: 0.55 } },
+      { from: { x: 0.65, y: 0.55 }, to: { x: 0.35, y: 0.35 } },
+    ],
+    "naval-architecture buoyancy drag scene",
+  );
+  console.log("OK naval-architecture buoyancy drag scene");
+
+  const windCanvas = page.locator("#na_wind_tilt canvas").first();
+  await windCanvas.scrollIntoViewIfNeeded();
+  const windBefore = await windCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#na_wind_tilt_sl0 .slider_knob", 90, 0, "naval-architecture wind slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#na_wind_tilt canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, windBefore, { timeout: 5000 });
+  console.log("OK naval-architecture stability scene");
+
+  const freeSurfaceCanvas = page.locator("#na_free_surface canvas").first();
+  await freeSurfaceCanvas.scrollIntoViewIfNeeded();
+  const freeSurfaceBefore = await freeSurfaceCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#na_free_surface_sl1 .slider_knob", 90, 0, "naval-architecture free-surface slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#na_free_surface canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, freeSurfaceBefore, { timeout: 5000 });
+  console.log("OK naval-architecture free-surface scene");
+
+  const propellerCanvas = page.locator("#na_propeller_pitch canvas").first();
+  await propellerCanvas.scrollIntoViewIfNeeded();
+  const propellerBefore = await propellerCanvas.evaluate((canvas) => canvas.toDataURL());
+  await dragKnob(page, "#na_propeller_pitch_sl0 .slider_knob", 90, 0, "naval-architecture propeller slider");
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#na_propeller_pitch canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, propellerBefore, { timeout: 5000 });
+  console.log("OK naval-architecture propulsion scene");
+
+  await assertCiechanowskiResponsiveShell(
+    context,
+    page,
+    "naval-architecture/",
+    "#na_syringe_pressure canvas",
+    "naval-architecture route",
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("naval-architecture route");
+  console.log("OK naval-architecture responsive shell");
   await page.close();
 }
 
@@ -2791,18 +3588,21 @@ async function smokeReadingQrCodesWithoutAComputer(context) {
     contentText: document.getElementById("content")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "",
   }));
 
-  await page.getByRole("button", { name: "Random code" }).click();
-  await page.waitForFunction((previous) => {
+  const targetContent = "OPENAI GPS PILOT 2026";
+  await page.locator("input[type='text']").fill(targetContent);
+  await page.waitForFunction(({ previous, targetContent }) => {
     const anatomySvg = document.getElementById("anatomy")?.nextElementSibling?.nextElementSibling?.outerHTML || "";
     const maskText = document.getElementById("mask")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
     const lengthText = document.getElementById("length")?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
     const contentText = document.getElementById("content")?.nextElementSibling?.nextElementSibling?.nextElementSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
-    return anatomySvg !== previous.anatomySvg &&
-      maskText !== previous.maskText &&
+    const inputValue = document.querySelector("input[type='text']")?.value || "";
+    return inputValue === targetContent &&
+      anatomySvg !== previous.anatomySvg &&
       lengthText !== previous.lengthText &&
-      contentText !== previous.contentText;
-  }, before, { timeout: 5000 });
-  console.log("OK reading-qr-codes-without-a-computer synced random-code flow");
+      contentText !== previous.contentText &&
+      maskText.length > 0;
+  }, { previous: before, targetContent }, { timeout: 5000 });
+  console.log("OK reading-qr-codes-without-a-computer deterministic input flow");
 
   await assertViewportUsable(page, "reading-qr-codes-without-a-computer route");
   await assertRouteViewportUsable(
@@ -2817,6 +3617,376 @@ async function smokeReadingQrCodesWithoutAComputer(context) {
   await page.waitForTimeout(250);
   assertPageRuntimeClean("reading-qr-codes-without-a-computer route");
   console.log("OK reading-qr-codes-without-a-computer responsive shell");
+  await page.close();
+}
+
+async function smokeMemoryAllocation(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "memory-allocation/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    ["./js/gsap/gsap.min.js", "./js/gsap/PixiPlugin.min.js", "./js/memory-allocation.js"],
+    "memory-allocation route",
+  );
+  await page.waitForFunction(() => {
+    return document.querySelectorAll(".memory canvas").length >= 10 &&
+      Boolean(document.querySelector("#hexadecimal-slider")) &&
+      Boolean(document.querySelector("#segmented-1 input[type='range']"));
+  }, null, { timeout: 30000 });
+  const hydrationState = await page.evaluate(() => ({
+    canvases: document.querySelectorAll(".memory canvas").length,
+    hasHexSlider: Boolean(document.querySelector("#hexadecimal-slider")),
+    hasSegmentedSlider: Boolean(document.querySelector("#segmented-1 input[type='range']")),
+  }));
+  assert(hydrationState.canvases >= 10, "memory-allocation did not hydrate the expected canvas scenes");
+  assert(hydrationState.hasHexSlider, "memory-allocation did not render the hexadecimal slider");
+  assert(hydrationState.hasSegmentedSlider, "memory-allocation did not hydrate the segmented allocator scene");
+
+  const assetState = await page.evaluate(() => {
+    return performance.getEntriesByType("resource").map((entry) => entry.name);
+  });
+  for (const assetPath of [
+    "/memory-allocation/js/allocators/stack.js",
+    "/memory-allocation/js/allocators/freelist.js",
+    "/memory-allocation/js/allocators/segmented-freelist.js",
+    "/memory-allocation/js/allocators/inline.js",
+  ]) {
+    assert(
+      assetState.some((entry) => entry.includes(assetPath)),
+      `memory-allocation did not load ${assetPath} from local assets`,
+    );
+  }
+  console.log("OK memory-allocation local assets");
+
+  const allocatorBefore = await page.evaluate(() => {
+    const canvas = document.querySelector("#segmented-1 canvas");
+    return canvas ? canvas.toDataURL() : "";
+  });
+  assert(allocatorBefore, "memory-allocation did not expose the segmented allocator canvas");
+  await setRangeValue(page, "#segmented-1 input[type='range']", 0.75);
+  await page.waitForFunction((previous) => {
+    const canvas = document.querySelector("#segmented-1 canvas");
+    return canvas && canvas.toDataURL() !== previous;
+  }, allocatorBefore, { timeout: 5000 });
+  console.log("OK memory-allocation allocator timeline");
+
+  const hexBefore = await page.evaluate(() => ({
+    decimal: document.querySelector("#decimal")?.textContent || "",
+    hexadecimal: document.querySelector("#hexadecimal")?.textContent || "",
+  }));
+  await setRangeValue(page, "#hexadecimal-slider", 26);
+  await page.waitForFunction((previous) => {
+    const decimal = document.querySelector("#decimal")?.textContent || "";
+    const hexadecimal = document.querySelector("#hexadecimal")?.textContent || "";
+    return decimal !== previous.decimal &&
+      hexadecimal !== previous.hexadecimal &&
+      decimal.trim() === "26" &&
+      hexadecimal.trim() === "0x1a";
+  }, hexBefore, { timeout: 5000 });
+  console.log("OK memory-allocation hexadecimal slider");
+
+  await assertViewportUsable(page, "memory-allocation route");
+  await assertRouteViewportUsable(
+    context,
+    "memory-allocation/",
+    "#reference-footer",
+    ".memory canvas",
+    "memory-allocation route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("memory-allocation route");
+  console.log("OK memory-allocation responsive shell");
+  await page.close();
+}
+
+async function smokeLoadBalancing(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "load-balancing/", "#reference-footer");
+  await assertLocalScriptSources(page, ["./js/load-balancers.js"], "load-balancing route");
+  await page.waitForFunction(() => {
+    const playground = window.__loadBalancingSimulationById?.fin;
+    const graph = document.querySelector("#graph-medians .js-plotly-plot, #graph-medians .plotly, #graph-medians svg");
+    return Boolean(playground) &&
+      document.querySelector('[id="1"] canvas') &&
+      document.querySelector("#fin canvas") &&
+      graph &&
+      document.querySelector("#fin select") &&
+      document.querySelectorAll("#fin input[type='range']").length >= 5;
+  }, null, { timeout: 30000 });
+
+  const assetState = await page.evaluate(() => {
+    return performance.getEntriesByType("resource").map((entry) => entry.name);
+  });
+  for (const assetPath of [
+    "/load-balancing/js/pixi.mjs",
+    "/load-balancing/js/plotly.js",
+  ]) {
+    assert(
+      assetState.some((entry) => entry.includes(assetPath)),
+      `load-balancing did not load ${assetPath} from local assets`,
+    );
+  }
+  console.log("OK load-balancing local assets");
+
+  const initialState = await page.evaluate(() => {
+    const playground = window.__loadBalancingSimulationById?.fin;
+    return {
+      algorithm: playground?.loadBalancer?.algorithm?.constructor?.name || "",
+      servers: playground?.loadBalancer?.servers?.length || 0,
+      rps: playground?.loadBalancer?.rps || 0,
+    };
+  });
+  assert(initialState.servers >= 1, "load-balancing did not expose the final playground simulation");
+
+  await setSelectControlByLabel(page, "#fin > div", "Algorithm", "random");
+  await setRangeControlByLabel(page, "#fin > div", "Num Servers", 4);
+  await setRangeControlByLabel(page, "#fin > div", "RPS", 7);
+  await page.waitForFunction((previous) => {
+    const playground = window.__loadBalancingSimulationById?.fin;
+    return playground &&
+      playground.loadBalancer.algorithm.constructor.name !== previous.algorithm &&
+      playground.loadBalancer.algorithm.constructor.name === "RandomAlgorithm" &&
+      playground.loadBalancer.servers.length === 4 &&
+      playground.loadBalancer.rps === 7;
+  }, initialState, { timeout: 5000 });
+  console.log("OK load-balancing playground controls");
+
+  await assertViewportUsable(page, "load-balancing route");
+  await assertRouteViewportUsable(
+    context,
+    "load-balancing/",
+    "#reference-footer",
+    '[id="1"] canvas',
+    "load-balancing route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("load-balancing route");
+  console.log("OK load-balancing responsive shell");
+  await page.close();
+}
+
+async function smokeHysteresisSlack(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "hysteresis-slack/", "#reference-footer");
+  await assertLocalScriptSources(page, ["./build/bundle.js"], "hysteresis-slack route");
+  await page.waitForFunction(() => {
+    return document.querySelectorAll("#slider2 circle").length >= 2 &&
+      (document.querySelector("#chart2")?.innerHTML || "").length > 100 &&
+      document.querySelectorAll("#timeline path").length >= 3;
+  }, null, { timeout: 15000 });
+
+  const assetState = await page.evaluate(() => {
+    return performance.getEntriesByType("resource").map((entry) => entry.name);
+  });
+  for (const assetPath of [
+    "/hysteresis-slack/bootstrap.css",
+    "/hysteresis-slack/build/bundle.js",
+    "/hysteresis-slack/images/hyloop.gif",
+  ]) {
+    assert(
+      assetState.some((entry) => entry.includes(assetPath)),
+      `hysteresis-slack did not load ${assetPath} from local assets`,
+    );
+  }
+  console.log("OK hysteresis-slack local assets");
+
+  const chartBefore = await page.locator("#chart2").evaluate((element) => element.innerHTML);
+  await dragKnob(page, "#slider2 circle", 50, 0, "hysteresis-slack route");
+  await page.waitForFunction((previous) => {
+    return (document.querySelector("#chart2")?.innerHTML || "") !== previous;
+  }, chartBefore, { timeout: 5000 });
+  console.log("OK hysteresis-slack slack slider");
+
+  await assertViewportUsable(page, "hysteresis-slack route");
+  await assertRouteViewportUsable(
+    context,
+    "hysteresis-slack/",
+    "#reference-footer",
+    "#slider2 circle",
+    "hysteresis-slack route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("hysteresis-slack route");
+  console.log("OK hysteresis-slack responsive shell");
+  await page.close();
+}
+
+async function smokeRigidBodyCollisions(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "rigid-body-collisions/", "#reference-footer");
+  await assertLocalScriptSources(page, ["./_nuxt/D4VqJVMa.js"], "rigid-body-collisions route");
+  await page.waitForFunction(() => {
+    return document.querySelector("canvas#c") &&
+      document.querySelectorAll("input[type='range']").length >= 4 &&
+      document.querySelectorAll("button").length >= 4 &&
+      Array.from(document.querySelectorAll("h1")).every((node) => (node.textContent || "").trim() !== "404") &&
+      !/404 - Page not found:/i.test(document.title);
+  }, null, { timeout: 30000 });
+
+  const assetState = await page.evaluate(() => {
+    return performance.getEntriesByType("resource").map((entry) => entry.name);
+  });
+  for (const assetPath of [
+    "/rigid-body-collisions/fonts/Essays1743.woff",
+    "/rigid-body-collisions/fonts/Essays1743-Bold.woff",
+  ]) {
+    assert(
+      assetState.some((entry) => entry.includes(assetPath)),
+      `rigid-body-collisions did not load ${assetPath} from local assets`,
+    );
+  }
+  assert(
+    assetState.some((entry) => /\/rigid-body-collisions\/_nuxt\/[^/]+\.css(?:$|\?)/.test(entry)),
+    "rigid-body-collisions did not load any local Nuxt CSS asset",
+  );
+  console.log("OK rigid-body-collisions local assets");
+
+  const firstRange = page.locator("input[type='range']").first();
+  const rangeBefore = await firstRange.inputValue();
+  await firstRange.evaluate((element, value) => {
+    element.value = String(value);
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  }, 10);
+  await page.waitForFunction((previous) => {
+    const firstRange = document.querySelector("input[type='range']");
+    return firstRange &&
+      firstRange.value !== previous &&
+      document.querySelector("canvas#c") &&
+      Array.from(document.querySelectorAll("h1")).every((node) => (node.textContent || "").trim() !== "404");
+  }, rangeBefore, { timeout: 5000 });
+  console.log("OK rigid-body-collisions control surface");
+
+  await assertViewportUsable(page, "rigid-body-collisions route");
+  await assertRouteViewportUsable(
+    context,
+    "rigid-body-collisions/",
+    "#reference-footer",
+    "canvas#c",
+    "rigid-body-collisions route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("rigid-body-collisions route");
+  console.log("OK rigid-body-collisions responsive shell");
+  await page.close();
+}
+
+async function smokeBlockchain101CombinedFlow(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "blockchain-101-combined-flow/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#chapter-hash") &&
+      document.querySelector("#chapter-signatures") &&
+      document.querySelector("#chapter-zkp") &&
+      document.querySelectorAll(".chapter-card").length === 3;
+  }, null, { timeout: 15000 });
+
+  const hrefs = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("a[href]")).map((node) => node.getAttribute("href") || "");
+  });
+  for (const expectedHref of [
+    "../blockchain/",
+    "../blockchain/distributed.html",
+    "../public-private-keys/",
+    "../public-private-keys/signatures/",
+    "../public-private-keys/transaction/",
+    "../zero-knowledge-proof-demo/",
+  ]) {
+    assert(
+      hrefs.includes(expectedHref),
+      `blockchain-101-combined-flow is missing local link ${expectedHref}`,
+    );
+  }
+  console.log("OK blockchain-101-combined-flow local chapter links");
+
+  await page.locator("a[href='./#chapter-hash']").click();
+  await page.waitForTimeout(250);
+  const hashAnchorVisible = await page.locator("#chapter-hash").isVisible();
+  assert(hashAnchorVisible, "blockchain-101-combined-flow chapter anchor navigation failed");
+  console.log("OK blockchain-101-combined-flow chapter anchor");
+
+  await assertViewportUsable(page, "blockchain-101-combined-flow route");
+  await assertRouteViewportUsable(
+    context,
+    "blockchain-101-combined-flow/",
+    "#reference-footer",
+    "#chapter-hash",
+    "blockchain-101-combined-flow route",
+    390,
+    844,
+  );
+  assertPageRuntimeClean("blockchain-101-combined-flow route");
+  console.log("OK blockchain-101-combined-flow responsive shell");
+  await page.close();
+}
+
+async function smokePrimaryInteractiveHub(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "primary-interactive-hub/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelector("#systems-cluster") &&
+      document.querySelector("#stories-cluster") &&
+      document.querySelector("#playgrounds-cluster") &&
+      document.querySelectorAll(".route-card").length >= 12;
+  }, null, { timeout: 15000 });
+
+  const hubState = await page.evaluate(() => {
+    const hrefs = Array.from(document.querySelectorAll(".route-card a[href]"))
+      .map((node) => node.getAttribute("href") || "");
+    return {
+      hrefs,
+      countText: document.querySelector("[data-hub-count]")?.textContent || "",
+    };
+  });
+  for (const expectedHref of [
+    "../trust/",
+    "../docs/trust/",
+    "../anxiety/",
+    "../coming-out-simulator-2014/",
+    "../loopy/",
+    "../simulating/",
+    "../sim/",
+  ]) {
+    assert(
+      hubState.hrefs.includes(expectedHref),
+      `primary-interactive-hub is missing local link ${expectedHref}`,
+    );
+  }
+  assert(/12 local routes/i.test(hubState.countText), "primary-interactive-hub count summary did not render");
+  console.log("OK primary-interactive-hub local route grid");
+
+  await page.locator("a[href='./#stories-cluster']").click();
+  await page.waitForTimeout(250);
+  const storiesVisible = await page.locator("#stories-cluster").isVisible();
+  assert(storiesVisible, "primary-interactive-hub cluster anchor navigation failed");
+  console.log("OK primary-interactive-hub cluster anchor");
+
+  await assertViewportUsable(page, "primary-interactive-hub route");
+  await assertRouteViewportUsable(
+    context,
+    "primary-interactive-hub/",
+    "#reference-footer",
+    "#systems-cluster",
+    "primary-interactive-hub route",
+    390,
+    844,
+  );
+  assertPageRuntimeClean("primary-interactive-hub route");
+  console.log("OK primary-interactive-hub responsive shell");
   await page.close();
 }
 
@@ -3405,36 +4575,58 @@ async function smokeDoubleDescent2(context) {
   await page.close();
 }
 
-async function main() {
-  const server = await startServer();
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
+async function createSmokeContext(browser) {
+  return browser.newContext({
     acceptDownloads: true,
     viewport: { width: 1400, height: 1000 },
   });
+}
+
+async function main() {
+  phaseLog(`Starting smoke run${selectedGroups.size ? ` [groups: ${Array.from(selectedGroups).join(", ")}]` : ""}${selectedRoutes.size ? ` [routes: ${Array.from(selectedRoutes).join(", ")}]` : ""}`);
+  const server = await startServer();
+  const browser = await chromium.launch({ headless: true });
+  let context = await createSmokeContext(browser);
 
   try {
     const routePage = await context.newPage();
     const routeChecks = [
       ["", "[data-page-list]"],
-      ["trust/", "#reference-footer"],
-      ["polygons/", "#reference-footer"],
-      ["ballot/", "#reference-footer"],
-      ["crowds/", "#reference-footer"],
-      ["loopy/", "#reference-footer"],
-      ["neurons/", "#reference-footer"],
-      ["remember/", "#reference-footer"],
-      ["anxiety/", "#reference-footer"],
-      ["anxiety/sharing/", "#reference-footer"],
-      ["docs/trust/", "[data-parity-list]"],
-      ["docs/polygons/", "[data-parity-list]"],
-      ["docs/ballot/", "[data-parity-list]"],
-      ["docs/crowds/", "[data-parity-list]"],
-      ["docs/loopy/", "[data-parity-list]"],
-      ["docs/neurons/", "[data-parity-list]"],
-      ["docs/remember/", "[data-parity-list]"],
-      ["docs/anxiety/", "[data-parity-list]"],
     ];
+
+    if (exists("trust")) {
+      routeChecks.push(["trust/", "#reference-footer"]);
+      routeChecks.push(["docs/trust/", "[data-parity-list]"]);
+    }
+    if (exists("polygons")) {
+      routeChecks.push(["polygons/", "#reference-footer"]);
+      routeChecks.push(["docs/polygons/", "[data-parity-list]"]);
+    }
+    if (exists("ballot")) {
+      routeChecks.push(["ballot/", "#reference-footer"]);
+      routeChecks.push(["docs/ballot/", "[data-parity-list]"]);
+    }
+    if (exists("crowds")) {
+      routeChecks.push(["crowds/", "#reference-footer"]);
+      routeChecks.push(["docs/crowds/", "[data-parity-list]"]);
+    }
+    if (exists("loopy")) {
+      routeChecks.push(["loopy/", "#reference-footer"]);
+      routeChecks.push(["docs/loopy/", "[data-parity-list]"]);
+    }
+    if (exists("neurons")) {
+      routeChecks.push(["neurons/", "#reference-footer"]);
+      routeChecks.push(["docs/neurons/", "[data-parity-list]"]);
+    }
+    if (exists("remember")) {
+      routeChecks.push(["remember/", "#reference-footer"]);
+      routeChecks.push(["docs/remember/", "[data-parity-list]"]);
+    }
+    if (exists("anxiety")) {
+      routeChecks.push(["anxiety/", "#reference-footer"]);
+      routeChecks.push(["anxiety/sharing/", "#reference-footer"]);
+      routeChecks.push(["docs/anxiety/", "[data-parity-list]"]);
+    }
 
     if (exists("wbwwb")) {
       routeChecks.push(["wbwwb/", "#reference-footer"]);
@@ -3540,9 +4732,69 @@ async function main() {
       routeChecks.push(["tesseract/", "#reference-footer"]);
       routeChecks.push(["docs/tesseract/", "[data-parity-list]"]);
     }
+    if (exists("gears")) {
+      routeChecks.push(["gears/", "#reference-footer"]);
+      routeChecks.push(["docs/gears/", "[data-parity-list]"]);
+    }
+    if (exists("gps")) {
+      routeChecks.push(["gps/", "#reference-footer"]);
+      routeChecks.push(["docs/gps/", "[data-parity-list]"]);
+    }
+    if (exists("earth-and-sun")) {
+      routeChecks.push(["earth-and-sun/", "#reference-footer"]);
+      routeChecks.push(["docs/earth-and-sun/", "[data-parity-list]"]);
+    }
+    if (exists("bicycle")) {
+      routeChecks.push(["bicycle/", "#reference-footer"]);
+      routeChecks.push(["docs/bicycle/", "[data-parity-list]"]);
+    }
+    if (exists("airfoil")) {
+      routeChecks.push(["airfoil/", "#reference-footer"]);
+      routeChecks.push(["docs/airfoil/", "[data-parity-list]"]);
+    }
+    if (exists("curves-and-surfaces")) {
+      routeChecks.push(["curves-and-surfaces/", "#reference-footer"]);
+      routeChecks.push(["docs/curves-and-surfaces/", "[data-parity-list]"]);
+    }
+    if (exists("internal-combustion-engine")) {
+      routeChecks.push(["internal-combustion-engine/", "#reference-footer"]);
+      routeChecks.push(["docs/internal-combustion-engine/", "[data-parity-list]"]);
+    }
+    if (exists("mechanical-watch")) {
+      routeChecks.push(["mechanical-watch/", "#reference-footer"]);
+      routeChecks.push(["docs/mechanical-watch/", "[data-parity-list]"]);
+    }
+    if (exists("naval-architecture")) {
+      routeChecks.push(["naval-architecture/", "#reference-footer"]);
+      routeChecks.push(["docs/naval-architecture/", "[data-parity-list]"]);
+    }
     if (exists("reading-qr-codes-without-a-computer")) {
       routeChecks.push(["reading-qr-codes-without-a-computer/", "#reference-footer"]);
       routeChecks.push(["docs/reading-qr-codes-without-a-computer/", "[data-parity-list]"]);
+    }
+    if (exists("memory-allocation")) {
+      routeChecks.push(["memory-allocation/", "#reference-footer"]);
+      routeChecks.push(["docs/memory-allocation/", "[data-parity-list]"]);
+    }
+    if (exists("load-balancing")) {
+      routeChecks.push(["load-balancing/", "#reference-footer"]);
+      routeChecks.push(["docs/load-balancing/", "[data-parity-list]"]);
+    }
+    if (exists("hysteresis-slack")) {
+      routeChecks.push(["hysteresis-slack/", "#reference-footer"]);
+      routeChecks.push(["docs/hysteresis-slack/", "[data-parity-list]"]);
+    }
+    if (exists("rigid-body-collisions")) {
+      routeChecks.push(["rigid-body-collisions/", "#reference-footer"]);
+      routeChecks.push(["docs/rigid-body-collisions/", "[data-parity-list]"]);
+    }
+    if (exists("blockchain-101-combined-flow")) {
+      routeChecks.push(["blockchain-101-combined-flow/", "#reference-footer"]);
+      routeChecks.push(["docs/blockchain-101-combined-flow/", "[data-parity-list]"]);
+    }
+    if (exists("primary-interactive-hub")) {
+      routeChecks.push(["primary-interactive-hub/", "#reference-footer"]);
+      routeChecks.push(["docs/primary-interactive-hub/", "[data-parity-list]"]);
     }
     if (exists("linear-regression")) {
       routeChecks.push(["linear-regression/", "#reference-footer"]);
@@ -3581,9 +4833,14 @@ async function main() {
       await assertRoute(routePage, relativePath, selector);
     }
     await routePage.close();
+    phaseLog("Route checks completed");
 
-    await smokeRemember(context);
-    await smokeAnxiety(context);
+    if (exists("remember")) {
+      await smokeRemember(context);
+    }
+    if (exists("anxiety")) {
+      await smokeAnxiety(context);
+    }
     if (exists("wbwwb")) {
       await smokeWbwwb(context);
     }
@@ -3659,8 +4916,72 @@ async function main() {
     if (exists("tesseract")) {
       await smokeTesseract(context);
     }
+    if (exists("gears")) {
+      await smokeGears(context);
+    }
+    if (exists("gps")) {
+      await smokeGps(context);
+    }
+    if (exists("earth-and-sun")) {
+      await smokeEarthAndSun(context);
+    }
+    if (exists("bicycle")) {
+      await smokeBicycle(context);
+    }
+    if (exists("airfoil")) {
+      await smokeAirfoil(context);
+    }
+    if (exists("curves-and-surfaces")) {
+      await smokeCurvesAndSurfaces(context);
+    }
+    if (exists("internal-combustion-engine")) {
+      await smokeInternalCombustionEngine(context);
+    }
+    if (exists("mechanical-watch")) {
+      await smokeMechanicalWatch(context);
+    }
+    if (exists("naval-architecture")) {
+      await smokeNavalArchitecture(context);
+    }
     if (exists("reading-qr-codes-without-a-computer")) {
       await smokeReadingQrCodesWithoutAComputer(context);
+    }
+    if (
+      exists("memory-allocation") ||
+      exists("load-balancing") ||
+      exists("hysteresis-slack") ||
+      exists("rigid-body-collisions") ||
+      exists("blockchain-101-combined-flow") ||
+      exists("primary-interactive-hub") ||
+      exists("linear-regression") ||
+      exists("logistic-regression") ||
+      exists("precision-recall") ||
+      exists("roc-auc") ||
+      exists("bias-variance") ||
+      exists("train-test-validation") ||
+      exists("double-descent") ||
+      exists("double-descent2")
+    ) {
+      await context.close();
+      context = await createSmokeContext(browser);
+    }
+    if (exists("memory-allocation")) {
+      await smokeMemoryAllocation(context);
+    }
+    if (exists("load-balancing")) {
+      await smokeLoadBalancing(context);
+    }
+    if (exists("hysteresis-slack")) {
+      await smokeHysteresisSlack(context);
+    }
+    if (exists("rigid-body-collisions")) {
+      await smokeRigidBodyCollisions(context);
+    }
+    if (exists("blockchain-101-combined-flow")) {
+      await smokeBlockchain101CombinedFlow(context);
+    }
+    if (exists("primary-interactive-hub")) {
+      await smokePrimaryInteractiveHub(context);
     }
     if (exists("linear-regression")) {
       await smokeLinearRegression(context);
@@ -3686,6 +5007,7 @@ async function main() {
     if (exists("double-descent2")) {
       await smokeDoubleDescent2(context);
     }
+    phaseLog("Smoke checks completed");
   } finally {
     await context.close();
     await browser.close();

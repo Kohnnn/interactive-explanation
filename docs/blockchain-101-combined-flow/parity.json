@@ -1,0 +1,56 @@
+[
+  {
+    "moduleId": "combined-flow-shell-and-chapter-roadmap",
+    "originalBehavior": "The source family is split across separate blockchain, signing, and proof demos with distinct entry routes and teaching surfaces.",
+    "localStatus": "The local route adds one lightweight roadmap page that introduces the full sequence and keeps each chapter accessible through local links.",
+    "sourceFiles": [
+      "../../blockchain-101-combined-flow/index.html",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route is intentionally a synthesis page rather than a runtime rewrite of the original demos.",
+      "The public body links only to local replica chapters and docs routes."
+    ],
+    "evidence": [
+      "The route hero and chapter cards expose the three-step teaching order and local chapter links.",
+      "Shared smoke coverage checks the chapter anchors, local route handoff, and responsive shell."
+    ]
+  },
+  {
+    "moduleId": "hashing-and-signing-chapter-handoff",
+    "originalBehavior": "The original learning path requires separate navigation from block hashing into public and private keys plus transaction signing scenes.",
+    "localStatus": "The local route keeps those chapter boundaries intact while adding a guided handoff from hashing to signing and transaction scenes through local route links.",
+    "sourceFiles": [
+      "../../blockchain-101-combined-flow/index.html",
+      "../../blockchain/index.html",
+      "../../public-private-keys/index.html"
+    ],
+    "notes": [
+      "Hashing, distributed-chain, signing, and transaction runtime behavior still lives in the original shipped local chapter routes.",
+      "The combined route simply sequences the order and explains why each chapter comes next."
+    ],
+    "evidence": [
+      "The chapter cards link directly to the hashing route, distributed view, signing route, and transaction route.",
+      "Shared smoke coverage verifies those local handoff links are present on the combined route."
+    ]
+  },
+  {
+    "moduleId": "proof-finale-and-footer-only-provenance",
+    "originalBehavior": "The proof demo is published as a separate route with its own interaction model and provenance surfaces.",
+    "localStatus": "The local route frames the proof demo as the final chapter, links to the local proof route, and keeps original-page provenance limited to the shared footer.",
+    "sourceFiles": [
+      "../../blockchain-101-combined-flow/index.html",
+      "../../zero-knowledge-proof-demo/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The final chapter card links only to the local proof route.",
+      "The public body does not ship upstream chapter links, repo links, or social surfaces."
+    ],
+    "evidence": [
+      "Implementation planning treated local-only navigation and footer-only provenance as the core public-surface requirement for this custom route.",
+      "Shared smoke coverage checks the responsive shell and the local chapter handoff for the proof section."
+    ]
+  }
+]

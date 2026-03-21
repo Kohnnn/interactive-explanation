@@ -1,0 +1,58 @@
+[
+  {
+    "moduleId": "hub-shell-and-local-curation-surface",
+    "originalBehavior": "The source account scope spans many interactive projects and repositories, without a single local browsing surface for the shipped replica subset.",
+    "localStatus": "The local route creates one curated hub page that surfaces the already-shipped replicas through grouped local cards and local docs links.",
+    "sourceFiles": [
+      "../../primary-interactive-hub/index.html",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route is intentionally a local curation page rather than a replica of one repository listing view.",
+      "The public body links only to local routes and local docs pages."
+    ],
+    "evidence": [
+      "The route exposes grouped cards for systems, stories, and playgrounds.",
+      "Shared smoke coverage checks the local card count, local route hrefs, and responsive shell."
+    ]
+  },
+  {
+    "moduleId": "systems-and-story-cluster-coverage",
+    "originalBehavior": "The shipped interactive collection spans systems explainers, narrative games, and emotionally focused story routes.",
+    "localStatus": "The local hub preserves that range by grouping local routes into systems-and-society cards plus stories-and-games cards.",
+    "sourceFiles": [
+      "../../primary-interactive-hub/index.html",
+      "../../trust/index.html",
+      "../../anxiety/index.html",
+      "../../coming-out-simulator-2014/index.html"
+    ],
+    "notes": [
+      "The cluster cards point to the local replicas and local docs routes only.",
+      "The grouping is editorial but intentionally mirrors the strongest learning and replay entry points."
+    ],
+    "evidence": [
+      "The systems cluster includes trust, polygons, ballot, crowds, neurons, and covid-19.",
+      "The stories cluster includes anxiety, coming-out-simulator-2014, wbwwb, and remember."
+    ]
+  },
+  {
+    "moduleId": "playground-cluster-and-footer-only-provenance",
+    "originalBehavior": "The interactive collection includes editable sandbox-style tools as well as narrative or article-led experiences.",
+    "localStatus": "The local hub keeps the sandbox routes in a separate playground cluster while maintaining footer-only provenance and local metadata shell behavior.",
+    "sourceFiles": [
+      "../../primary-interactive-hub/index.html",
+      "../../loopy/index.html",
+      "../../simulating/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The playground cluster links to both the launcher and the simulator route where useful.",
+      "The shared footer is the only public original-page reference surface on the hub route."
+    ],
+    "evidence": [
+      "The route includes dedicated cards for LOOPY and the simulator launcher path.",
+      "Implementation planning treated local-only navigation and responsive shell behavior as the core validation requirements for this hub."
+    ]
+  }
+]

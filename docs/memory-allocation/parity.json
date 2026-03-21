@@ -1,0 +1,77 @@
+[
+  {
+    "moduleId": "article-shell-and-local-memory-runtime-handoff",
+    "originalBehavior": "The published article loads through a route-local HTML shell plus shared CSS, GSAP, Pixi, allocator scripts, and many inline memory demos mounted across one longform page.",
+    "localStatus": "The local route keeps the published article structure, route-local CSS, GSAP, Pixi, allocator scripts, and simulation runtime while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",
+    "sourceFiles": [
+      "../../memory-allocation/index.html",
+      "../../memory-allocation/css/reset.css",
+      "../../memory-allocation/css/main.css",
+      "../../memory-allocation/js/memory-allocation.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream logo link, newsletter footer, social links, or other author-promo surfaces.",
+      "The route keeps the original article structure instead of condensing the allocator walkthrough into a custom rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell, route-local GSAP handoff, Pixi runtime, and allocator fetch paths as parity-critical.",
+      "Shared smoke coverage verifies the local scripts load, allocator-backed demos hydrate, and the public route stays responsive without upstream runtime dependencies."
+    ]
+  },
+  {
+    "moduleId": "memory-grid-and-hexadecimal-scenes",
+    "originalBehavior": "The published article opens with static and timeline-driven memory grids, then introduces hexadecimal addressing through a slider that keeps decimal and hexadecimal readouts synchronized.",
+    "localStatus": "The local route keeps the opening memory-grid sequence and the hexadecimal slider scene under the original published runtime.",
+    "sourceFiles": [
+      "../../memory-allocation/index.html",
+      "../../memory-allocation/js/memory-allocation.js"
+    ],
+    "notes": [
+      "The Haskie callouts remain in place with route-local image assets.",
+      "The hexadecimal slider still updates both the decimal and hexadecimal labels directly from the vendored runtime code."
+    ],
+    "evidence": [
+      "The route-specific smoke contract includes the hexadecimal slider as an explicit synchronized-readout check.",
+      "Shared smoke coverage verifies the opening article initializes and the hexadecimal labels update after slider input."
+    ]
+  },
+  {
+    "moduleId": "allocator-backed-timeline-demos",
+    "originalBehavior": "The published article fetches allocator scripts at runtime and uses them to drive slider-based timeline demos for stack, free-list, segmented, and inline allocation strategies.",
+    "localStatus": "The local route keeps the allocator-backed demos intact, with the published runtime fetching route-local allocator scripts under the same relative shape expected by the source article.",
+    "sourceFiles": [
+      "../../memory-allocation/index.html",
+      "../../memory-allocation/js/memory-allocation.js",
+      "../../memory-allocation/js/allocators/stack.js",
+      "../../memory-allocation/js/allocators/freelist.js",
+      "../../memory-allocation/js/allocators/segmented-freelist.js",
+      "../../memory-allocation/js/allocators/inline.js"
+    ],
+    "notes": [
+      "The route preserves the published next and previous controls, keyboard stepping, and slider-driven timeline state instead of replacing them with local UI.",
+      "Allocator fetch paths are localized so the demos no longer depend on the upstream root path."
+    ],
+    "evidence": [
+      "Implementation planning treated at least one allocator-backed timeline demo as parity-critical.",
+      "Shared smoke coverage verifies a hydrated memory simulation responds to slider input and that route-local allocator assets load without failed requests."
+    ]
+  },
+  {
+    "moduleId": "footer-only-provenance-and-neutralized-playground-link",
+    "originalBehavior": "The published article closes with a playground cross-link and an upstream footer that includes newsletter, social, and author provenance surfaces.",
+    "localStatus": "The local route keeps the article close intact while leaving the shared footer as the only public original-page reference surface and neutralizing the non-local playground link in body copy.",
+    "sourceFiles": [
+      "../../memory-allocation/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route does not require upstream asset URLs or author-promo widgets at runtime.",
+      "The body-level playground link is converted to plain text because that upstream route is not shipped locally in this batch."
+    ],
+    "evidence": [
+      "The public-surface audit is extended for the Sam Rose family so creator, share, and newsletter links are caught outside the shared footer and docs.",
+      "Shared smoke coverage verifies the route stays runtime-clean while the footer remains the only provenance surface."
+    ]
+  }
+]

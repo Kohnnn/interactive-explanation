@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "article-shell-and-local-load-balancing-runtime-handoff",
+    "originalBehavior": "The published article loads through a route-local HTML shell plus shared CSS, a page script, Pixi runtime, and Plotly bundle, then initializes many simulation mounts and static charts across one longform page.",
+    "localStatus": "The local route keeps the published article structure, route-local CSS, Pixi runtime, Plotly bundle, and page script while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../load-balancing/css/reset.css",
+      "../../load-balancing/css/main.css",
+      "../../load-balancing/js/load-balancers.js"
+    ],
+    "notes": [
+      "The public body no longer exposes the upstream logo link, newsletter footer, social links, or other author-promo surfaces.",
+      "The route keeps the original article structure instead of condensing the simulations into a custom rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the published article shell, local script loading, simulation mounts, and final playground controls as parity-critical.",
+      "Shared smoke coverage verifies the route loads locally, the simulations mount, the graphs render, and the public route stays responsive without upstream runtime dependencies."
+    ]
+  },
+  {
+    "moduleId": "opening-simulations-and-algorithm-scenes",
+    "originalBehavior": "The published article opens with a progression of load-balancer simulations that demonstrate round robin, queues, server variance, weighted variants, and least-connections behavior.",
+    "localStatus": "The local route keeps the opening simulation progression intact under the original published Pixi runtime.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../load-balancing/js/load-balancers.js",
+      "../../load-balancing/js/pixi.mjs"
+    ],
+    "notes": [
+      "The route preserves the automatically starting and visibility-aware simulation behavior rather than replacing the scenes with static screenshots.",
+      "The earliest simulation mounts remain in the same article positions as the published page."
+    ],
+    "evidence": [
+      "The route-specific smoke contract includes one early simulation mount and one drag-free interaction path through the final control panel.",
+      "Shared smoke coverage verifies an early simulation canvas initializes before the article graphs and final playground."
+    ]
+  },
+  {
+    "moduleId": "latency-graphs-and-final-playground",
+    "originalBehavior": "The published article renders several Plotly-based latency and drop graphs, then closes with a full playground that dynamically injects algorithm and slider controls for a large final simulation.",
+    "localStatus": "The local route keeps the Plotly graphs and the final playground intact, with the original script still creating the algorithm selector and slider controls at runtime.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../load-balancing/js/load-balancers.js",
+      "../../load-balancing/js/plotly.js"
+    ],
+    "notes": [
+      "The final playground still exposes the algorithm selector, RPS slider, variance sliders, and server-count slider under the original runtime.",
+      "The route preserves the published medians, percentile, histogram, and dropped-request chart sections instead of replacing them with a static summary."
+    ],
+    "evidence": [
+      "Implementation planning treated one chart mount and one final playground control path as parity-critical.",
+      "Shared smoke coverage verifies a Plotly graph mounts and the final playground controls appear and respond to input."
+    ]
+  },
+  {
+    "moduleId": "footer-only-provenance-and-discussion-link-cleanup",
+    "originalBehavior": "The published article closes with discussion links and an upstream footer that includes newsletter, social, and author provenance surfaces.",
+    "localStatus": "The local route keeps the article close intact while leaving the shared footer as the only public original-page reference surface and pruning the self-promotional social link from the body discussion note.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "Third-party discussion links and technical references remain intact, but author-promo and newsletter surfaces are removed.",
+      "The route does not require upstream asset URLs or author-promo widgets at runtime."
+    ],
+    "evidence": [
+      "The public-surface audit is extended for the Sam Rose family so creator, share, and newsletter links are caught outside the shared footer and docs.",
+      "Shared smoke coverage verifies the route remains runtime-clean and responsive after the provenance cleanup."
+    ]
+  }
+]

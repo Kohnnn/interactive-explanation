@@ -1,0 +1,1 @@
+import{_ as o}from"./DlAUqK2U.js";import{c as s,a as t,l,o as a}from"./D4VqJVMa.js";const r={},c={class:"w-full min-h-screen bg-white flex scroll-smooth dark:bg-slate-900"},n={class:"mx-auto px-4 min-h-full flex-1 overflow-hidden"};function d(e,f){return a(),s("div",c,[t("div",n,[l(e.$slots,"default")])])}const m=o(r,[["render",d]]);export{m as default};

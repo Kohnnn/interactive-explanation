@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "article-shell-and-local-slider-runtime-handoff",
+    "originalBehavior": "The published page loads through a short article shell with Bootstrap styling, a compiled D3 and React bundle, two slider scenes, and a later timeline trajectory explainer.",
+    "localStatus": "The local route keeps the published article structure, Bootstrap styling, compiled bundle, and image assets while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",
+    "sourceFiles": [
+      "../../hysteresis-slack/index.html",
+      "../../hysteresis-slack/bootstrap.css",
+      "../../hysteresis-slack/build/bundle.js"
+    ],
+    "notes": [
+      "The public body no longer exposes analytics, tracking beacons, or direct author-link surfaces.",
+      "The route keeps the published structure instead of condensing the explanation into a custom rewrite."
+    ],
+    "evidence": [
+      "Implementation planning treated the local bundle handoff, the two slider scenes, and the timeline scene as parity-critical.",
+      "Shared smoke coverage verifies the local bundle loads, the slack chart responds to drag input, and the route stays runtime-clean under static hosting."
+    ]
+  },
+  {
+    "moduleId": "paired-slider-scenes-and-looped-output-chart",
+    "originalBehavior": "The published explainer opens with two linked slider scenes: one rigid and one with slack, plus a looped output chart that updates as the input pin moves.",
+    "localStatus": "The local route keeps both opening slider scenes and the looped output chart under the original vendored runtime.",
+    "sourceFiles": [
+      "../../hysteresis-slack/index.html",
+      "../../hysteresis-slack/build/bundle.js"
+    ],
+    "notes": [
+      "The local route still renders the blue input pin and pink output pin interactions inside the opening scenes.",
+      "The slack chart continues to update in response to drag input rather than a static screenshot."
+    ],
+    "evidence": [
+      "The route-specific smoke contract includes a drag on the slack slider and asserts that the chart markup changes afterward.",
+      "Shared smoke coverage verifies the route exposes the expected opening SVG scenes before interaction."
+    ]
+  },
+  {
+    "moduleId": "trajectory-timeline-and-local-reference-image",
+    "originalBehavior": "The published article later lets the reader shape an input trajectory over time and inspect the possible output region, then closes with a magnetic hysteresis loop reference image.",
+    "localStatus": "The local route keeps the trajectory timeline scene and the closing reference image intact with fully local assets.",
+    "sourceFiles": [
+      "../../hysteresis-slack/index.html",
+      "../../hysteresis-slack/build/bundle.js",
+      "../../hysteresis-slack/images/hyloop.gif"
+    ],
+    "notes": [
+      "The trajectory timeline still renders the input path, hovered output path, and shaded feasible region from the vendored runtime.",
+      "The closing magnetic hysteresis image is loaded from the local route tree."
+    ],
+    "evidence": [
+      "Implementation planning treated the later timeline scene and the local reference image as parity-sensitive article assets.",
+      "Shared smoke coverage verifies the route remains responsive and runtime-clean after the opening chart interactions."
+    ]
+  }
+]

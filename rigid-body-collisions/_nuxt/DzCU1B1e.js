@@ -1,0 +1,1 @@
+import{_ as o}from"./DlAUqK2U.js";import{o as e,c as t,a as n}from"./D4VqJVMa.js";const r={},s={fill:"none",viewBox:"0 0 24 24"},c=n("path",{stroke:"currentColor","stroke-linecap":"round","stroke-linejoin":"round","stroke-width":"1.5",d:"M13.25 8.75L9.75 12L13.25 15.25"},null,-1),_=[c];function a(i,d){return e(),t("svg",s,_)}const h=o(r,[["render",a]]);export{h as default};

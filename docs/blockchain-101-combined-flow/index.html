@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Combined Blockchain Flow Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local combined blockchain flow route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Combined Blockchain Flow</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/blockchain-101-combined-flow/</code> is a
+        custom teaching hub that connects the shipped blockchain, signing, and proof demos into one
+        local sequence while keeping the heavy interactive runtime in the existing chapter routes.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../blockchain-101-combined-flow/">Open replica</a>
+        <a class="action-link secondary" href="https://andersbrownworth.com/blockchain/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
+        Source family: <code>andersbrownworth.com</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route is a custom synthesis page built from already-shipped local chapters. It
+          does not vendor a new upstream runtime; instead it provides a structured sequence over the
+          existing local blockchain, signing, and proof routes.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://andersbrownworth.com/blockchain/</code> on 2026-03-21.</li>
+          <li>The public body links only to local replicas and docs routes.</li>
+          <li>The shared footer remains the only public original-page reference surface.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>blockchain-101-combined-flow/index.html</code> owns the local metadata shell and chapter-card layout.</li>
+          <li>The route intentionally delegates the heavy interactive runtime to <code>blockchain/</code>, <code>public-private-keys/</code>, and <code>zero-knowledge-proof-demo/</code>.</li>
+          <li><code>shared/public-footer.js</code> keeps the original-page provenance in the footer only.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>This route is a local guide layer, not a direct replica of one published page.</li>
+          <li>Chapter navigation is rewritten to local links so the full sequence stays inside the shipped site.</li>
+          <li>The route uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep this page lightweight and local-link driven; the underlying demos should remain authoritative for the actual interaction runtime.</li>
+          <li>Extend the shared smoke bundle instead of creating a one-off harness if the chapter sequence changes.</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching chapter links, metadata, or footer handoff.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>
