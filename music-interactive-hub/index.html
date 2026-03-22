@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music Interactive Hub</title>
+  <meta name="description" content="Editorial local hub that connects shipped ear-training drills, sequencing tools, synth lessons, and the genre-history map into one music-focused learning path.">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="canonical" href="https://localhost/interactive-explanation/music-interactive-hub/">
+  <meta property="og:title" content="Music Interactive Hub">
+  <meta property="og:description" content="Editorial local hub that connects shipped ear-training drills, sequencing tools, synth lessons, and the genre-history map into one music-focused learning path.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://localhost/interactive-explanation/music-interactive-hub/">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <style>
+    .music-hub-page .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(180, 76, 47, 0.18), transparent 36%),
+        radial-gradient(circle at left center, rgba(31, 108, 99, 0.16), transparent 32%),
+        rgba(255, 250, 241, 0.9);
+    }
+
+    .music-hub-page .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -4rem -5rem auto;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 50%;
+      background: rgba(31, 108, 99, 0.08);
+      filter: blur(3px);
+      pointer-events: none;
+    }
+
+    .cluster {
+      margin-top: 26px;
+    }
+
+    .route-count {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(31, 108, 99, 0.12);
+      color: var(--accent-deep);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cluster-intro {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .music-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .music-card {
+      min-height: 100%;
+    }
+
+    .music-card h2 {
+      font-size: 1.35rem;
+    }
+
+    .path-panel {
+      margin-top: 26px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 250, 241, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .path-panel ol {
+      margin: 16px 0 0;
+      padding-left: 22px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .path-panel li + li {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body
+  data-reference-mode="neutral"
+  data-reference-note="This curated route spans multiple local music families. See the local docs for the full source inventory."
+  data-footer-label="Provenance"
+>
+  <main class="site-page music-hub-page" data-music-hub>
+    <a class="back-link" href="../">Back to replicas</a>
+
+    <header class="hero">
+      <p class="eyebrow">Curated local hub</p>
+      <h1>Music Interactive Hub</h1>
+      <p class="lead">
+        This route turns the shipped music replicas into one calm editorial entry point. Start with
+        ear training and notation, move into sequencing and composition, then spend time shaping
+        timbre and motion in the synth lessons before widening out into genre history with the
+        interactive music map.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="./#ear-training-cluster">Start with ear training</a>
+        <a class="action-link secondary" href="./#synthesis-cluster">Jump to synthesis</a>
+        <a class="action-link ghost" href="../docs/music-interactive-hub/">Docs</a>
+      </div>
+      <p class="meta-line">
+        21 local routes across five live music families: Teoria, Ableton Learning Music, Ableton Learning Synths, Chrome Music Lab, and Musicmap.
+      </p>
+    </header>
+
+    <section class="path-panel" data-recommended-path>
+      <div class="section-heading">
+        <h2>Recommended Path</h2>
+        <span class="route-count">9 stops</span>
+      </div>
+      <p class="cluster-intro">
+        Follow this sequence if you want one clean arc from hearing pitch relationships to shaping
+        patterns, harmony, timbre, and form before situating those sounds inside a wider map of styles.
+      </p>
+      <ol>
+        <li><a href="../teoria-note-ear-training/">Teoria Note Ear Training</a> to lock in single-note recognition.</li>
+        <li><a href="../teoria-interval-ear-training/">Teoria Interval Ear Training</a> to hear distance and contour between notes.</li>
+        <li><a href="../ableton-learning-music-play-with-beats/">Ableton Play with beats</a> to start building rhythmic motion one bar at a time.</li>
+        <li><a href="../ableton-learning-music-play-with-chords/">Ableton Play with chords</a> to add harmony and stronger progression cues.</li>
+        <li><a href="../ableton-learning-music-playground/">Ableton Learning Music Playground</a> to combine beats, bass, chords, and melody in motion.</li>
+        <li><a href="../ableton-learning-synths-get-started/">Ableton Learning Synths: Get started</a> to connect pitch and pattern work to a playable synth surface.</li>
+        <li><a href="../ableton-learning-synths-how-synths-make-sound/">How synths make sound</a> to hear oscillators and waveform changes as a concrete sound source.</li>
+        <li><a href="../ableton-learning-synths-filter-resonance/">Filter resonance</a> to shape brightness, focus, and motion with a filter instead of only changing notes.</li>
+        <li><a href="../ableton-learning-synths-recipes/">Recipes</a> to hear full subtractive-synth patches as combinations of the earlier controls.</li>
+        <li><a href="../musicmap/">Musicmap</a> to connect those sounds to a broader genre history.</li>
+      </ol>
+    </section>
+
+    <section class="cluster" id="ear-training-cluster">
+      <div class="section-heading">
+        <h2>Ear Training And Notation</h2>
+        <span class="route-count" data-cluster-count>6 routes</span>
+      </div>
+      <p class="cluster-intro">
+        These drills stay close to pitch, interval, key, and staff recognition. They are the most
+        focused entry points when you want short practice loops with clear right-or-wrong feedback.
+      </p>
+      <div class="music-card-grid">
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Interval Ear Training</h2>
+          <p class="meta-line">Hear two notes, identify the interval, and reinforce distance by ear and staff view.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-interval-ear-training/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-interval-ear-training/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Note Ear Training</h2>
+          <p class="meta-line">Train single-note recognition with local piano playback, notation redraws, and score feedback.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-note-ear-training/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-note-ear-training/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Key And Note Ear Training</h2>
+          <p class="meta-line">Work inside a tonal center, hear the reference key, then identify the note in context.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-key-and-note-ear-training/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-key-and-note-ear-training/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Random Key And Note Ear Training</h2>
+          <p class="meta-line">Push the same hearing exercise through randomized keys so the context keeps shifting.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-random-key-and-note-ear-training/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-random-key-and-note-ear-training/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Scale Construction</h2>
+          <p class="meta-line">Build scales note by note with notation feedback and local playback for confirmation.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-scale-construction/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-scale-construction/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Teoria</p>
+          <h2>Interval Identification And Inversion</h2>
+          <p class="meta-line">Name the interval, then reason through its inversion with notation and answer-grid feedback.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../teoria-interval-identification-and-inversion/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/teoria-interval-identification-and-inversion/">Docs</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cluster" id="sequencing-cluster">
+      <div class="section-heading">
+        <h2>Sequencing And Composition</h2>
+        <span class="route-count" data-cluster-count>8 routes</span>
+      </div>
+      <p class="cluster-intro">
+        This cluster shifts from recognition into making. The Ableton lessons walk from beats into
+        notes, chords, basslines, melodies, and form, while the Playground and Song Maker turn that
+        knowledge into faster freeform loop-building.
+      </p>
+      <div class="music-card-grid">
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with beats</h2>
+          <p class="meta-line">Build drum patterns on a recordable 909 grid with local playback and tempo control.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-beats/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-beats/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with notes and scales</h2>
+          <p class="meta-line">Change tonic and scale choices while a local piano pattern keeps playing through the grid.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-notes-and-scales/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-notes-and-scales/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with chords</h2>
+          <p class="meta-line">Explore harmonic movement with local chord and drum widgets under one shared transport.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-chords/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-chords/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with basslines</h2>
+          <p class="meta-line">Shape bass motion with local bass and drum samples while root and scale choices stay in sync.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-basslines/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-basslines/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with melodies</h2>
+          <p class="meta-line">Write melodic phrases on the piano grid while the companion drumpad holds the pulse underneath.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-melodies/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-melodies/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Play with song structures</h2>
+          <p class="meta-line">Step back from single loops and use the lighter arrangement primer to think in sections and form.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-play-with-song-structures/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-play-with-song-structures/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton</p>
+          <h2>Learning Music Playground</h2>
+          <p class="meta-line">Hear beats, basslines, chords, and melodies stay in sync while you change roots and patterns.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-music-playground/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-music-playground/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Chrome Music Lab</p>
+          <h2>Song Maker</h2>
+          <p class="meta-line">Paint notes directly onto the grid, play the loop, and change the feel through settings.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../chrome-music-lab-song-maker/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/chrome-music-lab-song-maker/">Docs</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cluster" id="synthesis-cluster">
+      <div class="section-heading">
+        <h2>Synthesis And Sound Design</h2>
+        <span class="route-count" data-cluster-count>6 routes</span>
+      </div>
+      <p class="cluster-intro">
+        These lessons shift the focus from notes and loops to timbre. Use them when you want to hear
+        what oscillators, filters, envelopes, and modulation do before jumping into bigger synth workflows.
+      </p>
+      <div class="music-card-grid">
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>Get started</h2>
+          <p class="meta-line">Use a playable XY surface to connect motion on the page to immediate synth response.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-get-started/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-get-started/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>How synths make sound</h2>
+          <p class="meta-line">Hear waveform changes at the source through the oscillator lesson’s archived synth visualizations.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-how-synths-make-sound/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-how-synths-make-sound/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>Filter resonance</h2>
+          <p class="meta-line">Shape the filter curve directly and hear how cutoff and resonance change the synth’s focus.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-filter-resonance/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-filter-resonance/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>Modulating amplitude with envelopes</h2>
+          <p class="meta-line">See how attack, decay, sustain, and release redraw a note’s contour over time.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-modulating-amplitude-with-envelopes/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-modulating-amplitude-with-envelopes/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>Matching envelopes</h2>
+          <p class="meta-line">Compare envelope shapes against recorded sounds and tighten the link between shape and result.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-matching-envelopes/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-matching-envelopes/">Docs</a>
+          </div>
+        </article>
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Ableton Learning Synths</p>
+          <h2>Recipes</h2>
+          <p class="meta-line">Work through full subtractive-synth patches and hear how several control families combine into one voice.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../ableton-learning-synths-recipes/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/ableton-learning-synths-recipes/">Docs</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cluster" id="history-cluster">
+      <div class="section-heading">
+        <h2>History And Genre Context</h2>
+        <span class="route-count" data-cluster-count>1 route</span>
+      </div>
+      <p class="cluster-intro">
+        Once the ear and sequencing routes feel familiar, this map helps place styles in relation
+        to one another through search, genre panels, and playlist context.
+      </p>
+      <div class="music-card-grid">
+        <article class="page-card music-card" data-music-card>
+          <p class="eyebrow">Musicmap</p>
+          <h2>Musicmap</h2>
+          <p class="meta-line">Browse the genre graph, search the map, open genre notes, and launch user-triggered playlist embeds.</p>
+          <div class="action-row">
+            <a class="action-link" data-link-kind="route" href="../musicmap/">Open route</a>
+            <a class="action-link secondary" data-link-kind="docs" href="../docs/musicmap/">Docs</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

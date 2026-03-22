@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "song-maker-shell-and-canvas-runtime-handoff",
+    "originalBehavior": "The published Song Maker page boots a bundled canvas runtime that mounts the sequencer grid, top bar, bottom transport, and settings surfaces directly into the page body.",
+    "localStatus": "The local route keeps that published bundled runtime and mount structure while replacing the broader Chrome shell with route-local metadata and the shared public footer.",
+    "sourceFiles": [
+      "../../chrome-music-lab-song-maker/index.html",
+      "../../chrome-music-lab-song-maker/client/build/Main.js",
+      "../../chrome-music-lab-song-maker/client/fonts.css"
+    ],
+    "notes": [
+      "The archive build preserves the original canvas runtime rather than reauthoring Song Maker in a separate framework.",
+      "The route-local shell adds only the metadata header, local base handoff, and provenance footer."
+    ],
+    "evidence": [
+      "The public route still mounts the published grid, top bar, and bottom control surfaces from the vendored bundle.",
+      "Music smoke coverage verifies the local bundle initializes and renders the interactive UI before note-entry checks begin."
+    ]
+  },
+  {
+    "moduleId": "local-instrument-banks-and-playback-state",
+    "originalBehavior": "The published Song Maker experience loads first-party melodic and percussion sample packs, then uses them to drive playback from the painted sequencer grid.",
+    "localStatus": "The local route archives those first-party media assets locally and keeps the same playback path so grid edits and transport changes still reflect local instrument banks.",
+    "sourceFiles": [
+      "../../chrome-music-lab-song-maker/client/build/Main.js",
+      "../../chrome-music-lab-song-maker/client/audio/marimba/60.ogg",
+      "../../chrome-music-lab-song-maker/client/audio/electronic/36.ogg"
+    ],
+    "notes": [
+      "The route-local audio inventory is 110 archived audio files.",
+      "The bundled base constants are patched so loader assets resolve inside the local route tree rather than `/Song-Maker/`."
+    ],
+    "evidence": [
+      "Implementation inventory captured the full local sample bank under the route tree before shipping.",
+      "Music smoke coverage verifies playback starts without remote playable media requests."
+    ]
+  },
+  {
+    "moduleId": "paintable-grid-settings-and-disabled-save-surface",
+    "originalBehavior": "The published page allows painting notes on the grid, changing settings like tempo and layout, and saving or sharing through a remote Song Maker service.",
+    "localStatus": "The local route keeps grid editing, playback, and settings interactions while neutralizing remote save and share so the archive build does not expose a broken non-local flow.",
+    "sourceFiles": [
+      "../../chrome-music-lab-song-maker/index.html",
+      "../../chrome-music-lab-song-maker/client/build/Main.js"
+    ],
+    "notes": [
+      "The public route swaps the save button for a disabled local-archive variant labeled `Save unavailable`.",
+      "Settings, play, instrument, and sequencer edit paths remain part of the shipped public route."
+    ],
+    "evidence": [
+      "The local shell observes the runtime DOM and replaces the upstream save entrypoint after mount.",
+      "Music smoke coverage verifies one note-entry change, one playback-state change, and one settings change on the local route."
+    ]
+  },
+  {
+    "moduleId": "local-media-inventory-and-runtime-cleanup",
+    "originalBehavior": "The published Song Maker shell includes broader Google or Chrome surfaces, analytics glue, and route assumptions tied to the hosted `/Song-Maker/` root.",
+    "localStatus": "The local route archives the first-party media locally, removes the broader shell and analytics surfaces from the public body, and leaves the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "../../chrome-music-lab-song-maker/index.html",
+      "../../chrome-music-lab-song-maker/client/images/song-maker.jpg",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The shipped route archives 110 audio files, 20 images, and 2 font files inside the route tree.",
+      "A local MIDI shim is injected before boot so unsupported environments no longer throw an unhandled rejection during route initialization."
+    ],
+    "evidence": [
+      "The docs contract records the exact local media counts required by the music-family archival policy.",
+      "The public-surface audit and music smoke group enforce footer-only provenance and zero remote playable media requests for this route."
+    ]
+  }
+]

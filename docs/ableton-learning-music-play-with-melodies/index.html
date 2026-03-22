@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ableton Learning Music: Play with melodies Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local Ableton Learning Music: Play with melodies route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Ableton Learning Music: Play with melodies</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/ableton-learning-music-play-with-melodies/</code> vendors Ableton's official lesson shell,
+        keeps the local Learning Music widget stack under the route tree, and archives the supporting
+        fonts, images, and sample-bank assets needed for GitHub Pages hosting.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../ableton-learning-music-play-with-melodies/">Open replica</a>
+        <a class="action-link secondary" href="https://learningmusic.ableton.com/make-melodies/play-with-melodies.html" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>lesson runtime and media inventory verified 2026-03-22</code><br>
+        Source family: <code>learningmusic.ableton.com melodies lesson</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the official Ableton lesson as one self-contained archive build instead of
+          reauthoring it. The route keeps the published widget runtime and local sample-bank behavior while trimming the broader lesson shell.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://learningmusic.ableton.com/make-melodies/play-with-melodies.html</code> on 2026-03-22.</li>
+          <li>The public route intentionally strips the upstream header, feedback shell, cookie surfaces, and marketing chrome.</li>
+          <li>Public provenance is limited to the shared footer with local canonical and <code>og:url</code> metadata.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>ableton-learning-music-play-with-melodies/index.html</code> owns the local metadata shell, widget bootstrap, and footer wiring.</li>
+          <li><code>ableton-learning-music-play-with-melodies/widgets/build/</code> preserves the published Ableton widget runtime under the route tree.</li>
+          <li><code>ableton-learning-music-play-with-melodies/lessons/sounds/</code> archives the shared local Ableton audio stack: <strong>31 audio files</strong>.</li>
+          <li><code>ableton-learning-music-play-with-melodies/fonts/</code> archives the shared Learning Music typography stack: <strong>9 font files</strong>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>Export-to-Live remains neutralized in the archive build so the route does not expose a broken remote export path.</li>
+          <li>Non-local lesson links in the published body are either rewritten to shipped local Ableton routes or reduced to plain text.</li>
+          <li>The route keeps the shared footer as the only original-lesson reference surface.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the published widget runtime in place and prefer asset-path or shell cleanup over rewriting the lesson UI.</li>
+          <li>Music smoke should keep proving local script loading, transport or visible state changes, and zero remote playable media requests.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code>, <code>node interactive-explanation/tools/smoke-bundle.mjs --group music</code>, and the full smoke bundle after route changes.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

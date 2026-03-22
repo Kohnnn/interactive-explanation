@@ -1,0 +1,86 @@
+{
+    "calls-to-action": {
+        "send-us-your-feedback": "Send us your feedback!",
+        "go-to-ableton": "Go to Ableton.com ›",
+        "go-to-original-site": "Go to legacy (2021) site ›"
+    },
+    "technical": {
+        "browser-incompatible": "Your browser does not support this site. Please try using a recent version of Chrome, Firefox, Safari, Edge, or Opera.",
+        "noscript": "Please enable JavaScript in order to use this site."
+    },
+    "unmute-screen": {
+        "message": "Unmute your device before continuing",
+        "button": "Done, let’s go!"
+    },
+    "cookie-consent": {
+        "message": "We use our own cookies and third party cookies to ensure the proper functioning of the website, to personalize content and advertising and to analyze data traffic and user behavior based on pseudonymous data.",
+        "dismiss": "OK",
+        "learn-more": "More information and opt-out"
+    },
+    "names": {
+        "learning-synths": "Learning Synths",
+        "home": "Home",
+        "playground": "Playground",
+        "settings": "Settings",
+        "privacy-policy": "Privacy Policy",
+        "imprint": "Imprint"
+    },
+    "tooltips": {
+        "press": "Press",
+        "drag": "Drag",
+        "hold": "Hold",
+        "play": "Play",
+        "sequence": "Play Pattern",
+        "presets": "Presets"
+    },
+    "navigation": {
+        "next": "Next",
+        "back": "Back",
+        "previous": "Previous",
+        "openInPlayground": "Open in Playground",
+        "chapters": "Chapters"
+    },
+    "descriptions": {
+        "site": "Learn about synthesizers via Ableton’s interactive website. Play with a synth in your browser and learn to use the various parts of a synth to make your own sounds.",
+        "playground": "Make your own sounds"
+    },
+    "not-found": {
+        "title": "The page you're looking for does not exist.",
+        "recommendation1": "You could go back to the [home](/) page.",
+        "recommendation2": "But while you're here, you could also make some interesting noises."
+    },
+    "settings": {
+        "audioQuality": "Audio Quality",
+        "audioQualityInfo": "If you are experiencing issues with audio playback, changing to a lower quality setting might be helpful.",
+        "midiInput": "MIDI Input",
+        "midiInputUnavailable": "Your browser does not support MIDI input.",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "on": "On",
+        "off": "Off",
+        "keyboardLayout": "Keyboard Layout",
+        "piano": "Piano",
+        "isomorphic": "Isomorphic"
+    },
+    "export-to-live": {
+        "title": "Continue in Ableton Live",
+        "download-prompt": "Click on the link below to download an Ableton Live Set:",
+        "download-button-text": "Download Live Set",
+        "download-button-text-downloaded": "Downloaded.",
+        "download-instructions": "After the file is downloaded, open the zip file and double-click the file that ends with \".als\". This will open Ableton Live with a version of this synth. It will look a bit different than it does on this website, but it will sound the same.",
+        "basic-info": "You'll see a window on the right side of Live that will give you a short introduction to the software. In Live, you can continue making new sounds, and also create your own music using these sounds.",
+        "mfl-info": "Note: If you're using Live 9 or 10, you will need to have [Max For Live](https://www.ableton.com/live/max-for-live/) installed and authorized in order to use this file. (This isn't necessary if you're using Live 11.)",
+        "what-is-live-title": "What is Ableton Live?",
+        "what-is-live": "Ableton Live is software for music production. It comes with hundreds of sounds and tools to help you create and finish songs.",
+        "how-to-get-live": "If you don't have Ableton Live installed on your computer, you can download a free 30 day trial by clicking on the link below.",
+        "download-live-link": "[Download a free trial of Ableton Live](https://www.ableton.com/trial/)",
+        "learn-more-about-live-link": "[Learn more about Ableton Live](https://www.ableton.com/live/learn-live/)"
+    },
+    "perform-panel": {
+        "map": "Map",
+        "done": "Done",
+        "unmap-all": "Unmap all",
+        "drag-and-drop-prompt": "Drag & Drop"
+    }
+}

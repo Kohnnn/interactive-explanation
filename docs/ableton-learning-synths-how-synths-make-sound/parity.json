@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "lesson-shell-and-oscillator-runtime",
+    "originalBehavior": "The published lesson boots the Learning Synths shell and walks through oscillator changes with a slider-driven synth visualization.",
+    "localStatus": "The local route keeps that lesson shell and oscillator runtime under the route tree while moving provenance to the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-how-synths-make-sound/index.html",
+      "../../ableton-learning-synths-how-synths-make-sound/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive stays on the published runtime instead of rebuilding the oscillator examples in a custom synth UI.",
+      "Local chapter links are rewritten after mount so the lesson can stay within the shipped synth family."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading and the slider update path on the shipped oscillator scene.",
+      "The public route keeps footer-only provenance and strips the upstream lesson shell from the body."
+    ]
+  },
+  {
+    "moduleId": "local-media-and-model-archive",
+    "originalBehavior": "The published oscillator lesson relies on shared lesson media, including waveform visuals, text payloads, RNBO patch data, and 3D or canvas-backed helper assets.",
+    "localStatus": "The local route archives those assets under its own tree so the oscillator lesson can run without remote media fetches.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-how-synths-make-sound/content/assets/models/bee-scene.glb",
+      "../../ableton-learning-synths-how-synths-make-sound/content/assets/images/live-screenshot.png",
+      "../../ableton-learning-synths-how-synths-make-sound/content/texts/en/lesson-visualizations.json"
+    ],
+    "notes": [
+      "The archived inventory matches the shared Learning Synths bundle used by the other shipped synth lessons.",
+      "Model and image assets stay route-local so the oscillator lesson does not fall back to the upstream root path."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before interaction checks begin.",
+      "The no-remote-playable-media smoke guard stays clean after lesson boot."
+    ]
+  },
+  {
+    "moduleId": "waveform-slider-scene",
+    "originalBehavior": "The published oscillator lesson updates the opening slider scene as waveform shape changes and notes are retriggered.",
+    "localStatus": "The local route keeps the slider-driven waveform scene and note-trigger logic while serving the full lesson from local assets.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-how-synths-make-sound/index.html",
+      "../../ableton-learning-synths-how-synths-make-sound/js/musiclab.js"
+    ],
+    "notes": [
+      "The route treats the opening slider scene as parity-critical because it is the clearest oscillator control surface in the lesson.",
+      "The lesson remains mounted inside the published chapter shell instead of collapsing into a single custom widget."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the slider fill changes, the synth macro value updates, and the lesson enters and exits its active note state.",
+      "Responsive checks keep the oscillator lesson usable on narrow viewports under the local archive shell."
+    ]
+  }
+]

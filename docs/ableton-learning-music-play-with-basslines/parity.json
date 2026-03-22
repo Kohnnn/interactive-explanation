@@ -1,0 +1,56 @@
+[
+  {
+    "moduleId": "lesson-shell-and-widget-runtime",
+    "originalBehavior": "The published Ableton Learning Music: Play with basslines page mounts inside Ableton's Learning Music shell with the shared widget runtime, local CSS, and route-local media inventory.",
+    "localStatus": "The local route keeps that lesson shell focused on Ableton Learning Music: Play with basslines while removing the broader Learning Music navigation, cookie, and feedback surfaces from the public body.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-basslines/index.html",
+      "../../ableton-learning-music-play-with-basslines/css/main.css",
+      "../../ableton-learning-music-play-with-basslines/widgets/build/widgets.min.js"
+    ],
+    "notes": [
+      "The route keeps the published widget runtime instead of rewriting the lesson into a custom sequencer.",
+      "Public provenance is limited to the shared footer rather than the upstream lesson chrome."
+    ],
+    "evidence": [
+      "The route preserves the published Ableton lesson content under a route-local shell.",
+      "Music smoke coverage verifies local script loading before route-specific interactions begin."
+    ]
+  },
+  {
+    "moduleId": "local-media-inventory-and-runtime-apis",
+    "originalBehavior": "The published Learning Music lessons rely on a shared stack of local fonts, icons, sample banks, and Web Audio runtime helpers.",
+    "localStatus": "The local route archives that first-party media stack under the route tree so playback and widget rendering stay on GitHub Pages without remote playable media.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-basslines/lessons/sounds",
+      "../../ableton-learning-music-play-with-basslines/fonts",
+      "../../ableton-learning-music-play-with-basslines/third-party/tone/tone.min.js"
+    ],
+    "notes": [
+      "The shipped local inventory includes 31 audio files and 9 font files under the route tree.",
+      "Web Audio remains a browser capability requirement, but media bytes are archived locally."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies zero remote playable media requests for the route.",
+      "Docs record the local media inventory for the archive build."
+    ]
+  },
+  {
+    "moduleId": "control-paths-and-footer-only-provenance",
+    "originalBehavior": "The published Ableton Learning Music: Play with basslines lesson exposes widget controls, transport, and lesson-state changes inside the wider Ableton shell.",
+    "localStatus": "The local route keeps the lesson controls and visible state changes while neutralizing export and preserving the shared footer as the only original-lesson reference surface.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-basslines/index.html",
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css"
+    ],
+    "notes": [
+      "Non-local lesson links are either rewritten to shipped local Ableton routes or reduced to plain text.",
+      "The page keeps local canonical and og:url metadata for subpath hosting."
+    ],
+    "evidence": [
+      "The public-surface audit keeps footer-only provenance intact for the route.",
+      "Music smoke coverage verifies the route shell stays usable on narrow viewports."
+    ]
+  }
+]

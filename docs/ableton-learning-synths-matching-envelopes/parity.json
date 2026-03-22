@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "lesson-shell-and-matching-runtime",
+    "originalBehavior": "The published lesson boots the Learning Synths shell and compares synth envelopes against recorded sounds with a shared ADSR control surface.",
+    "localStatus": "The local route keeps that matching lesson shell and ADSR runtime under the route tree while moving provenance to the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-matching-envelopes/index.html",
+      "../../ableton-learning-synths-matching-envelopes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive preserves the published comparison scenes instead of rebuilding them in a custom envelope trainer.",
+      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading and the ADSR interaction path on the shipped route.",
+      "The public route keeps footer-only provenance and strips the upstream lesson shell from the body."
+    ]
+  },
+  {
+    "moduleId": "local-archive-inventory",
+    "originalBehavior": "The published lesson relies on shared Learning Synths fonts, text payloads, RNBO patch data, and lesson WAV files around the comparison scenes.",
+    "localStatus": "The local route archives that shared inventory under its own tree so the matching lesson can run without remote media dependencies.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-matching-envelopes/content/texts/en/envelopes.json",
+      "../../ableton-learning-synths-matching-envelopes/content/lessons/en/synthesis/door-filter-loop.wav",
+      "../../ableton-learning-synths-matching-envelopes/rnbo/patches/learning-synth.json"
+    ],
+    "notes": [
+      "The archived inventory matches the rest of the shipped Learning Synths batch.",
+      "Route-local assets stay on relative paths for GitHub Pages subpath hosting."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before the ADSR interaction checks begin.",
+      "The no-remote-playable-media smoke guard stays clean after lesson boot and interaction."
+    ]
+  },
+  {
+    "moduleId": "envelope-matching-scene",
+    "originalBehavior": "The published lesson redraws the ADSR envelope as controls move and lets users compare that shape against a recorded reference sound.",
+    "localStatus": "The local route keeps the envelope redraw and held-note path while serving the lesson entirely from archived assets.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-matching-envelopes/index.html",
+      "../../ableton-learning-synths-matching-envelopes/js/musiclab.js"
+    ],
+    "notes": [
+      "The envelope-matching scene is treated as parity-critical because it is the payoff interaction in the lesson.",
+      "The route keeps the published chapter shell instead of condensing the lesson into a standalone control card."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the ADSR envelope path redraws and that the route can hold a synth note after parameter changes.",
+      "Responsive checks keep the matching lesson usable on narrow viewports under the local archive shell."
+    ]
+  }
+]

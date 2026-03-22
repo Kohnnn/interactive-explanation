@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "lesson-shell-and-envelope-runtime",
+    "originalBehavior": "The published lesson boots the Learning Synths shell and introduces ADSR shaping through a press-and-hold envelope scene.",
+    "localStatus": "The local route keeps that envelope lesson shell and ADSR runtime under the route tree while moving provenance to the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/index.html",
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive preserves the published envelope scenes instead of rebuilding them in a custom synth teaching page.",
+      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading and the ADSR interaction path on the shipped route.",
+      "The public route keeps footer-only provenance and strips the upstream lesson shell from the body."
+    ]
+  },
+  {
+    "moduleId": "local-archive-inventory",
+    "originalBehavior": "The published lesson relies on shared Learning Synths fonts, text payloads, RNBO patch data, and lesson WAV files around the ADSR scene.",
+    "localStatus": "The local route archives that shared inventory under its own tree so the envelope lesson can run without remote media dependencies.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/content/texts/en/envelopes.json",
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/content/lessons/en/synthesis/sustain-clarinet.wav",
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/rnbo/patches/learning-synth.json"
+    ],
+    "notes": [
+      "The archived inventory matches the rest of the shipped Learning Synths batch.",
+      "Route-local assets stay on relative paths for GitHub Pages subpath hosting."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before the ADSR interaction checks begin.",
+      "The no-remote-playable-media smoke guard stays clean after lesson boot and interaction."
+    ]
+  },
+  {
+    "moduleId": "adsr-shape-and-note-trigger",
+    "originalBehavior": "The published lesson redraws the ADSR envelope as attack, decay, sustain, and release change, and it lets users hold and release notes against that shape.",
+    "localStatus": "The local route keeps the ADSR redraw and held-note path while serving the lesson entirely from archived assets.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/index.html",
+      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/js/musiclab.js"
+    ],
+    "notes": [
+      "The envelope shape scene is treated as parity-critical because it is the clearest demonstration in the lesson.",
+      "The route keeps the published chapter shell instead of condensing the lesson into a single control card."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the ADSR envelope path redraws and that the route can hold a synth note after parameter changes.",
+      "Responsive checks keep the envelope lesson usable on narrow viewports under the local archive shell."
+    ]
+  }
+]

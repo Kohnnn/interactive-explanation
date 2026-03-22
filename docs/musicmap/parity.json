@@ -1,0 +1,57 @@
+[
+  {
+    "moduleId": "graph-shell-search-and-genre-pane",
+    "originalBehavior": "The published Musicmap page boots a large SVG graph with zoom controls, search, genre navigation, and a right-side genre pane with descriptive copy and playlist context.",
+    "localStatus": "The local route keeps the published graph shell, local search payload, zoom-to-genre behavior, and right-side genre pane while moving provenance into the shared footer.",
+    "sourceFiles": [
+      "../../musicmap/index.html",
+      "../../musicmap/main.bundle.js",
+      "../../musicmap/master-genrelist.json"
+    ],
+    "notes": [
+      "The route stays on the vendored published bundle instead of reauthoring the map.",
+      "Search and genre hydration rely on the vendored JSON payload inside the local route tree."
+    ],
+    "evidence": [
+      "Music smoke coverage opens search results, loads a genre pane, and verifies the local song list and playlist links.",
+      "The local graph shell exposes the same zoom buttons, search controls, and genre side pane structure as the published page."
+    ]
+  },
+  {
+    "moduleId": "local-asset-inventory-and-shell-cleanup",
+    "originalBehavior": "The published route includes shell-level banners, privacy and about panes, social buttons, analytics hooks, remote fonts, and other non-core page chrome around the map.",
+    "localStatus": "The local route archives the first-party static shell assets locally, strips the non-essential promo and tracking surfaces from the public body, and rewrites the shell to local metadata and footer-only provenance.",
+    "sourceFiles": [
+      "../../musicmap/index.html",
+      "../../musicmap/main.css",
+      "../../musicmap/assets/e8f26119eda90cfa574d.jpg",
+      "../../musicmap/assets/e5134e83ed35c5376b64.woff2",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The vendored static inventory includes 5 files under musicmap/assets, plus main.css, main.bundle.js, master-genrelist.json, favicon.ico, and apple-touch-icon.png.",
+      "Remote font imports were replaced with local font-family fallbacks in the vendored CSS."
+    ],
+    "evidence": [
+      "The public route no longer ships the upstream store banner, privacy banner, disclaimer panes, social buttons, Google Analytics, or Facebook SDK in the body shell.",
+      "The public-surface audit enforces footer-only provenance and Musicmap-specific shell cleanup on the route HTML."
+    ]
+  },
+  {
+    "moduleId": "scoped-youtube-and-spotify-exception",
+    "originalBehavior": "The published Musicmap runtime cues remote playlists and exposes direct YouTube and Spotify playlist surfaces inside the genre pane.",
+    "localStatus": "The local route keeps playlist context but gates playback behind explicit user clicks that create only YouTube or Spotify embeds, with no eager remote media shell before interaction.",
+    "sourceFiles": [
+      "../../musicmap/musicmap-embed-gate.js",
+      "../../musicmap/index.html"
+    ],
+    "notes": [
+      "This exception is scoped to Musicmap only; the rest of the music family still requires fully local media archives.",
+      "Allowed remote playback providers are YouTube and Spotify only, and only after user action."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the route stays remote-clean before interaction, then creates an allowed deferred embed after a user click.",
+      "The route converts playlist actions into iframe embeds instead of preserving the upstream eager iframe API flow."
+    ]
+  }
+]

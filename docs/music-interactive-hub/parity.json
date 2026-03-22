@@ -1,0 +1,65 @@
+[
+  {
+    "moduleId": "editorial-shell-and-local-navigation",
+    "originalBehavior": "The shipped music collection spans multiple source families, but there is no single local page that turns those routes into one music-specific entry point.",
+    "localStatus": "The local hub creates one curated editorial route that links only to local music replicas and local docs pages while keeping a neutral shared-footer provenance label instead of implying a single upstream original.",
+    "sourceFiles": [
+      "../../music-interactive-hub/index.html",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "This route is intentionally a local curation page rather than a direct one-source mirror.",
+      "The public body links only to local routes and local docs pages.",
+      "Curated multi-source provenance is documented in the local docs instead of a single external original-page link."
+    ],
+    "evidence": [
+      "Smoke coverage checks the full local card count and verifies all hub hrefs stay local.",
+      "The route exposes a recommended path and cluster navigation without any external body links."
+    ]
+  },
+  {
+    "moduleId": "clustered-learning-arc-across-four-families",
+    "originalBehavior": "The live music routes cover different goals: interval or note drills, multitrack sequencing, painted pattern writing, and genre history.",
+    "localStatus": "The local hub groups those experiences into three editorial clusters and one recommended path so the music collection reads as a progression rather than a flat list.",
+    "sourceFiles": [
+      "../../music-interactive-hub/index.html",
+      "../../teoria-note-ear-training/index.html",
+      "../../ableton-learning-music-playground/index.html",
+      "../../ableton-learning-music-play-with-beats/index.html",
+      "../../ableton-learning-music-play-with-notes-and-scales/index.html",
+      "../../ableton-learning-music-play-with-chords/index.html",
+      "../../ableton-learning-music-play-with-basslines/index.html",
+      "../../ableton-learning-music-play-with-melodies/index.html",
+      "../../ableton-learning-music-play-with-song-structures/index.html",
+      "../../chrome-music-lab-song-maker/index.html",
+      "../../musicmap/index.html"
+    ],
+    "notes": [
+      "The cluster counts are 6 Teoria routes, 8 sequencing routes, and 1 genre-history route.",
+      "The recommended path now walks from ear training into beats, notes, chords, full-loop composition, and finally genre context."
+    ],
+    "evidence": [
+      "The hub groups ear training and notation separately from sequencing and genre context.",
+      "Smoke coverage verifies the cluster counts and recommended-path panel remain visible on desktop and mobile widths."
+    ]
+  },
+  {
+    "moduleId": "shared-shell-styling-and-footer-only-provenance",
+    "originalBehavior": "Custom local hub pages need their own layout and copy but still have to follow the site's shared metadata and footer contract.",
+    "localStatus": "The hub reuses shared site styling, adds a bespoke warm editorial layout, and keeps the shared footer as the only provenance surface through a neutral curated-route mode.",
+    "sourceFiles": [
+      "../../music-interactive-hub/index.html",
+      "../../shared/site.css",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The page follows the reusable design principles without reusing the separate naming vocabulary from DESIGN.md.",
+      "No external shell, promo, or provenance links are exposed in the hub body."
+    ],
+    "evidence": [
+      "The route uses shared site.css tokens plus route-local styling for the music-specific hero and clusters.",
+      "The public-surface audit keeps footer-only provenance intact for the hub route."
+    ]
+  }
+]

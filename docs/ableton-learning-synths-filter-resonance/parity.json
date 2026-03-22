@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "lesson-shell-and-filter-runtime",
+    "originalBehavior": "The published filter lesson boots the Learning Synths shell and uses an XY control to reshape the filter response in real time.",
+    "localStatus": "The local route keeps that filter lesson shell and XY runtime under the route tree while moving provenance to the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/index.html",
+      "../../ableton-learning-synths-filter-resonance/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive preserves the published filter scene rather than rebuilding it in a custom control layer.",
+      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading and the filter-scene update path on the shipped route.",
+      "The public route keeps footer-only provenance and strips upstream lesson chrome from the body."
+    ]
+  },
+  {
+    "moduleId": "local-media-and-text-archive",
+    "originalBehavior": "The published filter lesson relies on the same shared Learning Synths fonts, text payloads, RNBO patch data, and helper assets as the rest of the site.",
+    "localStatus": "The local route archives that shared inventory under its own tree so the filter lesson can run without remote media dependencies.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/content/texts/en/common.json",
+      "../../ableton-learning-synths-filter-resonance/content/assets/models/door-scene.glb",
+      "../../ableton-learning-synths-filter-resonance/rnbo/patches/learning-synth.json"
+    ],
+    "notes": [
+      "The archived inventory matches the rest of the shipped Learning Synths batch.",
+      "Route-local assets stay on relative paths for GitHub Pages subpath hosting."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before the filter interaction checks begin.",
+      "The no-remote-playable-media smoke guard stays clean after lesson boot and interaction."
+    ]
+  },
+  {
+    "moduleId": "filter-curve-interaction",
+    "originalBehavior": "The published lesson updates the filter curve and synth response as the XY control moves across cutoff and resonance space.",
+    "localStatus": "The local route keeps that filter curve scene and note-trigger path while serving the lesson entirely from archived assets.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/index.html",
+      "../../ableton-learning-synths-filter-resonance/js/musiclab.js"
+    ],
+    "notes": [
+      "The filter curve scene is treated as parity-critical because it is the clearest demonstration in the lesson.",
+      "The route keeps the published lesson structure instead of collapsing the scene into a standalone demo."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the filter curve path changes, the macro values update, and the route enters the active note state during the interaction.",
+      "Responsive checks keep the filter lesson usable on narrow viewports under the local archive shell."
+    ]
+  }
+]

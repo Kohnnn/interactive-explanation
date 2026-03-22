@@ -62,6 +62,7 @@ function phaseLog(message) {
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".eot": "application/vnd.ms-fontobject",
+  ".gif": "image/gif",
   ".html": "text/html; charset=utf-8",
   ".ico": "image/x-icon",
   ".jpeg": "image/jpeg",
@@ -101,16 +102,34 @@ const rememberDownloadCardNames = [
   "you_when",
 ];
 
+const abletonLessonBatchSlugs = [
+  "ableton-learning-music-play-with-beats",
+  "ableton-learning-music-play-with-notes-and-scales",
+  "ableton-learning-music-play-with-chords",
+  "ableton-learning-music-play-with-basslines",
+  "ableton-learning-music-play-with-melodies",
+  "ableton-learning-music-play-with-song-structures",
+];
+
+const abletonSynthLessonSlugs = [
+  "ableton-learning-synths-get-started",
+  "ableton-learning-synths-how-synths-make-sound",
+  "ableton-learning-synths-filter-resonance",
+  "ableton-learning-synths-modulating-amplitude-with-envelopes",
+  "ableton-learning-synths-matching-envelopes",
+  "ableton-learning-synths-recipes",
+];
+
 const routeManifestPath = path.join(rootDir, "routes.manifest.json");
 const routeManifest = fs.existsSync(routeManifestPath)
   ? JSON.parse(fs.readFileSync(routeManifestPath, "utf8"))
   : [];
-const routeFamilyBySlug = new Map(routeManifest.map((route) => [route.slug, inferRouteFamily(route)]));
+const routeGroupsBySlug = new Map(routeManifest.map((route) => [route.slug, inferRouteGroups(route)]));
 const selectedGroups = new Set(getArgValues("--group"));
 const selectedRoutes = new Set(getArgValues("--route"));
 
 function inferRouteFamily(route) {
-  if (["blockchain-101-combined-flow", "primary-interactive-hub"].includes(route.slug)) {
+  if (["blockchain-101-combined-flow", "primary-interactive-hub", "music-interactive-hub"].includes(route.slug)) {
     return "custom";
   }
 
@@ -131,6 +150,15 @@ function inferRouteFamily(route) {
   if (/ciechanow\.ski/i.test(referenceUrl)) {
     return "ciechanowski";
   }
+  if (/teoria\.com/i.test(referenceUrl)) {
+    return "teoria";
+  }
+  if (/learningmusic\.ableton\.com|learningsynths\.ableton\.com/i.test(referenceUrl)) {
+    return "ableton";
+  }
+  if (/musicmap\.info/i.test(referenceUrl)) {
+    return "musicmap";
+  }
   if (/samwho\.dev/i.test(referenceUrl)) {
     return "samwho";
   }
@@ -142,6 +170,21 @@ function inferRouteFamily(route) {
   }
 
   return "custom";
+}
+
+function inferRouteGroups(route) {
+  const family = inferRouteFamily(route);
+  const groups = new Set([family]);
+
+  if (
+    ["teoria", "musicmap"].includes(family) ||
+    route.slug === "music-interactive-hub" ||
+    /learningmusic\.ableton\.com|learningsynths\.ableton\.com|musiclab\.chromeexperiments\.com/i.test(route.referenceUrl || "")
+  ) {
+    groups.add("music");
+  }
+
+  return groups;
 }
 
 function shouldRunSlug(slug) {
@@ -157,8 +200,10 @@ function shouldRunSlug(slug) {
     return true;
   }
 
-  const family = routeFamilyBySlug.get(slug) || "custom";
-  return selectedGroups.has("all") || selectedGroups.has(slug) || selectedGroups.has(family);
+  const groups = routeGroupsBySlug.get(slug) || new Set(["custom"]);
+  return selectedGroups.has("all") ||
+    selectedGroups.has(slug) ||
+    Array.from(groups).some((group) => selectedGroups.has(group));
 }
 
 function exists(relativePath) {
@@ -316,6 +361,84 @@ async function assertLocalScriptSources(page, expectedSources, label) {
       `${label} did not load ${expectedSource} from local assets`,
     );
   }
+}
+
+async function assertNoRemotePlayableMediaRequests(page, label) {
+  const baseOrigin = new URL(baseUrl).origin;
+  const remoteMedia = await page.evaluate((origin) => {
+    const mediaExtension = /\.(mp3|ogg|wav|m4a|opus|mp4|webm)(?:[?#].*)?$/i;
+    return performance
+      .getEntriesByType("resource")
+      .map((entry) => ({ name: entry.name, initiatorType: entry.initiatorType || "" }))
+      .filter((entry) => {
+        try {
+          const url = new URL(entry.name, window.location.href);
+          return url.origin !== origin &&
+            (mediaExtension.test(url.pathname) || ["audio", "video"].includes(entry.initiatorType));
+        } catch {
+          return false;
+        }
+      });
+  }, baseOrigin);
+
+  assert(
+    remoteMedia.length === 0,
+    `${label} loaded remote playable media:\n${remoteMedia.map((entry) => entry.name).join("\n")}`,
+  );
+}
+
+function createRemoteRequestMonitor(page) {
+  const requests = [];
+
+  page.on("request", (request) => {
+    requests.push(request.url());
+  });
+
+  return {
+    snapshot() {
+      return requests.slice();
+    },
+    diff(fromIndex = 0) {
+      return requests.slice(fromIndex);
+    },
+  };
+}
+
+function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label) {
+  const baseOrigin = new URL(baseUrl).origin;
+  const disallowed = requestUrls.filter((requestUrl) => {
+    try {
+      const url = new URL(requestUrl);
+      if (url.origin === baseOrigin) {
+        return false;
+      }
+
+      return !allowedHosts.some((host) => url.hostname === host || url.hostname.endsWith(`.${host}`));
+    } catch {
+      return false;
+    }
+  });
+
+  assert(
+    disallowed.length === 0,
+    `${label} made disallowed remote requests:\n${disallowed.join("\n")}`,
+  );
+}
+
+function countFilesRecursive(relativePath) {
+  const fullPath = path.join(rootDir, relativePath);
+  let count = 0;
+
+  for (const entry of fs.readdirSync(fullPath, { withFileTypes: true })) {
+    const nextRelativePath = path.join(relativePath, entry.name);
+    if (entry.isDirectory()) {
+      count += countFilesRecursive(nextRelativePath);
+    } else if (entry.isFile()) {
+      count += 1;
+    }
+  }
+
+  return count;
 }
 
 async function setRangeControlByLabel(page, scopeSelector, labelText, value) {
@@ -3620,6 +3743,1083 @@ async function smokeReadingQrCodesWithoutAComputer(context) {
   await page.close();
 }
 
+const TEORIA_AUDIO_SAMPLE_COUNT = 63;
+
+function teoriaExerciseScripts(exerciseScript, musikaScript = "musika_250207.js") {
+  return [
+    "./vendor/jquery.min.js",
+    `./res/js/min_24/musika/${musikaScript}`,
+    "./res/js/min_24/musika/musika_en_250207.js",
+    "./res/js/min_24/exe_babel/exe_babel_en_250614.js",
+    `./res/js/min_24/exe/${exerciseScript}`,
+  ];
+}
+
+async function waitForTeoriaOptions(page, expectedSampleCount = TEORIA_AUDIO_SAMPLE_COUNT) {
+  await page.waitForFunction((sampleCount) => {
+    return window.exe?.teoExe?.webAudio?.p_soundsCount === sampleCount &&
+      (
+        document.querySelector("#opts")?.offsetParent !== null ||
+        document.querySelector("#ov_continue")?.offsetParent !== null ||
+        document.querySelector("#ov_save")?.offsetParent !== null
+      );
+  }, expectedSampleCount, { timeout: 45000 });
+}
+
+async function startTeoriaExercise(page, config) {
+  const continueVisible = await page.locator("#ov_continue").isVisible().catch(() => false);
+  if (continueVisible) {
+    await page.click("#ov_continue");
+    await page.waitForTimeout(250);
+  }
+
+  for (const selector of config.optionSelectors || []) {
+    await page.click(selector);
+  }
+
+  await page.click("#ov_save");
+  await page.waitForSelector("#exe", { state: "visible", timeout: 20000 });
+  await page.waitForFunction((selector) => {
+    return getComputedStyle(document.querySelector(selector)).display !== "none";
+  }, config.exerciseSelector, { timeout: 10000 });
+}
+
+async function assertTeoriaCanvasInteraction(page, config) {
+  const beforeCanvas = await page.locator(config.canvasSelector).evaluate((canvas) => canvas.toDataURL());
+  const selectors = config.interactionSelectors || [config.interactionSelector];
+
+  for (const selector of selectors) {
+    await page.click(selector);
+    await page.waitForTimeout(300);
+    const afterCanvas = await page.locator(config.canvasSelector).evaluate((canvas) => canvas.toDataURL());
+    if (afterCanvas !== beforeCanvas) {
+      return;
+    }
+  }
+
+  throw new Error(`${config.label} did not redraw the expected notation surface`);
+}
+
+async function assertTeoriaMessageInteraction(page, config) {
+  const beforeMessage = ((await page.locator("#tsp_mess").textContent()) || "").trim();
+  await page.click(config.interactionSelector);
+  await page.waitForFunction((previousMessage) => {
+    return ((document.querySelector("#tsp_mess")?.textContent || "").trim()) !== previousMessage;
+  }, beforeMessage, { timeout: 5000 });
+}
+
+async function assertTeoriaRevealFlow(page, label) {
+  const scoreBeforeReveal = ((await page.locator("#tsp_score").textContent()) || "").trim();
+  const messageBeforeReveal = ((await page.locator("#tsp_mess").textContent()) || "").trim();
+  await page.click("#pp_tellMe");
+  await page.waitForFunction((previousMessage) => {
+    return getComputedStyle(document.querySelector("#ev_next")).display !== "none" ||
+      ((document.querySelector("#tsp_mess")?.textContent || "").trim()) !== previousMessage;
+  }, messageBeforeReveal, { timeout: 5000 });
+  const revealState = await page.evaluate(() => ({
+    message: (document.querySelector("#tsp_mess")?.textContent || "").trim(),
+    score: (document.querySelector("#tsp_score")?.textContent || "").trim(),
+    nextVisible: getComputedStyle(document.querySelector("#ev_next")).display,
+  }));
+  assert(
+    revealState.message !== messageBeforeReveal ||
+      revealState.score !== scoreBeforeReveal ||
+      revealState.nextVisible !== "none",
+    `${label} did not advance the correctness state after reveal`,
+  );
+  assert(revealState.nextVisible !== "none", `${label} did not advance to the next-exercise state`);
+}
+
+async function smokeTeoriaExercise(context, config) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, `${config.slug}/`, "#reference-footer");
+  await assertLocalScriptSources(page, teoriaExerciseScripts(config.exerciseScript, config.musikaScript), config.label);
+  await waitForTeoriaOptions(page);
+
+  const preloadStats = await page.evaluate(() => ({
+    soundsCount: window.exe?.teoExe?.webAudio?.p_soundsCount ?? 0,
+    totalSounds: window.exe?.teoExe?.webAudio?.p_totalSounds ?? 0,
+    audioPath: window.exe?.teoExe?.webAudio?.p_path ?? "",
+  }));
+  assert(preloadStats.soundsCount === TEORIA_AUDIO_SAMPLE_COUNT, `${config.label} did not preload the full local piano bank`);
+  assert(preloadStats.totalSounds === TEORIA_AUDIO_SAMPLE_COUNT, `${config.label} expected ${TEORIA_AUDIO_SAMPLE_COUNT} local piano samples`);
+  assert(preloadStats.audioPath === "./res/musika_2024/audio/", `${config.label} did not use the local audio tree`);
+  await assertNoRemotePlayableMediaRequests(page, config.label);
+  console.log(`OK ${config.slug} local assets`);
+
+  await startTeoriaExercise(page, config);
+  for (const selector of config.requiredSelectors || []) {
+    await page.waitForSelector(selector, { timeout: 5000 });
+  }
+  if (config.readyMessage) {
+    await page.waitForFunction((expectedMessage) => {
+      return ((document.querySelector("#tsp_mess")?.textContent || "").trim()) === expectedMessage;
+    }, config.readyMessage, { timeout: 20000 });
+  }
+
+  if (config.interactionType === "canvas-change") {
+    await assertTeoriaCanvasInteraction(page, config);
+  } else if (config.interactionType === "message-change") {
+    await assertTeoriaMessageInteraction(page, config);
+  }
+  console.log(`OK ${config.slug} interaction surface`);
+
+  await assertTeoriaRevealFlow(page, config.label);
+  console.log(`OK ${config.slug} answer flow`);
+
+  await assertViewportUsable(page, `${config.slug} route`);
+  const mobilePage = await context.newPage();
+  await mobilePage.setViewportSize({ width: 390, height: 844 });
+  await assertRoute(mobilePage, `${config.slug}/`, "#reference-footer");
+  await waitForTeoriaOptions(mobilePage);
+  await assertViewportUsable(mobilePage, `${config.slug} route`);
+  await mobilePage.close();
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean(`${config.slug} route`);
+  console.log(`OK ${config.slug} responsive shell`);
+  await page.close();
+}
+
+async function smokeTeoriaIntervalEarTraining(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-interval-ear-training",
+    label: "teoria interval ear training route",
+    exerciseScript: "ie.js",
+    musikaScript: "musika_260103.js",
+    optionSelectors: ["#ov_note"],
+    exerciseSelector: "#ev_note",
+    interactionType: "canvas-change",
+    canvasSelector: "#staff_staff",
+    interactionSelector: "#mknp_ev_noteC",
+    interactionSelectors: ["#mknp_ev_noteC", "#mknp_ev_noteD"],
+  });
+}
+
+async function smokeTeoriaNoteEarTraining(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-note-ear-training",
+    label: "teoria note ear training route",
+    exerciseScript: "ne_250201.js",
+    optionSelectors: ["#ov_note"],
+    exerciseSelector: "#ev_note",
+    interactionType: "canvas-change",
+    canvasSelector: "#staff_staff",
+    interactionSelector: "#mknp_ev_noteC",
+    interactionSelectors: ["#mknp_ev_noteC", "#mknp_ev_noteD"],
+  });
+}
+
+async function smokeTeoriaKeyAndNoteEarTraining(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-key-and-note-ear-training",
+    label: "teoria key and note ear training route",
+    exerciseScript: "kne.js",
+    optionSelectors: ["#ov_note", "#ov_playRef"],
+    exerciseSelector: "#ev_note",
+    interactionType: "canvas-change",
+    canvasSelector: "#staff_staff",
+    interactionSelector: "#mknp_ev_noteC",
+    interactionSelectors: ["#mknp_ev_noteC", "#mknp_ev_noteD"],
+    requiredSelectors: ["#pp_extra0"],
+  });
+}
+
+async function smokeTeoriaRandomKeyAndNoteEarTraining(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-random-key-and-note-ear-training",
+    label: "teoria random key and note ear training route",
+    exerciseScript: "kner.js",
+    optionSelectors: ["#ov_note", "#ov_playRef"],
+    exerciseSelector: "#ev_note",
+    interactionType: "canvas-change",
+    canvasSelector: "#staff_staff",
+    interactionSelector: "#mknp_ev_noteC",
+    interactionSelectors: ["#mknp_ev_noteC", "#mknp_ev_noteD"],
+    requiredSelectors: ["#pp_extra0"],
+  });
+}
+
+async function smokeTeoriaScaleConstruction(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-scale-construction",
+    label: "teoria scale construction route",
+    exerciseScript: "sc_250101.js",
+    exerciseSelector: "#ev_note",
+    interactionType: "canvas-change",
+    canvasSelector: "#staff_ev_staff",
+    interactionSelector: "#mknp_ev_noteC",
+    interactionSelectors: ["#mknp_ev_noteC", "#mknp_ev_noteD"],
+  });
+}
+
+async function smokeTeoriaIntervalIdentificationAndInversion(context) {
+  await smokeTeoriaExercise(context, {
+    slug: "teoria-interval-identification-and-inversion",
+    label: "teoria interval identification and inversion route",
+    exerciseScript: "iv.js",
+    exerciseSelector: "#ev_int",
+    interactionType: "message-change",
+    interactionSelector: "#mkip_M3",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayground(context) {
+  assert(
+    countFilesRecursive("ableton-learning-music-playground/lessons/sounds") === 31,
+    "ableton-learning-music-playground route expected 31 local audio files",
+  );
+  assert(
+    countFilesRecursive("ableton-learning-music-playground/fonts") === 9,
+    "ableton-learning-music-playground route expected 9 local font files",
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "ableton-learning-music-playground/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    [
+      "./third-party/polyfills/polyfills.js",
+      "./third-party/tone/tone.min.js",
+      "./third-party/microevent/microevent.js",
+      "./widgets/build/widgets.min.js",
+      "./widgets/build/SimplePianoRoll.js",
+      "../shared/public-footer.js",
+    ],
+    "ableton-learning-music-playground route",
+  );
+  await page.waitForFunction(() => {
+    return document.querySelectorAll(".widget").length === 4 &&
+      document.querySelectorAll(".widget__transport-btn").length >= 4 &&
+      Boolean(document.querySelector("#_theplaygroundplaygroundbass .widget__choice"));
+  }, null, { timeout: 30000 });
+  await assertNoRemotePlayableMediaRequests(page, "ableton-learning-music-playground route");
+  console.log("OK ableton-learning-music-playground local assets");
+
+  const transportBefore = await page.evaluate(() => ({
+    widgetCount: document.querySelectorAll(".widget").length,
+    transportCount: document.querySelectorAll(".widget__transport-btn").length,
+    bassSelectedRoot: document.querySelector("#_theplaygroundplaygroundbass .widget__choice--selected")?.textContent?.trim() || "",
+  }));
+  assert(transportBefore.widgetCount === 4, "ableton-learning-music-playground route did not mount all four widgets");
+  assert(transportBefore.transportCount >= 4, "ableton-learning-music-playground route did not expose transport controls");
+
+  await page.locator("button.widget__transport-btn").first().click();
+  await page.waitForTimeout(700);
+  const playbackState = await page.evaluate(() => ({
+    toneState: window.Tone?.getContext?.().state || "",
+    widgetGlobals: [
+      "_theplaygroundplaygrounddrumssequencer",
+      "_theplaygroundplaygroundbass",
+      "_theplaygroundplaygroundpiano",
+      "_theplaygroundplaygroundsynth",
+    ].every((key) => Boolean(window[key])),
+  }));
+  assert(playbackState.toneState === "running", "ableton-learning-music-playground route did not start the local transport");
+  assert(playbackState.widgetGlobals, "ableton-learning-music-playground route did not hydrate all widget globals");
+  console.log("OK ableton-learning-music-playground transport");
+
+  const bassChoices = page.locator("#_theplaygroundplaygroundbass .widget__choice");
+  await bassChoices.nth(2).click();
+  await page.waitForTimeout(250);
+  const editState = await page.evaluate(() => ({
+    selectedRoot: document.querySelector("#_theplaygroundplaygroundbass .widget__choice--selected")?.textContent?.trim() || "",
+    selectedScale: document.querySelectorAll("#_theplaygroundplaygroundbass .widget__choice--selected").length,
+  }));
+  assert(editState.selectedRoot === "D", `ableton-learning-music-playground route expected D root after edit, got ${editState.selectedRoot || "none"}`);
+  assert(editState.selectedScale >= 2, "ableton-learning-music-playground route lost synchronized chooser state after edit");
+  await assertNoRemotePlayableMediaRequests(page, "ableton-learning-music-playground route");
+  console.log("OK ableton-learning-music-playground edit path");
+
+  await assertViewportUsable(page, "ableton-learning-music-playground route");
+  await assertRouteViewportUsable(
+    context,
+    "ableton-learning-music-playground/",
+    "#reference-footer",
+    "button.widget__transport-btn",
+    "ableton-learning-music-playground route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("ableton-learning-music-playground route");
+  console.log("OK ableton-learning-music-playground responsive shell");
+  await page.close();
+}
+
+async function smokeAbletonLearningMusicLesson(context, config) {
+  const {
+    slug,
+    label,
+    widgetCount,
+    transportCount,
+    editKind,
+  } = config;
+
+  assert(
+    countFilesRecursive(`${slug}/lessons/sounds`) === 31,
+    `${label} expected 31 local audio files`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/fonts`) === 9,
+    `${label} expected 9 local font files`,
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, `${slug}/`, "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    [
+      "./third-party/polyfills/polyfills.js",
+      "./third-party/tone/tone.min.js",
+      "./third-party/microevent/microevent.js",
+      "./widgets/build/widgets.min.js",
+      "./widgets/build/SimplePianoRoll.js",
+      "../shared/public-footer.js",
+    ],
+    label,
+  );
+  await page.waitForFunction(({ widgetCount, transportCount }) => {
+    return document.querySelectorAll(".widget").length >= widgetCount &&
+      document.querySelectorAll("button.widget__transport-btn").length >= transportCount;
+  }, { widgetCount, transportCount }, { timeout: 30000 });
+  await assertNoRemotePlayableMediaRequests(page, label);
+  console.log(`OK ${label} local assets`);
+
+  await page.locator("button.widget__transport-btn").first().click();
+  await page.waitForTimeout(700);
+  const playbackState = await page.evaluate(() => ({
+    toneState: window.Tone?.getContext?.().state || "",
+    transportCount: document.querySelectorAll("button.widget__transport-btn").length,
+  }));
+  assert(playbackState.toneState === "running", `${label} did not start the local transport`);
+  assert(playbackState.transportCount >= 2, `${label} lost transport controls after playback start`);
+  console.log(`OK ${label} transport`);
+
+  if (editKind === "tempo") {
+    const tempoState = await page.evaluate(() => {
+      const slider = document.querySelector("input[type='range']");
+      if (!slider) {
+        return null;
+      }
+
+      const before = slider.value;
+      slider.value = "96";
+      slider.dispatchEvent(new Event("input", { bubbles: true }));
+      slider.dispatchEvent(new Event("change", { bubbles: true }));
+      return {
+        before,
+        after: slider.value,
+      };
+    });
+    assert(tempoState, `${label} did not expose a tempo slider`);
+    assert(tempoState.after === "96", `${label} did not accept the new tempo value`);
+  } else if (editKind === "root-choice") {
+    const choices = page.locator(".widget__choice");
+    await choices.nth(2).click();
+    await page.waitForTimeout(250);
+    const editState = await page.evaluate(() => ({
+      selectedRoot: document.querySelector(".widget__choice--selected")?.textContent?.trim() || "",
+      selectedCount: document.querySelectorAll(".widget__choice--selected").length,
+    }));
+    assert(editState.selectedRoot === "D", `${label} expected D root after edit, got ${editState.selectedRoot || "none"}`);
+    assert(editState.selectedCount >= 2, `${label} lost synchronized chooser state after edit`);
+  }
+  await assertNoRemotePlayableMediaRequests(page, label);
+  console.log(`OK ${label} edit path`);
+
+  await assertViewportUsable(page, label);
+  await assertRouteViewportUsable(
+    context,
+    `${slug}/`,
+    "#reference-footer",
+    "button.widget__transport-btn",
+    label,
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean(label);
+  console.log(`OK ${label} responsive shell`);
+  await page.close();
+}
+
+async function smokeAbletonLearningMusicPlayWithBeats(context) {
+  await smokeAbletonLearningMusicLesson(context, {
+    slug: "ableton-learning-music-play-with-beats",
+    label: "ableton-learning-music-play-with-beats route",
+    widgetCount: 1,
+    transportCount: 2,
+    editKind: "tempo",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayWithNotesAndScales(context) {
+  await smokeAbletonLearningMusicLesson(context, {
+    slug: "ableton-learning-music-play-with-notes-and-scales",
+    label: "ableton-learning-music-play-with-notes-and-scales route",
+    widgetCount: 2,
+    transportCount: 4,
+    editKind: "root-choice",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayWithChords(context) {
+  await smokeAbletonLearningMusicLesson(context, {
+    slug: "ableton-learning-music-play-with-chords",
+    label: "ableton-learning-music-play-with-chords route",
+    widgetCount: 2,
+    transportCount: 4,
+    editKind: "root-choice",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayWithBasslines(context) {
+  await smokeAbletonLearningMusicLesson(context, {
+    slug: "ableton-learning-music-play-with-basslines",
+    label: "ableton-learning-music-play-with-basslines route",
+    widgetCount: 2,
+    transportCount: 4,
+    editKind: "root-choice",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayWithMelodies(context) {
+  await smokeAbletonLearningMusicLesson(context, {
+    slug: "ableton-learning-music-play-with-melodies",
+    label: "ableton-learning-music-play-with-melodies route",
+    widgetCount: 2,
+    transportCount: 4,
+    editKind: "root-choice",
+  });
+}
+
+async function smokeAbletonLearningMusicPlayWithSongStructures(context) {
+  assert(
+    countFilesRecursive("ableton-learning-music-play-with-song-structures/lessons/sounds") === 31,
+    "ableton-learning-music-play-with-song-structures route expected 31 local audio files",
+  );
+  assert(
+    countFilesRecursive("ableton-learning-music-play-with-song-structures/fonts") === 9,
+    "ableton-learning-music-play-with-song-structures route expected 9 local font files",
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "ableton-learning-music-play-with-song-structures/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    [
+      "./third-party/polyfills/polyfills.js",
+      "./third-party/tone/tone.min.js",
+      "./third-party/microevent/microevent.js",
+      "./widgets/build/widgets.min.js",
+      "../shared/public-footer.js",
+    ],
+    "ableton-learning-music-play-with-song-structures route",
+  );
+  await page.waitForFunction(() => {
+    return Boolean(document.querySelector("[data-ableton-lesson='ableton-learning-music-play-with-song-structures']")) &&
+      /song forms/i.test(document.querySelector("main")?.textContent || "") &&
+      document.querySelectorAll(".widget").length === 0;
+  }, null, { timeout: 20000 });
+  await assertNoRemotePlayableMediaRequests(page, "ableton-learning-music-play-with-song-structures route");
+  console.log("OK ableton-learning-music-play-with-song-structures local shell");
+
+  await assertViewportUsable(page, "ableton-learning-music-play-with-song-structures route");
+  await assertRouteViewportUsable(
+    context,
+    "ableton-learning-music-play-with-song-structures/",
+    "#reference-footer",
+    "[data-ableton-lesson='ableton-learning-music-play-with-song-structures']",
+    "ableton-learning-music-play-with-song-structures route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("ableton-learning-music-play-with-song-structures route");
+  console.log("OK ableton-learning-music-play-with-song-structures responsive shell");
+  await page.close();
+}
+
+async function smokeAbletonLearningSynthLesson(context, config) {
+  const { slug, label, titleText, interactionKind } = config;
+
+  assert(
+    countFilesRecursive(`${slug}/fonts`) === 12,
+    `${label} expected 12 local font files`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/content/assets/sounds`) === 4,
+    `${label} expected 4 shared local sound assets`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/content/lessons/en/synthesis`) === 5,
+    `${label} expected 5 lesson-local WAV files`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/content/assets/models`) === 4,
+    `${label} expected 4 local GLB model assets`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/content/texts/en`) === 6,
+    `${label} expected 6 local text payload files`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/presets`) === 2,
+    `${label} expected 2 preset catalog files`,
+  );
+  assert(
+    countFilesRecursive(`${slug}/rnbo/patches`) === 1,
+    `${label} expected 1 local RNBO patch`,
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, `${slug}/`, "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    [
+      "./js/externals/react.production.min.js",
+      "./js/externals/react-dom.production.min.js",
+      "./js/musiclab.js",
+      "../shared/ableton-learning-synths-archive.js",
+      "../shared/public-footer.js",
+    ],
+    label,
+  );
+  await page.waitForFunction((expectedTitle) => {
+    const heading = document.querySelector("main[data-ableton-synth-lesson] h1");
+    return Boolean(heading) && heading.textContent?.trim() === expectedTitle;
+  }, titleText, { timeout: 30000 });
+  const archiveShellState = await page.evaluate(() => {
+    const bodyLinks = Array.from(document.querySelectorAll("main[data-ableton-synth-lesson] a[href]"));
+    return {
+      localizedLinks: bodyLinks.filter((node) => {
+        const href = node.getAttribute("href") || "";
+        return href.startsWith("../ableton-learning-synths-");
+      }).length,
+      hasRemoteLessonLink: bodyLinks.some((node) => /learningsynths\.ableton\.com/i.test(node.getAttribute("href") || "")),
+      hasFeedbackLink: bodyLinks.some((node) => /^mailto:learning@ableton\.com/i.test(node.getAttribute("href") || "")),
+    };
+  });
+  assert(archiveShellState.localizedLinks >= 2, `${label} did not localize the synth lesson cross-links`);
+  assert(!archiveShellState.hasRemoteLessonLink, `${label} left a remote Learning Synths body link in place`);
+  assert(!archiveShellState.hasFeedbackLink, `${label} left the upstream feedback link in the public body`);
+  await assertNoRemotePlayableMediaRequests(page, label);
+  console.log(`OK ${label} local archive shell`);
+
+  if (interactionKind === "xy") {
+    const xyState = await page.evaluate(async () => {
+      const control = document.querySelector(".components_xy-pad__control-container");
+      const key = Object.keys(control || {}).find((name) => name.startsWith("__reactInternalInstance$"));
+      let xyFiber = control?.[key];
+      for (let index = 0; xyFiber && index < 5; index += 1) {
+        xyFiber = xyFiber.return;
+      }
+      let lessonFiber = control?.[key];
+      for (let index = 0; lessonFiber && index < 7; index += 1) {
+        lessonFiber = lessonFiber.return;
+      }
+      const xyPad = xyFiber?.stateNode;
+      const lesson = lessonFiber?.stateNode;
+      if (!xyPad || !lesson) {
+        return null;
+      }
+
+      const beforeTransform = control.getAttribute("style") || "";
+      lesson.onXYChange({ type: 0, xPctEased: 0.5, yPctEased: 0.5, xPctRaw: 0.5, yPctRaw: 0.5 });
+      xyPad.setToPos(0.82, 0.18);
+      xyPad.notifyStateChange(1);
+      await new Promise((resolve) => window.setTimeout(resolve, 50));
+      const afterTransform = control.getAttribute("style") || "";
+      const duringState = { ...lesson.state };
+      lesson.onXYChange({ type: 2, xPctEased: 0.82, yPctEased: 0.18, xPctRaw: 0.82, yPctRaw: 0.18 });
+      return {
+        beforeTransform,
+        afterTransform,
+        duringState,
+        finalState: { ...lesson.state },
+      };
+    });
+    assert(xyState, `${label} did not expose the XY synth control`);
+    assert(xyState.beforeTransform !== xyState.afterTransform, `${label} did not update the XY position`);
+    assert(xyState.duringState.active === true, `${label} did not activate during note trigger`);
+    assert(xyState.finalState.active === false, `${label} did not release after note stop`);
+  } else if (interactionKind === "filter-xy") {
+    const filterState = await page.evaluate(async () => {
+      const control = document.querySelector(".components_xy-pad__control-container");
+      const curve = document.querySelector(".component_filter-curve__path");
+      const key = Object.keys(control || {}).find((name) => name.startsWith("__reactInternalInstance$"));
+      let fiber = control?.[key];
+      for (let index = 0; fiber && index < 7; index += 1) {
+        fiber = fiber.return;
+      }
+      const component = fiber?.stateNode;
+      if (!component || !curve) {
+        return null;
+      }
+
+      const beforeCurve = curve.getAttribute("d") || "";
+      component.onXYChange({ type: 0, xPctEased: 0.5, yPctEased: 0.5, xPctRaw: 0.5, yPctRaw: 0.5 });
+      component.onXYChange({ type: 1, xPctEased: 0.88, yPctEased: 0.22, xPctRaw: 0.88, yPctRaw: 0.22 });
+      component.forceUpdate();
+      await new Promise((resolve) => window.setTimeout(resolve, 50));
+      const afterCurve = curve.getAttribute("d") || "";
+      const duringState = { ...component.state };
+      component.onXYChange({ type: 2, xPctEased: 0.88, yPctEased: 0.22, xPctRaw: 0.88, yPctRaw: 0.22 });
+      return {
+        beforeCurve,
+        afterCurve,
+        duringState,
+        macroX: component.player.getMacroXValue(),
+        macroY: component.player.getMacroYValue(),
+      };
+    });
+    assert(filterState, `${label} did not expose the filter XY scene`);
+    assert(filterState.beforeCurve !== filterState.afterCurve, `${label} did not update the filter curve`);
+    assert(filterState.duringState.active === true, `${label} did not activate the filter scene during note trigger`);
+    assert(filterState.macroX > 0.8 && filterState.macroY > 0.7, `${label} did not update the filter macro values`);
+  } else if (interactionKind === "slider") {
+    const sliderState = await page.evaluate(async () => {
+      const control = document.querySelector(".components_control__slider_control");
+      const fill = document.querySelector(".components_control__slider_fill");
+      const key = Object.keys(control || {}).find((name) => name.startsWith("__reactInternalInstance$"));
+      let fiber = control?.[key];
+      for (let index = 0; fiber && index < 5; index += 1) {
+        fiber = fiber.return;
+      }
+      const component = fiber?.stateNode;
+      if (!component || !fill) {
+        return null;
+      }
+
+      const beforeFill = fill.getAttribute("style") || "";
+      component.onSliderChange({ type: 0, pctEased: 0, pctRaw: 0 });
+      component.onSliderChange({ type: 1, pctEased: 0.72, pctRaw: 0.72 });
+      await new Promise((resolve) => window.setTimeout(resolve, 60));
+      const afterFill = fill.getAttribute("style") || "";
+      const duringState = { ...component.state };
+      component.onSliderChange({ type: 2, pctEased: 0.72, pctRaw: 0.72 });
+      return {
+        beforeFill,
+        afterFill,
+        duringState,
+        finalState: { ...component.state },
+        macroX: component.player.getMacroXValue(),
+      };
+    });
+    assert(sliderState, `${label} did not expose the synth slider scene`);
+    assert(sliderState.beforeFill !== sliderState.afterFill, `${label} did not update the slider fill`);
+    assert(sliderState.duringState.active === true, `${label} did not enter the active note state`);
+    assert(sliderState.finalState.active === false, `${label} did not release after slider note stop`);
+    assert(sliderState.macroX > 0.4, `${label} did not update the synth macro value`);
+  } else if (interactionKind === "adsr") {
+    const adsrState = await page.evaluate(async () => {
+      const button = document.querySelector(".synth-adsr__press-hold-button");
+      const shape = document.querySelector(".adsr-envelope-shape");
+      const key = Object.keys(button || {}).find((name) => name.startsWith("__reactInternalInstance$"));
+      let fiber = button?.[key];
+      for (let index = 0; fiber && index < 5; index += 1) {
+        fiber = fiber.return;
+      }
+      const component = fiber?.stateNode;
+      if (!component || !shape) {
+        return null;
+      }
+
+      const beforeShape = shape.getAttribute("d") || "";
+      const beforeAttack = component.props.player.getParameterControlValue(component.props.attackParameter);
+      component.setADSRControlValues(0.8, 0.45, 0.25, 0.6);
+      component.forceUpdate();
+      await new Promise((resolve) => window.setTimeout(resolve, 60));
+      const afterShape = shape.getAttribute("d") || "";
+      const afterAttack = component.props.player.getParameterControlValue(component.props.attackParameter);
+      component.startNote();
+      await new Promise((resolve) => window.setTimeout(resolve, 40));
+      const heldNotes = component.props.player.getHeldNotes().length;
+      component.stopNote();
+      return {
+        beforeShape,
+        afterShape,
+        beforeAttack,
+        afterAttack,
+        heldNotes,
+      };
+    });
+    assert(adsrState, `${label} did not expose the ADSR scene`);
+    assert(adsrState.beforeShape !== adsrState.afterShape, `${label} did not redraw the ADSR envelope`);
+    assert(adsrState.beforeAttack !== adsrState.afterAttack, `${label} did not update the envelope parameters`);
+    assert(adsrState.heldNotes === 1, `${label} did not trigger a held synth note`);
+  } else if (interactionKind === "recipe") {
+    const slider = page.locator(".components_control__slider_control").first();
+    const fill = page.locator(".components_control__slider_fill").first();
+    const beforeFill = await fill.getAttribute("style");
+    await slider.focus();
+    await page.keyboard.press("ArrowRight");
+    await page.waitForTimeout(120);
+    const afterFill = await fill.getAttribute("style");
+    assert(beforeFill !== afterFill, `${label} did not update a recipe slider`);
+
+    const playButton = page.locator(".synth-playback_play-stop-button").first();
+    await playButton.click();
+    await page.waitForTimeout(120);
+    const buttonClass = await playButton.getAttribute("class");
+    assert(/--playing/.test(buttonClass || ""), `${label} did not enter the playing state`);
+  } else {
+    throw new Error(`Unknown Ableton Learning Synths interaction kind: ${interactionKind}`);
+  }
+  await assertNoRemotePlayableMediaRequests(page, label);
+  console.log(`OK ${label} interaction path`);
+
+  await assertViewportUsable(page, label);
+  await assertRouteViewportUsable(
+    context,
+    `${slug}/`,
+    "#reference-footer",
+    "main[data-ableton-synth-lesson] h1",
+    label,
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean(label);
+  console.log(`OK ${label} responsive shell`);
+  await page.close();
+}
+
+async function smokeAbletonLearningSynthsGetStarted(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-get-started",
+    label: "ableton-learning-synths-get-started route",
+    titleText: "Get started making sounds",
+    interactionKind: "xy",
+  });
+}
+
+async function smokeAbletonLearningSynthsHowSynthsMakeSound(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-how-synths-make-sound",
+    label: "ableton-learning-synths-how-synths-make-sound route",
+    titleText: "How synths make sound",
+    interactionKind: "slider",
+  });
+}
+
+async function smokeAbletonLearningSynthsFilterResonance(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-filter-resonance",
+    label: "ableton-learning-synths-filter-resonance route",
+    titleText: "Filter resonance",
+    interactionKind: "filter-xy",
+  });
+}
+
+async function smokeAbletonLearningSynthsModulatingAmplitudeWithEnvelopes(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-modulating-amplitude-with-envelopes",
+    label: "ableton-learning-synths-modulating-amplitude-with-envelopes route",
+    titleText: "Modulating amplitude with envelopes",
+    interactionKind: "adsr",
+  });
+}
+
+async function smokeAbletonLearningSynthsMatchingEnvelopes(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-matching-envelopes",
+    label: "ableton-learning-synths-matching-envelopes route",
+    titleText: "Matching envelopes",
+    interactionKind: "adsr",
+  });
+}
+
+async function smokeAbletonLearningSynthsRecipes(context) {
+  await smokeAbletonLearningSynthLesson(context, {
+    slug: "ableton-learning-synths-recipes",
+    label: "ableton-learning-synths-recipes route",
+    titleText: "Get to know this synth",
+    interactionKind: "recipe",
+  });
+}
+
+async function smokeChromeMusicLabSongMaker(context) {
+  assert(
+    countFilesRecursive("chrome-music-lab-song-maker/client/audio") === 110,
+    "chrome-music-lab-song-maker route expected 110 local audio files",
+  );
+  assert(
+    countFilesRecursive("chrome-music-lab-song-maker/client/images") === 20,
+    "chrome-music-lab-song-maker route expected 20 local image files",
+  );
+  assert(
+    countFilesRecursive("chrome-music-lab-song-maker/client/fonts") === 2,
+    "chrome-music-lab-song-maker route expected 2 local font files",
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "chrome-music-lab-song-maker/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    ["build/Main.js", "../../shared/public-footer.js"],
+    "chrome-music-lab-song-maker route",
+  );
+  await page.waitForFunction(() => {
+    return Boolean(document.querySelector("#grid-container")) &&
+      Boolean(document.querySelector("#instrument-canvas")) &&
+      Boolean(document.querySelector("#play-button")) &&
+      Boolean(document.querySelector("#save-button"));
+  }, null, { timeout: 30000 });
+  await page.waitForTimeout(5000);
+  await assertNoRemotePlayableMediaRequests(page, "chrome-music-lab-song-maker route");
+  console.log("OK chrome-music-lab-song-maker local assets");
+
+  const instrumentCanvas = page.locator("#instrument-canvas");
+  const canvasBefore = await instrumentCanvas.evaluate((node) => node.toDataURL());
+  const canvasBox = await instrumentCanvas.boundingBox();
+  assert(canvasBox, "chrome-music-lab-song-maker route did not expose the instrument canvas");
+  await page.mouse.click(canvasBox.x + canvasBox.width * 0.2, canvasBox.y + canvasBox.height * 0.2);
+  await page.waitForTimeout(300);
+  const canvasAfter = await instrumentCanvas.evaluate((node) => node.toDataURL());
+  assert(canvasAfter !== canvasBefore, "chrome-music-lab-song-maker route did not update the grid after painting a note");
+  console.log("OK chrome-music-lab-song-maker note painting");
+
+  await page.click("#play-button");
+  await page.waitForTimeout(700);
+  const playbackState = await page.evaluate(() => ({
+    playText: document.querySelector("#play-button")?.textContent?.trim() || "",
+    bottomPresent: Boolean(document.querySelector("#bottom")),
+  }));
+  assert(playbackState.playText === "Stop", "chrome-music-lab-song-maker route did not toggle into playback");
+  assert(playbackState.bottomPresent, "chrome-music-lab-song-maker route lost the playback control shell");
+  console.log("OK chrome-music-lab-song-maker playback");
+
+  await page.click("#instrument-toggle-button");
+  await page.waitForTimeout(250);
+  await page.evaluate(() => document.querySelector("#meter-button")?.click());
+  await page.waitForTimeout(250);
+  const controlState = await page.evaluate(() => ({
+    instrumentText: document.querySelector("#instrument-toggle-button")?.textContent?.trim() || "",
+    tempoSliderClass: document.querySelector("#tempo-slider")?.className || "",
+    meterClass: document.querySelector("#meter-button")?.className || "",
+    saveText: document.querySelector("#save-button")?.textContent?.trim() || "",
+    saveDisabled: Boolean(document.querySelector("#save-button")?.disabled),
+  }));
+  assert(controlState.instrumentText === "Piano", `chrome-music-lab-song-maker route expected Piano after instrument toggle, got ${controlState.instrumentText || "none"}`);
+  assert(/show/.test(controlState.tempoSliderClass), "chrome-music-lab-song-maker route did not reveal the tempo slider");
+  assert(/expand/.test(controlState.meterClass), "chrome-music-lab-song-maker route did not expand the tempo control");
+  assert(controlState.saveText === "Save unavailable" && controlState.saveDisabled, "chrome-music-lab-song-maker route did not keep save disabled in the local archive build");
+  await assertNoRemotePlayableMediaRequests(page, "chrome-music-lab-song-maker route");
+  console.log("OK chrome-music-lab-song-maker controls");
+
+  await assertViewportUsable(page, "chrome-music-lab-song-maker route");
+  await assertRouteViewportUsable(
+    context,
+    "chrome-music-lab-song-maker/",
+    "#reference-footer",
+    "#play-button",
+    "chrome-music-lab-song-maker route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("chrome-music-lab-song-maker route");
+  console.log("OK chrome-music-lab-song-maker responsive shell");
+  await page.close();
+}
+
+async function openMusicmapGenreFromSearch(page, searchTerm, resultIndex) {
+  await page.click("#search-toggle-button");
+  await page.waitForSelector("#search-field", { state: "visible", timeout: 15000 });
+  await page.locator("#search-field").fill("");
+  await page.locator("#search-field").type(searchTerm, { delay: 40 });
+  await page.waitForFunction(() => !document.querySelector("#search-button")?.disabled, null, { timeout: 10000 });
+  await page.click("#search-button", { force: true });
+  await page.waitForFunction(() => {
+    return /matches found/i.test(document.querySelector("#search-results-title")?.textContent || "") &&
+      document.querySelectorAll("#search-results-paragraphs a").length > 1;
+  }, null, { timeout: 25000 });
+  await page.waitForTimeout(2000);
+  await page.locator("#search-results-paragraphs a").nth(resultIndex).click({ force: true });
+  await page.waitForFunction(() => {
+    return (document.querySelector("#right-side-pane-genre-name")?.textContent || "").trim().length > 0 &&
+      document.querySelectorAll("#right-side-pane-songlist a").length > 0;
+  }, null, { timeout: 20000 });
+}
+
+async function smokeMusicmap(context) {
+  assert(
+    countFilesRecursive("musicmap/assets") === 5,
+    "musicmap route expected 5 vendored static assets under musicmap/assets",
+  );
+
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  const remoteRequests = createRemoteRequestMonitor(page);
+
+  await assertRoute(page, "musicmap/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    ["./musicmap-embed-gate.js", "./main.bundle.js", "../shared/public-footer.js"],
+    "musicmap route",
+  );
+  await page.waitForFunction(() => {
+    return Boolean(document.querySelector("#musicmap")) &&
+      document.querySelectorAll("#genres text").length > 200 &&
+      Boolean(document.querySelector("#search-toggle-button")) &&
+      Boolean(document.querySelector("#zoom-in")) &&
+      Boolean(document.querySelector("#zoom-out"));
+  }, null, { timeout: 30000 });
+  assert(
+    fs.existsSync(path.join(rootDir, "musicmap", "master-genrelist.json")),
+    "musicmap route is missing the vendored master-genrelist.json payload",
+  );
+  await assertOnlyAllowedRemoteRequests(remoteRequests.snapshot(), [], "musicmap route before playback");
+  console.log("OK musicmap local graph shell");
+
+  await openMusicmapGenreFromSearch(page, "shoegaze", 1);
+  const genreState = await page.evaluate(() => ({
+    resultsTitle: (document.querySelector("#search-results-title")?.textContent || "").trim(),
+    genreName: (document.querySelector("#right-side-pane-genre-name")?.textContent || "").trim(),
+    songCount: document.querySelectorAll("#right-side-pane-songlist a").length,
+    youtubeHref: document.querySelector("#youtube-playlist-link")?.getAttribute("href") || "",
+    spotifyHref: document.querySelector("#spotify-playlist-link")?.getAttribute("href") || "",
+  }));
+  assert(/matches found/i.test(genreState.resultsTitle), "musicmap route did not expose search results");
+  assert(genreState.genreName === "DREAM POP & SHOEGAZE", `musicmap route opened the wrong genre pane: ${genreState.genreName || "none"}`);
+  assert(genreState.songCount > 0, "musicmap route did not populate the genre song list");
+  assert(/^https:\/\/www\.youtube\.com\/playlist\?list=/.test(genreState.youtubeHref), "musicmap route did not wire the YouTube playlist link");
+  assert(/^https:\/\/open\.spotify\.com\/playlist\//.test(genreState.spotifyHref), "musicmap route did not wire the Spotify playlist link");
+  console.log("OK musicmap search and genre pane");
+
+  const zoomBefore = await page.evaluate(() => {
+    const zoom = document.querySelector("#musicmap")?.__zoom;
+    return zoom ? { x: zoom.x, y: zoom.y, k: zoom.k } : null;
+  });
+  await page.click("#right-side-pane-go-to-link", { force: true });
+  await page.waitForFunction((previousScale) => {
+    const zoom = document.querySelector("#musicmap")?.__zoom;
+    return Boolean(zoom) && zoom.k > previousScale;
+  }, zoomBefore?.k || 1, { timeout: 10000 });
+  const zoomAfter = await page.evaluate(() => {
+    const zoom = document.querySelector("#musicmap")?.__zoom;
+    return zoom ? { x: zoom.x, y: zoom.y, k: zoom.k } : null;
+  });
+  assert((zoomAfter?.k || 1) > (zoomBefore?.k || 1), "musicmap route did not zoom into the selected genre");
+  console.log("OK musicmap zoom and pan path");
+
+  const remoteBeforeYouTubeEmbed = remoteRequests.snapshot().length;
+  await page.click("#youtube-playlist-link", { force: true });
+  await page.waitForFunction(() => {
+    return /youtube-nocookie\.com\/embed\/videoseries/.test(
+      document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
+    );
+  }, null, { timeout: 10000 });
+  const embedState = await page.evaluate(() => ({
+    iframeSrc: document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
+    iframeCount: document.querySelectorAll("#youtube-player-iframe iframe").length,
+  }));
+  assert(embedState.iframeCount === 1, "musicmap route did not create a single deferred embed frame");
+  assert(
+    /^https:\/\/www\.youtube-nocookie\.com\/embed\/videoseries/.test(embedState.iframeSrc),
+    `musicmap route created an unexpected embed: ${embedState.iframeSrc || "none"}`,
+  );
+  assertOnlyAllowedRemoteRequests(
+    remoteRequests.diff(remoteBeforeYouTubeEmbed),
+    ["youtube.com", "youtube-nocookie.com", "ytimg.com", "googlevideo.com"],
+    "musicmap route after deferred YouTube embed",
+  );
+  console.log("OK musicmap deferred YouTube playback surface");
+
+  const remoteBeforeSpotifyEmbed = remoteRequests.snapshot().length;
+  await page.click("#spotify-playlist-link", { force: true });
+  await page.waitForFunction(() => {
+    return /open\.spotify\.com\/embed\/playlist/.test(
+      document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
+    );
+  }, null, { timeout: 10000 });
+  const spotifyEmbedState = await page.evaluate(() => ({
+    iframeSrc: document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
+    iframeCount: document.querySelectorAll("#youtube-player-iframe iframe").length,
+  }));
+  assert(spotifyEmbedState.iframeCount === 1, "musicmap route did not replace the embed host with a single Spotify frame");
+  assert(
+    /^https:\/\/open\.spotify\.com\/embed\/playlist/.test(spotifyEmbedState.iframeSrc),
+    `musicmap route created an unexpected Spotify embed: ${spotifyEmbedState.iframeSrc || "none"}`,
+  );
+  assertOnlyAllowedRemoteRequests(
+    remoteRequests.diff(remoteBeforeSpotifyEmbed),
+    ["open.spotify.com", "embed-cdn.spotifycdn.com"],
+    "musicmap route after deferred Spotify embed",
+  );
+  console.log("OK musicmap deferred Spotify playback surface");
+
+  await assertViewportUsable(page, "musicmap route");
+  await assertRouteViewportUsable(
+    context,
+    "musicmap/",
+    "#reference-footer",
+    "#search-toggle-button",
+    "musicmap route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("musicmap route");
+  console.log("OK musicmap responsive shell");
+  await page.close();
+}
+
+async function smokeMusicInteractiveHub(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+
+  await assertRoute(page, "music-interactive-hub/", "#reference-footer");
+  await page.waitForFunction(() => {
+    return document.querySelectorAll("[data-music-card]").length === 21 &&
+      document.querySelectorAll("[data-recommended-path] li").length >= 9;
+  }, null, { timeout: 15000 });
+
+  const hubState = await page.evaluate(() => ({
+    cardCount: document.querySelectorAll("[data-music-card]").length,
+    docsLinks: document.querySelectorAll("[data-music-card] a[data-link-kind='docs']").length,
+    routeLinks: document.querySelectorAll("[data-music-card] a[data-link-kind='route']").length,
+    clusterCounts: Array.from(document.querySelectorAll("[data-cluster-count]")).map((node) => node.textContent?.trim() || ""),
+    localOnlyLinks: Array.from(document.querySelectorAll("main[data-music-hub] a[href]")).every((node) => {
+      const href = node.getAttribute("href") || "";
+      return href.startsWith("../") || href.startsWith("./#") || href === "../";
+    }),
+    recommendedPathVisible: Boolean(document.querySelector("[data-recommended-path]")),
+  }));
+  assert(hubState.cardCount === 21, `music-interactive-hub route expected 21 route cards, found ${hubState.cardCount}`);
+  assert(hubState.routeLinks === 21, "music-interactive-hub route did not expose one local route link per card");
+  assert(hubState.docsLinks === 21, "music-interactive-hub route did not expose one local docs link per card");
+  assert(
+    hubState.clusterCounts.join("|") === "6 routes|8 routes|6 routes|1 route",
+    `music-interactive-hub route exposed unexpected cluster counts: ${hubState.clusterCounts.join(", ")}`,
+  );
+  assert(hubState.localOnlyLinks, "music-interactive-hub route exposed a non-local body link");
+  assert(hubState.recommendedPathVisible, "music-interactive-hub route did not render the recommended progression");
+  console.log("OK music-interactive-hub card clusters");
+
+  await assertViewportUsable(page, "music-interactive-hub route");
+  await assertRouteViewportUsable(
+    context,
+    "music-interactive-hub/",
+    "#reference-footer",
+    "[data-recommended-path]",
+    "music-interactive-hub route",
+    390,
+    844,
+  );
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("music-interactive-hub route");
+  console.log("OK music-interactive-hub responsive shell");
+  await page.close();
+}
+
 async function smokeMemoryAllocation(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
@@ -4772,6 +5972,60 @@ async function main() {
       routeChecks.push(["reading-qr-codes-without-a-computer/", "#reference-footer"]);
       routeChecks.push(["docs/reading-qr-codes-without-a-computer/", "[data-parity-list]"]);
     }
+    if (exists("teoria-interval-ear-training")) {
+      routeChecks.push(["teoria-interval-ear-training/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-interval-ear-training/", "[data-parity-list]"]);
+    }
+    if (exists("teoria-note-ear-training")) {
+      routeChecks.push(["teoria-note-ear-training/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-note-ear-training/", "[data-parity-list]"]);
+    }
+    if (exists("teoria-key-and-note-ear-training")) {
+      routeChecks.push(["teoria-key-and-note-ear-training/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-key-and-note-ear-training/", "[data-parity-list]"]);
+    }
+    if (exists("teoria-random-key-and-note-ear-training")) {
+      routeChecks.push(["teoria-random-key-and-note-ear-training/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-random-key-and-note-ear-training/", "[data-parity-list]"]);
+    }
+    if (exists("teoria-scale-construction")) {
+      routeChecks.push(["teoria-scale-construction/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-scale-construction/", "[data-parity-list]"]);
+    }
+    if (exists("teoria-interval-identification-and-inversion")) {
+      routeChecks.push(["teoria-interval-identification-and-inversion/", "#reference-footer"]);
+      routeChecks.push(["docs/teoria-interval-identification-and-inversion/", "[data-parity-list]"]);
+    }
+    if (exists("ableton-learning-music-playground")) {
+      routeChecks.push(["ableton-learning-music-playground/", "#reference-footer"]);
+      routeChecks.push(["docs/ableton-learning-music-playground/", "[data-parity-list]"]);
+    }
+    for (const slug of abletonLessonBatchSlugs) {
+      if (!exists(slug)) {
+        continue;
+      }
+      routeChecks.push([`${slug}/`, "#reference-footer"]);
+      routeChecks.push([`docs/${slug}/`, "[data-parity-list]"]);
+    }
+    for (const slug of abletonSynthLessonSlugs) {
+      if (!exists(slug)) {
+        continue;
+      }
+      routeChecks.push([`${slug}/`, "#reference-footer"]);
+      routeChecks.push([`docs/${slug}/`, "[data-parity-list]"]);
+    }
+    if (exists("chrome-music-lab-song-maker")) {
+      routeChecks.push(["chrome-music-lab-song-maker/", "#reference-footer"]);
+      routeChecks.push(["docs/chrome-music-lab-song-maker/", "[data-parity-list]"]);
+    }
+    if (exists("musicmap")) {
+      routeChecks.push(["musicmap/", "#reference-footer"]);
+      routeChecks.push(["docs/musicmap/", "[data-parity-list]"]);
+    }
+    if (exists("music-interactive-hub")) {
+      routeChecks.push(["music-interactive-hub/", "#reference-footer"]);
+      routeChecks.push(["docs/music-interactive-hub/", "[data-parity-list]"]);
+    }
     if (exists("memory-allocation")) {
       routeChecks.push(["memory-allocation/", "#reference-footer"]);
       routeChecks.push(["docs/memory-allocation/", "[data-parity-list]"]);
@@ -4945,6 +6199,72 @@ async function main() {
     }
     if (exists("reading-qr-codes-without-a-computer")) {
       await smokeReadingQrCodesWithoutAComputer(context);
+    }
+    if (exists("teoria-interval-ear-training")) {
+      await smokeTeoriaIntervalEarTraining(context);
+    }
+    if (exists("teoria-note-ear-training")) {
+      await smokeTeoriaNoteEarTraining(context);
+    }
+    if (exists("teoria-key-and-note-ear-training")) {
+      await smokeTeoriaKeyAndNoteEarTraining(context);
+    }
+    if (exists("teoria-random-key-and-note-ear-training")) {
+      await smokeTeoriaRandomKeyAndNoteEarTraining(context);
+    }
+    if (exists("teoria-scale-construction")) {
+      await smokeTeoriaScaleConstruction(context);
+    }
+    if (exists("teoria-interval-identification-and-inversion")) {
+      await smokeTeoriaIntervalIdentificationAndInversion(context);
+    }
+    if (exists("ableton-learning-music-playground")) {
+      await smokeAbletonLearningMusicPlayground(context);
+    }
+    if (exists("ableton-learning-music-play-with-beats")) {
+      await smokeAbletonLearningMusicPlayWithBeats(context);
+    }
+    if (exists("ableton-learning-music-play-with-notes-and-scales")) {
+      await smokeAbletonLearningMusicPlayWithNotesAndScales(context);
+    }
+    if (exists("ableton-learning-music-play-with-chords")) {
+      await smokeAbletonLearningMusicPlayWithChords(context);
+    }
+    if (exists("ableton-learning-music-play-with-basslines")) {
+      await smokeAbletonLearningMusicPlayWithBasslines(context);
+    }
+    if (exists("ableton-learning-music-play-with-melodies")) {
+      await smokeAbletonLearningMusicPlayWithMelodies(context);
+    }
+    if (exists("ableton-learning-music-play-with-song-structures")) {
+      await smokeAbletonLearningMusicPlayWithSongStructures(context);
+    }
+    if (exists("ableton-learning-synths-get-started")) {
+      await smokeAbletonLearningSynthsGetStarted(context);
+    }
+    if (exists("ableton-learning-synths-how-synths-make-sound")) {
+      await smokeAbletonLearningSynthsHowSynthsMakeSound(context);
+    }
+    if (exists("ableton-learning-synths-filter-resonance")) {
+      await smokeAbletonLearningSynthsFilterResonance(context);
+    }
+    if (exists("ableton-learning-synths-modulating-amplitude-with-envelopes")) {
+      await smokeAbletonLearningSynthsModulatingAmplitudeWithEnvelopes(context);
+    }
+    if (exists("ableton-learning-synths-matching-envelopes")) {
+      await smokeAbletonLearningSynthsMatchingEnvelopes(context);
+    }
+    if (exists("ableton-learning-synths-recipes")) {
+      await smokeAbletonLearningSynthsRecipes(context);
+    }
+    if (exists("chrome-music-lab-song-maker")) {
+      await smokeChromeMusicLabSongMaker(context);
+    }
+    if (exists("musicmap")) {
+      await smokeMusicmap(context);
+    }
+    if (exists("music-interactive-hub")) {
+      await smokeMusicInteractiveHub(context);
     }
     if (
       exists("memory-allocation") ||

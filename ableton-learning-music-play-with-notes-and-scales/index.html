@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local replica of Ableton's Play with notes and scales lesson with local piano and drum assets, tonic and scale choosers, and archived widget controls.">
+  <meta property="og:title" content="Ableton Learning Music: Play with notes and scales">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="./">
+  <meta property="og:description" content="Local replica of Ableton's Play with notes and scales lesson with local piano and drum assets, tonic and scale choosers, and archived widget controls.">
+  <link rel="canonical" href="./">
+  <title>Ableton Learning Music: Play with notes and scales</title>
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <style>
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .ableton-lesson-shell {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 5rem;
+    }
+
+    .ableton-lesson-shell .page-header {
+      margin-bottom: 2rem;
+      max-width: 44rem;
+    }
+
+    .ableton-lesson-shell .page-header p {
+      margin-bottom: 0;
+      color: #d9d9d9;
+    }
+
+    .ableton-lesson-shell h2 {
+      margin-top: 2.5rem;
+    }
+
+    .ableton-lesson-shell .body-text.text-container {
+      max-width: none;
+    }
+
+    #reference-footer .public-footer__inner {
+      width: min(52rem, calc(100vw - 32px));
+    }
+  </style>
+  <script src="./third-party/polyfills/polyfills.js"></script>
+  <script src="./third-party/tone/tone.min.js"></script>
+  <script src="./third-party/microevent/microevent.js"></script>
+  <script src="./widgets/build/widgets.min.js"></script>
+  <script>
+    function onLoad() {
+      ANIMATION_FRAMER = new AnimationFramer();
+      ANIMATION_FRAMER.init();
+
+      SUPERVISOR = new AudioSupervisor();
+      SUPERVISOR.init();
+
+      EXPORTER = new LiveSetExporter();
+      EXPORTER.init();
+
+      KEY_SUPERVISOR = new KeySupervisor();
+      KEY_SUPERVISOR.init();
+
+      METRONOME = new Metronome();
+      METRONOME.init();
+
+      LOCALE = "";
+      LOCALE_PATH = "";
+    }
+
+    onLoad();
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var widgets = document.getElementsByClassName("widget");
+      var widgetIds = {};
+      for (var index = 0; index < widgets.length; index += 1) {
+        var id = widgets[index].id;
+        if (widgetIds[id]) {
+          throw new Error("Duplicate widget id: " + id);
+        }
+        widgetIds[id] = true;
+      }
+    });
+  </script>
+</head>
+<body
+  class="lang-- bg--base color--inverted ltr"
+  dir="ltr"
+  data-reference-url="https://learningmusic.ableton.com/notes-and-scales/play-with-notes-and-scales.html"
+  data-reference-text="Ableton Learning Music: Play with notes and scales"
+  data-footer-label="Original lesson"
+>
+  <main class="ableton-lesson-shell">
+    <div class="page-header body-text">
+      <h1>Ableton Learning Music: Play with notes and scales</h1>
+      <p>Local replica of Ableton's notes-and-scales lesson. The shipped route keeps the piano-roll composer, tonic and scale choosers, and local playback stack while removing the broader Learning Music shell.</p>
+    </div>
+
+    <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-notes-and-scales">
+<p>Now that you&#39;ve learned a bit about notes and scales, spend some time creating your own patterns.</p>
+<p>You can try out how your patterns sound with different collections of notes by changing the <em>Tonic</em> and <em>Scale</em> settings. (These terms are explained in the Advanced topics lessons but you can already play with them here!)</p>
+<p>You can also create beats that will play in sync with your note patterns.</p>
+ <div class="widget widget-pianoroll theme-b"
+                id='_playwithnotesandscalespiano'
+                dir='ltr'
+                data-material='tonal'
+                data-tempo='85'
+                data-onPlay='join'
+                data-targetState=''
+                data-defaultState=''
+                data-lanes='[]'
+                data-beats='4'
+                data-gridSize='16'
+                data-allowResize='true'
+                data-disableExport="yes"
+                data-instrument='{"livePreset":"Grand Piano","fadeout":{"duration":0.4,"offset":0},"samples":[{"midi":24,"path":"piano/C1v10"},{"midi":30,"path":"piano/Fs1v10"},{"midi":36,"path":"piano/C2v10"},{"midi":42,"path":"piano/Fs2v10"},{"midi":48,"path":"piano/C3v10"},{"midi":54,"path":"piano/Fs3v10"},{"midi":60,"path":"piano/C4v10"},{"midi":66,"path":"piano/Fs4v10"},{"midi":72,"path":"piano/C5v10"},{"midi":78,"path":"piano/Fs5v10"},{"midi":84,"path":"piano/C6v10"},{"midi":90,"path":"piano/Fs6v10"},{"midi":96,"path":"piano/C7v10"},{"midi":102,"path":"piano/Fs7v10"},{"midi":108,"path":"piano/C8v10"}]}'
+                data-showTempoSlider=''
+                data-showRootChooser='yes'
+                data-showScaleChooser='yes'
+                data-availableScales='Major/Ionian,Minor/Aeolian,Dorian,Phrygian,Lydian,Mixolydian,Locrian'
+                data-defaultScale='Major/Ionian'
+                data-defaultRoot='C'
+                data-defaultOctave='5'
+                data-defaultOctaveCount='2'
+                data-tip=''
+                data-tips='{"playstop":{"@text":"Click this button to start and stop playback."},"createdeletenotes":{"@text":"Click in the grid to create a note. Click an existing note to delete it."},"tempo":{"@text":"Drag the slider to change the tempo."},"overview":{"@text":"Click to focus on a single bar. Click again to see the whole pattern."},"record":{"@text":"Click to start and stop real-time recording. When active, you can record what you play on the pads."},"dragnotes":{"@text":"You can move notes around the grid by clicking and dragging them."},"resizenotes":{"@text":"You can lengthen or shorten notes by dragging on their right edge."},"selectnotes":{"@text":"Click and drag around multiple notes to select them. You can then move them together."},"export":{"@text":"If you make patterns you like, you can export and open them in Ableton Live."},"keyboard":{"@text":"Click here to play these sounds using your keyboard keys."},"drumpad":{"@text":"Click on the pads to play a sound."},"lowhighpitch":{"@text":"Click and drag. Lower pitches are to the left, higher pitches to the right."},"songformsections":{"@text":"Click on the blocks to jump to a particular section of the song."},"devicemute":{"@text":"If you do not hear any sound, check that your device is not muted and that the volume is turned up."},"exportnotsupportedchromeios":{"@text":"Exporting to Live is not available from this browser. Please use Safari if you’d like to export your music from an iOS device.","showalways":true}}'
+                data-highlightedLanes='[0,7,14]'
+                data-lang='{"@reset":"Reset","@clear":"Clear","@exporttolive":"Export to Live","@exporting":"Exporting","@tempo":"Tempo","@keyboard":"Keyboard","@on":"On","@off":"Off","@close":"Close","@lowpitch":"Low Pitch","@highpitch":"High Pitch","@fillinsolution":"Fill in solution","@incompatiblebrowser":"Your browser can’t display the interactive musical examples on this page.<br>Please use a browser that supports Web Audio such as Chrome, Safari, Firefox, or Edge."}'
+                >
+           </div>
+        
+
+
+<script> _playwithnotesandscalesdrumpadrecorder = new Recorder(); </script>
+<div class="widget theme-a" id="_playwithnotesandscalesdrumpad" dir='ltr'>
+  <div class="widget-pianoroll drumsequencer"
+    id='_playwithnotesandscalesdrumpadsequencer'
+    data-material='drums'
+    data-tempo='85'
+    data-onPlay='join'
+    data-targetState=''
+    data-defaultState=''
+    data-lanes='[{"name":"Kick","midi":36,"path":"simplesequencer/909/Kick"},{"name":"Clap","midi":39,"path":"simplesequencer/909/Clap"},{"name":"Closed Hat","midi":42,"choke":46,"path":"simplesequencer/909/ClosedHat"},{"name":"Open Hat","midi":46,"path":"simplesequencer/909/OpenHat"}]'
+    data-instrument='{"livePreset":"Kit-Core 909","samples":[{"name":"Kick","midi":36,"path":"simplesequencer/909/Kick"},{"name":"Clap","midi":39,"path":"simplesequencer/909/Clap"},{"name":"Closed Hat","midi":42,"choke":46,"path":"simplesequencer/909/ClosedHat"},{"name":"Open Hat","midi":46,"path":"simplesequencer/909/OpenHat"}]}'
+    data-beats='4'
+    data-gridSize='16'
+    data-allowResize='false'
+    data-disableExport="yes"
+    data-recorder='_playwithnotesandscalesdrumpadrecorder'
+    data-tip=''
+    data-tips='{"playstop":{"@text":"Click this button to start and stop playback."},"createdeletenotes":{"@text":"Click in the grid to create a note. Click an existing note to delete it."},"tempo":{"@text":"Drag the slider to change the tempo."},"overview":{"@text":"Click to focus on a single bar. Click again to see the whole pattern."},"record":{"@text":"Click to start and stop real-time recording. When active, you can record what you play on the pads."},"dragnotes":{"@text":"You can move notes around the grid by clicking and dragging them."},"resizenotes":{"@text":"You can lengthen or shorten notes by dragging on their right edge."},"selectnotes":{"@text":"Click and drag around multiple notes to select them. You can then move them together."},"export":{"@text":"If you make patterns you like, you can export and open them in Ableton Live."},"keyboard":{"@text":"Click here to play these sounds using your keyboard keys."},"drumpad":{"@text":"Click on the pads to play a sound."},"lowhighpitch":{"@text":"Click and drag. Lower pitches are to the left, higher pitches to the right."},"songformsections":{"@text":"Click on the blocks to jump to a particular section of the song."},"devicemute":{"@text":"If you do not hear any sound, check that your device is not muted and that the volume is turned up."},"exportnotsupportedchromeios":{"@text":"Exporting to Live is not available from this browser. Please use Safari if you’d like to export your music from an iOS device.","showalways":true}}'
+    data-highlightedLanes='[]'
+    data-lang='{"@reset":"Reset","@clear":"Clear","@exporttolive":"Export to Live","@exporting":"Exporting","@tempo":"Tempo","@keyboard":"Keyboard","@on":"On","@off":"Off","@close":"Close","@lowpitch":"Low Pitch","@highpitch":"High Pitch","@fillinsolution":"Fill in solution","@incompatiblebrowser":"Your browser can’t display the interactive musical examples on this page.<br>Please use a browser that supports Web Audio such as Chrome, Safari, Firefox, or Edge."}'>
+  </div>
+  <div class="widget-drumpad widget-recordabledrumpad"
+    id='_playwithnotesandscalesdrumpaddrumpad'
+    data-keyboard='1234'
+    data-kit='{"livePreset":"Kit-Core 909","samples":[{"name":"Kick","midi":36,"path":"simplesequencer/909/Kick"},{"name":"Clap","midi":39,"path":"simplesequencer/909/Clap"},{"name":"Closed Hat","midi":42,"choke":46,"path":"simplesequencer/909/ClosedHat"},{"name":"Open Hat","midi":46,"path":"simplesequencer/909/OpenHat"}]}'
+    data-recorder='_playwithnotesandscalesdrumpadrecorder'
+    data-lang='{"@reset":"Reset","@clear":"Clear","@exporttolive":"Export to Live","@exporting":"Exporting","@tempo":"Tempo","@keyboard":"Keyboard","@on":"On","@off":"Off","@close":"Close","@lowpitch":"Low Pitch","@highpitch":"High Pitch","@fillinsolution":"Fill in solution","@incompatiblebrowser":"Your browser can’t display the interactive musical examples on this page.<br>Please use a browser that supports Web Audio such as Chrome, Safari, Firefox, or Edge."}'>
+  </div>
+</div>
+    </div>
+  </main>
+
+  <script src="./widgets/build/SimplePianoRoll.js"></script>
+<script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var sequencers = document.getElementsByClassName("widget-pianoroll");
+        Array.from(sequencers).forEach(function (element) {
+          window[element.id] = new SimplePianoRoll();
+          window[element.id].init({
+            widgetId: element.id,
+            material: element.getAttribute("data-material"),
+            tempo: element.getAttribute("data-tempo"),
+            onPlay: element.getAttribute("data-onplay"),
+            targetState: element.getAttribute("data-targetstate"),
+            defaultState: element.getAttribute("data-defaultstate"),
+            lanes: JSON.parse(element.getAttribute("data-lanes")),
+            beats: parseInt(element.getAttribute("data-beats")),
+            gridSize: parseInt(element.getAttribute("data-gridsize")),
+            allowResize: element.getAttribute("data-allowresize") == "true",
+            disableExport: element.getAttribute("data-disableexport"),
+            instrument: JSON.parse(element.getAttribute("data-instrument")),
+            showTempoSlider: element.getAttribute("data-showtemposlider"),
+            showRootChooser: element.getAttribute("data-showrootchooser"),
+            showScaleChooser: element.getAttribute("data-showscalechooser"),
+            availableScales: element.getAttribute("data-availablescales"),
+            defaultScale: element.getAttribute("data-defaultscale"),
+            defaultRoot: element.getAttribute("data-defaultroot"),
+            defaultOctave: element.getAttribute("data-defaultoctave"),
+            defaultOctaveCount: element.getAttribute("data-defaultoctavecount"),
+            recorder: window[element.getAttribute("data-recorder")],
+            exporter: EXPORTER,
+            tip: element.getAttribute("data-tip"),
+            tips: JSON.parse(element.getAttribute("data-tips")),
+            highlightedLanes: JSON.parse(element.getAttribute("data-highlightedlanes")),
+            lang: JSON.parse(element.getAttribute("data-lang"))
+          });
+        });
+      });
+    </script>
+<script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var widgets = document.getElementsByClassName("widget-drumpad");
+        Array.from(widgets).forEach(function (element) {
+          window[element.id] = new SimpleDrumpad();
+          window[element.id].init({
+            widgetId: element.id,
+            keyboard: element.getAttribute("data-keyboard"),
+            kit: JSON.parse(element.getAttribute("data-kit")),
+            recorder: window[element.getAttribute("data-recorder")],
+            tips: JSON.parse(element.getAttribute("data-tips")),
+            tip: element.getAttribute("data-tip"),
+            lang: JSON.parse(element.getAttribute("data-lang"))
+          });
+        });
+      });
+    </script>
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local replica of Ableton's Play with song structures lesson shell with archived Learning Music assets and a route-local arrangement primer.">
+  <meta property="og:title" content="Ableton Learning Music: Play with song structures">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="./">
+  <meta property="og:description" content="Local replica of Ableton's Play with song structures lesson shell with archived Learning Music assets and a route-local arrangement primer.">
+  <link rel="canonical" href="./">
+  <title>Ableton Learning Music: Play with song structures</title>
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <style>
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .ableton-lesson-shell {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 5rem;
+    }
+
+    .ableton-lesson-shell .page-header {
+      margin-bottom: 2rem;
+      max-width: 44rem;
+    }
+
+    .ableton-lesson-shell .page-header p {
+      margin-bottom: 0;
+      color: #d9d9d9;
+    }
+
+    .ableton-lesson-shell h2 {
+      margin-top: 2.5rem;
+    }
+
+    .ableton-lesson-shell .body-text.text-container {
+      max-width: none;
+    }
+
+    #reference-footer .public-footer__inner {
+      width: min(52rem, calc(100vw - 32px));
+    }
+  </style>
+  <script src="./third-party/polyfills/polyfills.js"></script>
+  <script src="./third-party/tone/tone.min.js"></script>
+  <script src="./third-party/microevent/microevent.js"></script>
+  <script src="./widgets/build/widgets.min.js"></script>
+  <script>
+    function onLoad() {
+      ANIMATION_FRAMER = new AnimationFramer();
+      ANIMATION_FRAMER.init();
+
+      SUPERVISOR = new AudioSupervisor();
+      SUPERVISOR.init();
+
+      EXPORTER = new LiveSetExporter();
+      EXPORTER.init();
+
+      KEY_SUPERVISOR = new KeySupervisor();
+      KEY_SUPERVISOR.init();
+
+      METRONOME = new Metronome();
+      METRONOME.init();
+
+      LOCALE = "";
+      LOCALE_PATH = "";
+    }
+
+    onLoad();
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var widgets = document.getElementsByClassName("widget");
+      var widgetIds = {};
+      for (var index = 0; index < widgets.length; index += 1) {
+        var id = widgets[index].id;
+        if (widgetIds[id]) {
+          throw new Error("Duplicate widget id: " + id);
+        }
+        widgetIds[id] = true;
+      }
+    });
+  </script>
+</head>
+<body
+  class="lang-- bg--base color--inverted ltr"
+  dir="ltr"
+  data-reference-url="https://learningmusic.ableton.com/song-structure/song-structure.html"
+  data-reference-text="Ableton Learning Music: Play with song structures"
+  data-footer-label="Original lesson"
+>
+  <main class="ableton-lesson-shell">
+    <div class="page-header body-text">
+      <h1>Ableton Learning Music: Play with song structures</h1>
+      <p>Local replica of Ableton's song-structure lesson shell. This page is lighter than the other Play with lessons, but it keeps the arrangement primer in a fully local archive build and stays on the same shared Ableton asset stack.</p>
+    </div>
+
+    <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-song-structures">
+<p>You can think of a song as a block of time, which can be broken down into smaller blocks of time. In many types of music, the smaller sections consist of even smaller patterns like the ones you&#39;ve been making, combined in <strong>multiples of four, eight, or 16 bars</strong>.</p>
+<p>Putting these sections together is called <em>arranging</em>; it&#39;s how you get from small patterns to a full song.</p>
+<h2 id="song-forms">Song forms</h2>
+<p>The combination of a song&#39;s sections is the song&#39;s <em>structure</em> or <em>form</em>. Some types of forms are used over and over in many types of music.</p>
+    </div>
+  </main>
+
+  
+  <script src="../shared/public-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Local replica of Chrome Music Lab Song Maker with vendored canvas runtime, instrument banks, percussion packs, and responsive sequencer controls.">
+  <meta property="og:title" content="Chrome Music Lab Song Maker">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="./">
+  <meta property="og:description" content="Local Song Maker replica with route-local samples, settings controls, and paintable sequencer grid.">
+  <meta property="og:image" content="./client/images/song-maker.jpg">
+  <link rel="canonical" href="./">
+  <title>Chrome Music Lab Song Maker</title>
+  <base href="./client/">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="../../shared/public-footer.css">
+  <style>
+    html {
+      background: #f6f7fb;
+    }
+
+    body.song-maker-route {
+      margin: 0;
+      min-height: 100vh;
+      background: #f6f7fb;
+      color: #1c2230;
+      padding-bottom: 6rem;
+    }
+
+    .song-maker-shell {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 0;
+      font-family: "Quicksand", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .song-maker-shell h1 {
+      margin: 0;
+      font-family: "Poppins", "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .song-maker-shell p {
+      max-width: 42rem;
+      color: #4b5567;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+    }
+
+    #reference-footer {
+      margin-top: 2rem;
+    }
+
+    #reference-footer .public-footer__inner {
+      width: min(48rem, calc(100vw - 32px));
+    }
+  </style>
+</head>
+<body
+  class="song-maker-route"
+  data-reference-url="https://musiclab.chromeexperiments.com/Song-Maker/"
+  data-reference-text="Chrome Music Lab Song Maker"
+  data-footer-label="Original experiment"
+>
+  <main class="song-maker-shell">
+    <h1>Chrome Music Lab Song Maker</h1>
+    <p>
+      Local replica of Song Maker with route-local instrument packs, percussion samples, and the
+      original paint-to-compose canvas runtime. The public page keeps playback, settings, and mic
+      entry while neutralizing the upstream analytics, cookie, and remote save or share surfaces.
+    </p>
+  </main>
+
+  <div id="incompatible" style="display: none; text-align: center;">
+    <div class="wrapper" style="padding: 20px;">
+      <img src="images/page-incompatible.svg" alt="">
+      <p>Oops, sorry for the tech trouble.</p>
+      <p>For best experience,<br>view in Chrome browser.</p>
+    </div>
+  </div>
+  <script>
+    var fallbackEl = document.getElementById("incompatible");
+    if (!(window.AudioContext || window.webkitAudioContext)) {
+      fallbackEl.style.display = "flex";
+    }
+
+    window.addEventListener("unhandledrejection", function (event) {
+      var message = String(
+        event.reason && (event.reason.message || event.reason.stack || event.reason),
+      );
+      if (/request is not allowed by the user agent or the platform/i.test(message)) {
+        event.preventDefault();
+      }
+    });
+
+    if (!navigator.requestMIDIAccess) {
+      navigator.requestMIDIAccess = function () {
+        return Promise.resolve({
+          inputs: new Map(),
+          outputs: new Map(),
+          onstatechange: null,
+        });
+      };
+    }
+  </script>
+
+  <script src="build/Main.js" charset="utf-8"></script>
+  <script>
+    (function () {
+      function disableSaveSurface() {
+        var saveButton = document.getElementById("save-button");
+        if (!saveButton || saveButton.dataset.localArchiveDisabled === "yes") {
+          return;
+        }
+
+        var disabled = saveButton.cloneNode(true);
+        disabled.dataset.localArchiveDisabled = "yes";
+        disabled.textContent = "Save unavailable";
+        disabled.disabled = true;
+        disabled.title = "Remote share or save flow is intentionally disabled in the local archive build.";
+        saveButton.replaceWith(disabled);
+      }
+
+      var observer = new MutationObserver(function () {
+        disableSaveSurface();
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      window.addEventListener("load", function () {
+        disableSaveSurface();
+        setTimeout(disableSaveSurface, 1200);
+      });
+    })();
+  </script>
+  <script defer src="../../shared/public-footer.js"></script>
+</body>
+</html>

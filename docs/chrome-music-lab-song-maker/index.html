@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chrome Music Lab Song Maker Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local Chrome Music Lab Song Maker route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Chrome Music Lab Song Maker</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/chrome-music-lab-song-maker/</code> vendors
+        Chrome Music Lab’s Song Maker as one standalone sequencer route, keeps the original canvas
+        runtime and local sample packs, and archives the shipped first-party media inside the route
+        tree for GitHub Pages hosting.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../chrome-music-lab-song-maker/">Open replica</a>
+        <a class="action-link secondary" href="https://musiclab.chromeexperiments.com/Song-Maker/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>runtime and asset tree verified 2026-03-21</code><br>
+        Source family: <code>musiclab.chromeexperiments.com</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published Song Maker bundle and the first-party assets needed
+          by that one experience. The archive build keeps the paint-to-compose grid, transport,
+          instrument toggles, settings, and mic entry shell where those flows work locally.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://musiclab.chromeexperiments.com/Song-Maker/</code> on 2026-03-21.</li>
+          <li>The public route intentionally ships Song Maker only, not the rest of the Chrome Music Lab shell.</li>
+          <li>Remote save and share are disabled in the local archive build because the published handoff depends on non-archived remote services.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>chrome-music-lab-song-maker/index.html</code> owns the local metadata shell, route base handoff, save neutralization, and shared footer wiring.</li>
+          <li><code>chrome-music-lab-song-maker/client/build/Main.js</code> preserves the published canvas runtime, patched to use route-local base paths for the archive build.</li>
+          <li><code>chrome-music-lab-song-maker/client/audio/</code> contains the full local instrument and percussion inventory: <strong>110 audio files</strong>.</li>
+          <li><code>chrome-music-lab-song-maker/client/images/</code> contains <strong>20 archived images</strong>, and <code>client/fonts/</code> contains <strong>2 archived font files</strong>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The public route removes the upstream analytics, cookie, and Chrome shell surfaces from the body.</li>
+          <li>The save button is replaced with a disabled local-archive variant because remote save and share are intentionally unsupported.</li>
+          <li>A local MIDI capability shim is injected before boot so non-MIDI environments do not throw a load-time unhandled rejection.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Preserve the published Song Maker runtime and patch path or shell behavior instead of rewriting the sequencer into a custom app.</li>
+          <li>Smoke coverage should prove local bundle load, note-entry changes, playback-state updates, one settings change, disabled save behavior, and zero remote playable media requests.</li>
+          <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code>, <code>node interactive-explanation/tools/smoke-bundle.mjs --group music</code>, and the full smoke bundle after route changes.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

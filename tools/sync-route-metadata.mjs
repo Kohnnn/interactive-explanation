@@ -48,21 +48,95 @@ function getArgValue(flag) {
 }
 
 function readManifest() {
-  return JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  validateManifest(manifest);
+  return manifest;
 }
 
 function writeJson(filePath, value) {
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
+function assertManifest(condition, message) {
+  if (!condition) {
+    throw new Error(`Manifest validation failed: ${message}`);
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/"/g, "&quot;");
+}
+
+function validateManifest(manifest) {
+  assertManifest(Array.isArray(manifest), "routes.manifest.json must contain an array");
+
+  const slugs = new Set();
+  const referenceUrls = new Set();
+
+  manifest.forEach((route, index) => {
+    assertManifest(route && typeof route === "object" && !Array.isArray(route), `entry ${index} must be an object`);
+
+    const { slug, title, summary, referenceUrl, referenceMode, docsUrl } = route;
+    assertManifest(typeof slug === "string" && slug.trim().length > 0, `entry ${index} is missing slug`);
+    assertManifest(!slugs.has(slug), `duplicate slug "${slug}"`);
+    slugs.add(slug);
+
+    assertManifest(typeof title === "string" && title.trim().length > 0, `route "${slug}" is missing title`);
+    assertManifest(typeof summary === "string" && summary.trim().length > 0, `route "${slug}" is missing summary`);
+    assertManifest(
+      referenceMode === undefined || referenceMode === "neutral",
+      `route "${slug}" uses unsupported referenceMode "${referenceMode}"`,
+    );
+
+    if (referenceMode === "neutral") {
+      assertManifest(
+        referenceUrl === undefined,
+        `route "${slug}" cannot combine referenceMode "neutral" with referenceUrl`,
+      );
+    } else {
+      assertManifest(
+        typeof referenceUrl === "string" && /^https?:\/\//i.test(referenceUrl),
+        `route "${slug}" must include an absolute referenceUrl or use referenceMode "neutral"`,
+      );
+      assertManifest(!referenceUrls.has(referenceUrl), `duplicate referenceUrl "${referenceUrl}"`);
+      referenceUrls.add(referenceUrl);
+    }
+
+    assertManifest(
+      docsUrl === `./docs/${slug}/`,
+      `route "${slug}" must use docsUrl "./docs/${slug}/"`,
+    );
+  });
+}
+
 function docsTemplate(route) {
+  const escapedTitle = escapeHtml(route.title);
+  const escapedSlug = escapeHtml(route.slug);
+  const escapedReferenceUrl = route.referenceUrl ? escapeAttribute(route.referenceUrl) : "";
+  const actionLinks = route.referenceMode === "neutral"
+    ? `        <a class="action-link" href="../../${escapedSlug}/">Open replica</a>\n`
+    : `        <a class="action-link" href="../../${escapedSlug}/">Open replica</a>\n        <a class="action-link secondary" href="${escapedReferenceUrl}" target="_blank" rel="noreferrer">Open original</a>\n`;
+  const snapshotLabel = route.referenceMode === "neutral"
+    ? "local curated route verified in docs"
+    : "fill in when the route is verified";
+  const sourceFamilyLabel = route.referenceMode === "neutral"
+    ? "curated multi-source route"
+    : "fill in source family";
+
   return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${route.title} Replica Docs</title>
-  <meta name="description" content="Provenance, parity notes, and implementation references for the local ${route.slug} route.">
+  <title>${escapedTitle} Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local ${escapedSlug} route.">
   <link rel="icon" type="image/png" href="../../favicon.png">
   <link rel="stylesheet" href="../../shared/site.css">
 </head>
@@ -72,18 +146,17 @@ function docsTemplate(route) {
 
     <header class="hero hero-compact">
       <p class="eyebrow">Replica documentation</p>
-      <h1>${route.title}</h1>
+      <h1>${escapedTitle}</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/${route.slug}/</code> is tracked through the
+        Local route <code>/interactive-explanation/${escapedSlug}/</code> is tracked through the
         standard docs, parity, and public-footer contract used by the rest of the replica site.
       </p>
       <div class="action-row">
-        <a class="action-link" href="../../${route.slug}/">Open replica</a>
-        <a class="action-link secondary" href="${route.referenceUrl}" target="_blank" rel="noreferrer">Open original</a>
+${actionLinks.trimEnd()}
       </div>
       <p class="meta-line">
-        Upstream snapshot: <code>fill in when the route is verified</code><br>
-        Source family: <code>fill in source family</code>
+        Upstream snapshot: <code>${snapshotLabel}</code><br>
+        Source family: <code>${sourceFamilyLabel}</code>
       </p>
     </header>
 

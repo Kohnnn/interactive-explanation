@@ -1,0 +1,74 @@
+[
+  {
+    "moduleId": "exercise-shell-and-runtime-handoff",
+    "originalBehavior": "The published Teoria page uses a compact exercise shell that loads jQuery, Bootstrap, Teoria CSS, four exercise runtime scripts, and then mounts the random key and note ear training workflow into five placeholder panels.",
+    "localStatus": "The local route preserves that shell structure with the same five mount panels while replacing the Teoria site chrome with route-local metadata and the shared public footer.",
+    "sourceFiles": [
+      "../../teoria-random-key-and-note-ear-training/index.html",
+      "../../teoria-random-key-and-note-ear-training/vendor/jquery.min.js",
+      "../../teoria-random-key-and-note-ear-training/res/js/min_24/exe/kner.js"
+    ],
+    "notes": [
+      "The route stays in the original Teoria exercise runtime instead of being rewritten into another article or app shell.",
+      "The public page removes the upstream navbar and footer shell so provenance is limited to the shared footer."
+    ],
+    "evidence": [
+      "The implementation preserves the published init, options, XML options, exercise, and score mount points.",
+      "Smoke coverage verifies the local route loads the vendored runtime scripts from route-local assets before the exercise starts."
+    ]
+  },
+  {
+    "moduleId": "audio-preload-and-playback-flow",
+    "originalBehavior": "The published exercise preloads a piano sample bank, waits for the preload gate to finish, and then starts interval or note playback through the same WebAudio-backed controller used by the exercise panels.",
+    "localStatus": "The local route keeps the preload gate and route-local piano sample bank so the start button appears only after local audio assets are ready, and the play prompt still drives the same interval or note playback controller.",
+    "sourceFiles": [
+      "../../teoria-random-key-and-note-ear-training/res/js/min_24/musika/musika_250207.js",
+      "../../teoria-random-key-and-note-ear-training/res/js/min_24/exe/kner.js",
+      "../../teoria-random-key-and-note-ear-training/res/musika_2024/audio/piano-2021/28.mp3"
+    ],
+    "notes": [
+      "The audio bank is vendored locally instead of being fetched from the live Teoria `/res/` tree.",
+      "The exercise continues to use the published WebAudio preload sequence instead of a custom audio subsystem."
+    ],
+    "evidence": [
+      "The official exercise was re-audited live before implementation to confirm the preload gate and piano-bank dependency.",
+      "Shared smoke coverage verifies the local route reaches the start state, uses the local audio tree, and keeps playable media requests local."
+    ]
+  },
+  {
+    "moduleId": "answer-modes-and-feedback-ui",
+    "originalBehavior": "The published exercise exposes note buttons, keyboard answers, and randomized key context controls, with correctness state and score updating as each exercise is answered or revealed.",
+    "localStatus": "The local route keeps the published answer-mode controls, score panel, and correctness messaging while neutralizing member-only copy that would otherwise point users to upstream sign-in flows.",
+    "sourceFiles": [
+      "../../teoria-random-key-and-note-ear-training/res/js/min_24/exe/kner.js",
+      "../../teoria-random-key-and-note-ear-training/res/js/min_24/exe_babel/exe_babel_en_250614.js",
+      "../../teoria-random-key-and-note-ear-training/res/musika_2024/view/img/staff/checkmark.png"
+    ],
+    "notes": [
+      "The member-only save prompts are rewritten to local-neutral copy rather than removed from the runtime entirely.",
+      "The local route keeps the published answer surface instead of collapsing the exercise into a simplified custom form."
+    ],
+    "evidence": [
+      "The official help page for random key and note ear training was reviewed during capture to confirm the randomized key-context workflow.",
+      "Shared smoke coverage verifies one answer-state update and one route-specific answer-surface interaction on the local route."
+    ]
+  },
+  {
+    "moduleId": "footer-only-provenance-and-local-shell-cleanup",
+    "originalBehavior": "The published exercise page is wrapped in the wider Teoria site shell, including navigation, cookie messaging, search, sign-in, write-to-us, donation, and creator attribution surfaces.",
+    "localStatus": "The local route removes those public-body Teoria shell and promo surfaces, keeps local canonical and `og:url` metadata, and leaves the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "../../teoria-random-key-and-note-ear-training/index.html",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "This route follows the repo-wide footer-only provenance policy for public pages.",
+      "The public-surface audit now includes generalized Teoria and music-family rules so future music routes inherit the same constraints."
+    ],
+    "evidence": [
+      "The Teoria family audit rules catch upstream shell links and Teoria promo surfaces if they reappear in public route HTML.",
+      "The music-family audit rules also catch remote playable media and embeds if they reappear in a shipped route."
+    ]
+  }
+]

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Musicmap Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local Musicmap route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Musicmap</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/musicmap/</code> keeps the published graph,
+        search flow, and genre side pane while shipping a scoped playback exception for deferred
+        YouTube and Spotify embeds.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../musicmap/">Open replica</a>
+        <a class="action-link secondary" href="https://musicmap.info/" target="_blank" rel="noreferrer">Open original</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>https://musicmap.info/ verified 2026-03-21</code><br>
+        Source family: <code>musicmap.info direct replica with scoped playback exception</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          The local route vendors the published Musicmap shell, graph markup, bundle, CSS, fonts,
+          images, and search data payload instead of rebuilding the map in a new stack.
+        </p>
+        <ul class="plain-list">
+          <li>Live original verified against <code>https://musicmap.info/</code> on 2026-03-21.</li>
+          <li>The route preserves zoom-to-genre, search results, genre descriptions, and playlist context.</li>
+          <li>The shared footer remains the only public provenance surface.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>musicmap/index.html</code> owns the local metadata shell and strips the upstream promo panes.</li>
+          <li><code>musicmap/main.bundle.js</code> and <code>musicmap/main.css</code> stay vendored as the published runtime core.</li>
+          <li><code>musicmap/master-genrelist.json</code> is vendored locally so search and genre hydration stay inside the route tree.</li>
+          <li>The local static inventory includes 5 vendored assets under <code>musicmap/assets/</code>, plus local favicon and apple-touch icon files.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Scoped exception</h2>
+        <p>
+          Musicmap is the only music-family route allowed to create remote playback surfaces, and
+          only under a user-click gate.
+        </p>
+        <ul class="plain-list">
+          <li>Allowed providers: <code>YouTube</code> and <code>Spotify</code> only.</li>
+          <li>Embed mode: <code>user-click only</code>, with no eager autoplay shell or preload.</li>
+          <li>The local gate script converts playlist actions into deferred embeds instead of preserving the upstream remote API shell.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The mobile redirect, store surfaces, privacy banner, disclaimer panes, social buttons, analytics, and Facebook SDK are removed from the public body.</li>
+          <li>Google Fonts are replaced locally in the vendored CSS.</li>
+          <li>Playlist playback is deferred to embed creation after explicit user action rather than the upstream eager iframe API flow.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

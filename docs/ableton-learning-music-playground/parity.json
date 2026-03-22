@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "playground-shell-and-widget-runtime-handoff",
+    "originalBehavior": "The published Ableton Playground mounts four synchronized lesson widgets through the Learning Music lesson shell, shared widget runtime, and route-local CSS.",
+    "localStatus": "The local route keeps the published widget runtime and four-widget layout while replacing the broader Learning Music shell with route-local metadata and the shared public footer.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/index.html",
+      "../../ableton-learning-music-playground/css/main.css",
+      "../../ableton-learning-music-playground/widgets/build/widgets.min.js",
+      "../../ableton-learning-music-playground/widgets/build/SimplePianoRoll.js"
+    ],
+    "notes": [
+      "The local route stays on the published widget stack instead of reimplementing the Playground in a custom sequencer shell.",
+      "Public provenance is limited to the shared footer rather than the upstream lesson navigation or marketing shell."
+    ],
+    "evidence": [
+      "The shipped route mounts the original beats, basslines, chords, and melodies widgets under the vendored Ableton runtime.",
+      "Music smoke coverage verifies the route loads the local widget scripts before transport and edit interactions begin."
+    ]
+  },
+  {
+    "moduleId": "local-sample-banks-and-multitrack-sync",
+    "originalBehavior": "The published Playground loads local lesson sample banks and keeps four musical lanes synchronized under one shared transport and tempo model.",
+    "localStatus": "The local route keeps that shared transport model and archives the full shipped audio set inside the route tree so all playback comes from local assets.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/widgets/build/widgets.min.js",
+      "../../ableton-learning-music-playground/lessons/sounds/piano/C4v10.ogg",
+      "../../ableton-learning-music-playground/lessons/sounds/sinelead/sinelead2.ogg"
+    ],
+    "notes": [
+      "The route-local audio inventory is 31 archived audio files.",
+      "The widget bundle is patched so sample paths resolve to `./lessons/sounds/` instead of the upstream root path."
+    ],
+    "evidence": [
+      "Implementation inventory captured the full Playground sample bank under the route tree before shipping.",
+      "Music smoke coverage verifies zero remote playable media requests and a transport start across the local archive build."
+    ]
+  },
+  {
+    "moduleId": "edit-paths-and-export-neutralization",
+    "originalBehavior": "The published Playground lets users create or delete notes, change scales and roots, adjust tempo, and export the current state to Ableton Live through the published export service.",
+    "localStatus": "The local route keeps note editing, scale or root changes, and tempo control paths while neutralizing the export surface because the upstream export handoff depends on a non-archived remote service.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/index.html",
+      "../../ableton-learning-music-playground/widgets/build/SimplePianoRoll.js"
+    ],
+    "notes": [
+      "Export buttons are disabled and relabeled as unavailable in the local archive build.",
+      "Interactive editing, transport, and multitrack sync remain part of the shipped public route."
+    ],
+    "evidence": [
+      "The route shell rewrites export copy to neutral local text while preserving the rest of the widget controls.",
+      "Music smoke coverage verifies one edit path changes the active state and that transport remains synchronized after interaction."
+    ]
+  },
+  {
+    "moduleId": "local-media-inventory-and-footer-only-provenance",
+    "originalBehavior": "The published page is wrapped in the Learning Music shell, including navigation, feedback surfaces, and an external provenance trail beyond the lesson itself.",
+    "localStatus": "The local route archives the first-party media inventory locally, removes the wider Learning Music shell from the public body, and leaves the shared footer as the only original-page reference surface.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/index.html",
+      "../../ableton-learning-music-playground/fonts/FTN45__W.woff2",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The shipped route archives 31 audio files and 9 font files under the local route tree.",
+      "The page body no longer includes upstream shell, cookie, or feedback surfaces."
+    ],
+    "evidence": [
+      "The docs contract records the exact local media counts required by the music-family shipping policy.",
+      "The public-surface audit and music smoke group enforce footer-only provenance and zero remote playable media requests for this route."
+    ]
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "lesson-shell-and-subtractive-runtime",
+    "originalBehavior": "The published Recipes chapter boots the Learning Synths shell and exposes a fuller subtractive-synth panel with multiple controls and preset-style text guidance.",
+    "localStatus": "The local route keeps that chapter shell and subtractive-synth runtime under the route tree while moving provenance to the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-recipes/index.html",
+      "../../ableton-learning-synths-recipes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive preserves the published Recipes chapter instead of recasting it as a single custom synth widget.",
+      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading and the Recipes playback and slider paths on the shipped route.",
+      "The public route keeps footer-only provenance and strips the upstream lesson shell from the body."
+    ]
+  },
+  {
+    "moduleId": "local-archive-inventory",
+    "originalBehavior": "The published chapter relies on shared Learning Synths fonts, text payloads, RNBO patch data, and lesson WAV files around the subtractive-synth panels.",
+    "localStatus": "The local route archives that shared inventory under its own tree so the Recipes chapter can run without remote media dependencies.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-recipes/content/texts/en/presets.json",
+      "../../ableton-learning-synths-recipes/presets/preset-catalog.json",
+      "../../ableton-learning-synths-recipes/rnbo/patches/learning-synth.json"
+    ],
+    "notes": [
+      "The archived inventory matches the rest of the shipped Learning Synths batch.",
+      "Route-local assets stay on relative paths for GitHub Pages subpath hosting."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before the Recipes interaction checks begin.",
+      "The no-remote-playable-media smoke guard stays clean after lesson boot and interaction."
+    ]
+  },
+  {
+    "moduleId": "recipes-playback-and-slider-controls",
+    "originalBehavior": "The published Recipes chapter lets users start playback and move synth controls while the subtractive-synth panels stay synchronized.",
+    "localStatus": "The local route keeps the playback toggle and slider-driven panel updates while serving the chapter entirely from archived assets.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-recipes/index.html",
+      "../../ableton-learning-synths-recipes/js/musiclab.js"
+    ],
+    "notes": [
+      "The Recipes chapter is treated as the synthesis batch payoff because it combines several control families into one sustained scene.",
+      "The route keeps the published chapter structure instead of flattening the panels into an auto-generated catalog card."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies a recipe slider update and the play button’s active state on the shipped route.",
+      "Responsive checks keep the Recipes chapter usable on narrow viewports under the local archive shell."
+    ]
+  }
+]

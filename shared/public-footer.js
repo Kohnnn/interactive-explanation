@@ -32,7 +32,7 @@
   }
 
   function mountFooter(definition) {
-    if (!definition || !definition.links || !definition.links.length) {
+    if (!definition) {
       return;
     }
 
@@ -52,23 +52,69 @@
     label.textContent = definition.label;
     inner.appendChild(label);
 
-    const links = document.createElement("div");
-    links.className = "public-footer__links";
+    if (definition.note) {
+      const note = document.createElement("p");
+      note.className = "public-footer__note";
+      note.textContent = definition.note;
+      inner.appendChild(note);
+    }
 
-    definition.links.forEach(function (item, index) {
-      if (index > 0) {
-        const divider = document.createElement("span");
-        divider.className = "public-footer__divider";
-        divider.textContent = "•";
-        links.appendChild(divider);
-      }
+    if (definition.links && definition.links.length) {
+      const links = document.createElement("div");
+      links.className = "public-footer__links";
 
-      links.appendChild(createLink(item.href, item.label));
-    });
+      definition.links.forEach(function (item, index) {
+        if (index > 0) {
+          const divider = document.createElement("span");
+          divider.className = "public-footer__divider";
+          divider.textContent = "•";
+          links.appendChild(divider);
+        }
 
-    inner.appendChild(links);
+        links.appendChild(createLink(item.href, item.label));
+      });
+
+      inner.appendChild(links);
+    }
+
+    if (!definition.note && (!definition.links || !definition.links.length)) {
+      return;
+    }
+
     footer.appendChild(inner);
     document.body.appendChild(footer);
+  }
+
+  function parseReferenceLinks(serializedLinks) {
+    if (!serializedLinks) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(serializedLinks);
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+
+      return parsed
+        .map(function (entry) {
+          if (typeof entry === "string") {
+            return { href: entry, label: entry };
+          }
+
+          if (!entry || typeof entry !== "object" || typeof entry.href !== "string" || !entry.href) {
+            return null;
+          }
+
+          return {
+            href: entry.href,
+            label: entry.label || entry.href,
+          };
+        })
+        .filter(Boolean);
+    } catch (error) {
+      return [];
+    }
   }
 
   async function getFooterDefinition() {
@@ -95,6 +141,23 @@
             };
           }),
       };
+    }
+
+    if (body.dataset.referenceMode === "neutral") {
+      return {
+        label: body.dataset.footerLabel || "Provenance",
+        note: body.dataset.referenceNote || "This curated route combines multiple upstream families. See the local docs for full provenance.",
+      };
+    }
+
+    if (body.dataset.referenceLinks) {
+      const links = parseReferenceLinks(body.dataset.referenceLinks);
+      if (links.length) {
+        return {
+          label: body.dataset.footerLabel || "Original pages",
+          links,
+        };
+      }
     }
 
     if (body.dataset.referenceUrl) {

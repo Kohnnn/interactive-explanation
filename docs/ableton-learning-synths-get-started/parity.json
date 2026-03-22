@@ -1,0 +1,56 @@
+[
+  {
+    "moduleId": "lesson-shell-and-rnbo-runtime",
+    "originalBehavior": "The published Get started lesson boots the Learning Synths shell, loads the RNBO-backed synth runtime, and drops straight into a playable XY pad.",
+    "localStatus": "The local route keeps that lesson shell and RNBO runtime under the route tree while replacing the broader lesson chrome with local metadata and the shared footer.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-get-started/index.html",
+      "../../ableton-learning-synths-get-started/js/musiclab.js",
+      "../../shared/ableton-learning-synths-archive.js"
+    ],
+    "notes": [
+      "The archive preserves the published runtime rather than rebuilding the synth pad in a custom stack.",
+      "The route forces the stable low-quality audio mode at boot so the archived lesson can mount consistently from local assets."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies local script loading, the XY control update path, and note-trigger state changes on the shipped route.",
+      "The rendered lesson body rewrites localizable chapter links to shipped local synth routes after the React shell mounts."
+    ]
+  },
+  {
+    "moduleId": "local-lesson-asset-inventory",
+    "originalBehavior": "The published lesson relies on shared Learning Synths fonts, text payloads, RNBO patch data, models, and lesson WAV files around the main synth surface.",
+    "localStatus": "The local route archives those first-party assets under its own tree so the synth lesson can run without remote media fetches.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-get-started/content/assets/sounds/impulseresponse.wav",
+      "../../ableton-learning-synths-get-started/content/lessons/en/synthesis/clarinet.wav",
+      "../../ableton-learning-synths-get-started/content/assets/models/synth003b.glb",
+      "../../ableton-learning-synths-get-started/fonts/AbletonSans-Regular.woff2"
+    ],
+    "notes": [
+      "The archived inventory includes 12 font files, 4 shared sound assets, 5 lesson WAVs, 4 GLB models, 6 text payload JSON files, 2 preset catalogs, and 1 RNBO patch.",
+      "Route-local assets are served from relative paths for GitHub Pages subpath hosting."
+    ],
+    "evidence": [
+      "Music smoke coverage asserts the expected local asset counts before interaction checks begin.",
+      "The route passes the no-remote-playable-media check inside the music smoke group."
+    ]
+  },
+  {
+    "moduleId": "xy-synth-interaction",
+    "originalBehavior": "The published lesson lets users drag across an XY synth surface to change sound and trigger notes immediately.",
+    "localStatus": "The local route keeps the playable XY pad and its note-trigger state while routing chapter navigation and provenance through local-only surfaces.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-get-started/index.html",
+      "../../ableton-learning-synths-get-started/js/musiclab.js"
+    ],
+    "notes": [
+      "The first synth lesson is treated as the family bootstrap and the smoke gate for the playable XY surface.",
+      "The shipped route preserves the lesson heading, chapter handoff, and in-body synth interaction instead of condensing the page into a custom wrapper."
+    ],
+    "evidence": [
+      "Music smoke coverage verifies the XY control position changes and that the route enters and exits the note-trigger state cleanly.",
+      "The public shell stays responsive on narrow viewports and retains footer-only provenance after the lesson mounts."
+    ]
+  }
+]

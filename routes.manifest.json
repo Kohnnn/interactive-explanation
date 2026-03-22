@@ -301,6 +301,160 @@
     "docsUrl": "./docs/reading-qr-codes-without-a-computer/"
   },
   {
+    "slug": "teoria-interval-ear-training",
+    "title": "Teoria Interval Ear Training",
+    "summary": "Replica of Teoria's interval ear-training exercise with local notation, keyboard, and piano audio assets for interval identification practice.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/ie.php",
+    "docsUrl": "./docs/teoria-interval-ear-training/"
+  },
+  {
+    "slug": "teoria-note-ear-training",
+    "title": "Teoria Note Ear Training",
+    "summary": "Replica of Teoria's note ear-training exercise with local notation, keyboard answer modes, and piano audio assets for single-note identification.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/ne.php",
+    "docsUrl": "./docs/teoria-note-ear-training/"
+  },
+  {
+    "slug": "teoria-key-and-note-ear-training",
+    "title": "Teoria Key and Note Ear Training",
+    "summary": "Replica of Teoria's key-and-note ear-training exercise with local notation, reference playback, keyboard answer modes, and piano audio assets.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/kne.php",
+    "docsUrl": "./docs/teoria-key-and-note-ear-training/"
+  },
+  {
+    "slug": "teoria-random-key-and-note-ear-training",
+    "title": "Teoria Random Key and Note Ear Training",
+    "summary": "Replica of Teoria's random key-and-note ear-training exercise with local notation, randomized key contexts, keyboard answer modes, and piano audio assets.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/kner.php",
+    "docsUrl": "./docs/teoria-random-key-and-note-ear-training/"
+  },
+  {
+    "slug": "teoria-scale-construction",
+    "title": "Teoria Scale Construction",
+    "summary": "Replica of Teoria's scale-construction exercise with local notation rendering, note-entry controls, and piano playback for scale-building practice.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/sc.php",
+    "docsUrl": "./docs/teoria-scale-construction/"
+  },
+  {
+    "slug": "teoria-interval-identification-and-inversion",
+    "title": "Teoria Interval Identification and Inversion",
+    "summary": "Replica of Teoria's interval identification and inversion exercise with local notation, interval answer grids, and piano playback for two-step interval practice.",
+    "referenceUrl": "https://www.teoria.com/en/exercises/iv.php",
+    "docsUrl": "./docs/teoria-interval-identification-and-inversion/"
+  },
+  {
+    "slug": "ableton-learning-music-playground",
+    "title": "Ableton Learning Music Playground",
+    "summary": "Local replica of Ableton's Playground with synced beats, basslines, chords, and melodies powered by vendored widgets and route-local sample banks.",
+    "referenceUrl": "https://learningmusic.ableton.com/the-playground",
+    "docsUrl": "./docs/ableton-learning-music-playground/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-beats",
+    "title": "Ableton Learning Music: Play with beats",
+    "summary": "Local replica of Ableton's Play with beats lesson with a recordable drum grid, local 909 sample bank, and archived widget runtime.",
+    "referenceUrl": "https://learningmusic.ableton.com/make-beats/play-with-beats.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-beats/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-notes-and-scales",
+    "title": "Ableton Learning Music: Play with notes and scales",
+    "summary": "Local replica of Ableton's Play with notes and scales lesson with local piano and drum assets, tonic and scale choosers, and archived widget controls.",
+    "referenceUrl": "https://learningmusic.ableton.com/notes-and-scales/play-with-notes-and-scales.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-notes-and-scales/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-chords",
+    "title": "Ableton Learning Music: Play with chords",
+    "summary": "Local replica of Ableton's Play with chords lesson with local piano and drum assets, archived chord widgets, and route-local transport controls.",
+    "referenceUrl": "https://learningmusic.ableton.com/chords/play-with-chords.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-chords/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-basslines",
+    "title": "Ableton Learning Music: Play with basslines",
+    "summary": "Local replica of Ableton's Play with basslines lesson with local bass and drum samples, archived sequencer widgets, and route-local transport.",
+    "referenceUrl": "https://learningmusic.ableton.com/make-basslines/play-with-basslines.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-basslines/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-melodies",
+    "title": "Ableton Learning Music: Play with melodies",
+    "summary": "Local replica of Ableton's Play with melodies lesson with local piano and drum samples, archived melody widgets, and route-local playback controls.",
+    "referenceUrl": "https://learningmusic.ableton.com/make-melodies/play-with-melodies.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-melodies/"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-song-structures",
+    "title": "Ableton Learning Music: Play with song structures",
+    "summary": "Local replica of Ableton's Play with song structures lesson shell with archived Learning Music assets and a route-local arrangement primer.",
+    "referenceUrl": "https://learningmusic.ableton.com/song-structure/song-structure.html",
+    "docsUrl": "./docs/ableton-learning-music-play-with-song-structures/"
+  },
+  {
+    "slug": "ableton-learning-synths-get-started",
+    "title": "Ableton Learning Synths: Get started",
+    "summary": "Local replica of Ableton's opening Learning Synths lesson with a draggable synth pad, archived RNBO runtime, and route-local synth media.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/get-started",
+    "docsUrl": "./docs/ableton-learning-synths-get-started/"
+  },
+  {
+    "slug": "ableton-learning-synths-how-synths-make-sound",
+    "title": "Ableton Learning Synths: How synths make sound",
+    "summary": "Local replica of Ableton's oscillator lesson with archived synth visualizations, local preset catalogs, and route-local lesson assets.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/oscillators/how-synths-make-sound",
+    "docsUrl": "./docs/ableton-learning-synths-how-synths-make-sound/"
+  },
+  {
+    "slug": "ableton-learning-synths-filter-resonance",
+    "title": "Ableton Learning Synths: Filter resonance",
+    "summary": "Local replica of Ableton's filter resonance lesson with archived XY filter controls, local text payloads, and route-local synth media.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/filters/filter-resonance",
+    "docsUrl": "./docs/ableton-learning-synths-filter-resonance/"
+  },
+  {
+    "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+    "title": "Ableton Learning Synths: Modulating amplitude with envelopes",
+    "summary": "Local replica of Ableton's amplitude-envelope lesson with archived ADSR controls, local RNBO assets, and route-local synth media.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/envelopes/modulating-amplitude-with-envelopes",
+    "docsUrl": "./docs/ableton-learning-synths-modulating-amplitude-with-envelopes/"
+  },
+  {
+    "slug": "ableton-learning-synths-matching-envelopes",
+    "title": "Ableton Learning Synths: Matching envelopes",
+    "summary": "Local replica of Ableton's matching envelopes lesson with archived sampler comparisons, ADSR controls, and route-local synth media.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/envelopes/matching-envelopes",
+    "docsUrl": "./docs/ableton-learning-synths-matching-envelopes/"
+  },
+  {
+    "slug": "ableton-learning-synths-recipes",
+    "title": "Ableton Learning Synths: Recipes",
+    "summary": "Local replica of Ableton's Recipes chapter with archived preset panels, local lesson data, and route-local Learning Synths media.",
+    "referenceUrl": "https://learningsynths.ableton.com/en/recipes/",
+    "docsUrl": "./docs/ableton-learning-synths-recipes/"
+  },
+  {
+    "slug": "chrome-music-lab-song-maker",
+    "title": "Chrome Music Lab Song Maker",
+    "summary": "Local replica of Song Maker with vendored canvas runtime, instrument banks, percussion packs, and responsive sequencer controls under one route-local archive.",
+    "referenceUrl": "https://musiclab.chromeexperiments.com/Song-Maker/",
+    "docsUrl": "./docs/chrome-music-lab-song-maker/"
+  },
+  {
+    "slug": "musicmap",
+    "title": "Musicmap",
+    "summary": "Local replica of Musicmap with vendored graph, search, genre panels, and user-click-triggered YouTube or Spotify embeds under a scoped music-family exception.",
+    "referenceUrl": "https://musicmap.info/",
+    "docsUrl": "./docs/musicmap/"
+  },
+  {
+    "slug": "music-interactive-hub",
+    "title": "Music Interactive Hub",
+    "summary": "Editorial local hub that connects the shipped Teoria drills, sequencer playgrounds, and genre-history map into one music-focused learning path.",
+    "referenceMode": "neutral",
+    "docsUrl": "./docs/music-interactive-hub/"
+  },
+  {
     "slug": "linear-regression",
     "title": "Linear Regression",
     "summary": "Interactive article about fitted lines, residuals, MSE, coefficient updates, and scroll-linked regression scenes.",
@@ -388,7 +542,7 @@
     "slug": "blockchain-101-combined-flow",
     "title": "Combined Blockchain Flow",
     "summary": "Local chapter map that connects the shipped blockchain, signing, transaction, and zero-knowledge routes into one teaching sequence.",
-    "referenceUrl": "https://andersbrownworth.com/blockchain/",
+    "referenceUrl": "https://andersbrownworth.com/",
     "docsUrl": "./docs/blockchain-101-combined-flow/"
   },
   {
