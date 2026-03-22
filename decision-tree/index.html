@@ -14,13 +14,47 @@
   <link rel="icon" href="mlu_robot.5a492771.png">
   <link rel="stylesheet" href="main.37eaf4da.css">
   <link rel="stylesheet" href="katex.min.aaa9b03f.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/decision-tree/"
   data-reference-text="Decision Trees"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
 >
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Build a tree by making one useful split at a time.</h1>
+        <p class="story-hero__summary">
+          This page starts with a tiny classification problem, then turns it into a hands-on
+          lesson about entropy, information gain, and why a tree that keeps chasing perfect purity
+          can stop generalizing.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Play with split building</span>
+          <span class="story-chip">Inspect entropy and gain</span>
+          <span class="story-chip">See why single trees wobble</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start by jumping straight to the entropy sandbox or by scrolling through the first tree
+          build. Watch the partition chart and the tree diagram together, then come back to the
+          gain and perturbation sections once the split logic feels intuitive.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#splits">Play first: entropy sandbox</a>
+          <a class="story-button story-button--secondary" href="#startsplit">Start the split story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div id="scrolly">
     <article>
       <section data-index="-1" id="title-section">
@@ -37,7 +71,7 @@
         </section>
       </section>
 
-      <section data-index="0" id="intro">
+      <section data-index="0" id="intro" data-story-chapter="Build the tree">
         <h2>Let's Build a Decision Tree</h2>
         <p>Let's pretend we're farmers with a new plot of land. Given only the Diameter and Height of a tree trunk, we must determine if it's an Apple, Cherry, or Oak tree. To do this, we'll use a Decision Tree.</p>
       </section>
@@ -86,7 +120,7 @@
     </div>
   </div>
 
-  <section id="splits">
+  <section id="splits" data-story-chapter="Choose the split">
     <h2 class="center-text sectionheader">Where To Partition?</h2>
     <p class="center-text">We just saw how a Decision Tree operates at a high-level: from the top down, it creates a series of sequential rules that split the data into well-separated regions for classification. But given the large number of potential options, how exactly does the algorithm determine where to partition the data? Before we learn how that works, we need to understand <span class="bold">Entropy</span>. <br><br>Entropy measures the amount of information of some variable or event. We'll make use of it to identify regions consisting of a large number of similar (pure) or dissimilar (impure) elements.</p>
     <p class="center-text">Given a certain set of events that occur with probabilities <span id="probs-equation"></span>, the total entropy <span id="H-equation"></span> can be written as the negative sum of weighted probabilities:</p>
@@ -108,7 +142,7 @@
     <p class="center-text">Did you notice that pure samples have zero entropy whereas impure ones have larger entropy values? This is what entropy is doing for us: measuring how pure (or impure) a set of samples is. We'll use it in the algorithm to train Decision Trees by defining the Information Gain.</p>
   </section>
 
-  <section id="informationgain">
+  <section id="informationgain" data-story-chapter="Measure the gain">
     <h3 class="center-text subheader">Information Gain</h3>
     <p class="center-text">With the intuition gained with the above animation, we can now describe the logic to train Decision Trees. As the name implies, information gain measures an amount the information that we gain. It does so using entropy. <span class="bold">The idea is to subtract from the entropy of our data before the split the entropy of each possible partition thereafter</span>. We then select the split that yields the largest reduction in entropy, or equivalently, the largest increase in information. <br><br>The core algorithm to calculate information gain is called <a class="on-plum" href="https://en.wikipedia.org/wiki/ID3_algorithm">ID3</a>. It's a recursive procedure that starts from the root node of the tree and iterates top-down on all non-leaf branches in a greedy manner, calculating at each depth the difference in entropy:</p>
     <span id="ig-equation"></span>
@@ -144,7 +178,16 @@
     <p class="center-text">An alternative to the entropy for the construction of Decision Trees is the <a href="https://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">Gini impurity</a>. This quantity is also a measure of information and can be seen as a variation of Shannon's entropy. Decision trees trained using entropy or Gini impurity are comparable, and only in a few cases do results differ considerably. In the case of imbalanced data sets, entropy might be more prudent. Yet Gini might train faster as it does not make use of logarithms.</p>
   </section>
 
-  <section id="anotherlook">
+  <div class="story-callout story-inline-note" data-story-callout="engineering">
+    <span class="story-callout__label">Why this matters</span>
+    <p>
+      The splitter is greedy on purpose: it only asks which cut improves impurity the most right
+      now. That makes trees fast and interpretable, but it also means later branches inherit every
+      early choice.
+    </p>
+  </div>
+
+  <section id="anotherlook" data-story-chapter="Read the trained tree">
     <h3 class="center-text subheader">Another Look At Our Decision Tree</h3>
     <p class="center-text">Let's recap what we've learned so far. First, we saw how a Decision Tree classifies data by repeatedly partitioning the feature space into regions according to some conditional series of rules. Second, we learned about entropy, a popular metric used to measure the purity (or lack thereof) of a given sample of data. Third, we learned how Decision Trees use entropy in information gain and the ID3 algorithm to determine the exact conditional series of rules to select. Taken together, the three sections detail the typical Decision Tree algorithm. <br><br>To reinforce concepts, let's look at our Decision Tree from a slightly different perspective. <br><br>The tree below maps exactly to the tree we showed in <span class="bold">How to Build a Decision Tree</span> section above. However, instead of showing the partitioned feature space alongside our tree's structure, let's look at the partitioned data points and their corresponding entropy at each node itself:</p>
     <div id="entropy-chart-tree"></div>
@@ -152,7 +195,7 @@
     <p class="center-text">From the top down, our sample of data points to classify shrinks as it gets partitioned to different <span class="bold">decision</span> and <span class="bold">leaf</span> nodes. In this manner, we could trace the full path taken by a training data point if we so desired. Note also that not every leaf node is pure: as discussed previously (and in the next section), we don't want the structure of our Decision Trees to be too deep, as such a model likely won't generalize well to unseen data.</p>
   </section>
 
-  <section id="pertubations">
+  <section id="pertubations" data-story-chapter="Stress-test the tree">
     <h3 class="center-text subheader">The Problem of Pertubations</h3>
     <p class="center-text">Without question, Decision Trees have a lot of things going for them. They're simple models that are easy to interpret. They're fast to train and require minimal data preprocessing. And they handle outliers with ease. Yet they suffer from a major limitation, and that is their instability compared with other predictors. They can be <span class="bold">extremely sensitive to small perturbations in the data</span>: a minor change in the training examples can result in a drastic change in the structure of the Decision Tree.</p>
     <p class="center-text">Check for yourself how small random Gaussian perturbations on just 5% of the training examples create a set of completely different Decision Trees:</p>
@@ -181,12 +224,12 @@
     <p class="center-text">There are ways to prevent excessive growth of Decision Trees by pruning them, for instance constraining their maximum depth, limiting the number of leaves that can be created, or setting a minimum size for the amount of items in each leaf and not allowing leaves with too few items in them. <br><br>As for the issue of high variance? Well, unfortunately it's an intrinsic characteristic when training a single Decision Tree.</p>
   </section>
 
-  <section id="limitations">
+  <section id="limitations" data-story-chapter="Why forests help">
     <h3 class="center-text subheader">The Need to Go Beyond Decision Trees</h3>
     <p class="center-text">Perhaps ironically, one way to alleviate the instability induced by perturbations is to introduce an extra layer of randomness in the training process. In practice this can be achieved by creating <span class="bold">collections of Decision Trees</span> trained on slightly different versions of the data set, the combined predictions of which do not suffer so heavily from high variance. This approach opens the door to one of the most successful Machine Learning algorithms thus far: random forests.<br><br><a class="on-plum" href="../random-forest/">Continue to the local Random Forest explainer.</a></p>
   </section>
 
-  <section id="final">
+  <section id="final" data-story-chapter="References">
     <h3 class="center-text subheader">The End</h3>
     <p class="center-text">Thanks for reading. The walkthrough above keeps the full decision-tree story intact, including the split-building progression, entropy sandbox, information-gain view, and perturbed-tree comparisons. <br><br>To keep things compact, it skips over related topics such as regression trees, end-cut preference, and additional tree-specific hyperparameters. The references below are still part of the lesson and are useful for going deeper.</p>
     <br><br>
@@ -207,6 +250,7 @@
   <script src="js.0203594f.js"></script>
   <script src="annotatedTree.53ab4bb5.js"></script>
   <script src="katexCalls.5eeadbac.js"></script>
+  <script src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

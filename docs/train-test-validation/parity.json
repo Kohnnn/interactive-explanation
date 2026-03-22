@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly into the split narrative shell without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original nav, scroll-linked chart shell, and compiled interaction logic intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
+      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and the internal TOC can continue to operate."
+    ],
+    "evidence": [
+      "The pilot plan requires a shared Engineering Sandbox layer with local Be Vietnam Pro and IBM Plex Mono assets, a hero, play-first prompt, and chapter jump rail.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original drag, feature-toggle, and table scenes."
+    ]
+  },
+  {
     "moduleId": "split-narrative-scrollytelling-shell",
     "originalBehavior": "The published article advances through introduction, split, train, model, validation, test, and summary scenes while a sticky chart shell stays synchronized with the active section.",
     "localStatus": "The local route keeps the original section order, chart shell, feature buttons, and scroll-linked state changes from the published bundle.",

@@ -17,8 +17,9 @@
       <h1>Decision Trees</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/decision-tree/</code> keeps the published scrollytelling
-        walkthrough, D3-driven split visuals, entropy sandbox, and information-gain charts while limiting
-        public provenance to the shared footer.
+        walkthrough, D3-driven split visuals, entropy sandbox, and information-gain charts while layering
+        on the shared Engineering Sandbox hero, chapter navigation, and play-first framing with public
+        provenance still limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../decision-tree/">Open replica</a>
@@ -44,6 +45,7 @@
           <li>Live original verified against <code>https://mlu-explain.github.io/decision-tree/</code> on 2026-03-10.</li>
           <li>The route was adapted from the built page tree rather than rebuilt from source.</li>
           <li>The public intro and outro were neutralized, but the teaching flow and educational references remain.</li>
+          <li>The route now also loads the shared Engineering Sandbox shell for local typography, chapter navigation, and editorial framing.</li>
         </ul>
       </article>
 
@@ -52,6 +54,7 @@
         <ul class="plain-list">
           <li>Keep the built hashed CSS and JS files in place so the scrollytelling runtime still binds to the expected IDs.</li>
           <li>Patch only the shell metadata, home link, and closing content needed for footer-only public provenance.</li>
+          <li>Layer the Engineering Sandbox hero, play-first prompt, and chapter rail around the existing scrollytelling structure without changing the compiled D3 runtime.</li>
           <li>Normalize canonical metadata and let the shared footer supply the single live-page reference link.</li>
           <li>Extend the shared audit and smoke runner instead of introducing a family-specific validator.</li>
         </ul>
@@ -60,7 +63,8 @@
       <article class="note-section">
         <h2>Asset and source map</h2>
         <ul class="plain-list">
-          <li><code>decision-tree/index.html</code> now owns the local shell metadata, footer hook, and upstream-copy cleanup.</li>
+          <li><code>decision-tree/index.html</code> now owns the local shell metadata, Engineering Sandbox hero and chapter markers, footer hook, and upstream-copy cleanup.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the local font stack, chapter jump rail, and mobile jump bar used by the pilot routes.</li>
           <li><code>decision-tree/main.37eaf4da.css</code> preserves the published layout, sticky panes, and typography.</li>
           <li><code>decision-tree/js.0203594f.js</code> keeps the main scrollytelling runtime, entropy bubble, and information-gain visuals.</li>
           <li><code>decision-tree/annotatedTree.53ab4bb5.js</code> and <code>decision-tree/katexCalls.5eeadbac.js</code> preserve the annotated tree and KaTeX rendering.</li>
@@ -72,6 +76,7 @@
         <ul class="plain-list">
           <li>The public route no longer shows author bylines, analytics, MLU branding, repo links, or contact calls outside the shared footer.</li>
           <li>The old link to the unshipped bias-variance page is now plain explanatory text.</li>
+          <li>The opening framing, play-first prompt, and section transitions were rewritten for the Engineering Sandbox pilot, while the split-building and entropy explanations remain intact.</li>
           <li>The closing handoff now points to the local <code>../random-forest/</code> route because that companion explainer is shipped locally.</li>
         </ul>
       </article>

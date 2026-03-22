@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly inside the Condorcet and random-forest story shell without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original scrollytelling DOM and compiled chart logic intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
+      "Chapter links are generated from data-story-chapter markers so the Condorcet, bagging, and variance sections keep their original structure."
+    ],
+    "evidence": [
+      "The pilot plan requires a shared Engineering Sandbox layer with local Be Vietnam Pro and IBM Plex Mono assets, a hero, play-first prompt, and chapter jump rail.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original slider and voting scenes."
+    ]
+  },
+  {
     "moduleId": "condorcet-scrollytelling-and-slider-shell",
     "originalBehavior": "The article opens with a sticky scrollytelling scene where the number-of-trees and tree-accuracy sliders drive a Condorcet-style ensemble visualization.",
     "localStatus": "The local route keeps the published slider scene, sticky figure layout, and label updates while only patching shell metadata and footer policy.",

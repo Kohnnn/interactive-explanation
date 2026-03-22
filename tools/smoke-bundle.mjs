@@ -281,6 +281,44 @@ async function assertRoute(page, relativePath, selector) {
   console.log(`OK route ${relativePath}`);
 }
 
+async function assertEngineeringSandboxShell(page, label, minimumChapters = 4) {
+  await page.waitForFunction(() => {
+    return document.body?.dataset.storyShell === "engineering-sandbox" &&
+      document.querySelector(".story-hero") &&
+      document.querySelector(".story-hero [data-story-callout='play']") &&
+      document.querySelector(".story-rail__nav a") &&
+      document.querySelector(".story-mobile-bar__nav a");
+  }, null, { timeout: 15000 });
+
+  const shellState = await page.evaluate(() => {
+    const railLinks = Array.from(document.querySelectorAll(".story-rail__nav a"));
+    const mobileLinks = Array.from(document.querySelectorAll(".story-mobile-bar__nav a"));
+
+    return {
+      storyShell: document.body?.dataset.storyShell || "",
+      storyFamily: document.body?.dataset.storyFamily || "",
+      heroTitle: document.querySelector(".story-hero__title")?.textContent?.trim() || "",
+      playButtonHref: document.querySelector(".story-hero [data-story-callout='play'] .story-button")?.getAttribute("href") || "",
+      chapterCount: document.querySelectorAll("[data-story-chapter]").length,
+      railCount: railLinks.length,
+      mobileCount: mobileLinks.length,
+      allAnchorLinks: railLinks.concat(mobileLinks).every((link) => {
+        const href = link.getAttribute("href") || "";
+        return href.startsWith("#");
+      }),
+    };
+  });
+
+  assert(shellState.storyShell === "engineering-sandbox", `${label} did not opt into the engineering sandbox shell`);
+  assert(shellState.storyFamily === "mlu-pilot", `${label} did not expose the expected story family`);
+  assert(shellState.heroTitle.length > 0, `${label} did not render the engineering sandbox hero`);
+  assert(shellState.playButtonHref.startsWith("#"), `${label} did not expose a local play-first action`);
+  assert(shellState.chapterCount >= minimumChapters, `${label} exposed only ${shellState.chapterCount} chapter markers`);
+  assert(shellState.railCount >= minimumChapters, `${label} exposed only ${shellState.railCount} desktop chapter links`);
+  assert(shellState.mobileCount >= minimumChapters, `${label} exposed only ${shellState.mobileCount} mobile chapter links`);
+  assert(shellState.allAnchorLinks, `${label} exposed a non-local chapter link`);
+}
+
 function createRuntimeMonitor(page) {
   const issues = [];
 
@@ -1181,6 +1219,7 @@ async function smokeSim(context) {
 async function smokeDecisionTree(context) {
   const page = await context.newPage();
   await assertRoute(page, "decision-tree/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "decision-tree route", 6);
   await page.waitForFunction(() => {
     return document.querySelector("#chart svg") &&
       document.querySelector("#entropy-chart svg") &&
@@ -1230,6 +1269,7 @@ async function smokeDecisionTree(context) {
   await page.waitForFunction((previousValue) => {
     return (document.querySelector("#ig-tooltip-ig")?.textContent || "").trim() !== previousValue;
   }, initialIg, { timeout: 5000 });
+  await assertViewportUsable(page, "decision-tree route");
   console.log("OK decision-tree information gain hover");
   await page.close();
 }
@@ -1237,6 +1277,7 @@ async function smokeDecisionTree(context) {
 async function smokeRandomForest(context) {
   const page = await context.newPage();
   await assertRoute(page, "random-forest/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "random-forest route", 5);
   await page.waitForFunction(() => {
     return document.querySelector("#gridOfTrees svg") &&
       document.querySelector("#chart-rf") &&
@@ -1293,6 +1334,7 @@ async function smokeRandomForest(context) {
   await page.waitForFunction(() => {
     return (document.querySelector("#cantor-scatter")?.textContent || "").includes("Forest");
   }, null, { timeout: 10000 });
+  await assertViewportUsable(page, "random-forest route");
   console.log("OK random-forest ensemble panels");
   await page.close();
 }
@@ -5463,6 +5505,7 @@ async function smokeBiasVariance(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "bias-variance/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "bias-variance route", 6);
   await page.waitForFunction(() => {
     return document.querySelector("#scroll-viz svg") &&
       document.querySelector("#errorBarSvg") &&
@@ -5546,6 +5589,7 @@ async function smokeBiasVariance(context) {
       document.querySelectorAll("#dd-container path").length >= 5;
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
+  await assertViewportUsable(page, "bias-variance route");
   assertPageRuntimeClean("bias-variance route");
   console.log("OK bias-variance double descent scene");
   await page.close();
@@ -5555,6 +5599,7 @@ async function smokeTrainTestValidation(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "train-test-validation/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "train-test-validation route", 6);
   await page.waitForFunction(() => {
     return document.querySelector("#chart svg") &&
       document.querySelector("#line-decision-boundary") &&
@@ -5609,6 +5654,7 @@ async function smokeTrainTestValidation(context) {
     return /test/.test(text) && /validation/.test(text) && /\d+\.\d%/.test(text);
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
+  await assertViewportUsable(page, "train-test-validation route");
   assertPageRuntimeClean("train-test-validation route");
   console.log("OK train-test-validation test table");
   await page.close();

@@ -19,16 +19,51 @@
   <link rel="canonical" href="./">
   <link rel="icon" href="./mlu_robot.5a492771.png">
   <link rel="stylesheet" href="./main.67dee0d6.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="./js.6c47f979.js"></script>
   <script defer src="./roughAnnotations.51d9685b.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/train-test-validation/"
   data-reference-text="Train, Test, and Validation Sets"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
 >
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Treat data splitting like a workflow decision, not vocabulary.</h1>
+        <p class="story-hero__summary">
+          This route turns train, validation, and test sets into a concrete sequence: split the
+          data, fit a boundary, drag examples around, compare models honestly, and resist the urge
+          to optimize against the final score.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Drag the training examples</span>
+          <span class="story-chip">Watch the boundary and tables react</span>
+          <span class="story-chip">Feel why the test set stays untouched</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Jump to the model scene first if you want a hands-on entry point. Drag a pet, switch the
+          active features, then keep scrolling so the validation and test tables explain why that
+          interaction belongs in the middle of the workflow rather than at the end.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#model">Play first: move the boundary</a>
+          <a class="story-button story-button--secondary" href="#split">Start with the split</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main></main>
 
   <header>
@@ -110,7 +145,7 @@
     </figure>
 
     <article>
-      <section data-index="0" class="intro" id="intro">
+      <section data-index="0" class="intro" id="intro" data-story-chapter="Why split at all">
         <h2>The Importance of Data Splitting <br></h2>
         <p>
           In most supervised machine learning tasks, best practice recommends splitting your data
@@ -136,7 +171,7 @@
         </p>
       </section>
 
-      <section data-index="1" class="split" id="split">
+      <section data-index="1" class="split" id="split" data-story-chapter="Make the split">
         <h2>Train, Test, and Validation Splits</h2>
         <p>
           The first step in our classification task is to randomly split our pets into three
@@ -161,7 +196,7 @@
         </p>
       </section>
 
-      <section data-index="2" class="train" id="train">
+      <section data-index="2" class="train" id="train" data-story-chapter="Train on one slice">
         <h2>The Training Set</h2>
         <p>
           <span id="annotation7">The training set is the dataset that we employ to train our
@@ -174,7 +209,7 @@
         </p>
       </section>
 
-      <section data-index="3" class="model" id="model">
+      <section data-index="3" class="model" id="model" data-story-chapter="Watch the boundary move">
         <h2>Building Our Model</h2>
         <p>
           Our goal (to determine whether a given pet is a cat or a dog) is a binary
@@ -196,7 +231,7 @@
         </p>
       </section>
 
-      <section data-index="4" class="validation" id="validation">
+      <section data-index="4" class="validation" id="validation" data-story-chapter="Tune with validation">
         <h2>The Validation Set</h2>
         <p>
           We can build four different logistic regression models (one for each feature
@@ -217,7 +252,7 @@
         </p>
       </section>
 
-      <section data-index="5" class="test" id="test">
+      <section data-index="5" class="test" id="test" data-story-chapter="Protect the test set">
         <h2>The Testing Set</h2>
         <p>
           Once we have used the validation set to determine the algorithm and parameter choices
@@ -237,7 +272,7 @@
         </p>
       </section>
 
-      <section data-index="6" class="summary" id="summary">
+      <section data-index="6" class="summary" id="summary" data-story-chapter="Takeaways">
         <h2>Summary</h2>
         <p>
           You may have noticed that the test accuracy of the "just fluffiness" model was higher
@@ -281,6 +316,15 @@
       <section data-index="7" class="empty" id="empty"></section>
       <p id="end-p"></p>
     </article>
+  </div>
+
+  <div class="story-callout story-inline-note" data-story-callout="engineering">
+    <span class="story-callout__label">Engineering note</span>
+    <p>
+      Validation is not a consolation prize for the training set. It is the buffer that lets you
+      compare models and hyperparameters without teaching yourself to overtrust the final test
+      number.
+    </p>
   </div>
 
   <section data-index="6" class="summary-mobile" id="summary-mobile">

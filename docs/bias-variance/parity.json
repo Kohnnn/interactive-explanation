@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly into the bias-variance story shell without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original scroll, LOESS, KNN, and double-descent runtime intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
+      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and DOM IDs."
+    ],
+    "evidence": [
+      "The pilot plan requires a shared Engineering Sandbox layer with local Be Vietnam Pro and IBM Plex Mono assets, a hero, play-first prompt, and chapter jump rail.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original decomposition and sandbox scenes."
+    ]
+  },
+  {
     "moduleId": "scrollytelling-error-shell",
     "originalBehavior": "The published article advances through underfitting, overfitting, and error-decomposition scenes with a sticky chart shell whose state changes as readers move through the steps.",
     "localStatus": "The local route keeps the original step containers, scroll-linked chart shell, and compiled transitions so the narrative still drives the visuals in order.",

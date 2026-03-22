@@ -13,14 +13,48 @@
   <link rel="canonical" href="./">
   <link rel="icon" href="mlu_robot.5a492771.png">
   <link rel="stylesheet" href="styles.0f8a2143.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/random-forest/"
   data-reference-text="Random Forest"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
 >
-  <section id="introduction">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Let a crowd of weak trees argue their way to a better answer.</h1>
+        <p class="story-hero__summary">
+          Random forests work because disagreement can be useful. This walkthrough lets you tune
+          the vote, watch bagging produce different trees, and see why small differences across
+          models can add up to a stronger classifier.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Tune vote size and tree accuracy</span>
+          <span class="story-chip">Watch bagging create diversity</span>
+          <span class="story-chip">Trace a majority prediction</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the Condorcet sliders to feel the voting intuition, then scroll into the
+          forest build and click a test sign once the majority-vote scene appears. Save the barcode
+          and prediction panels for the “why disagreement helps” part of the lesson.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#scrolly-condurcet">Play first: ensemble vote</a>
+          <a class="story-button story-button--secondary" href="#random-forest">Jump to tree building</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="introduction" data-story-chapter="Vote before you trust">
     <div id="intro-icon">
       <a href="../" aria-label="Back to replicas">
         <img src="mlu_robot.5a492771.png" alt="" width="50" height="46">
@@ -73,14 +107,14 @@
     </article>
   </div>
 
-  <section id="ensemble" class="one-column">
+  <section id="ensemble" class="one-column" data-story-chapter="Why ensembles work">
     <h2>Ensemble Learning</h2>
     <p>Ensemble learning creates a stronger model by aggregating the predictions of multiple weak models, such as decision trees. The companion <a href="../decision-tree/">Decision Trees explainer</a> covers why a single tree can be unstable. Condorcet's Jury Theorem suggests that majority-vote aggregation can outperform the individual models, although other aggregation methods exist too.</p>
     <br>
     <p>Random Forest is an example of ensemble learning where each model is a decision tree. In the next section, we will build a random forest model to classify if a road sign is a pedestrian crossing sign or not. These signs come in many variations, and we will use four simple features: Size, number of sides, number of colors used, and whether the sign has text or symbol. <br><br>We will start with a sampling method called the <span class="bold">Bagging Method</span> to create multiple samples from the training data to build each tree.</p>
   </section>
 
-  <section id="random-forest">
+  <section id="random-forest" data-story-chapter="Build the forest">
     <h2>Random Forest</h2>
     <div id="scrolly-rf">
       <figure id="figure-rf">
@@ -141,7 +175,15 @@
     </div>
   </section>
 
-  <section id="barcode" class="one-column">
+  <div class="story-callout story-inline-note" data-story-callout="engineering">
+    <span class="story-callout__label">Why disagreement helps</span>
+    <p>
+      Bagging and feature subsampling are not decoration. They deliberately make the trees
+      disagree so the final vote averages away some of the variance that makes a lone tree brittle.
+    </p>
+  </div>
+
+  <section id="barcode" class="one-column" data-story-chapter="Read disagreement">
     <h2>Variance in Composition</h2>
     <br>
     <p>We previously discussed <a href="../decision-tree/">how decision tree models suffer from high variance</a>. However, this variance among trees is employed in the random forest as a feature, not a bug. The inventor of the random forest model Leo Breiman says in his paper <i>"[o]ur results indicate that better (lower generalization error) random forests have lower correlation between classifiers and higher strength."</i> [Random Forest Article] <br><br>The high variance of the decision tree model can help keep the correlation among trees low. The Bagging Method as well as the Feature Selection are the key innovations to keep correlation low. <br><br>We've just shown how to construct random forests for a given dataset, but how different are our trees from one another in reality? To find out, we've trained a nine-tree random forest on our sign dataset and plotted it below. <br><br>The outer enclosing circle represents the random forest. Each inner circle represents a unique decision tree in the forest. Hovering over a tree will highlight the tree's classification accuracy, and its feature importances* for four features.</p>
@@ -152,7 +194,7 @@
     <p>As expected, the random forest model (the red dots on the right) performs better than any individual tree. Notice the wide range of the feature importance scores across our trees, which can contribute to low correlation. In the very first random forest visualization tool developed by Breiman, he also attempted to show the range in feature importances.</p>
   </section>
 
-  <section id="cantor-section" class="one-column">
+  <section id="cantor-section" class="one-column" data-story-chapter="Compare predictions">
     <h2>Variance in Predictions</h2>
     <br>
     <p>If each tree produces the same prediction, then the accuracy cannot improve. Below, each circle represents a prediction from a model. Circles in the same row share the same model, while circles in the same column share the same test data. Blue means "Yes" and pink means "No". Solid color means that the prediction is correct, while the stripe means that the prediction is incorrect. Not all test data points are shown.</p>
@@ -165,13 +207,13 @@
     <p>The irregular pattern in the grid shows how the trees are different in where they make mistakes. As expected, the random forest model performs the best overall even if there are trees with very low accuracy. Note that for the first data point (first column), there are still three trees with the correct prediction while the majority is incorrect. This inspired people to consider other methods, such as Boosting, which is very popular today.</p>
   </section>
 
-  <section id="conclusion" class="one-column">
+  <section id="conclusion" class="one-column" data-story-chapter="Takeaways">
     <h2>Conclusion</h2>
     <p>Random Forest models are a popular model for a large number of tasks. In short, it's a method to produce aggregated predictions using the predictions from several decision trees. The old theorem of Condorcet suggests that the majority vote from several weak models with more than 50% accuracy may do the trick. Later, Breiman came up with Bagging and Feature Selection that help keep correlation among the trees low, which is a key to success. <br><br>There has been theory built around the bias and variance of random forest models in relation to the trees they contain. The sections above focus on the intuition behind that behavior.</p>
     <p><br><br>Thanks for reading. The public route keeps the original bagging, voting, barcode, and prediction walkthroughs while leaving deeper provenance to the docs layer. The references below remain part of the lesson for anyone who wants to keep digging.</p>
   </section>
 
-  <section id="resources">
+  <section id="resources" data-story-chapter="References">
     <h1>Notes & Resources</h1>
     <p>To keep the main story concise, some details were left out. This walkthrough follows Breiman's implementation using Scikit-Learn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html?highlight=randomforest#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a>. The resources below go deeper into the history, theory, and tooling behind the model.</p>
     <p class="resource-item"><a href="https://link.springer.com/article/10.1023/A:1010933404324">Random Forests</a><br>(Leo Breiman, 2001).</p>
@@ -186,6 +228,7 @@
   <script src="js.a8267221.js"></script>
   <script src="indexRF.7579dc6d.js"></script>
   <script src="indexBarcode.c0641541.js"></script>
+  <script src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

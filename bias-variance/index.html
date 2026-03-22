@@ -20,22 +20,57 @@
   <link rel="icon" href="./mlu_robot.5a492771.png">
   <link rel="stylesheet" href="./katex.min.3c2484b0.css">
   <link rel="stylesheet" href="./styles.565b223c.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="./js.63b32ab2.js"></script>
   <script defer src="./katexCalls.eb206bfb.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/bias-variance/"
   data-reference-text="Bias-Variance Tradeoff"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
 >
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Push a model from too simple to too clever, then find the useful middle.</h1>
+        <p class="story-hero__summary">
+          This walkthrough makes the bias-variance tradeoff concrete by letting you watch model
+          realizations, error decomposition, and later hyperparameter sandboxes move together as
+          complexity changes.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Watch train and test error separate</span>
+          <span class="story-chip">Read bias and variance together</span>
+          <span class="story-chip">Tune LOESS and KNN yourself</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Use the opening story to feel underfitting and overfitting first. Then jump into the
+          LOESS and KNN controls to see the same tradeoff show up as a tuning decision instead of
+          an abstract chart.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#scrolly">Play first: complexity story</a>
+          <a class="story-button story-button--secondary" href="#loess-section">Jump to the sandboxes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main>
     <div id="intro-icon">
       <h2 class="logo">Interactive Explanation</h2>
     </div>
 
-    <section id="intro">
+    <section id="intro" data-story-chapter="Meet the tradeoff">
       <h1 id="intro__hed">
         The <span id="bias">Bias</span> <span id="variance">Variance</span> Tradeoff
       </h1>
@@ -48,7 +83,7 @@
       </p>
     </section>
 
-    <section id="scrolly">
+    <section id="scrolly" data-story-chapter="From underfit to overfit">
       <figure id="scroll-figure">
         <div id="scroll-viz"></div>
         <div id="svg2"></div>
@@ -258,6 +293,15 @@
       </article>
     </section>
 
+    <div class="story-callout story-inline-note" data-story-callout="story">
+      <span class="story-callout__label">What to watch for</span>
+      <p>
+        The key move is not “make the model bigger.” It is “notice which part of the error is
+        growing.” Bias dominates when the model cannot flex; variance dominates when every small
+        wobble in the data reshapes the fit.
+      </p>
+    </div>
+
     <div class="model-text">
       <br><br>
       <p>
@@ -268,7 +312,7 @@
       <br>
     </div>
 
-    <section class="models">
+    <section class="models" id="loess-section" data-story-chapter="Tune LOESS smoothing">
       <hr>
       <div class="model-text-wrapper">
         <h1 class="model-header">LOESS Regression</h1>
@@ -303,7 +347,7 @@
       <hr>
     </section>
 
-    <section class="models">
+    <section class="models" id="knn-section" data-story-chapter="Tune K-nearest neighbors">
       <div class="model-text-wrapper">
         <h1 class="model-header">K-Nearest Neighbors</h1>
         <p class="model-text">
@@ -343,7 +387,7 @@
 
     <hr>
 
-    <section class="section-offset">
+    <section class="section-offset" id="double-descent-section" data-story-chapter="See the double-descent echo">
       <div style="text-align:center">
         <h1 class="model-header">Related Concept: Double Descent</h1>
         <p class="model-text">
@@ -367,7 +411,7 @@
 
     <hr>
 
-    <section>
+    <section data-story-chapter="Wrap up the lesson">
       <div style="text-align:center">
         <h1 class="model-header">Wrapping Up</h1>
         <p class="model-text">
@@ -382,7 +426,7 @@
 
     <hr>
 
-    <section id="outro">
+    <section id="outro" data-story-chapter="References">
       <br><br>
       <h1 class="model-header">References</h1>
       <p class="model-text">

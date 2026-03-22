@@ -18,8 +18,9 @@
       <p class="lead">
         Local route <code>/interactive-explanation/train-test-validation/</code> keeps the
         published split narrative, draggable training examples, decision-boundary updates, and
-        validation-versus-test performance tables while limiting public provenance to the shared
-        footer.
+        validation-versus-test performance tables while layering on the shared Engineering Sandbox
+        hero, chapter navigation, and play-first framing with public provenance still limited to
+        the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../train-test-validation/">Open replica</a>
@@ -44,6 +45,7 @@
           <li>Live original verified against <code>https://mlu-explain.github.io/train-test-validation/</code> on 2026-03-17.</li>
           <li>The local copy keeps the published chart shell, draggable animal instances, split transitions, and performance-table rendering intact.</li>
           <li>Creator names, MLU branding, analytics, and upstream promo links were removed from the public route and retained in docs only.</li>
+          <li>The route now also loads the shared Engineering Sandbox shell for local fonts, chapter navigation, and editorial framing.</li>
         </ul>
       </article>
 
@@ -52,6 +54,7 @@
         <ul class="plain-list">
           <li>Keep the published compiled bundles in place so the original D3 interactions still bind to the shipped chart and table containers.</li>
           <li>Patch only metadata, nav branding, intro attribution, and summary copy that leak upstream provenance into the public body.</li>
+          <li>Layer the Engineering Sandbox hero, play-first prompt, and chapter rail around the existing nav, split walkthrough, and feature-toggle sections without changing the compiled D3 logic.</li>
           <li>Preserve the training, validation, and test section IDs plus button structure so the published scroll and feature-selection logic still works.</li>
           <li>Let the shared footer provide the only live original-page reference link.</li>
         </ul>
@@ -60,7 +63,8 @@
       <article class="note-section">
         <h2>Asset and source map</h2>
         <ul class="plain-list">
-          <li><code>train-test-validation/index.html</code> owns the local metadata shell, cleaned nav and summary copy, footer hook, and relative asset paths.</li>
+          <li><code>train-test-validation/index.html</code> owns the local metadata shell, Engineering Sandbox hero and chapter markers, cleaned nav and summary copy, footer hook, and relative asset paths.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the local font stack, chapter jump rail, and mobile jump bar used by the pilot routes.</li>
           <li><code>train-test-validation/js.6c47f979.js</code> keeps the published chart construction, draggable-example logic, boundary updates, and validation or test table rendering.</li>
           <li><code>train-test-validation/roughAnnotations.51d9685b.js</code> preserves the original annotation overlays used across the split narrative.</li>
           <li><code>train-test-validation/main.67dee0d6.css</code> preserves the sticky layout, chart styling, mobile variants, and route typography.</li>
@@ -72,6 +76,7 @@
         <ul class="plain-list">
           <li>The public route no longer shows MLU branding, creator bylines, analytics, or upstream promo links outside the shared footer.</li>
           <li>The nav, intro, and summary copy were localized to the replica site while leaving the split walkthrough and interactions unchanged.</li>
+          <li>The opening framing, play-first prompt, and transition copy were rewritten for the Engineering Sandbox pilot while preserving the existing internal TOC.</li>
           <li>The public surface keeps the original logistic-regression explainer link and icon credit, but provenance and source mapping stay in docs only.</li>
         </ul>
       </article>
