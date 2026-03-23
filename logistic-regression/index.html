@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="./assets/styles/katex.css">
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -25,5 +27,40 @@
   data-reference-url="https://mlu-explain.github.io/logistic-regression/"
   data-reference-text="Logistic Regression"
   data-footer-label="Original page"
-></body>
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
+  data-story-route="logistic-regression"
+>
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Move the threshold, then see probability turn into classification.</h1>
+        <p class="story-hero__summary">
+          Logistic regression is easier to trust once you can watch the sigmoid, the boundary, and
+          the classification decision shift together. This route pairs that intuition with loss and
+          coefficient scenes so the model stays connected to its mechanics.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Move the decision boundary</span>
+          <span class="story-chip">Read log loss</span>
+          <span class="story-chip">Watch coefficient updates</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the temperature and threshold controls until the prediction flips in a way
+          that feels intuitive. Then scroll into log loss and gradient descent so the probability
+          story connects cleanly to training.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#boundary-scene">Play first: move the boundary</a>
+          <a class="story-button story-button--secondary" href="#model-evaluation">Jump to evaluation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
 </html>

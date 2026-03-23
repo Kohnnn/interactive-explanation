@@ -50,6 +50,7 @@
         <h2>Asset handoff</h2>
         <ul class="plain-list">
           <li><code>ableton-learning-music-playground/index.html</code> owns the local metadata shell, shared footer wiring, and widget bootstrap.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the local practice-shell onboarding, hint strip, and framed first lesson surface around the archived Ableton widgets.</li>
           <li><code>ableton-learning-music-playground/widgets/build/</code> preserves the published sequencer and drumpad runtime, patched to load route-local samples.</li>
           <li><code>ableton-learning-music-playground/lessons/sounds/</code> contains the full local audio inventory for the shipped route: <strong>31 audio files</strong>.</li>
           <li><code>ableton-learning-music-playground/fonts/</code> contains <strong>9 archived font files</strong>, with local CSS and icon assets under the same route tree.</li>
@@ -62,6 +63,7 @@
           <li>The public route removes the upstream header, feedback shell, cookie surfaces, and other marketing or navigation chrome from the page body.</li>
           <li>Export actions are relabeled as unavailable and disabled so the public archive does not expose a broken remote export flow.</li>
           <li>Public provenance is limited to the shared footer with local canonical and <code>og:url</code> metadata.</li>
+          <li>The Engineering Sandbox practice shell is framing-only here: it adds onboarding and first-surface emphasis without changing the underlying multitrack widget runtime.</li>
         </ul>
       </article>
 
@@ -69,6 +71,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Future fixes should preserve the published widget runtime and patch asset paths or shell behavior rather than rewriting the sequencer UI.</li>
+          <li>Verify the practice hero renders before the first lesson surface and that the framed widget stack stays unobscured on desktop, tablet, and mobile widths.</li>
           <li>Smoke coverage should keep proving local script loading, transport start, one edit path, multitrack sync, and zero remote playable media requests.</li>
           <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code>, <code>node interactive-explanation/tools/smoke-bundle.mjs --group music</code>, and the full smoke bundle after route changes.</li>
         </ul>

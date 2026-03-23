@@ -48,6 +48,7 @@
         <h2>Asset handoff</h2>
         <ul class="plain-list">
           <li><code>ableton-learning-music-play-with-basslines/index.html</code> owns the local metadata shell, widget bootstrap, and footer wiring.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the local practice-shell onboarding, hint strip, and framed first lesson surface around the archived Ableton widgets.</li>
           <li><code>ableton-learning-music-play-with-basslines/widgets/build/</code> preserves the published Ableton widget runtime under the route tree.</li>
           <li><code>ableton-learning-music-play-with-basslines/lessons/sounds/</code> archives the shared local Ableton audio stack: <strong>31 audio files</strong>.</li>
           <li><code>ableton-learning-music-play-with-basslines/fonts/</code> archives the shared Learning Music typography stack: <strong>9 font files</strong>.</li>
@@ -60,6 +61,7 @@
           <li>Export-to-Live remains neutralized in the archive build so the route does not expose a broken remote export path.</li>
           <li>Non-local lesson links in the published body are either rewritten to shipped local Ableton routes or reduced to plain text.</li>
           <li>The route keeps the shared footer as the only original-lesson reference surface.</li>
+          <li>The Engineering Sandbox practice shell is framing-only here: it adds onboarding and first-surface emphasis without changing the underlying lesson widgets or audio boot path.</li>
         </ul>
       </article>
 
@@ -67,6 +69,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Keep the published widget runtime in place and prefer asset-path or shell cleanup over rewriting the lesson UI.</li>
+          <li>Verify the practice hero renders before the first lesson surface and that the framed widget stack stays unobscured on desktop, tablet, and mobile widths.</li>
           <li>Music smoke should keep proving local script loading, transport or visible state changes, and zero remote playable media requests.</li>
           <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code>, <code>node interactive-explanation/tools/smoke-bundle.mjs --group music</code>, and the full smoke bundle after route changes.</li>
         </ul>

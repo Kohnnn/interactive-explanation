@@ -12,6 +12,7 @@
   <title>Ableton Learning Music: Play with basslines</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     body {
@@ -20,31 +21,30 @@
     }
 
     .ableton-lesson-shell {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 5rem;
+      padding-bottom: 5rem;
     }
 
     .ableton-lesson-shell .page-header {
-      margin-bottom: 2rem;
       max-width: 44rem;
     }
 
     .ableton-lesson-shell .page-header p {
       margin-bottom: 0;
-      color: #d9d9d9;
-    }
-
-    .ableton-lesson-shell h2 {
-      margin-top: 2.5rem;
     }
 
     .ableton-lesson-shell .body-text.text-container {
       max-width: none;
     }
 
-    #reference-footer .public-footer__inner {
-      width: min(52rem, calc(100vw - 32px));
+    .story-practice-surface .widget,
+    .story-practice-surface .widget-drumpad {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 767px) {
+      .ableton-lesson-shell {
+        padding-bottom: 4rem;
+      }
     }
   </style>
   <script src="./third-party/polyfills/polyfills.js"></script>
@@ -93,13 +93,81 @@
   data-reference-url="https://learningmusic.ableton.com/make-basslines/play-with-basslines.html"
   data-reference-text="Ableton Learning Music: Play with basslines"
   data-footer-label="Original lesson"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="ableton-practice"
+  data-story-nav="none"
+  data-story-route="ableton-learning-music-play-with-basslines"
 >
-  <main class="ableton-lesson-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · ableton learning music</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Write low-end motion that locks to the drums instead of fighting them.</h1>
+        <p class="story-hero__summary">
+          Basslines teach timing and harmony at once. Start with a simple repeating figure, then
+          change note position or note length until the low end starts supporting the groove.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Bass sequencer first</span>
+          <span class="story-chip">Root and scale choices stay live</span>
+          <span class="story-chip">Drums expose groove clashes fast</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Place a few bass notes, press play, and listen for whether the line reinforces the kick
+          or muddies it. Once the motion feels clean, bring in the drums and test the groove again.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#_playwithbasslinespiano">Play first: open the bass grid</a>
+          <a class="story-button story-button--secondary" href="#_playwithbasslinesdrumpad">Jump to the drum layer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li><span class="story-practice-checklist__step">1</span><div><strong>Write a short bass figure</strong>Keep the first pattern small enough that you can hear every note’s role.</div></li>
+          <li><span class="story-practice-checklist__step">2</span><div><strong>Adjust timing or length</strong>Small changes to note placement or duration can fix a muddy groove faster than new notes.</div></li>
+          <li><span class="story-practice-checklist__step">3</span><div><strong>Check it with drums</strong>Use the drum layer to confirm whether the bass is supporting the pulse.</div></li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Listen for this</span>
+        <p>
+          Good basslines feel rhythmic and harmonic at the same time. They should support the kick rather than compete with it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Listen:</strong> check whether the bass reinforces the kick.</span>
+    <span class="story-practice-hint"><strong>Edit:</strong> change note length before adding more notes.</span>
+    <span class="story-practice-hint"><strong>Loop:</strong> use the drum layer as the groove test.</span>
+  </div>
+
+  <main class="ableton-lesson-shell story-practice-main">
     <div class="page-header body-text">
       <h1>Ableton Learning Music: Play with basslines</h1>
       <p>Local replica of Ableton's bassline-writing lesson. The shipped route keeps the bass sequencer, companion drumpad, and local archived samples without the upstream marketing shell.</p>
     </div>
 
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Shape a short bass figure on the sequencer first, then test it against the companion drum layer.
+        </div>
+        <a class="story-button story-button--secondary" href="#_playwithbasslinesdrumpad">Jump to the drum layer</a>
+      </div>
+      <div class="story-practice-surface">
     <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-basslines">
 <p>Now that you&#39;ve learned a bit about basslines, spend some time creating your own.</p>
 <p>You can also create beats that will play in sync with your note patterns.</p>
@@ -164,6 +232,8 @@
   </div>
 </div>
     </div>
+      </div>
+    </section>
   </main>
 
   <script src="./widgets/build/SimplePianoRoll.js"></script>
@@ -220,6 +290,7 @@
         });
       });
     </script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

@@ -19,9 +19,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Ordinary Least Squares Regression</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/ordinary-least-squares-regression/</code>
-        keeps the published Setosa EV OLS scatterplot, line controls, squared-error views, and
-        coefficient panels while limiting public provenance to the shared footer.
+        Local route <code>/interactive-explanation/ordinary-least-squares-regression/</code> now layers the lighter Engineering Sandbox essay shell, local font stack, play-first framing, and generated chapter navigation onto the published EV explainer while keeping the original interactive runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../ordinary-least-squares-regression/">Open replica</a>
@@ -45,6 +43,7 @@
           <li>Live original verified against <code>https://setosa.io/ev/ordinary-least-squares-regression/</code> on 2026-03-18.</li>
           <li>The local copy removes EV branding, bylines, share widgets, newsletter prompts, analytics, and comments.</li>
           <li>The interactive runtime still relies on the published React, D3, Three.js, and shared EV bundle shipped by the original page.</li>
+                  <li>The route now also loads the lighter Engineering Sandbox shell so the page gains local typography, editorial framing, and chapter navigation without displacing the EV chart layouts.</li>
         </ul>
       </article>
 
@@ -54,6 +53,7 @@
           <li><code>../ev/styles/style.css</code> remains the shared Setosa EV visual baseline for typography, layout, and menu treatment.</li>
           <li><code>../ev/_build/js/common-shared.js</code> is vendored locally in the same relative shape the published page expects, avoiding any live-root dependency.</li>
           <li><code>ordinary-least-squares-regression/_bundle.js</code> was patched only for local asset URLs and footer-policy cleanup around the published runtime.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -73,6 +73,7 @@
           <li>The public route no longer shows EV branding, author credits, share widgets, newsletter forms, analytics, or comments.</li>
           <li>The route adds a small docs link and shared footer, but leaves the published runtime intact.</li>
           <li>The original “special thanks” paragraph was localized into neutral public copy so provenance stays in docs only.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the original EV interactions and formulas remain intact.</li>
         </ul>
       </article>
     </section>

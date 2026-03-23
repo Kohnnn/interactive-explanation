@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "practice-shell-and-onboarding-frame",
+    "originalBehavior": "The published Teoria exercise opens directly into a compact drill shell with minimal framing around the start gate, answer controls, and score panels.",
+    "localStatus": "The local route keeps that exercise runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface ahead of the original mounts.",
+    "sourceFiles": [
+      "../../teoria-scale-construction/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The practice variant intentionally avoids the essay rail and lab checklist patterns so the drill stays controls-first.",
+      "The added shell is limited to framing, navigation contract, and first-control emphasis; the underlying Teoria runtime remains unchanged."
+    ],
+    "evidence": [
+      "The public route now exposes `data-story-shell=\"engineering-sandbox\"` with `data-story-variant=\"practice\"` and `data-story-nav=\"none\"`.",
+      "Smoke coverage verifies the hero loads before the first exercise surface and that no generated chapter rail appears on the route."
+    ]
+  },
+  {
     "moduleId": "exercise-shell-and-runtime-handoff",
     "originalBehavior": "The published Teoria page uses a compact exercise shell that loads jQuery, Bootstrap, Teoria CSS, four exercise runtime scripts, and then mounts the scale construction workflow into five placeholder panels.",
     "localStatus": "The local route preserves that shell structure with the same five mount panels while replacing the Teoria site chrome with route-local metadata and the shared public footer.",

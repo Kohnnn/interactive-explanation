@@ -19,9 +19,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Eigenvectors and Eigenvalues</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/eigenvectors-and-eigenvalues/</code> keeps the
-        published Setosa EV linear-algebra narrative while moving provenance and implementation
-        notes out of the public page body.
+        Local route <code>/interactive-explanation/eigenvectors-and-eigenvalues/</code> now layers the lighter Engineering Sandbox essay shell, local font stack, play-first framing, and generated chapter navigation onto the published EV explainer while keeping the original interactive runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../eigenvectors-and-eigenvalues/">Open replica</a>
@@ -45,6 +43,7 @@
           <li>Live original verified against <code>https://setosa.io/ev/eigenvectors-and-eigenvalues/</code> on 2026-03-14.</li>
           <li>The local copy removes EV branding, creator bylines, share widgets, newsletter prompts, analytics, and comments.</li>
           <li>The main controller and directive logic remain in the published <code>eigenvectors-and-eigenvalues/script.js</code> file for v1.</li>
+                  <li>The route now also loads the lighter Engineering Sandbox shell so the page gains local typography, editorial framing, and chapter navigation without displacing the EV chart layouts.</li>
         </ul>
       </article>
 
@@ -54,6 +53,7 @@
           <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> are reused as the main runtime layer.</li>
           <li><code>../ev/scripts/topojson.js</code> is vendored locally for the migration-map scene.</li>
           <li><code>../ev/scripts/mathjax/MathJax.js</code> replaces the retired CDN dependency used by the published page.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -73,6 +73,7 @@
           <li>The public route no longer shows EV branding, creator links, share widgets, newsletter forms, analytics, or comments.</li>
           <li>The published Markov cross-link is rewritten to the local <code>../markov-chains/</code> route so the narrative stays inside the replica site.</li>
           <li>MathJax now loads from the local EV asset tree, and the US map JSON loads from <code>./resources/us.json</code> instead of the original site root.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the original EV interactions and formulas remain intact.</li>
         </ul>
       </article>
     </section>

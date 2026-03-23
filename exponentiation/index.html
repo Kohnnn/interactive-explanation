@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -31,15 +32,49 @@
     data-reference-url="https://setosa.io/ev/exponentiation/"
     data-reference-text="Exponentiation"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="exponentiation"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · math essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Feel the jump from repeated addition to repeated multiplication.</h1>
+          <p class="story-hero__summary">
+            Exponentiation becomes intuitive once you watch simple systems accelerate past your
+            linear instincts. Use the first growth view to calibrate, then compare linear and
+            exponential steps side by side before the virus model turns the same idea into a story.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Adjust the growth rate</span>
+            <span class="story-chip">Contrast linear and exponential steps</span>
+            <span class="story-chip">Watch the virus model saturate</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start with the first growth scene, then move directly into the linear and exponential
+            comparison. The later virus model is easier to read once you already know what the
+            multiplication rule feels like in motion.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#growth-intuition">Play first: change the rate</a>
+            <a class="story-button story-button--secondary" href="#virus-example">Jump to the virus model</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet repeated multiplication">
       <div class="title-region">
         <h1 class="title">Exponentiation</h1>
         <h3 class="by-line">Interactive explainer</h3>
       </div>
     </section>
-    <section>
+    <section id="growth-intuition" data-story-chapter="Build the intuition">
       <p>We seem primed to understand linear growth, but lots of  processes in finance, ecology, physics and other fields depend on exponential growth.</p>
       <div ng-controller="SimpleGrowthCtrl">
         <p>Here's a simple visualization to help conceptualize this type of growth. It starts off <b>{{opts.rateLabel}}</b> with every step. Adjust the rate to see {{opts.otherRateLabels.join(' and ')}}.</p>
@@ -51,7 +86,7 @@
         <simple-growth></simple-growth>
       </div>
     </section>
-    <section>
+    <section data-story-chapter="Compare linear growth">
       <h3>Linear growth</h3>
       <p>Most of us already have an intuition for linear growth. In the example below, each step adds a fixed amount to the total.</p>
       <div ng-controller="LinearGrowthDemoCtrl">
@@ -65,7 +100,7 @@
         </div>
       </div>
     </section>
-    <section>
+    <section data-story-chapter="Compare exponential growth">
       <h3>Exponential growth</h3>
       <p>With exponential growth, on the other hand, each step multiplies the total by a fixed amount. So, exponentiation is  repeated multiplication in the same way that linear growth is repeated addition.</p>
       <div ng-controller="ExponentialGrowthDemoCtrl">
@@ -79,7 +114,7 @@
         </div>
       </div>
     </section>
-    <section>
+    <section id="virus-example" data-story-chapter="Model a real outbreak">
       <h3>Example</h3>
       <p>The following is a naive model of the spread of a virus in a population. The number of infected individuals grows exponentially up until the virus runs out of people to infect.</p>
       <div ng-controller="ViralDemoCtrl">

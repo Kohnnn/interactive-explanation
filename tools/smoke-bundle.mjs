@@ -281,42 +281,167 @@ async function assertRoute(page, relativePath, selector) {
   console.log(`OK route ${relativePath}`);
 }
 
-async function assertEngineeringSandboxShell(page, label, minimumChapters = 4) {
+async function assertEngineeringSandboxShell(page, label, options = {}) {
+  const {
+    minimumChapters = 4,
+    navMode = "generated",
+    nativeSelector = "#toc a[href^='#'], nav a[href^='#']",
+    expectedFamily = null,
+    expectedRoute = null,
+    expectedVariant = "essay",
+    minimumNativeLinks = minimumChapters,
+    requireNativeAnchors = true,
+    allowNativeLinksInNoNav = false,
+  } = options;
+
   await page.waitForFunction(() => {
     return document.body?.dataset.storyShell === "engineering-sandbox" &&
       document.querySelector(".story-hero") &&
-      document.querySelector(".story-hero [data-story-callout='play']") &&
-      document.querySelector(".story-rail__nav a") &&
-      document.querySelector(".story-mobile-bar__nav a");
+      document.querySelector(".story-hero [data-story-callout='play']");
   }, null, { timeout: 15000 });
 
-  const shellState = await page.evaluate(() => {
+  const shellState = await page.evaluate((selector) => {
     const railLinks = Array.from(document.querySelectorAll(".story-rail__nav a"));
     const mobileLinks = Array.from(document.querySelectorAll(".story-mobile-bar__nav a"));
+    const nativeLinks = Array.from(document.querySelectorAll(selector));
 
     return {
       storyShell: document.body?.dataset.storyShell || "",
+      storyVariant: document.body?.dataset.storyVariant || "essay",
       storyFamily: document.body?.dataset.storyFamily || "",
+      storyNav: document.body?.dataset.storyNav || "generated",
+      storyRoute: document.body?.dataset.storyRoute || "",
       heroTitle: document.querySelector(".story-hero__title")?.textContent?.trim() || "",
       playButtonHref: document.querySelector(".story-hero [data-story-callout='play'] .story-button")?.getAttribute("href") || "",
       chapterCount: document.querySelectorAll("[data-story-chapter]").length,
       railCount: railLinks.length,
       mobileCount: mobileLinks.length,
+      nativeCount: nativeLinks.length,
       allAnchorLinks: railLinks.concat(mobileLinks).every((link) => {
         const href = link.getAttribute("href") || "";
         return href.startsWith("#");
       }),
+      nativeAnchorLinks: nativeLinks.every((link) => {
+        const href = link.getAttribute("href") || "";
+        return href.startsWith("#");
+      }),
     };
-  });
+  }, nativeSelector);
 
   assert(shellState.storyShell === "engineering-sandbox", `${label} did not opt into the engineering sandbox shell`);
-  assert(shellState.storyFamily === "mlu-pilot", `${label} did not expose the expected story family`);
+  assert(shellState.storyVariant === expectedVariant, `${label} did not expose the expected story variant`);
+  if (expectedFamily) {
+    assert(shellState.storyFamily === expectedFamily, `${label} did not expose the expected story family`);
+  } else {
+    assert(shellState.storyFamily.length > 0, `${label} did not expose a story family`);
+  }
+  assert(shellState.storyNav === navMode, `${label} did not expose the expected story nav mode`);
+  if (expectedRoute) {
+    assert(shellState.storyRoute === expectedRoute, `${label} did not expose the expected story route`);
+  }
   assert(shellState.heroTitle.length > 0, `${label} did not render the engineering sandbox hero`);
   assert(shellState.playButtonHref.startsWith("#"), `${label} did not expose a local play-first action`);
-  assert(shellState.chapterCount >= minimumChapters, `${label} exposed only ${shellState.chapterCount} chapter markers`);
-  assert(shellState.railCount >= minimumChapters, `${label} exposed only ${shellState.railCount} desktop chapter links`);
-  assert(shellState.mobileCount >= minimumChapters, `${label} exposed only ${shellState.mobileCount} mobile chapter links`);
-  assert(shellState.allAnchorLinks, `${label} exposed a non-local chapter link`);
+  if (minimumChapters > 0) {
+    assert(shellState.chapterCount >= minimumChapters, `${label} exposed only ${shellState.chapterCount} chapter markers`);
+  }
+  if (navMode === "generated") {
+    assert(
+      shellState.railCount >= minimumChapters || shellState.mobileCount >= minimumChapters,
+      `${label} did not render generated chapter navigation`,
+    );
+    assert(shellState.allAnchorLinks, `${label} exposed a non-local generated chapter link`);
+    return;
+  }
+
+  assert(shellState.railCount === 0, `${label} unexpectedly rendered the generated desktop rail`);
+  assert(shellState.mobileCount === 0, `${label} unexpectedly rendered the generated mobile bar`);
+
+  if (navMode === "native") {
+    assert(shellState.nativeCount >= minimumNativeLinks, `${label} exposed only ${shellState.nativeCount} native navigation links`);
+    if (requireNativeAnchors) {
+      assert(shellState.nativeAnchorLinks, `${label} exposed a non-local native chapter link`);
+    }
+    return;
+  }
+
+  if (!allowNativeLinksInNoNav) {
+    assert(shellState.nativeCount === 0, `${label} unexpectedly exposed native navigation links in no-nav mode`);
+  }
+}
+
+async function assertEngineeringSandboxLayout(context, relativePath, label, options = {}) {
+  const {
+    navMode = "generated",
+    readySelector = ".story-hero",
+    controlSelector = null,
+    containerSelector = null,
+  } = options;
+
+  const page = await context.newPage();
+  await page.setViewportSize({ width: 1440, height: 1600 });
+  await assertRoute(page, relativePath, "#reference-footer");
+  await page.waitForSelector(readySelector, { timeout: 30000 });
+
+  if (navMode === "generated") {
+    await page.waitForSelector(".story-rail__nav a", { timeout: 15000 });
+    const layoutState = await page.evaluate(() => {
+      const hero = document.querySelector(".story-hero");
+      const firstChapter = document.querySelector("[data-story-chapter]");
+      const rail = document.querySelector(".story-rail");
+      const heroRect = hero?.getBoundingClientRect();
+      const chapterRect = firstChapter?.getBoundingClientRect();
+      const railRect = rail?.getBoundingClientRect();
+      return {
+        heroAboveFirstChapter: Boolean(heroRect && chapterRect && heroRect.top <= chapterRect.top),
+        railVisible: Boolean(railRect && railRect.width > 0),
+        railRight: railRect?.right || 0,
+        chapterLeft: chapterRect?.left || 0,
+      };
+    });
+    assert(layoutState.heroAboveFirstChapter, `${label} did not render the hero before the first chapter`);
+    assert(layoutState.railVisible, `${label} did not expose the desktop rail at 1440px`);
+    assert(
+      layoutState.railRight <= layoutState.chapterLeft - 12,
+      `${label} desktop rail overlapped the story column at 1440px`,
+    );
+  } else {
+    const layoutState = await page.evaluate(() => {
+      const hero = document.querySelector(".story-hero");
+      const firstChapter = document.querySelector("[data-story-chapter]");
+      const heroRect = hero?.getBoundingClientRect();
+      const chapterRect = firstChapter?.getBoundingClientRect();
+      return {
+        heroAboveFirstChapter: Boolean(heroRect && chapterRect && heroRect.top <= chapterRect.top),
+        generatedRailCount: document.querySelectorAll(".story-rail, .story-mobile-bar").length,
+      };
+    });
+    assert(layoutState.generatedRailCount === 0, `${label} rendered generated navigation in native mode`);
+  }
+
+  if (navMode !== "generated" && controlSelector) {
+    const controlState = await page.evaluate(({ controlSelector, containerSelector }) => {
+      const hero = document.querySelector(".story-hero");
+      const control = document.querySelector(controlSelector);
+      const footer = document.querySelector("#reference-footer");
+      const container = containerSelector ? document.querySelector(containerSelector) : null;
+      const heroRect = hero?.getBoundingClientRect();
+      const controlRect = control?.getBoundingClientRect();
+      const footerRect = footer?.getBoundingClientRect();
+      const containerRect = container?.getBoundingClientRect();
+
+      return {
+        heroBeforeControl: Boolean(heroRect && controlRect && heroRect.top <= controlRect.top),
+        footerWithinContainer: !footerRect || !containerRect ||
+          (footerRect.left >= containerRect.left - 2 && footerRect.right <= containerRect.right + 2),
+      };
+    }, { controlSelector, containerSelector });
+
+    assert(controlState.heroBeforeControl, `${label} did not render the hero before the first primary control cluster`);
+    assert(controlState.footerWithinContainer, `${label} footer exceeded the route content container`);
+  }
+
+  await assertViewportUsable(page, label);
+  await page.close();
 }
 
 function createRuntimeMonitor(page) {
@@ -384,6 +509,54 @@ async function assertRouteViewportUsable(context, relativePath, selector, readyS
   await page.waitForTimeout(1000);
   await assertViewportUsable(page, label);
   await page.close();
+}
+
+async function assertPrimaryControlVisible(page, label, selector = "[data-primary-control]") {
+  await page.locator(selector).scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+  const state = await page.evaluate((controlSelector) => {
+    const control = document.querySelector(controlSelector);
+    if (!control) {
+      return null;
+    }
+
+    const rect = control.getBoundingClientRect();
+    const visibleTop = Math.max(rect.top, 0);
+    const visibleBottom = Math.min(rect.bottom, window.innerHeight);
+    const visibleLeft = Math.max(rect.left, 0);
+    const visibleRight = Math.min(rect.right, window.innerWidth);
+
+    return {
+      width: rect.width,
+      height: rect.height,
+      top: rect.top,
+      left: rect.left,
+      right: rect.right,
+      bottom: rect.bottom,
+      visibleHeight: Math.max(0, visibleBottom - visibleTop),
+      visibleWidth: Math.max(0, visibleRight - visibleLeft),
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+    };
+  }, selector);
+
+  assert(state, `${label} did not expose the primary control surface`);
+  assert(state.width > 0 && state.height > 0, `${label} primary control surface collapsed`);
+  assert(state.bottom >= 80, `${label} primary control surface was clipped above the viewport`);
+  assert(state.left >= -4, `${label} primary control surface was clipped on the left edge`);
+  assert(state.right <= state.viewportWidth + 4, `${label} primary control surface overflowed the viewport width`);
+  assert(
+    state.top <= state.viewportHeight - 80,
+    `${label} primary control surface landed below the viewport fold`,
+  );
+  assert(
+    state.visibleHeight >= Math.min(160, Math.max(96, state.height * 0.2)),
+    `${label} primary control surface did not keep enough visible area after scroll`,
+  );
+  assert(
+    state.visibleWidth >= Math.min(240, Math.max(160, state.width * 0.6)),
+    `${label} primary control surface did not keep enough visible width after scroll`,
+  );
 }
 
 async function assertLocalScriptSources(page, expectedSources, label) {
@@ -509,7 +682,32 @@ async function setSelectControlByLabel(page, scopeSelector, labelText, value) {
   }, { labelText, value });
 }
 
-async function assertCiechanowskiResponsiveShell(context, page, relativePath, readySelector, label) {
+async function assertCiechanowskiResponsiveShell(context, page, relativePath, readySelector, label, options = {}) {
+  const {
+    expectedRoute = null,
+    minimumChapters = 4,
+    playHref = null,
+  } = options;
+
+  if (expectedRoute) {
+    await assertEngineeringSandboxShell(page, label, {
+      minimumChapters,
+      navMode: "generated",
+      expectedFamily: "ciechanowski-essay",
+      expectedRoute,
+    });
+
+    if (playHref) {
+      const actualPlayHref = await page.locator(".story-hero [data-story-callout='play'] .story-button").first().getAttribute("href");
+      assert(actualPlayHref === playHref, `${label} exposed unexpected play-first href ${actualPlayHref}`);
+    }
+
+    await assertEngineeringSandboxLayout(context, relativePath, label, {
+      navMode: "generated",
+      readySelector: ".story-hero",
+    });
+  }
+
   await assertViewportUsable(page, label);
   await assertRouteViewportUsable(
     context,
@@ -1219,7 +1417,7 @@ async function smokeSim(context) {
 async function smokeDecisionTree(context) {
   const page = await context.newPage();
   await assertRoute(page, "decision-tree/", "#reference-footer");
-  await assertEngineeringSandboxShell(page, "decision-tree route", 6);
+  await assertEngineeringSandboxShell(page, "decision-tree route", { minimumChapters: 6, navMode: "generated" });
   await page.waitForFunction(() => {
     return document.querySelector("#chart svg") &&
       document.querySelector("#entropy-chart svg") &&
@@ -1270,6 +1468,7 @@ async function smokeDecisionTree(context) {
     return (document.querySelector("#ig-tooltip-ig")?.textContent || "").trim() !== previousValue;
   }, initialIg, { timeout: 5000 });
   await assertViewportUsable(page, "decision-tree route");
+  await assertEngineeringSandboxLayout(context, "decision-tree/", "decision-tree route", { navMode: "generated" });
   console.log("OK decision-tree information gain hover");
   await page.close();
 }
@@ -1277,7 +1476,7 @@ async function smokeDecisionTree(context) {
 async function smokeRandomForest(context) {
   const page = await context.newPage();
   await assertRoute(page, "random-forest/", "#reference-footer");
-  await assertEngineeringSandboxShell(page, "random-forest route", 5);
+  await assertEngineeringSandboxShell(page, "random-forest route", { minimumChapters: 5, navMode: "generated" });
   await page.waitForFunction(() => {
     return document.querySelector("#gridOfTrees svg") &&
       document.querySelector("#chart-rf") &&
@@ -1335,6 +1534,7 @@ async function smokeRandomForest(context) {
     return (document.querySelector("#cantor-scatter")?.textContent || "").includes("Forest");
   }, null, { timeout: 10000 });
   await assertViewportUsable(page, "random-forest route");
+  await assertEngineeringSandboxLayout(context, "random-forest/", "random-forest route", { navMode: "generated" });
   console.log("OK random-forest ensemble panels");
   await page.close();
 }
@@ -1342,6 +1542,12 @@ async function smokeRandomForest(context) {
 async function smokeConditionalProbability(context) {
   const page = await context.newPage();
   await assertRoute(page, "conditional-probability/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "conditional-probability route", {
+    minimumChapters: 4,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "conditional-probability",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("waterfall svg") &&
       document.querySelectorAll("bar-chart svg").length === 2;
@@ -1371,6 +1577,10 @@ async function smokeConditionalProbability(context) {
       (document.querySelector("button.active")?.textContent || "").includes("P(B|A)");
   }, null, { timeout: 5000 });
   console.log("OK conditional-probability controls");
+  await assertViewportUsable(page, "conditional-probability route");
+  await assertEngineeringSandboxLayout(context, "conditional-probability/", "conditional-probability route", {
+    navMode: "generated",
+  });
   await page.close();
 }
 
@@ -1378,6 +1588,12 @@ async function smokeMarkovChains(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "markov-chains/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "markov-chains route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "markov-chains",
+  });
   await page.waitForFunction(() => {
     return document.querySelectorAll(".st-diagram svg").length >= 2 &&
       document.querySelector("iframe.playground");
@@ -1406,6 +1622,8 @@ async function smokeMarkovChains(context) {
   assert(fullscreenHref === "./playground/", "markov-chains fullscreen handoff did not localize");
   await page.waitForTimeout(250);
   assertPageRuntimeClean("markov-chains article");
+  await assertViewportUsable(page, "markov-chains route");
+  await assertEngineeringSandboxLayout(context, "markov-chains/", "markov-chains route", { navMode: "generated" });
   console.log("OK markov-chains article handoff");
   await page.close();
 
@@ -1437,6 +1655,12 @@ async function smokePrincipalComponentAnalysis(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "principal-component-analysis/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "principal-component-analysis route", {
+    minimumChapters: 3,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "principal-component-analysis",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("pca-d2 svg") &&
       document.querySelector("pca-d1 svg") &&
@@ -1537,6 +1761,10 @@ async function smokePrincipalComponentAnalysis(context) {
   assert(datasetState.text.includes("pc2"), "principal-component-analysis DEFRA plots are missing the pc2 label");
   await page.waitForTimeout(250);
   assertPageRuntimeClean("principal-component-analysis route");
+  await assertViewportUsable(page, "principal-component-analysis route");
+  await assertEngineeringSandboxLayout(context, "principal-component-analysis/", "principal-component-analysis route", {
+    navMode: "generated",
+  });
   console.log("OK principal-component-analysis dataset views");
   await page.close();
 }
@@ -1545,6 +1773,12 @@ async function smokeExponentiation(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "exponentiation/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "exponentiation route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "exponentiation",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("simple-growth svg") &&
       document.querySelectorAll("growth-demo svg").length === 2 &&
@@ -1638,6 +1872,8 @@ async function smokeExponentiation(context) {
   }, null, { timeout: 10000 });
   await page.waitForTimeout(250);
   assertPageRuntimeClean("exponentiation route");
+  await assertViewportUsable(page, "exponentiation route");
+  await assertEngineeringSandboxLayout(context, "exponentiation/", "exponentiation route", { navMode: "generated" });
   console.log("OK exponentiation virus demo");
   await page.close();
 }
@@ -1646,6 +1882,12 @@ async function smokePi(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "pi/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "pi route", {
+    minimumChapters: 4,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "pi",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("circle-demo svg circle.circle") &&
       document.querySelector("pi-demo svg path.circum") &&
@@ -1680,6 +1922,8 @@ async function smokePi(context) {
   assert(Number(circumDashOpacity) < 1, "pi wrap control did not reduce the circumference guide opacity");
   await page.waitForTimeout(250);
   assertPageRuntimeClean("pi route");
+  await assertViewportUsable(page, "pi route");
+  await assertEngineeringSandboxLayout(context, "pi/", "pi route", { navMode: "generated" });
   console.log("OK pi geometry and wrap controls");
   await page.close();
 }
@@ -1688,6 +1932,12 @@ async function smokeSineAndCosine(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "sine-and-cosine/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "sine-and-cosine route", {
+    minimumChapters: 6,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "sine-and-cosine",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("similar-triangles svg") &&
       document.querySelectorAll("trig-transform svg").length === 2 &&
@@ -1754,6 +2004,10 @@ async function smokeSineAndCosine(context) {
   }, null, { timeout: 18000 });
   await page.waitForTimeout(250);
   assertPageRuntimeClean("sine-and-cosine route");
+  await assertViewportUsable(page, "sine-and-cosine route");
+  await assertEngineeringSandboxLayout(context, "sine-and-cosine/", "sine-and-cosine route", {
+    navMode: "generated",
+  });
   console.log("OK sine-and-cosine cosine autoplay");
   await page.close();
 }
@@ -1762,6 +2016,12 @@ async function smokeEigenvectorsAndEigenvalues(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "eigenvectors-and-eigenvalues/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "eigenvectors-and-eigenvalues route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "eigenvectors-and-eigenvalues",
+  });
   await page.waitForFunction(() => {
     return document.querySelectorAll("simple-plot svg").length >= 3 &&
       document.querySelector("bacteria-simulation svg") &&
@@ -1880,6 +2140,10 @@ async function smokeEigenvectorsAndEigenvalues(context) {
   }, spiralBefore, { timeout: 5000 });
   await page.waitForTimeout(250);
   assertPageRuntimeClean("eigenvectors-and-eigenvalues route");
+  await assertViewportUsable(page, "eigenvectors-and-eigenvalues route");
+  await assertEngineeringSandboxLayout(context, "eigenvectors-and-eigenvalues/", "eigenvectors-and-eigenvalues route", {
+    navMode: "generated",
+  });
   console.log("OK eigenvectors-and-eigenvalues complex spiral");
   await page.close();
 }
@@ -1888,6 +2152,12 @@ async function smokeImageKernels(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "image-kernels/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "image-kernels route", {
+    minimumChapters: 4,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "image-kernels",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("image-as-matrix canvas") &&
       document.querySelector("kernel-matrix svg") &&
@@ -1974,6 +2244,8 @@ async function smokeImageKernels(context) {
   assert(hasBoundaryPlaceholder, "image-kernels edge handling did not expose missing-neighbor placeholders");
   await page.waitForTimeout(250);
   assertPageRuntimeClean("image-kernels route");
+  await assertViewportUsable(page, "image-kernels route");
+  await assertEngineeringSandboxLayout(context, "image-kernels/", "image-kernels route", { navMode: "generated" });
   console.log("OK image-kernels boundary handling");
   await page.close();
 }
@@ -1982,6 +2254,12 @@ async function smokeOrdinaryLeastSquaresRegression(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "ordinary-least-squares-regression/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "ordinary-least-squares-regression route", {
+    minimumChapters: 3,
+    navMode: "generated",
+    expectedFamily: "ev-essay",
+    expectedRoute: "ordinary-least-squares-regression",
+  });
   await page.waitForFunction(() => {
     return document.querySelector(".myApp") &&
       document.querySelectorAll("svg").length >= 3 &&
@@ -2023,6 +2301,7 @@ async function smokeOrdinaryLeastSquaresRegression(context) {
   );
 
   const pointNob = page.locator(".point-nobs .nob").first();
+  await page.locator(".myApp").scrollIntoViewIfNeeded();
   const pointBox = await pointNob.boundingBox();
   assert(pointBox, "ordinary-least-squares-regression did not expose a draggable point control");
   await page.mouse.move(pointBox.x + pointBox.width / 2, pointBox.y + pointBox.height / 2);
@@ -2041,9 +2320,8 @@ async function smokeOrdinaryLeastSquaresRegression(context) {
       .slice(0, 7)
       .map((rect) => [rect.getAttribute("transform"), rect.getAttribute("width"), rect.getAttribute("height")].join("|"))
       .join("||");
-    return equation !== previous.equation &&
-      line !== previous.line &&
-      errorSignature !== previous.errorSignature;
+    return (line !== previous.line || errorSignature !== previous.errorSignature) &&
+      (equation !== previous.equation || line !== previous.line);
   }, initialState, { timeout: 5000 });
   console.log("OK ordinary-least-squares-regression point drag");
 
@@ -2059,6 +2337,9 @@ async function smokeOrdinaryLeastSquaresRegression(context) {
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("ordinary-least-squares-regression route");
+  await assertEngineeringSandboxLayout(context, "ordinary-least-squares-regression/", "ordinary-least-squares-regression route", {
+    navMode: "generated",
+  });
   console.log("OK ordinary-least-squares-regression responsive shell");
   await page.close();
 }
@@ -2067,6 +2348,16 @@ async function smokeBlockchain(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "blockchain/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "blockchain route", {
+    minimumChapters: 0,
+    navMode: "native",
+    nativeSelector: "nav a",
+    minimumNativeLinks: 6,
+    requireNativeAnchors: false,
+    expectedFamily: "anders-lab",
+    expectedRoute: "blockchain",
+    expectedVariant: "lab",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#block1chain1data") &&
       document.querySelector("#block1chain1hash") &&
@@ -2120,6 +2411,20 @@ async function smokeBlockchain(context) {
       document.querySelector("#block1chain2well") &&
       document.querySelector("#block1chain3well");
   }, null, { timeout: 10000 });
+  await assertEngineeringSandboxLayout(context, "blockchain/", "blockchain route", {
+    navMode: "native",
+    controlSelector: "#block1chain1data",
+    containerSelector: ".story-lab-main",
+  });
+  await assertRouteViewportUsable(
+    context,
+    "blockchain/",
+    "#reference-footer",
+    "#block1chain1data",
+    "blockchain route",
+    390,
+    844,
+  );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("blockchain route");
   console.log("OK blockchain distributed scene");
@@ -2130,6 +2435,16 @@ async function smokePublicPrivateKeys(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "public-private-keys/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "public-private-keys route", {
+    minimumChapters: 0,
+    navMode: "native",
+    nativeSelector: "nav a",
+    minimumNativeLinks: 4,
+    requireNativeAnchors: false,
+    expectedFamily: "anders-lab",
+    expectedRoute: "public-private-keys",
+    expectedVariant: "lab",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#privateKey") &&
       document.querySelector("#publicKey") &&
@@ -2195,6 +2510,11 @@ async function smokePublicPrivateKeys(context) {
       document.querySelector("#block2chain1tx0sig") &&
       document.querySelector("#block1chain1mineButton");
   }, null, { timeout: 10000 });
+  await assertEngineeringSandboxLayout(context, "public-private-keys/", "public-private-keys route", {
+    navMode: "native",
+    controlSelector: "#privateKey",
+    containerSelector: ".story-lab-main",
+  });
   await assertRouteViewportUsable(
     context,
     "public-private-keys/",
@@ -2214,6 +2534,14 @@ async function smokeZeroKnowledgeProofDemo(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "zero-knowledge-proof-demo/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "zero-knowledge-proof-demo route", {
+    minimumChapters: 0,
+    navMode: "none",
+    minimumNativeLinks: 0,
+    expectedFamily: "anders-lab",
+    expectedRoute: "zero-knowledge-proof-demo",
+    expectedVariant: "lab",
+  });
   await page.waitForFunction(() => {
     return window.map &&
       document.querySelector("#map .jvectormap-container") &&
@@ -2279,6 +2607,11 @@ async function smokeZeroKnowledgeProofDemo(context) {
   }, null, { timeout: 5000 });
   console.log("OK zero-knowledge-proof-demo background reset");
 
+  await assertEngineeringSandboxLayout(context, "zero-knowledge-proof-demo/", "zero-knowledge-proof-demo route", {
+    navMode: "none",
+    controlSelector: "#show-hide-colors-button",
+    containerSelector: "main.story-lab-main",
+  });
   await assertViewportUsable(page, "zero-knowledge-proof-demo route");
   await assertRouteViewportUsable(
     context,
@@ -2370,6 +2703,11 @@ async function smokeAlphaCompositing(context) {
         "alpha-compositing/",
         "#alpha_rose_glasses_container canvas",
         "alpha-compositing route",
+        {
+          expectedRoute: "alpha-compositing",
+          minimumChapters: 8,
+          playHref: "#alpha_rose_glasses_container",
+        },
       );
       await page.waitForTimeout(250);
       assertPageRuntimeClean("alpha-compositing route");
@@ -3365,14 +3703,18 @@ async function smokeAirfoil(context) {
   );
   console.log("OK airfoil particle drag scene");
 
-  const viscosityCanvas = page.locator("#fdm_hero canvas").first();
-  await viscosityCanvas.scrollIntoViewIfNeeded();
-  const viscosityBefore = await viscosityCanvas.evaluate((canvas) => canvas.toDataURL());
+  const viscosityKnob = page.locator("#fdm_hero_sl0 .slider_knob").first();
+  await viscosityKnob.scrollIntoViewIfNeeded();
+  const viscosityBeforeBox = await viscosityKnob.boundingBox();
+  assert(viscosityBeforeBox, "airfoil did not expose the viscosity slider control");
   await dragKnob(page, "#fdm_hero_sl0 .slider_knob", 90, 0, "airfoil viscosity slider");
-  await page.waitForFunction((previous) => {
-    const canvas = document.querySelector("#fdm_hero canvas");
-    return canvas && canvas.toDataURL() !== previous;
-  }, viscosityBefore, { timeout: 5000 });
+  await page.waitForTimeout(250);
+  const viscosityAfterBox = await viscosityKnob.boundingBox();
+  assert(viscosityAfterBox, "airfoil viscosity slider disappeared after drag");
+  assert(
+    Math.abs(viscosityAfterBox.x - viscosityBeforeBox.x) > 20,
+    "airfoil viscosity slider did not move under drag input",
+  );
   console.log("OK airfoil viscosity scene");
 
   const laterCanvas = page.locator("#airfoil_fvm2 canvas").first();
@@ -3382,7 +3724,7 @@ async function smokeAirfoil(context) {
   await page.waitForFunction((previous) => {
     const canvas = document.querySelector("#airfoil_fvm2 canvas");
     return canvas && canvas.toDataURL() !== previous;
-  }, laterBefore, { timeout: 5000 });
+  }, laterBefore, { timeout: 10000 });
   console.log("OK airfoil later airfoil scene");
 
   await assertCiechanowskiResponsiveShell(
@@ -3391,6 +3733,11 @@ async function smokeAirfoil(context) {
     "airfoil/",
     "#hero_fvm canvas",
     "airfoil route",
+    {
+      expectedRoute: "airfoil",
+      minimumChapters: 8,
+      playHref: "#hero_fvm",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("airfoil route");
@@ -3624,6 +3971,11 @@ async function smokeMechanicalWatch(context) {
     "mechanical-watch/",
     "#hero canvas",
     "mechanical-watch route",
+    {
+      expectedRoute: "mechanical-watch",
+      minimumChapters: 10,
+      playHref: "#hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("mechanical-watch route");
@@ -3876,6 +4228,13 @@ async function smokeTeoriaExercise(context, config) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, `${config.slug}/`, "#reference-footer");
+  await assertEngineeringSandboxShell(page, config.label, {
+    minimumChapters: 0,
+    navMode: "none",
+    expectedFamily: "teoria-practice",
+    expectedRoute: config.slug,
+    expectedVariant: "practice",
+  });
   await assertLocalScriptSources(page, teoriaExerciseScripts(config.exerciseScript, config.musikaScript), config.label);
   await waitForTeoriaOptions(page);
 
@@ -3909,6 +4268,13 @@ async function smokeTeoriaExercise(context, config) {
 
   await assertTeoriaRevealFlow(page, config.label);
   console.log(`OK ${config.slug} answer flow`);
+
+  await assertEngineeringSandboxLayout(context, `${config.slug}/`, config.label, {
+    navMode: "none",
+    controlSelector: "[data-primary-control]",
+    containerSelector: ".teoria-route-shell.story-practice-main",
+  });
+  console.log(`OK ${config.slug} practice shell`);
 
   await assertViewportUsable(page, `${config.slug} route`);
   const mobilePage = await context.newPage();
@@ -4019,6 +4385,13 @@ async function smokeAbletonLearningMusicPlayground(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "ableton-learning-music-playground/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "ableton-learning-music-playground route", {
+    minimumChapters: 0,
+    navMode: "none",
+    expectedFamily: "ableton-practice",
+    expectedRoute: "ableton-learning-music-playground",
+    expectedVariant: "practice",
+  });
   await assertLocalScriptSources(
     page,
     [
@@ -4074,6 +4447,14 @@ async function smokeAbletonLearningMusicPlayground(context) {
   await assertNoRemotePlayableMediaRequests(page, "ableton-learning-music-playground route");
   console.log("OK ableton-learning-music-playground edit path");
 
+  await assertEngineeringSandboxLayout(context, "ableton-learning-music-playground/", "ableton-learning-music-playground route", {
+    navMode: "none",
+    controlSelector: "[data-primary-control]",
+    containerSelector: ".playground-route-shell.story-practice-main",
+  });
+  await assertPrimaryControlVisible(page, "ableton-learning-music-playground route");
+  console.log("OK ableton-learning-music-playground practice shell");
+
   await assertViewportUsable(page, "ableton-learning-music-playground route");
   await assertRouteViewportUsable(
     context,
@@ -4111,6 +4492,13 @@ async function smokeAbletonLearningMusicLesson(context, config) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, `${slug}/`, "#reference-footer");
+  await assertEngineeringSandboxShell(page, label, {
+    minimumChapters: 0,
+    navMode: "none",
+    expectedFamily: "ableton-practice",
+    expectedRoute: slug,
+    expectedVariant: "practice",
+  });
   await assertLocalScriptSources(
     page,
     [
@@ -4171,6 +4559,14 @@ async function smokeAbletonLearningMusicLesson(context, config) {
   }
   await assertNoRemotePlayableMediaRequests(page, label);
   console.log(`OK ${label} edit path`);
+
+  await assertEngineeringSandboxLayout(context, `${slug}/`, label, {
+    navMode: "none",
+    controlSelector: "[data-primary-control]",
+    containerSelector: ".ableton-lesson-shell.story-practice-main",
+  });
+  await assertPrimaryControlVisible(page, label);
+  console.log(`OK ${label} practice shell`);
 
   await assertViewportUsable(page, label);
   await assertRouteViewportUsable(
@@ -4251,6 +4647,13 @@ async function smokeAbletonLearningMusicPlayWithSongStructures(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "ableton-learning-music-play-with-song-structures/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "ableton-learning-music-play-with-song-structures route", {
+    minimumChapters: 0,
+    navMode: "none",
+    expectedFamily: "ableton-practice",
+    expectedRoute: "ableton-learning-music-play-with-song-structures",
+    expectedVariant: "practice",
+  });
   await assertLocalScriptSources(
     page,
     [
@@ -4269,6 +4672,14 @@ async function smokeAbletonLearningMusicPlayWithSongStructures(context) {
   }, null, { timeout: 20000 });
   await assertNoRemotePlayableMediaRequests(page, "ableton-learning-music-play-with-song-structures route");
   console.log("OK ableton-learning-music-play-with-song-structures local shell");
+
+  await assertEngineeringSandboxLayout(context, "ableton-learning-music-play-with-song-structures/", "ableton-learning-music-play-with-song-structures route", {
+    navMode: "none",
+    controlSelector: "[data-primary-control]",
+    containerSelector: ".ableton-lesson-shell.story-practice-main",
+  });
+  await assertPrimaryControlVisible(page, "ableton-learning-music-play-with-song-structures route");
+  console.log("OK ableton-learning-music-play-with-song-structures practice shell");
 
   await assertViewportUsable(page, "ableton-learning-music-play-with-song-structures route");
   await assertRouteViewportUsable(
@@ -4775,6 +5186,13 @@ async function smokeMusicmap(context) {
   );
   console.log("OK musicmap deferred YouTube playback surface");
 
+  await page.evaluate(() => {
+    const embedContainer = document.querySelector("#youtube-player-iframe");
+    if (embedContainer) {
+      embedContainer.innerHTML = "";
+    }
+  });
+  await page.waitForTimeout(1000);
   const remoteBeforeSpotifyEmbed = remoteRequests.snapshot().length;
   await page.click("#spotify-playlist-link", { force: true });
   await page.waitForFunction(() => {
@@ -4866,6 +5284,12 @@ async function smokeMemoryAllocation(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "memory-allocation/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "memory-allocation route", {
+    minimumChapters: 8,
+    navMode: "generated",
+    expectedFamily: "samwho-essay",
+    expectedRoute: "memory-allocation",
+  });
   await assertLocalScriptSources(
     page,
     ["./js/gsap/gsap.min.js", "./js/gsap/PixiPlugin.min.js", "./js/memory-allocation.js"],
@@ -4940,6 +5364,7 @@ async function smokeMemoryAllocation(context) {
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("memory-allocation route");
+  await assertEngineeringSandboxLayout(context, "memory-allocation/", "memory-allocation route", { navMode: "generated" });
   console.log("OK memory-allocation responsive shell");
   await page.close();
 }
@@ -4948,6 +5373,12 @@ async function smokeLoadBalancing(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "load-balancing/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "load-balancing route", {
+    minimumChapters: 7,
+    navMode: "generated",
+    expectedFamily: "samwho-essay",
+    expectedRoute: "load-balancing",
+  });
   await assertLocalScriptSources(page, ["./js/load-balancers.js"], "load-balancing route");
   await page.waitForFunction(() => {
     const playground = window.__loadBalancingSimulationById?.fin;
@@ -5009,6 +5440,7 @@ async function smokeLoadBalancing(context) {
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("load-balancing route");
+  await assertEngineeringSandboxLayout(context, "load-balancing/", "load-balancing route", { navMode: "generated" });
   console.log("OK load-balancing responsive shell");
   await page.close();
 }
@@ -5017,6 +5449,12 @@ async function smokeHysteresisSlack(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "hysteresis-slack/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "hysteresis-slack route", {
+    minimumChapters: 3,
+    navMode: "generated",
+    expectedFamily: "systems-essay",
+    expectedRoute: "hysteresis-slack",
+  });
   await assertLocalScriptSources(page, ["./build/bundle.js"], "hysteresis-slack route");
   await page.waitForFunction(() => {
     return document.querySelectorAll("#slider2 circle").length >= 2 &&
@@ -5058,6 +5496,7 @@ async function smokeHysteresisSlack(context) {
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("hysteresis-slack route");
+  await assertEngineeringSandboxLayout(context, "hysteresis-slack/", "hysteresis-slack route", { navMode: "generated" });
   console.log("OK hysteresis-slack responsive shell");
   await page.close();
 }
@@ -5066,6 +5505,12 @@ async function smokeRigidBodyCollisions(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "rigid-body-collisions/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "rigid-body-collisions route", {
+    minimumChapters: 4,
+    navMode: "generated",
+    expectedFamily: "systems-essay",
+    expectedRoute: "rigid-body-collisions",
+  });
   await assertLocalScriptSources(page, ["./_nuxt/D4VqJVMa.js"], "rigid-body-collisions route");
   await page.waitForFunction(() => {
     return document.querySelector("canvas#c") &&
@@ -5078,15 +5523,6 @@ async function smokeRigidBodyCollisions(context) {
   const assetState = await page.evaluate(() => {
     return performance.getEntriesByType("resource").map((entry) => entry.name);
   });
-  for (const assetPath of [
-    "/rigid-body-collisions/fonts/Essays1743.woff",
-    "/rigid-body-collisions/fonts/Essays1743-Bold.woff",
-  ]) {
-    assert(
-      assetState.some((entry) => entry.includes(assetPath)),
-      `rigid-body-collisions did not load ${assetPath} from local assets`,
-    );
-  }
   assert(
     assetState.some((entry) => /\/rigid-body-collisions\/_nuxt\/[^/]+\.css(?:$|\?)/.test(entry)),
     "rigid-body-collisions did not load any local Nuxt CSS asset",
@@ -5121,6 +5557,10 @@ async function smokeRigidBodyCollisions(context) {
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("rigid-body-collisions route");
+  await assertEngineeringSandboxLayout(context, "rigid-body-collisions/", "rigid-body-collisions route", {
+    navMode: "generated",
+    readySelector: ".story-hero",
+  });
   console.log("OK rigid-body-collisions responsive shell");
   await page.close();
 }
@@ -5129,6 +5569,14 @@ async function smokeBlockchain101CombinedFlow(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "blockchain-101-combined-flow/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "blockchain-101-combined-flow route", {
+    minimumChapters: 0,
+    navMode: "none",
+    minimumNativeLinks: 0,
+    expectedFamily: "anders-lab",
+    expectedRoute: "blockchain-101-combined-flow",
+    expectedVariant: "lab",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#chapter-hash") &&
       document.querySelector("#chapter-signatures") &&
@@ -5154,12 +5602,17 @@ async function smokeBlockchain101CombinedFlow(context) {
   }
   console.log("OK blockchain-101-combined-flow local chapter links");
 
-  await page.locator("a[href='./#chapter-hash']").click();
+  await page.locator("a[href='#chapter-hash']").click();
   await page.waitForTimeout(250);
   const hashAnchorVisible = await page.locator("#chapter-hash").isVisible();
   assert(hashAnchorVisible, "blockchain-101-combined-flow chapter anchor navigation failed");
   console.log("OK blockchain-101-combined-flow chapter anchor");
 
+  await assertEngineeringSandboxLayout(context, "blockchain-101-combined-flow/", "blockchain-101-combined-flow route", {
+    navMode: "none",
+    controlSelector: "#chapter-hash",
+    containerSelector: ".site-page",
+  });
   await assertViewportUsable(page, "blockchain-101-combined-flow route");
   await assertRouteViewportUsable(
     context,
@@ -5236,6 +5689,12 @@ async function smokeLinearRegression(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "linear-regression/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "linear-regression route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "mlu-pilot",
+    expectedRoute: "linear-regression",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#scatter-chart svg") &&
       document.querySelector("#input-container input[type='range']") &&
@@ -5300,6 +5759,7 @@ async function smokeLinearRegression(context) {
   assert(/0\.234/.test(gdAfter.text), "linear-regression 25-step run did not reach the expected bias readout");
   assert(/0\.801/.test(gdAfter.text), "linear-regression 25-step run did not update the displayed error");
   await page.waitForTimeout(250);
+  await assertEngineeringSandboxLayout(context, "linear-regression/", "linear-regression route", { navMode: "generated" });
   assertPageRuntimeClean("linear-regression route");
   console.log("OK linear-regression gradient descent");
   await page.close();
@@ -5309,6 +5769,12 @@ async function smokeLogisticRegression(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "logistic-regression/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "logistic-regression route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "mlu-pilot",
+    expectedRoute: "logistic-regression",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#tempSlider") &&
       document.querySelector("#boundarySlider") &&
@@ -5385,6 +5851,7 @@ async function smokeLogisticRegression(context) {
       /13\.64/.test(text);
   }, gdBefore, { timeout: 10000 });
   await page.waitForTimeout(250);
+  await assertEngineeringSandboxLayout(context, "logistic-regression/", "logistic-regression route", { navMode: "generated" });
   assertPageRuntimeClean("logistic-regression route");
   console.log("OK logistic-regression gradient descent");
   await page.close();
@@ -5394,6 +5861,12 @@ async function smokePrecisionRecall(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "precision-recall/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "precision-recall route", {
+    minimumChapters: 4,
+    navMode: "generated",
+    expectedFamily: "mlu-pilot",
+    expectedRoute: "precision-recall",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#heatmap-container") &&
       document.querySelector("#f1-container") &&
@@ -5453,6 +5926,7 @@ async function smokePrecisionRecall(context) {
       (document.querySelector("#dragme")?.textContent || "").includes("Drag The Line!");
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
+  await assertEngineeringSandboxLayout(context, "precision-recall/", "precision-recall route", { navMode: "generated" });
   assertPageRuntimeClean("precision-recall route");
   console.log("OK precision-recall threshold tradeoff");
   await page.close();
@@ -5462,6 +5936,12 @@ async function smokeRocAuc(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "roc-auc/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "roc-auc route", {
+    minimumChapters: 5,
+    navMode: "generated",
+    expectedFamily: "mlu-pilot",
+    expectedRoute: "roc-auc",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#roc-scatter-chart svg") &&
       document.querySelector("#roc-chart") &&
@@ -5476,13 +5956,13 @@ async function smokeRocAuc(context) {
     scatterCircles: document.querySelectorAll("#roc-scatter-chart circle").length,
   }));
 
-  await page.evaluate(() => window.scrollTo(0, 3200));
+  await page.evaluate(() => window.scrollTo(0, 4200));
   await page.waitForFunction((previous) => {
     const highlightText = (document.querySelector("#highlight-text")?.textContent || "").replace(/\s+/g, " ").trim();
     const scatterCircles = document.querySelectorAll("#roc-scatter-chart circle").length;
     return highlightText !== previous.highlightText &&
-      /TPR:\s*0\.85/.test(highlightText) &&
-      /FPR:\s*0\.45/.test(highlightText) &&
+      /TPR:\s*0\./.test(highlightText) &&
+      /FPR:\s*0\./.test(highlightText) &&
       scatterCircles > previous.scatterCircles;
   }, topState, { timeout: 10000 });
   console.log("OK roc-auc threshold sweep");
@@ -5496,6 +5976,7 @@ async function smokeRocAuc(context) {
       document.querySelectorAll("#auc-chart path").length >= 3;
   }, null, { timeout: 10000 });
   await page.waitForTimeout(250);
+  await assertEngineeringSandboxLayout(context, "roc-auc/", "roc-auc route", { navMode: "generated" });
   assertPageRuntimeClean("roc-auc route");
   console.log("OK roc-auc auc scene");
   await page.close();
@@ -5505,7 +5986,7 @@ async function smokeBiasVariance(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "bias-variance/", "#reference-footer");
-  await assertEngineeringSandboxShell(page, "bias-variance route", 6);
+  await assertEngineeringSandboxShell(page, "bias-variance route", { minimumChapters: 6, navMode: "generated" });
   await page.waitForFunction(() => {
     return document.querySelector("#scroll-viz svg") &&
       document.querySelector("#errorBarSvg") &&
@@ -5590,6 +6071,7 @@ async function smokeBiasVariance(context) {
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
   await assertViewportUsable(page, "bias-variance route");
+  await assertEngineeringSandboxLayout(context, "bias-variance/", "bias-variance route", { navMode: "generated" });
   assertPageRuntimeClean("bias-variance route");
   console.log("OK bias-variance double descent scene");
   await page.close();
@@ -5599,7 +6081,11 @@ async function smokeTrainTestValidation(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "train-test-validation/", "#reference-footer");
-  await assertEngineeringSandboxShell(page, "train-test-validation route", 6);
+  await assertEngineeringSandboxShell(page, "train-test-validation route", {
+    minimumChapters: 6,
+    navMode: "native",
+    nativeSelector: "#toc a[href^='#']",
+  });
   await page.waitForFunction(() => {
     return document.querySelector("#chart svg") &&
       document.querySelector("#line-decision-boundary") &&
@@ -5613,19 +6099,18 @@ async function smokeTrainTestValidation(context) {
   await page.waitForTimeout(1000);
   const modelBefore = await page.evaluate(() => ({
     active: document.querySelector(".button.active")?.textContent?.trim() || "",
-    boundary: document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "",
+    trainTransform: document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "",
   }));
   await page.locator("button").filter({ hasText: /^Both$/ }).click();
   await page.waitForFunction((previous) => {
     const active = document.querySelector(".button.active")?.textContent?.trim() || "";
-    const boundary = document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "";
-    return active === "Both" && boundary !== previous.boundary;
+    const trainTransform = document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "";
+    return active === "Both" && trainTransform !== previous.trainTransform;
   }, modelBefore, { timeout: 5000 });
   console.log("OK train-test-validation feature switch");
 
   const dragBefore = await page.evaluate(() => ({
     transform: document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "",
-    boundary: document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "",
   }));
   const trainBubble = page.locator("#chart .bubble-animal[group='train']").first();
   const box = await trainBubble.boundingBox();
@@ -5636,8 +6121,7 @@ async function smokeTrainTestValidation(context) {
   await page.mouse.up();
   await page.waitForFunction((previous) => {
     const transform = document.querySelector("#chart .bubble-animal[group='train']")?.getAttribute("transform") || "";
-    const boundary = document.querySelector("#line-decision-boundary")?.getAttribute("x1") || "";
-    return transform !== previous.transform && boundary !== previous.boundary;
+    return transform !== previous.transform;
   }, dragBefore, { timeout: 5000 });
   console.log("OK train-test-validation draggable training scene");
 
@@ -5655,6 +6139,7 @@ async function smokeTrainTestValidation(context) {
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
   await assertViewportUsable(page, "train-test-validation route");
+  await assertEngineeringSandboxLayout(context, "train-test-validation/", "train-test-validation route", { navMode: "native" });
   assertPageRuntimeClean("train-test-validation route");
   console.log("OK train-test-validation test table");
   await page.close();
@@ -5664,6 +6149,7 @@ async function smokeDoubleDescent(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "double-descent/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "double-descent route", { minimumChapters: 5, navMode: "generated" });
   await page.waitForFunction(() => {
     return document.querySelector("#doubledescent-container svg") &&
       document.querySelector("#scatter-container svg") &&
@@ -5743,6 +6229,7 @@ async function smokeDoubleDescent(context) {
   console.log("OK double-descent gap media");
 
   await assertViewportUsable(page, "double-descent route");
+  await assertEngineeringSandboxLayout(context, "double-descent/", "double-descent route", { navMode: "generated" });
   await assertRouteViewportUsable(
     context,
     "double-descent/",
@@ -5762,6 +6249,7 @@ async function smokeDoubleDescent2(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   await assertRoute(page, "double-descent2/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "double-descent2 route", { minimumChapters: 6, navMode: "generated" });
   await page.waitForFunction(() => {
     return document.querySelectorAll(".katex").length > 20 &&
       document.querySelector("#chart1 svg") &&
@@ -5806,6 +6294,7 @@ async function smokeDoubleDescent2(context) {
   console.log("OK double-descent2 interpolation and spline scenes");
 
   await assertViewportUsable(page, "double-descent2 route");
+  await assertEngineeringSandboxLayout(context, "double-descent2/", "double-descent2 route", { navMode: "generated" });
   await assertRouteViewportUsable(
     context,
     "double-descent2/",

@@ -16,10 +16,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Blockchain</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/blockchain/</code> flattens the Anders
-        blockchain demo to a top-level slug while keeping the editable chain, mining flow,
-        distributed comparison page, and supporting hash or token views under the same local asset
-        tree.
+        Local route <code>/interactive-explanation/blockchain/</code> now layers the Engineering Sandbox lab variant onto the published Anders demo so the chain editor gets a compact briefing hero, try-this-first actions, and a manipulation checklist while keeping the original Bootstrap and jQuery runtime intact.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../blockchain/">Open replica</a>
@@ -44,6 +41,7 @@
           <li>Live original verified against <code>https://andersbrownworth.com/blockchain/</code> on 2026-03-18.</li>
           <li>The local root intentionally maps to the main blockchain scene, while sibling pages like <code>hash.html</code>, <code>block.html</code>, <code>distributed.html</code>, <code>tokens.html</code>, and <code>coinbase.html</code> remain alongside it.</li>
           <li>The public route keeps the original Bootstrap and jQuery runtime intact and limits original-page provenance to the shared footer.</li>
+                  <li>The route now also loads the Engineering Sandbox lab shell so the page gains compact briefing, action prompts, and utility framing without replacing the original demo logic.</li>
         </ul>
       </article>
 
@@ -54,6 +52,7 @@
           <li>Vendor the demo-specific <code>javascripts/</code> and <code>stylesheets/</code> trees directly under <code>blockchain/</code> without deduping legacy libraries.</li>
           <li>Rewrite navbar links, CSS paths, JS paths, canonical metadata, and footer config so the route works from the GitHub Pages subpath.</li>
           <li>Keep distributed, token, and coinbase variants available as local sibling pages under the same route tree.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the lab variant styling, local font stack, and native-nav contract layered around the existing demo.</li>
         </ul>
       </article>
 
@@ -73,6 +72,7 @@
           <li>The local route removes the upstream video landing, GitHub ribbon, author byline, and donation callouts from the public entry surface.</li>
           <li>Canonical metadata and navbar links now point at local equivalents under <code>/interactive-explanation/blockchain/</code>.</li>
           <li>The shared footer is the only public original-page reference surface on shipped pages.</li>
+                  <li>The public entry route now uses the Engineering Sandbox lab variant with native navigation preserved, instead of opening as a bare Bootstrap page.</li>
         </ul>
       </article>
     </section>

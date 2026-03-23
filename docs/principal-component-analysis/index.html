@@ -19,9 +19,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Principal Component Analysis</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/principal-component-analysis/</code> keeps the
-        published Setosa EV 2D drag sandbox, 3D PCA viewer, and UK-food walkthrough while moving
-        provenance and route policy out of the public narrative.
+        Local route <code>/interactive-explanation/principal-component-analysis/</code> now layers the lighter Engineering Sandbox essay shell, local font stack, play-first framing, and generated chapter navigation onto the published EV explainer while keeping the original interactive runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../principal-component-analysis/">Open replica</a>
@@ -45,6 +43,7 @@
           <li>Live original verified against <code>https://setosa.io/ev/principal-component-analysis/</code> on 2026-03-14.</li>
           <li>The local copy removes EV branding, bylines, share widgets, newsletter prompts, analytics, and comments.</li>
           <li>The interactive math and visualization flow still rely on the original Angular, D3, Three.js, and numeric.js runtime.</li>
+                  <li>The route now also loads the lighter Engineering Sandbox shell so the page gains local typography, editorial framing, and chapter navigation without displacing the EV chart layouts.</li>
         </ul>
       </article>
 
@@ -54,6 +53,7 @@
           <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> remain shared across Setosa EV routes.</li>
           <li><code>../ev/scripts/three.js</code>, <code>OrthographicTrackballControls.js</code>, and <code>numeric.js</code> were added locally for this route.</li>
           <li><code>principal-component-analysis/style.css</code> now adds wrapper-level overflow handling so the wide visualizations stay usable on smaller screens.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -72,6 +72,7 @@
           <li>The public route no longer shows EV branding, author credits, share widgets, newsletter forms, analytics, or comments.</li>
           <li>The local page adds a small docs link and shared footer, but leaves the interactive runtime unchanged.</li>
           <li>The live PCA page currently ships fixed UK-food <code>defra-d1</code> and <code>defra-d2</code> views rather than a component-pair switcher, and the replica preserves that published surface.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the original EV interactions and formulas remain intact.</li>
         </ul>
       </article>
     </section>

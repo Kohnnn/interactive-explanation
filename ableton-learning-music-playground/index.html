@@ -12,6 +12,7 @@
   <title>Ableton Learning Music Playground</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     body {
@@ -20,27 +21,30 @@
     }
 
     .playground-route-shell {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 5rem;
+      padding-bottom: 5rem;
     }
 
     .playground-route-shell .page-header {
-      margin-bottom: 2rem;
       max-width: 42rem;
     }
 
     .playground-route-shell .page-header p {
       margin-bottom: 0;
-      color: #d9d9d9;
     }
 
-    .playground-route-shell h2 {
-      margin-top: 2.5rem;
+    .story-practice-surface .body-text.text-container {
+      max-width: none;
     }
 
-    #reference-footer .public-footer__inner {
-      width: min(48rem, calc(100vw - 32px));
+    .story-practice-surface .widget,
+    .story-practice-surface .widget-drumpad {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 767px) {
+      .playground-route-shell {
+        padding-bottom: 4rem;
+      }
     }
   </style>
   <script src="./third-party/polyfills/polyfills.js"></script>
@@ -89,8 +93,68 @@
   data-reference-url="https://learningmusic.ableton.com/the-playground"
   data-reference-text="Ableton Learning Music: The Playground"
   data-footer-label="Original lesson"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="ableton-practice"
+  data-story-nav="none"
+  data-story-route="ableton-learning-music-playground"
 >
-  <main class="playground-route-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · ableton learning music</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Build one loop by moving beats, bass, chords, and melody together.</h1>
+        <p class="story-hero__summary">
+          Playground is the fastest way to hear how arrangement decisions interact. Start the shared
+          transport, change one track, and listen to how the whole loop shifts when the parts stay synced.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Four synced widget tracks</span>
+          <span class="story-chip">Local sample bank and transport</span>
+          <span class="story-chip">Edit one layer, hear the whole loop react</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the beats section, then change either the bassline or the melody while the loop
+          is running. The lesson lands when you can hear which edits change groove, harmony, or shape.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#beats">Play first: start with beats</a>
+          <a class="story-button story-button--secondary" href="#melodies">Jump to melodies</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li><span class="story-practice-checklist__step">1</span><div><strong>Start the shared loop</strong>Hit play in the beats section so every later track can join the same transport.</div></li>
+          <li><span class="story-practice-checklist__step">2</span><div><strong>Edit one layer</strong>Change the bass, chords, or melody and keep listening to the unchanged parts around it.</div></li>
+          <li><span class="story-practice-checklist__step">3</span><div><strong>Compare sections</strong>Use the four tracks to hear which musical job belongs to rhythm, harmony, and melodic contour.</div></li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Why this lesson matters</span>
+        <p>
+          This is the family bridge from isolated drills into arrangement thinking. It makes rhythm,
+          bass motion, harmony, and melodic shape audible as one system.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Listen:</strong> start with the beat before changing any pitched track.</span>
+    <span class="story-practice-hint"><strong>Edit:</strong> move one layer at a time so the effect stays audible.</span>
+    <span class="story-practice-hint"><strong>Loop:</strong> let the transport keep running while you compare sections.</span>
+  </div>
+
+  <main class="playground-route-shell story-practice-main">
     <div class="page-header body-text">
       <h1 id="the-playground">Ableton Learning Music: The Playground</h1>
       <p>
@@ -100,6 +164,15 @@
       </p>
     </div>
 
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Start the synced transport in beats, then shape bass, chords, and melody without breaking the loop.
+        </div>
+        <a class="story-button story-button--secondary" href="#melodies">Jump to later track</a>
+      </div>
+      <div class="story-practice-surface">
     <div class="body-text text-container limit-line-length-inside">
       <h2 id="beats">Beats</h2>
       <script>_theplaygroundplaygrounddrumsrecorder = new Recorder();</script>
@@ -133,7 +206,16 @@
           data-lang='{"@reset":"Reset","@clear":"Clear","@exporttolive":"Export unavailable","@exporting":"Exporting","@tempo":"Tempo","@keyboard":"Keyboard","@on":"On","@off":"Off","@close":"Close","@lowpitch":"Low Pitch","@highpitch":"High Pitch","@fillinsolution":"Fill in solution","@incompatiblebrowser":"Your browser can’t display the interactive musical examples on this page.<br>Please use a browser that supports Web Audio such as Chrome, Safari, Firefox, or Edge."}'
         ></div>
       </div>
+    </div>
+      </div>
+    </section>
 
+    <div class="body-text text-container limit-line-length-inside">
+      <p>
+        Once the beat is carrying the loop, add one later track at a time. Keep the transport
+        running so bass movement, chord color, and melody shape stay easy to compare against the
+        same rhythmic bed.
+      </p>
       <h2 id="basslines">Basslines</h2>
       <div
         class="widget widget-pianoroll theme-d"
@@ -277,6 +359,7 @@
       });
     });
   </script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </body>
 </html>

@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly into the static double-descent essay without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original scrollytelling and slider runtime intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten chart layout system.",
+      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and step containers."
+    ],
+    "evidence": [
+      "The hardening plan expands the Engineering Sandbox shell from the first four pilots to the next static ML essays, starting with double-descent.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original scrolly and slider scenes."
+    ]
+  },
+  {
     "moduleId": "intro-double-descent-scrolly-chart",
     "originalBehavior": "The published article opens with a sticky chart in #doubledescent-container whose training and test error state changes as readers move through the five introductory steps.",
     "localStatus": "The local route keeps the original step containers, top chart mount, and compiled scrollytelling transitions so the main double-descent narrative still advances in order.",

@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-lab-shell",
+    "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
+    "localStatus": "The local route now adds the Engineering Sandbox lab shell in a compact bridge mode, with local fonts, a tighter hero, and guided action framing while keeping the page editorial rather than turning it into a full interactive lab.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell runs in no-nav mode so the page keeps its compact roadmap structure without an essay rail or mobile chapter bar.",
+      "The updated framing is intentionally lighter than the hands-on labs because this page exists to sequence the family, not to replace it."
+    ],
+    "evidence": [
+      "The Anders rollout adds a first-class Engineering Sandbox lab variant with compact briefing, try-this-first actions, and no essay rail.",
+      "Shared smoke coverage now checks that Anders lab routes avoid the essay rail, keep the hero ahead of the first control cluster, and preserve footer width inside the actual route container."
+    ]
+  },
+  {
     "moduleId": "combined-flow-shell-and-chapter-roadmap",
     "originalBehavior": "The source family is split across separate blockchain, signing, and proof demos with distinct entry routes and teaching surfaces.",
     "localStatus": "The local route adds one lightweight roadmap page that introduces the full sequence and keeps each chapter accessible through local links.",

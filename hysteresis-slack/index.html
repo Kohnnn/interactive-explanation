@@ -12,7 +12,9 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://localhost/interactive-explanation/hysteresis-slack/">
     <link href="./bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css">
     <link rel="stylesheet" href="../shared/public-footer.css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
     <style>
       body {
         font-size: 16px;
@@ -75,12 +77,51 @@
       }
     </style>
   </head>
-  <body data-reference-url="https://joshuahhh.com/projects/hysteresis/" data-reference-text="Hysteresis &amp; Slack" data-footer-label="Original page">
+  <body
+    data-reference-url="https://joshuahhh.com/projects/hysteresis/"
+    data-reference-text="Hysteresis &amp; Slack"
+    data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="systems-essay"
+    data-story-nav="generated"
+    data-story-route="hysteresis-slack"
+  >
     <div class="container" style='max-width: 900px'>
+
+      <section class="story-hero">
+        <p class="story-hero__eyebrow">Engineering Sandbox rollout · technical essays</p>
+        <div class="story-hero__grid">
+          <div>
+            <h1 class="story-hero__title">See memory in a system before the formal definition lands.</h1>
+            <p class="story-hero__summary">
+              This page works by making hysteresis feel mechanical first. Drag the pins, watch the
+              loops appear, then use the timeline experiment to turn “history dependence” from a
+              vocabulary term into something you can predict with your hands.
+            </p>
+            <div class="story-hero__meta">
+              <span class="story-chip">Drag both slider systems</span>
+              <span class="story-chip">Compare the rigid and slack paths</span>
+              <span class="story-chip">Draw a trajectory and inspect the region of outcomes</span>
+            </div>
+          </div>
+          <div class="story-callout story-hero__panel" data-story-callout="play">
+            <span class="story-callout__label">How to use this page</span>
+            <p>
+              Start with the two machines side by side, then jump down to the trajectory editor once
+              you can feel the difference between direct response and slack. The later prose is much
+              clearer after you have already watched the loops form.
+            </p>
+            <div class="story-hero__actions">
+              <a class="story-button" href="#two-machines">Play first: drag the two machines</a>
+              <a class="story-button story-button--secondary" href="#trajectory">Jump to trajectory mode</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div class="spacer"></div>
 
-      <h1>hysteresis &amp; slack</h1>
+      <h1 id="intro" class="story-legacy-title" data-story-chapter="Meet hysteresis through slack">hysteresis &amp; slack</h1>
 
       <div class="spacer"></div>
 
@@ -94,7 +135,7 @@
 
       <div class="spacer"></div>
 
-      <h3>Here are two machines you can control.</h3>
+      <h3 id="two-machines" data-story-chapter="Control two machines">Here are two machines you can control.</h3>
       <div class="row">
         <div class="col-md-6">
           <div class="above-chart">
@@ -201,7 +242,7 @@
       <p>So let's give the computer some "history" to play
       with.</p>
 
-      <h3>Set a trajectory for the input pin.</h3>
+      <h3 id="trajectory" data-story-chapter="Set a trajectory and inspect the future">Set a trajectory for the input pin.</h3>
 
       <p>Click &amp; drag to define the <span class="input-color-path">path of the input pin</span> over time.
       Hover to see the <span class="output-color-path">future trajectory of the output pin</span> from the point you've selected.

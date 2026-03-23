@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -31,15 +32,49 @@
     data-reference-url="https://setosa.io/ev/pi/"
     data-reference-text="Pi (π)"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="pi"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · math essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Use a circle to make π feel measured instead of memorized.</h1>
+          <p class="story-hero__summary">
+            The ratio matters more than the digits. Start by dragging the basic circle geometry,
+            then unwrap the circumference until the constant reads like a stable relationship
+            between lengths rather than a mystical decimal.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Drag the circle geometry</span>
+            <span class="story-chip">Unwrap circumference against diameter</span>
+            <span class="story-chip">Change size without changing the ratio</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Play with the circle first, then move to the wrap control and size slider. The page is
+            doing its job when you can predict that the ratio will stay put even while the whole
+            diagram changes scale.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#circle-basics">Play first: drag the circle</a>
+            <a class="story-button story-button--secondary" href="#unwrap-pi">Jump to the ratio view</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet the circle vocabulary">
       <div class="title-region">
         <h1 class="title">Pi (π)</h1>
         <h3 class="by-line">Interactive explainer</h3>
       </div>
     </section>
-    <section>
+    <section id="circle-basics" data-story-chapter="Define the circle">
       <p>
         Before we define π, let's define a circle. A circle is a set of points that all lie an
         equal distance away from a single center point. The distance from the center point is
@@ -51,7 +86,7 @@
         <circle-demo></circle-demo>
       </div>
     </section>
-    <section>
+    <section data-story-chapter="Frame pi as a ratio">
       <p>
         π is the ratio of the <evt label="circumference"></evt> to the
         <evt label="diameter"></evt>, and this ratio holds true for all circle sizes. Because of
@@ -62,7 +97,7 @@
         <a href="http://www.tauday.com/" target="_blank" rel="noreferrer">Tau Day</a>.
       </p>
     </section>
-    <section>
+    <section id="unwrap-pi" data-story-chapter="Unwrap circumference against diameter">
       <div class="viz-scroll">
         <pi-demo></pi-demo>
       </div>

@@ -16,9 +16,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Hysteresis &amp; Slack</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/hysteresis-slack/</code> vendors the
-        published slider and trajectory explainer, keeps the D3 and React runtime intact, and
-        limits public provenance to the shared footer.
+        Local route <code>/interactive-explanation/hysteresis-slack/</code> now layers the shared Engineering Sandbox hero, play-first framing, and generated chapter navigation onto the published article while keeping the original runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../hysteresis-slack/">Open replica</a>
@@ -42,6 +40,7 @@
           <li>Live original verified against <code>https://joshuahhh.com/projects/hysteresis/</code> on 2026-03-21.</li>
           <li>The local copy removes the Plausible analytics script, the Cloudflare beacon, and the author link from the public body.</li>
           <li>The slider scenes and the later trajectory timeline remain driven by the vendored published bundle.</li>
+                  <li>The route now also loads the shared Engineering Sandbox shell for local typography, play-first framing, and generated chapter navigation.</li>
         </ul>
       </article>
 
@@ -52,6 +51,7 @@
           <li><code>hysteresis-slack/bootstrap.css</code> preserves the published article layout.</li>
           <li><code>hysteresis-slack/build/bundle.js</code> keeps the original D3 and React slider runtime intact while disabling the vendored dev websocket bootstrap for local static hosting.</li>
           <li><code>hysteresis-slack/images/hyloop.gif</code> keeps the article’s final magnetic hysteresis reference image local.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -61,6 +61,7 @@
           <li>The public route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
           <li>The vendored webpack dev-server socket bootstrap is disabled so the public route stays runtime-clean under static hosting.</li>
           <li>The shared footer is the only public original-page reference surface.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the vendored interactive logic remains unchanged.</li>
         </ul>
       </article>
 

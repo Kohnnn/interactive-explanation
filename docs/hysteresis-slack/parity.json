@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original interactive runtime intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
+      "Chapter links are generated from data-story-chapter markers so the route can keep its original section structure."
+    ],
+    "evidence": [
+      "The hardened rollout expands the Engineering Sandbox essay shell beyond MLU into the next article-shaped technical families.",
+      "Shared smoke coverage now checks hero-before-chapter ordering, generated navigation behavior, and desktop non-overlap before exercising the original interactive scenes."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-slider-runtime-handoff",
     "originalBehavior": "The published page loads through a short article shell with Bootstrap styling, a compiled D3 and React bundle, two slider scenes, and a later timeline trajectory explainer.",
     "localStatus": "The local route keeps the published article structure, Bootstrap styling, compiled bundle, and image assets while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",

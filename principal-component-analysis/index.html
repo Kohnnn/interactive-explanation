@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -31,9 +32,43 @@
     data-reference-url="https://setosa.io/ev/principal-component-analysis/"
     data-reference-text="Principal Component Analysis"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="principal-component-analysis"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · data essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Use PCA as a way to rotate your attention, not just your axes.</h1>
+          <p class="story-hero__summary">
+            This route gets better once you stop thinking about dimensionality reduction as a purely
+            symbolic trick. Drag the points, rotate the view, and watch which directions keep the
+            variation that matters before you move into the higher-dimensional examples.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Drag 2D samples</span>
+            <span class="story-chip">Rotate the 3D view</span>
+            <span class="story-chip">Follow the UK food dataset into 17 dimensions</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start in 2D and physically move the points until the first principal component feels
+            inevitable. Then rotate the 3D cloud and only afterwards jump into the UK food example,
+            where the meaning comes from the separation you have already learned to see.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#pca-2d">Play first: drag the 2D points</a>
+            <a class="story-button story-button--secondary" href="#pca-uk">Jump to the 17D case</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" id="pca-2d" data-story-chapter="Start in 2D">
       <div class="title-region">
         <h1 class="title">Principal Component Analysis</h1>
         <h3 class="by-line">Interactive explainer</h3>
@@ -74,7 +109,7 @@
         </div>
       </div>
     </section>
-    <section>
+    <section id="pca-3d" data-story-chapter="Rotate the 3D view">
       <h1>3D example</h1>
       <p>
         With three dimensions, PCA is more useful, because it's hard to see through a cloud of
@@ -93,7 +128,7 @@
         <button ng-click="resetPCAThree()" class="btn">reset</button>
       </div>
     </section>
-    <section>
+    <section id="pca-uk" data-story-chapter="Read the 17D food dataset">
       <h1>Eating in the UK (a 17D example)</h1>
       <div
         class="dataset-copy"

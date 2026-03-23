@@ -14,10 +14,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -25,15 +26,49 @@
     data-reference-url="https://setosa.io/ev/conditional-probability/"
     data-reference-text="Conditional Probability"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="conditional-probability"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · probability essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Turn conditional probability into a physical overlap you can inspect.</h1>
+          <p class="story-hero__summary">
+            This page is strongest when you treat each slider like a population shift. Set the base
+            rates, watch the shelves and bars change together, then swap perspectives so the
+            conditioned view feels like a narrowing of the sample space instead of a formula trick.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Move the event probabilities</span>
+            <span class="story-chip">Switch perspectives</span>
+            <span class="story-chip">Compare actual and expected outcomes</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start with the three probability sliders, then watch the waterfall before you read too
+            much text. Once the shelves make sense, use the perspective buttons and bar charts to
+            see how conditioning changes what counts as the relevant world.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#event-probabilities">Play first: set the event rates</a>
+            <a class="story-button story-button--secondary" href="#expected-vs-actual">Jump to the comparison bars</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet conditional probability">
       <div class="title-region">
         <h1 class="title">Conditional probability</h1>
         <h3 class="by-line">Interactive explainer</h3>
       </div>
     </section>
-    <section>
+    <section id="event-probabilities" data-story-chapter="Set the event probabilities">
       <br>
       <p> A conditional probability is the probability of an event, given some other event has already occurred. In the below example, there are two possible events that can occur. A ball falling could either hit the <span class="A">red</span> shelf (we'll call this event <span class="A">A</span>) or hit the <span class="B">blue</span> shelf (we'll call this event <span class="B">B</span>) or both.
       </p>
@@ -75,7 +110,7 @@
         </p>
       </div>
       <div style="clear:both"></div>
-      <waterfall></waterfall>
+      <waterfall id="waterfall-view" data-story-chapter="Watch the conditional view"></waterfall>
       <div class="half-column">
         <label class="or">drop frequency</label><input type="range" ng-model="dropFrequency" min="0" max="20"></input>
       </div>
@@ -89,7 +124,7 @@
       </div>
       <div style="clear:both"></div>
       <p> actual </p>
-      <bar-chart data="barChartActual" accessor="accessor"></bar-chart>
+      <bar-chart id="expected-vs-actual" data-story-chapter="Compare actual and expected" data="barChartActual" accessor="accessor"></bar-chart>
       <p> expected </p>
       <bar-chart data="barChartExpected" accessor="accessor"></bar-chart>
       <p> <div class="icon A"></div> count(A n !B): {{countA}} <small class="or">(balls that hit the <span class="A">red</span> shelf but not the <span class="B">blue</span> shelf)</small></p>

@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly into the compiled logistic-regression app without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original compiled charts and controls intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten app layout system.",
+      "Chapter links are attached after mount to stable top-level sections so the compiled runtime keeps control of its own internals."
+    ],
+    "evidence": [
+      "The hardening plan extends the Engineering Sandbox shell from static pilots to harder JS-rendered ML routes once the shared layout and navigation contract stabilizes.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original sigmoid, threshold, and loss scenes."
+    ]
+  },
+  {
     "moduleId": "classification-scrollytelling-shell",
     "originalBehavior": "The published article uses a staged scrollytelling shell where the explanation panes drive the scatter, curve, boundary, and example-prediction visuals.",
     "localStatus": "The local route keeps the original step containers, sticky chart shell, and scroll observer so the compiled scene transitions still advance in order.",

@@ -12,6 +12,7 @@
   <title>Ableton Learning Music: Play with song structures</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     body {
@@ -20,31 +21,25 @@
     }
 
     .ableton-lesson-shell {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 5rem;
+      padding-bottom: 5rem;
     }
 
     .ableton-lesson-shell .page-header {
-      margin-bottom: 2rem;
       max-width: 44rem;
     }
 
     .ableton-lesson-shell .page-header p {
       margin-bottom: 0;
-      color: #d9d9d9;
-    }
-
-    .ableton-lesson-shell h2 {
-      margin-top: 2.5rem;
     }
 
     .ableton-lesson-shell .body-text.text-container {
       max-width: none;
     }
 
-    #reference-footer .public-footer__inner {
-      width: min(52rem, calc(100vw - 32px));
+    @media (max-width: 767px) {
+      .ableton-lesson-shell {
+        padding-bottom: 4rem;
+      }
     }
   </style>
   <script src="./third-party/polyfills/polyfills.js"></script>
@@ -93,22 +88,92 @@
   data-reference-url="https://learningmusic.ableton.com/song-structure/song-structure.html"
   data-reference-text="Ableton Learning Music: Play with song structures"
   data-footer-label="Original lesson"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="ableton-practice"
+  data-story-nav="none"
+  data-story-route="ableton-learning-music-play-with-song-structures"
 >
-  <main class="ableton-lesson-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · ableton learning music</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Think in sections, not just loops, and start hearing how songs take shape over time.</h1>
+        <p class="story-hero__summary">
+          This route is a practice primer rather than an instrument lesson. It frames arrangement as
+          the move from small repeating patterns into sections that can carry a whole song.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Arrangement primer</span>
+          <span class="story-chip">Section thinking over loop editing</span>
+          <span class="story-chip">Local lesson shell only</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Read this like a short setup for arrangement practice: start with the idea of repeating bar
+          blocks, then jump into song forms and think about how loops combine into sections.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#song-forms">Play first: jump to song forms</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li><span class="story-practice-checklist__step">1</span><div><strong>Start with the time block</strong>Think of a song as a long block made of smaller repeating sections.</div></li>
+          <li><span class="story-practice-checklist__step">2</span><div><strong>Name the sections</strong>Use the primer to notice verse, chorus, and other repeating forms as structural tools.</div></li>
+          <li><span class="story-practice-checklist__step">3</span><div><strong>Connect back to loops</strong>Translate the arrangement idea into how you would combine the smaller patterns from the other Ableton lessons.</div></li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Why this lesson matters</span>
+        <p>
+          Writing patterns is only the beginning. Arrangement is what turns repeating ideas into a song that moves.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Read:</strong> think in bars, then in sections made of bars.</span>
+    <span class="story-practice-hint"><strong>Compare:</strong> relate each section idea back to the loop lessons.</span>
+    <span class="story-practice-hint"><strong>Plan:</strong> imagine where your next contrast or return would happen.</span>
+  </div>
+
+  <main class="ableton-lesson-shell story-practice-main">
     <div class="page-header body-text">
       <h1>Ableton Learning Music: Play with song structures</h1>
       <p>Local replica of Ableton's song-structure lesson shell. This page is lighter than the other Play with lessons, but it keeps the arrangement primer in a fully local archive build and stays on the same shared Ableton asset stack.</p>
     </div>
 
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Use this primer to map loops into sections, then carry that arrangement lens back into the interactive Ableton lessons.
+        </div>
+        <a class="story-button story-button--secondary" href="#song-forms">Jump to song forms</a>
+      </div>
+      <div class="story-practice-surface">
     <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-song-structures">
 <p>You can think of a song as a block of time, which can be broken down into smaller blocks of time. In many types of music, the smaller sections consist of even smaller patterns like the ones you&#39;ve been making, combined in <strong>multiples of four, eight, or 16 bars</strong>.</p>
 <p>Putting these sections together is called <em>arranging</em>; it&#39;s how you get from small patterns to a full song.</p>
 <h2 id="song-forms">Song forms</h2>
 <p>The combination of a song&#39;s sections is the song&#39;s <em>structure</em> or <em>form</em>. Some types of forms are used over and over in many types of music.</p>
     </div>
+      </div>
+    </section>
   </main>
 
   
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

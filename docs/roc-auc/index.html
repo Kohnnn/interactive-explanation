@@ -18,7 +18,8 @@
       <p class="lead">
         Local route <code>/interactive-explanation/roc-auc/</code> keeps the published
         threshold-sweep walkthrough, ROC curve construction, classifier comparison, and AUC
-        interpretation scenes while limiting public provenance to the shared footer.
+        interpretation scenes while adding the shared Engineering Sandbox hero, play-first
+        framing, and chapter navigation around the compiled runtime.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../roc-auc/">Open replica</a>
@@ -42,6 +43,7 @@
         <ul class="plain-list">
           <li>Live original verified against <code>https://mlu-explain.github.io/roc-auc/</code> on 2026-03-17.</li>
           <li>The local copy keeps the compiled Svelte runtime, threshold sweep scenes, ROC chart rendering, and AUC interpretation visuals intact.</li>
+          <li>The route now layers the shared Engineering Sandbox shell around the compiled lesson so the narrative opens with a hero and chapter rail before the app-driven story continues.</li>
           <li>Creator names, MLU branding, analytics, and upstream promo links were removed from the public route and retained in docs only.</li>
         </ul>
       </article>
@@ -50,6 +52,7 @@
         <h2>MLU adaptation checklist</h2>
         <ul class="plain-list">
           <li>Keep the compiled <code>build/bundle.js</code> and <code>build/bundle.css</code> in place so the original app still mounts directly into <code>document.body</code>.</li>
+          <li>Add the shared <code>engineering-sandbox.css</code> and <code>engineering-sandbox.js</code> layer as additive framing only, with chapter markers applied after mount to stable top-level scenes.</li>
           <li>Patch only the string-level intro, conclusion, and metadata surfaces that leak upstream branding or promo links into the public route.</li>
           <li>Reuse the existing vendored MLU fonts from <code>decision-tree/</code> through relative font-face paths.</li>
           <li>Let the shared footer provide the only live original-page reference link.</li>
@@ -59,7 +62,8 @@
       <article class="note-section">
         <h2>Asset and source map</h2>
         <ul class="plain-list">
-          <li><code>roc-auc/index.html</code> owns the local metadata shell, footer hook, and GitHub Pages-safe relative asset paths.</li>
+          <li><code>roc-auc/index.html</code> owns the local metadata shell, Engineering Sandbox hero, footer hook, and GitHub Pages-safe relative asset paths.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the shared typography, chapter navigation, and play-first enhancement layer.</li>
           <li><code>roc-auc/build/bundle.js</code> keeps the published threshold scenes, ROC curve rendering, comparison lines, and AUC interpretation logic.</li>
           <li><code>roc-auc/build/bundle.css</code> preserves the route layout, chart sections, and highlight styling.</li>
           <li><code>roc-auc/assets/styles/font.css</code> now points at the already-vendored MLU font assets shipped with <code>decision-tree/</code>.</li>
@@ -70,6 +74,7 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>The public route no longer shows MLU branding, author bylines, analytics, or upstream promo links outside the shared footer.</li>
+          <li>The local page now opens with the Engineering Sandbox hero and generated chapter navigation before the compiled app content takes over the essay rhythm.</li>
           <li>The opening logo and concluding link cluster were localized to the replica site while leaving the ROC and AUC teaching scenes unchanged.</li>
           <li>The public surface keeps the original scroll-linked threshold and chart flow without adding new classifier tooling beyond the published page.</li>
         </ul>

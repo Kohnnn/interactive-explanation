@@ -14,12 +14,14 @@
   <link rel="stylesheet" href="./css/site.css">
   <link rel="stylesheet" href="./css/lib/jquery-jvectormap-2.0.5.css">
   <link rel="stylesheet" href="./css/map-custom.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script src="./js/lib/bootstrap.bundle.min.js"></script>
   <script src="./js/lib/jquery.min.js"></script>
   <script src="./js/lib/jquery-jvectormap-2.0.5.min.js"></script>
   <script src="./js/lib/jvm/map.js"></script>
   <script src="./js/lib/jquery-jvectormap-us-merc-en.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
   <script>
     let map;
@@ -135,14 +137,75 @@
     });
   </script>
 </head>
-<body data-reference-url="https://andersbrownworth.com/zero-knowledge-proof-demo/" data-reference-text="Zero Knowledge Proof Demo" data-footer-label="Original page">
+<body
+  data-reference-url="https://andersbrownworth.com/zero-knowledge-proof-demo/"
+  data-reference-text="Zero Knowledge Proof Demo"
+  data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="lab"
+  data-story-family="anders-lab"
+  data-story-nav="none"
+  data-story-route="zero-knowledge-proof-demo"
+>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="./">Zero Knowledge Proof Demo</a>
     </div>
   </nav>
 
-  <main class="container content-container">
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox lab · privacy proofs</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Hide the coloring, reveal it, shuffle it, then test whether the map logic still holds.</h1>
+        <p class="story-hero__summary">
+          This lab works best when the map stays central. Toggle the hidden color classes on and off,
+          reshuffle the palette, and click regions to test how much information can be revealed
+          without exposing the full partition all at once.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Reveal the hidden classes</span>
+          <span class="story-chip">Shuffle the visible palette</span>
+          <span class="story-chip">Probe region logic without long prose</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">Try this first</span>
+        <p>
+          Start by showing the colors once so you know the hidden partition exists, then hide them
+          again and click a few states. The key move is comparing what you can infer from a local
+          reveal versus what stays hidden until you ask for the full overlay.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#show-hide-colors-button">Reveal the map</a>
+          <a class="story-button story-button--secondary" href="#map">Jump to the map</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-lab-panel" data-story-callout="engineering">
+    <div class="story-lab-grid">
+      <div>
+        <p class="story-lab-kicker">Manipulation checklist</p>
+        <ul class="story-checklist">
+          <li><span class="story-checklist__step">1</span><div><strong>Reveal.</strong> Show the hidden color classes once so you understand the secret partition.</div></li>
+          <li><span class="story-checklist__step">2</span><div><strong>Shuffle.</strong> Change the palette without changing the underlying region logic.</div></li>
+          <li><span class="story-checklist__step">3</span><div><strong>Select.</strong> Click regions to inspect local evidence while the rest of the map stays concealed.</div></li>
+          <li><span class="story-checklist__step">4</span><div><strong>Reset.</strong> Click the background to clear the current reveal and compare it with the default hidden state.</div></li>
+        </ul>
+      </div>
+      <div>
+        <p class="story-lab-kicker">Why this format</p>
+        <p class="story-shell-caption">
+          The shell stays intentionally light here. The map is the concept, so the framing only
+          clarifies the state transitions instead of trying to compete with the interaction.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container content-container story-lab-main">
     <div class="card">
       <div id="map" aria-label="Zero knowledge proof map demo"></div>
       <div class="card-footer text-center">

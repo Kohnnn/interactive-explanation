@@ -13,35 +13,23 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="./res/bs_341/css/bootstrap.min.css">
   <link rel="stylesheet" href="./res/css/teoria.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
-    body {
-      background: #f7f8fb;
-      color: #1c2230;
-    }
-
     .teoria-route-shell {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px 16px 96px;
+      padding-bottom: 96px;
     }
 
-    .teoria-route-shell .page-header {
-      margin-top: 12px;
-    }
-
-    .teoria-route-shell .page-header p {
-      max-width: 68ch;
-      color: #4b5567;
-    }
-
-    #reference-footer .public-footer__inner {
-      width: min(48rem, calc(100vw - 32px));
+    .story-practice-surface #init,
+    .story-practice-surface #opts,
+    .story-practice-surface #xml_opts,
+    .story-practice-surface #exe {
+      margin-bottom: 1rem;
     }
 
     @media (max-width: 767px) {
       .teoria-route-shell {
-        padding-top: 16px;
+        padding-bottom: 72px;
       }
     }
   </style>
@@ -55,8 +43,78 @@
   data-reference-url="https://www.teoria.com/en/exercises/ie.php"
   data-reference-text="Teoria Interval Ear Training"
   data-footer-label="Original exercise"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="teoria-practice"
+  data-story-nav="none"
+  data-story-route="teoria-interval-ear-training"
 >
-  <main class="teoria-route-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · teoria drills</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Hear the interval, then name the distance between the notes.</h1>
+        <p class="story-hero__summary">
+          This drill keeps the original Teoria runtime intact, but reframes the page around one
+          job: listen, compare the two notes, and lock in the interval quality before you answer.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Train interval quality</span>
+          <span class="story-chip">Use notation or keyboard answers</span>
+          <span class="story-chip">Watch score update live</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start the exercise first, replay the prompt until the distance feels stable, then answer
+          before peeking at the score. If you get stuck, switch answer modes and compare what the
+          keyboard and notation views are telling you.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#init">Play first: start the drill</a>
+          <a class="story-button story-button--secondary" href="#exe">Jump to the answer surface</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li>
+            <span class="story-practice-checklist__step">1</span>
+            <div><strong>Start playback</strong>Wait for the local piano bank to finish preloading, then trigger the first prompt.</div>
+          </li>
+          <li>
+            <span class="story-practice-checklist__step">2</span>
+            <div><strong>Judge the interval</strong>Listen for the distance and direction before deciding on the label.</div>
+          </li>
+          <li>
+            <span class="story-practice-checklist__step">3</span>
+            <div><strong>Check your streak</strong>Use the score panel to see whether your ear is stabilizing or still wobbling.</div>
+          </li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Why this drill matters</span>
+        <p>
+          Interval recognition is one of the fastest bridges between staff reading and hearing.
+          Once the distance becomes familiar, harmony and melody analysis both get easier.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Listen:</strong> replay the pair before answering.</span>
+    <span class="story-practice-hint"><strong>Compare:</strong> use the keyboard view when the label feels fuzzy.</span>
+    <span class="story-practice-hint"><strong>Track:</strong> score changes after every response.</span>
+  </div>
+
+  <main class="teoria-route-shell story-practice-main">
     <div class="page-header">
       <h3>Interval Ear Training</h3>
       <p class="lead">
@@ -66,14 +124,26 @@
       </p>
     </div>
 
-    <div id="init">&nbsp;</div>
-    <div id="opts">&nbsp;</div>
-    <div id="xml_opts">&nbsp;</div>
-    <div id="exe">&nbsp;</div>
-    <div id="score">&nbsp;</div>
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Start the prompt, answer with the interval controls, then read the score without leaving the exercise flow.
+        </div>
+        <a class="story-button story-button--secondary" href="#score">Jump to score</a>
+      </div>
+      <div class="story-practice-surface">
+        <div id="init">&nbsp;</div>
+        <div id="opts">&nbsp;</div>
+        <div id="xml_opts">&nbsp;</div>
+        <div id="exe">&nbsp;</div>
+        <div id="score">&nbsp;</div>
+      </div>
+    </section>
   </main>
 
   <script src="./res/bs_341/js/bootstrap.min.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
   <script>
     var o = getOptions();

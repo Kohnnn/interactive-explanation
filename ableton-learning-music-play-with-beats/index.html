@@ -12,6 +12,7 @@
   <title>Ableton Learning Music: Play with beats</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     body {
@@ -20,31 +21,30 @@
     }
 
     .ableton-lesson-shell {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 5rem;
+      padding-bottom: 5rem;
     }
 
     .ableton-lesson-shell .page-header {
-      margin-bottom: 2rem;
       max-width: 44rem;
     }
 
     .ableton-lesson-shell .page-header p {
       margin-bottom: 0;
-      color: #d9d9d9;
-    }
-
-    .ableton-lesson-shell h2 {
-      margin-top: 2.5rem;
     }
 
     .ableton-lesson-shell .body-text.text-container {
       max-width: none;
     }
 
-    #reference-footer .public-footer__inner {
-      width: min(52rem, calc(100vw - 32px));
+    .story-practice-surface .widget,
+    .story-practice-surface .widget-drumpad {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 767px) {
+      .ableton-lesson-shell {
+        padding-bottom: 4rem;
+      }
     }
   </style>
   <script src="./third-party/polyfills/polyfills.js"></script>
@@ -93,13 +93,82 @@
   data-reference-url="https://learningmusic.ableton.com/make-beats/play-with-beats.html"
   data-reference-text="Ableton Learning Music: Play with beats"
   data-footer-label="Original lesson"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="ableton-practice"
+  data-story-nav="none"
+  data-story-route="ableton-learning-music-play-with-beats"
 >
-  <main class="ableton-lesson-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · ableton learning music</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Record a beat by tapping pads, then tighten the groove on the grid.</h1>
+        <p class="story-hero__summary">
+          This lesson is about hearing rhythm as something you can both perform and edit. Start the
+          loop, record with the pads, then reshape the pattern until the kick, clap, and hats lock together.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Recordable drum grid</span>
+          <span class="story-chip">909 kit archived locally</span>
+          <span class="story-chip">Pads and sequencer stay in sync</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start by recording a simple pattern from the pads, then clean it up on the grid. Slow the
+          tempo if needed and listen for where the pulse feels unstable instead of adding more notes first.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#_playwithbeatsrecordabledrumpadsequencer">Play first: open the beat grid</a>
+          <a class="story-button story-button--secondary" href="#_playwithbeatsrecordabledrumpaddrumpad">Jump to the drumpads</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li><span class="story-practice-checklist__step">1</span><div><strong>Start the loop</strong>Hit play so the metronome and grid give you a steady pulse.</div></li>
+          <li><span class="story-practice-checklist__step">2</span><div><strong>Record from the pads</strong>Use the drumpad to capture a rough groove before editing the notes by hand.</div></li>
+          <li><span class="story-practice-checklist__step">3</span><div><strong>Trim the rhythm</strong>Move or delete hits until the groove feels deliberate instead of crowded.</div></li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Listen for this</span>
+        <p>
+          The useful contrast is between a beat that only has activity and one that has a clear
+          pulse. A few well-placed hits usually teach more than a busy pattern.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Listen:</strong> keep the pulse steady before adding detail.</span>
+    <span class="story-practice-hint"><strong>Record:</strong> tap the pads first, then correct the grid.</span>
+    <span class="story-practice-hint"><strong>Loop:</strong> slow the tempo if the groove feels rushed.</span>
+  </div>
+
+  <main class="ableton-lesson-shell story-practice-main">
     <div class="page-header body-text">
       <h1>Ableton Learning Music: Play with beats</h1>
       <p>Local replica of Ableton's drum-writing lesson. The shipped route keeps the recordable 909 grid and drumpad under the archived Learning Music runtime while stripping the wider shell, cookies, and feedback surfaces.</p>
     </div>
 
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Record a groove from the pads, then tighten the beat on the sequencer without stopping the loop.
+        </div>
+        <a class="story-button story-button--secondary" href="#_playwithbeatsrecordabledrumpaddrumpad">Jump to the drumpads</a>
+      </div>
+      <div class="story-practice-surface">
     <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-beats">
 <p>Now that you&#39;ve experimented with some musical examples, spend some time creating your own beats.</p>
 <p>This beat grid works just like the one you&#39;ve been using, but you can also <em>record</em> into it as you play. When you&#39;re recording, you&#39;ll hear a click on each beat, so that it&#39;s easier to play at the right tempo.</p>
@@ -136,6 +205,8 @@
 
 <p>Now that you&#39;ve experimented with beats, it&#39;s time to move on to different types of musical ideas.</p>
     </div>
+      </div>
+    </section>
   </main>
 
   <script src="./widgets/build/SimplePianoRoll.js"></script>
@@ -175,7 +246,7 @@
         });
       });
     </script>
-<script>
+    <script>
       document.addEventListener("DOMContentLoaded", function () {
         var widgets = document.getElementsByClassName("widget-drumpad");
         Array.from(widgets).forEach(function (element) {
@@ -192,6 +263,7 @@
         });
       });
     </script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

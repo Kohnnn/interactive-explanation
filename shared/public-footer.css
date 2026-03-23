@@ -11,9 +11,10 @@
 }
 
 .public-footer__inner {
-  width: min(1100px, calc(100vw - 32px));
+  width: min(1100px, 100%);
+  max-width: calc(100vw - 32px);
   margin: 0 auto;
-  padding: 14px 0 18px;
+  padding: 14px 16px 18px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -64,7 +65,8 @@
   }
 
   .public-footer__inner {
-    width: min(100vw - 20px, 1100px);
-    padding: 12px 0 16px;
+    width: min(1100px, 100%);
+    max-width: calc(100vw - 20px);
+    padding: 12px 10px 16px;
   }
 }

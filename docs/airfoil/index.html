@@ -18,7 +18,8 @@
       <p class="lead">
         Local route <code>/interactive-explanation/airfoil/</code> vendors the published
         Ciechanowski article, keeps its flow, particle, pressure, viscosity, and airfoil-shape
-        scenes intact, and limits public provenance to the shared footer.
+        scenes intact, adds the shared engineering-sandbox onboarding hero and chapter rail, and
+        limits public provenance to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../airfoil/">Open replica</a>
@@ -41,6 +42,7 @@
         <ul class="plain-list">
           <li>Live original verified against <code>https://ciechanow.ski/airfoil/</code> on 2026-03-21.</li>
           <li>The local copy removes the upstream banner, blog navigation, analytics, Patreon prompt, and social links from the public body.</li>
+          <li>The shipped route now adds a compact engineering-sandbox hero and generated chapter navigation while leaving the article runtime in place.</li>
           <li>The flow-visualization, particle, pressure, viscosity, boundary-layer, and later airfoil-shape sections remain driven by the vendored scripts rather than a local rewrite.</li>
         </ul>
       </article>
@@ -60,6 +62,7 @@
         <ul class="plain-list">
           <li>The public route no longer includes the author banner, Patreon prompt, X/Twitter, Instagram, e-mail, RSS, or Google Analytics surfaces.</li>
           <li>The local copy uses local fallback font stacks instead of runtime Google Fonts requests so the route stays self-contained.</li>
+          <li>The onboarding shell is additive: it introduces local hero framing and chapter navigation without rewriting the underlying article scenes.</li>
           <li>In-body Ciechanowski article links are rewritten locally when available or neutralized when no local replica exists yet.</li>
         </ul>
       </article>

@@ -18,8 +18,9 @@
       <p class="lead">
         Local route <code>/interactive-explanation/double-descent2/</code> keeps the published
         KaTeX-heavy mathematical walkthrough, interpolation-threshold charts, animated transition
-        scene, delta diagram, and natural-cubic-spline endpoint while limiting public provenance
-        to the shared footer.
+        scene, delta diagram, and natural-cubic-spline endpoint while adding the shared
+        Engineering Sandbox hero, play-first framing, and chapter navigation without changing the
+        underlying interactive runtime.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../double-descent2/">Open replica</a>
@@ -43,6 +44,7 @@
         <ul class="plain-list">
           <li>Live original verified against <code>https://mlu-explain.github.io/double-descent2/</code> on 2026-03-18.</li>
           <li>The local copy keeps the published chart sequence, KaTeX derivations, interpolation-threshold walkthrough, and spline-limit scene intact.</li>
+          <li>The route now layers the shared Engineering Sandbox shell on top of the static essay so the math-heavy story opens with a stronger hero and chapter rail.</li>
           <li>Creator names, MLU branding, analytics, and upstream promo links were removed from the public route and retained in docs only.</li>
         </ul>
       </article>
@@ -51,6 +53,7 @@
         <h2>MLU adaptation checklist</h2>
         <ul class="plain-list">
           <li>Keep the published compiled bundles in place so the original D3 and KaTeX logic still bind to the shipped chart mounts and math placeholders.</li>
+          <li>Add the shared <code>engineering-sandbox.css</code> and <code>engineering-sandbox.js</code> layer as additive framing only, leaving the published charts and derivations untouched.</li>
           <li>Patch only metadata, top-note attribution, and closing promo surfaces that leak upstream provenance into the public body.</li>
           <li>Preserve the chart mount IDs from <code>#chart1</code> through <code>#chart6</code>, plus <code>#animation-chart</code> and <code>#delta-chart</code>, so the published walkthrough still renders in order.</li>
           <li>Rewrite the series references to the local <code>double-descent</code> route and let the shared footer provide the only live original-page reference link.</li>
@@ -60,7 +63,8 @@
       <article class="note-section">
         <h2>Asset and source map</h2>
         <ul class="plain-list">
-          <li><code>double-descent2/index.html</code> owns the local metadata shell, cleaned top note and closing copy, localized series references, footer hook, and relative asset paths.</li>
+          <li><code>double-descent2/index.html</code> owns the local metadata shell, Engineering Sandbox hero and chapter markers, cleaned top note and closing copy, localized series references, footer hook, and relative asset paths.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the shared typography, chapter navigation, and play-first enhancement layer.</li>
           <li><code>double-descent2/js.47ac2d4d.js</code> keeps the published charts, interpolation-threshold walkthrough, delta diagram, and spline-limit rendering logic.</li>
           <li><code>double-descent2/katexCalls.a524eba6.js</code> and <code>double-descent2/katex.min.3c2484b0.css</code> preserve the original KaTeX hydration and math presentation.</li>
           <li><code>double-descent2/styles.d50a6b6f.css</code> preserves the route layout, math typography, chart spacing, and mobile presentation.</li>
@@ -71,6 +75,7 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>The public route no longer shows MLU branding, creator bylines, analytics, or upstream promo links outside the shared footer.</li>
+          <li>The local page now opens with the Engineering Sandbox hero and generated chapter navigation rather than dropping straight into the original math essay shell.</li>
           <li>The top note and closing copy were localized to the replica site while leaving the mathematical walkthrough, charts, and derivations unchanged.</li>
           <li>Series references now prefer the local <code>double-descent</code> route where the local equivalent exists.</li>
         </ul>

@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="./assets/styles/katex.css">
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -25,5 +27,40 @@
   data-reference-url="https://mlu-explain.github.io/linear-regression/"
   data-reference-text="Linear Regression"
   data-footer-label="Original page"
-></body>
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
+  data-story-route="linear-regression"
+>
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Fit the line, then watch the optimizer learn how to reach it.</h1>
+        <p class="story-hero__summary">
+          This lesson moves from linear intuition to measurable fit quality, then into gradient
+          descent and coefficient interpretation. The goal is not just to read the formula, but to
+          see how the line, loss, and parameters move together.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Probe a prediction</span>
+          <span class="story-chip">Tune the loss directly</span>
+          <span class="story-chip">Watch gradient descent converge</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the fit story, then jump into the loss controls and the gradient-descent
+          scene once the idea of “best line” feels concrete. The interpretation section is a good
+          final pass once the mechanics are already familiar.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#scrolly">Play first: fit the line</a>
+          <a class="story-button story-button--secondary" href="#gradient-descent">Jump to optimization</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
 </html>

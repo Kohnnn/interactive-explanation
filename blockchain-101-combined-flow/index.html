@@ -12,6 +12,7 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://localhost/interactive-explanation/blockchain-101-combined-flow/">
   <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     .chapter-grid {
@@ -70,35 +71,43 @@
   data-reference-url="https://andersbrownworth.com/"
   data-reference-text="Anders Brownworth demos"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="lab"
+  data-story-family="anders-lab"
+  data-story-nav="none"
+  data-story-route="blockchain-101-combined-flow"
+  style="--story-shell-max: 1100px;"
 >
   <main class="site-page">
     <a class="back-link" href="../">Back to replicas</a>
 
-    <header class="hero">
-      <p class="eyebrow">Local learning flow</p>
-      <h1>Combined Blockchain Flow</h1>
-      <p class="lead">
-        This local page stitches the shipped hashing, signing, and proof routes into one guided
-        sequence. It keeps the heavy demos in their original route silos while giving the whole
-        topic a clearer start-to-finish path.
-      </p>
-      <div class="action-row">
-        <a class="action-link" href="./#chapter-hash">Start the flow</a>
-        <a class="action-link secondary" href="../blockchain/">Open hashing demo</a>
-        <a class="action-link ghost" href="../docs/blockchain-101-combined-flow/">Docs</a>
-      </div>
-      <div class="stat-row">
-        <div class="stat-card">
-          <strong>3</strong>
-          linked chapters
+    <header class="story-hero story-hero--tight">
+      <p class="story-hero__eyebrow">Engineering Sandbox bridge · blockchain sequence</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Move through hashing, signing, and privacy in one local path.</h1>
+          <p class="story-hero__summary">
+            This bridge page is intentionally compact. It does not rewrite the demos. It simply gives
+            the Anders family one clean order: first understand chained state, then authenticity, then
+            proof without disclosure.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">3 linked labs</span>
+            <span class="story-chip">4 local routes in the path</span>
+            <span class="story-chip">1 recommended first walkthrough</span>
+          </div>
         </div>
-        <div class="stat-card">
-          <strong>4</strong>
-          local replica routes in the learning path
-        </div>
-        <div class="stat-card">
-          <strong>1</strong>
-          consistent sequence for a first walkthrough
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">Recommended order</span>
+          <p>
+            Start with the chain-breaking mechanics in Blockchain, move to signatures once state and
+            trust feel concrete, then finish with the zero-knowledge map when you are ready to think
+            about privacy instead of authenticity.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#chapter-hash">Start with hashing</a>
+            <a class="story-button story-button--secondary" href="../docs/blockchain-101-combined-flow/">Docs</a>
+          </div>
         </div>
       </div>
     </header>
@@ -186,6 +195,7 @@
     </section>
   </main>
 
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -39,15 +40,49 @@
     data-reference-url="https://setosa.io/ev/sine-and-cosine/"
     data-reference-text="Sine and Cosine"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="sine-and-cosine"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · math essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Let sine and cosine emerge from motion before the formulas tidy them up.</h1>
+          <p class="story-hero__summary">
+            This route works best when you treat trig as a geometry machine. Start with similar
+            triangles, watch the unit circle trace the wave, and then use the linked coordinate
+            view to connect ratios, rotations, and graphs in one pass.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Resize similar triangles</span>
+            <span class="story-chip">Play the sine and cosine transforms</span>
+            <span class="story-chip">Link polar and Cartesian views</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start with the unit-circle triangle and the animated transforms before you dwell on the
+            formulas. The Taylor series and coordinate conversion become much less abstract once the
+            moving geometry already feels familiar.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#similar-triangles-story">Play first: resize the triangles</a>
+            <a class="story-button story-button--secondary" href="#linked-coordinates-story">Jump to linked coordinates</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet sine and cosine">
       <div class="title-region">
         <h1 class="title">Sine and Cosine</h1>
         <h3 class="by-line">Interactive explainer</h3>
       </div>
     </section>
-    <section>
+    <section data-story-chapter="Frame the right triangle">
       <p>
         Sine and cosine, a.k.a. sin(θ) and cos(θ), are functions revealing the shape of a right
         triangle. Looking out from a vertex with angle θ, sin(θ) is the ratio of the
@@ -59,7 +94,7 @@
         θ, as illustrated below.
       </p>
     </section>
-    <section>
+    <section id="similar-triangles-story" data-story-chapter="See similar triangles stay consistent">
       <div class="viz-scroll">
         <similar-triangles></similar-triangles>
       </div>
@@ -80,7 +115,7 @@
         </div>
       </div>
     </section>
-    <section ng-controller="CosineAnimationCtrl">
+    <section ng-controller="CosineAnimationCtrl" data-story-chapter="Watch cosine unfold">
       <h1>Cos(θ)</h1>
       <div class="viz-scroll">
         <ev-play-button is-playing="opts.isPlaying" style="width:100%; height: 200px">
@@ -88,7 +123,7 @@
         </ev-play-button>
       </div>
     </section>
-    <section class="math-copy">
+    <section class="math-copy" data-story-chapter="Bridge to the formulas">
       <p>
         Of course, computers and calculators don't actually draw circles to find sine and cosine.
         Instead, they use approximations like the
@@ -99,7 +134,7 @@
         \end{aligned}\]
       </p>
     </section>
-    <section ng-controller="SineCosineLinkedCtrl">
+    <section ng-controller="SineCosineLinkedCtrl" data-story-chapter="Translate between coordinate systems">
       <p>
         Using sine and cosine, it's possible to describe any
         (<span style="color: #3498db;">x</span>,<span style="color: #2ecc71;">y</span>) point as
@@ -117,7 +152,7 @@
         and polar coordinates.
       </p>
     </section>
-    <section>
+    <section id="linked-coordinates-story" data-story-chapter="Link polar and Cartesian views">
       <div class="viz-scroll">
         <linked-coordinates></linked-coordinates>
       </div>

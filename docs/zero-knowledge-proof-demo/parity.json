@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-lab-shell",
+    "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
+    "localStatus": "The local route now adds the Engineering Sandbox lab shell with local fonts, compact framing, no-nav behavior, and a short manipulation checklist while leaving the original map runtime and state transitions intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell intentionally avoids the essay rail and mobile chapter bar so the map remains the dominant interaction.",
+      "The added framing clarifies state transitions without surrounding the demo with long prose."
+    ],
+    "evidence": [
+      "The Anders rollout adds a first-class Engineering Sandbox lab variant with compact briefing, try-this-first actions, and no essay rail.",
+      "Shared smoke coverage now checks that Anders lab routes avoid the essay rail, keep the hero ahead of the first control cluster, and preserve footer width inside the actual route container."
+    ]
+  },
+  {
     "moduleId": "map-boot-and-local-vector-assets",
     "originalBehavior": "The published map scene loads a US vector map with local CSS, JavaScript, and custom jvm assets so the coloring demo initializes immediately on first render.",
     "localStatus": "The local route keeps the published map-first runtime and vendors the Bootstrap, jQuery, jvectormap, custom jvm, and US-map assets directly under the route tree for subpath hosting.",

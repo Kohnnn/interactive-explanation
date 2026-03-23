@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -39,9 +40,43 @@
     data-reference-url="https://setosa.io/ev/eigenvectors-and-eigenvalues/"
     data-reference-text="Eigenvectors and Eigenvalues"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="eigenvectors-and-eigenvalues"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · linear algebra essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Use repeated transformation to make eigenvectors feel inevitable.</h1>
+          <p class="story-hero__summary">
+            This page gets easier once you stop treating eigenvectors as mysterious special cases.
+            Drag the matrix and vector first, watch repeated steps settle onto preferred directions,
+            and then carry that intuition into populations, migration, and complex spirals.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Drag matrix columns and vectors</span>
+            <span class="story-chip">Step through growth and migration systems</span>
+            <span class="story-chip">Follow real and complex eigen-behavior</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start with the introductory transform until you can predict when a vector will stay on
+            its own line. After that, the application sections work like variations on one idea
+            instead of disconnected examples.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#eigen-intro">Play first: drag the transform</a>
+            <a class="story-button story-button--secondary" href="#complex-story">Jump to complex eigenvalues</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet eigenvectors and eigenvalues">
       <div class="title-region">
         <h1 class="title">Eigenvectors and Eigenvalues</h1>
         <h3 class="by-line">Interactive explainer</h3>
@@ -52,7 +87,7 @@
       </p>
     </section>
 
-    <section ng-controller="IntroCtrl">
+    <section id="eigen-intro" ng-controller="IntroCtrl" data-story-chapter="Build the geometric intuition">
       <p>
         Eigenvalues and eigenvectors are instrumental to understanding electrical circuits,
         mechanical systems, ecology, and even Google's
@@ -141,7 +176,7 @@
       </div>
     </section>
 
-    <section ng-controller="BacteriaCtrl">
+    <section ng-controller="BacteriaCtrl" data-story-chapter="Follow Fibonacci growth">
       <h3>Fibonacci Sequence</h3>
       <p>
         Suppose you have some amoebas in a petri dish. Every minute, each adult amoeba produces one
@@ -204,7 +239,7 @@
       </p>
     </section>
 
-    <section ng-controller="MigrationCtrl">
+    <section ng-controller="MigrationCtrl" data-story-chapter="Find steady states">
       <h3>Steady States</h3>
       <p>
         Suppose that each year a fraction $p$ of New Yorkers move to California and a fraction $q$
@@ -256,7 +291,7 @@
       </p>
     </section>
 
-    <section ng-controller="FourQuadCtrl">
+    <section id="complex-story" ng-controller="FourQuadCtrl" data-story-chapter="Watch complex eigenvalues spiral">
       <h3>Complex Eigenvalues</h3>
       <p>
         So far the examples use real eigenvalues. But in the equation $Av = \lambda v$, $\lambda$

@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "practice-shell-and-onboarding-frame",
+    "originalBehavior": "The published Ableton lesson opens directly into the archived lesson shell with minimal framing around the arrangement primer content.",
+    "localStatus": "The local route keeps that lesson shell intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed primer surface around the arrangement content.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-song-structures/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The practice shell is framing-only and does not invent widget behavior that the upstream song-structures lesson does not ship.",
+      "The practice variant intentionally avoids the essay rail and the denser lab checklist treatment."
+    ],
+    "evidence": [
+      "The public route now exposes `data-story-shell=\"engineering-sandbox\"` with `data-story-variant=\"practice\"`, `data-story-family=\"ableton-practice\"`, and `data-story-nav=\"none\"`.",
+      "Music smoke coverage verifies the hero renders before the primer surface and that no generated chapter rail appears."
+    ]
+  },
+  {
     "moduleId": "lesson-shell-and-widget-runtime",
     "originalBehavior": "The published Ableton Learning Music: Play with song structures page mounts inside Ableton's Learning Music shell with the shared widget runtime, local CSS, and route-local media inventory.",
     "localStatus": "The local route keeps that lesson shell focused on Ableton Learning Music: Play with song structures while removing the broader Learning Music navigation, cookie, and feedback surfaces from the public body.",

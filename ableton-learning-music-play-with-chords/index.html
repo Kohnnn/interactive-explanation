@@ -12,6 +12,7 @@
   <title>Ableton Learning Music: Play with chords</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
     body {
@@ -20,31 +21,30 @@
     }
 
     .ableton-lesson-shell {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.5rem 5rem;
+      padding-bottom: 5rem;
     }
 
     .ableton-lesson-shell .page-header {
-      margin-bottom: 2rem;
       max-width: 44rem;
     }
 
     .ableton-lesson-shell .page-header p {
       margin-bottom: 0;
-      color: #d9d9d9;
-    }
-
-    .ableton-lesson-shell h2 {
-      margin-top: 2.5rem;
     }
 
     .ableton-lesson-shell .body-text.text-container {
       max-width: none;
     }
 
-    #reference-footer .public-footer__inner {
-      width: min(52rem, calc(100vw - 32px));
+    .story-practice-surface .widget,
+    .story-practice-surface .widget-drumpad {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 767px) {
+      .ableton-lesson-shell {
+        padding-bottom: 4rem;
+      }
     }
   </style>
   <script src="./third-party/polyfills/polyfills.js"></script>
@@ -93,13 +93,81 @@
   data-reference-url="https://learningmusic.ableton.com/chords/play-with-chords.html"
   data-reference-text="Ableton Learning Music: Play with chords"
   data-footer-label="Original lesson"
+  data-story-shell="engineering-sandbox"
+  data-story-variant="practice"
+  data-story-family="ableton-practice"
+  data-story-nav="none"
+  data-story-route="ableton-learning-music-play-with-chords"
 >
-  <main class="ableton-lesson-shell">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox practice · ableton learning music</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Stack chord tones, then hear how harmony shifts against the beat.</h1>
+        <p class="story-hero__summary">
+          This lesson moves from single notes into harmonic shape. Try a simple progression first,
+          then change the root or scale and listen for how the chord color changes the whole loop.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Chord sequencer first</span>
+          <span class="story-chip">Scale and root controls stay live</span>
+          <span class="story-chip">Drums can support harmonic timing</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Place two or three chord tones on the grid, press play, and listen to whether the harmony
+          feels settled or tense. Once that lands, bring in the drum part to check the progression in context.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#_playwithchordspiano">Play first: open the chord grid</a>
+          <a class="story-button story-button--secondary" href="#_playwithchordsdrumpad">Jump to the drum layer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-callout story-practice-callout" data-story-callout="story">
+    <div class="story-practice-grid">
+      <div class="story-practice-panel">
+        <p class="story-practice-kicker">Quick start</p>
+        <ol class="story-practice-checklist">
+          <li><span class="story-practice-checklist__step">1</span><div><strong>Build one chord shape</strong>Place a few notes together and hear the harmonic block before adding a progression.</div></li>
+          <li><span class="story-practice-checklist__step">2</span><div><strong>Change the context</strong>Use root or scale choices to hear how the same voicing behaves under a different tonal center.</div></li>
+          <li><span class="story-practice-checklist__step">3</span><div><strong>Check the groove</strong>Bring in the drums once the harmony feels clear enough to support a pulse.</div></li>
+        </ol>
+      </div>
+      <div class="story-callout story-practice-panel">
+        <span class="story-callout__label">Listen for this</span>
+        <p>
+          Chords feel different not only because of pitch choice, but because of when they land and how long they hold.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="story-practice-strip" aria-label="Practice hints">
+    <span class="story-practice-hint"><strong>Listen:</strong> hear one chord clearly before writing a progression.</span>
+    <span class="story-practice-hint"><strong>Edit:</strong> move the root or scale to test harmonic color.</span>
+    <span class="story-practice-hint"><strong>Loop:</strong> add drums after the harmony already makes sense.</span>
+  </div>
+
+  <main class="ableton-lesson-shell story-practice-main">
     <div class="page-header body-text">
       <h1>Ableton Learning Music: Play with chords</h1>
       <p>Local replica of Ableton's chord-building lesson. The shipped route keeps the chord sequencer and drumpad under the archived Ableton widget runtime and local media stack.</p>
     </div>
 
+    <section class="story-practice-focus" data-primary-control>
+      <div class="story-practice-focus__label">
+        <div>
+          <strong>Primary practice surface</strong>
+          Place chord tones on the sequencer first, then use the drum layer to hear how harmony sits inside a groove.
+        </div>
+        <a class="story-button story-button--secondary" href="#_playwithchordsdrumpad">Jump to the drum layer</a>
+      </div>
+      <div class="story-practice-surface">
     <div class="body-text text-container limit-line-length-inside" data-ableton-lesson="ableton-learning-music-play-with-chords">
 <p>Now that you&#39;ve learned a bit about chords, spend some time creating your own patterns and progressions.</p>
 <p>You can also create beats that will play in sync with your chords.</p>
@@ -164,6 +232,8 @@
   </div>
 </div>
     </div>
+      </div>
+    </section>
   </main>
 
   <script src="./widgets/build/SimplePianoRoll.js"></script>
@@ -220,6 +290,7 @@
         });
       });
     </script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

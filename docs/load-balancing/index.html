@@ -16,9 +16,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Load Balancing</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/load-balancing/</code> vendors the
-        published Sam Rose article, keeps the Pixi and Plotly simulations intact, and limits
-        public provenance to the shared footer.
+        Local route <code>/interactive-explanation/load-balancing/</code> now layers the shared Engineering Sandbox hero, play-first framing, and generated chapter navigation onto the published article while keeping the original simulations and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../load-balancing/">Open replica</a>
@@ -42,6 +40,7 @@
           <li>Live original verified against <code>https://samwho.dev/load-balancing/</code> on 2026-03-21.</li>
           <li>The local copy removes the upstream logo link, newsletter footer, social links, and other author-promo surfaces from the public body.</li>
           <li>The opening simulations, latency graphs, and final playground remain driven by the vendored published runtime.</li>
+                  <li>The route now also loads the shared Engineering Sandbox shell for local typography, play-first framing, and generated chapter navigation.</li>
         </ul>
       </article>
 
@@ -52,6 +51,7 @@
           <li><code>load-balancing/css/reset.css</code> and <code>load-balancing/css/main.css</code> preserve the published article layout and simulation styling.</li>
           <li><code>load-balancing/js/load-balancers.js</code>, <code>load-balancing/js/pixi.mjs</code>, and <code>load-balancing/js/plotly.js</code> keep the original simulation and chart runtime intact.</li>
           <li>The final playground still builds its controls dynamically from the published script rather than a local replacement panel.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -61,6 +61,7 @@
           <li>The public route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
           <li>The self-promotional social link in the article’s discussion note is pruned, while third-party discussion and reference links remain intact.</li>
           <li>The shared footer is the only public original-page reference surface.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the vendored interactive logic remains unchanged.</li>
         </ul>
       </article>
 

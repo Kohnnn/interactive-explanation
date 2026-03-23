@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-lab-shell",
+    "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
+    "localStatus": "The local route now adds the Engineering Sandbox lab shell with local fonts, compact workflow framing, native-nav styling, and a generate-sign-mutate-verify checklist while leaving the original key and signing runtime intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell keeps the published top nav as the official route navigation instead of injecting an essay chapter rail.",
+      "The added framing is intentionally compact so the runtime tabs remain the primary teacher."
+    ],
+    "evidence": [
+      "The Anders rollout adds a first-class Engineering Sandbox lab variant with compact briefing, try-this-first actions, and no essay rail.",
+      "Shared smoke coverage now checks that Anders lab routes avoid the essay rail, keep the hero ahead of the first control cluster, and preserve footer width inside the actual route container."
+    ]
+  },
+  {
     "moduleId": "keypair-generation-and-cookie-backed-loading",
     "originalBehavior": "The published keys page generates a secp256k1 keypair, lets readers randomize or edit the private key, derives the public key, and persists the active keys in cookies for the rest of the demo.",
     "localStatus": "The local root keeps the published keypair generation flow, editable private key field, derived public key, and cookie-backed persistence under the flattened top-level slug.",

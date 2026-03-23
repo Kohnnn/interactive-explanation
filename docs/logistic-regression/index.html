@@ -18,7 +18,8 @@
       <p class="lead">
         Local route <code>/interactive-explanation/logistic-regression/</code> keeps the published
         binary-classification walkthrough, sigmoid and threshold visuals, and linked probability
-        controls while limiting public provenance to the shared footer.
+        controls while adding the shared Engineering Sandbox hero, play-first framing, and chapter
+        navigation around the compiled runtime.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../logistic-regression/">Open replica</a>
@@ -42,6 +43,7 @@
         <ul class="plain-list">
           <li>Live original verified against <code>https://mlu-explain.github.io/logistic-regression/</code> on 2026-03-14.</li>
           <li>The local copy keeps the compiled Svelte app, including the sigmoid chart, threshold scene, and linked probability readouts.</li>
+          <li>The route now layers the shared Engineering Sandbox shell around the compiled lesson so the narrative opens with a hero and chapter rail before the app-driven story continues.</li>
           <li>Branding, author bylines, analytics, and upstream-only promo surfaces were removed from the public route and preserved in docs instead.</li>
         </ul>
       </article>
@@ -50,6 +52,7 @@
         <h2>MLU adaptation checklist</h2>
         <ul class="plain-list">
           <li>Keep the compiled bundle structure unchanged so the original app still mounts directly into <code>document.body</code>.</li>
+          <li>Add the shared <code>engineering-sandbox.css</code> and <code>engineering-sandbox.js</code> layer as additive framing only, with chapter markers applied after mount to stable top-level scenes.</li>
           <li>Patch only the string-level metadata, logo link, and byline surfaces that leak upstream project references into the public page.</li>
           <li>Reuse the vendored MLU and KaTeX fonts already shipped with <code>decision-tree/</code> through relative font-face paths.</li>
           <li>Let the shared footer handle the single live original-page reference link.</li>
@@ -59,7 +62,8 @@
       <article class="note-section">
         <h2>Asset and source map</h2>
         <ul class="plain-list">
-          <li><code>logistic-regression/index.html</code> owns the local metadata shell, footer hook, and relative asset paths.</li>
+          <li><code>logistic-regression/index.html</code> owns the local metadata shell, Engineering Sandbox hero, footer hook, and relative asset paths.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the shared typography, chapter navigation, and play-first enhancement layer.</li>
           <li><code>logistic-regression/build/bundle.js</code> keeps the original scrollytelling scenes, sigmoid plot, threshold interactions, and probability outputs.</li>
           <li><code>logistic-regression/build/bundle.css</code> preserves the sticky chart shell, slider styling, and component layout.</li>
           <li><code>logistic-regression/assets/styles/font.css</code> now points to the already-vendored MLU and KaTeX font assets shipped with <code>decision-tree/</code>.</li>
@@ -70,6 +74,7 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>The public route no longer shows MLU branding, creator bylines, analytics, or upstream-only promo links outside the shared footer.</li>
+          <li>The local page now opens with the Engineering Sandbox hero and generated chapter navigation before the compiled app content takes over the essay rhythm.</li>
           <li>The logo and intro attribution were localized to the replica site while leaving the teaching flow and interactive scenes untouched.</li>
           <li>The public page continues to use the original local chart and slider controls without adding new classification tooling beyond the published surface.</li>
         </ul>

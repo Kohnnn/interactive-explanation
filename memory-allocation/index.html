@@ -18,7 +18,9 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
   <script>
     const url = new URL(window.location.href);
@@ -34,7 +36,15 @@
   
 </head>
 
-<body data-reference-url="https://samwho.dev/memory-allocation/" data-reference-text="Memory Allocation" data-footer-label="Original page">
+<body
+  data-reference-url="https://samwho.dev/memory-allocation/"
+  data-reference-text="Memory Allocation"
+  data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="samwho-essay"
+  data-story-nav="generated"
+  data-story-route="memory-allocation"
+>
   
   <div class="bar" role="presentation">
     <div class="segment"></div>
@@ -52,8 +62,39 @@
 
 <a href="#content" style="display: none">Skip to main content</a>
 
+<section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · systems essays</p>
+    <div class="story-hero__grid">
+        <div>
+            <h1 class="story-hero__title">Watch memory management turn from an API call into a spatial problem.</h1>
+            <p class="story-hero__summary">
+                This article works best when you treat every allocator rule like a visible tradeoff.
+                Step through the byte grids, fragment the heap on purpose, then compare how each
+                bookkeeping idea changes what “free space” really means.
+            </p>
+            <div class="story-hero__meta">
+                <span class="story-chip">Scrub allocator timelines</span>
+                <span class="story-chip">Compare fragmentation strategies</span>
+                <span class="story-chip">Use the puzzle before the conclusion</span>
+            </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+            <span class="story-callout__label">How to use this page</span>
+            <p>
+                Start with the earliest memory grids, then jump straight to fragmentation or the
+                allocator puzzle once the byte model makes sense. The article is strongest when you
+                alternate between watching the heap and reading the explanation around it.
+            </p>
+            <div class="story-hero__actions">
+                <a class="story-button" href="#what-is-memory">Play first: inspect the byte grid</a>
+                <a class="story-button story-button--secondary" href="#fragmentation">Jump to fragmentation</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <article class="post">
-    <header>
+    <header class="story-legacy-title">
         <h1>Memory Allocation</h1>
         <section class="post-meta" aria-label="published on  April 13, 2023">
             2023-04-13
@@ -103,7 +144,7 @@ use it effectively. We will visually explore how simple allocators work. We'll
 see some of the problems that they try to solve, and some of the techniques used
 to solve them. At the end of this post, you should know everything you need to
 know to write your own allocator.</p>
-<h2 id="malloc-and-free"><a class="anchor" href="#malloc-and-free">#</a>
+<h2 id="malloc-and-free" data-story-chapter="Meet malloc and free"><a class="anchor" href="#malloc-and-free">#</a>
 <code>malloc</code> and <code>free</code></h2>
 <p>To understand the job of a memory allocator, it's essential to understand how
 programs request and return memory.  <code>malloc</code> and <code>free</code> are functions that were
@@ -133,7 +174,7 @@ done with the memory by calling <code>free(ptr)</code>.</p>
 <p>These two functions are how almost all programs manage the memory they use.
 Even when you're not writing C, the code that is executing your Java, Python,
 Ruby, JavaScript, and so on make use of <code>malloc</code> and <code>free</code>.</p>
-<h2 id="what-is-memory"><a class="anchor" href="#what-is-memory">#</a>
+<h2 id="what-is-memory" data-story-chapter="See memory as bytes"><a class="anchor" href="#what-is-memory">#</a>
 What is memory?</h2>
 <p>The smallest unit of memory that allocators work with is called a "byte." A byte
 can store any number between 0 and 255. You can think of memory as being a long
@@ -271,7 +312,7 @@ small amount of memory, but in real life you have billions of bytes to work
 with. Real addresses are much larger than what we're using here, but the idea is
 exactly the same. Memory addresses are numbers that refer to a specific byte in
 memory.</p>
-<h2 id="the-simplest-malloc"><a class="anchor" href="#the-simplest-malloc">#</a>
+<h2 id="the-simplest-malloc" data-story-chapter="Start with the simplest allocator"><a class="anchor" href="#the-simplest-malloc">#</a>
 The simplest <code>malloc</code></h2>
 <p>The "hello world" of <code>malloc</code> implementations would hand out blocks of memory by
 keeping track of where the previous block ended and starting the next block
@@ -293,7 +334,7 @@ again.</p>
 that use a known amount of memory, this can be a very efficient strategy.  It's
 extremely fast and extremely simple. As a general-purpose memory allocator,
 though, we can't get away with having no <code>free</code> implementation.</p>
-<h2 id="the-simplest-general-purpose-malloc"><a class="anchor" href="#the-simplest-general-purpose-malloc">#</a>
+<h2 id="the-simplest-general-purpose-malloc" data-story-chapter="Generalize the allocator"><a class="anchor" href="#the-simplest-general-purpose-malloc">#</a>
 The simplest general-purpose <code>malloc</code></h2>
 <p>In order to <code>free</code> memory, we need to keep better track of memory.  We can do
 this by saving the address and size of all allocations, and the address and size
@@ -390,7 +431,7 @@ free blocks, we combine them together. This is called "coalescing."</p>
   <free id=8></free>
 </div>
 <p>Much better.</p>
-<h2 id="fragmentation"><a class="anchor" href="#fragmentation">#</a>
+<h2 id="fragmentation" data-story-chapter="Feel fragmentation happen"><a class="anchor" href="#fragmentation">#</a>
 Fragmentation</h2>
 <p>A perfectly coalesced free list doesn't solve all of our problems. The following
 example shows a longer sequence of allocations. Have a look at the state memory
@@ -534,7 +575,7 @@ space thanks to small allocations.</p>
 <p>Allocators that split memory up based on the size of allocation are called
 "slab allocators." In practice they have many more size classes than the 2 in
 our example.</p>
-<h2 id="a-quick-malloc-puzzle"><a class="anchor" href="#a-quick-malloc-puzzle">#</a>
+<h2 id="a-quick-malloc-puzzle" data-story-chapter="Test yourself with the puzzle"><a class="anchor" href="#a-quick-malloc-puzzle">#</a>
 A quick <code>malloc</code> puzzle</h2>
 <p>What happens if you <code>malloc(0)</code>? Have a think about this before playing with
 the slider below.</p>
@@ -561,7 +602,7 @@ pointer that will crash your program if you try to read or write the memory it
 points to.  Others pick one specific location in memory and return that same
 location for all calls to <code>malloc(0)</code>, regardless how many times it is called.</p>
 <p>Moral of the story? Don't <code>malloc(0)</code>.</p>
-<h2 id="inline-bookkeeping"><a class="anchor" href="#inline-bookkeeping">#</a>
+<h2 id="inline-bookkeeping" data-story-chapter="Track bookkeeping overhead"><a class="anchor" href="#inline-bookkeeping">#</a>
 Inline bookkeeping</h2>
 <p>Remember earlier on when you asked about where allocation list and free list
 information gets stored, and I gave an unsatisfying answer about how it's
@@ -684,13 +725,13 @@ bookkeeping information. They store, say, <code>0x55</code> at <code>address + 2
 waste an extra byte of memory per allocation, but would allow them to know when
 a mistake has been made. To reduce the impact of this, allocators often disable
 this behaviour by default and allow you to enable it only when you're debugging.</p>
-<h2 id="playground"><a class="anchor" href="#playground">#</a>
+<h2 id="playground" data-story-chapter="Experiment in the playground"><a class="anchor" href="#playground">#</a>
 Playground</h2>
 <p>If you're keen to take your new found knowledge and try your hand at writing
 your own allocators, you can continue from the ideas here into a standalone
 allocator playground. You'll be able to write JavaScript code that implements
 the <code>malloc</code>/<code>free</code> API and visualise how it works!</p>
-<h2 id="conclusion"><a class="anchor" href="#conclusion">#</a>
+<h2 id="conclusion" data-story-chapter="Take the allocator mental model with you"><a class="anchor" href="#conclusion">#</a>
 Conclusion</h2>
 <p>We've covered a lot in this post, and if it has left you yearning for more you
 won't be disappointed. I've specifically avoided the topics of virtual memory,

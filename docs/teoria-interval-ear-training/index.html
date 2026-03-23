@@ -51,6 +51,7 @@
         <h2>Asset handoff</h2>
         <ul class="plain-list">
           <li><code>teoria-interval-ear-training/index.html</code> owns the local metadata shell, bootstrap handoff, and shared footer wiring.</li>
+          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the local practice-shell typography, onboarding hero, and first-control framing layered around the original exercise mounts.</li>
           <li><code>teoria-interval-ear-training/vendor/jquery.min.js</code> replaces the upstream CDN dependency with a route-local copy.</li>
           <li><code>teoria-interval-ear-training/res/js/min_24/</code> preserves the published Teoria exercise runtime, localized to route-relative asset paths.</li>
           <li><code>teoria-interval-ear-training/res/musika_2024/</code> contains the staff graphics, clef art, and piano audio bank required by the exercise.</li>
@@ -63,6 +64,7 @@
           <li>The Teoria navbar, cookie notice, PayPal block, search link, sign-in link, write-to-us link, and creator footer are removed from the public route.</li>
           <li>Public provenance is limited to the shared footer with a local canonical and <code>og:url</code>.</li>
           <li>Member-only save prompts are rewritten so the local route does not advertise upstream sign-in flows while still preserving the published score-panel structure.</li>
+          <li>The public page now uses the Engineering Sandbox practice variant, adding a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface without changing the drill runtime.</li>
         </ul>
       </article>
 
@@ -70,6 +72,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Keep the published runtime structure intact; future fixes should prefer path or shell patches over reauthoring the exercise.</li>
+          <li>Verify the practice hero loads before the first exercise surface and that the framed control region stays unobscured on desktop and mobile widths after shell edits.</li>
           <li>Verify the audio preload, exercise start flow, one answer-state update, and one visual keyboard response after runtime edits.</li>
           <li>Run <code>node interactive-explanation/tools/check-public-surface.mjs</code>, <code>node interactive-explanation/tools/smoke-bundle.mjs --group teoria</code>, and the full smoke bundle after changes.</li>
         </ul>

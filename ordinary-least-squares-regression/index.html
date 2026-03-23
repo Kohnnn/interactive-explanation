@@ -17,27 +17,62 @@
   <meta property="og:url" content="./">
   <link rel="canonical" href="./">
   <link rel="icon" type="image/png" href="../favicon.png">
-  <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
   <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
   <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
   <link rel="stylesheet" href="./style.css" type="text/css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
 </head>
 <body
   data-reference-url="https://setosa.io/ev/ordinary-least-squares-regression/"
   data-reference-text="Ordinary Least Squares Regression"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="ev-essay"
+  data-story-nav="generated"
+  data-story-route="ordinary-least-squares-regression"
 >
   <section class="menu"><a href="../">Back to replicas</a></section>
-  <section class="title">
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · regression essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Treat least squares as a surface you can feel, not just a formula to recite.</h1>
+        <p class="story-hero__summary">
+          This route is best when you move the line before reading the algebra. Pull the fit away
+          from the points, watch squared error accumulate, and then use the coefficient and loss
+          views to see why the optimum lands where it does.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Move the fitted line</span>
+          <span class="story-chip">Watch squared error update live</span>
+          <span class="story-chip">Connect coefficients to the loss surface</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Jump into the fit scene first and make the line obviously wrong on purpose. Once the
+          residuals and objective feel concrete, the parameter and surface views become a map of the
+          same decision rather than a second topic.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#ols-app">Play first: drag the line</a>
+          <a class="story-button story-button--secondary" href="../docs/ordinary-least-squares-regression/">Open route notes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="title" data-story-chapter="Meet least squares">
     <div class="title-region">
       <h1 class="title">Ordinary Least Squares Regression</h1>
       <h3 class="by-line">Interactive explainer</h3>
     </div>
   </section>
 
-  <div class="myApp"></div>
+  <div id="ols-app" class="myApp" data-story-chapter="Move the line and read the loss"></div>
 
-  <section>
+  <section data-story-chapter="Carry the model back to the notes">
     <p class="local-note">
       Replica notes and parity details live separately in
       <a href="../docs/ordinary-least-squares-regression/">docs</a>.

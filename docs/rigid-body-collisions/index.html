@@ -16,9 +16,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Rigid Body Collisions</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/rigid-body-collisions/</code> vendors the
-        published Nuxt article for part one of the rigid-body collision series, keeps the canvas,
-        sliders, and article runtime intact, and limits public provenance to the shared footer.
+        Local route <code>/interactive-explanation/rigid-body-collisions/</code> now layers the shared Engineering Sandbox hero, play-first framing, and generated chapter navigation onto the published article while keeping the original runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../rigid-body-collisions/">Open replica</a>
@@ -43,6 +41,7 @@
           <li>Live original verified against <code>https://www.sassnow.ski/rigid-body-collisions/1</code> on 2026-03-21.</li>
           <li>The local copy removes the body-level RSS, Twitter, e-mail, and Fathom provenance surfaces from the public body.</li>
           <li>The opening collision scenes, later vector examples, and article-long interactive runtime remain driven by the vendored published assets.</li>
+                  <li>The route now also loads the shared Engineering Sandbox shell, with chapter navigation resolved through an explicit <code>data-story-route</code> contract instead of depending only on pathname parsing.</li>
         </ul>
       </article>
 
@@ -53,6 +52,7 @@
           <li><code>rigid-body-collisions/_nuxt/</code> contains the full vendored Nuxt chunk graph, route CSS, and runtime dependencies required by the article.</li>
           <li><code>rigid-body-collisions/fonts/</code> keeps the Essays1743 essay fonts local so the typography and route CSS no longer depend on the upstream root.</li>
           <li><code>rigid-body-collisions/_nuxt/D4VqJVMa.js</code> retains the published app runtime while localizing lazy asset references and disabling the dormant analytics CDN handoff.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, generated chapter rail, and mobile jump bar layered around the vendored runtime.</li>
         </ul>
       </article>
 
@@ -62,6 +62,7 @@
           <li>The public route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
           <li>A tiny local cleanup hook removes the vendored document-driven not-found card that appears when the published Nuxt route is flattened to the top-level local slug.</li>
           <li>The shared footer is the only public original-page reference surface.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the vendored Nuxt runtime and controls remain intact.</li>
         </ul>
       </article>
 

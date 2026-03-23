@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "practice-shell-and-onboarding-frame",
+    "originalBehavior": "The published Ableton lesson opens directly into the archived widget lesson shell with only the lesson copy and interactive controls framing the first action.",
+    "localStatus": "The local route keeps that lesson runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first lesson surface around the archived widgets.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-basslines/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The practice shell is framing-only and does not alter the underlying Ableton widget boot, transport, or local sample-bank paths.",
+      "The practice variant intentionally avoids the essay rail and the denser lab checklist treatment."
+    ],
+    "evidence": [
+      "The public route now exposes `data-story-shell=\"engineering-sandbox\"` with `data-story-variant=\"practice\"`, `data-story-family=\"ableton-practice\"`, and `data-story-nav=\"none\"`.",
+      "Music smoke coverage verifies the hero renders before the first lesson surface and that no generated chapter rail appears."
+    ]
+  },
+  {
     "moduleId": "lesson-shell-and-widget-runtime",
     "originalBehavior": "The published Ableton Learning Music: Play with basslines page mounts inside Ableton's Learning Music shell with the shared widget runtime, local CSS, and route-local media inventory.",
     "localStatus": "The local route keeps that lesson shell focused on Ableton Learning Music: Play with basslines while removing the broader Learning Music navigation, cookie, and feedback surfaces from the public body.",

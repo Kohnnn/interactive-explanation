@@ -19,9 +19,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Sine and Cosine</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/sine-and-cosine/</code> keeps the published
-        Setosa EV similar-triangle demos, autoplay transforms, and linked-coordinate sandbox while
-        moving provenance and source references out of the public page body.
+        Local route <code>/interactive-explanation/sine-and-cosine/</code> now layers the lighter Engineering Sandbox essay shell, local font stack, play-first framing, and generated chapter navigation onto the published EV explainer while keeping the original interactive runtime and public provenance limited to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../sine-and-cosine/">Open replica</a>
@@ -45,6 +43,7 @@
           <li>Live original verified against <code>https://setosa.io/ev/sine-and-cosine/</code> on 2026-03-14.</li>
           <li>The local copy removes EV branding, bylines, share widgets, newsletter prompts, analytics, and comments.</li>
           <li>The published page still points at a retired MathJax CDN URL, so the replica vendors MathJax 2 locally under <code>ev/scripts/mathjax/</code>.</li>
+                  <li>The route now also loads the lighter Engineering Sandbox shell so the page gains local typography, editorial framing, and chapter navigation without displacing the EV chart layouts.</li>
         </ul>
       </article>
 
@@ -54,6 +53,7 @@
           <li><code>../ev/scripts/d3.js</code>, <code>angular.js</code>, and <code>common.js</code> are reused unchanged.</li>
           <li><code>../ev/styles/style.css</code> remains the common EV base stylesheet.</li>
           <li><code>sine-and-cosine/style.css</code> adds narrow-screen wrappers and display handling for local MathJax output.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, chapter rail, and mobile jump bar used by this essay rollout.</li>
         </ul>
       </article>
 
@@ -73,6 +73,7 @@
           <li>The public route no longer shows EV branding, creator credits, share widgets, newsletter forms, analytics, or comments.</li>
           <li>The live page verified on 2026-03-14 does not ship a single page-wide angle controller or pause/reset transport. Instead it has a draggable similar-triangle view, separate sine and cosine autoplay panels, and a linked-coordinate sandbox; the replica preserves that exact surface.</li>
           <li>The local route swaps the retired remote MathJax load for a local vendor copy but keeps the same inline tex2jax configuration and displayed Taylor-series content.</li>
+                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the original EV interactions and formulas remain intact.</li>
         </ul>
       </article>
     </section>

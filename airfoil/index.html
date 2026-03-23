@@ -18,13 +18,53 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link href="./css/base.css" rel="stylesheet" type="text/css">
   <link href="./css/airfoil.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="./js/base.js"></script>
   <script defer src="./js/airfoil.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 
-<body data-reference-url="https://ciechanow.ski/airfoil/" data-reference-text="Airfoil" data-footer-label="Original page">
+<body
+  data-reference-url="https://ciechanow.ski/airfoil/"
+  data-reference-text="Airfoil"
+  data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="ciechanowski-essay"
+  data-story-nav="generated"
+  data-story-route="airfoil"
+>
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · ciechanowski visual essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Use the flow scenes first, then let the pressure story explain what you saw.</h1>
+        <p class="story-hero__summary">
+          This article is strongest when you learn the airflow visually before you try to memorize
+          lift language. Scrub the opening airfoil and viscosity demos, then follow how velocity,
+          pressure, and boundary layers produce the later shape tradeoffs.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Scrub the opening airfoil scene</span>
+          <span class="story-chip">Compare viscosity regimes</span>
+          <span class="story-chip">Carry the intuition into lift</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the opening airfoil slider, then compare it with the viscosity scene before you
+          read too far. The later sections make more sense once you have already felt how the
+          airflow, markers, and pressure fields change under your hand.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#hero_fvm">Play first: move the airfoil angle</a>
+          <a class="story-button story-button--secondary" href="#airfoil-flow">Jump to airfoil flow</a>
+        </div>
+      </div>
+    </div>
+  </section>
   <div id="main_container">
     <div id="body">
       <div id="content">

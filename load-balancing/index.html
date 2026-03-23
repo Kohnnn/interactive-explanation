@@ -18,7 +18,9 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
   <script>
     const url = new URL(window.location.href);
@@ -34,7 +36,15 @@
   
 </head>
 
-<body data-reference-url="https://samwho.dev/load-balancing/" data-reference-text="Load Balancing" data-footer-label="Original page">
+<body
+  data-reference-url="https://samwho.dev/load-balancing/"
+  data-reference-text="Load Balancing"
+  data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="samwho-essay"
+  data-story-nav="generated"
+  data-story-route="load-balancing"
+>
   
   <div class="bar" role="presentation">
     <div class="segment"></div>
@@ -52,8 +62,39 @@
 
 <a href="#content" style="display: none">Skip to main content</a>
 
+<section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · systems essays</p>
+    <div class="story-hero__grid">
+        <div>
+            <h1 class="story-hero__title">Treat load balancing like a queueing experiment, not a list of algorithms.</h1>
+            <p class="story-hero__summary">
+                This page is best when you watch imbalance emerge before the text names it. Start
+                with round robin, push the requests harder, then compare how each strategy trades
+                fairness, throughput, and latency under visible stress.
+            </p>
+            <div class="story-hero__meta">
+                <span class="story-chip">Watch queues back up</span>
+                <span class="story-chip">Compare round robin against smarter policies</span>
+                <span class="story-chip">Finish in the local playground</span>
+            </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+            <span class="story-callout__label">How to use this page</span>
+            <p>
+                Play the earliest simulations until dropped requests and idle servers become obvious,
+                then keep scrolling to see which heuristic fixes which failure mode. The graphs make
+                more sense once you have already watched the queues wobble.
+            </p>
+            <div class="story-hero__actions">
+                <a class="story-button" href="#visualising-the-problem">Play first: watch the first queue</a>
+                <a class="story-button story-button--secondary" href="#optimizing-for-latency">Jump to latency tradeoffs</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <article class="post">
-    <header>
+    <header class="story-legacy-title">
         <h1>Load Balancing</h1>
         <section class="post-meta" aria-label="published on  April 10, 2023">
             2023-04-10
@@ -124,7 +165,7 @@ thousands of servers running their web application to handle the load.</p>
 <p>In this post we're going to focus on the ways that a single load balancer might
 distribute HTTP requests to a set of servers. We'll start from the bottom and
 work our way up to modern load balancing algorithms.</p>
-<h2 id="visualising-the-problem"><a class="anchor" href="#visualising-the-problem">#</a>
+<h2 id="visualising-the-problem" data-story-chapter="Visualize the problem"><a class="anchor" href="#visualising-the-problem">#</a>
 Visualising the problem</h2>
 <p>Let's start at the beginning: a single <span class="load-balancer">load
 balancer</span> sending <span class="request">requests</span> to a single <span
@@ -163,7 +204,7 @@ class="request">requests</span> are all equally expensive.</p>
 <div id="4" class="simulation" style="height: 200px">
     <div class="lds-dual-ring"></div>
 </div>
-<h2 id="when-round-robin-doesn-t-cut-it"><a class="anchor" href="#when-round-robin-doesn-t-cut-it">#</a>
+<h2 id="when-round-robin-doesn-t-cut-it" data-story-chapter="See round robin break"><a class="anchor" href="#when-round-robin-doesn-t-cut-it">#</a>
 When round robin doesn't cut it</h2>
 <p>In the real world, it's rare for <span class="server">servers</span> to be
 equally powerful and <span class="request">requests</span> to be equally
@@ -210,7 +251,7 @@ time, the more powerful <span class="server">servers</span> sit idle most of the
 time. This scenario shows the key weakness of round robin: variance.</p>
 <p>Despite its flaws, however, round robin is still the default HTTP load balancing
 method for <a rel="external" href="https://nginx.org/en/docs/http/load_balancing.html">nginx</a>.</p>
-<h2 id="improving-on-round-robin"><a class="anchor" href="#improving-on-round-robin">#</a>
+<h2 id="improving-on-round-robin" data-story-chapter="Improve the baseline"><a class="anchor" href="#improving-on-round-robin">#</a>
 Improving on round robin</h2>
 <p>It's possible to tweak round robin to perform better with variance. There's an
 algorithm called "weighted round robin" which involves getting humans
@@ -253,7 +294,7 @@ the page a few times to see it adapt to new variants.</p>
 <div id="10" class="simulation" style="height: 250px">
     <div class="lds-dual-ring"></div>
 </div>
-<h2 id="moving-away-from-round-robin"><a class="anchor" href="#moving-away-from-round-robin">#</a>
+<h2 id="moving-away-from-round-robin" data-story-chapter="Move beyond round robin"><a class="anchor" href="#moving-away-from-round-robin">#</a>
 Moving away from round robin</h2>
 <p>Dynamic weighted round robin seems to account well for variance in both <span
 class="server">server</span> power and <span class="request">request
@@ -288,7 +329,7 @@ time this algorithm <span class="dropped">drops</span> <span
 class="request">requests</span> is when there is literally no more queue space
 available. It will make sure all available resources are in use, and that makes
 it a great default choice for most workloads.</p>
-<h2 id="optimizing-for-latency"><a class="anchor" href="#optimizing-for-latency">#</a>
+<h2 id="optimizing-for-latency" data-story-chapter="Optimize for latency"><a class="anchor" href="#optimizing-for-latency">#</a>
 Optimizing for latency</h2>
 <p>Up until now I've been avoiding a crucial part of the discussion: what we're
 optimising for. Implicitly, I've been considering <span
@@ -333,7 +374,7 @@ class="dropped">dropped</span> over time.</p>
 <p>Least connections handles overload much better, but the cost of doing that is
 slightly higher 95th and 99th percentile latencies. Depending on your use-case,
 this might be a worthwhile trade-off.</p>
-<h2 id="one-last-algorithm"><a class="anchor" href="#one-last-algorithm">#</a>
+<h2 id="one-last-algorithm" data-story-chapter="Add one last algorithm"><a class="anchor" href="#one-last-algorithm">#</a>
 One last algorithm</h2>
 <p>If we <em>really</em> want to optimise for latency, we need an algorithm that takes
 latency into account. Wouldn't it be great if we could combine the dynamic
@@ -386,7 +427,7 @@ implementation I wrote for this post uses a configuration that seemed to work
 well for the situations I tested it in, but further tweaking could get you
 better results vs least connections. This is one of the downsides of PEWMA vs
 least connections: extra complexity.</p>
-<h2 id="conclusion"><a class="anchor" href="#conclusion">#</a>
+<h2 id="conclusion" data-story-chapter="Take the tradeoffs with you"><a class="anchor" href="#conclusion">#</a>
 Conclusion</h2>
 <p>I spent a long time on this post. It was difficult to balance realism against
 ease of understanding, but I feel good about where I landed. I'm hopeful that
@@ -417,7 +458,7 @@ do!</em></p>
 my first time using this library and it was quite easy to get to grips with.
 If writing visual explanations like this are something you're interested in,
 I recommend it!</em></p>
-<h2 id="playground"><a class="anchor" href="#playground">#</a>
+<h2 id="playground" data-story-chapter="Experiment in the playground"><a class="anchor" href="#playground">#</a>
 Playground</h2>
 <div id="fin" class="simulation" style="height: 450px; margin-top: 20px">
     <div class="lds-dual-ring"></div>

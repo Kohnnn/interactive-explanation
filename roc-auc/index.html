@@ -16,7 +16,9 @@
   <link rel="stylesheet" href="./assets/styles/font.css">
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -24,5 +26,40 @@
   data-reference-url="https://mlu-explain.github.io/roc-auc/"
   data-reference-text="ROC &amp; AUC"
   data-footer-label="Original page"
-></body>
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
+  data-story-route="roc-auc"
+>
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Sweep the threshold and watch a whole classifier trace out its story.</h1>
+        <p class="story-hero__summary">
+          ROC and AUC are easiest to understand when the threshold movement, the scatter updates,
+          and the curve all stay visible at the same time. This route keeps the sweep tactile and
+          then uses the area view to summarize what the classifier family is doing.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Sweep the threshold</span>
+          <span class="story-chip">Read the ROC shape</span>
+          <span class="story-chip">Interpret the area under it</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the threshold scene until the true-positive and false-positive tradeoff feels
+          obvious, then move to the ROC and AUC sections to see how the whole sweep compresses into
+          one curve and one summary score.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#first-threshold">Play first: sweep the threshold</a>
+          <a class="story-button story-button--secondary" href="#roc-section">Jump to the ROC curve</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
 </html>

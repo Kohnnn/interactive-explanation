@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="./assets/styles/katex.css">
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -25,5 +27,40 @@
   data-reference-url="https://mlu-explain.github.io/precision-recall/"
   data-reference-text="Precision &amp; Recall"
   data-footer-label="Original page"
-></body>
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
+  data-story-route="precision-recall"
+>
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Trade false alarms against misses with the threshold in your hand.</h1>
+        <p class="story-hero__summary">
+          Precision and recall only really stick once you can feel the tradeoff. This page turns
+          the confusion matrix, F1 score, and threshold sweep into one connected system instead of
+          three isolated definitions.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Read the confusion matrix</span>
+          <span class="story-chip">Balance precision and recall</span>
+          <span class="story-chip">Drag the threshold</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Begin with the confusion matrix and metric panel, then move into the threshold chart
+          once you can predict how the counts should change. The later sections land best once the
+          tradeoff feels tactile, not verbal.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#confusion-matrix">Play first: read the matrix</a>
+          <a class="story-button story-button--secondary" href="#threshold-tradeoff">Jump to threshold tuning</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
 </html>

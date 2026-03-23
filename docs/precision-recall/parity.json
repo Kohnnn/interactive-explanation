@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly into the compiled precision-recall app without a separate editorial hero, chapter rail, or play-first framing layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original compiled charts and controls intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten app layout system.",
+      "Chapter links are attached after mount to stable top-level sections so the compiled runtime keeps control of its own internals."
+    ],
+    "evidence": [
+      "The hardening plan extends the Engineering Sandbox shell from static pilots to harder JS-rendered ML routes once the shared layout and navigation contract stabilizes.",
+      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original threshold, metric, and tradeoff scenes."
+    ]
+  },
+  {
     "moduleId": "confusion-matrix-threshold-sandbox",
     "originalBehavior": "The published article opens with a threshold-driven classifier scene that updates a confusion-matrix style grid as the reader changes the cutoff for binary predictions.",
     "localStatus": "The local route keeps the original threshold slider, draggable threshold marker, and linked confusion-state rendering from the compiled app.",

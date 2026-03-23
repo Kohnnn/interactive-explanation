@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
+    "localStatus": "The local route now adds the shared Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original interactive runtime intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
+      "Runtime chapter links are resolved through the explicit data-story-route contract so the page does not depend only on pathname parsing."
+    ],
+    "evidence": [
+      "The hardened rollout expands the Engineering Sandbox essay shell beyond MLU into the next article-shaped technical families.",
+      "Shared smoke coverage now checks hero-before-chapter ordering, generated navigation behavior, and desktop non-overlap before exercising the original interactive scenes."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-nuxt-runtime-handoff",
     "originalBehavior": "The published article loads through a Nuxt shell with a large vendored chunk graph, route-local fonts, many interactive mounts, and a longform markdown body rendered into one page.",
     "localStatus": "The local route keeps the published article structure, Nuxt runtime, and chunk graph while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",

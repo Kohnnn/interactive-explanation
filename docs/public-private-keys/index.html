@@ -16,10 +16,7 @@
       <p class="eyebrow">Replica documentation</p>
       <h1>Public / Private Keys</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/public-private-keys/</code> flattens the
-        nested Anders signing demo to a top-level slug while keeping the keys, signatures,
-        transaction, and blockchain pages available as local sibling routes under the same asset
-        tree.
+        Local route <code>/interactive-explanation/public-private-keys/</code> now layers the Engineering Sandbox lab variant onto the published Anders signing demo so key generation and signature flow start with a compact briefing hero, try-this-first actions, and a utility checklist while keeping the original runtime intact.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../public-private-keys/">Open replica</a>
@@ -44,6 +41,7 @@
           <li>Live original verified against <code>https://andersbrownworth.com/blockchain/public-private-keys/</code> on 2026-03-18.</li>
           <li>The local root intentionally flattens the upstream nested demo to the top-level slug <code>public-private-keys</code>.</li>
           <li>The public route keeps the original Bootstrap, jQuery, cookie, BigInteger, Buffer, elliptic, and SHA256 runtime intact.</li>
+                  <li>The route now also loads the Engineering Sandbox lab shell so the page gains compact workflow framing and native-nav styling without displacing the original tabs and form logic.</li>
         </ul>
       </article>
 
@@ -54,6 +52,7 @@
           <li>Vendor the demo-specific <code>javascripts/</code> and <code>stylesheets/</code> trees directly under <code>public-private-keys/</code> without deduping libraries on the first pass.</li>
           <li>Patch only asset paths, navbar links, canonical metadata, and footer configuration for nested hosting.</li>
           <li>Keep signatures, transaction, and blockchain pages available under the flattened local slug so the original demo flow still works.</li>
+                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the lab variant styling, local font stack, and native-nav contract layered around the existing signing demo.</li>
         </ul>
       </article>
 
@@ -73,6 +72,7 @@
           <li>The public entry route no longer surfaces the upstream video landing, author byline, or repo ribbon.</li>
           <li>The local root is intentionally flattened to <code>/interactive-explanation/public-private-keys/</code> even though the original demo lived under <code>/blockchain/public-private-keys/</code>.</li>
           <li>The shared footer is the only public original-page reference surface on shipped pages.</li>
+                  <li>The public keys route now opens with the Engineering Sandbox lab variant and a compact generate-sign-mutate-verify framing layer instead of a bare form card.</li>
         </ul>
       </article>
     </section>

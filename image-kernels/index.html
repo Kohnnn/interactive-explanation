@@ -20,10 +20,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -31,16 +32,50 @@
     data-reference-url="https://setosa.io/ev/image-kernels/"
     data-reference-text="Image Kernels"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="image-kernels"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · visual computing essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Read an image filter as local arithmetic before it feels like magic.</h1>
+          <p class="story-hero__summary">
+            This page is most useful when you move between the tiny matrix and the big visual
+            result. Start by hovering the pixel math, then swap kernels and finally build your own
+            so the effect names map back to the numbers creating them.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Inspect pixel-by-pixel convolution</span>
+            <span class="story-chip">Swap blur, sharpen, emboss, and Sobel kernels</span>
+            <span class="story-chip">Edit the custom kernel directly</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Start with the matrix walkthrough before the playground. Once you can read how one
+            3×3 neighborhood becomes one output pixel, the larger editor feels like exploration
+            instead of trial and error.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#kernel-basics">Play first: inspect the first convolution</a>
+            <a class="story-button story-button--secondary" href="#kernel-playground-story">Jump to the custom playground</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet image kernels">
       <div class="title-region">
         <h1 class="title">Image Kernels</h1>
         <h3 class="by-line">Interactive explainer</h3>
       </div>
     </section>
 
-    <section>
+    <section id="kernel-basics" data-story-chapter="Read convolution as local arithmetic">
       <p>
         An image kernel is a small matrix used to apply effects such as blurring, sharpening,
         outlining, or embossing. Kernels also show up in machine learning for feature extraction
@@ -62,7 +97,7 @@
       <div class="control-strip">
         <select ng-options="key as key for (key, value) in selectableKernels" ng-model="selectedKernel"></select>
       </div>
-      <div class="viz-scroll">
+      <div class="viz-scroll" id="kernel-matrix-story" data-story-chapter="Walk through the kernel math">
         <kernel-matrix></kernel-matrix>
       </div>
 
@@ -71,7 +106,7 @@
         corresponding kernel entry and sum the results. That sum becomes a new pixel in the image
         on the right. Hover over a pixel on either image to see how the value is computed.
       </p>
-      <div class="viz-scroll">
+      <div class="viz-scroll" id="kernel-playground-story" data-story-chapter="Experiment in the playground">
         <div style="position: relative; width: 1000px; min-height: 430px">
           <kernel-inspect></kernel-inspect>
           <div style="display: block; position: absolute; top: 360px; left: 450px">

@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "engineering-sandbox-story-shell",
+    "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
+    "localStatus": "The local route now adds the lighter Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original EV runtime and chart logic intact.",
+    "sourceFiles": [
+      "index.html",
+      "../shared/engineering-sandbox.css",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The shell uses the lighter EV essay variant so the original chart layouts stay visually dominant while the page gains local typography and chapter navigation.",
+      "Chapter links are generated from data-story-chapter markers embedded in the static page structure."
+    ],
+    "evidence": [
+      "The hardened rollout expands the Engineering Sandbox essay shell beyond MLU into the next article-shaped technical families.",
+      "Shared smoke coverage now checks hero-before-chapter ordering, generated navigation behavior, and desktop non-overlap before exercising the original interactive scenes."
+    ]
+  },
+  {
     "moduleId": "main-scatter-and-fitted-line-scene",
     "originalBehavior": "The published route mounts a scatterplot with a fitted line and keeps the coefficient readout synchronized as sample points move.",
     "localStatus": "The local route keeps the original scatterplot, fitted line, draggable points, and coefficient panel from the published bundle with only shell-level cleanup around it.",

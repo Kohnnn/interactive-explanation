@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "practice-shell-and-onboarding-frame",
+    "originalBehavior": "The published Ableton lesson opens directly into the archived widget lesson shell with only the lesson copy and interactive controls framing the first action.",
+    "localStatus": "The local route keeps that lesson runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first lesson surface around the archived widgets.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The practice shell is framing-only and does not alter the underlying Ableton widget boot, transport, or local sample-bank paths.",
+      "The practice variant intentionally avoids the essay rail and the denser lab checklist treatment."
+    ],
+    "evidence": [
+      "The public route now exposes `data-story-shell=\"engineering-sandbox\"` with `data-story-variant=\"practice\"`, `data-story-family=\"ableton-practice\"`, and `data-story-nav=\"none\"`.",
+      "Music smoke coverage verifies the hero renders before the first lesson surface and that no generated chapter rail appears."
+    ]
+  },
+  {
     "moduleId": "playground-shell-and-widget-runtime-handoff",
     "originalBehavior": "The published Ableton Playground mounts four synchronized lesson widgets through the Learning Music lesson shell, shared widget runtime, and route-local CSS.",
     "localStatus": "The local route keeps the published widget runtime and four-widget layout while replacing the broader Learning Music shell with route-local metadata and the shared public footer.",

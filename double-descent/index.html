@@ -19,14 +19,50 @@
   <link rel="canonical" href="./">
   <link rel="icon" href="./mlu_robot.5a492771.png">
   <link rel="stylesheet" href="./styles.758827dc.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/double-descent/"
   data-reference-text="Double Descent"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
 >
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · static ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Follow the curve past the usual overfitting warning sign.</h1>
+        <p class="story-hero__summary">
+          Double descent feels strange because it asks you to keep going after the classical
+          tradeoff says to stop. This page lets you watch the familiar U-shape break, then rebuild
+          the intuition with an interpolation story you can actually inspect.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Watch the second descent appear</span>
+          <span class="story-chip">Toggle feature count in the side scene</span>
+          <span class="story-chip">Connect back to bias-variance</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start with the opening chart until the interpolation threshold clicks, then jump to the
+          side-by-side experiment and drag the feature-count slider yourself. The gap animation is
+          the payoff: it shows why the models past interpolation do not all behave the same way.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#scrolly">Play first: watch the curve break</a>
+          <a class="story-button story-button--secondary" href="#scrolly-side">Jump to the experiment</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main>
     <div id="intro-icon">
       <a href="../">
@@ -35,7 +71,7 @@
       </a>
     </div>
 
-    <section id="intro">
+    <section id="intro" data-story-chapter="Meet double descent">
       <h1 id="intro-hed">Double Descent</h1>
       <h1 class="intro-sub">Part 1: A Visual Introduction</h1>
       <h3 id="intro__date">Interactive walkthrough</h3>
@@ -63,7 +99,7 @@
       </p>
     </section>
 
-    <section id="scrolly">
+    <section id="scrolly" data-story-chapter="Watch the second descent">
       <figure>
         <div id="doubledescent-container"></div>
       </figure>
@@ -113,7 +149,7 @@
       </article>
     </section>
 
-    <section id="section2">
+    <section id="section2" data-story-chapter="Set up the experiment">
       <div class="model-text">
         <h1 class="model-header">What's Going On?</h1>
         <p class="model-text">
@@ -134,7 +170,7 @@
     </section>
 
     <div id="ttt">
-      <section id="scrolly-side">
+      <section id="scrolly-side" data-story-chapter="Move across the threshold">
         <figure>
           <div id="scatter-container"></div>
           <br>
@@ -202,7 +238,7 @@
       </section>
     </div>
 
-    <section id="gap">
+    <section id="gap" data-story-chapter="Mind the interpolation gap">
       <div class="model-text">
         <h1 class="model-header">Minding The Gap</h1>
         <div id="gap-container">
@@ -245,7 +281,7 @@
       </div>
     </section>
 
-    <section id="conclusion">
+    <section id="conclusion" data-story-chapter="References">
       <br><br>
       <p class="model-text">
         Thanks for reading. If you'd like the more mathematical version of the story, continue to

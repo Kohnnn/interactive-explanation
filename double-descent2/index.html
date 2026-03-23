@@ -20,14 +20,50 @@
   <link rel="icon" href="./mlu_robot.5a492771.png">
   <link rel="stylesheet" href="./katex.min.3c2484b0.css">
   <link rel="stylesheet" href="./styles.d50a6b6f.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/double-descent2/"
   data-reference-text="Double Descent, Part 2"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="mlu-pilot"
+  data-story-nav="generated"
 >
+  <section class="story-hero story-hero--tight">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · static ML essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Keep the picture from part one, then tighten the math around it.</h1>
+        <p class="story-hero__summary">
+          Part two trades intuition for structure. It walks through a concrete piecewise-linear
+          model, shows why the interpolation threshold can be rigid and bad, and then explains why
+          the infinite-model limit opens the door to much smoother solutions.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Track the model definition</span>
+          <span class="story-chip">See the threshold turn rigid</span>
+          <span class="story-chip">End at the spline limit</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Read this one like a technical essay with checkpoints. The charts break up the argument,
+          so pause at each diagram before moving on. If the notation starts to feel abstract,
+          revisit part one and then come back to the threshold and infinity sections.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#intro">Start with the setup</a>
+          <a class="story-button story-button--secondary" href="#at-threshold">Jump to the threshold argument</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main>
     <div id="intro-icon">
       <a href="../">
@@ -36,7 +72,7 @@
       </a>
     </div>
 
-    <section id="intro">
+    <section id="intro" data-story-chapter="Set up the mathematics">
       <h1 id="intro-hed">Double Descent</h1>
       <h1 class="intro-sub">Part 2: A Mathematical Explanation</h1>
       <h3 id="intro__date">Interactive math walkthrough</h3>
@@ -83,7 +119,7 @@
       </p>
       <div id="chart1" class="chart"></div>
 
-      <h2 class="subtitle">Our Piecewise Linear Model</h2>
+      <h2 class="subtitle" id="piecewise-model" data-story-chapter="Define the model">Our Piecewise Linear Model</h2>
       <p class="body-text">
         Let's be precise about exactly what model we are working with. We work entirely in one
         dimension, so our input data is a vector <span class="katex-eq" id="katex-input"></span>,
@@ -119,7 +155,7 @@
         <span class="katex-eq" id="katex-beta2"></span> from the minimization).
       </p>
 
-      <h2 class="subtitle">Below The Interpolation Threshold</h2>
+      <h2 class="subtitle" id="below-threshold" data-story-chapter="Below the interpolation threshold">Below The Interpolation Threshold</h2>
       <p class="body-text">
         While not the focus of the document, let's take a moment to consider what happens when we
         are well below the interpolation threshold. Without any knot points
@@ -148,7 +184,7 @@
       </p>
       <p class="body-text"></p>
 
-      <h2 class="subtitle">At The Interpolation Threshold</h2>
+      <h2 class="subtitle" id="at-threshold" data-story-chapter="At the interpolation threshold">At The Interpolation Threshold</h2>
       <p class="body-text">
         We now turn our attention to the behavior <i>at</i> the interpolation threshold. Our goal
         here will be to illustrate why this will perform poorly by showing that, for this model,
@@ -271,7 +307,7 @@
         average when you are at the interpolation threshold.
       </p>
 
-      <h2 class="subtitle">To Infinity! (But Not Beyond)</h2>
+      <h2 class="subtitle" id="to-infinity" data-story-chapter="In the spline limit">To Infinity! (But Not Beyond)</h2>
       <p class="body-text">
         We now understand why the model performs poorly at the interpolation threshold. In
         essence, there is only one model that can be used, and that model has no reason to be a
@@ -468,7 +504,7 @@
       </p>
       <br><br>
 
-      <h2 id="references" class="subtitle">Resources</h2>
+      <h2 id="references" class="subtitle" data-story-chapter="Resources">Resources</h2>
       <br>
       <ul>
         <li id="reference1">

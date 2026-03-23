@@ -14,10 +14,11 @@
     <script src="../ev/scripts/d3.js" charset="utf-8"></script>
     <script src="../ev/scripts/angular.js" charset="utf-8"></script>
     <script src="../ev/scripts/common.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../shared/engineering-sandbox.css" type="text/css">
     <link rel="stylesheet" href="../ev/styles/style.css" type="text/css">
     <link rel="stylesheet" href="../shared/public-footer.css" type="text/css">
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script defer src="../shared/engineering-sandbox.js"></script>
   </head>
   <body
     ng-app="myApp"
@@ -25,9 +26,43 @@
     data-reference-url="https://setosa.io/ev/markov-chains/"
     data-reference-text="Markov Chains"
     data-footer-label="Original page"
+    data-story-shell="engineering-sandbox"
+    data-story-family="ev-essay"
+    data-story-nav="generated"
+    data-story-route="markov-chains"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
-    <section class="title">
+    <section class="story-hero">
+      <p class="story-hero__eyebrow">Engineering Sandbox rollout · probability essays</p>
+      <div class="story-hero__grid">
+        <div>
+          <h1 class="story-hero__title">Read a Markov chain as a system that keeps just enough memory to be useful.</h1>
+          <p class="story-hero__summary">
+            The fastest way into this page is to watch state transitions first, then interpret the
+            matrix later. Start with the simple chain, tune the matrix until the behavior changes,
+            and only then move into the weather and playground examples.
+          </p>
+          <div class="story-hero__meta">
+            <span class="story-chip">Animate a two-state chain</span>
+            <span class="story-chip">Tune transition probabilities</span>
+            <span class="story-chip">Build your own chain in the playground</span>
+          </div>
+        </div>
+        <div class="story-callout story-hero__panel" data-story-callout="play">
+          <span class="story-callout__label">How to use this page</span>
+          <p>
+            Play the two-state demo and the transition matrix before reading the larger examples.
+            Once you can predict how one row affects the next step, the sticky-weather model and
+            fullscreen playground start to feel like extensions instead of new topics.
+          </p>
+          <div class="story-hero__actions">
+            <a class="story-button" href="#two-state-demo">Play first: run the two-state chain</a>
+            <a class="story-button story-button--secondary" href="#playground">Jump to the playground</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="title" data-story-chapter="Meet Markov chains">
       <div class="title-region">
         <h1 class="title">Markov Chains</h1>
         <h3 class="by-line">Interactive explainer</h3>
@@ -36,14 +71,14 @@
       <p>A simple, two-state Markov chain is shown below.</p>
     </section>
 
-      <p ng-controller="NoControlsCtrl">
+      <p id="two-state-demo" data-story-chapter="Watch a two-state chain" ng-controller="NoControlsCtrl">
         <input type="range" ng-model="speedRange" min="1" max="20" step="1" class="speedRange">
         <label>speed</label>
         <st-diagram states="states" transition-matrix="transitionMatrix" style="width:100%;height:230px;display:block;" center="diagramCenter" duration="duration"></st-diagram>
       </p><p>With two states (A and B) in our state space, there are 4 possible transitions (not 2, because a state can transition back into itself). If we&#39;re at &#39;A&#39; we could transition to &#39;B&#39; or stay at &#39;A&#39;. If we&#39;re at &#39;B&#39; we could transition to &#39;A&#39; or stay at &#39;B&#39;. In this two state diagram, the probability of transitioning from any state to any other state is 0.5.</p>
 <p>Of course, real modelers don&#39;t always draw out Markov chain diagrams. Instead they use a &quot;transition matrix&quot; to tally the transition probabilities. Every state in the state space is included once as a row and again as a column, and each cell in the matrix tells you the probability of transitioning from its row&#39;s state to its column&#39;s state. So, in the matrix, the cells do the same job that the arrows do in the diagram.</p>
 
-      <div ng-controller="TransitionMatrixCtrl" style="position: relative; height: 230px;margin-bottom:0px">
+      <div id="transition-matrix" data-story-chapter="Tune the transition matrix" ng-controller="TransitionMatrixCtrl" style="position: relative; height: 230px;margin-bottom:0px">
         <div class="controls" style="position: absolute; top: 0">
           <input class="speedRange" type="range" ng-model="speedRange"
             min="1" max="20" step="1">
@@ -131,7 +166,7 @@
       </div><p>Did you notice how the above sequence doesn&#39;t look quite like the original? The second sequence seems to jump around, while the first one (the real data) seems to have a &quot;stickyness&quot;. In the real data, if it&#39;s sunny (S) one day, then the next day is also much more likely to be sunny.</p>
 <p>We can minic this &quot;stickyness&quot; with a two-state Markov chain. When the Markov chain is in state &quot;R&quot;, it has a 0.9 probability of staying put and a 0.1 chance of leaving for the &quot;S&quot; state. Likewise, &quot;S&quot; state has 0.9 probability of staying put and a 0.1 chance of transitioning to the &quot;R&quot; state.</p>
 
-      <div ng-controller="RandomSequenceMarkovCtrl" style="width:100%; height: 230px;position: relative">
+      <div id="sticky-weather" data-story-chapter="Model sticky weather" ng-controller="RandomSequenceMarkovCtrl" style="width:100%; height: 230px;position: relative">
         <div class="controls" style="position: absolute; top: 0">
           <input class="speedRange" type="range" ng-model="speedRange"
             min="1" max="10" step="1">
@@ -145,7 +180,7 @@
         <div class="sequence" step-1="70%" step-2="60%"></div>
         
       </div><p>In the hands of metereologists, ecologists, computer scientists, financial engineers and other people who need to model big phenomena, Markov chains can get to be quite large and powerful. For example, the algorithm Google uses to determine the order of search results, called <a href="https://en.wikipedia.org/wiki/PageRank">PageRank</a>, is a type of Markov chain.</p>
-<iframe scrolling="no" class="playground" style="display: block; float: left; border: none" width="100%" height="500" src="./playground/"></iframe>
+<iframe id="playground" data-story-chapter="Experiment in the playground" scrolling="no" class="playground" style="display: block; float: left; border: none" width="100%" height="500" src="./playground/"></iframe>
 
 <p>Above, we&#39;ve included a Markov chain &quot;playground&quot;, where you can make your own Markov chains by messing around with a transition matrix. Here&#39;s a few to work from as an example: <a href="javascript:update_playground('long')">ex1</a>, <a href="javascript:update_playground('large')">ex2</a>, <a href="javascript:update_playground('three')">ex3</a> or generate one <a href="javascript:update_playground('random')">randomly</a>. The transition matrix text will turn red if the provided matrix isn&#39;t a valid transition matrix. <em>The rows of the transition matrix must total to 1.</em> There also has to be the same number of rows as columns.</p>
 <p>You can also open the local fullscreen playground at <a href="./playground/">markov-chains/playground/</a>.</p>
