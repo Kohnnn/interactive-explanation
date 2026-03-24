@@ -317,6 +317,13 @@ async function assertEngineeringSandboxShell(page, label, options = {}) {
       railCount: railLinks.length,
       mobileCount: mobileLinks.length,
       nativeCount: nativeLinks.length,
+      progressBarCount: document.querySelectorAll(".story-progress__bar").length,
+      progressValueCount: Array.from(document.querySelectorAll(".story-progress__value")).filter((node) => {
+        return (node.textContent || "").trim().length > 0;
+      }).length,
+      progressPositionCount: Array.from(document.querySelectorAll(".story-rail__position, .story-mobile-bar__position, .story-mobile-sheet__position")).filter((node) => {
+        return (node.textContent || "").trim().length > 0;
+      }).length,
       allAnchorLinks: railLinks.concat(mobileLinks).every((link) => {
         const href = link.getAttribute("href") || "";
         return href.startsWith("#");
@@ -349,6 +356,9 @@ async function assertEngineeringSandboxShell(page, label, options = {}) {
       shellState.railCount >= minimumChapters || shellState.mobileCount >= minimumChapters,
       `${label} did not render generated chapter navigation`,
     );
+    assert(shellState.progressBarCount > 0, `${label} did not render the story progress bar`);
+    assert(shellState.progressValueCount > 0, `${label} did not render the story progress label`);
+    assert(shellState.progressPositionCount > 0, `${label} did not render the chapter position label`);
     assert(shellState.allAnchorLinks, `${label} exposed a non-local generated chapter link`);
     return;
   }
@@ -388,22 +398,41 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
       const hero = document.querySelector(".story-hero");
       const firstChapter = document.querySelector("[data-story-chapter]");
       const rail = document.querySelector(".story-rail");
+      const progress = document.querySelector(".story-rail .story-progress");
       const heroRect = hero?.getBoundingClientRect();
       const chapterRect = firstChapter?.getBoundingClientRect();
       const railRect = rail?.getBoundingClientRect();
       return {
         heroAboveFirstChapter: Boolean(heroRect && chapterRect && heroRect.top <= chapterRect.top),
         railVisible: Boolean(railRect && railRect.width > 0),
+        railProgressVisible: Boolean(progress && progress.getBoundingClientRect().width > 0),
         railRight: railRect?.right || 0,
         chapterLeft: chapterRect?.left || 0,
+        progressValue: document.querySelector(".story-rail .story-progress__value")?.textContent?.trim() || "",
       };
     });
     assert(layoutState.heroAboveFirstChapter, `${label} did not render the hero before the first chapter`);
     assert(layoutState.railVisible, `${label} did not expose the desktop rail at 1440px`);
+    assert(layoutState.railProgressVisible, `${label} did not expose the desktop story progress bar`);
+    assert(layoutState.progressValue.length > 0, `${label} did not expose the desktop story progress label`);
     assert(
       layoutState.railRight <= layoutState.chapterLeft - 12,
       `${label} desktop rail overlapped the story column at 1440px`,
     );
+    const initialDesktopProgress = Number.parseInt(layoutState.progressValue, 10) || 0;
+    await page.evaluate(() => {
+      window.scrollTo(0, Math.max(document.documentElement.scrollHeight - window.innerHeight - 200, 0));
+    });
+    await page.waitForFunction((previousProgress) => {
+      const currentValue = document.querySelector(".story-rail .story-progress__value")?.textContent?.trim() || "";
+      return (Number.parseInt(currentValue, 10) || 0) > previousProgress;
+    }, initialDesktopProgress, { timeout: 5000 });
+    const desktopScrolledState = await page.evaluate(() => {
+      return {
+        progressValue: document.querySelector(".story-rail .story-progress__value")?.textContent?.trim() || "",
+      };
+    });
+    assert((Number.parseInt(desktopScrolledState.progressValue, 10) || 0) > initialDesktopProgress, `${label} desktop story progress did not respond to scrolling`);
 
     const mobilePage = await context.newPage();
     await mobilePage.setViewportSize({ width: 390, height: 844 });
@@ -420,6 +449,9 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
       return {
         mobileBarVisible: Boolean(barRect && barRect.height > 0),
         currentLabel: document.querySelector(".story-mobile-bar__current")?.textContent?.trim() || "",
+        progressValue: document.querySelector(".story-mobile-bar .story-progress__value")?.textContent?.trim() || "",
+        progressVisible: Boolean(document.querySelector(".story-mobile-bar .story-progress")?.getBoundingClientRect().width > 0),
+        positionLabel: document.querySelector(".story-mobile-bar__position")?.textContent?.trim() || "",
         toggleVisible: Boolean(toggle && toggle.getBoundingClientRect().width > 0),
         activeLinkVisible: Boolean(
           barRect &&
@@ -431,6 +463,9 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
     });
     assert(mobileState.mobileBarVisible, `${label} did not expose the mobile chapter bar at 390px`);
     assert(mobileState.currentLabel.length > 0, `${label} did not expose the active mobile chapter label`);
+    assert(mobileState.progressVisible, `${label} did not expose the mobile story progress bar`);
+    assert(mobileState.progressValue.length > 0, `${label} did not expose the mobile story progress label`);
+    assert(mobileState.positionLabel.length > 0, `${label} did not expose the mobile chapter position label`);
     assert(mobileState.toggleVisible, `${label} did not expose the mobile chapter tray toggle`);
     assert(mobileState.activeLinkVisible, `${label} did not keep the active mobile chapter chip in view`);
 
@@ -446,11 +481,15 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
         sheetVisible: Boolean(sheet && !sheet.hidden && panel && panel.getBoundingClientRect().height > 0),
         sheetLinkCount: document.querySelectorAll(".story-mobile-sheet__nav a").length,
         sheetCurrent: document.querySelector(".story-mobile-sheet__current")?.textContent?.trim() || "",
+        sheetProgress: document.querySelector(".story-mobile-sheet .story-progress__value")?.textContent?.trim() || "",
+        sheetPosition: document.querySelector(".story-mobile-sheet__position")?.textContent?.trim() || "",
       };
     });
     assert(sheetState.sheetVisible, `${label} did not open the mobile chapter tray`);
     assert(sheetState.sheetLinkCount > 0, `${label} did not populate the mobile chapter tray`);
     assert(sheetState.sheetCurrent.length > 0, `${label} did not mirror the current chapter into the mobile tray`);
+    assert(sheetState.sheetProgress.length > 0, `${label} did not mirror story progress into the mobile tray`);
+    assert(sheetState.sheetPosition.length > 0, `${label} did not mirror chapter position into the mobile tray`);
 
     await mobilePage.locator(".story-mobile-sheet__close").click();
     await mobilePage.waitForFunction(() => {

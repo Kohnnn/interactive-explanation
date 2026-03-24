@@ -106,6 +106,10 @@
     return link;
   }
 
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
   function revealActiveLinks(links, activeId) {
     links.forEach((link) => {
       if (link.dataset.storyTarget !== activeId) {
@@ -118,21 +122,41 @@
     });
   }
 
-  function setActive(links, activeId) {
+  function setProgress(progress, activeIndex, totalSections) {
+    const clampedProgress = clamp(progress, 0, 1);
+    const percentLabel = `${Math.round(clampedProgress * 100)}% through`;
+    const positionLabel = `${Math.min(activeIndex + 1, totalSections)} / ${totalSections}`;
+
+    document.querySelectorAll(".story-progress__bar").forEach((bar) => {
+      bar.style.width = `${clampedProgress * 100}%`;
+    });
+    document.querySelectorAll(".story-progress__value").forEach((node) => {
+      node.textContent = percentLabel;
+    });
+    document.querySelectorAll(".story-rail__position, .story-mobile-bar__position, .story-mobile-sheet__position").forEach((node) => {
+      node.textContent = positionLabel;
+    });
+  }
+
+  function setActive(linkGroups, activeId, activeIndex) {
     let activeLabel = "";
 
-    links.forEach((link) => {
-      const isActive = link.dataset.storyTarget === activeId;
-      link.classList.toggle("is-active", isActive);
-      if (isActive) {
-        link.setAttribute("aria-current", "true");
-        activeLabel = link.textContent?.trim() || "";
-      } else {
-        link.removeAttribute("aria-current");
-      }
+    linkGroups.forEach((links, index) => {
+      links.forEach((link) => {
+        const isActive = link.dataset.storyTarget === activeId;
+        const isComplete = index < activeIndex;
+        link.classList.toggle("is-active", isActive);
+        link.classList.toggle("is-complete", isComplete);
+        if (isActive) {
+          link.setAttribute("aria-current", "true");
+          activeLabel = link.textContent?.trim() || "";
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
     });
 
-    revealActiveLinks(links, activeId);
+    revealActiveLinks(linkGroups.flat(), activeId);
     document.querySelectorAll(".story-rail__current, .story-mobile-bar__current, .story-mobile-sheet__current").forEach((node) => {
       node.textContent = activeLabel;
     });
@@ -177,26 +201,35 @@
     });
   }
 
-  function observeActiveSection(sections, links) {
-    if (!sections.length || !links.length) {
+  function observeActiveSection(sections, linkGroups) {
+    if (!sections.length || !linkGroups.length) {
       return;
     }
 
+    const normalizedLinkGroups = Array.isArray(linkGroups[0]) ? linkGroups : linkGroups.map((link) => [link]);
     let frameId = 0;
 
     const updateActiveSection = () => {
       frameId = 0;
       const marker = Math.max(120, window.innerHeight * 0.3);
       let activeSection = sections[0];
+      let activeIndex = 0;
 
-      sections.forEach((section) => {
+      sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= marker) {
           activeSection = section;
+          activeIndex = index;
         }
       });
 
-      setActive(links, activeSection.id);
+      const firstTop = window.scrollY + sections[0].getBoundingClientRect().top;
+      const lastBottom = window.scrollY + sections[sections.length - 1].getBoundingClientRect().bottom;
+      const progressRange = Math.max(lastBottom - firstTop - marker, 1);
+      const progress = (window.scrollY + marker - firstTop) / progressRange;
+
+      setActive(normalizedLinkGroups, activeSection.id, activeIndex);
+      setProgress(progress, activeIndex, sections.length);
     };
 
     const requestUpdate = () => {
@@ -226,7 +259,12 @@
         <div class="story-rail__header">
           <div class="story-rail__label">Story rail</div>
           <div class="story-rail__summary">
-            <div class="story-rail__count">${sections.length} chapters</div>
+            <div class="story-rail__meta">
+              <div class="story-rail__count">${sections.length} chapters</div>
+              <div class="story-rail__position">1 / ${sections.length}</div>
+            </div>
+            <div class="story-progress" aria-hidden="true"><div class="story-progress__bar"></div></div>
+            <div class="story-progress__value">0% through</div>
             <div class="story-rail__current"></div>
           </div>
         </div>
@@ -243,6 +281,10 @@
         <div class="story-mobile-bar__meta">
           <div class="story-mobile-bar__eyebrow">Jump to</div>
           <div class="story-mobile-bar__current"></div>
+          <div class="story-mobile-bar__status">
+            <div class="story-mobile-bar__position">1 / ${sections.length}</div>
+            <div class="story-progress__value">0% through</div>
+          </div>
         </div>
         <button
           type="button"
@@ -251,6 +293,7 @@
           aria-controls="story-mobile-sheet-nav"
         >Browse</button>
       </div>
+      <div class="story-progress story-mobile-bar__progress" aria-hidden="true"><div class="story-progress__bar"></div></div>
       <div class="story-mobile-bar__nav"></div>
     `;
     const mobileNav = mobile.querySelector(".story-mobile-bar__nav");
@@ -266,6 +309,11 @@
             <div class="story-mobile-bar__eyebrow">Chapter rail</div>
             <h2 class="story-mobile-sheet__title" id="story-mobile-sheet-title">Browse the story</h2>
             <div class="story-mobile-sheet__current"></div>
+            <div class="story-mobile-sheet__status">
+              <div class="story-mobile-sheet__position">1 / ${sections.length}</div>
+              <div class="story-progress__value">0% through</div>
+            </div>
+            <div class="story-progress story-mobile-sheet__progress" aria-hidden="true"><div class="story-progress__bar"></div></div>
           </div>
           <button type="button" class="story-mobile-sheet__close">Close</button>
         </div>
@@ -288,7 +336,7 @@
     document.body.appendChild(mobile);
     document.body.appendChild(sheet);
     wireMobileSheet();
-    observeActiveSection(sections, linkGroups.flat());
+    observeActiveSection(sections, linkGroups);
   }
 
   function getNativeLinks(body) {

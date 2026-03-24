@@ -293,10 +293,41 @@ body[data-story-shell="engineering-sandbox"] .story-rail__header {
 
 body[data-story-shell="engineering-sandbox"] .story-rail__summary {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.35rem;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-rail__meta,
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__status,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-progress {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: rgba(41, 90, 114, 0.09);
+}
+
+body[data-story-shell="engineering-sandbox"] .story-progress__bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(37, 87, 110, 0.95), rgba(211, 135, 45, 0.95));
+  transition: width 180ms ease;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-rail__count,
+body[data-story-shell="engineering-sandbox"] .story-rail__position,
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__position,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__position,
+body[data-story-shell="engineering-sandbox"] .story-progress__value,
 body[data-story-shell="engineering-sandbox"] .story-rail__current,
 body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__current {
   min-width: 0;
@@ -311,6 +342,16 @@ body[data-story-shell="engineering-sandbox"] .story-rail__count {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-rail__position,
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__position,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__position,
+body[data-story-shell="engineering-sandbox"] .story-progress__value {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-rail__nav,
@@ -370,11 +411,24 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link.is-active
   color: #143246;
 }
 
+body[data-story-shell="engineering-sandbox"] .story-rail__link.is-complete,
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link.is-complete,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link.is-complete {
+  color: #20475a;
+}
+
 body[data-story-shell="engineering-sandbox"] .story-rail__link.is-active::before,
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link.is-active::before,
 body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link.is-active::before {
   background: var(--story-accent);
   border-color: rgba(211, 135, 45, 0.5);
+}
+
+body[data-story-shell="engineering-sandbox"] .story-rail__link.is-complete::before,
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link.is-complete::before,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link.is-complete::before {
+  background: rgba(37, 87, 110, 0.3);
+  border-color: rgba(37, 87, 110, 0.36);
 }
 
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar {
@@ -419,6 +473,15 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__current {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__status,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__status {
+  margin-top: 0.18rem;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__progress {
+  margin-bottom: 0.45rem;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar__toggle,
