@@ -12,7 +12,7 @@
 <body data-page-type="home">
   <main class="site-page">
     <section class="hero">
-      <p class="eyebrow">Interactive Explanation</p>
+      <p class="eyebrow">Interactive Explanation Atlas</p>
       <h1>Replica routes for interactive explanations</h1>
       <p class="lead">
         This folder is a self-contained static site for subpath hosting. The public pages stay
@@ -24,13 +24,65 @@
         stay as planning or research material until they are vendored, documented, and added to
         <code>pages.json</code>.
       </p>
-      <div class="action-row" data-quick-links>
-        <div class="empty-state">Loading quick links...</div>
+      <div class="stat-grid" data-home-stats>
+        <div class="empty-state">Loading route stats...</div>
+      </div>
+      <div class="action-row">
+        <a class="action-link" href="#route-inventory">Open route inventory</a>
+        <a class="action-link secondary" href="#family-board">Browse source families</a>
+        <a class="action-link ghost" href="./pages.json">Open manifest JSON</a>
       </div>
     </section>
 
-    <section class="page-grid" data-page-list>
-      <div class="empty-state">Loading page manifest...</div>
+    <section class="inventory-section" id="family-board">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Source Families</p>
+          <h2>Color-coded route groups</h2>
+        </div>
+        <p class="meta-line">
+          Use the source-family board to scan the collection and jump the inventory into a focused
+          subset when you are shipping, QA-ing, or auditing a specific batch.
+        </p>
+      </div>
+      <div class="family-grid" data-family-board>
+        <div class="empty-state">Loading family board...</div>
+      </div>
+    </section>
+
+    <section class="inventory-section" id="route-inventory">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Route Inventory</p>
+          <h2>Filter the shipped replicas</h2>
+        </div>
+        <p class="meta-line" data-page-results>
+          Loading route inventory...
+        </p>
+      </div>
+
+      <div class="inventory-toolbar">
+        <label class="search-field">
+          <span class="search-field__label">Search routes</span>
+          <input
+            type="search"
+            placeholder="Search title, slug, summary, or source host"
+            autocomplete="off"
+            data-filter-query
+          >
+        </label>
+
+        <div class="filter-group">
+          <div class="filter-group__label">Family filter</div>
+          <div class="filter-pills" data-family-filters>
+            <div class="empty-state">Loading filters...</div>
+          </div>
+        </div>
+      </div>
+
+      <section class="page-grid" data-page-list>
+        <div class="empty-state">Loading page manifest...</div>
+      </section>
     </section>
   </main>
 
