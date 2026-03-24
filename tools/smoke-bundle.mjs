@@ -404,6 +404,59 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
       layoutState.railRight <= layoutState.chapterLeft - 12,
       `${label} desktop rail overlapped the story column at 1440px`,
     );
+
+    const mobilePage = await context.newPage();
+    await mobilePage.setViewportSize({ width: 390, height: 844 });
+    await assertRoute(mobilePage, relativePath, "#reference-footer");
+    await mobilePage.waitForSelector(readySelector, { timeout: 30000 });
+    await mobilePage.waitForSelector(".story-mobile-bar__nav a", { timeout: 15000 });
+
+    const mobileState = await mobilePage.evaluate(() => {
+      const mobileBar = document.querySelector(".story-mobile-bar");
+      const activeLink = document.querySelector(".story-mobile-bar__link.is-active");
+      const toggle = document.querySelector(".story-mobile-bar__toggle");
+      const barRect = mobileBar?.getBoundingClientRect();
+      const linkRect = activeLink?.getBoundingClientRect();
+      return {
+        mobileBarVisible: Boolean(barRect && barRect.height > 0),
+        currentLabel: document.querySelector(".story-mobile-bar__current")?.textContent?.trim() || "",
+        toggleVisible: Boolean(toggle && toggle.getBoundingClientRect().width > 0),
+        activeLinkVisible: Boolean(
+          barRect &&
+          linkRect &&
+          linkRect.left >= barRect.left - 1 &&
+          linkRect.right <= barRect.right + 1
+        ),
+      };
+    });
+    assert(mobileState.mobileBarVisible, `${label} did not expose the mobile chapter bar at 390px`);
+    assert(mobileState.currentLabel.length > 0, `${label} did not expose the active mobile chapter label`);
+    assert(mobileState.toggleVisible, `${label} did not expose the mobile chapter tray toggle`);
+    assert(mobileState.activeLinkVisible, `${label} did not keep the active mobile chapter chip in view`);
+
+    await mobilePage.locator(".story-mobile-bar__toggle").click();
+    await mobilePage.waitForFunction(() => {
+      const sheet = document.querySelector(".story-mobile-sheet");
+      return Boolean(sheet && !sheet.hidden);
+    }, null, { timeout: 5000 });
+    const sheetState = await mobilePage.evaluate(() => {
+      const sheet = document.querySelector(".story-mobile-sheet");
+      const panel = document.querySelector(".story-mobile-sheet__panel");
+      return {
+        sheetVisible: Boolean(sheet && !sheet.hidden && panel && panel.getBoundingClientRect().height > 0),
+        sheetLinkCount: document.querySelectorAll(".story-mobile-sheet__nav a").length,
+        sheetCurrent: document.querySelector(".story-mobile-sheet__current")?.textContent?.trim() || "",
+      };
+    });
+    assert(sheetState.sheetVisible, `${label} did not open the mobile chapter tray`);
+    assert(sheetState.sheetLinkCount > 0, `${label} did not populate the mobile chapter tray`);
+    assert(sheetState.sheetCurrent.length > 0, `${label} did not mirror the current chapter into the mobile tray`);
+
+    await mobilePage.locator(".story-mobile-sheet__close").click();
+    await mobilePage.waitForFunction(() => {
+      return Boolean(document.querySelector(".story-mobile-sheet")?.hidden);
+    }, null, { timeout: 5000 });
+    await mobilePage.close();
   } else {
     const layoutState = await page.evaluate(() => {
       const hero = document.querySelector(".story-hero");
@@ -2799,6 +2852,11 @@ async function smokeColorSpaces(context) {
     "color-spaces/",
     "#color_plain_linear_quadratic_slider_container .color_slider_knob",
     "color-spaces route",
+    {
+      expectedRoute: "color-spaces",
+      minimumChapters: 12,
+      playHref: "#color_plain_srgb_slider_container",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("color-spaces route");
@@ -2931,6 +2989,11 @@ async function smokeSound(context) {
     "sound/",
     "#hero_keyboard .keyboard_button",
     "sound route",
+    {
+      expectedRoute: "sound",
+      minimumChapters: 6,
+      playHref: "#hero_keyboard",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("sound route");
@@ -3102,6 +3165,11 @@ async function smokeCamerasAndLenses(context) {
     "cameras-and-lenses/",
     "#lens_detector_sl0 .slider_knob",
     "cameras-and-lenses route",
+    {
+      expectedRoute: "cameras-and-lenses",
+      minimumChapters: 6,
+      playHref: "#lens_hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("cameras-and-lenses route");
@@ -3233,6 +3301,11 @@ async function smokeLightsAndShadows(context) {
     "lights-and-shadows/",
     "#lns_shadow2_rot_y_slider_container .slider_knob",
     "lights-and-shadows route",
+    {
+      expectedRoute: "lights-and-shadows",
+      minimumChapters: 10,
+      playHref: "#lns_shadow2",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("lights-and-shadows route");
@@ -3366,6 +3439,11 @@ async function smokeTesseract(context) {
     "tesseract/",
     "#ts_3D_demo_slice_slider_container .slider_knob",
     "tesseract route",
+    {
+      expectedRoute: "tesseract",
+      minimumChapters: 10,
+      playHref: "#ts_3D_demo_slice_container",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("tesseract route");
@@ -3441,6 +3519,11 @@ async function smokeGears(context) {
     "gears/",
     "#gears_angular_velocity_slider_container .slider_knob",
     "gears route",
+    {
+      expectedRoute: "gears",
+      minimumChapters: 10,
+      playHref: "#gears_demo",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("gears route");
@@ -3501,6 +3584,11 @@ async function smokeGps(context) {
     "gps/",
     "#map0 canvas",
     "gps route",
+    {
+      expectedRoute: "gps",
+      minimumChapters: 15,
+      playHref: "#gps_orbits_hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("gps route");
@@ -3573,6 +3661,11 @@ async function smokeEarthAndSun(context) {
     "earth-and-sun/",
     "#es_earth_sunlight canvas",
     "earth-and-sun route",
+    {
+      expectedRoute: "earth-and-sun",
+      minimumChapters: 11,
+      playHref: "#es_earth_sunlight",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("earth-and-sun route");
@@ -3658,6 +3751,11 @@ async function smokeBicycle(context) {
     "bicycle/",
     "#hero canvas",
     "bicycle route",
+    {
+      expectedRoute: "bicycle",
+      minimumChapters: 12,
+      playHref: "#hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("bicycle route");
@@ -3828,6 +3926,11 @@ async function smokeCurvesAndSurfaces(context) {
     "curves-and-surfaces/",
     "#cs_control_points canvas",
     "curves-and-surfaces route",
+    {
+      expectedRoute: "curves-and-surfaces",
+      minimumChapters: 13,
+      playHref: "#cs_subdiv_hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("curves-and-surfaces route");
@@ -3899,6 +4002,11 @@ async function smokeInternalCombustionEngine(context) {
     "internal-combustion-engine/",
     "#ice_hero canvas",
     "internal-combustion-engine route",
+    {
+      expectedRoute: "internal-combustion-engine",
+      minimumChapters: 8,
+      playHref: "#ice_hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("internal-combustion-engine route");
@@ -4059,6 +4167,11 @@ async function smokeNavalArchitecture(context) {
     "naval-architecture/",
     "#na_syringe_pressure canvas",
     "naval-architecture route",
+    {
+      expectedRoute: "naval-architecture",
+      minimumChapters: 10,
+      playHref: "#na_hero",
+    },
   );
   await page.waitForTimeout(250);
   assertPageRuntimeClean("naval-architecture route");

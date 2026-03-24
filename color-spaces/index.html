@@ -18,13 +18,53 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   <link href="./css/base.css" rel="stylesheet" type="text/css">
   <link href="./css/color_spaces.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="./js/base.js"></script>
   <script defer src="./js/color_spaces.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 
-<body data-reference-url="https://ciechanow.ski/color-spaces/" data-reference-text="Color Spaces" data-footer-label="Original page">
+<body
+  data-reference-url="https://ciechanow.ski/color-spaces/"
+  data-reference-text="Color Spaces"
+  data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-family="ciechanowski-essay"
+  data-story-nav="generated"
+  data-story-route="color-spaces"
+>
+  <section class="story-hero">
+    <p class="story-hero__eyebrow">Engineering Sandbox rollout · ciechanowski visual essays</p>
+    <div class="story-hero__grid">
+      <div>
+        <h1 class="story-hero__title">Move the pickers first, then let the gamut math explain the mismatch.</h1>
+        <p class="story-hero__summary">
+          This essay clicks faster when you feel that the same RGB numbers can mean different
+          colors before you read the definitions. Compare the early pickers, watch gamma break the
+          intuition, and then carry that instinct into the plots and gamut views.
+        </p>
+        <div class="story-hero__meta">
+          <span class="story-chip">Compare two RGB pickers</span>
+          <span class="story-chip">Feel the gamma mismatch</span>
+          <span class="story-chip">Carry it into gamut plots</span>
+        </div>
+      </div>
+      <div class="story-callout story-hero__panel" data-story-callout="play">
+        <span class="story-callout__label">How to use this page</span>
+        <p>
+          Start by dragging the first picker to see how familiar RGB controls behave. Then compare
+          the mismatch and intensity sections before you move into the chromaticity and gamut
+          diagrams.
+        </p>
+        <div class="story-hero__actions">
+          <a class="story-button" href="#color_plain_srgb_slider_container">Play first: compare the pickers</a>
+          <a class="story-button story-button--secondary" href="#intensity-mismatch">Jump to intensity mismatch</a>
+        </div>
+      </div>
+    </div>
+  </section>
   <div id="main_container">
     <div id="body">
       <div id="content">

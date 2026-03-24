@@ -2,7 +2,7 @@
   {
     "moduleId": "article-shell-and-local-naval-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and navarch scripts, then initializes many inline ship, fluid, and propeller scenes under one longform page.",
-    "localStatus": "The local route keeps the published article structure, shared article styling, route-local ship model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica.",
+    "localStatus": "The local route keeps the published article structure, shared article styling, route-local ship model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",
     "sourceFiles": [
       "../../naval-architecture/index.html",
       "../../naval-architecture/css/base.css",
@@ -11,7 +11,8 @@
     ],
     "notes": [
       "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
-      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite."
+      "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite.",
+      "The shipped shell adds a local hero and reinforced generated chapter navigation without replacing the underlying article runtime."
     ],
     "evidence": [
       "Implementation planning treated the published article shell, the naval model data, and both scripts as parity-critical.",
