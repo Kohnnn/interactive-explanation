@@ -55,7 +55,7 @@
   },
   {
     "moduleId": "footer-only-provenance-and-local-family-link",
-    "originalBehavior": "The published article closes with further-reading sections and an upstream footer that includes supporter messaging and author provenance, while also referring back to other Bartosz articles by upstream URL.",
+    "originalBehavior": "The published article closes with further-reading sections and an upstream footer that includes supporter messaging and author provenance, while also referring back to other family articles by upstream URL.",
     "localStatus": "The local route keeps the published closing sections while leaving the shared footer as the only public original-page reference surface and rewriting available local cross-links.",
     "sourceFiles": [
       "../../curves-and-surfaces/index.html",
@@ -67,7 +67,7 @@
       "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
     ],
     "evidence": [
-      "The hardened Ciechanowski audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "The hardened longform-family audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
       "Route cleanup rewrote the local `gears` tangency reference so the family continues converging toward local intra-family navigation."
     ]
   }

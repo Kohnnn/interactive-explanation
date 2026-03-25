@@ -48,7 +48,7 @@
     ],
     "notes": [
       "The published 3D bicycle scenes now load their model data from the route-local model tree instead of the upstream root path.",
-      "The shipped `gears` reference is rewritten locally while not-yet-shipped Bartosz article links remain neutralized in the public body."
+      "The shipped `gears` reference is rewritten locally while not-yet-shipped family article links remain neutralized in the public body."
     ],
     "evidence": [
       "Implementation planning treated one wheel or slip scene as parity-critical for the bicycle batch.",
@@ -70,7 +70,7 @@
       "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
     ],
     "evidence": [
-      "The hardened Ciechanowski audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "The hardened longform-family audit flags ordinary in-body upstream article links while allowing footer-only provenance.",
       "Shared smoke coverage verifies a later torsion scene remains interactive and the route stays responsive without upstream asset dependencies."
     ]
   }

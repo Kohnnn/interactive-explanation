@@ -148,7 +148,7 @@ function inferRouteFamily(route) {
     return "anders";
   }
   if (/ciechanow\.ski/i.test(referenceUrl)) {
-    return "ciechanowski";
+    return "engineering-longform";
   }
   if (/teoria\.com/i.test(referenceUrl)) {
     return "teoria";
@@ -774,7 +774,7 @@ async function setSelectControlByLabel(page, scopeSelector, labelText, value) {
   }, { labelText, value });
 }
 
-async function assertCiechanowskiResponsiveShell(context, page, relativePath, readySelector, label, options = {}) {
+async function assertLongformResponsiveShell(context, page, relativePath, readySelector, label, options = {}) {
   const {
     expectedRoute = null,
     minimumChapters = 4,
@@ -785,7 +785,7 @@ async function assertCiechanowskiResponsiveShell(context, page, relativePath, re
     await assertEngineeringSandboxShell(page, label, {
       minimumChapters,
       navMode: "generated",
-      expectedFamily: "ciechanowski-essay",
+      expectedFamily: "engineering-longform",
       expectedRoute,
     });
 
@@ -2789,7 +2789,7 @@ async function smokeAlphaCompositing(context) {
     const pdExampleAfter = (await page.locator("#alpha_pd_example_step").textContent())?.trim() || "";
     if (pdExampleAfter && pdExampleAfter !== pdExampleBefore) {
       console.log("OK alpha-compositing step-driven Porter-Duff scene");
-      await assertCiechanowskiResponsiveShell(
+      await assertLongformResponsiveShell(
         context,
         page,
         "alpha-compositing/",
@@ -2885,7 +2885,7 @@ async function smokeColorSpaces(context) {
   }, gamutBefore, { timeout: 5000 });
   console.log("OK color-spaces gamut scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "color-spaces/",
@@ -3022,7 +3022,7 @@ async function smokeSound(context) {
   }, playBefore || "", { timeout: 5000 });
   console.log("OK sound play-pause control");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "sound/",
@@ -3198,7 +3198,7 @@ async function smokeCamerasAndLenses(context) {
   }, chromaticBefore, { timeout: 5000 });
   console.log("OK cameras-and-lenses later lens scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "cameras-and-lenses/",
@@ -3334,7 +3334,7 @@ async function smokeLightsAndShadows(context) {
   }, bounceBefore, { timeout: 5000 });
   console.log("OK lights-and-shadows later bounce scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "lights-and-shadows/",
@@ -3472,7 +3472,7 @@ async function smokeTesseract(context) {
   }, sliceBefore, { timeout: 5000 });
   console.log("OK tesseract later slice scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "tesseract/",
@@ -3552,7 +3552,7 @@ async function smokeGears(context) {
   }, compoundBefore, { timeout: 5000 });
   console.log("OK gears compound-gear scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "gears/",
@@ -3617,7 +3617,7 @@ async function smokeGps(context) {
   }, orbitBefore, { timeout: 5000 });
   console.log("OK gps orbital inclination scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "gps/",
@@ -3694,7 +3694,7 @@ async function smokeEarthAndSun(context) {
   }, tropicalBefore, { timeout: 5000 });
   console.log("OK earth-and-sun tropical-year scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "earth-and-sun/",
@@ -3784,7 +3784,7 @@ async function smokeBicycle(context) {
   }, torsionBefore, { timeout: 5000 });
   console.log("OK bicycle torsion scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "bicycle/",
@@ -3864,7 +3864,7 @@ async function smokeAirfoil(context) {
   }, laterBefore, { timeout: 10000 });
   console.log("OK airfoil later airfoil scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "airfoil/",
@@ -3959,7 +3959,7 @@ async function smokeCurvesAndSurfaces(context) {
   }, surfaceBefore, { timeout: 5000 });
   console.log("OK curves-and-surfaces surface subdivision scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "curves-and-surfaces/",
@@ -4035,7 +4035,7 @@ async function smokeInternalCombustionEngine(context) {
   }, starterBefore, { timeout: 5000 });
   console.log("OK internal-combustion-engine starter scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "internal-combustion-engine/",
@@ -4112,7 +4112,7 @@ async function smokeMechanicalWatch(context) {
   }, sizeBefore, { timeout: 5000 });
   console.log("OK mechanical-watch final size scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "mechanical-watch/",
@@ -4200,7 +4200,7 @@ async function smokeNavalArchitecture(context) {
   }, propellerBefore, { timeout: 5000 });
   console.log("OK naval-architecture propulsion scene");
 
-  await assertCiechanowskiResponsiveShell(
+  await assertLongformResponsiveShell(
     context,
     page,
     "naval-architecture/",

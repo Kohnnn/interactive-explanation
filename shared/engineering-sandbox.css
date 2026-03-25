@@ -1225,70 +1225,70 @@ body[data-story-shell="engineering-sandbox"] .story-legacy-title {
   clip-path: inset(50%);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] {
   --story-shell-max: 56rem;
   box-sizing: border-box;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .story-hero {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .story-hero {
   max-width: min(var(--story-shell-max), calc(100vw - 2rem));
   margin-bottom: 1rem;
   padding-top: 2.65rem;
   padding-bottom: 1rem;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .story-hero__title {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .story-hero__title {
   font-size: clamp(2.35rem, 5.6vw, 4.5rem);
   line-height: 0.97;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .story-hero__summary {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .story-hero__summary {
   max-width: 43rem;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container {
   max-width: min(var(--story-shell-max), calc(100vw - 2rem));
   margin: 0 auto;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #content {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #content {
   max-width: 100%;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #body {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #body {
   padding-bottom: 1.5rem;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container p,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container li,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container button,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container input,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container textarea {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container p,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container li,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container button,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container input,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container textarea {
   font-family: system-ui, "Helvetica Neue", Arial, sans-serif;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h1,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h2,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h3,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h4,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h5,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #main_container h6 {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h1,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h2,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h3,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h4,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h5,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container h6 {
   color: #535353;
   font-family: system-ui, "Helvetica Neue", Arial, sans-serif;
   letter-spacing: 0;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .article > .post_date,
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .article > .post_title {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .article > .post_date,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .article > .post_title {
   display: none;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] .story-auto-section {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .story-auto-section {
   display: block;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"] #reference-footer {
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #reference-footer {
   width: min(var(--story-shell-max), calc(100vw - 2rem));
   margin-left: auto;
   margin-right: auto;
@@ -1362,17 +1362,17 @@ body[data-story-shell="engineering-sandbox"][data-reference-text="Double Descent
 }
 
 @media (min-width: 1200px) {
-  body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"][data-story-nav="generated"] {
+  body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-nav="generated"] {
     padding-left: var(--story-rail-offset);
     padding-bottom: 0;
   }
 
-  body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"][data-story-nav="generated"] .story-rail {
+  body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-nav="generated"] .story-rail {
     display: block;
   }
 
-  body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"][data-story-nav="generated"] .story-mobile-bar,
-  body[data-story-shell="engineering-sandbox"][data-story-family="ciechanowski-essay"][data-story-nav="generated"] .story-mobile-sheet {
+  body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-nav="generated"] .story-mobile-bar,
+  body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-nav="generated"] .story-mobile-sheet {
     display: none;
   }
 }

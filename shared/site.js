@@ -29,9 +29,9 @@ const FAMILY_CONFIGS = {
     description: "Blockchain, signing, and zero-knowledge demos.",
     tone: "brick",
   },
-  ciechanowski: {
-    key: "ciechanowski",
-    label: "Bartosz Ciechanowski",
+  "engineering-longform": {
+    key: "engineering-longform",
+    label: "Engineering Longform",
     description: "Dense engineering essays with simulation-heavy scenes.",
     tone: "copper",
   },
@@ -126,7 +126,7 @@ function getFamilyKey(page) {
     return "anders-brownworth";
   }
   if (host === "ciechanow.ski") {
-    return "ciechanowski";
+    return "engineering-longform";
   }
   if (host === "learningmusic.ableton.com" || host === "learningsynths.ableton.com") {
     return "ableton";
@@ -146,7 +146,9 @@ function getFamilyKey(page) {
 function enrichPage(page, manifestIndex) {
   const familyKey = getFamilyKey(page);
   const family = FAMILY_CONFIGS[familyKey] || FAMILY_CONFIGS["independent-labs"];
-  const referenceHost = getReferenceHost(page);
+  const referenceHost = familyKey === "engineering-longform"
+    ? "Reference archive"
+    : getReferenceHost(page);
 
   return {
     manifestIndex: manifestIndex,
@@ -363,10 +365,13 @@ function createPageCard(page) {
   actions.appendChild(createActionLink("./" + page.slug + "/", "Open replica", "action-link"));
   actions.appendChild(createActionLink(page.docsUrl, "Docs", "action-link secondary"));
   if (page.referenceUrl) {
+    const referenceLabel = page.referenceMode === "neutral" || page.family.key === "engineering-longform"
+      ? "Reference"
+      : "Upstream";
     actions.appendChild(
       createActionLink(
         page.referenceUrl,
-        page.referenceMode === "neutral" ? "Reference" : "Upstream",
+        referenceLabel,
         "action-link ghost",
         true,
       ),

@@ -49,10 +49,10 @@
     ],
     "notes": [
       "The published WebGL Earth scenes now load their texture assets from the route-local GPS image tree instead of the upstream root path.",
-      "In-body Ciechanowski article links are rewritten locally when available or neutralized when the target route is not shipped yet."
+      "In-body longform engineering article links are rewritten locally when available or neutralized when the target route is not shipped yet."
     ],
     "evidence": [
-      "Implementation planning treated one orbital or inclination scene as parity-critical for the second Bartosz pilot.",
+      "Implementation planning treated one orbital or inclination scene as parity-critical for the second longform pilot.",
       "Shared smoke coverage verifies an orbital-inclination scene updates from slider input without runtime asset failures."
     ]
   },
@@ -70,7 +70,7 @@
       "The public body no longer includes the Patreon footer prompt or other author-promo surfaces."
     ],
     "evidence": [
-      "The hardened Ciechanowski audit now flags ordinary in-body upstream article links while allowing footer-only provenance.",
+      "The hardened longform-family audit now flags ordinary in-body upstream article links while allowing footer-only provenance.",
       "Shared smoke coverage verifies the route stays responsive and runtime-clean without upstream asset dependencies."
     ]
   }

@@ -9,7 +9,7 @@
       "../../reading-qr-codes-without-a-computer/assets/index-s1eyThQf.css"
     ],
     "notes": [
-      "The route stays in the published app runtime instead of translating the walkthrough into the Ciechanowski longform article shell.",
+      "The route stays in the published app runtime instead of translating the walkthrough into the longform engineering article shell.",
       "The hashed bundle remains vendored as shipped, with only route-level asset path fixes for subpath hosting."
     ],
     "evidence": [

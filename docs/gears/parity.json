@@ -46,10 +46,10 @@
     ],
     "notes": [
       "The route preserves the published progression from pitch circles to involute tooth shapes rather than collapsing the middle sections into static diagrams.",
-      "Ciechanowski cross-links in the public body are rewritten locally when available or neutralized when no local replica exists."
+      "Longform family cross-links in the public body are rewritten locally when available or neutralized when no local replica exists."
     ],
     "evidence": [
-      "Batch policy hardening introduced explicit audit coverage for ordinary in-body Ciechanowski article links.",
+      "Batch policy hardening introduced explicit audit coverage for ordinary in-body longform engineering article links.",
       "The local route keeps the original geometry sections while the public-surface audit enforces footer-only provenance."
     ]
   },

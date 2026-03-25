@@ -70,10 +70,9 @@ const policyTables = {
     { label: "upstream promo link", regex: /https?:\/\/aws\.amazon\.com\/machine-learning\/mlu\/|https?:\/\/(?:www\.)?youtube\.com\/channel\/UC12LqyqTQYbXatYS9AA7Nuw/i },
     { label: "upstream contributor callout", regex: /A special thanks goes out to Brent Werness/i },
   ],
-  ciechanowski: [
-    { label: "creator name", regex: /\bBartosz Ciechanowski\b/i },
-    { label: "upstream ciechanow article link", regex: /https?:\/\/ciechanow\.ski\/(?!atom\.xml)(?!images\/)(?!css\/)(?!js\/)[^"'>\s)]+/i },
-    { label: "creator self-link", regex: /https?:\/\/(?:www\.)?twitter\.com\/bciechanowski|https?:\/\/(?:www\.)?instagram\.com\/bartoszciechanowski\/?|https?:\/\/(?:www\.)?patreon\.com\/ciechanowski|mailto:bartosz@ciechanow\.ski|https?:\/\/ciechanow\.ski\/atom\.xml/i },
+  "engineering-longform": [
+    { label: "upstream article link", regex: /https?:\/\/ciechanow\.ski\/(?!atom\.xml)(?!images\/)(?!css\/)(?!js\/)[^"'>\s)]+/i },
+    { label: "legacy feed or email link", regex: /https?:\/\/(?:www\.)?patreon\.com\/[^"'>\s)]+|mailto:[^"'>\s]*@ciechanow\.ski|https?:\/\/ciechanow\.ski\/atom\.xml/i },
   ],
   teoria: [
     {

@@ -17,17 +17,16 @@
       <h1>Earth and Sun</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/earth-and-sun/</code> vendors the published
-        Ciechanowski article, keeps its orbit, axial-tilt, seasonal, and time-tracking scenes
+        longform engineering article, keeps its orbit, axial-tilt, seasonal, and time-tracking scenes
         intact, adds the shared engineering-sandbox onboarding hero and reinforced chapter rail,
         and limits public provenance to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../earth-and-sun/">Open replica</a>
-        <a class="action-link secondary" href="https://ciechanow.ski/earth-and-sun/" target="_blank" rel="noreferrer">Open original</a>
       </div>
       <p class="meta-line">
         Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
-        Source family: <code>ciechanow.ski</code>
+        Source family: <code>longform-engineering</code>
       </p>
     </header>
 
@@ -40,7 +39,7 @@
           provenance surfaces needed for the public replica.
         </p>
         <ul class="plain-list">
-          <li>Live original verified against <code>https://ciechanow.ski/earth-and-sun/</code> on 2026-03-21.</li>
+          <li>Live source snapshot verified and archived for this route on 2026-03-21.</li>
           <li>The local copy removes the upstream banner, blog navigation, analytics, Patreon prompt, and social links from the public body.</li>
           <li>The shipped route now adds a compact engineering-sandbox hero and reinforced generated chapter navigation while leaving the article runtime in place.</li>
           <li>The orbit, day-length, axial-tilt, precession, and seasonal scenes remain driven by the vendored scripts rather than a local rewrite.</li>
@@ -63,7 +62,7 @@
           <li>The public route no longer includes the author banner, Patreon prompt, X/Twitter, Instagram, e-mail, RSS, or Google Analytics surfaces.</li>
           <li>The local copy uses local fallback font stacks instead of runtime Google Fonts requests so the route stays self-contained.</li>
           <li>The onboarding shell is additive: it introduces local hero framing and reinforced chapter navigation without rewriting the underlying article scenes.</li>
-          <li>Later Bartosz routes can now rewrite local `earth-and-sun` references directly instead of neutralizing them in the public body.</li>
+          <li>Later family routes can now rewrite local `earth-and-sun` references directly instead of neutralizing them in the public body.</li>
         </ul>
       </article>
 
@@ -71,7 +70,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Keep the article structure intact; future edits should patch the published shell, not rewrite the interactions into a condensed local experience.</li>
-          <li>Extend the shared smoke bundle through the Ciechanowski family helpers instead of creating a one-off validator.</li>
+          <li>Extend the shared smoke bundle through the engineering-longform family helpers instead of creating a one-off validator.</li>
           <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching article shell copy or any vendored runtime files.</li>
         </ul>
       </article>

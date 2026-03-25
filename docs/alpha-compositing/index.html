@@ -17,17 +17,16 @@
       <h1>Alpha Compositing</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/alpha-compositing/</code> vendors the
-        published Ciechanowski article, keeps its canvas and slider runtime intact, adds the
+        published longform engineering article, keeps its canvas and slider runtime intact, adds the
         shared engineering-sandbox onboarding hero and chapter rail, and limits public provenance
         to the shared footer.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../alpha-compositing/">Open replica</a>
-        <a class="action-link secondary" href="https://ciechanow.ski/alpha-compositing/" target="_blank" rel="noreferrer">Open original</a>
       </div>
       <p class="meta-line">
         Upstream snapshot: <code>published site capture verified 2026-03-20</code><br>
-        Source family: <code>ciechanow.ski</code>
+        Source family: <code>longform-engineering</code>
       </p>
     </header>
 
@@ -40,7 +39,7 @@
           surfaces needed for subpath hosting.
         </p>
         <ul class="plain-list">
-          <li>Live original verified against <code>https://ciechanow.ski/alpha-compositing/</code> on 2026-03-20.</li>
+          <li>Live source snapshot verified and archived for this route on 2026-03-20.</li>
           <li>The local copy removes the upstream banner, blog navigation, analytics, Patreon prompt, and social links from the public body.</li>
           <li>The shipped route now adds a compact engineering-sandbox hero and generated chapter navigation while leaving the article runtime in place.</li>
           <li>The interactive runtime still relies on the published canvas, slider, drag, and segmented-control modules from the vendored scripts.</li>
@@ -71,7 +70,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Keep the article structure intact; future edits should patch the published shell, not rewrite the interactions into a custom condensed page.</li>
-          <li>Extend the shared smoke bundle instead of creating a one-off validator so later Ciechanowski routes can reuse the same family path.</li>
+          <li>Extend the shared smoke bundle instead of creating a one-off validator so later longform engineering routes can reuse the same family path.</li>
           <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching article shell copy or any of the vendored scripts.</li>
         </ul>
       </article>

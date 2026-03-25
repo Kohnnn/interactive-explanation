@@ -419,8 +419,8 @@
     });
   }
 
-  function prepareCiechanowskiArticle(body) {
-    if (body.dataset.storyFamily !== "ciechanowski-essay") {
+  function prepareLongformEngineeringArticle(body) {
+    if (body.dataset.storyFamily !== "engineering-longform") {
       return;
     }
 
@@ -491,7 +491,7 @@
     }
 
     const navMode = body.dataset.storyNav || "generated";
-    prepareCiechanowskiArticle(body);
+    prepareLongformEngineeringArticle(body);
     await applyRouteChapterConfig(getSlug());
 
     const sections = Array.from(document.querySelectorAll("[data-story-chapter]"));
