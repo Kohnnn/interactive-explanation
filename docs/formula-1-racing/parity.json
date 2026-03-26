@@ -1,0 +1,75 @@
+[
+  {
+    "moduleId": "engineering-sandbox-longform-shell",
+    "originalBehavior": "The route is designed as an original longform article that should use the shared Engineering Sandbox shell rather than a bespoke standalone layout.",
+    "localStatus": "The local route uses the shared Engineering Sandbox longform family with a generated story rail, shared hero framing, and shared footer contract while keeping all public teaching content local to the route.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The route keeps its own Formula 1 visual language through local CSS overrides instead of copying an upstream longform page.",
+      "Chapter navigation depends on top-level h1 ids in the longform body."
+    ],
+    "evidence": [
+      "The route hero, generated chapter rail, and mobile chapter navigation are all mounted by the shared shell.",
+      "The public route uses neutral provenance handling because it is not a vendored replica."
+    ]
+  },
+  {
+    "moduleId": "car-overview-hotspot-map",
+    "originalBehavior": "The route plan calls for an opening scene that lets readers inspect the F1 car as one connected system before drilling into subsystems.",
+    "localStatus": "The local route ships an interactive car map with component buttons, highlighted regions, and explanatory panel copy for the major aerodynamic, mechanical, braking, and power-unit areas.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "This scene is the phase-1 anchor interaction for the route.",
+      "The map intentionally prioritizes teaching clarity over geometry accuracy."
+    ],
+    "evidence": [
+      "The route ships selectable hotspot buttons and synchronized component copy.",
+      "The active component also highlights the matching region in the car diagram."
+    ]
+  },
+  {
+    "moduleId": "aero-floor-and-braking-scenes",
+    "originalBehavior": "The route plan calls for original scenes that explain airflow, ground effect, and braking as connected constraints on lap time.",
+    "localStatus": "The local route ships simplified airflow, underfloor, and braking scenes with controllable inputs and live derived readouts for load share, drag, stability, suction, platform risk, braking authority, and rotation behavior.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "The scenes are intentionally explanatory, not telemetry-grade simulations.",
+      "Airflow and underfloor scenes are centered on tradeoffs rather than numeric fidelity."
+    ],
+    "evidence": [
+      "Range controls update the scene metrics and illustrations in real time.",
+      "The braking scene exposes the stability versus rotation compromise through brake-bias and harvest adjustments."
+    ]
+  },
+  {
+    "moduleId": "power-tyre-track-and-setup-synthesis",
+    "originalBehavior": "The route plan calls for hybrid power, tyre window, track layout, and setup-compromise scenes that bring the article back to lap-time synthesis.",
+    "localStatus": "The local route ships phase-1 interactions for power mode switching, tyre window management, track archetype selection, and setup-board readouts tied to the active track profile.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "Track selection dispatches a shared local event so the setup board can respond to the current circuit profile.",
+      "The setup board is a compact synthesis layer for the first shipped phase, not yet a full lap simulator."
+    ],
+    "evidence": [
+      "Buttons switch power mode, tyre compounds, and track profiles with updated explanatory copy and metrics.",
+      "The setup scene recalculates straight-line speed, slow-corner ability, high-speed support, tyre life, braking confidence, and estimated lap fit."
+    ]
+  }
+]

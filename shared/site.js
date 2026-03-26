@@ -54,6 +54,12 @@ const ROUTE_DECORATORS = {
     difficulty: "Intermediate",
     spotlight: "Most complete engineering longform route in the collection.",
   },
+  "formula-1-racing": {
+    featured: true,
+    timeEstimate: "18-28 min",
+    difficulty: "Intermediate",
+    spotlight: "Original longform route about how a modern F1 car turns tradeoffs into lap time.",
+  },
   tesseract: {
     featured: true,
     timeEstimate: "15-25 min",
@@ -175,6 +181,10 @@ function getFamilyPriority(familyKey) {
 }
 
 function getFamilyKey(page) {
+  if (page.familyKey && FAMILY_CONFIGS[page.familyKey]) {
+    return page.familyKey;
+  }
+
   if (LOCAL_HUB_SLUGS.has(page.slug) || page.referenceMode === "neutral" || !page.referenceUrl) {
     return "local-hubs";
   }
@@ -214,7 +224,9 @@ function getFamilyKey(page) {
 function enrichPage(page, manifestIndex) {
   const familyKey = getFamilyKey(page);
   const family = FAMILY_CONFIGS[familyKey] || FAMILY_CONFIGS["independent-labs"];
-  const referenceHost = familyKey === "engineering-longform"
+  const referenceHost = page.referenceMode === "neutral"
+    ? "Original local route"
+    : familyKey === "engineering-longform"
     ? "Reference archive"
     : getReferenceHost(page);
   const decorator = ROUTE_DECORATORS[page.slug] || {};

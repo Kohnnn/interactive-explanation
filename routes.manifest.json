@@ -294,6 +294,14 @@
     "docsUrl": "./docs/naval-architecture/"
   },
   {
+    "slug": "formula-1-racing",
+    "title": "Formula 1 Racing",
+    "summary": "Original interactive article about airflow, ground effect, hybrid power units, tyres, braking, track layout, and setup tradeoffs in modern Formula 1.",
+    "docsUrl": "./docs/formula-1-racing/",
+    "referenceMode": "neutral",
+    "familyKey": "engineering-longform"
+  },
+  {
     "slug": "reading-qr-codes-without-a-computer",
     "title": "Reading QR Codes Without a Computer!",
     "summary": "Interactive QR explainer about anatomy, masking, reading order, bytes, error correction, and reconstructing payloads by hand.",
