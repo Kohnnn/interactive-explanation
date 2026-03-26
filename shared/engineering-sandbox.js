@@ -39,6 +39,112 @@
     ],
   };
 
+  const routeChapterNavLabels = {
+    "mechanical-watch": {
+      "motion-works": "Motion",
+      "automatic-winding": "Auto winding",
+      "the-size-of-it-all": "Scale",
+      "further-watching-and-reading": "References",
+    },
+    gears: {
+      transmission: "Gear train",
+      torque: "Torque",
+      "tangent--normal": "Contact",
+      "strings-attached": "Belts",
+      "multiple-gears": "Multi-gear",
+      "further-watching-and-reading": "References",
+    },
+    airfoil: {
+      "visualizing-flow": "Flow",
+      velocity: "Velocity",
+      "relative-velocity": "Relative flow",
+      pressure: "Pressure",
+      "visualizing-pressure": "Pressure map",
+      "airfoil-flow": "Lift scene",
+      viscosity: "Viscosity",
+      "boundary-layer": "Boundary",
+      "airfoil-shapes": "Shapes",
+      "further-reading-and-watching": "References",
+    },
+    tesseract: {
+      "building-cubes": "Cubes",
+      "ambiguous-representation": "Projection",
+      "fourth-dimension": "4D space",
+      tesseract: "Tesseract",
+      "stepping-into-the-shadows": "Shadows",
+      "plane-of-rotation": "Rotation",
+      "in-n-out": "Slicing",
+      "leaving-platos-cave": "Plato's cave",
+      "further-watching-and-reading": "References",
+    },
+  };
+
+  const routeCompanionConfigs = {
+    gears: {
+      eyebrow: "Companion routes",
+      title: "Keep the motion model alive in related machines.",
+      summary: "If this gear train clicked, continue into the watch for a compact timing machine or the bicycle for force flow through a larger mechanical frame.",
+      links: [
+        {
+          href: "../mechanical-watch/",
+          label: "Mechanical Watch",
+          description: "See the same transmission logic inside a regulated timekeeping system.",
+        },
+        {
+          href: "../bicycle/",
+          label: "Bicycle",
+          description: "Carry torque, force, and load transfer into a larger moving system.",
+        },
+      ],
+    },
+    "mechanical-watch": {
+      eyebrow: "Companion routes",
+      title: "Branch outward once the movement starts feeling legible.",
+      summary: "The watch compresses gears, stored energy, and controlled release into one tiny machine. These routes expand those same ideas into cleaner or larger systems.",
+      links: [
+        {
+          href: "../gears/",
+          label: "Gears",
+          description: "Strip the train down to meshing teeth, ratios, torque, and contact geometry.",
+        },
+        {
+          href: "../internal-combustion-engine/",
+          label: "Internal Combustion Engine",
+          description: "Compare another timed machine built from linked motion and constrained energy flow.",
+        },
+      ],
+    },
+    tesseract: {
+      eyebrow: "Companion routes",
+      title: "Take the 4D intuition into other geometry-heavy routes.",
+      summary: "Once projections and slices start making sense, it helps to visit routes that keep the same spatial thinking but swap dimensions, surfaces, or linear structure.",
+      links: [
+        {
+          href: "../curves-and-surfaces/",
+          label: "Curves and Surfaces",
+          description: "Stay in geometry mode and trade 4D slicing for editable smooth forms and control meshes.",
+        },
+        {
+          href: "../eigenvectors-and-eigenvalues/",
+          label: "Eigenvectors and Eigenvalues",
+          description: "Shift from shape intuition into transformation intuition with another visual math route.",
+        },
+      ],
+    },
+    "curves-and-surfaces": {
+      eyebrow: "Companion routes",
+      title: "Jump sideways into geometry that deforms space differently.",
+      summary: "This route focuses on shaping smooth objects. If you want a sharper sense of dimensional thinking and projection, move next into the tesseract route.",
+      links: [
+        {
+          href: "../tesseract/",
+          label: "Tesseract",
+          description: "Use projections, slices, and higher-dimensional scaffolding to stretch geometric intuition further.",
+        },
+      ],
+    },
+  };
+
   function getSlug() {
     const explicitRoute = document.body?.dataset.storyRoute;
     if (explicitRoute) {
@@ -133,6 +239,73 @@
     link.setAttribute("aria-label", chapterTitle);
     link.textContent = chapterLabel;
     return link;
+  }
+
+  function applyRouteChapterNavLabels(slug, sections) {
+    const labels = routeChapterNavLabels[slug];
+    if (!labels) {
+      return;
+    }
+
+    sections.forEach((section) => {
+      const label = labels[section.id];
+      if (label) {
+        section.dataset.storyNavLabel = label;
+      }
+    });
+  }
+
+  function renderCompanionRoutes(slug) {
+    const config = routeCompanionConfigs[slug];
+    const hero = document.querySelector(".story-hero");
+    if (!config || !hero || document.querySelector("[data-story-companions]")) {
+      return;
+    }
+
+    const section = document.createElement("section");
+    section.className = "story-callout story-companion-panel";
+    section.dataset.storyCallout = "story";
+    section.dataset.storyCompanions = "true";
+
+    const intro = document.createElement("div");
+    intro.className = "story-companion-panel__intro";
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "story-callout__label";
+    eyebrow.textContent = config.eyebrow;
+    intro.appendChild(eyebrow);
+
+    const title = document.createElement("h2");
+    title.className = "story-companion-panel__title";
+    title.textContent = config.title;
+    intro.appendChild(title);
+
+    const summary = document.createElement("p");
+    summary.className = "story-shell-caption";
+    summary.textContent = config.summary;
+    intro.appendChild(summary);
+    section.appendChild(intro);
+
+    const grid = document.createElement("div");
+    grid.className = "story-companion-grid";
+    config.links.forEach((item) => {
+      const article = document.createElement("article");
+      article.className = "story-companion-card";
+
+      const link = document.createElement("a");
+      link.className = "story-companion-card__link";
+      link.href = item.href;
+      link.textContent = item.label;
+      article.appendChild(link);
+
+      const description = document.createElement("p");
+      description.textContent = item.description;
+      article.appendChild(description);
+
+      grid.appendChild(article);
+    });
+
+    section.appendChild(grid);
+    hero.insertAdjacentElement("afterend", section);
   }
 
   function clamp(value, min, max) {
@@ -524,6 +697,8 @@
     await applyRouteChapterConfig(getSlug());
 
     const sections = Array.from(document.querySelectorAll("[data-story-chapter]"));
+    applyRouteChapterNavLabels(getSlug(), sections);
+    renderCompanionRoutes(getSlug());
     if (navMode === "none") {
       return;
     }

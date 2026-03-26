@@ -264,6 +264,54 @@ body[data-story-shell="engineering-sandbox"] .story-callout[data-story-callout="
   background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(238, 247, 244, 0.96));
 }
 
+body[data-story-shell="engineering-sandbox"] .story-companion-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-panel__title {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  line-height: 1.08;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-panel__intro .story-shell-caption {
+  margin-top: 0.7rem;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-card {
+  padding: 1rem 1rem 0.95rem;
+  border: 1px solid rgba(18, 32, 42, 0.1);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-card__link {
+  color: var(--story-ink);
+  font-family: "Fraunces", "Iowan Old Style", "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-card__link:hover,
+body[data-story-shell="engineering-sandbox"] .story-companion-card__link:focus-visible {
+  color: #8a3b22;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-companion-card p {
+  margin: 0.55rem 0 0;
+  color: var(--story-ink-soft);
+}
+
 body[data-story-shell="engineering-sandbox"] .story-rail,
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar {
   z-index: 12;
