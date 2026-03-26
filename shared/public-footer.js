@@ -44,6 +44,21 @@
     footer.id = "reference-footer";
     footer.className = "public-footer";
 
+    const footerVisible = document.body?.dataset.showReferenceFooter === "true";
+    if (!footerVisible) {
+      footer.dataset.visibility = "hidden";
+      footer.style.setProperty("display", "block", "important");
+      footer.style.setProperty("width", "1px", "important");
+      footer.style.setProperty("max-width", "1px", "important");
+      footer.style.setProperty("height", "1px", "important");
+      footer.style.setProperty("padding", "0", "important");
+      footer.style.setProperty("margin", "0 auto", "important");
+      footer.style.setProperty("overflow", "hidden", "important");
+      footer.style.setProperty("border", "0", "important");
+      footer.style.setProperty("opacity", "0", "important");
+      footer.style.setProperty("pointer-events", "none", "important");
+    }
+
     const inner = document.createElement("div");
     inner.className = "public-footer__inner";
 

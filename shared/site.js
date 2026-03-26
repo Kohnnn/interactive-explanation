@@ -4,6 +4,70 @@ const LOCAL_HUB_SLUGS = new Set([
   "primary-interactive-hub",
 ]);
 
+const FAMILY_PRIORITY = {
+  "local-hubs": -20,
+  "engineering-longform": -10,
+  "anders-brownworth": -9,
+  "nicky-case": -8,
+};
+
+const ROUTE_DECORATORS = {
+  "blockchain-101-combined-flow": {
+    featured: true,
+    timeEstimate: "15-20 min",
+    difficulty: "Starter path",
+    spotlight: "Best first stop for the blockchain family.",
+  },
+  "primary-interactive-hub": {
+    featured: true,
+    timeEstimate: "10 min to browse",
+    difficulty: "Starter path",
+    spotlight: "Fastest way into the social sims and narrative routes.",
+  },
+  "music-interactive-hub": {
+    featured: true,
+    timeEstimate: "15 min to browse",
+    difficulty: "Starter path",
+    spotlight: "Curated entry point for the music tools and lessons.",
+  },
+  blockchain: {
+    featured: true,
+    timeEstimate: "8-12 min",
+    difficulty: "Beginner",
+    spotlight: "Best editable demo for learning chained state.",
+  },
+  "public-private-keys": {
+    featured: true,
+    timeEstimate: "10-15 min",
+    difficulty: "Beginner",
+    spotlight: "Shortest path from identity to signatures and transactions.",
+  },
+  "zero-knowledge-proof-demo": {
+    featured: true,
+    timeEstimate: "6-10 min",
+    difficulty: "Intermediate",
+    spotlight: "Compact privacy-proof demo once the blockchain flow clicks.",
+  },
+  "mechanical-watch": {
+    featured: true,
+    timeEstimate: "20-30 min",
+    difficulty: "Intermediate",
+    spotlight: "Most complete engineering longform route in the collection.",
+  },
+  tesseract: {
+    featured: true,
+    timeEstimate: "15-25 min",
+    difficulty: "Intermediate",
+    spotlight: "Best math-first longform route for geometric intuition.",
+  },
+  trust: {
+    featured: true,
+    timeEstimate: "15-20 min",
+    difficulty: "Beginner",
+    spotlight: "Strong first systems explainer for new visitors.",
+  },
+};
+
 const FAMILY_CONFIGS = {
   "nicky-case": {
     key: "nicky-case",
@@ -106,6 +170,10 @@ function getReferenceHost(page) {
   }
 }
 
+function getFamilyPriority(familyKey) {
+  return FAMILY_PRIORITY[familyKey] || 0;
+}
+
 function getFamilyKey(page) {
   if (LOCAL_HUB_SLUGS.has(page.slug) || page.referenceMode === "neutral" || !page.referenceUrl) {
     return "local-hubs";
@@ -149,6 +217,7 @@ function enrichPage(page, manifestIndex) {
   const referenceHost = familyKey === "engineering-longform"
     ? "Reference archive"
     : getReferenceHost(page);
+  const decorator = ROUTE_DECORATORS[page.slug] || {};
 
   return {
     manifestIndex: manifestIndex,
@@ -160,12 +229,18 @@ function enrichPage(page, manifestIndex) {
     referenceMode: page.referenceMode || "",
     family: family,
     referenceHost: referenceHost,
+    timeEstimate: decorator.timeEstimate || page.timeEstimate || "",
+    difficulty: decorator.difficulty || page.difficulty || "",
+    featured: Boolean(decorator.featured || page.featured),
+    spotlight: decorator.spotlight || page.spotlight || "",
     searchText: [
       page.title,
       page.slug,
       page.summary,
       family.label,
       referenceHost,
+      decorator.timeEstimate || "",
+      decorator.difficulty || "",
     ].join(" ").toLowerCase(),
   };
 }
@@ -191,6 +266,10 @@ function buildFamilyList(pages) {
   });
 
   return Array.from(familyMap.values()).sort(function (left, right) {
+    const priorityDelta = getFamilyPriority(left.key) - getFamilyPriority(right.key);
+    if (priorityDelta !== 0) {
+      return priorityDelta;
+    }
     if (right.count !== left.count) {
       return right.count - left.count;
     }
@@ -343,6 +422,74 @@ function renderFamilyBoard(mount, families, state, onSelectFamily) {
   });
 }
 
+function buildMetaChips(page) {
+  const chips = [page.slug];
+
+  if (page.difficulty) {
+    chips.push(page.difficulty);
+  }
+
+  if (page.timeEstimate) {
+    chips.push(page.timeEstimate);
+  }
+
+  if (page.featured) {
+    chips.push("Featured");
+  }
+
+  chips.push("docs linked");
+  return chips;
+}
+
+function comparePages(left, right) {
+  const leftPriority = left.featured ? -1 : 0;
+  const rightPriority = right.featured ? -1 : 0;
+  if (leftPriority !== rightPriority) {
+    return leftPriority - rightPriority;
+  }
+
+  return left.title.localeCompare(right.title);
+}
+
+function comparePageFamilies(left, right) {
+  const priorityDelta = getFamilyPriority(left) - getFamilyPriority(right);
+  if (priorityDelta !== 0) {
+    return priorityDelta;
+  }
+  return (FAMILY_CONFIGS[left]?.label || left).localeCompare(FAMILY_CONFIGS[right]?.label || right);
+}
+
+function getFeaturedPages(pages) {
+  return pages
+    .filter(function (page) {
+      return page.featured;
+    })
+    .sort(comparePages);
+}
+
+function renderFeaturedRoutes(mount, pages) {
+  if (!mount) {
+    return;
+  }
+
+  mount.innerHTML = "";
+
+  const featuredPages = getFeaturedPages(pages).slice(0, 6);
+  if (!featuredPages.length) {
+    mount.innerHTML = '<div class="empty-state">Featured routes unavailable.</div>';
+    return;
+  }
+
+  featuredPages.forEach(function (page) {
+    const article = createPageCard(page);
+    article.classList.add("page-card--featured");
+    if (page.spotlight) {
+      article.appendChild(createElement("p", "meta-line page-card__spotlight", page.spotlight));
+    }
+    mount.appendChild(article);
+  });
+}
+
 function createPageCard(page) {
   const article = createElement("article", "page-card");
   article.dataset.familyTone = page.family.tone;
@@ -355,8 +502,9 @@ function createPageCard(page) {
   article.appendChild(createElement("h2", null, page.title));
 
   const chipList = createElement("div", "chip-list page-card__chips");
-  chipList.appendChild(createElement("span", "chip", page.slug));
-  chipList.appendChild(createElement("span", "chip", "docs linked"));
+  buildMetaChips(page).forEach(function (label) {
+    chipList.appendChild(createElement("span", "chip", label));
+  });
   article.appendChild(chipList);
 
   article.appendChild(createElement("p", "meta-line", page.summary));
@@ -420,9 +568,39 @@ function renderPageList(mount, pages, state, onReset) {
     return;
   }
 
-  pages.forEach(function (page) {
-    mount.appendChild(createPageCard(page));
-  });
+  const groupedPages = new Map();
+
+  pages
+    .slice()
+    .sort(comparePages)
+    .forEach(function (page) {
+      if (!groupedPages.has(page.family.key)) {
+        groupedPages.set(page.family.key, []);
+      }
+      groupedPages.get(page.family.key).push(page);
+    });
+
+  Array.from(groupedPages.keys())
+    .sort(comparePageFamilies)
+    .forEach(function (familyKey) {
+      const family = FAMILY_CONFIGS[familyKey] || FAMILY_CONFIGS["independent-labs"];
+      const section = createElement("section", "inventory-group");
+      const heading = createElement("div", "inventory-group__header");
+      const headerCopy = createElement("div", null, null);
+      headerCopy.appendChild(createElement("p", "eyebrow", "Source family"));
+      headerCopy.appendChild(createElement("h2", null, family.label));
+      headerCopy.appendChild(createElement("p", "meta-line", family.description));
+      heading.appendChild(headerCopy);
+      heading.appendChild(createElement("span", "status-pill", groupedPages.get(familyKey).length + " routes"));
+      section.appendChild(heading);
+
+      const grid = createElement("div", "page-grid page-grid--grouped");
+      groupedPages.get(familyKey).forEach(function (page) {
+        grid.appendChild(createPageCard(page));
+      });
+      section.appendChild(grid);
+      mount.appendChild(section);
+    });
 }
 
 function renderResultsSummary(mount, filteredPages, allPages, state) {
@@ -454,12 +632,13 @@ function readHomeState() {
 async function initHome() {
   const mount = document.querySelector("[data-page-list]");
   const statsMount = document.querySelector("[data-home-stats]");
+  const featuredMount = document.querySelector("[data-featured-routes]");
   const familyBoardMount = document.querySelector("[data-family-board]");
   const familyFiltersMount = document.querySelector("[data-family-filters]");
   const resultsMount = document.querySelector("[data-page-results]");
   const queryInput = document.querySelector("[data-filter-query]");
 
-  if (!mount && !statsMount && !familyBoardMount && !familyFiltersMount) {
+  if (!mount && !statsMount && !featuredMount && !familyBoardMount && !familyFiltersMount) {
     return;
   }
 
@@ -481,6 +660,7 @@ async function initHome() {
     function render() {
       const filteredPages = applyHomeFilters(pages, state);
       renderHomeStats(statsMount, pages, families);
+      renderFeaturedRoutes(featuredMount, pages);
       renderFamilyFilters(familyFiltersMount, families, state, function (familyKey) {
         state.family = familyKey;
         syncHomeState(state);
@@ -517,6 +697,9 @@ async function initHome() {
     }
     if (familyBoardMount) {
       familyBoardMount.innerHTML = message;
+    }
+    if (featuredMount) {
+      featuredMount.innerHTML = message;
     }
     if (familyFiltersMount) {
       familyFiltersMount.innerHTML = message;

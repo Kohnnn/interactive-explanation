@@ -370,7 +370,7 @@ body[data-story-shell="engineering-sandbox"] .story-rail__link,
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link,
 body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.55rem;
   padding: 0.5rem 0.72rem;
   border-radius: 999px;
@@ -378,8 +378,16 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link {
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.79rem;
   text-decoration: none;
-  white-space: nowrap;
   transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-rail__link,
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__link {
+  white-space: normal;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {
+  white-space: nowrap;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-rail__link::before,
@@ -1397,8 +1405,7 @@ body[data-story-shell="engineering-sandbox"][data-reference-text="Double Descent
 
 body[data-story-shell="engineering-sandbox"] .story-rail__link {
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.45;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {

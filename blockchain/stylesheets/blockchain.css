@@ -44,3 +44,16 @@ input {
   border: 0;
   z-index: 20000;
 }
+
+.row-horizon {
+  padding-bottom: 6px;
+}
+
+.row-horizon:focus-visible {
+  outline: 2px solid rgba(201, 125, 52, 0.9);
+  outline-offset: 6px;
+}
+
+textarea::placeholder {
+  color: rgba(32, 24, 19, 0.5);
+}

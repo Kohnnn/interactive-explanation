@@ -30,7 +30,26 @@
       const palette = ["#FF8888", "#8888FF", "#88FF88", "#FFFF88"];
       let offset = Math.floor(Math.random() * palette.length);
       let show = false;
+      let rounds = 0;
       const colors = {};
+
+      const updateStatus = (selectionCount, message) => {
+        const confidence = rounds <= 0 ? 0 : Math.round((1 - Math.pow(0.5, rounds)) * 100);
+        $("#zkp-round-count").text(String(rounds));
+        $("#zkp-confidence").text(`${confidence}%`);
+
+        let selectionLabel = "No states selected";
+        if (selectionCount === 1) {
+          selectionLabel = "1 state selected";
+        } else if (selectionCount > 1) {
+          selectionLabel = `${selectionCount} states selected`;
+        }
+        $("#zkp-selection-status").text(selectionLabel);
+
+        if (message) {
+          $("#zkp-status-message").text(message);
+        }
+      };
 
       const allColors = () => {
         for (const key in map.regions) {
@@ -81,16 +100,24 @@
           map.series.regions[0].setValues(colors);
 
           if (selectedRegions.length === 2) {
+            rounds += 1;
+            updateStatus(0, `Round ${rounds} complete. Confidence rises as the verifier keeps choosing fresh local challenges.`);
             map.clearSelectedRegions();
+            return;
           }
 
           if (selectedRegions.length > 2) {
             noColors();
+            updateStatus(0, "Too many states are visible at once. Reset and probe one local challenge at a time.");
+            return;
           }
+
+          updateStatus(selectedRegions.length, "Pick a second state to test a local challenge without exposing the full hidden partition.");
         },
       });
 
       noColors();
+      updateStatus(0, "The partition starts hidden. Reveal it once, then hide it again before running local challenge rounds.");
 
       $("#shuffle-colors-button").on("click", (event) => {
         event.preventDefault();
@@ -103,6 +130,7 @@
         }
 
         map.series.regions[0].setValues(colors);
+        updateStatus(0, "Palette shuffled. The coloring changed appearance, but the underlying partition logic stayed the same.");
       });
 
       $("#show-hide-colors-button").on("click", (event) => {
@@ -119,6 +147,15 @@
         }
 
         map.series.regions[0].setValues(colors);
+        updateStatus(0, show
+          ? "Full partition revealed. Hide it again when you are ready to test local evidence."
+          : "Full partition hidden again. Now try selecting one or two states at a time.");
+      });
+
+      $("#reset-rounds-button").on("click", (event) => {
+        event.preventDefault();
+        rounds = 0;
+        updateStatus(0, "Challenge history cleared. Confidence is back to zero until you complete new rounds.");
       });
 
       $(document).on("click", (event) => {
@@ -132,6 +169,7 @@
           show = false;
           $("#show-hide-colors-button").text("Show Colors");
           map.series.regions[0].setValues(colors);
+          updateStatus(0, "Map reset. Reveal once, then probe a new local challenge.");
         }
       });
     });
@@ -206,15 +244,41 @@
   </section>
 
   <main class="container content-container story-lab-main">
+    <section class="story-callout zkp-status-panel" aria-label="Proof status">
+      <div class="zkp-status-grid">
+        <div class="zkp-status-card">
+          <span class="story-callout__label">Rounds tested</span>
+          <strong id="zkp-round-count">0</strong>
+        </div>
+        <div class="zkp-status-card">
+          <span class="story-callout__label">Confidence</span>
+          <strong id="zkp-confidence">0%</strong>
+        </div>
+        <div class="zkp-status-card">
+          <span class="story-callout__label">Selection</span>
+          <strong id="zkp-selection-status">No states selected</strong>
+        </div>
+      </div>
+      <p class="story-shell-caption" id="zkp-status-message">
+        The partition starts hidden. Reveal it once, then hide it again before running local challenge rounds.
+      </p>
+      <p class="story-shell-caption zkp-status-caption">
+        Confidence here assumes a fresh random challenge each round, so the chance of a bad proof surviving keeps shrinking.
+        Continue from the <a href="../blockchain-101-combined-flow/">Blockchain Combined Flow</a> when you want the full local path from hashing to privacy.
+      </p>
+    </section>
     <div class="card">
       <div id="map" aria-label="Zero knowledge proof map demo"></div>
       <div class="card-footer text-center">
         <div class="row">
-          <div class="col">
+          <div class="col-md-4 col-12 mb-2 mb-md-0">
             <button class="btn btn-secondary" id="show-hide-colors-button" type="button">Show Colors</button>
           </div>
-          <div class="col">
+          <div class="col-md-4 col-12 mb-2 mb-md-0">
             <button class="btn btn-secondary" id="shuffle-colors-button" type="button">Shuffle Colors</button>
+          </div>
+          <div class="col-md-4 col-12">
+            <button class="btn btn-outline-secondary" id="reset-rounds-button" type="button">Reset Rounds</button>
           </div>
         </div>
       </div>

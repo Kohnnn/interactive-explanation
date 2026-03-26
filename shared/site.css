@@ -158,6 +158,10 @@ a {
   margin-top: 24px;
 }
 
+.page-grid--grouped {
+  margin-top: 18px;
+}
+
 .family-grid {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   margin-top: 18px;
@@ -181,6 +185,13 @@ a {
   box-shadow: var(--shadow);
 }
 
+.page-card--featured {
+  border-color: rgba(180, 76, 47, 0.2);
+  background:
+    radial-gradient(circle at top right, rgba(180, 76, 47, 0.1), transparent 38%),
+    rgba(255, 250, 241, 0.94);
+}
+
 .page-card::before,
 .family-card::before,
 .stat-card::before {
@@ -196,6 +207,22 @@ a {
 .page-card h2,
 .note-section h2,
 .module-card h3 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.inventory-group + .inventory-group {
+  margin-top: 26px;
+}
+
+.inventory-group__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inventory-group__header h2 {
   margin: 0;
   font-size: 1.45rem;
 }
@@ -257,6 +284,11 @@ a {
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.55;
+}
+
+.page-card__spotlight {
+  margin-top: 14px;
+  font-style: italic;
 }
 
 .section-heading {
@@ -524,6 +556,10 @@ code {
   .site-page {
     width: min(100vw - 20px, 1100px);
     padding: 20px 0 36px;
+  }
+
+  .inventory-group__header {
+    flex-direction: column;
   }
 
   .hero,

@@ -53,18 +53,32 @@
     return parts[interactiveIndex + 1] || "";
   }
 
+  function sanitizeChapterTitle(value) {
+    return String(value || "")
+      .replace(/\s+/g, " ")
+      .replace(/^[|:;.,\-\u2013\u2014\u2022\u00b7\s]+/, "")
+      .trim();
+  }
+
   function getChapterTitle(section, index) {
-    const explicit = section.dataset.storyChapter;
+    const explicit = sanitizeChapterTitle(section.dataset.storyChapter);
     if (explicit) {
       return explicit;
     }
 
     const heading = section.querySelector("h1, h2, h3");
     if (heading && heading.textContent) {
-      return heading.textContent.trim();
+      const headingTitle = sanitizeChapterTitle(heading.textContent);
+      if (headingTitle) {
+        return headingTitle;
+      }
     }
 
     return `Chapter ${index + 1}`;
+  }
+
+  function getChapterLabel(section, index) {
+    return sanitizeChapterTitle(section.dataset.storyNavLabel) || getChapterTitle(section, index);
   }
 
   function ensureSectionId(section, index, fallbackId) {
@@ -75,34 +89,49 @@
 
   function buildGeneratedLink(section, index) {
     ensureSectionId(section, index);
+    const chapterTitle = getChapterTitle(section, index);
+    const chapterLabel = getChapterLabel(section, index);
 
     const link = document.createElement("a");
     link.className = "story-rail__link";
     link.href = `#${section.id}`;
     link.dataset.storyTarget = section.id;
-    link.textContent = getChapterTitle(section, index);
+    link.dataset.storyFullTitle = chapterTitle;
+    link.title = chapterTitle;
+    link.setAttribute("aria-label", chapterTitle);
+    link.textContent = chapterLabel;
     return link;
   }
 
   function buildMobileLink(section, index) {
     ensureSectionId(section, index);
+    const chapterTitle = getChapterTitle(section, index);
+    const chapterLabel = getChapterLabel(section, index);
 
     const link = document.createElement("a");
     link.className = "story-mobile-bar__link";
     link.href = `#${section.id}`;
     link.dataset.storyTarget = section.id;
-    link.textContent = getChapterTitle(section, index);
+    link.dataset.storyFullTitle = chapterTitle;
+    link.title = chapterTitle;
+    link.setAttribute("aria-label", chapterTitle);
+    link.textContent = chapterLabel;
     return link;
   }
 
   function buildSheetLink(section, index) {
     ensureSectionId(section, index);
+    const chapterTitle = getChapterTitle(section, index);
+    const chapterLabel = getChapterLabel(section, index);
 
     const link = document.createElement("a");
     link.className = "story-mobile-sheet__link";
     link.href = `#${section.id}`;
     link.dataset.storyTarget = section.id;
-    link.textContent = getChapterTitle(section, index);
+    link.dataset.storyFullTitle = chapterTitle;
+    link.title = chapterTitle;
+    link.setAttribute("aria-label", chapterTitle);
+    link.textContent = chapterLabel;
     return link;
   }
 
@@ -149,7 +178,7 @@
         link.classList.toggle("is-complete", isComplete);
         if (isActive) {
           link.setAttribute("aria-current", "true");
-          activeLabel = link.textContent?.trim() || "";
+          activeLabel = link.dataset.storyFullTitle || link.textContent?.trim() || "";
         } else {
           link.removeAttribute("aria-current");
         }
@@ -387,7 +416,7 @@
   function getLegacyHeadingTitle(heading) {
     const clone = heading.cloneNode(true);
     clone.querySelectorAll("a").forEach((link) => link.remove());
-    return clone.textContent.replace(/\s+/g, " ").trim();
+    return sanitizeChapterTitle(clone.textContent);
   }
 
   function wrapLegacyHeadingSections(contentRoot) {
