@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Formula 1 Racing Replica Docs</title>
+  <title>Formula 1 Racing Docs</title>
   <meta name="description" content="Implementation notes, parity tracking, and validation guidance for the local Formula 1 Racing route.">
   <link rel="icon" type="image/png" href="../../favicon.png">
   <link rel="stylesheet" href="../../shared/site.css">
@@ -16,11 +16,9 @@
       <p class="eyebrow">Route documentation</p>
       <h1>Formula 1 Racing</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/formula-1-racing/</code> is an original Engineering
-        Sandbox longform article about modern Formula 1 performance. It uses the shared hero, generated
-        chapter rail, and footer contract while shipping original Formula 1 scenes for the car overview,
-        airflow, front wing, floor, rear wing and DRS, suspension platform, power unit deployment maps,
-        tyres, braking, track layout, racecraft, setup tradeoffs, weather strategy, pit strategy, and sector lap building with track-specific telemetry overlays.
+        Local route <code>/interactive-explanation/formula-1-racing/</code> is an original Engineering Sandbox
+        longform article about modern Formula 1 performance. It now uses a local copy of the Bartosz-family
+        base runtime and procedural canvas scenes instead of mostly static SVG dashboard panels.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../formula-1-racing/">Open route</a>
@@ -35,32 +33,33 @@
       <article class="note-section">
         <h2>Source snapshot</h2>
         <p>
-          This route does not vendor a published external article. It is a local original build created for
-          the interactive-explanation collection and written specifically around modern Formula 1 systems.
+          This route does not mirror one published external article. It is a local original build created for the
+          interactive-explanation collection and written specifically around modern Formula 1 systems.
         </p>
         <ul class="plain-list">
           <li>The public route uses neutral provenance handling because there is no single upstream article to reference.</li>
-          <li>The shell reuses the Engineering Sandbox longform family so the route gets the shared hero, story rail, and mobile chapter navigation.</li>
-          <li>The body content, scenes, and explanatory copy are original local assets authored directly for this route.</li>
+          <li>The shell still uses the shared Engineering Sandbox longform family for hero framing, rail navigation, and mobile chapter behavior.</li>
+          <li>The interaction layer now follows the Bartosz-family pattern more closely by using local <code>base.js</code> controls and procedural canvas scenes.</li>
         </ul>
       </article>
 
       <article class="note-section">
         <h2>Asset handoff</h2>
         <ul class="plain-list">
-          <li><code>formula-1-racing/index.html</code> owns the route shell, longform body, and scene markup.</li>
-          <li><code>formula-1-racing/css/f1.css</code> provides the Formula 1-specific visual language and scene styling.</li>
-          <li><code>formula-1-racing/js/f1.js</code> drives the hotspot map, richer aero scenes, suspension platform visuals, power deployment maps, track presets, weather strategy logic, pit-wall timing logic, racecraft logic, setup board, and sector telemetry builder.</li>
-          <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the shared shell behavior, generated rail, and hero framing.</li>
+          <li><code>formula-1-racing/index.html</code> owns the route shell, longform body, scene mounts, and control containers.</li>
+          <li><code>formula-1-racing/js/base.js</code> is a local unmodified copy of the Bartosz-family base runtime and must be treated as-is.</li>
+          <li><code>formula-1-racing/css/base.css</code> provides the slider, segmented-control, drawer, and canvas utility styling expected by the base runtime.</li>
+          <li><code>formula-1-racing/js/f1.js</code> drives the procedural canvas scenes, state synchronization, and route-specific calculations.</li>
+          <li><code>formula-1-racing/css/f1.css</code> adds Formula 1-specific colors, slider accents, and scene framing on top of the base runtime styles.</li>
         </ul>
       </article>
 
       <article class="note-section">
-        <h2>Known deviations</h2>
+        <h2>Current build</h2>
         <ul class="plain-list">
-          <li>This route is intentionally original, so the docs track implementation parity against the local design spec rather than an upstream replica.</li>
-          <li>The current build now ships track-specific presets, a weather and tyre-strategy layer, pit-stop timing tradeoffs, track-shaped telemetry presets, and more bespoke SVG car artwork on top of the earlier longform shell.</li>
-          <li>Formulas and scene readouts are simplified explanatory models, not an attempt at regulation-grade or telemetry-grade simulation fidelity.</li>
+          <li>The route now ships a rotatable overview car, animated airflow, front-wing wake, floor, rear-wing, chassis, power, tyre, braking, track, racecraft, setup, weather, pit, and lap scenes.</li>
+          <li>The scenes are procedural and explanatory rather than regulation-grade or telemetry-grade simulations.</li>
+          <li>Track selection, setup presets, tyre choice, power maps, weather, and pit timing all influence the final lap-builder scene.</li>
         </ul>
       </article>
 
@@ -68,6 +67,7 @@
         <h2>Validation guidance</h2>
         <ul class="plain-list">
           <li>Keep the route self-contained and subpath-safe; all assets should remain local to <code>formula-1-racing/</code> or the shared shell.</li>
+          <li>Do not edit <code>formula-1-racing/js/base.js</code> unless the route intentionally forks the Bartosz-family engine.</li>
           <li>Preserve generated chapter behavior by keeping major sections anchored with top-level <code>h1</code> ids.</li>
           <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after edits.</li>
         </ul>

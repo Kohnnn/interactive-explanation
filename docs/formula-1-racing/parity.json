@@ -1,8 +1,8 @@
 [
   {
     "moduleId": "engineering-sandbox-longform-shell",
-    "originalBehavior": "The route is designed as an original longform article that should use the shared Engineering Sandbox shell rather than a bespoke standalone layout.",
-    "localStatus": "The local route uses the shared Engineering Sandbox longform family with a generated story rail, shared hero framing, and shared footer contract while keeping all public teaching content local to the route.",
+    "originalBehavior": "The route should remain a longform Engineering Sandbox article with a shared hero, generated story rail, and local provenance handling.",
+    "localStatus": "The route still uses the shared Engineering Sandbox shell while keeping all public teaching content local to the Formula 1 route.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../shared/engineering-sandbox.css",
@@ -10,129 +10,65 @@
       "../../shared/public-footer.js"
     ],
     "notes": [
-      "The route keeps its own Formula 1 visual language through local CSS overrides instead of copying an upstream longform page.",
-      "Chapter navigation depends on top-level h1 ids in the longform body."
+      "The shell provides the longform wrapper and generated chapter navigation.",
+      "Public provenance remains neutral because the route is an original local build."
     ],
     "evidence": [
-      "The route hero, generated chapter rail, and mobile chapter navigation are all mounted by the shared shell.",
-      "The public route uses neutral provenance handling because it is not a vendored replica."
+      "The route hero, generated chapter rail, and mobile chapter navigation are mounted by the shared shell.",
+      "The public route still uses neutral provenance handling rather than an upstream reference page."
     ]
   },
   {
-    "moduleId": "car-overview-hotspot-map",
-    "originalBehavior": "The route plan calls for an opening scene that lets readers inspect the F1 car as one connected system before drilling into subsystems.",
-    "localStatus": "The local route ships an interactive car map with component buttons, highlighted regions, bespoke SVG silhouettes, and explanatory panel copy for the major aerodynamic, mechanical, braking, and power-unit areas.",
+    "moduleId": "bartosz-family-base-runtime",
+    "originalBehavior": "The route should use the Bartosz-family base runtime for shared controls and math utilities, with the file kept unmodified.",
+    "localStatus": "The route now ships a local copy of base.js and base.css so sliders, segmented controls, touch handlers, ArcBall rotation, and shared math helpers are available inside the Formula 1 route itself.",
+    "sourceFiles": [
+      "../../formula-1-racing/js/base.js",
+      "../../formula-1-racing/css/base.css",
+      "../../formula-1-racing/index.html"
+    ],
+    "notes": [
+      "The local base runtime is intended to stay unmodified unless the route explicitly forks that engine.",
+      "The Formula 1 route uses the runtime directly rather than only imitating its control patterns."
+    ],
+    "evidence": [
+      "The route head now loads ./js/base.js and ./css/base.css before the route-specific runtime.",
+      "The overview scene uses ArcBall rotation and the route controls use Slider and SegmentedControl instances from the base runtime."
+    ]
+  },
+  {
+    "moduleId": "procedural-canvas-scenes",
+    "originalBehavior": "The route should feel closer to the Bartosz family by drawing key scenes procedurally instead of relying on static infographic panels.",
+    "localStatus": "The route now renders the overview, airflow, front-wing, floor, rear-wing, chassis, power, tyre, braking, track, racecraft, setup, weather, pit, and lap scenes procedurally on canvas.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
       "../../formula-1-racing/css/f1.css"
     ],
     "notes": [
-      "This scene is the phase-1 anchor interaction for the route.",
-      "The map intentionally prioritizes teaching clarity over geometry accuracy.",
-      "Later phases replaced the earliest placeholder rectangles with more bespoke top-view and chase-scene silhouettes."
+      "The drawings are explanatory and stylized rather than scan-based or model-import-based.",
+      "The route uses procedural silhouettes, animated flow lines, shaded bands, and dynamic traces to make the scenes feel more alive."
     ],
     "evidence": [
-      "The route ships selectable hotspot buttons and synchronized component copy.",
-      "The active component also highlights the matching region in the car diagram."
+      "Each chapter scene mounts through a drawer_container instead of static metric-card dashboards.",
+      "The route runtime draws and repaints scene state directly on canvas in response to base-runtime controls."
     ]
   },
   {
-    "moduleId": "aero-floor-and-braking-scenes",
-    "originalBehavior": "The route plan calls for original scenes that explain airflow, ground effect, and braking as connected constraints on lap time.",
-    "localStatus": "The local route ships simplified airflow, front-wing dirty-air, underfloor, rear-wing and DRS, and braking scenes with controllable inputs and live derived readouts for load share, drag, wake quality, suction, platform risk, braking authority, and rotation behavior.",
+    "moduleId": "formula-1-system-state-sync",
+    "originalBehavior": "Track, setup, power, tyre, weather, and pit decisions should connect back into a shared lap-time story rather than living as isolated widgets.",
+    "localStatus": "The route keeps a shared Formula 1 state model so track presets, setup sliders, tyre choice, power maps, weather, and pit timing all propagate into the lap-builder scene and chapter summaries.",
     "sourceFiles": [
-      "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
-      "../../formula-1-racing/css/f1.css"
+      "../../formula-1-racing/index.html"
     ],
     "notes": [
-      "The scenes are intentionally explanatory, not telemetry-grade simulations.",
-      "Airflow, front-wing, rear-wing, and underfloor scenes are centered on tradeoffs rather than numeric fidelity."
+      "Track presets change setup, tyre, power, and lap-plan defaults together.",
+      "The lap traces are still simplified explanatory curves, but they now respond to the route-wide state rather than staying fixed."
     ],
     "evidence": [
-      "Range controls update the scene metrics and illustrations in real time.",
-      "The front-wing scene now shows the combined effect of flap angle, following distance, and demand on front bite and floor feed.",
-      "The braking scene exposes the stability versus rotation compromise through brake-bias and harvest adjustments."
-    ]
-  },
-  {
-    "moduleId": "power-tyre-track-and-setup-synthesis",
-    "originalBehavior": "The route plan calls for hybrid power, tyre window, track layout, and setup-compromise scenes that bring the article back to lap-time synthesis.",
-    "localStatus": "The local route ships power mode switching, deployment-bias maps, tyre window management, track archetype selection, per-track setup presets, setup-board readouts, and a sector-by-sector lap builder tied to the active track profile.",
-    "sourceFiles": [
-      "../../formula-1-racing/index.html",
-      "../../formula-1-racing/js/f1.js",
-      "../../formula-1-racing/css/f1.css"
-    ],
-    "notes": [
-      "Track selection dispatches a shared local event so the setup board can respond to the current circuit profile.",
-      "The power scene now dispatches deployment-map state so later synthesis scenes can react to it.",
-      "Track presets now apply a representative setup, lap plan, and power map for each named circuit in one click.",
-      "The setup board now feeds a dedicated lap-builder scene instead of stopping at one aggregate estimate.",
-      "The lap-builder uses attack-plan buttons to separate garage setup from lap execution style.",
-      "Track objects now carry their own trace presets so telemetry overlays feel circuit-specific instead of generic."
-    ],
-    "evidence": [
-      "Buttons switch power mode, deployment bias, tyre compounds, and track profiles with updated explanatory copy and metrics.",
-      "The setup scene now includes one-click presets for Monza, Monaco, Silverstone, Spa, and Suzuka.",
-      "The setup scene recalculates straight-line speed, slow-corner ability, high-speed support, tyre life, braking confidence, and aero balance.",
-      "The lap-builder scene recalculates three sector deltas and a total lap delta from the active track, setup, compound, and lap plan.",
-      "The telemetry traces now use track-specific base profiles before applying setup, weather, and deployment adjustments."
-    ]
-  },
-  {
-    "moduleId": "racecraft-and-telemetry-overlays",
-    "originalBehavior": "The route plan called for a later phase that would connect setup and aerodynamic understanding back to following behavior, DRS windows, and telemetry-style lap traces.",
-    "localStatus": "The local route now ships a dedicated racecraft scene plus telemetry-style lap overlays that show speed, braking demand, and deployment bias across the three sectors of the active track.",
-    "sourceFiles": [
-      "../../formula-1-racing/index.html",
-      "../../formula-1-racing/js/f1.js",
-      "../../formula-1-racing/css/f1.css"
-    ],
-    "notes": [
-      "The racecraft scene intentionally uses a simplified drafting and braking model rather than a physics-accurate pass simulator.",
-      "The telemetry overlay is synthetic, but it stays tied to the current setup, power map, track selection, and lap plan so it behaves like a real summary layer rather than decorative chrome."
-    ],
-    "evidence": [
-      "The route now exposes DRS state, following gap, battery push, and braking confidence as racecraft controls.",
-      "The lap-builder now updates three telemetry traces and sector labels whenever track, setup, lap plan, or power deployment changes."
-    ]
-  },
-  {
-    "moduleId": "weather-and-strategy-layer",
-    "originalBehavior": "A later route phase was intended to connect the car-focused engineering story to race-engineering decisions like crossover timing, tyre recommendation, and pit urgency.",
-    "localStatus": "The local route now ships a weather and tyre-strategy chapter with dry, mixed, and wet modes plus temperature, laps-to-go, and rain-pressure inputs that feed recommended tyre, crossover urgency, pit pressure, and a weather penalty into the lap builder.",
-    "sourceFiles": [
-      "../../formula-1-racing/index.html",
-      "../../formula-1-racing/js/f1.js",
-      "../../formula-1-racing/css/f1.css"
-    ],
-    "notes": [
-      "The strategy layer is intentionally explanatory rather than a full race simulator.",
-      "Weather state now propagates into the lap builder so the route can show how a dry setup becomes fragile once the tyre or moisture context changes."
-    ],
-    "evidence": [
-      "Weather buttons and sliders now drive recommendation, urgency, pit, and strategic-bias outputs.",
-      "The lap builder summary now tracks weather and recommended strategy tyre alongside track, compound, and power state."
-    ]
-  },
-  {
-    "moduleId": "pit-wall-and-race-window-logic",
-    "originalBehavior": "A later route phase was intended to explain pit-lane loss, safety-car timing, and the difference between an undercut and an overcut as a real race-engineering tradeoff.",
-    "localStatus": "The local route now ships a dedicated pit-strategy chapter with tyre-age, traffic, and safety-car controls that estimate raw pit loss, undercut and overcut value, safety-car swing, and a current pit-wall recommendation.",
-    "sourceFiles": [
-      "../../formula-1-racing/index.html",
-      "../../formula-1-racing/js/f1.js",
-      "../../formula-1-racing/css/f1.css"
-    ],
-    "notes": [
-      "The pit wall scene is intentionally compact and explanatory rather than a full Monte Carlo strategy simulator.",
-      "The scene listens to track, compound, and weather state so the stop recommendation reacts to the same route-wide context as the lap builder."
-    ],
-    "evidence": [
-      "The route now exposes tyre age, traffic after the stop, and safety-car chance as explicit strategy controls.",
-      "The pit scene produces a raw stop loss, undercut gain, overcut gain, safety-car swing, and a recommended current call."
+      "Selecting a new track preset updates setup sliders, tyre compound, power mode, power bias, and lap plan together.",
+      "Weather and pit strategy calculations change the lap-builder caption and the strategic recommendations shown in later chapters."
     ]
   }
 ]

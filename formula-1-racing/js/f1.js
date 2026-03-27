@@ -1,1957 +1,1819 @@
+"use strict";
+
 (function () {
-  const overviewComponents = {
-    "front-wing": {
-      group: "Aero control surface",
-      title: "Front wing",
-      summary: "The front wing creates front load and shapes the quality of the airflow that the rest of the car receives.",
-      points: [
-        "Sets the first big balance decision between front bite and straight-line cost.",
-        "Conditions the flow feeding the floor and front tyre wake paths.",
-        "Becomes especially sensitive in dirty air because disturbed flow hurts front authority first.",
-      ],
-    },
-    floor: {
-      group: "Ground-effect platform",
-      title: "Floor",
-      summary: "The floor is the main modern downforce device, accelerating airflow under the car to create low pressure and support.",
-      points: [
-        "Produces a huge share of total load once the ride platform is stable.",
-        "Depends on ride height, pitch, yaw, and edge sealing quality.",
-        "Can gain load quickly, but also becomes fragile when the operating window narrows too far.",
-      ],
-    },
-    diffuser: {
-      group: "Underbody recovery",
-      title: "Diffuser",
-      summary: "The diffuser is the rear expansion region that helps the underfloor recover its accelerated flow instead of separating abruptly.",
-      points: [
-        "Turns a fast low-pressure underbody stream into useful rear support.",
-        "Works best when the floor upstream stays attached and predictable.",
-        "Loses effectiveness quickly when the platform gets too low or too pitch-sensitive.",
-      ],
-    },
-    "power-unit": {
-      group: "Hybrid energy system",
-      title: "Power unit",
-      summary: "The modern Formula 1 power unit is a turbo-hybrid energy system built around combustion, recovery, deployment, and cooling limits.",
-      points: [
-        "Combines a turbocharged V6 with electrical recovery and deployment.",
-        "Shapes acceleration, top speed, and energy availability later in the lap.",
-        "Shares packaging and thermal constraints with the bodywork around it.",
-      ],
-    },
-    tyres: {
-      group: "Grip bottleneck",
-      title: "Tyres",
-      summary: "The tyres are the final performance limiter. Every aerodynamic and mechanical gain still has to survive inside their grip and thermal windows.",
-      points: [
-        "Translate vertical load into usable braking and cornering authority.",
-        "Change behavior with compound, temperature, wear, pressure, and slip.",
-        "Punish over-ambitious setup choices by overheating or falling away over a stint.",
-      ],
-    },
-    brakes: {
-      group: "Entry control",
-      title: "Brakes",
-      summary: "Brakes do more than stop the car. They move load forward, change floor attitude, and interact with recovery systems and tyre state.",
-      points: [
-        "Define braking distance and entry confidence.",
-        "Interact with bias settings and front or rear lockup risk.",
-        "Create one of the clearest tradeoffs between stability and rotation.",
-      ],
-    },
-    "rear-wing": {
-      group: "Rear load and drag",
-      title: "Rear wing",
-      summary: "The rear wing trades straight-line efficiency for rear support and confidence in high-speed corners.",
-      points: [
-        "Creates rear downforce and stabilizes the car on entry and through fast corners.",
-        "Adds drag that hurts top speed on long straights.",
-        "Works with DRS to shift the straight-line versus cornering balance on demand.",
-      ],
-    },
-    sidepods: {
-      group: "Cooling and flow shaping",
-      title: "Sidepods",
-      summary: "The sidepods are packaging tools for cooling and body-side flow management rather than simple visual styling features.",
-      points: [
-        "House and feed cooling hardware around the power unit package.",
-        "Influence how airflow reaches the beam wing, coke bottle, and diffuser zone.",
-        "Force compromises between thermal margin and aerodynamic cleanliness.",
-      ],
-    },
-    gearbox: {
-      group: "Driveline structure",
-      title: "Gearbox",
-      summary: "The gearbox transfers torque to the rear axle while also acting as a structural and packaging anchor for the rear of the car.",
-      points: [
-        "Connects power delivery to the rear wheels.",
-        "Supports the rear suspension and shapes packaging around the diffuser inlet region.",
-        "Contributes to both reliability and rear-end packaging constraints.",
-      ],
-    },
-    halo: {
-      group: "Safety structure",
-      title: "Halo",
-      summary: "The halo is primarily a safety device, but like every exposed piece on the car it also has aerodynamic consequences that the package has to absorb.",
-      points: [
-        "Protects the driver against large debris and severe impact scenarios.",
-        "Adds mass high on the chassis and influences packaging around the cockpit.",
-        "Creates a small aerodynamic disturbance that surrounding surfaces must manage.",
-      ],
-    },
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+
+  const COLORS = {
+    red: [214, 92, 74],
+    orange: [216, 135, 66],
+    yellow: [215, 170, 53],
+    green: [119, 168, 79],
+    cyan: [78, 176, 171],
+    blue: [61, 135, 183],
+    violet: [155, 103, 184],
+    gray: [146, 151, 158],
+    dark: [30, 35, 42],
+    paper: [248, 242, 234],
+    ink: [38, 43, 51],
+    wake: [74, 132, 169],
+    ground: [214, 204, 193],
   };
 
-  const powerModes = {
-    harvest: {
-      ice: 68,
-      deploy: 32,
-      harvest: 78,
-      cooling: 88,
-      note: "Harvest mode trims peak deployment so the car can refill electrical energy and protect thermal headroom.",
+  const COMPONENTS = [
+    {
+      key: "front-wing",
+      label: "Front wing",
+      color: COLORS.red,
+      caption: "The front wing is the first aerodynamic negotiator. It buys front bite, but it also decides how cleanly the floor and the rest of the car are being fed.",
     },
-    balanced: {
-      ice: 82,
-      deploy: 58,
-      harvest: 54,
-      cooling: 68,
-      note: "Balanced mode spreads the lap between sensible deployment and enough recovery to avoid an empty battery later in the run.",
+    {
+      key: "floor",
+      label: "Floor",
+      color: COLORS.cyan,
+      caption: "The floor is the main downforce machine in the current era. It wants speed and proximity to the ground, but only inside a narrow geometric window.",
     },
-    attack: {
-      ice: 94,
-      deploy: 86,
-      harvest: 24,
-      cooling: 42,
-      note: "Attack mode spends electrical energy aggressively for exits and straights, but it narrows thermal and energy margin very quickly.",
+    {
+      key: "diffuser",
+      label: "Diffuser",
+      color: COLORS.orange,
+      caption: "The diffuser tries to recover the fast underfloor flow without letting it separate abruptly. That makes it sensitive to how healthy the whole platform has been upstream.",
     },
-  };
+    {
+      key: "power-unit",
+      label: "Power unit",
+      color: COLORS.red,
+      caption: "The power unit is a hybrid energy manager, not just a combustion engine. It decides how much electrical and thermal margin to spend now and how much to save for later sectors.",
+    },
+    {
+      key: "tyres",
+      label: "Tyres",
+      color: COLORS.gray,
+      caption: "Every clever idea on the car has to survive inside the tyre window. Grip, overheating, and wear are where abstract engineering choices finally become real or fail.",
+    },
+    {
+      key: "brakes",
+      label: "Brakes",
+      color: COLORS.yellow,
+      caption: "The brakes do more than stop the car. They move load, change pitch, interact with energy recovery, and decide how much entry confidence the driver still has at turn-in.",
+    },
+    {
+      key: "rear-wing",
+      label: "Rear wing",
+      color: COLORS.orange,
+      caption: "The rear wing is the cleanest straight-line versus support tradeoff on the car. Its load helps the rear axle trust the next corner, but that support is expensive in drag.",
+    },
+    {
+      key: "sidepods",
+      label: "Sidepods",
+      color: COLORS.blue,
+      caption: "Sidepods are cooling and flow-shaping devices. They help package the power unit and influence how the body feeds the rear of the car.",
+    },
+    {
+      key: "gearbox",
+      label: "Gearbox",
+      color: COLORS.violet,
+      caption: "The gearbox is both a driveline component and a rear packaging anchor. It matters mechanically, structurally, and aerodynamically.",
+    },
+    {
+      key: "halo",
+      label: "Halo",
+      color: COLORS.green,
+      caption: "The halo is primarily a safety structure, but like every exposed object on the car it also creates an aerodynamic disturbance that the surrounding surfaces must absorb.",
+    },
+  ];
 
-  const powerBiases = {
-    early: {
-      label: "Early",
-      splits: [0.5, 0.3, 0.2],
-    },
-    distributed: {
-      label: "Distributed",
-      splits: [0.34, 0.33, 0.33],
-    },
-    late: {
-      label: "Late",
-      splits: [0.2, 0.3, 0.5],
-    },
-  };
-
-  const tyreCompounds = {
-    soft: {
-      title: "Soft compound",
-      baseGrip: 95,
-      wearRate: 1.15,
-      loadPenalty: 0.34,
-      windowLow: 88,
-      windowHigh: 106,
-      windowMid: 97,
-      points: [
-        "Best for short high-grip bursts and fast warm-up.",
-        "Narrowest thermal margin of the dry compounds.",
-        "Strong qualifying or short-attack option if the axle stays alive.",
-      ],
-    },
-    medium: {
-      title: "Medium compound",
-      baseGrip: 88,
-      wearRate: 0.82,
-      loadPenalty: 0.28,
-      windowLow: 86,
-      windowHigh: 108,
-      windowMid: 97,
-      points: [
-        "The best compromise compound for many race stints.",
-        "Gives away a little bite to buy back more thermal range.",
-        "Often the safest reference tire when the track is evolving.",
-      ],
-    },
-    hard: {
-      title: "Hard compound",
-      baseGrip: 81,
-      wearRate: 0.58,
-      loadPenalty: 0.22,
-      windowLow: 90,
-      windowHigh: 112,
-      windowMid: 101,
-      points: [
-        "Built for longer stints and higher abuse tolerance.",
-        "Needs more energy before it feels fully alive.",
-        "Can resist overheating well but may underdeliver in cool conditions.",
-      ],
-    },
-    intermediate: {
-      title: "Intermediate tyre",
-      baseGrip: 74,
-      wearRate: 0.72,
-      loadPenalty: 0.24,
-      windowLow: 62,
-      windowHigh: 82,
-      windowMid: 72,
-      points: [
-        "For crossover conditions where the track is damp, not flooded.",
-        "Moves water well while still behaving closer to a slick than a full wet.",
-        "Quickly overheats if the line dries too much.",
-      ],
-    },
-    wet: {
-      title: "Wet tyre",
-      baseGrip: 66,
-      wearRate: 0.64,
-      loadPenalty: 0.18,
-      windowLow: 48,
-      windowHigh: 68,
-      windowMid: 58,
-      points: [
-        "Built for standing water and heavy spray.",
-        "Can survive deep wet conditions by moving a large water volume.",
-        "Overheats immediately once the track becomes too dry.",
-      ],
-    },
-  };
-
-  const setupCompounds = {
-    soft: {
+  const TYRES = [
+    {
+      key: "soft",
       label: "Soft",
-      slow: 10,
-      fast: 6,
-      tyreLife: -16,
-      braking: 2,
-      balance: 3,
+      color: COLORS.red,
+      window: [0.44, 0.66],
+      baseGrip: 0.93,
+      wear: 1.18,
     },
-    medium: {
+    {
+      key: "medium",
       label: "Medium",
-      slow: 6,
-      fast: 4,
-      tyreLife: -6,
-      braking: 0,
-      balance: 1,
+      color: COLORS.yellow,
+      window: [0.42, 0.7],
+      baseGrip: 0.87,
+      wear: 0.86,
     },
-    hard: {
+    {
+      key: "hard",
       label: "Hard",
-      slow: 2,
-      fast: 2,
-      tyreLife: 8,
-      braking: 4,
-      balance: -1,
+      color: COLORS.gray,
+      window: [0.48, 0.76],
+      baseGrip: 0.8,
+      wear: 0.62,
     },
-  };
+    {
+      key: "intermediate",
+      label: "Intermediate",
+      color: COLORS.green,
+      window: [0.26, 0.46],
+      baseGrip: 0.73,
+      wear: 0.78,
+    },
+    {
+      key: "wet",
+      label: "Wet",
+      color: COLORS.blue,
+      window: [0.18, 0.38],
+      baseGrip: 0.66,
+      wear: 0.7,
+    },
+  ];
 
-  const lapPlans = {
-    push: {
-      title: "Qualifying push",
-      note: "The lap is spending more tyre and thermal margin to maximize sector peak rather than stint stability.",
-      adjustments: {
-        straight: 6,
-        slow: 5,
-        fast: 4,
-        tyreLife: -14,
-        braking: -2,
-        balance: 2,
-      },
-    },
-    balanced: {
-      title: "Balanced race lap",
-      note: "This plan tries to keep the sectors coherent instead of chasing the largest single-corner or straight-line peak.",
-      adjustments: {
-        straight: 1,
-        slow: 1,
-        fast: 1,
-        tyreLife: -2,
-        braking: 1,
-        balance: 0,
-      },
-    },
-    protect: {
-      title: "Protect the tyres",
-      note: "This plan backs away from the lap peak so the tyres and rear platform stay usable deeper into the run.",
-      adjustments: {
-        straight: -4,
-        slow: -2,
-        fast: -3,
-        tyreLife: 12,
-        braking: 4,
-        balance: 1,
-      },
-    },
-  };
+  const POWER_MODES = [
+    { key: "harvest", label: "Harvest", ice: 0.68, deploy: 0.32, harvest: 0.78, cooling: 0.88 },
+    { key: "balanced", label: "Balanced", ice: 0.82, deploy: 0.58, harvest: 0.54, cooling: 0.68 },
+    { key: "attack", label: "Attack", ice: 0.94, deploy: 0.86, harvest: 0.24, cooling: 0.42 },
+  ];
 
-  const tracks = {
-    monza: {
-      title: "Monza",
-      kicker: "Low-drag benchmark",
-      note: "Long straights and heavy braking zones reward a car that can shed drag without becoming nervous in the stop-and-go sections.",
-      aero: "Medium",
-      tyre: "Moderate",
-      brake: "High",
-      pass: "Strong",
-      path: "M68 140 C84 84, 152 60, 220 78 S346 142, 422 116 C454 106, 472 134, 450 160 C420 194, 336 204, 292 184 C236 158, 178 182, 150 216 C132 236, 90 228, 84 196 C80 176, 60 170, 68 140 Z",
-      pitLossBase: 21,
+  const POWER_BIASES = [
+    { key: "early", label: "Early", splits: [0.5, 0.3, 0.2] },
+    { key: "split", label: "Split", splits: [0.34, 0.33, 0.33] },
+    { key: "late", label: "Late", splits: [0.2, 0.3, 0.5] },
+  ];
+
+  const LAP_PLANS = [
+    { key: "push", label: "Qualifying push", adjustments: { straight: 6, slow: 5, fast: 4, tyre: -14, braking: -2, balance: 2 } },
+    { key: "race", label: "Balanced race", adjustments: { straight: 1, slow: 1, fast: 1, tyre: -2, braking: 1, balance: 0 } },
+    { key: "protect", label: "Protect tyres", adjustments: { straight: -4, slow: -2, fast: -3, tyre: 12, braking: 4, balance: 1 } },
+  ];
+
+  const WEATHER_MODES = [
+    { key: "dry", label: "Dry" },
+    { key: "mixed", label: "Mixed" },
+    { key: "wet", label: "Wet" },
+  ];
+
+  const TRACKS = [
+    {
+      key: "monza",
+      label: "Monza",
+      pitLossBase: 21.0,
       undercutBias: 7,
       overcutBias: 4,
-      tracePresets: {
+      path: "M68 140 C84 84, 152 60, 220 78 S346 142, 422 116 C454 106, 472 134, 450 160 C420 194, 336 204, 292 184 C236 158, 178 182, 150 216 C132 236, 90 228, 84 196 C80 176, 60 170, 68 140 Z",
+      caption: "Monza rewards low drag, heavy braking stability, and enough rear security that the straights do not come at the price of panic in the chicanes.",
+      traces: {
         speed: [34, 94, 44, 58, 76, 54, 70, 90, 48],
         brake: [18, 96, 24, 44, 72, 20, 42, 84, 18],
         deploy: [52, 92, 44, 48, 68, 42, 58, 84, 46],
       },
-      weights: { straight: 0.34, slow: 0.14, fast: 0.12, tyreLife: 0.14, braking: 0.26, balance: 0.0 },
-      sectors: [
-        {
-          label: "Retifilo and launch",
-          focus: "Braking and acceleration",
-          weights: { straight: 0.22, slow: 0.12, fast: 0.06, tyreLife: 0.1, braking: 0.5, balance: 0.0 },
-          lead: "Heavy braking still dominates this sector",
-        },
-        {
-          label: "Lesmo sequence",
-          focus: "Exit grip and medium speed flow",
-          weights: { straight: 0.24, slow: 0.18, fast: 0.18, tyreLife: 0.16, braking: 0.18, balance: 0.06 },
-          lead: "This sector starts rewarding cleaner exits and enough rear support",
-        },
-        {
-          label: "Ascari to Parabolica",
-          focus: "High-speed balance into final exit",
-          weights: { straight: 0.2, slow: 0.14, fast: 0.28, tyreLife: 0.18, braking: 0.14, balance: 0.06 },
-          lead: "Late-lap commitment here depends on the rear axle still feeling honest",
-        },
-      ],
+      sectors: ["Retifilo", "Lesmo", "Ascari / Parabolica"],
+      preset: { wing: 0.24, ride: 0.45, stiffness: 0.66, bias: 0.74, tyre: 1, powerMode: 2, powerBias: 0, lapPlan: 1 },
     },
-    monaco: {
-      title: "Monaco",
-      kicker: "Slow-speed precision",
-      note: "Almost every gain here is bought through low-speed rotation, traction, and confidence near barriers rather than pure straight-line efficiency.",
-      aero: "High",
-      tyre: "Low",
-      brake: "Medium",
-      pass: "Minimal",
-      path: "M132 214 C108 196, 98 166, 114 140 C132 110, 164 118, 176 88 C186 60, 216 54, 242 72 C274 94, 310 94, 348 86 C384 80, 410 98, 408 128 C406 168, 446 170, 452 204 C456 228, 430 236, 398 232 C348 226, 304 224, 268 244 C234 262, 194 256, 180 232 C168 210, 148 226, 132 214 Z",
+    {
+      key: "monaco",
+      label: "Monaco",
       pitLossBase: 18.6,
       undercutBias: 4,
       overcutBias: 7,
-      tracePresets: {
+      path: "M132 214 C108 196, 98 166, 114 140 C132 110, 164 118, 176 88 C186 60, 216 54, 242 72 C274 94, 310 94, 348 86 C384 80, 410 98, 408 128 C406 168, 446 170, 452 204 C456 228, 430 236, 398 232 C348 226, 304 224, 268 244 C234 262, 194 256, 180 232 C168 210, 148 226, 132 214 Z",
+      caption: "Monaco spends the lap at low speed, near barriers, and with tiny margins for error. Rotation, traction, and confidence matter more than raw top speed.",
+      traces: {
         speed: [30, 56, 34, 40, 52, 36, 42, 58, 38],
         brake: [28, 74, 36, 44, 62, 40, 48, 70, 34],
         deploy: [34, 58, 32, 36, 50, 34, 38, 56, 34],
       },
-      weights: { straight: 0.08, slow: 0.34, fast: 0.08, tyreLife: 0.16, braking: 0.34, balance: 0.0 },
-      sectors: [
-        {
-          label: "Sainte Devote to Massenet",
-          focus: "Traction and confidence",
-          weights: { straight: 0.08, slow: 0.26, fast: 0.12, tyreLife: 0.16, braking: 0.28, balance: 0.1 },
-          lead: "The lap opens by asking for confidence near the walls",
-        },
-        {
-          label: "Casino to hairpin",
-          focus: "Rotation and patience",
-          weights: { straight: 0.04, slow: 0.34, fast: 0.08, tyreLife: 0.22, braking: 0.24, balance: 0.08 },
-          lead: "This middle sector punishes any setup that refuses to rotate cleanly",
-        },
-        {
-          label: "Swimming pool to final corner",
-          focus: "Direction change and traction",
-          weights: { straight: 0.08, slow: 0.26, fast: 0.16, tyreLife: 0.2, braking: 0.18, balance: 0.12 },
-          lead: "The final sector rewards agility without making the rear nervous over the direction changes",
-        },
-      ],
+      sectors: ["Sainte Devote", "Casino / Hairpin", "Pool / Rascasse"],
+      preset: { wing: 0.88, ride: 0.68, stiffness: 0.34, bias: 0.48, tyre: 0, powerMode: 1, powerBias: 1, lapPlan: 1 },
     },
-    silverstone: {
-      title: "Silverstone",
-      kicker: "High-speed confidence",
-      note: "Fast directional changes and loaded corners reward a platform that can carry speed without destabilizing the floor or overworking the front tyres.",
-      aero: "Very high",
-      tyre: "High",
-      brake: "Medium",
-      pass: "Good",
-      path: "M68 164 C72 114, 118 78, 170 82 C220 86, 244 126, 284 126 C338 126, 350 78, 402 70 C446 64, 486 90, 486 132 C486 164, 514 176, 544 156 C578 132, 618 138, 636 170 C654 202, 626 228, 580 226 C542 224, 504 208, 458 214 C404 222, 362 252, 308 250 C250 248, 220 216, 178 210 C130 204, 64 214, 68 164 Z",
+    {
+      key: "silverstone",
+      label: "Silverstone",
       pitLossBase: 20.4,
       undercutBias: 6,
       overcutBias: 5,
-      tracePresets: {
+      path: "M68 164 C72 114, 118 78, 170 82 C220 86, 244 126, 284 126 C338 126, 350 78, 402 70 C446 64, 486 90, 486 132 C486 164, 514 176, 544 156 C578 132, 618 138, 636 170 C654 202, 626 228, 580 226 C542 224, 504 208, 458 214 C404 222, 362 252, 308 250 C250 248, 220 216, 178 210 C130 204, 64 214, 68 164 Z",
+      caption: "Silverstone is a platform-confidence track. High-speed direction changes reward a car that keeps the floor alive while staying believable on the front axle.",
+      traces: {
         speed: [46, 84, 38, 54, 94, 62, 66, 86, 48],
         brake: [24, 58, 44, 30, 42, 26, 34, 54, 30],
         deploy: [42, 64, 38, 40, 68, 44, 48, 66, 42],
       },
-      weights: { straight: 0.16, slow: 0.12, fast: 0.34, tyreLife: 0.22, braking: 0.16, balance: 0.0 },
-      sectors: [
-        {
-          label: "Abbey to Village",
-          focus: "Fast turn-in into low-speed reset",
-          weights: { straight: 0.12, slow: 0.18, fast: 0.26, tyreLife: 0.18, braking: 0.18, balance: 0.08 },
-          lead: "The first sector asks for a car that changes phase cleanly from brave entry to slow-speed rotation",
-        },
-        {
-          label: "Maggotts and Becketts",
-          focus: "Platform trust",
-          weights: { straight: 0.08, slow: 0.08, fast: 0.42, tyreLife: 0.22, braking: 0.1, balance: 0.1 },
-          lead: "This is where the car either earns high-speed trust or exposes its platform weakness",
-        },
-        {
-          label: "Stowe to final complex",
-          focus: "Rear stability and tyre survival",
-          weights: { straight: 0.18, slow: 0.12, fast: 0.28, tyreLife: 0.24, braking: 0.1, balance: 0.08 },
-          lead: "The end of the lap rewards a car that still has rear support and front tyre life left",
-        },
-      ],
+      sectors: ["Abbey / Village", "Maggotts / Becketts", "Stowe / Vale"],
+      preset: { wing: 0.72, ride: 0.26, stiffness: 0.8, bias: 0.62, tyre: 1, powerMode: 2, powerBias: 1, lapPlan: 0 },
     },
-    spa: {
-      title: "Spa",
-      kicker: "Mixed altitude compromise",
-      note: "Spa stretches the car in every direction at once: long power sections, loaded fast corners, elevation change, and braking zones that punish imbalance.",
-      aero: "High",
-      tyre: "Moderate",
-      brake: "High",
-      pass: "Strong",
-      path: "M88 202 C62 174, 62 130, 96 112 C130 94, 180 114, 226 96 C268 80, 302 42, 348 48 C400 54, 418 112, 470 120 C520 128, 566 92, 608 118 C648 142, 638 188, 598 202 C556 216, 502 202, 470 224 C430 250, 392 250, 344 228 C286 200, 222 214, 168 230 C128 242, 102 224, 88 202 Z",
+    {
+      key: "spa",
+      label: "Spa",
       pitLossBase: 20.9,
       undercutBias: 7,
       overcutBias: 5,
-      tracePresets: {
+      path: "M88 202 C62 174, 62 130, 96 112 C130 94, 180 114, 226 96 C268 80, 302 42, 348 48 C400 54, 418 112, 470 120 C520 128, 566 92, 608 118 C648 142, 638 188, 598 202 C556 216, 502 202, 470 224 C430 250, 392 250, 344 228 C286 200, 222 214, 168 230 C128 242, 102 224, 88 202 Z",
+      caption: "Spa stretches the car in every direction at once: long power sections, elevation, loaded corners, and braking zones that punish any imbalance.",
+      traces: {
         speed: [38, 96, 46, 58, 82, 54, 60, 88, 44],
         brake: [22, 82, 30, 38, 58, 26, 44, 76, 28],
         deploy: [50, 90, 42, 46, 70, 40, 54, 82, 46],
       },
-      weights: { straight: 0.24, slow: 0.12, fast: 0.24, tyreLife: 0.16, braking: 0.24, balance: 0.0 },
-      sectors: [
-        {
-          label: "La Source to Kemmel",
-          focus: "Traction to top speed",
-          weights: { straight: 0.32, slow: 0.14, fast: 0.14, tyreLife: 0.12, braking: 0.2, balance: 0.08 },
-          lead: "The lap opens by asking the setup to survive a hairpin and then stop dragging itself up the hill",
-        },
-        {
-          label: "Middle sector flow",
-          focus: "Mixed load commitment",
-          weights: { straight: 0.18, slow: 0.12, fast: 0.28, tyreLife: 0.16, braking: 0.18, balance: 0.08 },
-          lead: "The middle sector is all about whether the car can keep speed without becoming vague over the fast transitions",
-        },
-        {
-          label: "Bus Stop finish",
-          focus: "Braking and exit integrity",
-          weights: { straight: 0.22, slow: 0.12, fast: 0.18, tyreLife: 0.18, braking: 0.22, balance: 0.08 },
-          lead: "The final sector rewards a car that still brakes cleanly after being stretched for the whole lap",
-        },
-      ],
+      sectors: ["La Source / Kemmel", "Middle flow", "Bus Stop"],
+      preset: { wing: 0.5, ride: 0.42, stiffness: 0.58, bias: 0.68, tyre: 1, powerMode: 2, powerBias: 2, lapPlan: 1 },
     },
-    suzuka: {
-      title: "Suzuka",
-      kicker: "Flow and rhythm track",
-      note: "Repeated direction changes and linked corners reward a car with rhythm, front confidence, and enough tyre control to keep the first sector alive.",
-      aero: "High",
-      tyre: "High",
-      brake: "Medium",
-      pass: "Limited",
-      path: "M112 84 C146 52, 208 56, 236 92 C256 118, 246 148, 212 164 C178 180, 170 214, 198 228 C232 246, 296 246, 322 214 C344 186, 376 170, 410 184 C452 202, 492 188, 514 158 C540 122, 584 114, 616 138 C648 162, 642 204, 604 220 C564 236, 530 224, 496 206 C450 182, 418 206, 406 232 C386 272, 326 268, 290 246 C252 222, 192 216, 152 194 C112 172, 96 126, 112 84 Z",
+    {
+      key: "suzuka",
+      label: "Suzuka",
       pitLossBase: 22.1,
       undercutBias: 5,
       overcutBias: 6,
-      tracePresets: {
+      path: "M112 84 C146 52, 208 56, 236 92 C256 118, 246 148, 212 164 C178 180, 170 214, 198 228 C232 246, 296 246, 322 214 C344 186, 376 170, 410 184 C452 202, 492 188, 514 158 C540 122, 584 114, 616 138 C648 162, 642 204, 604 220 C564 236, 530 224, 496 206 C450 182, 418 206, 406 232 C386 272, 326 268, 290 246 C252 222, 192 216, 152 194 C112 172, 96 126, 112 84 Z",
+      caption: "Suzuka rewards rhythm, front confidence, and enough tyre control to survive linked corners without breaking the platform's flow.",
+      traces: {
         speed: [42, 78, 50, 60, 88, 58, 56, 82, 46],
         brake: [18, 52, 28, 36, 58, 26, 40, 74, 34],
         deploy: [40, 58, 36, 42, 64, 42, 48, 68, 40],
       },
-      weights: { straight: 0.14, slow: 0.16, fast: 0.3, tyreLife: 0.24, braking: 0.16, balance: 0.0 },
-      sectors: [
-        {
-          label: "Esses and Dunlop",
-          focus: "Front confidence and rhythm",
-          weights: { straight: 0.08, slow: 0.14, fast: 0.34, tyreLife: 0.24, braking: 0.1, balance: 0.1 },
-          lead: "The first sector exposes any front-end hesitation immediately",
-        },
-        {
-          label: "Degner to Spoon",
-          focus: "Linked commitment",
-          weights: { straight: 0.16, slow: 0.12, fast: 0.28, tyreLife: 0.18, braking: 0.14, balance: 0.12 },
-          lead: "The middle of the lap rewards rhythm and punishments arrive whenever the platform breaks that rhythm",
-        },
-        {
-          label: "130R to final chicane",
-          focus: "High speed bravery into braking reset",
-          weights: { straight: 0.18, slow: 0.14, fast: 0.24, tyreLife: 0.18, braking: 0.18, balance: 0.08 },
-          lead: "The final sector demands a rear axle that still feels trustworthy after the earlier load cycles",
-        },
-      ],
+      sectors: ["Esses / Dunlop", "Degner / Spoon", "130R / Chicane"],
+      preset: { wing: 0.62, ride: 0.3, stiffness: 0.64, bias: 0.58, tyre: 1, powerMode: 1, powerBias: 1, lapPlan: 1 },
     },
-  };
+  ];
 
-  const setupDefaults = {
-    wing: 5,
-    ride: 39,
-    stiffness: 58,
-    bias: 55.5,
-    compoundKey: "soft",
-  };
+  const controls = {};
+  const scenes = [];
+  const captionCache = {};
 
-  const trackPresets = {
-    monza: {
-      trackKey: "monza",
-      wing: 3,
-      ride: 41,
-      stiffness: 66,
-      bias: 56.5,
-      compoundKey: "medium",
-      lapPlan: "balanced",
-      powerMode: "attack",
-      powerBias: "early",
-      note: "The Monza preset trims wing and keeps the car disciplined enough under braking that the long straights stay worth protecting.",
-    },
-    monaco: {
-      trackKey: "monaco",
-      wing: 10,
-      ride: 48,
-      stiffness: 42,
-      bias: 54.5,
-      compoundKey: "soft",
-      lapPlan: "balanced",
-      powerMode: "balanced",
-      powerBias: "distributed",
-      note: "The Monaco preset accepts drag so the car can rotate, ride the slow corners more willingly, and keep the front axle alive next to the barriers.",
-    },
-    silverstone: {
-      trackKey: "silverstone",
-      wing: 8,
-      ride: 34,
-      stiffness: 72,
-      bias: 55.5,
-      compoundKey: "medium",
-      lapPlan: "push",
-      powerMode: "attack",
-      powerBias: "distributed",
-      note: "The Silverstone preset protects high-speed trust, accepting more drag so the floor and rear stay believable through the fast sequences.",
-    },
-    spa: {
-      trackKey: "spa",
-      wing: 6,
-      ride: 38,
-      stiffness: 60,
-      bias: 56,
-      compoundKey: "medium",
-      lapPlan: "balanced",
-      powerMode: "attack",
-      powerBias: "late",
-      note: "The Spa preset splits the difference between long-straight power demand and enough support to survive the faster, more loaded sections.",
-    },
-    suzuka: {
-      trackKey: "suzuka",
-      wing: 7,
-      ride: 35,
-      stiffness: 64,
-      bias: 55.2,
-      compoundKey: "medium",
-      lapPlan: "balanced",
-      powerMode: "balanced",
-      powerBias: "distributed",
-      note: "The Suzuka preset leans into rhythm and front confidence so the car can survive the linked corners without breaking the platform's flow.",
-    },
-  };
-
-  const weatherModes = {
-    dry: {
-      label: "Dry",
-    },
-    mixed: {
-      label: "Mixed",
-    },
-    wet: {
-      label: "Wet",
-    },
-  };
-
-  const metricLabels = {
-    straight: "straight-line speed",
-    slow: "slow-corner authority",
-    fast: "high-speed support",
-    tyreLife: "tyre preservation",
-    braking: "braking confidence",
-    balance: "aero balance",
+  const state = {
+    component: 0,
+    track: 0,
+    powerMode: 0,
+    powerBias: 0,
+    lapPlan: 0,
+    tyreCompound: 0,
+    weatherMode: 0,
+    overviewRotation: mat3_mul(rot_x_mat3(-0.92), rot_z_mat3(0.42)),
+    airflowSpeed: 0.44,
+    airflowWing: 0.54,
+    airflowRide: 0.36,
+    frontGap: 0.42,
+    frontFlap: 0.48,
+    frontDemand: 0.62,
+    floorRide: 0.38,
+    floorPitch: 0.54,
+    rearDrc: 0,
+    rearWing: 0.62,
+    rearSpeed: 0.7,
+    chassisStiffness: 0.58,
+    chassisKerb: 0.32,
+    chassisBrake: 0.5,
+    tyreTemp: 0.58,
+    tyreLoad: 0.56,
+    tyreStint: 0.4,
+    brakeSpeed: 0.75,
+    brakeBias: 0.56,
+    brakeRecovery: 0.48,
+    raceDrc: 0,
+    raceGap: 0.42,
+    raceDeploy: 0.62,
+    raceBrake: 0.74,
+    setupWing: 0.24,
+    setupRide: 0.45,
+    setupStiffness: 0.66,
+    setupBias: 0.74,
+    weatherTemp: 0.53,
+    weatherLaps: 0.38,
+    weatherRain: 0.18,
+    pitAge: 0.42,
+    pitTraffic: 0.36,
+    pitSafety: 0.18,
   };
 
   function clamp(value, min, max) {
-    return Math.min(max, Math.max(min, value));
+    return Math.max(min, Math.min(value, max));
   }
 
-  function setText(id, value) {
-    const node = document.getElementById(id);
-    if (node) {
-      node.textContent = value;
-    }
+  function lerpNumber(a, b, t) {
+    return a * (1 - t) + b * t;
   }
 
-  function setList(id, items) {
-    const list = document.getElementById(id);
-    if (!list) {
+  function mixRgb(a, b, t) {
+    return [
+      lerpNumber(a[0], b[0], t),
+      lerpNumber(a[1], b[1], t),
+      lerpNumber(a[2], b[2], t),
+    ];
+  }
+
+  function rgba(rgb, alpha) {
+    return "rgba(" + Math.round(rgb[0]) + "," + Math.round(rgb[1]) + "," + Math.round(rgb[2]) + "," + alpha + ")";
+  }
+
+  function getTrack() {
+    return TRACKS[state.track];
+  }
+
+  function getTyre() {
+    return TYRES[state.tyreCompound];
+  }
+
+  function getPowerMode() {
+    return POWER_MODES[state.powerMode];
+  }
+
+  function getPowerBias() {
+    return POWER_BIASES[state.powerBias];
+  }
+
+  function getLapPlan() {
+    return LAP_PLANS[state.lapPlan];
+  }
+
+  function getWeatherMode() {
+    return WEATHER_MODES[state.weatherMode];
+  }
+
+  function setCaption(id, text) {
+    if (captionCache[id] === text) {
       return;
     }
-
-    list.innerHTML = "";
-    items.forEach((item) => {
-      const element = document.createElement("li");
-      element.textContent = item;
-      list.appendChild(element);
-    });
-  }
-
-  function setMeter(id, value) {
+    captionCache[id] = text;
     const node = document.getElementById(id);
     if (node) {
-      node.style.width = `${clamp(value, 0, 100)}%`;
+      node.innerHTML = text;
     }
   }
 
-  function dispatchInputEvent(node) {
-    if (!node) {
-      return;
-    }
-    node.dispatchEvent(new Event("input", { bubbles: true }));
+  function isVisible(element) {
+    const rect = element.getBoundingClientRect();
+    const wh = window.innerHeight || document.documentElement.clientHeight;
+    const ww = window.innerWidth || document.documentElement.clientWidth;
+    return !(rect.top > wh || rect.bottom < 0 || rect.left > ww || rect.right < 0);
   }
 
-  function setActiveByValue(nodes, value, attributeName) {
-    nodes.forEach((node) => {
-      const isActive = node.dataset[attributeName] === value;
-      node.classList.toggle("is-active", isActive);
-      node.setAttribute("aria-pressed", isActive ? "true" : "false");
+  function makeScene(id, options, drawFn) {
+    const container = document.getElementById(id);
+    if (!container) {
+      return null;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "canvas_container non_selectable";
+    const canvas = document.createElement("canvas");
+    canvas.className = "non_selectable";
+    wrapper.appendChild(canvas);
+    container.appendChild(wrapper);
+
+    let width = 0;
+    let height = 0;
+    let dirty = true;
+    let rotation = options.rotation ? options.rotation.slice() : null;
+
+    const ctx = canvas.getContext("2d");
+
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      const nextWidth = Math.max(1, Math.round(rect.width));
+      const nextHeight = Math.max(1, Math.round(rect.height));
+      if (nextWidth !== width || nextHeight !== height) {
+        width = nextWidth;
+        height = nextHeight;
+        canvas.width = Math.round(width * scale);
+        canvas.height = Math.round(height * scale);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        dirty = true;
+        if (scene.arcball) {
+          scene.arcball.set_viewport_size(width, height);
+        }
+      }
+    }
+
+    const scene = {
+      id,
+      canvas,
+      ctx,
+      options,
+      arcball: null,
+      get width() {
+        return width;
+      },
+      get height() {
+        return height;
+      },
+      get rotation() {
+        return rotation;
+      },
+      set rotation(value) {
+        rotation = value.slice();
+        dirty = true;
+      },
+      requestRepaint() {
+        dirty = true;
+      },
+      maybeDraw(time) {
+        resize();
+        if (!isVisible(canvas)) {
+          return;
+        }
+        if (options.animated || dirty) {
+          ctx.setTransform(scale, 0, 0, scale, 0, 0);
+          ctx.clearRect(0, 0, width, height);
+          drawFn(ctx, width, height, time || 0, scene);
+          dirty = false;
+        }
+      },
+    };
+
+    if (options.arcball) {
+      const arcball = new ArcBall(rotation, function () {
+        rotation = arcball.matrix.slice();
+        dirty = true;
+      });
+      scene.arcball = arcball;
+
+      function canvasPoint(event) {
+        const rect = canvas.getBoundingClientRect();
+        return [width - (event.clientX - rect.left), event.clientY - rect.top];
+      }
+
+      canvas.style.cursor = "grab";
+      new TouchHandler(canvas,
+        function (event) {
+          resize();
+          canvas.style.cursor = "grabbing";
+          const point = canvasPoint(event);
+          arcball.start(point[0], point[1]);
+          return true;
+        },
+        function (event) {
+          const point = canvasPoint(event);
+          arcball.update(point[0], point[1], event.timeStamp);
+          rotation = arcball.matrix.slice();
+          dirty = true;
+          return true;
+        },
+        function (event) {
+          canvas.style.cursor = "grab";
+          arcball.end(event.timeStamp);
+        }
+      );
+    }
+
+    scenes.push(scene);
+    return scene;
+  }
+
+  function repaintAll() {
+    scenes.forEach((scene) => scene.requestRepaint());
+  }
+
+  function loop(time) {
+    scenes.forEach((scene) => scene.maybeDraw(time * 0.001));
+    window.requestAnimationFrame(loop);
+  }
+
+  function roundedRectPoints(cx, cy, w, h, r, steps) {
+    const pts = [];
+    const segs = steps || 3;
+    const corners = [
+      { x: cx + w / 2 - r, y: cy - h / 2 + r, start: -Math.PI / 2, end: 0 },
+      { x: cx + w / 2 - r, y: cy + h / 2 - r, start: 0, end: Math.PI / 2 },
+      { x: cx - w / 2 + r, y: cy + h / 2 - r, start: Math.PI / 2, end: Math.PI },
+      { x: cx - w / 2 + r, y: cy - h / 2 + r, start: Math.PI, end: Math.PI * 1.5 },
+    ];
+
+    corners.forEach((corner) => {
+      for (let i = 0; i <= segs; i += 1) {
+        const t = i / segs;
+        const a = lerpNumber(corner.start, corner.end, t);
+        pts.push([corner.x + Math.cos(a) * r, corner.y + Math.sin(a) * r]);
+      }
     });
+
+    return pts;
   }
 
-  function formatSignedDelta(value) {
-    return `${value >= 0 ? "+" : ""}${value.toFixed(2)} s`;
-  }
-
-  function getCompoundTitle(compoundKey) {
-    return (setupCompounds[compoundKey] || setupCompounds.soft).label;
-  }
-
-  function computeSetupScores(trackKey, compoundKey, wing, ride, stiffness, bias) {
-    const track = tracks[trackKey] || tracks.monza;
-    const compound = setupCompounds[compoundKey] || setupCompounds.soft;
-
-    const straight = clamp(98 - wing * 3.6 - Math.max(0, 40 - ride) * 0.45 - stiffness * 0.05, 36, 98);
-    const slow = clamp(46 + wing * 2.2 + compound.slow + (64 - stiffness) * 0.22 - Math.abs(bias - 55.4) * 1.3, 28, 96);
-    const fast = clamp(44 + wing * 2.8 + (40 - Math.abs(ride - 33)) * 0.95 + stiffness * 0.18 + compound.fast, 28, 98);
-    const tyreLife = clamp(92 - wing * 1.4 - Math.max(0, 38 - ride) * 0.55 - stiffness * 0.16 + compound.tyreLife, 22, 96);
-    const braking = clamp(84 - Math.abs(bias - 55.8) * 4.1 - Math.max(0, 54 - stiffness) * 0.16 + compound.braking, 22, 98);
-    const balance = clamp(48 + wing * 3 + (35 - Math.abs(ride - 34)) * 0.55 - Math.max(0, stiffness - 72) * 0.28 + compound.balance, 20, 95);
-
-    let note = `${track.title}-biased setup: `;
-    if (track.title === "Monza") {
-      note += "this direction protects the straights, but every extra wing click needs to earn its drag penalty back in the chicanes.";
-    } else if (track.title === "Monaco") {
-      note += "low-speed rotation and confidence matter more than raw speed, so drag is easier to forgive than hesitation near the wall.";
-    } else if (track.title === "Silverstone") {
-      note += "high-speed commitment rewards a calmer platform and floor, which usually means accepting a little more drag than a pure straight-line setup.";
-    } else if (track.title === "Spa") {
-      note += "the circuit stretches the setup both ways, so the strongest answer is often the least punishing compromise rather than the single best local number.";
-    } else {
-      note += "the linked corners reward rhythm and front confidence, so abrupt imbalance is more expensive than one missing kilometer per hour on the straight.";
-    }
-
+  function projectPoint(point, rot, sceneScale, cx, cy) {
+    const q = mat3_mul_vec(rot, point);
+    const perspective = 2.4 + q[2] * 0.5;
     return {
-      straight,
-      slow,
-      fast,
-      tyreLife,
-      braking,
-      balance,
-      note,
+      x: cx + q[0] * sceneScale / perspective,
+      y: cy - q[1] * sceneScale / perspective,
+      z: q[2],
     };
   }
 
-  function computePowerState(modeKey, biasKey, trackKey) {
-    const mode = powerModes[modeKey] || powerModes.harvest;
-    const bias = powerBiases[biasKey] || powerBiases.distributed;
-    const track = tracks[trackKey] || tracks.monza;
+  function pushExtrudedShape(polys, shape, z0, z1, topColor, sideColor, rot, sceneScale, cx, cy) {
+    const top = shape.map((point) => projectPoint([point[0], point[1], z1], rot, sceneScale, cx, cy));
+    const bottom = shape.map((point) => projectPoint([point[0], point[1], z0], rot, sceneScale, cx, cy));
 
-    const sectorBars = track.sectors.map((sector, index) => {
-      const split = bias.splits[index] || 0.33;
-      const sensitivity = 0.58 + (sector.weights.straight || 0) * 0.9 + (sector.weights.fast || 0) * 0.35;
-      return clamp(mode.deploy * split * sensitivity * 1.9, 12, 100);
+    polys.push({
+      depth: top.reduce((sum, point) => sum + point.z, 0) / top.length,
+      fill: topColor,
+      stroke: rgba(COLORS.dark, 0.18),
+      points: top,
     });
 
-    let note = `${bias.label} deployment concentrates more of the usable electrical push into ${track.sectors[0].label.toLowerCase()}.`;
-    if (biasKey === "distributed") {
-      note = `Distributed deployment keeps the lap shape more even, so no single sector receives all the battery help.`;
+    for (let i = 0; i < shape.length; i += 1) {
+      const next = (i + 1) % shape.length;
+      const side = [bottom[i], bottom[next], top[next], top[i]];
+      polys.push({
+        depth: side.reduce((sum, point) => sum + point.z, 0) / side.length,
+        fill: sideColor,
+        stroke: rgba(COLORS.dark, 0.12),
+        points: side,
+      });
     }
-    if (biasKey === "late") {
-      note = `${bias.label} deployment saves more of the electrical push for the back half of the lap when tyre and rear-platform confidence are already under pressure.`;
-    }
-    if (modeKey === "harvest") {
-      note = `${note} In harvest mode the overall ceiling stays lower because the car is prioritizing energy refill and cooling headroom.`;
-    }
-    if (modeKey === "attack") {
-      note = `${note} Attack mode raises the ceiling, but it also spends battery and thermal margin much faster.`;
-    }
-
-    return {
-      modeKey,
-      modeLabel: modeKey.charAt(0).toUpperCase() + modeKey.slice(1),
-      biasKey,
-      biasLabel: bias.label,
-      sectorBars,
-      deployValue: mode.deploy,
-      note,
-    };
   }
 
-  function buildTracePoints(values, options) {
-    const left = options.left;
-    const top = options.top;
-    const height = options.height;
-    const width = options.width;
-    const points = values.map((value, index) => {
-      const ratio = values.length === 1 ? 0 : index / (values.length - 1);
-      const x = left + width * ratio;
-      const y = top + height * (1 - clamp(value, 0, 100) / 100);
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
+  function drawPolygon(ctx, poly) {
+    ctx.beginPath();
+    poly.points.forEach((point, index) => {
+      if (index === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
     });
-
-    return points.join(" ");
+    ctx.closePath();
+    ctx.fillStyle = poly.fill;
+    ctx.fill();
+    if (poly.stroke) {
+      ctx.strokeStyle = poly.stroke;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
   }
 
-  function getRacecraftTrackCopy(trackKey) {
-    if (trackKey === "monaco") {
+  function renderPolys(ctx, polys) {
+    polys.sort((a, b) => a.depth - b.depth);
+    polys.forEach((poly) => drawPolygon(ctx, poly));
+  }
+
+  function componentColor(componentKey, selectedKey, activeBoost) {
+    const component = COMPONENTS.find((item) => item.key === componentKey);
+    const source = component ? component.color : COLORS.gray;
+    if (componentKey === selectedKey) {
       return {
-        kicker: "Precision pass window",
-        note: "Passing is rare here because the braking zones are short and the road punishes any move that begins without full front confidence.",
-      };
-    }
-    if (trackKey === "silverstone") {
-      return {
-        kicker: "High-speed setup trap",
-        note: "The biggest racecraft challenge here is staying close enough through the fast sections that the straight-line tools still matter at the end of them.",
-      };
-    }
-    if (trackKey === "spa") {
-      return {
-        kicker: "Long-run draft battle",
-        note: "The straights and elevation changes create good closing-speed windows, but the chase only works if the car survives the faster corners without losing front trust.",
-      };
-    }
-    if (trackKey === "suzuka") {
-      return {
-        kicker: "Rhythm before reward",
-        note: "Suzuka often forces the attacking car to earn the move several corners earlier by protecting the front tyres and staying inside the rhythm of the lap.",
+        top: rgba(mixRgb(source, COLORS.paper, 0.08), activeBoost || 0.96),
+        side: rgba(mixRgb(source, COLORS.dark, 0.22), 0.92),
       };
     }
 
     return {
-      kicker: "Primary pass window",
-      note: "The braking zones are long enough that a strong closing rate can turn into a decisive move rather than just a late defensive feint.",
+      top: rgba(mixRgb(source, COLORS.paper, 0.72), 0.96),
+      side: rgba(mixRgb(source, COLORS.dark, 0.58), 0.46),
     };
   }
 
-  function computeWeatherStrategy(modeKey, trackKey, temp, lapsRemaining, rainPressure, compoundKey) {
-    const track = tracks[trackKey] || tracks.monza;
-    const compound = setupCompounds[compoundKey] || setupCompounds.soft;
-    let recommendedTyre = "Medium";
+  function drawOverviewScene(ctx, width, height, time, scene) {
+    const selected = COMPONENTS[state.component].key;
+    const rot = scene.rotation || state.overviewRotation;
+    const cx = width * 0.5;
+    const cy = height * 0.56;
+    const sceneScale = Math.min(width, height) * 0.48;
+
+    const background = ctx.createLinearGradient(0, 0, 0, height);
+    background.addColorStop(0, rgba(COLORS.paper, 1));
+    background.addColorStop(1, rgba(mixRgb(COLORS.paper, COLORS.gray, 0.12), 1));
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    ctx.beginPath();
+    ctx.ellipse(cx, height * 0.83, width * 0.24, height * 0.06, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    const shapes = {
+      "front-wing": [[-1.72, -0.92], [-1.28, -1.12], [-0.78, -1.08], [-0.52, -0.64], [-0.52, 0.64], [-0.78, 1.08], [-1.28, 1.12], [-1.72, 0.92]],
+      nose: [[-0.92, -0.3], [-0.28, -0.2], [-0.16, -0.1], [-0.16, 0.1], [-0.28, 0.2], [-0.92, 0.3]],
+      floor: [[-0.34, -0.86], [0.96, -0.78], [1.18, -0.56], [1.18, 0.56], [0.96, 0.78], [-0.34, 0.86], [-0.58, 0.42], [-0.58, -0.42]],
+      sidepodsL: [[-0.18, -0.82], [0.4, -0.78], [0.68, -0.6], [0.6, -0.34], [0.02, -0.28], [-0.2, -0.52]],
+      sidepodsR: [[-0.18, 0.82], [0.4, 0.78], [0.68, 0.6], [0.6, 0.34], [0.02, 0.28], [-0.2, 0.52]],
+      engine: [[0.18, -0.34], [0.78, -0.28], [1.12, -0.1], [1.12, 0.1], [0.78, 0.28], [0.18, 0.34], [0.02, 0.18], [0.02, -0.18]],
+      gearbox: [[1.02, -0.3], [1.42, -0.26], [1.58, -0.12], [1.58, 0.12], [1.42, 0.26], [1.02, 0.3]],
+      diffuser: [[1.52, -0.42], [1.88, -0.36], [2.02, -0.16], [2.02, 0.16], [1.88, 0.36], [1.52, 0.42]],
+      "rear-wing": [[1.9, -0.88], [2.22, -0.78], [2.24, -0.2], [2.18, 0], [2.24, 0.2], [2.22, 0.78], [1.9, 0.88]],
+      halo: [[0.18, -0.12], [0.28, -0.24], [0.5, -0.24], [0.62, -0.1], [0.54, 0.1], [0.5, 0.18], [0.3, 0.18], [0.16, 0.06]],
+    };
+
+    const polys = [];
+    const neutralWheel = roundedRectPoints(-0.58, -1.28, 0.56, 0.42, 0.12, 3);
+    const frontRightWheel = roundedRectPoints(-0.58, 1.28, 0.56, 0.42, 0.12, 3);
+    const rearLeftWheel = roundedRectPoints(1.22, -1.34, 0.64, 0.46, 0.12, 3);
+    const rearRightWheel = roundedRectPoints(1.22, 1.34, 0.64, 0.46, 0.12, 3);
+
+    pushExtrudedShape(polys, neutralWheel, -0.18, 0.22, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, frontRightWheel, -0.18, 0.22, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, rearLeftWheel, -0.2, 0.26, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, rearRightWheel, -0.2, 0.26, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
+
+    pushExtrudedShape(polys, shapes["front-wing"], -0.02, 0.04, componentColor("front-wing", selected).top, componentColor("front-wing", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.nose, -0.01, 0.11, componentColor("front-wing", selected).top, componentColor("front-wing", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.floor, -0.04, 0.1, componentColor("floor", selected).top, componentColor("floor", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.sidepodsL, 0.0, 0.18, componentColor("sidepods", selected).top, componentColor("sidepods", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.sidepodsR, 0.0, 0.18, componentColor("sidepods", selected).top, componentColor("sidepods", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.engine, 0.02, 0.3, componentColor("power-unit", selected).top, componentColor("power-unit", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.gearbox, 0.02, 0.18, componentColor("gearbox", selected).top, componentColor("gearbox", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.diffuser, -0.02, 0.08, componentColor("diffuser", selected).top, componentColor("diffuser", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes["rear-wing"], 0.04, 0.14, componentColor("rear-wing", selected).top, componentColor("rear-wing", selected).side, rot, sceneScale, cx, cy);
+    pushExtrudedShape(polys, shapes.halo, 0.18, 0.42, componentColor("halo", selected).top, componentColor("halo", selected).side, rot, sceneScale, cx, cy);
+
+    const brakeShapes = [
+      roundedRectPoints(-0.58, -1.28, 0.24, 0.18, 0.06, 2),
+      roundedRectPoints(-0.58, 1.28, 0.24, 0.18, 0.06, 2),
+      roundedRectPoints(1.22, -1.34, 0.28, 0.2, 0.06, 2),
+      roundedRectPoints(1.22, 1.34, 0.28, 0.2, 0.06, 2),
+    ];
+    brakeShapes.forEach((shape) => {
+      pushExtrudedShape(polys, shape, 0.04, 0.12, componentColor("brakes", selected).top, componentColor("brakes", selected).side, rot, sceneScale, cx, cy);
+    });
+
+    renderPolys(ctx, polys);
+
+    ctx.save();
+    ctx.translate(width - 54, 54);
+    draw_camera_axes(ctx, 24, rot);
+    ctx.restore();
+
+    ctx.fillStyle = rgba(COLORS.ink, 0.62);
+    ctx.font = "600 12px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("Drag to rotate", 24, 28);
+
+    setCaption("f1_overview_caption", `<strong>${COMPONENTS[state.component].label}</strong> - ${COMPONENTS[state.component].caption}`);
+  }
+
+  function drawSideCar(ctx, x, y, scaleSize, pitch, ride, wingOpen) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scaleSize, scaleSize);
+    ctx.rotate(pitch);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.1);
+    ctx.beginPath();
+    ctx.ellipse(0.08, 0.72 + ride, 1.18, 0.18, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.paper, 0.98);
+    ctx.strokeStyle = rgba(COLORS.dark, 0.22);
+    ctx.lineWidth = 0.02;
+    ctx.beginPath();
+    ctx.moveTo(-1.45, 0.36 + ride);
+    ctx.lineTo(-1.0, 0.2 + ride);
+    ctx.lineTo(-0.4, 0.05 + ride);
+    ctx.lineTo(0.2, -0.04 + ride);
+    ctx.lineTo(0.82, -0.01 + ride);
+    ctx.lineTo(1.16, 0.04 + ride);
+    ctx.lineTo(1.62, 0.2 + ride);
+    ctx.lineTo(1.7, 0.3 + ride);
+    ctx.lineTo(1.7, 0.46 + ride);
+    ctx.lineTo(-1.45, 0.46 + ride);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = rgba(COLORS.red, 0.84);
+    ctx.fillRect(-1.52, 0.18 + ride, 0.44, 0.08);
+    ctx.fillRect(1.38, 0.06 + ride - (wingOpen ? 0.08 : 0), 0.46, 0.08);
+    ctx.fillStyle = rgba(COLORS.cyan, 0.72);
+    ctx.fillRect(-0.12, 0.18 + ride, 1.3, 0.08);
+    ctx.fillStyle = rgba(COLORS.ink, 0.08);
+    ctx.fillRect(0.08, 0.02 + ride, 0.44, 0.12);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.2);
+    ctx.beginPath();
+    ctx.ellipse(-0.82, 0.52 + ride, 0.18, 0.18, 0, 0, Math.PI * 2);
+    ctx.ellipse(1.16, 0.52 + ride, 0.22, 0.22, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawFlowLine(ctx, width, startY, amplitude, time, speed, color) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.setLineDash([12, 14]);
+    ctx.lineDashOffset = -time * (70 + speed * 140);
+    ctx.beginPath();
+    ctx.moveTo(18, startY);
+    ctx.bezierCurveTo(width * 0.22, startY - amplitude * 0.35, width * 0.44, startY + amplitude * 0.55, width * 0.65, startY + amplitude * 0.25);
+    ctx.bezierCurveTo(width * 0.82, startY - amplitude * 0.2, width * 0.92, startY + amplitude * 0.18, width - 18, startY + amplitude * 0.08);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  function computeSetupScores() {
+    const track = getTrack();
+    const tyre = getTyre();
+    const wing = state.setupWing;
+    const ride = state.setupRide;
+    const stiffness = state.setupStiffness;
+    const bias = state.setupBias;
+
+    const straight = clamp(0.98 - wing * 0.52 - Math.max(0, 0.46 - ride) * 0.18 - stiffness * 0.08, 0.24, 0.98);
+    const slow = clamp(0.38 + wing * 0.44 + (0.68 - stiffness) * 0.26 - Math.abs(bias - 0.56) * 0.45, 0.2, 0.96);
+    const fast = clamp(0.32 + wing * 0.5 + (0.42 - Math.abs(ride - 0.34)) * 0.5 + stiffness * 0.18, 0.22, 0.98);
+    const tyreLife = clamp(0.9 - wing * 0.22 - Math.max(0, 0.42 - ride) * 0.24 - stiffness * 0.22 - tyre.wear * 0.08, 0.18, 0.96);
+    const braking = clamp(0.82 - Math.abs(bias - 0.58) * 0.72 - Math.max(0, 0.54 - stiffness) * 0.22, 0.18, 0.96);
+    const balance = clamp(0.44 + wing * 0.44 + (0.36 - Math.abs(ride - 0.34)) * 0.32 - Math.max(0, stiffness - 0.78) * 0.22, 0.16, 0.95);
+
+    const weights = {
+      monza: { straight: 0.34, slow: 0.14, fast: 0.12, tyreLife: 0.14, braking: 0.26 },
+      monaco: { straight: 0.08, slow: 0.34, fast: 0.08, tyreLife: 0.16, braking: 0.34 },
+      silverstone: { straight: 0.16, slow: 0.12, fast: 0.34, tyreLife: 0.22, braking: 0.16 },
+      spa: { straight: 0.24, slow: 0.12, fast: 0.24, tyreLife: 0.16, braking: 0.24 },
+      suzuka: { straight: 0.14, slow: 0.16, fast: 0.3, tyreLife: 0.24, braking: 0.16 },
+    }[track.key];
+
+    const score = straight * weights.straight + slow * weights.slow + fast * weights.fast + tyreLife * weights.tyreLife + braking * weights.braking;
+
+    return { straight, slow, fast, tyreLife, braking, balance, score };
+  }
+
+  function computePowerState() {
+    const track = getTrack();
+    const mode = getPowerMode();
+    const bias = getPowerBias();
+    const sectorBars = track.sectors.map(function (_, index) {
+      const split = bias.splits[index];
+      return clamp(mode.deploy * split * 2.05, 0.08, 0.98);
+    });
+
+    return { mode, bias, sectorBars };
+  }
+
+  function computeTyreState() {
+    const tyre = getTyre();
+    const temp = state.tyreTemp;
+    const load = state.tyreLoad;
+    const stint = state.tyreStint;
+    const thermalDistance = Math.abs(temp - (tyre.window[0] + tyre.window[1]) * 0.5);
+    const thermalPenalty = thermalDistance * 1.3;
+    const wear = clamp(stint * tyre.wear + Math.max(0, load - 0.58) * 0.48, 0, 1.3);
+    const grip = clamp(tyre.baseGrip - thermalPenalty - wear * 0.22, 0.24, 0.98);
+    let stateLabel = "in the window";
+    if (temp < tyre.window[0]) {
+      stateLabel = "too cold";
+    } else if (temp > tyre.window[1]) {
+      stateLabel = "overheated";
+    }
+    return { tyre, temp, load, stint, wear, grip, stateLabel };
+  }
+
+  function computeWeatherStrategy() {
+    const track = getTrack();
+    const mode = getWeatherMode();
+    const temp = 12 + state.weatherTemp * 36;
+    const laps = 4 + state.weatherLaps * 38;
+    const rain = state.weatherRain * 100;
+    const tyre = getTyre();
+
+    let recommended = "Medium";
     let urgency = "Low";
-    let pit = "Measured";
-    let bias = "Stay flexible";
     let note = "The track is still dry enough that the medium tyre is the calmer race answer unless a short, aggressive stint is needed.";
     let penalty = 0;
 
-    if (modeKey === "dry") {
-      if (temp < 22 && lapsRemaining < 14) {
-        recommendedTyre = "Soft";
-      } else if (temp > 35 || lapsRemaining > 24) {
-        recommendedTyre = "Hard";
+    if (mode.key === "dry") {
+      if (temp < 22 && laps < 12) {
+        recommended = "Soft";
+        note = "The track is cool enough and the run is short enough that the softer tyre can be used as a deliberate attack call.";
+      } else if (temp > 35 || laps > 24) {
+        recommended = "Hard";
+        note = "The surface is hot or the run is long enough that keeping the tyre alive matters more than winning the first peak of grip.";
       }
-
-      urgency = rainPressure > 48 ? "Rising" : "Low";
-      pit = lapsRemaining < 10 ? "Late window" : temp > 35 ? "Protect rears" : "Measured";
-      bias = temp > 35 ? "Manage heat" : "Stay flexible";
-      note = recommendedTyre === "Soft"
-        ? "The track is cool enough and the run is short enough that the soft tyre can make sense as a deliberate attack call."
-        : recommendedTyre === "Hard"
-          ? "The surface is hot or the run is long enough that keeping the tyre alive matters more than taking the first peak of grip."
-          : "The track is still dry enough that the medium tyre is the calmer race answer unless a short, aggressive stint is needed.";
-
-      if (compound.label !== recommendedTyre) {
-        penalty = recommendedTyre === "Medium" ? 0.08 : 0.14;
-      }
-      penalty += Math.max(0, rainPressure - 55) * 0.004;
-    } else if (modeKey === "mixed") {
-      recommendedTyre = rainPressure > 58 ? "Intermediate" : "Crossover watch";
-      urgency = rainPressure > 70 ? "High" : "Rising";
-      pit = lapsRemaining < 10 ? "Reactive" : "Watch radar";
-      bias = "Protect optionality";
-      note = rainPressure > 58
-        ? "The track is drifting toward a genuine intermediate window, so the important strategic skill becomes timing the crossover before the dry tyre suddenly falls away."
-        : "Conditions are unstable rather than fully wet. The job is to keep enough tyre and battery margin that a sudden shower or safety car does not trap the strategy.";
-      penalty = compoundKey === "medium" ? 0.35 : compoundKey === "hard" ? 0.42 : 0.5;
-      penalty += rainPressure * 0.006;
+      urgency = rain > 48 ? "Rising" : "Low";
+      penalty = Math.max(0, rain - 55) * 0.004 + (tyre.key === "soft" && recommended !== "Soft" ? 0.12 : 0);
+    } else if (mode.key === "mixed") {
+      recommended = rain > 58 ? "Intermediate" : "Crossover watch";
+      urgency = rain > 70 ? "High" : "Rising";
+      note = rain > 58
+        ? "The track is drifting toward a real intermediate window, so the race becomes a timing problem: stop too late and the dry tyre falls away suddenly."
+        : "Conditions are unstable rather than fully wet. The important thing is keeping enough optionality that the next shower or safety car does not trap the strategy.";
+      penalty = 0.34 + rain * 0.006;
     } else {
-      recommendedTyre = rainPressure > 54 ? "Wet" : "Intermediate";
+      recommended = rain > 54 ? "Wet" : "Intermediate";
       urgency = "Immediate";
-      pit = "Stop now";
-      bias = "Stay on track";
-      note = recommendedTyre === "Wet"
-        ? "There is now enough standing water that the race is mostly about staying on the circuit and surviving the braking zones until visibility or grip improves."
+      note = recommended === "Wet"
+        ? "Standing water is now enough of the story that survival under braking and visibility matter more than raw lap peak."
         : "This is the awkward crossover where a full wet is no longer mandatory, but a dry tyre still cannot exploit the lap with any confidence.";
-      penalty = compoundKey === "hard" ? 1.05 : compoundKey === "medium" ? 1.12 : 1.2;
-      penalty += Math.max(0, rainPressure - 40) * 0.006;
+      penalty = 0.86 + Math.max(0, rain - 40) * 0.005;
     }
 
-    const crossover = clamp(
-      modeKey === "dry"
-        ? rainPressure * 0.75
-        : modeKey === "mixed"
-          ? 34 + rainPressure * 0.46
-          : 64 + rainPressure * 0.24,
-      0,
-      100,
-    );
-    const bandFill = clamp(
-      modeKey === "dry"
-        ? 16 + temp * 1.5 + rainPressure * 0.15
-        : modeKey === "mixed"
-          ? 42 + rainPressure * 0.42
-          : 70 + rainPressure * 0.24,
-      0,
-      100,
-    );
-
     return {
-      modeKey,
-      label: weatherModes[modeKey]?.label || "Dry",
-      recommendedTyre,
+      track,
+      mode,
+      temp,
+      laps,
+      rain,
+      recommended,
       urgency,
-      pit,
-      bias,
+      penalty: clamp(penalty, 0, 1.6),
       note,
-      crossover,
-      bandFill,
-      penalty: clamp(penalty, 0, 1.8),
-      trackTitle: track.title,
-      lapsRemaining,
-      rainPressure,
-      temperature: temp,
+      crossover: clamp(mode.key === "dry" ? rain * 0.7 : mode.key === "mixed" ? 34 + rain * 0.46 : 64 + rain * 0.24, 0, 100),
     };
   }
 
-  function computePitStrategy(trackKey, weatherState, tyreAge, traffic, safetyCarChance, compoundKey) {
-    const track = tracks[trackKey] || tracks.monza;
-    const weatherPenalty = weatherState?.penalty || 0;
-    const modeKey = weatherState?.modeKey || "dry";
-    const baseLoss = track.pitLossBase + (modeKey === "wet" ? 1.4 : modeKey === "mixed" ? 0.6 : 0);
-    const rawLoss = clamp(baseLoss + traffic * 0.018 - Math.min(tyreAge, 20) * 0.03, 14, 29);
-    const undercut = clamp(
-      tyreAge * 0.26 + track.undercutBias * 0.58 + weatherPenalty * 5.5 - traffic * 0.08 - (compoundKey === "hard" ? 1.6 : 0),
-      -2,
-      9,
-    );
-    const overcut = clamp(
-      track.overcutBias * 0.46 + traffic * 0.05 - tyreAge * 0.1 + (modeKey === "mixed" ? 0.8 : 0),
-      -2,
-      7,
-    );
-    const safetySwing = clamp(-(rawLoss * 0.16 + safetyCarChance * 0.1 + weatherPenalty * 2.2), -18, -2);
-
+  function computePitStrategy() {
+    const track = getTrack();
+    const weather = computeWeatherStrategy();
+    const tyreAge = 4 + state.pitAge * 24;
+    const traffic = state.pitTraffic * 100;
+    const safety = state.pitSafety * 100;
+    const rawLoss = clamp(track.pitLossBase + traffic * 0.018 - Math.min(tyreAge, 20) * 0.03 + (weather.mode.key === "wet" ? 1.4 : weather.mode.key === "mixed" ? 0.6 : 0), 14, 29);
+    const undercut = clamp(tyreAge * 0.26 + track.undercutBias * 0.58 + weather.penalty * 5.5 - traffic * 0.08 - (getTyre().key === "hard" ? 1.6 : 0), -2, 9);
+    const overcut = clamp(track.overcutBias * 0.46 + traffic * 0.05 - tyreAge * 0.1 + (weather.mode.key === "mixed" ? 0.8 : 0), -2, 7);
+    const safetySwing = clamp(-(rawLoss * 0.16 + safety * 0.1 + weather.penalty * 2.2), -18, -2);
     let call = "Hold for now";
-    let note = "The tyre is aging, but the current stop still gives away more time than the fresh rubber is likely to earn back immediately.";
+    let note = "The stop still gives away more time than the fresh tyre is likely to earn back immediately.";
 
-    if (safetyCarChance > 58) {
+    if (safety > 58) {
       call = "Stretch for safety car";
       note = "The caution risk is high enough that staying out a little longer could turn a painful stop into a discounted one.";
     } else if (undercut > overcut + 1.2 && undercut > 2.4) {
       call = "Box for undercut";
-      note = "Fresh rubber is now worth enough that pitting first has a real chance to beat the pit loss, especially if rejoin traffic stays manageable.";
+      note = "Fresh rubber is now worth enough that pitting first can pay the stop back quickly if the rejoin stays clear enough.";
     } else if (overcut > undercut + 1 && traffic > 52) {
       call = "Delay for overcut";
       note = "The traffic picture after the stop looks too costly, so the pit wall gains more by extending the stint and letting rivals rejoin into slower air.";
     }
 
-    return {
-      rawLoss,
-      undercut,
-      overcut,
-      safetySwing,
-      call,
-      note,
-      window: clamp(42 + undercut * 4 - traffic * 0.18 + safetyCarChance * 0.12, 12, 88),
+    return { track, weather, tyreAge, traffic, safety, rawLoss, undercut, overcut, safetySwing, call, note };
+  }
+
+  function computeRacecraftState() {
+    const track = getTrack();
+    const gap = 0.4 + state.raceGap * 1.6;
+    const deploy = state.raceDeploy * 100;
+    const brakeConfidence = state.raceBrake * 100;
+    const drsOn = state.raceDrc === 1;
+    const dirtyPenalty = clamp((1 - state.raceGap) * (44 + (track.key === "silverstone" || track.key === "suzuka" ? 18 : 6)), 6, 92);
+    const straightFactor = track.key === "monza" ? 30 : track.key === "spa" ? 26 : track.key === "monaco" ? 8 : 18;
+    const brakingFactor = track.key === "monza" ? 28 : track.key === "spa" ? 24 : track.key === "monaco" ? 16 : 18;
+    const closingRate = clamp(deploy * 0.16 + straightFactor * 0.34 + (drsOn ? 10 : 0) - dirtyPenalty * 0.12, 4, 34);
+    const brakingWindow = clamp(brakeConfidence * 0.48 + brakingFactor * 0.55 - dirtyPenalty * 0.12, 8, 100);
+    const passChance = clamp(closingRate * 2.1 + brakingWindow * 0.42 - dirtyPenalty * 0.3 + (drsOn ? 12 : 0), 0, 100);
+    return { track, gap, deploy, brakeConfidence, drsOn, dirtyPenalty, closingRate, brakingWindow, passChance };
+  }
+
+  function computeLapState() {
+    const track = getTrack();
+    const setup = computeSetupScores();
+    const power = computePowerState();
+    const weather = computeWeatherStrategy();
+    const plan = getLapPlan();
+
+    const adjusted = {
+      straight: clamp(setup.straight + plan.adjustments.straight * 0.01, 0.12, 0.99),
+      slow: clamp(setup.slow + plan.adjustments.slow * 0.01, 0.12, 0.99),
+      fast: clamp(setup.fast + plan.adjustments.fast * 0.01, 0.12, 0.99),
+      tyre: clamp(setup.tyreLife + plan.adjustments.tyre * 0.01, 0.12, 0.99),
+      braking: clamp(setup.braking + plan.adjustments.braking * 0.01, 0.12, 0.99),
+      balance: clamp(setup.balance + plan.adjustments.balance * 0.01, 0.12, 0.99),
     };
+
+    const sectorScores = track.sectors.map(function (_, index) {
+      const powerBoost = power.sectorBars[index] * 0.16;
+      const bias = index === 0 ? adjusted.straight * 0.34 + adjusted.braking * 0.3 : index === 1 ? adjusted.fast * 0.36 + adjusted.balance * 0.24 : adjusted.fast * 0.26 + adjusted.slow * 0.14 + adjusted.tyre * 0.18;
+      return clamp(bias + powerBoost - weather.penalty * (0.18 + index * 0.06), 0.14, 0.98);
+    });
+
+    const totalDelta = sectorScores.reduce(function (sum, score) {
+      return sum + ((0.9 - score) * 1.8);
+    }, 0);
+
+    const speedTrace = [];
+    const brakeTrace = [];
+    const deployTrace = [];
+    for (let i = 0; i < 9; i += 1) {
+      const sector = Math.floor(i / 3);
+      speedTrace.push(clamp(track.traces.speed[i] + (adjusted.straight - 0.6) * 38 + (adjusted.fast - 0.6) * 26 - weather.penalty * 12, 10, 98));
+      brakeTrace.push(clamp(track.traces.brake[i] + (adjusted.braking - 0.6) * 34 + weather.penalty * 12, 4, 98));
+      deployTrace.push(clamp(track.traces.deploy[i] + (power.sectorBars[sector] - 0.5) * 52, 8, 98));
+    }
+
+    return { track, setup, power, weather, plan, sectorScores, totalDelta, speedTrace, brakeTrace, deployTrace };
   }
 
-  function initOverviewScene() {
-    const buttons = Array.from(document.querySelectorAll("[data-component]"));
-    const shapes = Array.from(document.querySelectorAll("[data-component-shape]"));
-    if (!buttons.length || !shapes.length) {
-      return;
+  function updateCaptions() {
+    const component = COMPONENTS[state.component];
+    setCaption("f1_overview_caption", `<strong>${component.label}</strong> - ${component.caption}`);
+
+    const airflowSpeed = 180 + state.airflowSpeed * 160;
+    const frontShare = clamp(31 + state.airflowWing * 24 + state.airflowSpeed * 10 - state.airflowRide * 8, 24, 62);
+    const floorEff = clamp(46 + (1 - Math.abs(state.airflowRide - 0.32) / 0.35) * 34 + state.airflowSpeed * 12, 20, 96);
+    const dragCost = clamp(14 + state.airflowWing * 28 + state.airflowSpeed * 9, 8, 66);
+    let airflowState = "healthy";
+    if (state.airflowRide < 0.18) {
+      airflowState = "fragile";
+    } else if (state.airflowRide < 0.28) {
+      airflowState = "tight";
     }
+    setCaption("f1_airflow_caption", `<strong>${Math.round(airflowSpeed)} km/h</strong> - Front load share sits near <strong>${Math.round(frontShare)}%</strong>, floor efficiency near <strong>${Math.round(floorEff)}%</strong>, and drag penalty near <strong>${Math.round(dragCost)}%</strong>. Right now the platform looks <strong>${airflowState}</strong>.`);
 
-    function update(componentKey) {
-      const component = overviewComponents[componentKey];
-      if (!component) {
-        return;
-      }
+    const dirty = clamp((1 - state.frontGap) * 100, 0, 100);
+    const bite = clamp(42 + state.frontFlap * 36 + state.frontDemand * 18 - dirty * 0.34, 20, 97);
+    const feed = clamp(84 - dirty * 0.44 + state.frontFlap * 10, 18, 97);
+    const frontState = dirty > 60 ? "washed out" : dirty > 36 ? "fading" : "usable";
+    setCaption("f1_front_caption", `<strong>${componentColorName("front-wing")}</strong> - Front bite is around <strong>${Math.round(bite)}%</strong> and floor feed quality around <strong>${Math.round(feed)}%</strong>. In this wake condition the front axle feels <strong>${frontState}</strong>.`);
 
-      setActiveByValue(buttons, componentKey, "component");
-      shapes.forEach((shape) => {
-        shape.classList.toggle("is-active", shape.dataset.componentShape === componentKey);
-      });
-      setText("f1-component-group", component.group);
-      setText("f1-component-title", component.title);
-      setText("f1-component-summary", component.summary);
-      setList("f1-component-points", component.points);
-    }
+    const suction = clamp(42 + (1 - Math.abs(state.floorRide - 0.34) / 0.3) * 54 - Math.max(0, state.floorPitch - 0.55) * 34, 12, 98);
+    const risk = state.floorRide < 0.22 || state.floorPitch > 0.7 ? "high" : state.floorRide < 0.3 ? "elevated" : "moderate";
+    setCaption("f1_floor_caption", `<strong>Ground effect</strong> - Underfloor suction is near <strong>${Math.round(suction)}%</strong>. The diffuser still recovers cleanly, but platform risk is now <strong>${risk}</strong> as the throat narrows and pitch grows.`);
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => update(button.dataset.component || "front-wing"));
-    });
+    const rearSupport = clamp(38 + state.rearWing * 48 + state.rearSpeed * 12 - state.rearDrc * 18, 18, 98);
+    const rearDrag = clamp(14 + state.rearWing * 38 + state.rearSpeed * 10 - state.rearDrc * 14, 8, 68);
+    const topDelta = Math.round((state.rearDrc ? 9 : 1) + (1 - state.rearWing) * 7 + state.rearSpeed * 5);
+    setCaption("f1_rear_caption", `<strong>${state.rearDrc ? "DRS open" : "DRS closed"}</strong> - Rear support is around <strong>${Math.round(rearSupport)}%</strong>, drag load around <strong>${Math.round(rearDrag)}%</strong>, and the straight-line gain around <strong>+${topDelta} km/h</strong>.`);
 
-    update("front-wing");
+    const calm = clamp(92 - Math.abs(0.58 - state.chassisStiffness) * 90 - state.chassisBrake * 22 - state.chassisKerb * 18, 18, 96);
+    const kerbScore = clamp(88 - state.chassisStiffness * 58 - state.chassisKerb * 22 + 12, 14, 94);
+    const floorScore = clamp(42 + state.chassisStiffness * 54 - state.chassisBrake * 16 - state.chassisKerb * 14, 18, 97);
+    setCaption("f1_chassis_caption", `<strong>Platform control</strong> - Calmness is near <strong>${Math.round(calm)}%</strong>, kerb compliance near <strong>${Math.round(kerbScore)}%</strong>, and floor consistency near <strong>${Math.round(floorScore)}%</strong>. The platform is balancing tyre kindness against aero discipline.`);
+
+    const power = computePowerState();
+    setCaption("f1_power_caption", `<strong>${power.mode.label} / ${power.bias.label}</strong> - The power unit is spending electrical support across the lap in a deliberately uneven way: <strong>${Math.round(power.sectorBars[0] * 100)}%</strong>, <strong>${Math.round(power.sectorBars[1] * 100)}%</strong>, and <strong>${Math.round(power.sectorBars[2] * 100)}%</strong> across the three sectors.`);
+
+    const tyre = computeTyreState();
+    setCaption("f1_tyre_caption", `<strong>${tyre.tyre.label}</strong> - Grip is around <strong>${Math.round(tyre.grip * 100)}%</strong>, wear pressure around <strong>${Math.round(tyre.wear * 60)}%</strong>, and the tyre now looks <strong>${tyre.stateLabel}</strong>.`);
+
+    const brakeSpeed = 140 + state.brakeSpeed * 200;
+    const rearRotation = clamp((0.64 - state.brakeBias) * 140 + state.brakeRecovery * 22 + 50, 0, 100);
+    const brakingAuthority = clamp(72 + (brakeSpeed - 180) * 0.08 - Math.abs(state.brakeBias - 0.58) * 46 - state.brakeRecovery * 9, 28, 96);
+    const brakingState = rearRotation < 35 ? "locked-in" : rearRotation > 68 ? "aggressive" : "controlled";
+    setCaption("f1_brake_caption", `<strong>${Math.round(brakeSpeed)} km/h entry</strong> - Stopping authority is around <strong>${Math.round(brakingAuthority)}%</strong> and the rear now feels <strong>${brakingState}</strong> on release.`);
+
+    const track = getTrack();
+    setCaption("f1_track_caption", `<strong>${track.label}</strong> - ${track.caption}`);
+
+    const race = computeRacecraftState();
+    const passLabel = race.passChance > 68 ? "high-odds" : race.passChance > 45 ? "promising" : "hopeful";
+    setCaption("f1_race_caption", `<strong>${track.label} racecraft</strong> - Dirty-air penalty is around <strong>${Math.round(race.dirtyPenalty)}%</strong>, closing rate around <strong>${Math.round(race.closingRate)} km/h</strong>, and the move currently looks <strong>${passLabel}</strong>.`);
+
+    const setup = computeSetupScores();
+    const setupPreset = TRACKS[state.track].label;
+    setCaption("f1_setup_caption", `<strong>${setupPreset} setup</strong> - Straight-line speed sits near <strong>${Math.round(setup.straight * 100)}%</strong>, slow-corner authority near <strong>${Math.round(setup.slow * 100)}%</strong>, high-speed support near <strong>${Math.round(setup.fast * 100)}%</strong>, and tyre life near <strong>${Math.round(setup.tyreLife * 100)}%</strong>.`);
+
+    const weather = computeWeatherStrategy();
+    setCaption("f1_weather_caption", `<strong>${weather.mode.label}</strong> - Track temperature is around <strong>${Math.round(weather.temp)} C</strong>, rain pressure around <strong>${Math.round(weather.rain)}%</strong>, and the recommended strategic tyre is <strong>${weather.recommended}</strong>. Urgency now feels <strong>${weather.urgency.toLowerCase()}</strong>.`);
+
+    const pit = computePitStrategy();
+    setCaption("f1_pit_caption", `<strong>${pit.call}</strong> - Raw pit loss is about <strong>${pit.rawLoss.toFixed(1)} s</strong>, undercut value about <strong>${pit.undercut >= 0 ? "+" : ""}${pit.undercut.toFixed(1)} s</strong>, and safety-car swing about <strong>${pit.safetySwing.toFixed(1)} s</strong>. ${pit.note}`);
+
+    const lap = computeLapState();
+    setCaption("f1_lap_caption", `<strong>${lap.track.label} / ${lap.plan.label}</strong> - The current build projects sector deltas of <strong>${lap.totalDelta.toFixed(2)} s</strong> across the lap once setup, deployment, tyre, and weather are all pushing on the same traces.`);
   }
 
-  function initAirflowScene() {
-    const speedInput = document.getElementById("f1-speed");
-    const wingInput = document.getElementById("f1-wing");
-    const rideInput = document.getElementById("f1-ride");
-    const wake = document.getElementById("f1-wake");
-    const frontWing = document.getElementById("f1-body-front-wing");
-    const floor = document.getElementById("f1-body-floor");
-    const rearWing = document.getElementById("f1-body-rear-wing");
-    const lines = Array.from(document.querySelectorAll("#f1-airflow-scene .f1-flow-line"));
-    if (!speedInput || !wingInput || !rideInput || !wake || !frontWing || !floor || !rearWing) {
-      return;
-    }
-
-    function update() {
-      const speed = Number(speedInput.value);
-      const wing = Number(wingInput.value);
-      const ride = Number(rideInput.value);
-      const speedNorm = (speed - 180) / 160;
-      const wingNorm = (wing - 1) / 10;
-      const rideSweetness = clamp(1 - Math.abs(ride - 38) / 24, 0, 1);
-
-      const frontShare = clamp(31 + wingNorm * 17 + speedNorm * 5 - (ride - 38) * 0.12, 28, 58);
-      const floorEfficiency = clamp(48 + rideSweetness * 42 + speedNorm * 10 - wingNorm * 2.5, 24, 96);
-      const dragCost = clamp(16 + wingNorm * 26 + speedNorm * 8 + Math.max(0, 36 - ride) * 0.35, 10, 64);
-
-      let stability = "Calm";
-      let note = "The platform is in a healthy range for predictable floor behavior.";
-      if (ride < 30 || floorEfficiency < 58) {
-        stability = "Nervous";
-        note = "The car is generating load, but the floor window is tightening and the wake is getting less tidy.";
-      }
-      if (ride < 27 || (ride < 31 && wing > 8)) {
-        stability = "Fragile";
-        note = "The floor is close to a stall-prone posture. This can feel brilliant for a moment and then disappear once the platform moves.";
-      }
-
-      setText("f1-speed-value", `${speed} km/h`);
-      setText("f1-wing-value", `${wing} clicks`);
-      setText("f1-ride-value", `${ride} mm`);
-      setText("f1-front-load", `${Math.round(frontShare)}%`);
-      setText("f1-floor-load", `${Math.round(floorEfficiency)}%`);
-      setText("f1-drag-cost", `${Math.round(dragCost)}%`);
-      setText("f1-stability", stability);
-      setText("f1-airflow-note", note);
-
-      const frontFill = 0.18 + wingNorm * 0.28;
-      const floorFill = 0.14 + floorEfficiency / 220;
-      const rearFill = 0.18 + dragCost / 180;
-      frontWing.setAttribute("fill", `rgba(180, 58, 51, ${frontFill.toFixed(3)})`);
-      floor.setAttribute("fill", `rgba(41, 108, 127, ${floorFill.toFixed(3)})`);
-      rearWing.setAttribute("fill", `rgba(201, 91, 49, ${rearFill.toFixed(3)})`);
-      wake.setAttribute("fill", `rgba(53, 115, 149, ${(0.08 + dragCost / 180).toFixed(3)})`);
-      wake.setAttribute("d", `M604 ${82 - dragCost * 0.12} C672 ${84 - dragCost * 0.08}, 712 92, 738 130 C710 176, 666 ${190 + dragCost * 0.12}, 604 ${180 + dragCost * 0.08} Z`);
-      lines.forEach((line, index) => {
-        line.style.strokeWidth = `${3 + speedNorm * 2.2 - index * 0.05}`;
-        line.style.opacity = `${0.56 + speedNorm * 0.28}`;
-        line.style.animationDuration = `${16 - speedNorm * 5 + index * 0.35}s`;
-      });
-    }
-
-    speedInput.addEventListener("input", update);
-    wingInput.addEventListener("input", update);
-    rideInput.addEventListener("input", update);
-    update();
+  function componentColorName(key) {
+    const component = COMPONENTS.find((item) => item.key === key);
+    return component ? component.label : key;
   }
 
-  function initFrontWingScene() {
-    const flapInput = document.getElementById("f1-front-flap");
-    const gapInput = document.getElementById("f1-front-gap");
-    const steerInput = document.getElementById("f1-front-steer");
-    const dirtyAir = document.getElementById("f1-front-dirty-air");
-    const leader = document.getElementById("f1-front-leader");
-    const flapMain = document.getElementById("f1-front-flap-main");
-    const flapUpper = document.getElementById("f1-front-flap-upper");
-    const feedRibbon = document.getElementById("f1-front-feed-ribbon");
-    const flowLines = Array.from(document.querySelectorAll("#f1-front-wing-scene .f1-flow-line"));
-    if (!flapInput || !gapInput || !steerInput || !dirtyAir || !leader || !flapMain || !flapUpper || !feedRibbon) {
-      return;
-    }
-
-    function update() {
-      const flap = Number(flapInput.value);
-      const gapTenths = Number(gapInput.value);
-      const steer = Number(steerInput.value);
-      const dirtyFactor = clamp(1 - (gapTenths - 6) / 18, 0, 1);
-      const steerNorm = (steer - 20) / 80;
-
-      const bite = clamp(42 + flap * 3.2 + steerNorm * 14 - dirtyFactor * 28, 20, 97);
-      const feed = clamp(84 - dirtyFactor * 42 + flap * 0.9 - Math.max(0, steer - 70) * 0.35, 18, 97);
-      const drag = clamp(12 + flap * 2.3 + steer * 0.06, 6, 44);
-
-      let state = "Usable";
-      let note = "The wing still has enough clean structure in the flow to support a committed entry.";
-      if (dirtyFactor > 0.45 || feed < 62) {
-        state = "Fading";
-        note = "The front wing is still making load, but the useful feed into the rest of the aero package is breaking down.";
-      }
-      if (dirtyFactor > 0.72 || bite < 46) {
-        state = "Washed out";
-        note = "The car is now close enough to another wake that front confidence is disappearing before the corner has even properly begun.";
-      }
-
-      setText("f1-front-flap-value", `${flap} clicks`);
-      setText("f1-front-gap-value", `${(gapTenths / 10).toFixed(1)} s`);
-      setText("f1-front-steer-value", `${steer}%`);
-      setText("f1-front-bite", `${Math.round(bite)}%`);
-      setText("f1-front-feed", `${Math.round(feed)}%`);
-      setText("f1-front-drag", `${Math.round(drag)}%`);
-      setText("f1-front-state", state);
-      setText("f1-front-note", note);
-
-      const leaderX = 72 - dirtyFactor * 18;
-      leader.setAttribute("transform", `translate(${leaderX.toFixed(1)} 0)`);
-      dirtyAir.style.opacity = `${0.15 + dirtyFactor * 0.55}`;
-      dirtyAir.setAttribute("d", `M40 ${78 - dirtyFactor * 16} C${120 + dirtyFactor * 46} ${44 - dirtyFactor * 8}, ${206 + dirtyFactor * 18} 54, 246 90 C220 126, ${120 + dirtyFactor * 34} ${138 + dirtyFactor * 8}, 40 ${120 + dirtyFactor * 10} Z`);
-      const mainAngle = -2 - flap * 1.6;
-      const upperAngle = -3 - flap * 1.9;
-      flapMain.setAttribute("transform", `rotate(${mainAngle.toFixed(1)} 258 138)`);
-      flapUpper.setAttribute("transform", `rotate(${upperAngle.toFixed(1)} 254 118)`);
-      feedRibbon.style.strokeWidth = `${6 + feed / 12}`;
-      feedRibbon.style.opacity = `${0.28 + feed / 130}`;
-      flowLines.forEach((line, index) => {
-        line.style.opacity = `${0.4 + (1 - dirtyFactor) * 0.4}`;
-        line.style.animationDuration = `${12 + dirtyFactor * 3 + index * 0.4}s`;
-      });
-    }
-
-    flapInput.addEventListener("input", update);
-    gapInput.addEventListener("input", update);
-    steerInput.addEventListener("input", update);
-    update();
+  function drawSceneBackground(ctx, width, height, tint) {
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, rgba(mixRgb(COLORS.paper, tint || COLORS.paper, 0.1), 1));
+    gradient.addColorStop(1, rgba(mixRgb(COLORS.paper, tint || COLORS.gray, 0.2), 1));
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
   }
 
-  function initFloorScene() {
-    const rideInput = document.getElementById("f1-floor-ride");
-    const pitchInput = document.getElementById("f1-floor-pitch");
-    const platform = document.getElementById("f1-floor-platform");
-    const pressureBand = document.getElementById("f1-floor-pressure-band");
-    if (!rideInput || !pitchInput || !platform || !pressureBand) {
-      return;
+  function drawAirflowScene(ctx, width, height, time) {
+    drawSceneBackground(ctx, width, height, COLORS.blue);
+    const speed = state.airflowSpeed;
+    const wing = state.airflowWing;
+    const ride = state.airflowRide;
+    for (let i = 0; i < 6; i += 1) {
+      const y = height * (0.2 + i * 0.11);
+      const amplitude = (i - 2.5) * (14 + wing * 16);
+      drawFlowLine(ctx, width, y, amplitude * (0.24 + speed * 0.32), time, speed, rgba(COLORS.blue, 0.38 + speed * 0.25));
     }
-
-    function update() {
-      const ride = Number(rideInput.value);
-      const pitch = Number(pitchInput.value);
-      const rideSweetness = clamp(1 - Math.abs(ride - 34) / 20, 0, 1);
-      const pitchPenalty = Math.max(0, pitch - 1.5) * 10 + Math.max(0, -pitch) * 4;
-      const suction = clamp(42 + rideSweetness * 54 - pitchPenalty, 15, 96);
-
-      let recovery = "Healthy";
-      if (ride < 28 || pitch > 2.1) {
-        recovery = "Tense";
-      }
-      if (ride < 24 || pitch > 3.1) {
-        recovery = "Breaking up";
-      }
-
-      let risk = "Moderate";
-      let note = "The floor is loaded, but still has enough margin before it becomes nervous.";
-      if (ride < 29 || pitch > 2.1) {
-        risk = "Elevated";
-        note = "The throat is productive, but now pitch and plank contact can start eating the operating window.";
-      }
-      if (ride < 24 || pitch > 3.2) {
-        risk = "High";
-        note = "This is the kind of posture that can invite oscillation, local stall, or a suddenly inconsistent rear platform.";
-      }
-
-      setText("f1-floor-ride-value", `${ride} mm`);
-      setText("f1-floor-pitch-value", `${pitch.toFixed(1)} deg`);
-      setText("f1-floor-suction", `${Math.round(suction)}%`);
-      setText("f1-floor-recovery", recovery);
-      setText("f1-floor-risk", risk);
-      setText("f1-floor-note", note);
-
-      const translateY = (ride - 36) * 1.15;
-      const rotation = -pitch * 1.4;
-      platform.setAttribute("transform", `translate(0 ${translateY.toFixed(1)}) rotate(${rotation.toFixed(2)} 390 150)`);
-      pressureBand.style.strokeWidth = `${7 + suction / 12}`;
-      pressureBand.style.opacity = `${0.38 + suction / 180}`;
-    }
-
-    rideInput.addEventListener("input", update);
-    pitchInput.addEventListener("input", update);
-    update();
+    const ridePx = 10 + (1 - ride) * 18;
+    drawSideCar(ctx, width * 0.47, height * 0.48, Math.min(width, height) * 0.19, -0.01, ridePx / 120, false);
+    ctx.fillStyle = rgba(COLORS.cyan, 0.18 + (1 - Math.abs(ride - 0.32) / 0.35) * 0.26);
+    ctx.fillRect(width * 0.36, height * 0.52, width * 0.28, 8 + (1 - ride) * 18);
+    ctx.fillStyle = rgba(COLORS.wake, 0.16 + wing * 0.25);
+    ctx.beginPath();
+    ctx.moveTo(width * 0.62, height * 0.28);
+    ctx.bezierCurveTo(width * 0.82, height * 0.2, width * 0.96, height * 0.34, width * 0.96, height * 0.5);
+    ctx.bezierCurveTo(width * 0.96, height * 0.66, width * 0.82, height * 0.8, width * 0.62, height * 0.72);
+    ctx.closePath();
+    ctx.fill();
   }
 
-  function initRearWingScene() {
-    const wingInput = document.getElementById("f1-rear-wing-level");
-    const speedInput = document.getElementById("f1-rear-speed");
-    const buttons = Array.from(document.querySelectorAll("[data-drs-mode]"));
-    const flap = document.getElementById("f1-rear-flap");
-    const mainPlane = document.getElementById("f1-rear-main-plane");
-    const airGap = document.getElementById("f1-rear-air-gap");
-    if (!wingInput || !speedInput || !buttons.length || !flap || !mainPlane || !airGap) {
-      return;
+  function drawFrontScene(ctx, width, height, time) {
+    drawSceneBackground(ctx, width, height, COLORS.violet);
+    const gap = state.frontGap;
+    const flap = state.frontFlap;
+    const demand = state.frontDemand;
+    const dirty = (1 - gap);
+
+    for (let i = 0; i < 4; i += 1) {
+      const y = height * (0.26 + i * 0.13);
+      drawFlowLine(ctx, width, y, (i - 1.4) * 16 * (0.35 + dirty * 0.5), time, 0.35 + demand * 0.5, rgba(COLORS.blue, 0.26 + (1 - dirty) * 0.2));
     }
 
-    let currentMode = "closed";
+    ctx.fillStyle = rgba(COLORS.wake, 0.12 + dirty * 0.4);
+    ctx.beginPath();
+    ctx.moveTo(width * 0.12, height * 0.2);
+    ctx.bezierCurveTo(width * 0.3, height * 0.08, width * 0.44, height * 0.18, width * 0.46, height * 0.48);
+    ctx.bezierCurveTo(width * 0.42, height * 0.76, width * 0.28, height * 0.84, width * 0.12, height * 0.72);
+    ctx.closePath();
+    ctx.fill();
 
-    function update() {
-      const wing = Number(wingInput.value);
-      const speed = Number(speedInput.value);
-      const speedNorm = (speed - 180) / 180;
-      const drsOpen = currentMode === "open" ? 1 : 0;
+    drawTopCar(ctx, width * (0.2 + dirty * 0.04), height * 0.52, Math.min(width, height) * 0.08, COLORS.gray, 0.96);
+    drawTopCar(ctx, width * 0.62, height * 0.56, Math.min(width, height) * 0.1, COLORS.paper, 1);
 
-      const support = clamp(38 + wing * 4.6 + speedNorm * 12 - drsOpen * 18, 18, 98);
-      const drag = clamp(14 + wing * 3.7 + speedNorm * 10 - drsOpen * 12, 8, 68);
-      const topSpeedDelta = Math.round((drsOpen ? 10 : 1) + (11 - wing) * 0.6 + (speed - 220) * 0.02);
-      const braking = clamp(44 + support * 0.45 - drsOpen * 10, 18, 96);
-
-      let state = "Anchored";
-      let note = "The wing is still carrying enough load that the rear axle feels planted on the next fast commitment.";
-      if (drsOpen) {
-        state = support > 58 ? "Open but usable" : "Lightened";
-        note = support > 58
-          ? "DRS is open, but the rear wing level is still high enough to leave a believable rear platform for the braking zone ahead."
-          : "The flap is open and the rear is now trading a meaningful amount of confidence for top speed. This works only if the straight is worth it.";
-      }
-
-      setActiveByValue(buttons, currentMode, "drsMode");
-      setText("f1-rear-wing-value", `${wing} clicks`);
-      setText("f1-rear-speed-value", `${speed} km/h`);
-      setText("f1-rear-support", `${Math.round(support)}%`);
-      setText("f1-rear-drag", `${Math.round(drag)}%`);
-      setText("f1-rear-top-speed", `+${topSpeedDelta} km/h`);
-      setText("f1-rear-state", state);
-      setText("f1-rear-note", note);
-
-      flap.setAttribute("transform", `rotate(${(-wing * 0.35 + (drsOpen ? -14 : 0)).toFixed(1)} 548 72)`);
-      mainPlane.setAttribute("fill", `rgba(180, 58, 51, ${(0.16 + wing / 34).toFixed(3)})`);
-      airGap.style.strokeWidth = `${4 + (drsOpen ? 8 : 3) + speedNorm * 2}`;
-      airGap.style.opacity = `${0.32 + (drsOpen ? 0.34 : 0.14)}`;
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentMode = button.dataset.drsMode || "closed";
-        update();
-      });
-    });
-
-    wingInput.addEventListener("input", update);
-    speedInput.addEventListener("input", update);
-    update();
+    ctx.strokeStyle = rgba(COLORS.red, 0.8);
+    ctx.lineWidth = 8 + flap * 14;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(width * 0.44, height * 0.57);
+    ctx.lineTo(width * 0.52, height * (0.57 - demand * 0.12));
+    ctx.stroke();
   }
 
-  function initChassisScene() {
-    const stiffnessInput = document.getElementById("f1-platform-stiffness");
-    const brakeInput = document.getElementById("f1-platform-brake");
-    const kerbInput = document.getElementById("f1-platform-kerb");
-    const speedInput = document.getElementById("f1-platform-speed");
-    const car = document.getElementById("f1-platform-car");
-    const frontDamper = document.getElementById("f1-platform-front-damper");
-    const rearDamper = document.getElementById("f1-platform-rear-damper");
-    const kerbBlock = document.getElementById("f1-platform-kerb-block");
-    if (!stiffnessInput || !brakeInput || !kerbInput || !speedInput || !car || !frontDamper || !rearDamper || !kerbBlock) {
-      return;
+  function drawFloorScene(ctx, width, height, time) {
+    drawSceneBackground(ctx, width, height, COLORS.cyan);
+    const ride = state.floorRide;
+    const pitch = state.floorPitch;
+    const bodyY = height * 0.42 + pitch * 12;
+    ctx.fillStyle = rgba(COLORS.ground, 0.82);
+    ctx.fillRect(0, height * 0.74, width, height * 0.26);
+
+    ctx.strokeStyle = rgba(COLORS.dark, 0.16);
+    for (let x = -20; x < width + 20; x += 36) {
+      ctx.beginPath();
+      ctx.moveTo(x, height * 0.74);
+      ctx.lineTo(x + 20, height * 0.92);
+      ctx.stroke();
     }
 
-    function update() {
-      const stiffness = Number(stiffnessInput.value);
-      const brake = Number(brakeInput.value);
-      const kerb = Number(kerbInput.value);
-      const speed = Number(speedInput.value);
-      const speedNorm = (speed - 120) / 200;
+    drawSideCar(ctx, width * 0.46, bodyY, Math.min(width, height) * 0.19, -0.08 + pitch * 0.12, ride * 0.14, false);
 
-      const frontCompression = clamp(brake * 0.72 + speedNorm * 14 - stiffness * 0.34 + 10, 4, 100);
-      const rearCompression = clamp(kerb * 0.6 + speedNorm * 6 - stiffness * 0.22 + 8, 4, 100);
-      const pitch = clamp(brake * 0.046 - stiffness * 0.018, -0.4, 4.8);
-      const heave = clamp(kerb * 0.032 - stiffness * 0.012, 0, 3.4);
+    ctx.strokeStyle = rgba(COLORS.cyan, 0.78);
+    ctx.lineWidth = 10 + (1 - Math.abs(ride - 0.34) / 0.35) * 14;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(width * 0.28, height * 0.61);
+    ctx.bezierCurveTo(width * 0.38, height * (0.74 - ride * 0.18), width * 0.56, height * (0.72 - ride * 0.16), width * 0.7, height * 0.56);
+    ctx.stroke();
 
-      const calm = clamp(92 - Math.abs(58 - stiffness) * 0.9 - brake * 0.18 - kerb * 0.14, 18, 96);
-      const kerbScore = clamp(88 - stiffness * 0.58 - kerb * 0.22 + 12, 14, 94);
-      const floorScore = clamp(42 + stiffness * 0.54 - pitch * 7 - heave * 8, 18, 97);
-      const tyreScore = clamp(74 + (66 - stiffness) * 0.24 - kerb * 0.18, 18, 95);
-
-      let note = "The chassis is holding shape well enough, but the kerb event is starting to tax the tyre's patience.";
-      if (calm < 48) {
-        note = "The platform is moving too much for the floor to stay consistently happy. The car may feel dramatic rather than dependable.";
-      } else if (kerbScore < 40) {
-        note = "The platform is disciplined, but the stiff response over the kerb is now turning compliance into a visible weakness.";
-      } else if (tyreScore > 74 && floorScore > 72) {
-        note = "This is the sweet spot the teams chase: enough discipline to protect the floor without making the tyre and kerb response hostile.";
-      }
-
-      setText("f1-platform-stiffness-value", `${stiffness}%`);
-      setText("f1-platform-brake-value", `${brake}%`);
-      setText("f1-platform-kerb-value", `${kerb} mm`);
-      setText("f1-platform-speed-value", `${speed} km/h`);
-      setText("f1-platform-calm", `${Math.round(calm)}%`);
-      setText("f1-platform-kerb-score", `${Math.round(kerbScore)}%`);
-      setText("f1-platform-floor-score", `${Math.round(floorScore)}%`);
-      setText("f1-platform-tyre-score", `${Math.round(tyreScore)}%`);
-      setText("f1-platform-note", note);
-      setMeter("f1-platform-front-travel", frontCompression);
-      setMeter("f1-platform-rear-travel", rearCompression);
-
-      car.setAttribute("transform", `translate(0 ${heave.toFixed(2)}) rotate(${(-pitch).toFixed(2)} 400 170)`);
-      frontDamper.setAttribute("y2", String(170 - frontCompression * 0.32));
-      rearDamper.setAttribute("y2", String(164 - rearCompression * 0.3));
-      kerbBlock.setAttribute("height", String(8 + kerb * 0.4));
-      kerbBlock.setAttribute("y", String(214 - (8 + kerb * 0.4)));
-    }
-
-    stiffnessInput.addEventListener("input", update);
-    brakeInput.addEventListener("input", update);
-    kerbInput.addEventListener("input", update);
-    speedInput.addEventListener("input", update);
-    update();
+    ctx.strokeStyle = rgba(COLORS.red, 0.62);
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(width * 0.52, height * 0.58);
+    ctx.lineTo(width * 0.66, height * (0.48 - pitch * 0.08));
+    ctx.stroke();
   }
 
-  function initPowerScene(initialTrack) {
-    const modeButtons = Array.from(document.querySelectorAll("[data-power-mode]"));
-    const biasButtons = Array.from(document.querySelectorAll("[data-power-bias]"));
-    if (!modeButtons.length || !biasButtons.length) {
-      return;
+  function drawRearScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.orange);
+    drawSideCar(ctx, width * 0.42, height * 0.5, Math.min(width, height) * 0.19, 0, 0.02, state.rearDrc === 1);
+
+    const wingX = width * 0.72;
+    const wingY = height * 0.36;
+    ctx.strokeStyle = rgba(COLORS.red, 0.94);
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(wingX - 30, wingY + 24);
+    ctx.lineTo(wingX + 42, wingY + 24);
+    ctx.stroke();
+
+    ctx.beginPath();
+    const flapLift = state.rearDrc === 1 ? 22 : 6;
+    ctx.moveTo(wingX - 24, wingY + 6);
+    ctx.lineTo(wingX + 34, wingY - flapLift);
+    ctx.stroke();
+
+    for (let i = 0; i < 3; i += 1) {
+      ctx.strokeStyle = rgba(COLORS.blue, 0.32 + i * 0.08);
+      ctx.lineWidth = 4;
+      ctx.setLineDash([10, 12]);
+      ctx.lineDashOffset = -performance.now() * 0.03 * (2 + i);
+      ctx.beginPath();
+      ctx.moveTo(width * 0.18, height * (0.32 + i * 0.12));
+      ctx.bezierCurveTo(width * 0.46, height * (0.28 + i * 0.16), width * 0.62, height * (0.22 + i * 0.1), width * 0.9, height * (0.24 + i * 0.16 + flapLift * 0.02));
+      ctx.stroke();
     }
-
-    let currentTrack = initialTrack || "monza";
-    let currentMode = "harvest";
-    let currentBias = "early";
-
-    function update() {
-      const mode = powerModes[currentMode];
-      const powerState = computePowerState(currentMode, currentBias, currentTrack);
-      const track = tracks[currentTrack] || tracks.monza;
-
-      setActiveByValue(modeButtons, currentMode, "powerMode");
-      setActiveByValue(biasButtons, currentBias, "powerBias");
-      setMeter("f1-meter-ice", mode.ice);
-      setMeter("f1-meter-deploy", mode.deploy);
-      setMeter("f1-meter-harvest", mode.harvest);
-      setMeter("f1-meter-cooling", mode.cooling);
-      setText("f1-power-note", mode.note);
-      setText("f1-power-map-note", powerState.note);
-      track.sectors.forEach((sector, index) => {
-        setText(`f1-power-sector-${index + 1}-title`, `${sector.label} deploy`);
-        setMeter(`f1-power-sector-${index + 1}-bar`, powerState.sectorBars[index]);
-      });
-
-      document.dispatchEvent(new CustomEvent("f1-power-change", {
-        detail: {
-          trackKey: currentTrack,
-          powerState,
-        },
-      }));
-    }
-
-    modeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentMode = button.dataset.powerMode || "balanced";
-        update();
-      });
-    });
-
-    biasButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentBias = button.dataset.powerBias || "distributed";
-        update();
-      });
-    });
-
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      update();
-    });
-
-    update();
+    ctx.setLineDash([]);
   }
 
-  function initTyreScene() {
-    const buttons = Array.from(document.querySelectorAll("[data-compound]"));
-    const tempInput = document.getElementById("f1-tyre-temp");
-    const loadInput = document.getElementById("f1-tyre-load");
-    const stintInput = document.getElementById("f1-tyre-stint");
-    if (!buttons.length || !tempInput || !loadInput || !stintInput) {
-      return;
-    }
+  function drawChassisScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.green);
+    const stiffness = state.chassisStiffness;
+    const kerb = state.chassisKerb;
+    const brake = state.chassisBrake;
+    const pitch = (brake - stiffness * 0.4) * 0.18;
+    const heave = kerb * 0.12;
+    ctx.fillStyle = rgba(COLORS.ground, 0.82);
+    ctx.fillRect(0, height * 0.78, width, height * 0.22);
+    ctx.fillStyle = rgba(COLORS.red, 0.22);
+    ctx.fillRect(width * 0.64, height * (0.74 - kerb * 24), 46, 28 + kerb * 24);
 
-    let currentCompound = "soft";
+    drawSideCar(ctx, width * 0.48, height * 0.5 + heave * 18, Math.min(width, height) * 0.19, -pitch, 0.02 + heave * 0.18, false);
 
-    function update() {
-      const compound = tyreCompounds[currentCompound];
-      const temp = Number(tempInput.value);
-      const load = Number(loadInput.value);
-      const stint = Number(stintInput.value);
-      const thermalDistance = Math.abs(temp - compound.windowMid);
-      const thermalPenalty = thermalDistance * 1.2;
-      const wearScore = clamp(stint * compound.wearRate + Math.max(0, load - 72) * compound.loadPenalty + Math.max(0, temp - compound.windowHigh) * 0.6, 0, 100);
-      const grip = clamp(compound.baseGrip - thermalPenalty - wearScore * 0.18, 28, 98);
-
-      let state = "In the window";
-      let note = "The tyre is warm enough to produce strong bite without yet crossing into surface overheating.";
-      if (temp < compound.windowLow) {
-        state = "Too cold";
-        note = "The compound is struggling to switch on. Grip exists, but the surface is not yet in its most useful working range.";
-      }
-      if (temp > compound.windowHigh) {
-        state = "Overheated";
-        note = "The surface is too hot for stable peak grip. The tyre will slide more and usually overwork itself again on the next demand spike.";
-      }
-      if (currentCompound === "intermediate" || currentCompound === "wet") {
-        note = temp > compound.windowHigh
-          ? "The treaded tyre is overheating because the track is effectively too dry for this choice."
-          : "This treaded tyre is in its intended crossover or wet operating range.";
-      }
-
-      let wearLabel = "Low";
-      if (wearScore > 28) {
-        wearLabel = "Moderate";
-      }
-      if (wearScore > 52) {
-        wearLabel = "High";
-      }
-      if (wearScore > 74) {
-        wearLabel = "Critical";
-      }
-
-      setActiveByValue(buttons, currentCompound, "compound");
-      setText("f1-tyre-temp-value", `${temp} C`);
-      setText("f1-tyre-load-value", `${load}%`);
-      setText("f1-tyre-stint-value", `${stint} laps`);
-      setText("f1-tyre-grip", `${Math.round(grip)}%`);
-      setText("f1-tyre-wear", wearLabel);
-      setText("f1-tyre-state", state);
-      setText("f1-tyre-title", compound.title);
-      setText("f1-tyre-note", note);
-      setList("f1-tyre-points", compound.points);
-      setMeter("f1-heat-fill", clamp((temp - 40) / 95 * 100, 0, 100));
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentCompound = button.dataset.compound || "soft";
-        update();
-      });
-    });
-
-    tempInput.addEventListener("input", update);
-    loadInput.addEventListener("input", update);
-    stintInput.addEventListener("input", update);
-    update();
+    ctx.strokeStyle = rgba(COLORS.red, 0.7);
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(width * 0.36, height * 0.42);
+    ctx.lineTo(width * 0.36, height * (0.63 - brake * 0.12));
+    ctx.lineTo(width * 0.39, height * 0.68);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(width * 0.64, height * 0.4);
+    ctx.lineTo(width * 0.64, height * (0.64 - kerb * 0.18));
+    ctx.lineTo(width * 0.67, height * 0.7);
+    ctx.stroke();
   }
 
-  function initBrakingScene() {
-    const speedInput = document.getElementById("f1-brake-speed");
-    const biasInput = document.getElementById("f1-brake-bias");
-    const harvestInput = document.getElementById("f1-brake-harvest");
-    const marker = document.getElementById("f1-brake-marker");
-    const frontBar = document.getElementById("f1-brake-front-bar");
-    const rearBar = document.getElementById("f1-brake-rear-bar");
-    const car = document.getElementById("f1-brake-car");
-    if (!speedInput || !biasInput || !harvestInput || !marker || !frontBar || !rearBar || !car) {
-      return;
+  function drawPowerScene(ctx, width, height, time) {
+    drawSceneBackground(ctx, width, height, COLORS.red);
+    const power = computePowerState();
+    const centers = [width * 0.16, width * 0.38, width * 0.6, width * 0.82];
+    const labels = ["ICE", "Turbo", "Battery", "Rear axle"];
+    const nodeColors = [COLORS.red, COLORS.orange, COLORS.green, COLORS.dark];
+
+    ctx.lineWidth = 10;
+    centers.forEach(function (x, index) {
+      if (index < centers.length - 1) {
+        ctx.strokeStyle = rgba(COLORS.dark, 0.12);
+        ctx.beginPath();
+        ctx.moveTo(x + 36, height * 0.46);
+        ctx.lineTo(centers[index + 1] - 36, height * 0.46);
+        ctx.stroke();
+      }
+    });
+
+    for (let i = 0; i < 3; i += 1) {
+      const start = centers[i] + 36;
+      const end = centers[i + 1] - 36;
+      const travel = ((time * (0.18 + power.sectorBars[i] * 0.4)) % 1);
+      const pulseX = lerpNumber(start, end, travel);
+      ctx.fillStyle = rgba(COLORS.yellow, 0.86);
+      ctx.beginPath();
+      ctx.ellipse(pulseX, height * 0.46, 12, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
     }
 
-    function update() {
-      const speed = Number(speedInput.value);
-      const bias = Number(biasInput.value);
-      const harvest = Number(harvestInput.value);
-      const speedNorm = (speed - 140) / 200;
-      const authority = clamp(72 + (speed - 180) * 0.08 - Math.abs(bias - 55.8) * 2.6 - harvest * 0.09, 28, 96);
-      const rearRotationScore = clamp((56.5 - bias) * 8 + harvest * 0.15 + 50, 0, 100);
-      const frontLoad = clamp(56 + speedNorm * 16 + (bias - 55.5) * 3 + harvest * 0.05, 46, 84);
-      const rearLoad = clamp(100 - frontLoad, 16, 54);
+    centers.forEach(function (x, index) {
+      ctx.fillStyle = rgba(nodeColors[index], 0.86);
+      ctx.beginPath();
+      ctx.roundRect(x - 42, height * 0.34, 84, 66, 18);
+      ctx.fill();
+      ctx.fillStyle = rgba(COLORS.paper, 0.96);
+      ctx.font = "600 16px IBM Plex Mono, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(labels[index], x, height * 0.41);
+    });
 
-      let lockup = "Low";
-      if (Math.abs(bias - 55.5) > 2 || harvest > 56) {
-        lockup = "Moderate";
-      }
-      if (Math.abs(bias - 55.5) > 3.4 || harvest > 68 || speed > 315) {
-        lockup = "High";
-      }
-
-      let rotation = "Controlled";
-      let note = "The car is stable enough to commit, but still willing to change direction on release.";
-      if (rearRotationScore < 35) {
-        rotation = "Locked-in";
-        note = "This is a front-led, stability-first posture. It will feel safe, but it may resist the last part of entry rotation.";
-      } else if (rearRotationScore > 68) {
-        rotation = "Aggressive";
-        note = "The rear is being asked to help the car rotate more eagerly. That can be fast, but it narrows the comfort window under heavy entry demand.";
-      }
-
-      setText("f1-brake-speed-value", `${speed} km/h`);
-      setText("f1-brake-bias-value", `${bias.toFixed(1)}% front`);
-      setText("f1-brake-harvest-value", `${harvest}%`);
-      setText("f1-brake-authority", `${Math.round(authority)}%`);
-      setText("f1-brake-lockup", lockup);
-      setText("f1-brake-rotation", rotation);
-      setText("f1-brake-note", note);
-      marker.style.left = `${rearRotationScore}%`;
-      setMeter("f1-brake-front-bar", frontLoad);
-      setMeter("f1-brake-rear-bar", rearLoad);
-      car.setAttribute("transform", `translate(0 ${(-speedNorm * 2.4).toFixed(2)}) rotate(${(-1.8 - speedNorm * 3.6 - harvest * 0.02).toFixed(2)} 410 172)`);
-    }
-
-    speedInput.addEventListener("input", update);
-    biasInput.addEventListener("input", update);
-    harvestInput.addEventListener("input", update);
-    update();
+    power.sectorBars.forEach(function (value, index) {
+      const barX = width * (0.16 + index * 0.24);
+      ctx.fillStyle = rgba(COLORS.dark, 0.08);
+      ctx.beginPath();
+      ctx.roundRect(barX - 54, height * 0.72, 108, 10, 10);
+      ctx.fill();
+      ctx.fillStyle = rgba(COLORS.yellow, 0.9);
+      ctx.beginPath();
+      ctx.roundRect(barX - 54, height * 0.72, 108 * value, 10, 10);
+      ctx.fill();
+      ctx.fillStyle = rgba(COLORS.ink, 0.68);
+      ctx.font = "600 12px IBM Plex Mono, monospace";
+      ctx.fillText(getTrack().sectors[index], barX, height * 0.7);
+    });
   }
 
-  function initTrackScene() {
-    const buttons = Array.from(document.querySelectorAll("[data-track]"));
-    const path = document.getElementById("f1-track-path");
-    if (!buttons.length || !path) {
-      return "monza";
-    }
+  function drawTyreScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, getTyre().color);
+    const tyre = computeTyreState();
+    const cx = width * 0.38;
+    const cy = height * 0.5;
+    const outer = Math.min(width, height) * 0.22;
+    const inner = outer * 0.58;
+    const heatT = clamp((tyre.temp - tyre.tyre.window[0]) / Math.max(0.001, tyre.tyre.window[1] - tyre.tyre.window[0]), 0, 1);
 
-    let currentTrack = "monza";
+    ctx.fillStyle = rgba(COLORS.dark, 0.12);
+    ctx.beginPath();
+    ctx.ellipse(cx, height * 0.82, outer * 0.9, outer * 0.18, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-    function update(trackKey) {
-      const track = tracks[trackKey];
-      if (!track) {
-        return;
-      }
+    const ring = ctx.createRadialGradient(cx, cy, inner * 0.7, cx, cy, outer);
+    ring.addColorStop(0, rgba(mixRgb(getTyre().color, COLORS.paper, 0.25), 0.96));
+    ring.addColorStop(1, rgba(mixRgb(COLORS.dark, getTyre().color, 0.25), 0.96));
+    ctx.fillStyle = ring;
+    ctx.beginPath();
+    ctx.arc(cx, cy, outer, 0, Math.PI * 2);
+    ctx.arc(cx, cy, inner, 0, Math.PI * 2, true);
+    ctx.fill();
 
-      currentTrack = trackKey;
-      setActiveByValue(buttons, trackKey, "track");
-      path.setAttribute("d", track.path);
-      setText("f1-track-kicker", track.kicker);
-      setText("f1-track-title", track.title);
-      setText("f1-track-note", track.note);
-      setText("f1-track-aero", track.aero);
-      setText("f1-track-tyre", track.tyre);
-      setText("f1-track-brake", track.brake);
-      setText("f1-track-pass", track.pass);
-      document.dispatchEvent(new CustomEvent("f1-track-change", { detail: { trackKey } }));
-    }
+    ctx.fillStyle = rgba(mixRgb(COLORS.red, COLORS.blue, 1 - heatT), 0.66);
+    ctx.beginPath();
+    ctx.arc(cx, cy, inner * 0.88, Math.PI * 0.2, Math.PI * (0.2 + heatT * 1.6));
+    ctx.lineWidth = 18;
+    ctx.strokeStyle = rgba(mixRgb(COLORS.blue, COLORS.red, heatT), 0.84);
+    ctx.stroke();
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => update(button.dataset.track || "monza"));
-    });
+    const patchWidth = clamp((0.24 + tyre.load * 0.22 - tyre.wear * 0.08) * width, 70, 220);
+    ctx.fillStyle = rgba(COLORS.dark, 0.14 + tyre.grip * 0.12);
+    ctx.beginPath();
+    ctx.roundRect(cx - patchWidth * 0.5, height * 0.76, patchWidth, 16, 8);
+    ctx.fill();
 
-    update(currentTrack);
-    return currentTrack;
+    ctx.fillStyle = rgba(COLORS.ink, 0.76);
+    ctx.font = "600 18px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText(tyre.tyre.label, width * 0.66, height * 0.36);
+    ctx.font = "500 14px IBM Plex Mono, monospace";
+    ctx.fillText("Grip " + Math.round(tyre.grip * 100) + "%", width * 0.66, height * 0.46);
+    ctx.fillText("Wear " + Math.round(tyre.wear * 60) + "%", width * 0.66, height * 0.56);
+    ctx.fillText("State " + tyre.stateLabel, width * 0.66, height * 0.66);
   }
 
-  function initTrackPresetScene() {
-    const presetButtons = Array.from(document.querySelectorAll("[data-track-preset]"));
-    if (!presetButtons.length) {
-      return;
-    }
+  function drawBrakeScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.red);
+    const speed = 140 + state.brakeSpeed * 200;
+    const bias = state.brakeBias;
+    const recovery = state.brakeRecovery;
+    const pitch = -0.03 - state.brakeSpeed * 0.08 - recovery * 0.05;
+    drawSideCar(ctx, width * 0.42, height * 0.54, Math.min(width, height) * 0.19, pitch, 0.02, false);
 
-    const wingInput = document.getElementById("f1-setup-wing");
-    const rideInput = document.getElementById("f1-setup-ride");
-    const stiffnessInput = document.getElementById("f1-setup-stiffness");
-    const biasInput = document.getElementById("f1-setup-bias");
-    const noteNode = document.getElementById("f1-preset-note");
+    ctx.fillStyle = rgba(COLORS.red, 0.7);
+    ctx.arrow(width * 0.74, height * 0.24, width * 0.58, height * 0.24, 18, 28, 24);
+    ctx.fill();
 
-    function applyPreset(presetKey) {
-      const preset = trackPresets[presetKey];
-      if (!preset) {
-        return;
-      }
+    const frontLoad = clamp(56 + state.brakeSpeed * 16 + (bias - 0.55) * 34 + recovery * 12, 46, 84);
+    const rearLoad = clamp(100 - frontLoad, 16, 54);
+    drawBarPair(ctx, width * 0.74, height * 0.44, frontLoad / 100, rearLoad / 100, "Front", "Rear", COLORS.red, COLORS.blue);
 
-      setActiveByValue(presetButtons, presetKey, "trackPreset");
-      if (noteNode) {
-        noteNode.textContent = preset.note;
-      }
-
-      document.querySelector(`[data-track="${preset.trackKey}"]`)?.click();
-      document.querySelector(`[data-power-mode="${preset.powerMode}"]`)?.click();
-      document.querySelector(`[data-power-bias="${preset.powerBias}"]`)?.click();
-      document.querySelector(`[data-setup-compound="${preset.compoundKey}"]`)?.click();
-      document.querySelector(`[data-lap-plan="${preset.lapPlan}"]`)?.click();
-
-      if (wingInput) {
-        wingInput.value = String(preset.wing);
-        dispatchInputEvent(wingInput);
-      }
-      if (rideInput) {
-        rideInput.value = String(preset.ride);
-        dispatchInputEvent(rideInput);
-      }
-      if (stiffnessInput) {
-        stiffnessInput.value = String(preset.stiffness);
-        dispatchInputEvent(stiffnessInput);
-      }
-      if (biasInput) {
-        biasInput.value = String(preset.bias);
-        dispatchInputEvent(biasInput);
-      }
-    }
-
-    presetButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        applyPreset(button.dataset.trackPreset || "monza");
-      });
-    });
-
-    document.addEventListener("f1-track-change", (event) => {
-      const trackKey = event.detail?.trackKey;
-      if (!trackKey || !trackPresets[trackKey]) {
-        return;
-      }
-      setActiveByValue(presetButtons, trackKey, "trackPreset");
-      if (noteNode) {
-        noteNode.textContent = trackPresets[trackKey].note;
-      }
-    });
-
-    applyPreset("monza");
+    ctx.fillStyle = rgba(COLORS.ink, 0.76);
+    ctx.font = "600 15px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText(Math.round(speed) + " km/h", width * 0.66, height * 0.76);
   }
 
-  function initWeatherScene(initialTrack) {
-    const buttons = Array.from(document.querySelectorAll("[data-weather-mode]"));
-    const tempInput = document.getElementById("f1-weather-temp");
-    const lapsInput = document.getElementById("f1-weather-laps");
-    const rainInput = document.getElementById("f1-weather-rain");
-    const marker = document.getElementById("f1-weather-crossover-marker");
-    if (!buttons.length || !tempInput || !lapsInput || !rainInput || !marker) {
-      return;
-    }
+  function drawTrackScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.gray);
+    const track = getTrack();
+    ctx.save();
+    ctx.translate(width * 0.12, height * 0.12);
+    const scaleX = width * 0.72 / 520;
+    const scaleY = height * 0.68 / 280;
+    ctx.scale(scaleX, scaleY);
+    const path = new Path2D(track.path);
+    ctx.strokeStyle = rgba(COLORS.dark, 0.16);
+    ctx.lineWidth = 30 / scaleX;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.stroke(path);
+    ctx.strokeStyle = rgba(COLORS.red, 0.84);
+    ctx.lineWidth = 16 / scaleX;
+    ctx.stroke(path);
+    ctx.restore();
 
-    let currentTrack = initialTrack || "monza";
-    let currentCompoundKey = setupDefaults.compoundKey;
-    let currentMode = "dry";
-
-    function update() {
-      const temp = Number(tempInput.value);
-      const laps = Number(lapsInput.value);
-      const rain = Number(rainInput.value);
-      const strategy = computeWeatherStrategy(currentMode, currentTrack, temp, laps, rain, currentCompoundKey);
-
-      setActiveByValue(buttons, currentMode, "weatherMode");
-      setText("f1-weather-temp-value", `${temp} C`);
-      setText("f1-weather-laps-value", `${laps} laps`);
-      setText("f1-weather-rain-value", `${rain}%`);
-      setText("f1-weather-tyre", strategy.recommendedTyre);
-      setText("f1-weather-urgency", strategy.urgency);
-      setText("f1-weather-pit", strategy.pit);
-      setText("f1-weather-bias", strategy.bias);
-      setText("f1-weather-note", strategy.note);
-      setText("f1-weather-strategy", `${strategy.trackTitle} now rewards a ${strategy.bias.toLowerCase()} approach because the tyre choice is drifting toward ${strategy.recommendedTyre.toLowerCase()}.`);
-      setMeter("f1-weather-band-fill", strategy.bandFill);
-      marker.style.left = `${strategy.crossover}%`;
-
-      document.dispatchEvent(new CustomEvent("f1-weather-change", {
-        detail: {
-          trackKey: currentTrack,
-          strategy,
-        },
-      }));
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentMode = button.dataset.weatherMode || "dry";
-        update();
-      });
+    const tags = track.sectors;
+    tags.forEach(function (tag, index) {
+      const x = width * (0.18 + index * 0.24);
+      const y = height * 0.82;
+      ctx.fillStyle = rgba([track.traces.speed[index * 3 + 1], 110, 140], 0.16);
+      ctx.beginPath();
+      ctx.roundRect(x, y, width * 0.18, 40, 14);
+      ctx.fill();
+      ctx.fillStyle = rgba(COLORS.ink, 0.76);
+      ctx.font = "600 12px IBM Plex Mono, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(tag, x + width * 0.09, y + 24);
     });
-
-    tempInput.addEventListener("input", update);
-    lapsInput.addEventListener("input", update);
-    rainInput.addEventListener("input", update);
-
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      update();
-    });
-
-    document.addEventListener("f1-setup-change", (event) => {
-      currentCompoundKey = event.detail?.compoundKey || currentCompoundKey;
-      update();
-    });
-
-    update();
   }
 
-  function initPitScene(initialTrack) {
-    const ageInput = document.getElementById("f1-pit-age");
-    const trafficInput = document.getElementById("f1-pit-traffic");
-    const safetyInput = document.getElementById("f1-pit-sc");
-    const lossBand = document.getElementById("f1-pit-loss-band");
-    const marker = document.getElementById("f1-pit-window-marker");
-    if (!ageInput || !trafficInput || !safetyInput || !lossBand || !marker) {
-      return;
+  function drawRaceScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.violet);
+    const race = computeRacecraftState();
+    const leadX = width * (0.26 - (1 - state.raceGap) * 0.08);
+    const chaseX = width * (0.58 + race.closingRate * 0.004);
+
+    ctx.fillStyle = rgba(COLORS.ground, 0.84);
+    ctx.fillRect(0, height * 0.62, width, height * 0.18);
+    ctx.fillStyle = rgba(COLORS.red, 0.12 + (state.raceDrc ? 0.18 : 0));
+    ctx.fillRect(width * 0.54, height * 0.62, width * 0.26, height * 0.18);
+    ctx.fillStyle = rgba(COLORS.cyan, 0.22);
+    ctx.fillRect(width * 0.48, height * 0.58, 6, height * 0.26);
+
+    ctx.fillStyle = rgba(COLORS.wake, 0.16 + (1 - state.raceGap) * 0.38);
+    ctx.beginPath();
+    ctx.moveTo(leadX + 40, height * 0.24);
+    ctx.bezierCurveTo(leadX + 140, height * 0.08, chaseX - 60, height * 0.18, chaseX - 28, height * 0.42);
+    ctx.bezierCurveTo(chaseX - 66, height * 0.62, leadX + 150, height * 0.74, leadX + 46, height * 0.6);
+    ctx.closePath();
+    ctx.fill();
+
+    drawTopCar(ctx, leadX, height * 0.56, Math.min(width, height) * 0.085, COLORS.gray, 0.96);
+    drawTopCar(ctx, chaseX, height * 0.58, Math.min(width, height) * 0.095, COLORS.red, 0.96);
+
+    if (state.raceDrc === 1) {
+      ctx.strokeStyle = rgba(COLORS.yellow, 0.86);
+      ctx.lineWidth = 6;
+      ctx.setLineDash([10, 12]);
+      ctx.lineDashOffset = -performance.now() * 0.05;
+      ctx.beginPath();
+      ctx.moveTo(chaseX + 20, height * 0.54);
+      ctx.lineTo(chaseX + 120, height * 0.54);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
-
-    let currentTrack = initialTrack || "monza";
-    let currentCompoundKey = setupDefaults.compoundKey;
-    let currentWeatherState = computeWeatherStrategy("dry", currentTrack, 31, 18, 18, currentCompoundKey);
-
-    function update() {
-      const tyreAge = Number(ageInput.value);
-      const traffic = Number(trafficInput.value);
-      const safetyChance = Number(safetyInput.value);
-      const strategy = computePitStrategy(currentTrack, currentWeatherState, tyreAge, traffic, safetyChance, currentCompoundKey);
-
-      setText("f1-pit-age-value", `${tyreAge} laps`);
-      setText("f1-pit-traffic-value", `${traffic}%`);
-      setText("f1-pit-sc-value", `${safetyChance}%`);
-      setText("f1-pit-loss", `${strategy.rawLoss.toFixed(1)} s`);
-      setText("f1-pit-undercut", `${strategy.undercut >= 0 ? "+" : ""}${strategy.undercut.toFixed(1)} s`);
-      setText("f1-pit-overcut", `${strategy.overcut >= 0 ? "+" : ""}${strategy.overcut.toFixed(1)} s`);
-      setText("f1-pit-safety", `${strategy.safetySwing.toFixed(1)} s`);
-      setText("f1-pit-call", strategy.call);
-      setText("f1-pit-call-note", strategy.note);
-      setText("f1-pit-note", `${(tracks[currentTrack] || tracks.monza).title}: ${strategy.note}`);
-
-      lossBand.style.width = `${clamp(strategy.rawLoss / 28 * 100, 18, 92)}%`;
-      marker.style.left = `${strategy.window}%`;
-    }
-
-    ageInput.addEventListener("input", update);
-    trafficInput.addEventListener("input", update);
-    safetyInput.addEventListener("input", update);
-
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      update();
-    });
-
-    document.addEventListener("f1-weather-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      currentWeatherState = event.detail?.strategy || currentWeatherState;
-      update();
-    });
-
-    document.addEventListener("f1-setup-change", (event) => {
-      currentCompoundKey = event.detail?.compoundKey || currentCompoundKey;
-      update();
-    });
-
-    update();
   }
 
-  function initRacecraftScene(initialTrack) {
-    const gapInput = document.getElementById("f1-race-gap");
-    const deployInput = document.getElementById("f1-race-deploy");
-    const brakeInput = document.getElementById("f1-race-brake");
-    const drsButtons = Array.from(document.querySelectorAll("[data-racecraft-drs]"));
-    const leader = document.getElementById("f1-race-leader");
-    const chaser = document.getElementById("f1-race-chaser");
-    const dirtyAir = document.getElementById("f1-race-dirty-air");
-    const zone = document.getElementById("f1-race-drs-zone");
-    const detection = document.getElementById("f1-race-detection");
-    if (!gapInput || !deployInput || !brakeInput || !drsButtons.length || !leader || !chaser || !dirtyAir || !zone || !detection) {
-      return;
-    }
-
-    let currentTrack = initialTrack || "monza";
-    let drsMode = "off";
-
-    function update() {
-      const track = tracks[currentTrack] || tracks.monza;
-      const raceCopy = getRacecraftTrackCopy(currentTrack);
-      const gapTenths = Number(gapInput.value);
-      const deploy = Number(deployInput.value);
-      const brakeConfidence = Number(brakeInput.value);
-      const dirtyFactor = clamp(1 - (gapTenths - 4) / 16, 0, 1);
-      const drsOn = drsMode === "on";
-      const straightFactor = (track.weights.straight || 0) * 100;
-      const brakeFactor = (track.weights.braking || 0) * 100;
-      const fastFactor = (track.weights.fast || 0) * 100;
-
-      const dirtyPenalty = clamp(dirtyFactor * (44 + fastFactor * 0.45), 6, 92);
-      const closingRate = clamp(deploy * 0.16 + straightFactor * 0.36 + (drsOn ? 8 + straightFactor * 0.08 : 0) - dirtyPenalty * 0.12, 4, 34);
-      const brakingOpportunity = clamp(brakeConfidence * 0.48 + brakeFactor * 0.55 - dirtyPenalty * 0.12, 10, 100);
-      const passChanceScore = clamp(closingRate * 2.1 + brakingOpportunity * 0.42 - dirtyPenalty * 0.3 + (drsOn ? 12 : 0), 0, 100);
-
-      let windowLabel = "Narrow";
-      if (brakingOpportunity > 48) {
-        windowLabel = "Usable";
-      }
-      if (brakingOpportunity > 72) {
-        windowLabel = "Wide";
-      }
-
-      let passLabel = "Hopeful";
-      let note = "The attack might force a defensive move, but it still lacks the closing rate or braking margin to feel fully convincing.";
-      if (passChanceScore > 45) {
-        passLabel = "Promising";
-        note = "The chaser has enough straight-line gain and braking margin to make the overtake worth attempting.";
-      }
-      if (passChanceScore > 68) {
-        passLabel = "High odds";
-        note = "This is a real passing window: the chaser is close enough through the dirty-air phase, then gains enough rate to attack the braking zone with confidence.";
-      }
-      if (!drsOn && straightFactor > 24) {
-        note = "Without DRS the straight is doing less of the work, so the move depends much more heavily on exit quality and bravery under braking.";
-      }
-
-      const zoneWidth = 120 + straightFactor * 4.6 + (drsOn ? 60 : 0);
-      const zoneX = clamp(330 - straightFactor * 0.8, 250, 380);
-
-      setActiveByValue(drsButtons, drsMode, "racecraftDrs");
-      setText("f1-race-gap-value", `${(gapTenths / 10).toFixed(1)} s`);
-      setText("f1-race-deploy-value", `${deploy}%`);
-      setText("f1-race-brake-value", `${brakeConfidence}%`);
-      setText("f1-race-track-kicker", raceCopy.kicker);
-      setText("f1-race-track-title", track.title);
-      setText("f1-race-track-note", raceCopy.note);
-      setText("f1-race-dirty", `${Math.round(dirtyPenalty)}%`);
-      setText("f1-race-close", `${Math.round(closingRate)} km/h`);
-      setText("f1-race-window", windowLabel);
-      setText("f1-race-pass", passLabel);
-      setText("f1-race-note", note);
-
-      leader.setAttribute("transform", `translate(${Math.round(220 - dirtyFactor * 56)} 0)`);
-      chaser.setAttribute("transform", `translate(${Math.round(0 - dirtyFactor * 42 + closingRate * 1.8)} 0)`);
-      dirtyAir.style.opacity = `${0.18 + dirtyFactor * 0.52}`;
-      dirtyAir.setAttribute("d", `M180 ${86 - dirtyFactor * 20} C${250 + dirtyFactor * 50} ${48 - dirtyFactor * 8}, ${344 + dirtyFactor * 18} 58, 390 102 C360 138, ${258 + dirtyFactor * 40} ${146 + dirtyFactor * 8}, 182 ${126 + dirtyFactor * 10} Z`);
-      zone.setAttribute("x", String(zoneX));
-      zone.setAttribute("width", String(zoneWidth));
-      detection.setAttribute("x", String(zoneX - 46));
-    }
-
-    drsButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        drsMode = button.dataset.racecraftDrs || "off";
-        update();
-      });
+  function drawMetricBars(ctx, width, height, labels, values, colors) {
+    labels.forEach(function (label, index) {
+      const x = width * 0.14;
+      const y = height * (0.18 + index * 0.15);
+      ctx.fillStyle = rgba(COLORS.dark, 0.08);
+      ctx.beginPath();
+      ctx.roundRect(x + 110, y, width * 0.52, 12, 12);
+      ctx.fill();
+      ctx.fillStyle = rgba(colors[index], 0.88);
+      ctx.beginPath();
+      ctx.roundRect(x + 110, y, width * 0.52 * values[index], 12, 12);
+      ctx.fill();
+      ctx.fillStyle = rgba(COLORS.ink, 0.74);
+      ctx.font = "600 13px IBM Plex Mono, monospace";
+      ctx.textAlign = "left";
+      ctx.fillText(label, x, y + 10);
     });
-
-    gapInput.addEventListener("input", update);
-    deployInput.addEventListener("input", update);
-    brakeInput.addEventListener("input", update);
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      update();
-    });
-
-    update();
   }
 
-  function initLapBuilderScene(initialTrack) {
-    const buttons = Array.from(document.querySelectorAll("[data-lap-plan]"));
-    if (!buttons.length) {
-      return;
-    }
-
-    let currentTrack = initialTrack || "monza";
-    let currentPlan = "push";
-    let currentCompoundKey = setupDefaults.compoundKey;
-    let currentPowerState = computePowerState("harvest", "early", currentTrack);
-    let currentWeatherState = computeWeatherStrategy("dry", currentTrack, 31, 18, 18, currentCompoundKey);
-    let currentScores = computeSetupScores(
-      currentTrack,
-      currentCompoundKey,
-      setupDefaults.wing,
-      setupDefaults.ride,
-      setupDefaults.stiffness,
-      setupDefaults.bias,
+  function drawSetupScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.orange);
+    const setup = computeSetupScores();
+    drawMetricBars(
+      ctx,
+      width,
+      height,
+      ["Straight", "Slow corners", "Fast corners", "Tyre life", "Braking", "Balance"],
+      [setup.straight, setup.slow, setup.fast, setup.tyreLife, setup.braking, setup.balance],
+      [COLORS.blue, COLORS.orange, COLORS.red, COLORS.gray, COLORS.yellow, COLORS.cyan],
     );
 
-    function render() {
-      const track = tracks[currentTrack] || tracks.monza;
-      const plan = lapPlans[currentPlan] || lapPlans.push;
-      const adjusted = {
-        straight: clamp(currentScores.straight + plan.adjustments.straight, 0, 100),
-        slow: clamp(currentScores.slow + plan.adjustments.slow, 0, 100),
-        fast: clamp(currentScores.fast + plan.adjustments.fast, 0, 100),
-        tyreLife: clamp(currentScores.tyreLife + plan.adjustments.tyreLife, 0, 100),
-        braking: clamp(currentScores.braking + plan.adjustments.braking, 0, 100),
-        balance: clamp(currentScores.balance + plan.adjustments.balance, 0, 100),
-      };
-
-      setActiveByValue(buttons, currentPlan, "lapPlan");
-      setText("f1-lap-plan-title", plan.title);
-      setText("f1-lap-plan-note", plan.note);
-      setText("f1-lap-track", track.title);
-      setText("f1-lap-compound", getCompoundTitle(currentCompoundKey));
-      setText("f1-lap-power-mode", currentPowerState.modeLabel);
-      setText("f1-lap-power-bias", currentPowerState.biasLabel);
-      setText("f1-lap-weather", currentWeatherState.label);
-      setText("f1-lap-strategy-tyre", currentWeatherState.recommendedTyre);
-
-      const speedTrace = [];
-      const brakeTrace = [];
-      const deployTrace = [];
-      const speedPreset = track.tracePresets?.speed || [34, 94, 44, 58, 76, 54, 70, 90, 48];
-      const brakePreset = track.tracePresets?.brake || [18, 96, 24, 44, 72, 20, 42, 84, 18];
-      const deployPreset = track.tracePresets?.deploy || [52, 92, 44, 48, 68, 42, 58, 84, 46];
-      const sectorDeltas = track.sectors.map((sector, index) => {
-        const powerBoost = (currentPowerState.sectorBars[index] || 0) * 0.18;
-        const weatherPenalty = currentWeatherState.penalty * (0.24 + (sector.weights.tyreLife || 0) * 1.2 + (sector.weights.braking || 0) * 0.4);
-        const sectorScore = Object.keys(sector.weights).reduce((total, key) => {
-          return total + (sector.weights[key] || 0) * adjusted[key];
-        }, 0) + powerBoost;
-        const sectorDelta = clamp((87 - sectorScore) / 20 + weatherPenalty, -0.35, 2.2);
-        const dominantMetric = Object.keys(sector.weights).sort((left, right) => {
-          return (sector.weights[right] || 0) - (sector.weights[left] || 0);
-        })[0];
-        const note = `${sector.lead}, and the current weak point is ${metricLabels[dominantMetric] || dominantMetric}.`;
-
-        const baseIndex = index * 3;
-        const straightTuning = (adjusted.straight - 60) * 0.18;
-        const fastTuning = (adjusted.fast - 60) * 0.14;
-        const slowTuning = (adjusted.slow - 60) * 0.14;
-        const brakeTuning = (adjusted.braking - 60) * 0.16;
-        const balanceTuning = (adjusted.balance - 60) * 0.1;
-
-        speedTrace.push(
-          clamp(speedPreset[baseIndex] + slowTuning + balanceTuning - currentWeatherState.penalty * 10, 8, 98),
-          clamp(speedPreset[baseIndex + 1] + straightTuning + fastTuning + powerBoost * 0.28 - currentWeatherState.penalty * 14, 8, 98),
-          clamp(speedPreset[baseIndex + 2] + fastTuning + balanceTuning - currentWeatherState.penalty * 9, 8, 98),
-        );
-        brakeTrace.push(
-          clamp(brakePreset[baseIndex] + brakeTuning + currentWeatherState.penalty * 10, 4, 98),
-          clamp(brakePreset[baseIndex + 1] + brakeTuning + currentWeatherState.penalty * 14, 4, 98),
-          clamp(brakePreset[baseIndex + 2] + brakeTuning + currentWeatherState.penalty * 12, 4, 98),
-        );
-        deployTrace.push(
-          clamp(deployPreset[baseIndex] + (currentPowerState.sectorBars[index] - 50) * 0.4, 8, 98),
-          clamp(deployPreset[baseIndex + 1] + (currentPowerState.sectorBars[index] - 50) * 0.5 + plan.adjustments.straight * 1.4, 8, 98),
-          clamp(deployPreset[baseIndex + 2] + (currentPowerState.sectorBars[index] - 50) * 0.34, 8, 98),
-        );
-
-        setText(`f1-sector-${index + 1}-title`, sector.label);
-        setText(`f1-sector-${index + 1}-focus`, sector.focus);
-        setText(`f1-sector-${index + 1}-delta`, formatSignedDelta(sectorDelta));
-        setText(`f1-sector-${index + 1}-note`, note);
-        setMeter(`f1-sector-${index + 1}-bar`, clamp(sectorScore, 0, 100));
-        setText(`f1-telemetry-sector-${index + 1}`, sector.label);
-
-        return sectorDelta;
-      });
-
-      const totalDelta = sectorDeltas.reduce((total, value) => total + value, 0);
-      setText("f1-lap-total", formatSignedDelta(totalDelta));
-      const traceOptions = { left: 40, top: 70, height: 140, width: 680 };
-      const speedPoints = buildTracePoints(speedTrace, traceOptions);
-      const brakePoints = buildTracePoints(brakeTrace, traceOptions);
-      const deployPoints = buildTracePoints(deployTrace, traceOptions);
-      document.getElementById("f1-trace-speed")?.setAttribute("points", speedPoints);
-      document.getElementById("f1-trace-brake")?.setAttribute("points", brakePoints);
-      document.getElementById("f1-trace-deploy")?.setAttribute("points", deployPoints);
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentPlan = button.dataset.lapPlan || "push";
-        render();
-      });
-    });
-
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      render();
-    });
-
-    document.addEventListener("f1-setup-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      currentCompoundKey = event.detail?.compoundKey || currentCompoundKey;
-      currentScores = event.detail?.scores || currentScores;
-      render();
-    });
-
-    document.addEventListener("f1-power-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      currentPowerState = event.detail?.powerState || currentPowerState;
-      render();
-    });
-
-    document.addEventListener("f1-weather-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      currentWeatherState = event.detail?.strategy || currentWeatherState;
-      render();
-    });
-
-    render();
+    ctx.fillStyle = rgba(COLORS.ink, 0.8);
+    ctx.font = "600 17px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText(getTrack().label + " preset", width * 0.14, height * 0.86);
+    ctx.font = "500 13px IBM Plex Mono, monospace";
+    ctx.fillText("Wing " + Math.round(state.setupWing * 10 + 1) + " · Ride " + Math.round(24 + state.setupRide * 40) + " mm · Stiffness " + Math.round(20 + state.setupStiffness * 70) + "%", width * 0.14, height * 0.92);
   }
 
-  function initSetupScene(initialTrack) {
-    const wingInput = document.getElementById("f1-setup-wing");
-    const rideInput = document.getElementById("f1-setup-ride");
-    const stiffnessInput = document.getElementById("f1-setup-stiffness");
-    const biasInput = document.getElementById("f1-setup-bias");
-    const buttons = Array.from(document.querySelectorAll("[data-setup-compound]"));
-    if (!wingInput || !rideInput || !stiffnessInput || !biasInput || !buttons.length) {
-      return;
-    }
+  function drawWeatherScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.blue);
+    const weather = computeWeatherStrategy();
 
-    let currentTrack = initialTrack || "monza";
-    let currentCompound = setupDefaults.compoundKey;
+    const bandX = width * 0.12;
+    const bandY = height * 0.36;
+    const bandW = width * 0.74;
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    ctx.beginPath();
+    ctx.roundRect(bandX, bandY, bandW, 16, 16);
+    ctx.fill();
 
-    function update() {
-      const wing = Number(wingInput.value);
-      const ride = Number(rideInput.value);
-      const stiffness = Number(stiffnessInput.value);
-      const bias = Number(biasInput.value);
-      const track = tracks[currentTrack] || tracks.monza;
-      const scores = computeSetupScores(currentTrack, currentCompound, wing, ride, stiffness, bias);
+    const gradient = ctx.createLinearGradient(bandX, 0, bandX + bandW, 0);
+    gradient.addColorStop(0, rgba(COLORS.orange, 0.9));
+    gradient.addColorStop(0.5, rgba(COLORS.green, 0.9));
+    gradient.addColorStop(1, rgba(COLORS.blue, 0.9));
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.roundRect(bandX, bandY, bandW * clamp(weather.crossover / 100, 0.06, 1), 16, 16);
+    ctx.fill();
 
-      setActiveByValue(buttons, currentCompound, "setupCompound");
-      setText("f1-setup-track", track.title);
-      setText("f1-setup-wing-value", `${wing} clicks`);
-      setText("f1-setup-ride-value", `${ride} mm`);
-      setText("f1-setup-stiffness-value", `${stiffness}%`);
-      setText("f1-setup-bias-value", `${bias.toFixed(1)}% front`);
-      setText("f1-setup-straight", `${Math.round(scores.straight)}%`);
-      setText("f1-setup-slow", `${Math.round(scores.slow)}%`);
-      setText("f1-setup-fast", `${Math.round(scores.fast)}%`);
-      setText("f1-setup-tyre-life", `${Math.round(scores.tyreLife)}%`);
-      setText("f1-setup-braking", `${Math.round(scores.braking)}%`);
-      setText("f1-setup-balance", `${Math.round(scores.balance)}%`);
-      setText("f1-setup-note", scores.note);
+    ctx.fillStyle = rgba(COLORS.cyan, 0.9);
+    ctx.beginPath();
+    ctx.ellipse(bandX + bandW * clamp(weather.crossover / 100, 0.06, 0.96), bandY + 8, 10, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-      document.dispatchEvent(new CustomEvent("f1-setup-change", {
-        detail: {
-          trackKey: currentTrack,
-          compoundKey: currentCompound,
-          scores,
-        },
-      }));
-    }
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.font = "600 16px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText(weather.mode.label + " mode", width * 0.12, height * 0.18);
+    ctx.font = "500 13px IBM Plex Mono, monospace";
+    ctx.fillText("Track " + Math.round(weather.temp) + " C · Rain " + Math.round(weather.rain) + "% · Laps to go " + Math.round(weather.laps), width * 0.12, height * 0.78);
+    ctx.fillText("Recommended tyre: " + weather.recommended + " · Urgency: " + weather.urgency, width * 0.12, height * 0.86);
+  }
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        currentCompound = button.dataset.setupCompound || setupDefaults.compoundKey;
-        update();
-      });
+  function drawPitScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.violet);
+    const pit = computePitStrategy();
+    const bandX = width * 0.12;
+    const bandW = width * 0.74;
+    const bandY = height * 0.34;
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    ctx.beginPath();
+    ctx.roundRect(bandX, bandY, bandW, 16, 16);
+    ctx.fill();
+    ctx.fillStyle = rgba(COLORS.orange, 0.9);
+    ctx.beginPath();
+    ctx.roundRect(bandX, bandY, bandW * clamp(pit.rawLoss / 28, 0.08, 0.96), 16, 16);
+    ctx.fill();
+    ctx.fillStyle = rgba(COLORS.cyan, 0.9);
+    ctx.beginPath();
+    ctx.ellipse(bandX + bandW * clamp((pit.undercut + 3) / 12, 0.06, 0.94), bandY + 8, 10, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.font = "600 16px IBM Plex Mono, monospace";
+    ctx.fillText(pit.call, width * 0.12, height * 0.18);
+    ctx.font = "500 13px IBM Plex Mono, monospace";
+    ctx.fillText("Loss " + pit.rawLoss.toFixed(1) + " s · Undercut " + (pit.undercut >= 0 ? "+" : "") + pit.undercut.toFixed(1) + " s · Overcut " + (pit.overcut >= 0 ? "+" : "") + pit.overcut.toFixed(1) + " s", width * 0.12, height * 0.74);
+    ctx.fillText("Safety-car swing " + pit.safetySwing.toFixed(1) + " s", width * 0.12, height * 0.84);
+  }
+
+  function buildTracePoints(values, width, height) {
+    const left = width * 0.08;
+    const top = height * 0.16;
+    const traceWidth = width * 0.84;
+    const traceHeight = height * 0.56;
+    return values.map(function (value, index) {
+      const ratio = values.length === 1 ? 0 : index / (values.length - 1);
+      return [left + traceWidth * ratio, top + traceHeight * (1 - value / 100)];
+    });
+  }
+
+  function strokeTrace(ctx, points, color, widthValue) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = widthValue;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    points.forEach(function (point, index) {
+      if (index === 0) {
+        ctx.moveTo(point[0], point[1]);
+      } else {
+        ctx.lineTo(point[0], point[1]);
+      }
+    });
+    ctx.stroke();
+  }
+
+  function drawLapScene(ctx, width, height) {
+    drawSceneBackground(ctx, width, height, COLORS.gray);
+    const lap = computeLapState();
+    const speedPoints = buildTracePoints(lap.speedTrace, width, height);
+    const brakePoints = buildTracePoints(lap.brakeTrace, width, height);
+    const deployPoints = buildTracePoints(lap.deployTrace, width, height);
+
+    const bands = [0.08, 0.37, 0.66];
+    bands.forEach(function (x, index) {
+      ctx.fillStyle = rgba(COLORS.dark, 0.04);
+      ctx.fillRect(width * x, height * 0.14, width * 0.26, height * 0.6);
+      ctx.fillStyle = rgba(COLORS.ink, 0.64);
+      ctx.font = "600 12px IBM Plex Mono, monospace";
+      ctx.textAlign = "left";
+      ctx.fillText(lap.track.sectors[index], width * x + 10, height * 0.18);
     });
 
-    [wingInput, rideInput, stiffnessInput, biasInput].forEach((input) => {
-      input.addEventListener("input", update);
-    });
+    strokeTrace(ctx, speedPoints, rgba(COLORS.blue, 0.92), 6);
+    strokeTrace(ctx, brakePoints, rgba(COLORS.red, 0.92), 6);
+    strokeTrace(ctx, deployPoints, rgba(COLORS.yellow, 0.94), 6);
 
-    document.addEventListener("f1-track-change", (event) => {
-      currentTrack = event.detail?.trackKey || currentTrack;
-      update();
-    });
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.font = "600 12px IBM Plex Mono, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("Speed", width * 0.08, height * 0.88);
+    ctx.fillStyle = rgba(COLORS.blue, 0.92);
+    ctx.fillRect(width * 0.15, height * 0.868, 18, 4);
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.fillText("Brake", width * 0.28, height * 0.88);
+    ctx.fillStyle = rgba(COLORS.red, 0.92);
+    ctx.fillRect(width * 0.35, height * 0.868, 18, 4);
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.fillText("Deploy", width * 0.48, height * 0.88);
+    ctx.fillStyle = rgba(COLORS.yellow, 0.94);
+    ctx.fillRect(width * 0.58, height * 0.868, 18, 4);
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.fillText("Total delta " + lap.totalDelta.toFixed(2) + " s", width * 0.72, height * 0.88);
+  }
 
-    update();
+  function drawTopCar(ctx, x, y, size, color, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(size, size);
+    ctx.fillStyle = rgba(color, alpha);
+    ctx.beginPath();
+    ctx.moveTo(-1.26, -0.14);
+    ctx.lineTo(-0.88, -0.26);
+    ctx.lineTo(-0.2, -0.24);
+    ctx.lineTo(0.52, -0.16);
+    ctx.lineTo(0.9, -0.12);
+    ctx.lineTo(1.24, -0.06);
+    ctx.lineTo(1.24, 0.06);
+    ctx.lineTo(0.9, 0.12);
+    ctx.lineTo(0.52, 0.16);
+    ctx.lineTo(-0.2, 0.24);
+    ctx.lineTo(-0.88, 0.26);
+    ctx.lineTo(-1.26, 0.14);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillRect(-1.44, -0.1, 0.34, 0.2);
+    ctx.fillRect(1.1, -0.18, 0.22, 0.36);
+    ctx.fillStyle = rgba(COLORS.dark, 0.2);
+    ctx.beginPath();
+    ctx.ellipse(-0.56, -0.32, 0.18, 0.12, 0, 0, Math.PI * 2);
+    ctx.ellipse(-0.56, 0.32, 0.18, 0.12, 0, 0, Math.PI * 2);
+    ctx.ellipse(0.82, -0.36, 0.22, 0.14, 0, 0, Math.PI * 2);
+    ctx.ellipse(0.82, 0.36, 0.22, 0.14, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawBarPair(ctx, x, y, left, right, leftLabel, rightLabel, leftColor, rightColor) {
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    ctx.beginPath();
+    ctx.roundRect(x - 26, y, 18, 100, 10);
+    ctx.roundRect(x + 12, y, 18, 100, 10);
+    ctx.fill();
+    ctx.fillStyle = rgba(leftColor, 0.88);
+    ctx.beginPath();
+    ctx.roundRect(x - 26, y + (1 - left) * 100, 18, left * 100, 10);
+    ctx.fill();
+    ctx.fillStyle = rgba(rightColor, 0.88);
+    ctx.beginPath();
+    ctx.roundRect(x + 12, y + (1 - right) * 100, 18, right * 100, 10);
+    ctx.fill();
+    ctx.fillStyle = rgba(COLORS.ink, 0.72);
+    ctx.font = "600 12px IBM Plex Mono, monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(leftLabel, x - 17, y + 120);
+    ctx.fillText(rightLabel, x + 21, y + 120);
+  }
+
+  function applyTrackPreset(index) {
+    const preset = TRACKS[index].preset;
+    state.track = index;
+    state.setupWing = preset.wing;
+    state.setupRide = preset.ride;
+    state.setupStiffness = preset.stiffness;
+    state.setupBias = preset.bias;
+    state.tyreCompound = preset.tyre;
+    state.powerMode = preset.powerMode;
+    state.powerBias = preset.powerBias;
+    state.lapPlan = preset.lapPlan;
+
+    if (controls.track) controls.track.set_selection(index);
+    if (controls.setupPreset) controls.setupPreset.set_selection(index);
+    if (controls.tyreCompound) controls.tyreCompound.set_selection(state.tyreCompound);
+    if (controls.powerMode) controls.powerMode.set_selection(state.powerMode);
+    if (controls.powerBias) controls.powerBias.set_selection(state.powerBias);
+    if (controls.lapPlan) controls.lapPlan.set_selection(state.lapPlan);
+    if (controls.setupWing) controls.setupWing.set_value(state.setupWing);
+    if (controls.setupRide) controls.setupRide.set_value(state.setupRide);
+    if (controls.setupStiffness) controls.setupStiffness.set_value(state.setupStiffness);
+    if (controls.setupBias) controls.setupBias.set_value(state.setupBias);
+
+    updateCaptions();
+    repaintAll();
+  }
+
+  function bindControls() {
+    controls.overview = new SegmentedControl(document.getElementById("f1_overview_seg0"), function (index) {
+      state.component = index;
+      updateCaptions();
+      repaintAll();
+    }, COMPONENTS.map(function (item) { return item.label; }));
+
+    controls.airflowSpeed = new Slider(document.getElementById("f1_airflow_sl0"), function (value) {
+      state.airflowSpeed = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.airflowSpeed);
+    controls.airflowWing = new Slider(document.getElementById("f1_airflow_sl1"), function (value) {
+      state.airflowWing = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.airflowWing);
+    controls.airflowRide = new Slider(document.getElementById("f1_airflow_sl2"), function (value) {
+      state.airflowRide = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.airflowRide);
+
+    controls.frontGap = new Slider(document.getElementById("f1_front_sl0"), function (value) {
+      state.frontGap = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.frontGap);
+    controls.frontFlap = new Slider(document.getElementById("f1_front_sl1"), function (value) {
+      state.frontFlap = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.frontFlap);
+    controls.frontDemand = new Slider(document.getElementById("f1_front_sl2"), function (value) {
+      state.frontDemand = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.frontDemand);
+
+    controls.floorRide = new Slider(document.getElementById("f1_floor_sl0"), function (value) {
+      state.floorRide = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.floorRide);
+    controls.floorPitch = new Slider(document.getElementById("f1_floor_sl1"), function (value) {
+      state.floorPitch = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.floorPitch);
+
+    controls.rearMode = new SegmentedControl(document.getElementById("f1_rear_seg0"), function (index) {
+      state.rearDrc = index;
+      updateCaptions();
+      repaintAll();
+    }, ["DRS closed", "DRS open"]);
+    controls.rearWing = new Slider(document.getElementById("f1_rear_sl0"), function (value) {
+      state.rearWing = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.rearWing);
+    controls.rearSpeed = new Slider(document.getElementById("f1_rear_sl1"), function (value) {
+      state.rearSpeed = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.rearSpeed);
+
+    controls.chassisStiffness = new Slider(document.getElementById("f1_chassis_sl0"), function (value) {
+      state.chassisStiffness = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.chassisStiffness);
+    controls.chassisKerb = new Slider(document.getElementById("f1_chassis_sl1"), function (value) {
+      state.chassisKerb = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.chassisKerb);
+    controls.chassisBrake = new Slider(document.getElementById("f1_chassis_sl2"), function (value) {
+      state.chassisBrake = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.chassisBrake);
+
+    controls.powerMode = new SegmentedControl(document.getElementById("f1_power_seg0"), function (index) {
+      state.powerMode = index;
+      updateCaptions();
+      repaintAll();
+    }, POWER_MODES.map(function (item) { return item.label; }));
+    controls.powerBias = new SegmentedControl(document.getElementById("f1_power_seg1"), function (index) {
+      state.powerBias = index;
+      updateCaptions();
+      repaintAll();
+    }, POWER_BIASES.map(function (item) { return item.label; }));
+
+    controls.tyreCompound = new SegmentedControl(document.getElementById("f1_tyre_seg0"), function (index) {
+      state.tyreCompound = index;
+      updateCaptions();
+      repaintAll();
+    }, TYRES.map(function (item) { return item.label; }));
+    controls.tyreTemp = new Slider(document.getElementById("f1_tyre_sl0"), function (value) {
+      state.tyreTemp = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.tyreTemp);
+    controls.tyreLoad = new Slider(document.getElementById("f1_tyre_sl1"), function (value) {
+      state.tyreLoad = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.tyreLoad);
+    controls.tyreStint = new Slider(document.getElementById("f1_tyre_sl2"), function (value) {
+      state.tyreStint = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.tyreStint);
+
+    controls.brakeSpeed = new Slider(document.getElementById("f1_brake_sl0"), function (value) {
+      state.brakeSpeed = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.brakeSpeed);
+    controls.brakeBias = new Slider(document.getElementById("f1_brake_sl1"), function (value) {
+      state.brakeBias = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.brakeBias);
+    controls.brakeRecovery = new Slider(document.getElementById("f1_brake_sl2"), function (value) {
+      state.brakeRecovery = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.brakeRecovery);
+
+    controls.track = new SegmentedControl(document.getElementById("f1_track_seg0"), function (index) {
+      if (state.track !== index) {
+        applyTrackPreset(index);
+      }
+    }, TRACKS.map(function (item) { return item.label; }));
+
+    controls.raceMode = new SegmentedControl(document.getElementById("f1_race_seg0"), function (index) {
+      state.raceDrc = index;
+      updateCaptions();
+      repaintAll();
+    }, ["No DRS", "DRS open"]);
+    controls.raceGap = new Slider(document.getElementById("f1_race_sl0"), function (value) {
+      state.raceGap = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.raceGap);
+    controls.raceDeploy = new Slider(document.getElementById("f1_race_sl1"), function (value) {
+      state.raceDeploy = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.raceDeploy);
+    controls.raceBrake = new Slider(document.getElementById("f1_race_sl2"), function (value) {
+      state.raceBrake = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.raceBrake);
+
+    controls.setupPreset = new SegmentedControl(document.getElementById("f1_setup_seg0"), function (index) {
+      if (state.track !== index) {
+        applyTrackPreset(index);
+      }
+    }, TRACKS.map(function (item) { return item.label; }));
+    controls.setupWing = new Slider(document.getElementById("f1_setup_sl0"), function (value) {
+      state.setupWing = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.setupWing);
+    controls.setupRide = new Slider(document.getElementById("f1_setup_sl1"), function (value) {
+      state.setupRide = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.setupRide);
+    controls.setupStiffness = new Slider(document.getElementById("f1_setup_sl2"), function (value) {
+      state.setupStiffness = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.setupStiffness);
+    controls.setupBias = new Slider(document.getElementById("f1_setup_sl3"), function (value) {
+      state.setupBias = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.setupBias);
+
+    controls.weatherMode = new SegmentedControl(document.getElementById("f1_weather_seg0"), function (index) {
+      state.weatherMode = index;
+      updateCaptions();
+      repaintAll();
+    }, WEATHER_MODES.map(function (item) { return item.label; }));
+    controls.weatherTemp = new Slider(document.getElementById("f1_weather_sl0"), function (value) {
+      state.weatherTemp = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.weatherTemp);
+    controls.weatherLaps = new Slider(document.getElementById("f1_weather_sl1"), function (value) {
+      state.weatherLaps = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.weatherLaps);
+    controls.weatherRain = new Slider(document.getElementById("f1_weather_sl2"), function (value) {
+      state.weatherRain = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.weatherRain);
+
+    controls.pitAge = new Slider(document.getElementById("f1_pit_sl0"), function (value) {
+      state.pitAge = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.pitAge);
+    controls.pitTraffic = new Slider(document.getElementById("f1_pit_sl1"), function (value) {
+      state.pitTraffic = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.pitTraffic);
+    controls.pitSafety = new Slider(document.getElementById("f1_pit_sl2"), function (value) {
+      state.pitSafety = value;
+      updateCaptions();
+      repaintAll();
+    }, undefined, state.pitSafety);
+
+    controls.lapPlan = new SegmentedControl(document.getElementById("f1_lap_seg0"), function (index) {
+      state.lapPlan = index;
+      updateCaptions();
+      repaintAll();
+    }, LAP_PLANS.map(function (item) { return item.label; }));
+  }
+
+  function initScenes() {
+    makeScene("f1_overview", { animated: true, arcball: true, rotation: state.overviewRotation }, drawOverviewScene);
+    makeScene("f1_airflow", { animated: true }, drawAirflowScene);
+    makeScene("f1_front", { animated: true }, drawFrontScene);
+    makeScene("f1_floor", { animated: true }, drawFloorScene);
+    makeScene("f1_rear", { animated: true }, drawRearScene);
+    makeScene("f1_chassis", { animated: true }, drawChassisScene);
+    makeScene("f1_power", { animated: true }, drawPowerScene);
+    makeScene("f1_tyre", { animated: true }, drawTyreScene);
+    makeScene("f1_brake", { animated: true }, drawBrakeScene);
+    makeScene("f1_track", { animated: false }, drawTrackScene);
+    makeScene("f1_race", { animated: true }, drawRaceScene);
+    makeScene("f1_setup", { animated: false }, drawSetupScene);
+    makeScene("f1_weather", { animated: false }, drawWeatherScene);
+    makeScene("f1_pit", { animated: false }, drawPitScene);
+    makeScene("f1_lap", { animated: false }, drawLapScene);
   }
 
   function init() {
-    initOverviewScene();
-    initAirflowScene();
-    initFrontWingScene();
-    initFloorScene();
-    initRearWingScene();
-    initChassisScene();
-    initTyreScene();
-    initBrakingScene();
-    const initialTrack = initTrackScene();
-    initLapBuilderScene(initialTrack);
-    initPowerScene(initialTrack);
-    initRacecraftScene(initialTrack);
-    initSetupScene(initialTrack);
-    initWeatherScene(initialTrack);
-    initPitScene(initialTrack);
-    initTrackPresetScene();
+    bindControls();
+    initScenes();
+    applyTrackPreset(0);
+    updateCaptions();
+    window.requestAnimationFrame(loop);
   }
 
   if (document.readyState === "loading") {

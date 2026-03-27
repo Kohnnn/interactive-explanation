@@ -12,11 +12,13 @@
   <link rel="canonical" href="./">
   <title>Formula 1 Racing</title>
   <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <link rel="stylesheet" href="./css/f1.css">
-  <script defer src="../shared/engineering-sandbox.js"></script>
+  <script defer src="./js/base.js"></script>
   <script defer src="./js/f1.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
 <body
@@ -29,30 +31,30 @@
   data-story-route="formula-1-racing"
 >
   <section class="story-hero">
-    <p class="story-hero__eyebrow">Engineering Sandbox original · Formula 1 systems</p>
+    <p class="story-hero__eyebrow">Engineering Sandbox original · procedural Formula 1 notebook</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">See an F1 car as a lap-time machine, not a blur of fast parts.</h1>
+        <h1 class="story-hero__title">Read a modern F1 car as a moving stack of compromises.</h1>
         <p class="story-hero__summary">
-          Start with the whole car, then follow the chain from airflow to grip, from grip to braking,
-          and from braking to setup compromise. The goal is not to memorize components. The goal is to
-          understand why the same machine can feel brilliant at Silverstone and compromised at Monaco.
+          Start by rotating the car and isolating its major systems. Then move through airflow, the floor,
+          the rear wing, tyres, braking, weather, and pit windows until the final lap view stops looking like
+          a collection of motorsport buzzwords and starts behaving like one connected engineering machine.
         </p>
         <div class="story-hero__meta">
-          <span class="story-chip">Inspect aero hotspots</span>
-          <span class="story-chip">Follow grip and energy</span>
-          <span class="story-chip">Build a faster lap</span>
+          <span class="story-chip">Rotate the car</span>
+          <span class="story-chip">Scrub the aero window</span>
+          <span class="story-chip">Build a race lap</span>
         </div>
       </div>
       <div class="story-callout story-hero__panel" data-story-callout="play">
-        <span class="story-callout__label">Start with the whole car</span>
+        <span class="story-callout__label">Start with the car map</span>
         <p>
-          Click through the car map first, then move to airflow, the floor, and the wing chapters. Once
-          the underbody story is clear, the tyre, braking, and lap-builder sections stop feeling like
-          separate topics and start reading like connected constraints on the same lap.
+          Drag the opening model first. Once the main components and their colors feel familiar, the later
+          scenes become much easier to read because the same front wing, floor, tyre, and power-unit logic
+          keeps reappearing in different contexts.
         </p>
         <div class="story-hero__actions">
-          <a class="story-button" href="#f1-overview-scene">Inspect the car</a>
+          <a class="story-button" href="#overview">Inspect the car</a>
           <a class="story-button story-button--secondary" href="#airflow">Jump to airflow</a>
           <a class="story-button story-button--secondary" href="#building-a-lap">Jump to lap builder</a>
         </div>
@@ -68,1296 +70,205 @@
           <h1 class="post_title"><a href="./">Formula 1 Racing</a></h1>
           <div class="padding_wrapper">
             <p>
-              Modern Formula 1 cars are often described with isolated buzzwords: downforce, dirty air,
-              tyre degradation, energy deployment, brake bias, setup window. In reality those are not
-              separate stories. They are different cuts through one machine trying to turn air, load,
-              fuel, electricity, and rubber into lap time.
+              A modern Formula 1 car is usually described through disconnected terms: downforce, tyre window,
+              brake bias, dirty air, deployment, pit undercut. This route treats those terms as different views
+              of the same machine. The car is always trading one kind of lap-time help against another kind of
+              lap-time risk.
             </p>
             <p>
-              This article treats the car as a coupled system. We will start with the whole package,
-              isolate the major subsystems, and then bring them back together through track layout and a
-              sector-by-sector lap model. The route stays firmly in the modern ground-effect era because
-              the floor, diffuser, hybrid power unit, and tyre behavior all make the current cars especially
-              useful to study as an engineering problem.
+              The route stays in the current ground-effect era because that gives us the clearest version of the
+              modern problem: how to keep the floor alive, the rear stable, the tyres inside their working range,
+              and the battery useful over a whole lap and a whole stint.
             </p>
 
             <h1 id="overview">Overview</h1>
             <p>
-              Before the detailed chapters, it helps to know where each subsystem lives on the car. The
-              map below is not meant to reproduce every vane, duct, or fastener. It is meant to give you
-              a working top-level layout of the parts that most strongly shape performance.
+              Before the details, start with the whole object. The car below is not a scan or a model import.
+              It is drawn procedurally so the same color-coded systems can stay legible as you rotate the package
+              and isolate each major component family.
             </p>
-            <div class="f1-stage f1-stage--overview" id="f1-overview-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Phase 1 anchor scene</p>
-                  <h2 class="f1-stage__title">Inspect the car as one connected machine.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Pick a component family to see where it sits on the car, what problem it solves, and
-                  what tradeoff it introduces somewhere else.
-                </p>
-              </div>
-              <div class="f1-overview-grid">
-                <div class="f1-car-figure" aria-hidden="true">
-                  <svg viewBox="0 0 760 280" class="f1-overview-svg" role="img" aria-label="Simplified Formula 1 car top view">
-                    <path d="M118 126 L208 112 L252 112 L252 168 L208 168 L118 154 L96 140 Z" class="f1-part" data-component-shape="front-wing"></path>
-                    <path d="M252 126 C286 120, 318 118, 352 120 L352 160 C318 162, 286 160, 252 154 Z" class="f1-part" data-component-shape="nose"></path>
-                    <path d="M348 100 L392 100 L410 118 L410 162 L392 180 L348 180 Z" class="f1-part" data-component-shape="front-suspension"></path>
-                    <path d="M396 88 L514 88 C546 88, 574 98, 594 118 L594 162 C574 182, 546 192, 514 192 L396 192 Z" class="f1-part" data-component-shape="floor"></path>
-                    <path d="M424 54 C452 46, 500 46, 532 58 L548 92 L548 116 L408 116 L408 92 Z" class="f1-part" data-component-shape="power-unit"></path>
-                    <path d="M410 104 C474 86, 544 90, 582 118 L518 132 L410 124 Z" class="f1-part" data-component-shape="sidepods"></path>
-                    <path d="M410 176 L518 168 L582 162 C544 190, 474 194, 410 176 Z" class="f1-part" data-component-shape="sidepods"></path>
-                    <path d="M594 116 L646 116 L666 130 L666 150 L646 164 L594 164 Z" class="f1-part" data-component-shape="gearbox"></path>
-                    <path d="M666 122 L714 114 L734 122 L734 158 L714 166 L666 158 Z" class="f1-part" data-component-shape="diffuser"></path>
-                    <path d="M712 102 L746 98 L754 114 L754 166 L746 182 L712 178 Z" class="f1-part" data-component-shape="rear-wing"></path>
-                    <circle cx="360" cy="58" r="34" class="f1-part" data-component-shape="tyres"></circle>
-                    <circle cx="360" cy="222" r="34" class="f1-part" data-component-shape="tyres"></circle>
-                    <circle cx="606" cy="58" r="36" class="f1-part" data-component-shape="tyres"></circle>
-                    <circle cx="606" cy="222" r="36" class="f1-part" data-component-shape="tyres"></circle>
-                    <circle cx="360" cy="58" r="18" class="f1-part f1-part--accent" data-component-shape="brakes"></circle>
-                    <circle cx="360" cy="222" r="18" class="f1-part f1-part--accent" data-component-shape="brakes"></circle>
-                    <circle cx="606" cy="58" r="20" class="f1-part f1-part--accent" data-component-shape="brakes"></circle>
-                    <circle cx="606" cy="222" r="20" class="f1-part f1-part--accent" data-component-shape="brakes"></circle>
-                    <path d="M442 94 C450 80, 466 74, 482 74 C498 74, 512 82, 520 96 L512 138 L452 138 Z" class="f1-part" data-component-shape="halo"></path>
-                  </svg>
-                </div>
-                <div class="f1-overview-panel">
-                  <div class="f1-selector-grid" role="tablist" aria-label="Formula 1 car components">
-                    <button type="button" class="f1-selector is-active" data-component="front-wing">Front wing</button>
-                    <button type="button" class="f1-selector" data-component="floor">Floor</button>
-                    <button type="button" class="f1-selector" data-component="diffuser">Diffuser</button>
-                    <button type="button" class="f1-selector" data-component="power-unit">Power unit</button>
-                    <button type="button" class="f1-selector" data-component="tyres">Tyres</button>
-                    <button type="button" class="f1-selector" data-component="brakes">Brakes</button>
-                    <button type="button" class="f1-selector" data-component="rear-wing">Rear wing</button>
-                    <button type="button" class="f1-selector" data-component="sidepods">Sidepods</button>
-                    <button type="button" class="f1-selector" data-component="gearbox">Gearbox</button>
-                    <button type="button" class="f1-selector" data-component="halo">Halo</button>
-                  </div>
-                  <article class="f1-info-card">
-                    <p class="f1-info-card__kicker" id="f1-component-group">Aero control surface</p>
-                    <h3 id="f1-component-title">Front wing</h3>
-                    <p id="f1-component-summary">
-                      The front wing creates front load and conditions the airflow that feeds the floor and
-                      the rest of the car.
-                    </p>
-                    <ul class="plain-list" id="f1-component-points">
-                      <li>Sets early aerodynamic balance.</li>
-                      <li>Shapes flow quality for downstream devices.</li>
-                      <li>Can gain front bite while making the car draggier or more nervous in wake.</li>
-                    </ul>
-                  </article>
-                </div>
-              </div>
-            </div>
-            <p>
-              This is already enough to see the route's central theme. The car makes time by turning
-              airflow into load, turning load into grip, turning grip into braking and cornering authority,
-              and then surviving the thermal and mechanical cost of doing that repeatedly over a stint.
-            </p>
+            <div class="drawer_container ratio_65" id="f1_overview"></div>
+            <div id="f1_overview_seg0" class="segmented_container"></div>
+            <p class="f1_live_note" id="f1_overview_caption"></p>
 
             <h1 id="airflow">Airflow</h1>
             <p>
-              At F1 speeds, the air around the car is not just background. It is the working fluid that
-              determines whether the car gains support, pays drag, or starves the floor. The important
-              shift is to stop thinking of the bodywork as decoration and start thinking of it as a
-              device that shapes pressure and velocity fields.
+              At Formula 1 speeds the car is not moving through empty space. It is negotiating pressure and
+              velocity fields. The bodywork matters because it shapes where the air speeds up, where it separates,
+              and whether the floor gets the clean feed it needs.
             </p>
-            <div class="f1-stage" id="f1-airflow-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Airflow scene</p>
-                  <h2 class="f1-stage__title">Trade wing angle and ride height against drag and floor quality.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Move the car through faster air, then tighten or open the platform. The numbers are
-                  simplified, but the relationships are the real point: more front load can help the nose
-                  while hurting drag, and a floor that runs too close to the ground can gain load before it
-                  becomes fragile.
-                </p>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Speed <strong id="f1-speed-value">250 km/h</strong></span>
-                  <input id="f1-speed" type="range" min="180" max="340" step="5" value="250">
-                </label>
-                <label class="f1-control">
-                  <span>Front wing <strong id="f1-wing-value">6 clicks</strong></span>
-                  <input id="f1-wing" type="range" min="1" max="11" step="1" value="6">
-                </label>
-                <label class="f1-control">
-                  <span>Ride height <strong id="f1-ride-value">38 mm</strong></span>
-                  <input id="f1-ride" type="range" min="24" max="70" step="1" value="38">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 260" class="f1-airflow-svg" role="img" aria-label="Simplified airflow around a Formula 1 car">
-                    <defs>
-                      <linearGradient id="f1-flow-gradient" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#97e3ff"></stop>
-                        <stop offset="100%" stop-color="#226f8f"></stop>
-                      </linearGradient>
-                    </defs>
-                    <g class="f1-flow-lines">
-                      <path class="f1-flow-line" d="M20 48 C160 56, 220 38, 298 40 S470 50, 738 32"></path>
-                      <path class="f1-flow-line" d="M18 82 C148 88, 210 80, 302 74 S478 68, 736 58"></path>
-                      <path class="f1-flow-line" d="M18 114 C150 118, 214 110, 304 106 S478 118, 736 98"></path>
-                      <path class="f1-flow-line" d="M18 146 C150 150, 216 148, 306 148 S480 162, 736 138"></path>
-                      <path class="f1-flow-line" d="M18 180 C148 188, 212 188, 304 190 S476 202, 736 186"></path>
-                      <path class="f1-flow-line" d="M20 214 C160 220, 220 222, 298 224 S470 218, 738 228"></path>
-                    </g>
-                    <path id="f1-wake" class="f1-wake" d="M604 82 C672 84, 712 92, 738 130 C710 176, 666 190, 604 180 Z"></path>
-                    <g class="f1-car-body">
-                      <rect id="f1-body-floor" x="226" y="96" width="332" height="68" rx="24"></rect>
-                      <rect id="f1-body-front-wing" x="168" y="108" width="74" height="42" rx="10"></rect>
-                      <rect id="f1-body-rear-wing" x="562" y="88" width="56" height="84" rx="14"></rect>
-                      <rect id="f1-body-cockpit" x="354" y="70" width="94" height="120" rx="24"></rect>
-                    </g>
-                  </svg>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Front load share</span>
-                    <strong id="f1-front-load">39%</strong>
-                    <p>Early balance from the front wing and nose region.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Floor efficiency</span>
-                    <strong id="f1-floor-load">84%</strong>
-                    <p>How effectively the underbody is turning speed into support.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Drag penalty</span>
-                    <strong id="f1-drag-cost">31%</strong>
-                    <p>Relative straight-line cost of the current aero posture.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Stability window</span>
-                    <strong id="f1-stability">Calm</strong>
-                    <p id="f1-airflow-note">The platform is in a healthy range for predictable floor behavior.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-            <p>
-              Airflow matters twice over. First, it creates direct forces on wings and body surfaces.
-              Second, it determines how well the floor can keep working once the car begins pitching,
-              bouncing, and turning. That is why the front wing and the underbody deserve separate chapters.
-            </p>
+            <div class="drawer_container ratio_55" id="f1_airflow"></div>
+            <div id="f1_airflow_sl0" class="slider_blue"></div>
+            <div id="f1_airflow_sl1" class="slider_red"></div>
+            <div id="f1_airflow_sl2" class="slider_cyan"></div>
+            <p class="f1_live_note" id="f1_airflow_caption"></p>
 
             <h1 id="front-wing">Front Wing</h1>
             <p>
-              The front wing is where the aerodynamic story becomes directional. It does not just add load
-              to the nose. It decides how much the front axle trusts the air, how cleanly the floor is fed,
-              and how much of that control survives when the car follows another machine into a corner.
+              The front wing is the first serious negotiation with the air. It buys front bite, but it also sets
+              the quality of the flow that reaches the rest of the car. That makes it especially vulnerable when
+              another car's wake starts corrupting the air ahead of it.
             </p>
-            <div class="f1-stage" id="f1-front-wing-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Front axle and dirty-air scene</p>
-                  <h2 class="f1-stage__title">Add flap, then move closer to another car to see where front confidence disappears first.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  The front wing can buy turn-in authority, but it does that in the same airflow environment
-                  that becomes most disturbed when the car follows traffic. This scene focuses on that double
-                  role: local grip and downstream feed quality.
-                </p>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Flap angle <strong id="f1-front-flap-value">6 clicks</strong></span>
-                  <input id="f1-front-flap" type="range" min="1" max="11" step="1" value="6">
-                </label>
-                <label class="f1-control">
-                  <span>Following distance <strong id="f1-front-gap-value">1.4 s</strong></span>
-                  <input id="f1-front-gap" type="range" min="6" max="24" step="1" value="14">
-                </label>
-                <label class="f1-control">
-                  <span>Corner demand <strong id="f1-front-steer-value">62%</strong></span>
-                  <input id="f1-front-steer" type="range" min="20" max="100" step="1" value="62">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 260" class="f1-frontwing-svg" role="img" aria-label="Simplified front wing and dirty-air scene">
-                    <path id="f1-front-dirty-air" class="f1-dirty-air" d="M40 78 C120 44, 206 54, 246 90 C220 126, 120 138, 40 120 Z"></path>
-                    <g id="f1-front-leader" class="f1-front-leader" transform="translate(88 0)">
-                      <path class="f1-car-shell" d="M0 138 C18 118, 46 112, 76 116 L102 122 L102 140 L0 140 Z"></path>
-                      <path class="f1-cockpit-shell" d="M34 104 C44 96, 58 94, 68 98 L76 118 L28 118 Z"></path>
-                      <path class="f1-wing-surface" d="M-14 136 L18 130 L50 130 L50 144 L18 144 Z"></path>
-                      <circle cx="28" cy="146" r="8" class="f1-wheel-small"></circle>
-                      <circle cx="80" cy="146" r="9" class="f1-wheel-small"></circle>
-                    </g>
-                    <g class="f1-flow-lines f1-flow-lines--frontwing">
-                      <path class="f1-flow-line" d="M18 58 C180 62, 246 64, 332 76 S506 94, 734 78"></path>
-                      <path class="f1-flow-line" d="M18 96 C178 98, 242 102, 332 114 S512 128, 736 120"></path>
-                      <path class="f1-flow-line" d="M18 134 C182 138, 246 142, 336 150 S516 162, 736 154"></path>
-                      <path class="f1-flow-line" d="M18 172 C182 176, 248 182, 336 188 S514 202, 736 196"></path>
-                    </g>
-                    <g id="f1-front-car" class="f1-front-car">
-                      <path class="f1-car-shell" d="M296 144 C326 116, 382 108, 446 114 L494 122 L494 146 L296 146 Z"></path>
-                      <path class="f1-cockpit-shell" d="M388 98 C404 90, 428 90, 444 98 L458 126 L378 126 Z"></path>
-                      <circle cx="346" cy="152" r="12" class="f1-wheel-small"></circle>
-                      <circle cx="450" cy="152" r="14" class="f1-wheel-small"></circle>
-                      <path id="f1-front-flap-main" class="f1-wing-surface" d="M258 138 L304 138 L316 122 L258 122 Z"></path>
-                      <path id="f1-front-flap-upper" class="f1-wing-surface" d="M254 118 L298 118 L308 106 L254 106 Z"></path>
-                      <path id="f1-front-feed-ribbon" class="f1-flow-ribbon" d="M322 118 C390 100, 472 100, 560 122"></path>
-                    </g>
-                  </svg>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Front bite</span>
-                    <strong id="f1-front-bite">78%</strong>
-                    <p>How much confidence the front axle has on initial turn-in.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Floor feed quality</span>
-                    <strong id="f1-front-feed">82%</strong>
-                    <p>How useful the front-end airflow remains by the time it reaches the floor and sidepods.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Drag add</span>
-                    <strong id="f1-front-drag">24%</strong>
-                    <p>The straight-line cost of the current flap and demand level.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Dirty-air state</span>
-                    <strong id="f1-front-state">Usable</strong>
-                    <p id="f1-front-note">The wing still has enough clean structure in the flow to support a committed entry.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-            <p>
-              This is why following another car is so punishing at the front axle. The driver does not just
-              lose abstract downforce. They lose the quality of the local flow, which means the car reaches
-              the corner with less trustworthy turn-in and a weaker feed into the rest of the aerodynamic package.
-            </p>
+            <div class="drawer_container ratio_52" id="f1_front"></div>
+            <div id="f1_front_sl0" class="slider_orange"></div>
+            <div id="f1_front_sl1" class="slider_red"></div>
+            <div id="f1_front_sl2" class="slider_violet"></div>
+            <p class="f1_live_note" id="f1_front_caption"></p>
 
             <h1 id="floor-and-diffuser">Floor and Diffuser</h1>
             <p>
-              The current cars make a huge fraction of their performance under the floor. That means ride
-              height is not just a packaging or suspension detail. It decides how much the underbody can
-              accelerate the flow, how well the diffuser can recover it, and how close the car is to a
-              narrow operating window.
+              The floor is where the modern cars make much of their support. That makes ride height and pitch more
+              than setup trivia. The underbody has a narrow zone where it feels brilliant, and then a much less
+              forgiving zone where the car becomes nervous or inconsistent.
             </p>
-            <div class="f1-stage" id="f1-floor-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Ground-effect scene</p>
-                  <h2 class="f1-stage__title">Hold the car low enough to gain load, but not so low that the platform becomes fragile.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Reduce the throat height and add pitch. The underfloor likes speed and proximity to the
-                  track, but only up to a point. Once the window gets too tight, stall risk and oscillation
-                  pressure rise quickly.
-                </p>
-              </div>
-              <div class="f1-control-grid f1-control-grid--compact">
-                <label class="f1-control">
-                  <span>Static ride height <strong id="f1-floor-ride-value">36 mm</strong></span>
-                  <input id="f1-floor-ride" type="range" min="20" max="64" step="1" value="36">
-                </label>
-                <label class="f1-control">
-                  <span>Pitch under braking <strong id="f1-floor-pitch-value">1.2 deg</strong></span>
-                  <input id="f1-floor-pitch" type="range" min="-1" max="4" step="0.1" value="1.2">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 250" class="f1-floor-svg" role="img" aria-label="Side cutaway of Formula 1 floor and diffuser">
-                    <rect x="24" y="188" width="712" height="18" rx="8" class="f1-ground"></rect>
-                    <g id="f1-floor-platform" transform="translate(0 0)">
-                      <path id="f1-floor-body" d="M110 148 C180 112, 292 104, 442 106 L578 112 C640 116, 684 128, 710 144 L710 166 L110 166 Z"></path>
-                      <path id="f1-floor-channel" d="M150 166 L252 166 C302 166, 340 160, 410 156 C482 152, 538 146, 620 130 L670 120 L670 166 Z"></path>
-                    </g>
-                    <path id="f1-floor-pressure-band" d="M152 180 C238 184, 320 182, 412 176 C500 170, 580 156, 670 136" class="f1-pressure-band"></path>
-                  </svg>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Suction potential</span>
-                    <strong id="f1-floor-suction">82%</strong>
-                    <p>Relative underfloor load available from the current throat height.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Diffuser recovery</span>
-                    <strong id="f1-floor-recovery">Healthy</strong>
-                    <p>How cleanly the rear of the floor is recovering the accelerated flow.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Platform risk</span>
-                    <strong id="f1-floor-risk">Moderate</strong>
-                    <p id="f1-floor-note">The floor is loaded, but still has enough margin before it becomes nervous.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-            <p>
-              This is why suspension stiffness, kerb behavior, and ride control all bleed back into aero.
-              The floor is not a static device. It lives or dies by how consistently the car can present
-              the right geometry to the air and the track at the same time.
-            </p>
+            <div class="drawer_container ratio_48" id="f1_floor"></div>
+            <div id="f1_floor_sl0" class="slider_cyan"></div>
+            <div id="f1_floor_sl1" class="slider_red"></div>
+            <p class="f1_live_note" id="f1_floor_caption"></p>
 
             <h1 id="rear-wing-and-drs">Rear Wing and DRS</h1>
             <p>
-              The rear wing tells the clearest speed-versus-support story on the whole car. Close it and
-              the car carries more rear load into braking and high-speed corners. Open it with DRS and the
-              straights become easier, but the security of the rear axle drops with it.
+              The rear wing tells the clearest straight-line versus support story on the entire car. DRS does not
+              create free speed. It creates a temporary deal: less rear load and less drag in exchange for a faster
+              straight and a smaller confidence window at the next braking zone.
             </p>
-            <div class="f1-stage" id="f1-rear-wing-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Rear wing and DRS scene</p>
-                  <h2 class="f1-stage__title">Open the flap and watch straight-line gain arrive with a smaller rear comfort window.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  DRS is easy to misunderstand as free speed. It is really a temporary agreement to give away
-                  some rear support and drag in exchange for a cleaner straight. The value of that deal changes
-                  with wing level, track type, and how much rear confidence the driver still needs on the next entry.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Rear wing DRS state">
-                <button type="button" class="f1-pill is-active" data-drs-mode="closed">DRS closed</button>
-                <button type="button" class="f1-pill" data-drs-mode="open">DRS open</button>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Rear wing level <strong id="f1-rear-wing-value">7 clicks</strong></span>
-                  <input id="f1-rear-wing-level" type="range" min="1" max="11" step="1" value="7">
-                </label>
-                <label class="f1-control">
-                  <span>Straight speed <strong id="f1-rear-speed-value">300 km/h</strong></span>
-                  <input id="f1-rear-speed" type="range" min="180" max="360" step="5" value="300">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 260" class="f1-rearwing-svg" role="img" aria-label="Rear wing and DRS side profile">
-                    <g class="f1-flow-lines f1-flow-lines--rearwing">
-                      <path class="f1-flow-line" d="M40 92 C188 90, 318 92, 468 92 S620 102, 728 94"></path>
-                      <path class="f1-flow-line" d="M40 126 C188 124, 318 124, 468 124 S620 134, 728 126"></path>
-                      <path class="f1-flow-line" d="M40 160 C188 158, 318 158, 468 158 S620 166, 728 160"></path>
-                    </g>
-                    <path id="f1-rear-air-gap" class="f1-flow-ribbon" d="M560 88 C612 94, 660 102, 722 118"></path>
-                    <g class="f1-rear-car">
-                      <path class="f1-car-shell" d="M156 170 C214 122, 326 98, 458 102 L582 110 L624 124 L624 170 Z"></path>
-                      <path class="f1-cockpit-shell" d="M378 108 C404 92, 446 92, 470 104 L494 132 L360 132 Z"></path>
-                      <circle cx="246" cy="184" r="28" class="f1-wheel"></circle>
-                      <circle cx="534" cy="184" r="34" class="f1-wheel"></circle>
-                      <path id="f1-rear-main-plane" class="f1-wing-surface" d="M544 88 L634 88 L648 98 L548 98 Z"></path>
-                      <path id="f1-rear-flap" class="f1-wing-surface" d="M548 72 L630 72 L642 82 L552 82 Z"></path>
-                    </g>
-                  </svg>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Rear support</span>
-                    <strong id="f1-rear-support">79%</strong>
-                    <p>Rear axle confidence through fast corners and braking entries.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Drag load</span>
-                    <strong id="f1-rear-drag">34%</strong>
-                    <p>The straight-line price of the current rear-wing posture.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Top-speed delta</span>
-                    <strong id="f1-rear-top-speed">+5 km/h</strong>
-                    <p>Relative change compared with the same car in a neutral closed-flap state.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Rear state</span>
-                    <strong id="f1-rear-state">Anchored</strong>
-                    <p id="f1-rear-note">The wing is still carrying enough load that the rear axle feels planted on the next fast commitment.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-            <p>
-              When people say a circuit wants a low-downforce or high-downforce setup, this is usually the
-              tradeoff they are feeling first: how much rear stability the lap can afford to lose in order to
-              gain straight-line time elsewhere.
-            </p>
+            <div class="drawer_container ratio_48" id="f1_rear"></div>
+            <div id="f1_rear_seg0" class="segmented_container"></div>
+            <div id="f1_rear_sl0" class="slider_red"></div>
+            <div id="f1_rear_sl1" class="slider_blue"></div>
+            <p class="f1_live_note" id="f1_rear_caption"></p>
 
             <h1 id="chassis-and-suspension">Chassis and Suspension</h1>
             <p>
-              Suspension in Formula 1 is not only about keeping the tyres on the ground. It is also about
-              protecting the car's aerodynamic posture. A platform that dives too far, rides kerbs badly, or
-              oscillates under load can ruin the very floor behavior that the aero package depends on.
+              Suspension in Formula 1 is not just there to keep the tyres on the asphalt. It is also managing the
+              car's aerodynamic posture. Too soft and the floor moves out of its sweet spot. Too stiff and the tyres
+              and kerbs become expensive to ride.
             </p>
-            <div class="f1-stage" id="f1-chassis-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Platform control scene</p>
-                  <h2 class="f1-stage__title">Trade stiffness against kerb compliance, pitch control, and floor consistency.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  This is the missing bridge between aero and tyres. A very stiff car can hold the floor in a
-                  strong posture, but it may punish kerbs and tyre contact. A softer car can look kinder over
-                  bumps while letting the aero platform move more than the floor wants.
-                </p>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Suspension stiffness <strong id="f1-platform-stiffness-value">58%</strong></span>
-                  <input id="f1-platform-stiffness" type="range" min="20" max="90" step="1" value="58">
-                </label>
-                <label class="f1-control">
-                  <span>Brake load <strong id="f1-platform-brake-value">54%</strong></span>
-                  <input id="f1-platform-brake" type="range" min="0" max="100" step="1" value="54">
-                </label>
-                <label class="f1-control">
-                  <span>Kerb strike <strong id="f1-platform-kerb-value">34 mm</strong></span>
-                  <input id="f1-platform-kerb" type="range" min="0" max="80" step="1" value="34">
-                </label>
-                <label class="f1-control">
-                  <span>Speed <strong id="f1-platform-speed-value">230 km/h</strong></span>
-                  <input id="f1-platform-speed" type="range" min="120" max="320" step="5" value="230">
-                </label>
-              </div>
-              <div class="f1-platform-layout">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 280" class="f1-platform-svg" role="img" aria-label="Side view of a Formula 1 car showing pitch and suspension travel">
-                    <rect x="24" y="222" width="712" height="18" rx="8" class="f1-ground"></rect>
-                    <rect id="f1-platform-kerb-block" x="522" y="198" width="44" height="24" rx="6" class="f1-kerb"></rect>
-                    <g id="f1-platform-car" transform="translate(0 0)">
-                      <circle cx="218" cy="198" r="28" class="f1-wheel"></circle>
-                      <circle cx="550" cy="198" r="34" class="f1-wheel"></circle>
-                      <line id="f1-platform-front-damper" x1="218" y1="116" x2="218" y2="170" class="f1-damper"></line>
-                      <line id="f1-platform-rear-damper" x1="550" y1="106" x2="550" y2="164" class="f1-damper"></line>
-                      <path id="f1-platform-body" d="M118 162 C188 114, 298 96, 436 98 L566 104 C624 108, 672 124, 704 146 L704 178 L118 178 Z"></path>
-                    </g>
-                  </svg>
-                </div>
-                <div class="f1-platform-sidepanel">
-                  <div class="f1-travel-grid">
-                    <article class="f1-travel-card">
-                      <span class="f1-metric-card__label">Front compression</span>
-                      <div class="f1-meter"><span id="f1-platform-front-travel"></span></div>
-                    </article>
-                    <article class="f1-travel-card">
-                      <span class="f1-metric-card__label">Rear compression</span>
-                      <div class="f1-meter"><span id="f1-platform-rear-travel"></span></div>
-                    </article>
-                  </div>
-                  <div class="f1-metric-grid">
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Platform calmness</span>
-                      <strong id="f1-platform-calm">73%</strong>
-                      <p>How trustworthy the aero posture stays through the combined event.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Kerb compliance</span>
-                      <strong id="f1-platform-kerb-score">62%</strong>
-                      <p>How much of the kerb the chassis can absorb without immediate punishment.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Floor consistency</span>
-                      <strong id="f1-platform-floor-score">76%</strong>
-                      <p>Whether the underbody stays in a usable height and pitch band.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Tyre contact</span>
-                      <strong id="f1-platform-tyre-score">68%</strong>
-                      <p id="f1-platform-note">The chassis is holding shape well enough, but the kerb event is starting to tax the tyre's patience.</p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p>
-              This is one reason setup is circuit specific. The floor wants discipline. The tyres want a contact patch they can trust. The kerbs and braking zones decide how often the car is asked to disappoint one of them.
-            </p>
+            <div class="drawer_container ratio_52" id="f1_chassis"></div>
+            <div id="f1_chassis_sl0" class="slider_green"></div>
+            <div id="f1_chassis_sl1" class="slider_orange"></div>
+            <div id="f1_chassis_sl2" class="slider_red"></div>
+            <p class="f1_live_note" id="f1_chassis_caption"></p>
 
             <h1 id="power-unit">Power Unit</h1>
             <p>
-              Modern F1 cars do not rely on a simple engine. The package is a turbocharged 1.6-liter V6
-              hybrid power unit whose real job is to move and reuse energy intelligently. Combustion,
-              turbocharging, electrical recovery, deployment, and cooling all share packaging and thermal
-              constraints that change how much performance the driver can use lap after lap.
+              The modern Formula 1 power unit is not just an engine. It is a hybrid energy manager that chooses how
+              much combustion power to use, how much electrical push to spend, and how much heat or battery margin to
+              save for later sectors.
             </p>
-            <div class="f1-stage" id="f1-power-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Hybrid power scene</p>
-                  <h2 class="f1-stage__title">Switch between harvest, balanced, and attack power modes.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  These modes are simplified, but the pattern is accurate: the car never thinks only about
-                  peak power. It thinks about how much energy to spend now, how much to recover later, and
-                  how much heat the package can tolerate over the whole stint.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Power unit modes">
-                <button type="button" class="f1-pill is-active" data-power-mode="harvest">Harvest</button>
-                <button type="button" class="f1-pill" data-power-mode="balanced">Balanced</button>
-                <button type="button" class="f1-pill" data-power-mode="attack">Attack</button>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Deployment map bias">
-                <button type="button" class="f1-pill is-active" data-power-bias="early">Early deploy</button>
-                <button type="button" class="f1-pill" data-power-bias="distributed">Distributed</button>
-                <button type="button" class="f1-pill" data-power-bias="late">Late deploy</button>
-              </div>
-              <div class="f1-energy-layout">
-                <div class="f1-energy-diagram">
-                  <div class="f1-energy-node">ICE</div>
-                  <div class="f1-energy-arrow"></div>
-                  <div class="f1-energy-node">Turbo</div>
-                  <div class="f1-energy-arrow"></div>
-                  <div class="f1-energy-node">Battery</div>
-                  <div class="f1-energy-arrow"></div>
-                  <div class="f1-energy-node">Rear axle</div>
-                </div>
-                <div class="f1-energy-meters">
-                  <article class="f1-meter-card">
-                    <span>Combustion output</span>
-                    <div class="f1-meter"><span id="f1-meter-ice"></span></div>
-                  </article>
-                  <article class="f1-meter-card">
-                    <span>Electrical deploy</span>
-                    <div class="f1-meter"><span id="f1-meter-deploy"></span></div>
-                  </article>
-                  <article class="f1-meter-card">
-                    <span>Recovery rate</span>
-                    <div class="f1-meter"><span id="f1-meter-harvest"></span></div>
-                  </article>
-                  <article class="f1-meter-card">
-                    <span>Cooling headroom</span>
-                    <div class="f1-meter"><span id="f1-meter-cooling"></span></div>
-                  </article>
-                </div>
-              </div>
-              <div class="f1-power-sector-grid">
-                <article class="f1-travel-card">
-                  <span class="f1-metric-card__label" id="f1-power-sector-1-title">Sector 1 deploy</span>
-                  <div class="f1-meter"><span id="f1-power-sector-1-bar"></span></div>
-                </article>
-                <article class="f1-travel-card">
-                  <span class="f1-metric-card__label" id="f1-power-sector-2-title">Sector 2 deploy</span>
-                  <div class="f1-meter"><span id="f1-power-sector-2-bar"></span></div>
-                </article>
-                <article class="f1-travel-card">
-                  <span class="f1-metric-card__label" id="f1-power-sector-3-title">Sector 3 deploy</span>
-                  <div class="f1-meter"><span id="f1-power-sector-3-bar"></span></div>
-                </article>
-              </div>
-              <p class="f1-scene-note" id="f1-power-map-note">
-                Early deploy biases the strongest electrical push into the opening sector instead of saving it for later exits.
-              </p>
-              <p class="f1-scene-note" id="f1-power-note">
-                Harvest mode trims peak deployment so the car can refill electrical energy and protect thermal headroom.
-              </p>
-            </div>
-            <p>
-              The power unit therefore shapes lap time in a less obvious way than the wings. It changes
-              acceleration and top speed directly, but it also changes how hard the driver can attack exits,
-              how much electrical support is available later in the lap, and how much cooling drag the car
-              has to carry to stay reliable.
-            </p>
+            <div class="drawer_container ratio_46" id="f1_power"></div>
+            <div id="f1_power_seg0" class="segmented_container"></div>
+            <div id="f1_power_seg1" class="segmented_container"></div>
+            <p class="f1_live_note" id="f1_power_caption"></p>
 
             <h1 id="tyres">Tyres</h1>
             <p>
-              However sophisticated the aero and power package may be, every good idea still has to pass
-              through four contact patches. F1 tyres are not constant-grip devices. They have operating
-              windows, thermal limits, wear patterns, and surface conditions that can quickly turn a fast
-              setup into an unstable one.
+              Every good idea on the car has to pass through four contact patches. Tyres decide whether downforce,
+              braking load, and power delivery actually become lap time or simply become another form of heat and wear.
             </p>
-            <div class="f1-stage" id="f1-tyre-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Tyre window scene</p>
-                  <h2 class="f1-stage__title">Move the compound and temperature through the grip window.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Softer tyres can reach higher peak grip, but only if load, temperature, and stint length
-                  stay inside a narrower working range. This scene focuses on that tradeoff instead of trying
-                  to model every compound detail.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Tyre compounds">
-                <button type="button" class="f1-pill is-active" data-compound="soft">Soft</button>
-                <button type="button" class="f1-pill" data-compound="medium">Medium</button>
-                <button type="button" class="f1-pill" data-compound="hard">Hard</button>
-                <button type="button" class="f1-pill" data-compound="intermediate">Intermediate</button>
-                <button type="button" class="f1-pill" data-compound="wet">Wet</button>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Surface temperature <strong id="f1-tyre-temp-value">96 C</strong></span>
-                  <input id="f1-tyre-temp" type="range" min="40" max="135" step="1" value="96">
-                </label>
-                <label class="f1-control">
-                  <span>Vertical load <strong id="f1-tyre-load-value">72%</strong></span>
-                  <input id="f1-tyre-load" type="range" min="30" max="100" step="1" value="72">
-                </label>
-                <label class="f1-control">
-                  <span>Stint length <strong id="f1-tyre-stint-value">18 laps</strong></span>
-                  <input id="f1-tyre-stint" type="range" min="1" max="35" step="1" value="18">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-tyre-panel">
-                  <div class="f1-heat-band"><span id="f1-heat-fill"></span></div>
-                  <div class="f1-tyre-readout">
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Peak grip</span>
-                      <strong id="f1-tyre-grip">88%</strong>
-                      <p>Approximate available cornering support.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Wear pressure</span>
-                      <strong id="f1-tyre-wear">Moderate</strong>
-                      <p>How much the current stint and load are consuming the tyre.</p>
-                    </article>
-                  </div>
-                </div>
-                <div class="f1-info-card">
-                  <p class="f1-info-card__kicker" id="f1-tyre-state">In the window</p>
-                  <h3 id="f1-tyre-title">Soft compound</h3>
-                  <p id="f1-tyre-note">
-                    The tyre is warm enough to produce strong bite without yet crossing into surface overheating.
-                  </p>
-                  <ul class="plain-list" id="f1-tyre-points">
-                    <li>Best for short high-grip bursts.</li>
-                    <li>Thermal headroom is narrower than the harder compounds.</li>
-                    <li>Good qualifying-style option if the track can keep the front axle alive.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <p>
-              The crucial lesson is that the tyre does not care whether the load came from the floor, the
-              wing, braking transfer, or a steering input. It only sees the combined demand. That is why a
-              track chapter has to come before the lap builder: the circuit decides which kinds of demand
-              dominate the lap.
-            </p>
+            <div class="drawer_container ratio_52" id="f1_tyre"></div>
+            <div id="f1_tyre_seg0" class="segmented_container"></div>
+            <div id="f1_tyre_sl0" class="slider_orange"></div>
+            <div id="f1_tyre_sl1" class="slider_cyan"></div>
+            <div id="f1_tyre_sl2" class="slider_gray long_slider"></div>
+            <p class="f1_live_note" id="f1_tyre_caption"></p>
 
             <h1 id="braking">Braking</h1>
             <p>
-              Braking is where many subsystems arrive at once. The car sheds speed, loads the front axle,
-              harvests electrical energy, changes pitch, changes floor attitude, and asks the rear to stay
-              settled while the driver aims at rotation. A good brake bias setting is not a number to chase
-              in isolation. It is a compromise between stability, deceleration, entry rotation, and energy
-              recovery.
+              Braking is where the machine compresses several constraints into one instant. The car sheds speed,
+              moves load forward, changes floor attitude, recovers energy, and asks the rear to stay calm enough for
+              rotation on release.
             </p>
-            <div class="f1-stage" id="f1-braking-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Braking scene</p>
-                  <h2 class="f1-stage__title">Move brake bias and recovery to see entry stability change.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Bias the car forward and the front axle will do more work. Bias it rearward and the car
-                  can rotate more eagerly, but the rear becomes less calm. Recovery adds another layer
-                  because the car wants to capture energy while still remaining trustworthy on corner entry.
-                </p>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Entry speed <strong id="f1-brake-speed-value">290 km/h</strong></span>
-                  <input id="f1-brake-speed" type="range" min="140" max="340" step="5" value="290">
-                </label>
-                <label class="f1-control">
-                  <span>Brake bias <strong id="f1-brake-bias-value">56% front</strong></span>
-                  <input id="f1-brake-bias" type="range" min="51" max="61" step="0.5" value="56">
-                </label>
-                <label class="f1-control">
-                  <span>Energy recovery <strong id="f1-brake-harvest-value">48%</strong></span>
-                  <input id="f1-brake-harvest" type="range" min="0" max="80" step="1" value="48">
-                </label>
-              </div>
-              <div class="f1-brake-grid">
-                <div class="f1-brake-visual-panel">
-                  <svg viewBox="0 0 760 260" class="f1-brake-svg" role="img" aria-label="Side view of Formula 1 car under braking">
-                    <rect x="24" y="214" width="712" height="16" rx="8" class="f1-ground"></rect>
-                    <g id="f1-brake-car" transform="translate(0 0)">
-                      <circle cx="226" cy="188" r="28" class="f1-wheel"></circle>
-                      <circle cx="546" cy="188" r="34" class="f1-wheel"></circle>
-                      <path id="f1-brake-body" d="M120 160 C192 114, 304 96, 444 98 L568 104 C626 108, 676 124, 706 146 L706 176 L120 176 Z"></path>
-                    </g>
-                  </svg>
-                  <div class="f1-axle-load-grid">
-                    <article class="f1-travel-card">
-                      <span class="f1-metric-card__label">Front axle load</span>
-                      <div class="f1-meter"><span id="f1-brake-front-bar"></span></div>
-                    </article>
-                    <article class="f1-travel-card">
-                      <span class="f1-metric-card__label">Rear axle load</span>
-                      <div class="f1-meter"><span id="f1-brake-rear-bar"></span></div>
-                    </article>
-                  </div>
-                </div>
-                <div>
-                  <div class="f1-brake-balance-track">
-                    <span class="f1-brake-balance-track__label">Rear rotation</span>
-                    <div class="f1-brake-balance-track__rail"><span id="f1-brake-marker"></span></div>
-                    <div class="f1-brake-balance-track__ends">
-                      <span>calm front-led</span>
-                      <span>aggressive rear-led</span>
-                    </div>
-                  </div>
-                  <div class="f1-metric-grid f1-metric-grid--brake">
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Stopping authority</span>
-                      <strong id="f1-brake-authority">84%</strong>
-                      <p>Relative deceleration confidence for this entry phase.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Lockup risk</span>
-                      <strong id="f1-brake-lockup">Low</strong>
-                      <p>Combined risk from bias, speed, and recovery load.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Entry rotation</span>
-                      <strong id="f1-brake-rotation">Controlled</strong>
-                      <p id="f1-brake-note">The car is stable enough to commit, but still willing to change direction on release.</p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="drawer_container ratio_48" id="f1_brake"></div>
+            <div id="f1_brake_sl0" class="slider_red"></div>
+            <div id="f1_brake_sl1" class="slider_blue"></div>
+            <div id="f1_brake_sl2" class="slider_yellow"></div>
+            <p class="f1_live_note" id="f1_brake_caption"></p>
 
             <h1 id="track-layout">Track Layout</h1>
             <p>
-              The reason setup is so hard is that tracks ask the car to spend its time differently. One
-              circuit may reward low drag and hard braking stability. Another may reward high-speed support,
-              quick direction changes, and tyre thermal resilience. A setup that looks fast on paper can
-              still be wrong for the shape of the lap.
+              A setup only becomes meaningful once a track gives it something specific to solve. Monza, Monaco,
+              Silverstone, Spa, and Suzuka ask the car to spend its lap in very different ways, so the same setup
+              strength can turn into a different weakness from circuit to circuit.
             </p>
-            <div class="f1-stage" id="f1-track-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Track archetypes</p>
-                  <h2 class="f1-stage__title">Switch circuits to see what the car is being asked to prioritize.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  These track profiles are simplified, but each one exaggerates a real demand pattern:
-                  low drag, slow-speed traction, high-speed commitment, or a mix that forces compromise.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Track layouts">
-                <button type="button" class="f1-pill is-active" data-track="monza">Monza</button>
-                <button type="button" class="f1-pill" data-track="monaco">Monaco</button>
-                <button type="button" class="f1-pill" data-track="silverstone">Silverstone</button>
-                <button type="button" class="f1-pill" data-track="spa">Spa</button>
-                <button type="button" class="f1-pill" data-track="suzuka">Suzuka</button>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 520 280" class="f1-track-svg" role="img" aria-label="Simplified track map">
-                    <path id="f1-track-path" d="M68 140 C84 84, 152 60, 220 78 S346 142, 422 116 C454 106, 472 134, 450 160 C420 194, 336 204, 292 184 C236 158, 178 182, 150 216 C132 236, 90 228, 84 196 C80 176, 60 170, 68 140 Z"></path>
-                  </svg>
-                </div>
-                <div class="f1-track-panel">
-                  <article class="f1-info-card">
-                    <p class="f1-info-card__kicker" id="f1-track-kicker">Low-drag benchmark</p>
-                    <h3 id="f1-track-title">Monza</h3>
-                    <p id="f1-track-note">
-                      Long straights and heavy braking zones reward a car that can shed drag without becoming nervous in the stop-and-go sections.
-                    </p>
-                  </article>
-                  <div class="f1-metric-grid">
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Aero demand</span>
-                      <strong id="f1-track-aero">Medium</strong>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Tyre energy</span>
-                      <strong id="f1-track-tyre">Moderate</strong>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Braking load</span>
-                      <strong id="f1-track-brake">High</strong>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Overtaking</span>
-                      <strong id="f1-track-pass">Strong</strong>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p>
-              With the circuit now in view, setup stops being abstract. The same front wing, ride height,
-              tyre, and brake-bias choices will deliver different sector strengths depending on what the lap
-              asks the driver to do most often.
-            </p>
+            <div class="drawer_container ratio_46" id="f1_track"></div>
+            <div id="f1_track_seg0" class="segmented_container"></div>
+            <p class="f1_live_note" id="f1_track_caption"></p>
 
             <h1 id="racecraft">Racecraft</h1>
             <p>
-              Performance only matters if the car can use it near other cars. Dirty air strips confidence from
-              the front axle, DRS only helps in specific windows, and the best overtaking opportunities appear
-              when closing speed, braking stability, and track geometry all line up at once.
+              A fast car still has to use its speed near other cars. Dirty air removes front confidence, DRS only helps
+              in certain windows, and overtaking requires the straight-line gain and the braking stability to arrive at
+              the same place at the same time.
             </p>
-            <div class="f1-stage" id="f1-racecraft-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Racecraft scene</p>
-                  <h2 class="f1-stage__title">Close up in dirty air, then decide whether DRS and battery push are enough to create a real pass.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  Overtaking is not only a top-speed problem. The chasing car needs enough clean front-end confidence
-                  to stay close through the preceding corner, enough deployment to build a closing rate, and enough
-                  braking stability to finish the move without overreaching the entry.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Racecraft DRS state">
-                <button type="button" class="f1-pill is-active" data-racecraft-drs="off">No DRS</button>
-                <button type="button" class="f1-pill" data-racecraft-drs="on">DRS open</button>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Following gap <strong id="f1-race-gap-value">1.1 s</strong></span>
-                  <input id="f1-race-gap" type="range" min="4" max="20" step="1" value="11">
-                </label>
-                <label class="f1-control">
-                  <span>Battery push <strong id="f1-race-deploy-value">62%</strong></span>
-                  <input id="f1-race-deploy" type="range" min="0" max="100" step="1" value="62">
-                </label>
-                <label class="f1-control">
-                  <span>Braking confidence <strong id="f1-race-brake-value">74%</strong></span>
-                  <input id="f1-race-brake" type="range" min="20" max="100" step="1" value="74">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-visual-panel">
-                  <svg viewBox="0 0 760 260" class="f1-racecraft-svg" role="img" aria-label="Simplified DRS and overtaking scene">
-                    <rect x="40" y="154" width="680" height="24" rx="12" class="f1-ground"></rect>
-                    <rect id="f1-race-drs-zone" x="360" y="152" width="220" height="28" rx="14" class="f1-race-zone"></rect>
-                    <rect id="f1-race-detection" x="300" y="148" width="10" height="36" rx="4" class="f1-race-detection"></rect>
-                    <path id="f1-race-dirty-air" class="f1-dirty-air" d="M180 86 C250 48, 344 58, 390 102 C360 138, 258 146, 182 126 Z"></path>
-                    <g id="f1-race-leader" class="f1-race-car">
-                      <path class="f1-car-shell" d="M180 150 C210 124, 258 118, 312 124 L340 130 L340 150 L180 150 Z"></path>
-                      <path class="f1-cockpit-shell" d="M242 112 C254 104, 272 104, 284 110 L294 132 L232 132 Z"></path>
-                      <circle cx="226" cy="154" r="12" class="f1-wheel-small"></circle>
-                      <circle cx="306" cy="154" r="13" class="f1-wheel-small"></circle>
-                    </g>
-                    <g id="f1-race-chaser" class="f1-race-car f1-race-car--chaser">
-                      <path class="f1-car-shell" d="M462 150 C492 124, 540 118, 594 124 L622 130 L622 150 L462 150 Z"></path>
-                      <path class="f1-cockpit-shell" d="M524 112 C536 104, 554 104, 566 110 L576 132 L514 132 Z"></path>
-                      <circle cx="508" cy="154" r="12" class="f1-wheel-small"></circle>
-                      <circle cx="588" cy="154" r="13" class="f1-wheel-small"></circle>
-                    </g>
-                  </svg>
-                </div>
-                <div class="f1-track-panel">
-                  <article class="f1-info-card">
-                    <p class="f1-info-card__kicker" id="f1-race-track-kicker">Primary pass window</p>
-                    <h3 id="f1-race-track-title">Monza</h3>
-                    <p id="f1-race-track-note">
-                      The braking zones are long enough that a strong closing rate can turn into a decisive move rather than just a late defensive feint.
-                    </p>
-                  </article>
-                  <div class="f1-metric-grid">
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Dirty-air penalty</span>
-                      <strong id="f1-race-dirty">22%</strong>
-                      <p>How much front-end confidence is being consumed just by sitting in another wake.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Closing rate</span>
-                      <strong id="f1-race-close">18 km/h</strong>
-                      <p>Relative gain available before the braking zone arrives.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Braking window</span>
-                      <strong id="f1-race-window">Wide</strong>
-                      <p>How realistic it is to finish the move once the cars arrive side by side.</p>
-                    </article>
-                    <article class="f1-metric-card">
-                      <span class="f1-metric-card__label">Pass chance</span>
-                      <strong id="f1-race-pass">Promising</strong>
-                      <p id="f1-race-note">The chaser has enough straight-line gain and braking margin to make the overtake worth attempting.</p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="drawer_container ratio_48" id="f1_race"></div>
+            <div id="f1_race_seg0" class="segmented_container"></div>
+            <div id="f1_race_sl0" class="slider_violet"></div>
+            <div id="f1_race_sl1" class="slider_yellow"></div>
+            <div id="f1_race_sl2" class="slider_red"></div>
+            <p class="f1_live_note" id="f1_race_caption"></p>
 
             <h1 id="setup-tradeoffs">Setup Tradeoffs</h1>
             <p>
-              A setup sheet is not a search for perfection. It is a choice about which weaknesses are most
-              survivable on this circuit, in this temperature window, on this compound, over this stint.
-              The board below is still compact, but it now feeds a later lap builder so the tradeoffs stay
-              attached to actual sector outcomes instead of one synthetic number.
+              A setup sheet is a choice about what kinds of pain the car can afford. The preset controls below move
+              the car toward a representative circuit direction, then the detailed sliders show how that compromise is
+              being expressed in wing, ride height, stiffness, and brake balance.
             </p>
-            <div class="f1-stage" id="f1-setup-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Setup board</p>
-                  <h2 class="f1-stage__title">Tune the car against the currently selected track.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  This board compresses the garage logic into a readable form. It is not a full vehicle model.
-                  It exists to keep the core tradeoffs legible before the sector-by-sector lap builder translates
-                  them into a more concrete lap outcome.
-                </p>
-              </div>
-              <div class="f1-setup-header">
-                <span class="f1-setup-header__label">Current circuit</span>
-                <strong id="f1-setup-track">Monza</strong>
-              </div>
-              <div class="f1-preset-row" role="tablist" aria-label="Track setup presets">
-                <button type="button" class="f1-selector f1-selector--preset is-active" data-track-preset="monza">Monza preset</button>
-                <button type="button" class="f1-selector f1-selector--preset" data-track-preset="monaco">Monaco preset</button>
-                <button type="button" class="f1-selector f1-selector--preset" data-track-preset="silverstone">Silverstone preset</button>
-                <button type="button" class="f1-selector f1-selector--preset" data-track-preset="spa">Spa preset</button>
-                <button type="button" class="f1-selector f1-selector--preset" data-track-preset="suzuka">Suzuka preset</button>
-              </div>
-              <p class="f1-scene-note" id="f1-preset-note">
-                The Monza preset trims wing and keeps the car disciplined enough under braking that the long straights stay worth protecting.
-              </p>
-              <div class="f1-control-grid f1-control-grid--setup">
-                <label class="f1-control">
-                  <span>Front wing <strong id="f1-setup-wing-value">5 clicks</strong></span>
-                  <input id="f1-setup-wing" type="range" min="1" max="11" step="1" value="5">
-                </label>
-                <label class="f1-control">
-                  <span>Ride height <strong id="f1-setup-ride-value">39 mm</strong></span>
-                  <input id="f1-setup-ride" type="range" min="24" max="62" step="1" value="39">
-                </label>
-                <label class="f1-control">
-                  <span>Suspension stiffness <strong id="f1-setup-stiffness-value">58%</strong></span>
-                  <input id="f1-setup-stiffness" type="range" min="20" max="90" step="1" value="58">
-                </label>
-                <label class="f1-control">
-                  <span>Brake bias <strong id="f1-setup-bias-value">55.5% front</strong></span>
-                  <input id="f1-setup-bias" type="range" min="51" max="60.5" step="0.5" value="55.5">
-                </label>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Setup compounds">
-                <button type="button" class="f1-pill is-active" data-setup-compound="soft">Soft</button>
-                <button type="button" class="f1-pill" data-setup-compound="medium">Medium</button>
-                <button type="button" class="f1-pill" data-setup-compound="hard">Hard</button>
-              </div>
-              <div class="f1-setup-grid">
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">Straight-line speed</span>
-                  <strong id="f1-setup-straight">81%</strong>
-                </article>
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">Slow corners</span>
-                  <strong id="f1-setup-slow">74%</strong>
-                </article>
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">High-speed support</span>
-                  <strong id="f1-setup-fast">77%</strong>
-                </article>
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">Tyre life</span>
-                  <strong id="f1-setup-tyre-life">69%</strong>
-                </article>
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">Braking confidence</span>
-                  <strong id="f1-setup-braking">82%</strong>
-                </article>
-                <article class="f1-metric-card">
-                  <span class="f1-metric-card__label">Aero balance</span>
-                  <strong id="f1-setup-balance">57%</strong>
-                </article>
-              </div>
-              <p class="f1-scene-note" id="f1-setup-note">
-                This Monza-biased setup cuts drag well, but it is starting to give away some slow-corner patience and tyre margin.
-              </p>
-            </div>
+            <div class="drawer_container ratio_52" id="f1_setup"></div>
+            <div id="f1_setup_seg0" class="segmented_container"></div>
+            <div id="f1_setup_sl0" class="slider_red"></div>
+            <div id="f1_setup_sl1" class="slider_cyan"></div>
+            <div id="f1_setup_sl2" class="slider_green"></div>
+            <div id="f1_setup_sl3" class="slider_blue"></div>
+            <p class="f1_live_note" id="f1_setup_caption"></p>
 
             <h1 id="weather-and-strategy">Weather and Tyre Strategy</h1>
             <p>
-              Once the car is understood as a machine, the next question becomes how to use it over a race.
-              Weather does not just change grip. It changes tyre choice, pit timing, the value of an undercut,
-              and whether the driver should spend margin now or save it for the crossover moment that matters most.
+              Once the car is understood as a machine, the problem shifts from pure setup to race engineering. Weather
+              changes tyre logic, crossover timing, and how brave the pit wall can be with long stints or delayed stops.
             </p>
-            <div class="f1-stage" id="f1-weather-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Strategy layer</p>
-                  <h2 class="f1-stage__title">Move from a car setup problem to a race-engineering problem.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  The point of this scene is not to simulate every pit wall decision. It is to show how track,
-                  temperature, stint length, and moisture change the tyre call and the urgency of the next stop.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Weather modes">
-                <button type="button" class="f1-pill is-active" data-weather-mode="dry">Dry</button>
-                <button type="button" class="f1-pill" data-weather-mode="mixed">Mixed</button>
-                <button type="button" class="f1-pill" data-weather-mode="wet">Wet</button>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Track temperature <strong id="f1-weather-temp-value">31 C</strong></span>
-                  <input id="f1-weather-temp" type="range" min="12" max="48" step="1" value="31">
-                </label>
-                <label class="f1-control">
-                  <span>Laps to go <strong id="f1-weather-laps-value">18 laps</strong></span>
-                  <input id="f1-weather-laps" type="range" min="4" max="42" step="1" value="18">
-                </label>
-                <label class="f1-control">
-                  <span>Rain pressure <strong id="f1-weather-rain-value">18%</strong></span>
-                  <input id="f1-weather-rain" type="range" min="0" max="100" step="1" value="18">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-weather-visual-panel">
-                  <div class="f1-weather-band">
-                    <span id="f1-weather-band-fill"></span>
-                  </div>
-                  <div class="f1-weather-crossover">
-                    <div class="f1-weather-crossover__marker" id="f1-weather-crossover-marker"></div>
-                  </div>
-                  <p class="f1-scene-note" id="f1-weather-note">
-                    The track is still dry enough that the medium tyre is the calmer race answer unless a short, aggressive stint is needed.
-                  </p>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Recommended tyre</span>
-                    <strong id="f1-weather-tyre">Medium</strong>
-                    <p>Best current choice for balancing grip, pace, and survival.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Crossover urgency</span>
-                    <strong id="f1-weather-urgency">Low</strong>
-                    <p>How quickly the tyre choice becomes fragile if conditions change.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Pit pressure</span>
-                    <strong id="f1-weather-pit">Measured</strong>
-                    <p>How urgently strategy needs to commit to an undercut or stop window.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Strategic bias</span>
-                    <strong id="f1-weather-bias">Stay flexible</strong>
-                    <p id="f1-weather-strategy">Keep enough tyre and energy margin that one weather update or safety-car swing does not force a desperate call.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
+            <div class="drawer_container ratio_44" id="f1_weather"></div>
+            <div id="f1_weather_seg0" class="segmented_container"></div>
+            <div id="f1_weather_sl0" class="slider_orange"></div>
+            <div id="f1_weather_sl1" class="slider_gray"></div>
+            <div id="f1_weather_sl2" class="slider_blue"></div>
+            <p class="f1_live_note" id="f1_weather_caption"></p>
 
             <h1 id="pit-strategy">Pit Strategy</h1>
             <p>
-              Weather tells you what tyres are becoming sensible. Pit strategy tells you whether that choice is
-              worth making right now. A stop only pays if the fresh tyre, the traffic picture, and the safety-car
-              risk align well enough to beat the time you are giving away in the pit lane itself.
+              A stop only works if the tyre gain can beat the pit loss, the rejoin is not ruined by traffic, or a
+              safety car shrinks the cost of stopping. This is where the route moves fully from car behavior into race
+              timing.
             </p>
-            <div class="f1-stage" id="f1-pit-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Pit wall scene</p>
-                  <h2 class="f1-stage__title">Compare the raw stop loss with the undercut, overcut, and safety-car swing.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  This scene treats the pit wall as a timing problem. The stop only works if fresh tyres can pay back
-                  the pit lane cost quickly enough, or if a caution period compresses that cost into something much smaller.
-                </p>
-              </div>
-              <div class="f1-control-grid">
-                <label class="f1-control">
-                  <span>Current tyre age <strong id="f1-pit-age-value">14 laps</strong></span>
-                  <input id="f1-pit-age" type="range" min="4" max="28" step="1" value="14">
-                </label>
-                <label class="f1-control">
-                  <span>Traffic after stop <strong id="f1-pit-traffic-value">36%</strong></span>
-                  <input id="f1-pit-traffic" type="range" min="0" max="100" step="1" value="36">
-                </label>
-                <label class="f1-control">
-                  <span>Safety-car chance <strong id="f1-pit-sc-value">18%</strong></span>
-                  <input id="f1-pit-sc" type="range" min="0" max="100" step="1" value="18">
-                </label>
-              </div>
-              <div class="f1-dual-grid">
-                <div class="f1-pit-visual-panel">
-                  <div class="f1-pit-lane-band">
-                    <span class="f1-pit-lane-band__track"></span>
-                    <span class="f1-pit-lane-band__pit" id="f1-pit-loss-band"></span>
-                    <span class="f1-pit-lane-band__marker" id="f1-pit-window-marker"></span>
-                  </div>
-                  <div class="f1-pit-legend">
-                    <span class="f1-pit-legend__item">Main track pace</span>
-                    <span class="f1-pit-legend__item f1-pit-legend__item--pit">Pit-lane loss</span>
-                    <span class="f1-pit-legend__item f1-pit-legend__item--window">Strategic sweet spot</span>
-                  </div>
-                  <p class="f1-scene-note" id="f1-pit-note">
-                    The stop is not yet free enough for a speculative undercut, so the pit wall is still waiting for either a cleaner gap or a stronger reason to commit.
-                  </p>
-                </div>
-                <div class="f1-metric-grid">
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Raw pit loss</span>
-                    <strong id="f1-pit-loss">21.0 s</strong>
-                    <p>The baseline time cost of entering, servicing, and rejoining under current conditions.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Undercut gain</span>
-                    <strong id="f1-pit-undercut">1.6 s</strong>
-                    <p>How much fresh-tyre pace could pay back immediately if the rejoin stays clear enough.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Overcut gain</span>
-                    <strong id="f1-pit-overcut">0.8 s</strong>
-                    <p>How much value there is in staying out while rivals lose time in traffic or on a slower warm-up.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Safety-car swing</span>
-                    <strong id="f1-pit-safety">-5.2 s</strong>
-                    <p>How much a caution could shrink the effective stop cost compared with the green-flag baseline.</p>
-                  </article>
-                  <article class="f1-metric-card">
-                    <span class="f1-metric-card__label">Recommended call</span>
-                    <strong id="f1-pit-call">Hold for now</strong>
-                    <p id="f1-pit-call-note">The tyre is aging, but the current stop still gives away more time than the fresh rubber is likely to earn back immediately.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
+            <div class="drawer_container ratio_44" id="f1_pit"></div>
+            <div id="f1_pit_sl0" class="slider_gray"></div>
+            <div id="f1_pit_sl1" class="slider_violet"></div>
+            <div id="f1_pit_sl2" class="slider_yellow"></div>
+            <p class="f1_live_note" id="f1_pit_caption"></p>
 
             <h1 id="building-a-lap">Building a Lap</h1>
             <p>
-              A good setup still has to survive a whole lap. That means the same car may look clever in one
-              sector and compromised in the next. The lap builder below takes the currently selected track and
-              setup, then breaks the lap into sector stories so you can see where the gains and losses are actually living.
+              The final scene collapses everything back into the lap. Setup, tyre choice, deployment, track type,
+              weather, and plan shape all bend the same three traces. The point is not exact simulation. The point is
+              to see where the lap is being won and where the earlier compromises are finally showing up.
             </p>
-            <div class="f1-stage" id="f1-lap-builder-scene">
-              <div class="f1-stage__header">
-                <div>
-                  <p class="f1-stage__eyebrow">Sector lap builder</p>
-                  <h2 class="f1-stage__title">Carry the chosen setup through three sectors and see where the lap is really won.</h2>
-                </div>
-                <p class="f1-stage__summary">
-                  The attack plan is now separate from the garage setup. That lets the same car behave more
-                  like a qualifying push, a balanced race lap, or a tyre-protecting compromise depending on how
-                  the driver chooses to spend energy and confidence over the lap.
-                </p>
-              </div>
-              <div class="f1-pill-row" role="tablist" aria-label="Lap plans">
-                <button type="button" class="f1-pill is-active" data-lap-plan="push">Qualifying push</button>
-                <button type="button" class="f1-pill" data-lap-plan="balanced">Balanced race lap</button>
-                <button type="button" class="f1-pill" data-lap-plan="protect">Protect the tyres</button>
-              </div>
-              <div class="f1-lap-grid">
-                <article class="f1-lap-summary-card">
-                  <p class="f1-info-card__kicker">Current lap package</p>
-                  <h3 id="f1-lap-plan-title">Qualifying push</h3>
-                  <p id="f1-lap-plan-note">
-                    The lap is spending more tyre and thermal margin to maximize sector peak rather than stint stability.
-                  </p>
-                  <div class="f1-lap-summary-meta">
-                    <div>
-                      <span class="f1-metric-card__label">Track</span>
-                      <strong id="f1-lap-track">Monza</strong>
-                    </div>
-                    <div>
-                      <span class="f1-metric-card__label">Compound</span>
-                      <strong id="f1-lap-compound">Soft</strong>
-                    </div>
-                    <div>
-                      <span class="f1-metric-card__label">Power mode</span>
-                      <strong id="f1-lap-power-mode">Harvest</strong>
-                    </div>
-                    <div>
-                      <span class="f1-metric-card__label">Deploy map</span>
-                      <strong id="f1-lap-power-bias">Early</strong>
-                    </div>
-                    <div>
-                      <span class="f1-metric-card__label">Weather</span>
-                      <strong id="f1-lap-weather">Dry</strong>
-                    </div>
-                    <div>
-                      <span class="f1-metric-card__label">Strategy tyre</span>
-                      <strong id="f1-lap-strategy-tyre">Medium</strong>
-                    </div>
-                  </div>
-                  <div class="f1-lap-total-card">
-                    <span class="f1-metric-card__label">Total estimated delta</span>
-                    <strong id="f1-lap-total">+0.24 s</strong>
-                  </div>
-                </article>
-                <div class="f1-lap-stack">
-                  <article class="f1-lap-telemetry-card">
-                    <div class="f1-lap-telemetry-card__header">
-                      <div>
-                        <p class="f1-info-card__kicker">Telemetry view</p>
-                        <h3>See where the lap is spending speed, brake load, and electrical support.</h3>
-                      </div>
-                      <div class="f1-lap-legend">
-                        <span class="f1-lap-legend__item f1-lap-legend__item--speed">Speed</span>
-                        <span class="f1-lap-legend__item f1-lap-legend__item--brake">Brake</span>
-                        <span class="f1-lap-legend__item f1-lap-legend__item--deploy">Deploy</span>
-                      </div>
-                    </div>
-                    <svg viewBox="0 0 760 260" class="f1-lap-telemetry-svg" role="img" aria-label="Sector telemetry overlay">
-                      <rect x="28" y="28" width="228" height="204" class="f1-sector-band"></rect>
-                      <rect x="266" y="28" width="228" height="204" class="f1-sector-band"></rect>
-                      <rect x="504" y="28" width="228" height="204" class="f1-sector-band"></rect>
-                      <line x1="256" y1="28" x2="256" y2="232" class="f1-sector-divider"></line>
-                      <line x1="494" y1="28" x2="494" y2="232" class="f1-sector-divider"></line>
-                      <polyline id="f1-trace-speed" class="f1-trace f1-trace--speed" points="40,170 120,130 200,142 280,158 360,136 440,126 520,146 600,112 720,152"></polyline>
-                      <polyline id="f1-trace-brake" class="f1-trace f1-trace--brake" points="40,214 120,84 200,206 280,196 360,150 440,206 520,176 600,102 720,212"></polyline>
-                      <polyline id="f1-trace-deploy" class="f1-trace f1-trace--deploy" points="40,190 120,126 200,174 280,188 360,164 440,152 520,182 600,140 720,186"></polyline>
-                      <text id="f1-telemetry-sector-1" x="48" y="52" class="f1-telemetry-label">Sector 1</text>
-                      <text id="f1-telemetry-sector-2" x="286" y="52" class="f1-telemetry-label">Sector 2</text>
-                      <text id="f1-telemetry-sector-3" x="524" y="52" class="f1-telemetry-label">Sector 3</text>
-                    </svg>
-                  </article>
-                  <div class="f1-sector-grid">
-                    <article class="f1-sector-card">
-                      <span class="f1-metric-card__label">Sector 1</span>
-                      <h3 id="f1-sector-1-title">Retifilo and launch</h3>
-                      <p class="f1-sector-card__focus" id="f1-sector-1-focus">Braking and acceleration</p>
-                      <div class="f1-sector-card__bar"><span id="f1-sector-1-bar"></span></div>
-                      <strong id="f1-sector-1-delta">+0.09 s</strong>
-                      <p id="f1-sector-1-note">Heavy braking still dominates this sector, so stability matters more than a perfect slow-corner shape.</p>
-                    </article>
-                    <article class="f1-sector-card">
-                      <span class="f1-metric-card__label">Sector 2</span>
-                      <h3 id="f1-sector-2-title">Lesmo sequence</h3>
-                      <p class="f1-sector-card__focus" id="f1-sector-2-focus">Exit grip and medium speed flow</p>
-                      <div class="f1-sector-card__bar"><span id="f1-sector-2-bar"></span></div>
-                      <strong id="f1-sector-2-delta">+0.07 s</strong>
-                      <p id="f1-sector-2-note">This sector starts rewarding cleaner exits and enough rear support to stay committed across the longer arcs.</p>
-                    </article>
-                    <article class="f1-sector-card">
-                      <span class="f1-metric-card__label">Sector 3</span>
-                      <h3 id="f1-sector-3-title">Ascari to Parabolica</h3>
-                      <p class="f1-sector-card__focus" id="f1-sector-3-focus">High-speed balance into final exit</p>
-                      <div class="f1-sector-card__bar"><span id="f1-sector-3-bar"></span></div>
-                      <strong id="f1-sector-3-delta">+0.08 s</strong>
-                      <p id="f1-sector-3-note">Late-lap commitment here depends on the car still trusting its rear load and tyre state after the earlier sectors.</p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p>
-              This is the level at which the route should ultimately be read. Not as a set of separate facts
-              about wings, tyres, and engines, but as a machine that keeps making tradeoffs visible. Some of
-              those tradeoffs are chosen in the garage. Others appear the moment the driver hits a kerb,
-              enters dirty air, or asks the tyres for one percent more than the stint can support.
-            </p>
+            <div class="drawer_container ratio_58" id="f1_lap"></div>
+            <div id="f1_lap_seg0" class="segmented_container"></div>
+            <p class="f1_live_note" id="f1_lap_caption"></p>
 
             <h1 id="further-reading">Further Reading</h1>
             <p>
-              The route is intentionally original and simplified, but the following source types are useful
-              when you want to deepen the engineering layer without turning this article into a regulation dump:
+              For deeper reading beyond this route, the most useful sources are FIA technical regulations, Pirelli tyre
+              notes, track-sector analyses, and technical explainers on ground effect, hybrid deployment, braking, and
+              suspension layout.
             </p>
-            <ul>
-              <li>FIA Formula 1 technical regulations and season rule summaries</li>
-              <li>Pirelli documentation on compounds, operating windows, and wear behavior</li>
-              <li>Track maps and sector analysis from race engineering and timing references</li>
-              <li>Technical briefings on hybrid deployment, cooling, braking, and suspension layout</li>
-              <li>Aerodynamic explainers focused on ground effect, wake control, and diffuser behavior</li>
-            </ul>
 
             <h1 id="final-words">Final Words</h1>
             <p>
-              Formula 1 becomes much easier to understand once the car stops looking like a collection of
-              impressive parts and starts looking like a machine that is always negotiating with the track,
-              the tyres, the air, and the driver. The quickest cars are not the ones that win every local
-              tradeoff. They are the ones that lose the fewest important ones over a full lap and a full stint.
+              Formula 1 becomes much easier to understand once the car stops looking like a pile of impressive parts and
+              starts looking like a machine that is always negotiating with the air, the tyres, the track, and the race
+              clock. The best cars are not the ones that win every local tradeoff. They are the ones that lose the fewest
+              important ones over a full lap and a full stint.
             </p>
           </div>
         </div>
