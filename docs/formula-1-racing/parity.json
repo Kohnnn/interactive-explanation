@@ -21,7 +21,7 @@
   {
     "moduleId": "car-overview-hotspot-map",
     "originalBehavior": "The route plan calls for an opening scene that lets readers inspect the F1 car as one connected system before drilling into subsystems.",
-    "localStatus": "The local route ships an interactive car map with component buttons, highlighted regions, and explanatory panel copy for the major aerodynamic, mechanical, braking, and power-unit areas.",
+    "localStatus": "The local route ships an interactive car map with component buttons, highlighted regions, bespoke SVG silhouettes, and explanatory panel copy for the major aerodynamic, mechanical, braking, and power-unit areas.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
@@ -29,7 +29,8 @@
     ],
     "notes": [
       "This scene is the phase-1 anchor interaction for the route.",
-      "The map intentionally prioritizes teaching clarity over geometry accuracy."
+      "The map intentionally prioritizes teaching clarity over geometry accuracy.",
+      "Later phases replaced the earliest placeholder rectangles with more bespoke top-view and chase-scene silhouettes."
     ],
     "evidence": [
       "The route ships selectable hotspot buttons and synchronized component copy.",
@@ -39,7 +40,7 @@
   {
     "moduleId": "aero-floor-and-braking-scenes",
     "originalBehavior": "The route plan calls for original scenes that explain airflow, ground effect, and braking as connected constraints on lap time.",
-    "localStatus": "The local route ships simplified airflow, underfloor, and braking scenes with controllable inputs and live derived readouts for load share, drag, stability, suction, platform risk, braking authority, and rotation behavior.",
+    "localStatus": "The local route ships simplified airflow, front-wing dirty-air, underfloor, rear-wing and DRS, and braking scenes with controllable inputs and live derived readouts for load share, drag, wake quality, suction, platform risk, braking authority, and rotation behavior.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
@@ -47,17 +48,18 @@
     ],
     "notes": [
       "The scenes are intentionally explanatory, not telemetry-grade simulations.",
-      "Airflow and underfloor scenes are centered on tradeoffs rather than numeric fidelity."
+      "Airflow, front-wing, rear-wing, and underfloor scenes are centered on tradeoffs rather than numeric fidelity."
     ],
     "evidence": [
       "Range controls update the scene metrics and illustrations in real time.",
+      "The front-wing scene now shows the combined effect of flap angle, following distance, and demand on front bite and floor feed.",
       "The braking scene exposes the stability versus rotation compromise through brake-bias and harvest adjustments."
     ]
   },
   {
     "moduleId": "power-tyre-track-and-setup-synthesis",
     "originalBehavior": "The route plan calls for hybrid power, tyre window, track layout, and setup-compromise scenes that bring the article back to lap-time synthesis.",
-    "localStatus": "The local route ships phase-1 interactions for power mode switching, tyre window management, track archetype selection, and setup-board readouts tied to the active track profile.",
+    "localStatus": "The local route ships power mode switching, deployment-bias maps, tyre window management, track archetype selection, per-track setup presets, setup-board readouts, and a sector-by-sector lap builder tied to the active track profile.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
@@ -65,11 +67,52 @@
     ],
     "notes": [
       "Track selection dispatches a shared local event so the setup board can respond to the current circuit profile.",
-      "The setup board is a compact synthesis layer for the first shipped phase, not yet a full lap simulator."
+      "The power scene now dispatches deployment-map state so later synthesis scenes can react to it.",
+      "Track presets now apply a representative setup, lap plan, and power map for each named circuit in one click.",
+      "The setup board now feeds a dedicated lap-builder scene instead of stopping at one aggregate estimate.",
+      "The lap-builder uses attack-plan buttons to separate garage setup from lap execution style."
     ],
     "evidence": [
-      "Buttons switch power mode, tyre compounds, and track profiles with updated explanatory copy and metrics.",
-      "The setup scene recalculates straight-line speed, slow-corner ability, high-speed support, tyre life, braking confidence, and estimated lap fit."
+      "Buttons switch power mode, deployment bias, tyre compounds, and track profiles with updated explanatory copy and metrics.",
+      "The setup scene now includes one-click presets for Monza, Monaco, Silverstone, Spa, and Suzuka.",
+      "The setup scene recalculates straight-line speed, slow-corner ability, high-speed support, tyre life, braking confidence, and aero balance.",
+      "The lap-builder scene recalculates three sector deltas and a total lap delta from the active track, setup, compound, and lap plan."
+    ]
+  },
+  {
+    "moduleId": "racecraft-and-telemetry-overlays",
+    "originalBehavior": "The route plan called for a later phase that would connect setup and aerodynamic understanding back to following behavior, DRS windows, and telemetry-style lap traces.",
+    "localStatus": "The local route now ships a dedicated racecraft scene plus telemetry-style lap overlays that show speed, braking demand, and deployment bias across the three sectors of the active track.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "The racecraft scene intentionally uses a simplified drafting and braking model rather than a physics-accurate pass simulator.",
+      "The telemetry overlay is synthetic, but it stays tied to the current setup, power map, track selection, and lap plan so it behaves like a real summary layer rather than decorative chrome."
+    ],
+    "evidence": [
+      "The route now exposes DRS state, following gap, battery push, and braking confidence as racecraft controls.",
+      "The lap-builder now updates three telemetry traces and sector labels whenever track, setup, lap plan, or power deployment changes."
+    ]
+  },
+  {
+    "moduleId": "weather-and-strategy-layer",
+    "originalBehavior": "A later route phase was intended to connect the car-focused engineering story to race-engineering decisions like crossover timing, tyre recommendation, and pit urgency.",
+    "localStatus": "The local route now ships a weather and tyre-strategy chapter with dry, mixed, and wet modes plus temperature, laps-to-go, and rain-pressure inputs that feed recommended tyre, crossover urgency, pit pressure, and a weather penalty into the lap builder.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "The strategy layer is intentionally explanatory rather than a full race simulator.",
+      "Weather state now propagates into the lap builder so the route can show how a dry setup becomes fragile once the tyre or moisture context changes."
+    ],
+    "evidence": [
+      "Weather buttons and sliders now drive recommendation, urgency, pit, and strategic-bias outputs.",
+      "The lap builder summary now tracks weather and recommended strategy tyre alongside track, compound, and power state."
     ]
   }
 ]

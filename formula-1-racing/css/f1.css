@@ -78,7 +78,8 @@ body[data-story-route="formula-1-racing"] .f1-stage__header {
 body[data-story-route="formula-1-racing"] .f1-stage__eyebrow,
 body[data-story-route="formula-1-racing"] .f1-info-card__kicker,
 body[data-story-route="formula-1-racing"] .f1-metric-card__label,
-body[data-story-route="formula-1-racing"] .f1-setup-header__label {
+body[data-story-route="formula-1-racing"] .f1-setup-header__label,
+body[data-story-route="formula-1-racing"] .f1-sector-card__focus {
   display: block;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.74rem;
@@ -102,7 +103,9 @@ body[data-story-route="formula-1-racing"] .f1-stage__summary {
 body[data-story-route="formula-1-racing"] .f1-overview-grid,
 body[data-story-route="formula-1-racing"] .f1-dual-grid,
 body[data-story-route="formula-1-racing"] .f1-energy-layout,
-body[data-story-route="formula-1-racing"] .f1-brake-grid {
+body[data-story-route="formula-1-racing"] .f1-brake-grid,
+body[data-story-route="formula-1-racing"] .f1-platform-layout,
+body[data-story-route="formula-1-racing"] .f1-lap-grid {
   display: grid;
   gap: 1rem;
   margin-top: 1rem;
@@ -118,14 +121,21 @@ body[data-story-route="formula-1-racing"] .f1-brake-grid {
   grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
 }
 
-body[data-story-route="formula-1-racing"] .f1-energy-layout {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.95fr);
+body[data-story-route="formula-1-racing"] .f1-platform-layout {
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.95fr);
+  align-items: start;
+}
+
+body[data-story-route="formula-1-racing"] .f1-energy-layout,
+body[data-story-route="formula-1-racing"] .f1-lap-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
   align-items: start;
 }
 
 body[data-story-route="formula-1-racing"] .f1-car-figure,
 body[data-story-route="formula-1-racing"] .f1-visual-panel,
-body[data-story-route="formula-1-racing"] .f1-tyre-panel {
+body[data-story-route="formula-1-racing"] .f1-tyre-panel,
+body[data-story-route="formula-1-racing"] .f1-brake-visual-panel {
   padding: 0.9rem;
   border: 1px solid rgba(24, 29, 35, 0.09);
   border-radius: 1.2rem;
@@ -134,7 +144,11 @@ body[data-story-route="formula-1-racing"] .f1-tyre-panel {
 
 body[data-story-route="formula-1-racing"] .f1-overview-svg,
 body[data-story-route="formula-1-racing"] .f1-airflow-svg,
+body[data-story-route="formula-1-racing"] .f1-frontwing-svg,
 body[data-story-route="formula-1-racing"] .f1-floor-svg,
+body[data-story-route="formula-1-racing"] .f1-rearwing-svg,
+body[data-story-route="formula-1-racing"] .f1-platform-svg,
+body[data-story-route="formula-1-racing"] .f1-brake-svg,
 body[data-story-route="formula-1-racing"] .f1-track-svg {
   display: block;
   width: 100%;
@@ -158,7 +172,8 @@ body[data-story-route="formula-1-racing"] .f1-part.is-active {
 }
 
 body[data-story-route="formula-1-racing"] .f1-overview-panel,
-body[data-story-route="formula-1-racing"] .f1-track-panel {
+body[data-story-route="formula-1-racing"] .f1-track-panel,
+body[data-story-route="formula-1-racing"] .f1-platform-sidepanel {
   display: grid;
   gap: 0.9rem;
 }
@@ -197,21 +212,27 @@ body[data-story-route="formula-1-racing"] .f1-pill.is-active {
   color: #fff9f4;
 }
 
-body[data-story-route="formula-1-racing"] .f1-info-card {
+body[data-story-route="formula-1-racing"] .f1-info-card,
+body[data-story-route="formula-1-racing"] .f1-lap-summary-card,
+body[data-story-route="formula-1-racing"] .f1-sector-card {
   padding: 1rem 1rem 0.95rem;
   border: 1px solid rgba(24, 29, 35, 0.11);
   border-radius: 1.2rem;
   background: rgba(255, 255, 255, 0.76);
 }
 
-body[data-story-route="formula-1-racing"] .f1-info-card h3 {
+body[data-story-route="formula-1-racing"] .f1-info-card h3,
+body[data-story-route="formula-1-racing"] .f1-lap-summary-card h3,
+body[data-story-route="formula-1-racing"] .f1-sector-card h3 {
   margin: 0.2rem 0 0.4rem;
   font-size: 1.35rem;
 }
 
 body[data-story-route="formula-1-racing"] .f1-info-card p,
 body[data-story-route="formula-1-racing"] .f1-meter-card span,
-body[data-story-route="formula-1-racing"] .f1-scene-note {
+body[data-story-route="formula-1-racing"] .f1-scene-note,
+body[data-story-route="formula-1-racing"] .f1-sector-card p,
+body[data-story-route="formula-1-racing"] .f1-lap-summary-card p {
   color: var(--story-ink-soft);
 }
 
@@ -250,35 +271,42 @@ body[data-story-route="formula-1-racing"] input[type="range"] {
 
 body[data-story-route="formula-1-racing"] .f1-metric-grid,
 body[data-story-route="formula-1-racing"] .f1-setup-grid,
-body[data-story-route="formula-1-racing"] .f1-tyre-readout {
+body[data-story-route="formula-1-racing"] .f1-tyre-readout,
+body[data-story-route="formula-1-racing"] .f1-travel-grid,
+body[data-story-route="formula-1-racing"] .f1-axle-load-grid,
+body[data-story-route="formula-1-racing"] .f1-sector-grid {
   display: grid;
   gap: 0.8rem;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
-body[data-story-route="formula-1-racing"] .f1-metric-card {
+body[data-story-route="formula-1-racing"] .f1-metric-grid--brake {
+  margin-top: 0.85rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-metric-card,
+body[data-story-route="formula-1-racing"] .f1-meter-card,
+body[data-story-route="formula-1-racing"] .f1-travel-card {
   padding: 0.95rem;
   border: 1px solid rgba(24, 29, 35, 0.1);
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.72);
 }
 
-body[data-story-route="formula-1-racing"] .f1-metric-card strong {
+body[data-story-route="formula-1-racing"] .f1-metric-card strong,
+body[data-story-route="formula-1-racing"] .f1-lap-total-card strong,
+body[data-story-route="formula-1-racing"] .f1-sector-card strong {
   display: block;
   margin-top: 0.4rem;
   font-size: 1.45rem;
   line-height: 1.05;
 }
 
-body[data-story-route="formula-1-racing"] .f1-metric-card p {
+body[data-story-route="formula-1-racing"] .f1-metric-card p,
+body[data-story-route="formula-1-racing"] .f1-sector-card p {
   margin: 0.45rem 0 0;
   color: var(--story-ink-soft);
   font-size: 0.92rem;
-}
-
-body[data-story-route="formula-1-racing"] .f1-metric-card--accent {
-  background: linear-gradient(180deg, rgba(255, 245, 238, 0.92), rgba(246, 233, 224, 0.88));
-  border-color: rgba(180, 58, 51, 0.18);
 }
 
 body[data-story-route="formula-1-racing"] .f1-flow-line {
@@ -288,6 +316,11 @@ body[data-story-route="formula-1-racing"] .f1-flow-line {
   stroke-dasharray: 16 14;
   animation: f1-flow 14s linear infinite;
   opacity: 0.8;
+}
+
+body[data-story-route="formula-1-racing"] .f1-flow-lines--frontwing .f1-flow-line,
+body[data-story-route="formula-1-racing"] .f1-flow-lines--rearwing .f1-flow-line {
+  stroke-width: 3.5;
 }
 
 body[data-story-route="formula-1-racing"] .f1-flow-line:nth-child(2) {
@@ -310,32 +343,89 @@ body[data-story-route="formula-1-racing"] .f1-flow-line:nth-child(6) {
   animation-duration: 15s;
 }
 
-body[data-story-route="formula-1-racing"] .f1-wake {
+body[data-story-route="formula-1-racing"] .f1-wake,
+body[data-story-route="formula-1-racing"] .f1-dirty-air {
   fill: rgba(53, 115, 149, 0.18);
   stroke: rgba(53, 115, 149, 0.25);
   stroke-width: 2;
 }
 
+body[data-story-route="formula-1-racing"] .f1-dirty-air {
+  animation: f1-dirty-air-shift 6s ease-in-out infinite alternate;
+}
+
+body[data-story-route="formula-1-racing"] .f1-front-leader .f1-car-shell,
 body[data-story-route="formula-1-racing"] .f1-car-body rect,
 body[data-story-route="formula-1-racing"] .f1-floor-svg #f1-floor-body,
 body[data-story-route="formula-1-racing"] .f1-floor-svg #f1-floor-channel,
-body[data-story-route="formula-1-racing"] .f1-track-svg #f1-track-path {
+body[data-story-route="formula-1-racing"] .f1-track-svg #f1-track-path,
+body[data-story-route="formula-1-racing"] .f1-rear-car .f1-car-shell,
+body[data-story-route="formula-1-racing"] .f1-platform-svg #f1-platform-body,
+body[data-story-route="formula-1-racing"] .f1-brake-svg #f1-brake-body {
   fill: rgba(32, 41, 51, 0.18);
   stroke: rgba(32, 41, 51, 0.28);
   stroke-width: 2;
 }
 
-body[data-story-route="formula-1-racing"] #f1-body-front-wing,
-body[data-story-route="formula-1-racing"] #f1-body-rear-wing {
-  fill: rgba(180, 58, 51, 0.28);
+body[data-story-route="formula-1-racing"] .f1-front-car .f1-car-shell,
+body[data-story-route="formula-1-racing"] .f1-race-car .f1-car-shell {
+  fill: rgba(32, 41, 51, 0.18);
+  stroke: rgba(32, 41, 51, 0.28);
+  stroke-width: 2;
 }
 
-body[data-story-route="formula-1-racing"] #f1-body-floor {
-  fill: rgba(41, 108, 127, 0.2);
+body[data-story-route="formula-1-racing"] .f1-cockpit-shell {
+  fill: rgba(32, 41, 51, 0.12);
+  stroke: rgba(32, 41, 51, 0.22);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] .f1-wheel-small {
+  fill: rgba(28, 31, 35, 0.22);
+  stroke: rgba(28, 31, 35, 0.42);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] #f1-body-front-wing,
+body[data-story-route="formula-1-racing"] #f1-body-rear-wing,
+body[data-story-route="formula-1-racing"] .f1-wing-surface {
+  fill: rgba(180, 58, 51, 0.28);
+  stroke: rgba(180, 58, 51, 0.45);
+}
+
+body[data-story-route="formula-1-racing"] #f1-body-floor,
+body[data-story-route="formula-1-racing"] .f1-flow-ribbon {
+  fill: rgba(41, 108, 127, 0.18);
+  stroke: rgba(41, 108, 127, 0.42);
+  stroke-linecap: round;
+}
+
+body[data-story-route="formula-1-racing"] .f1-flow-ribbon {
+  fill: none;
+  stroke-width: 10;
+  opacity: 0.85;
 }
 
 body[data-story-route="formula-1-racing"] .f1-ground {
   fill: rgba(45, 51, 58, 0.22);
+}
+
+body[data-story-route="formula-1-racing"] .f1-kerb {
+  fill: rgba(180, 58, 51, 0.24);
+  stroke: rgba(180, 58, 51, 0.4);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] .f1-wheel {
+  fill: rgba(28, 31, 35, 0.18);
+  stroke: rgba(28, 31, 35, 0.4);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] .f1-damper {
+  stroke: rgba(180, 58, 51, 0.72);
+  stroke-width: 6;
+  stroke-linecap: round;
 }
 
 body[data-story-route="formula-1-racing"] .f1-pressure-band {
@@ -393,13 +483,6 @@ body[data-story-route="formula-1-racing"] .f1-energy-meters {
   gap: 0.8rem;
 }
 
-body[data-story-route="formula-1-racing"] .f1-meter-card {
-  padding: 0.9rem;
-  border: 1px solid rgba(24, 29, 35, 0.1);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.72);
-}
-
 body[data-story-route="formula-1-racing"] .f1-meter {
   height: 0.8rem;
   margin-top: 0.55rem;
@@ -409,7 +492,8 @@ body[data-story-route="formula-1-racing"] .f1-meter {
 }
 
 body[data-story-route="formula-1-racing"] .f1-meter span,
-body[data-story-route="formula-1-racing"] .f1-heat-band span {
+body[data-story-route="formula-1-racing"] .f1-heat-band span,
+body[data-story-route="formula-1-racing"] .f1-sector-card__bar span {
   display: block;
   height: 100%;
   width: 40%;
@@ -479,6 +563,224 @@ body[data-story-route="formula-1-racing"] .f1-setup-header strong {
   font-size: 1.35rem;
 }
 
+body[data-story-route="formula-1-racing"] .f1-lap-summary-meta {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  margin-top: 1rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-total-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(180, 58, 51, 0.16);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 247, 241, 0.94), rgba(248, 237, 229, 0.9));
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-total-card strong {
+  font-size: 1.7rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-sector-card__bar {
+  height: 0.9rem;
+  margin-top: 0.8rem;
+  border-radius: 999px;
+  background: rgba(24, 29, 35, 0.08);
+  overflow: hidden;
+}
+
+body[data-story-route="formula-1-racing"] .f1-sector-card strong {
+  margin-top: 0.8rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-platform-sidepanel,
+body[data-story-route="formula-1-racing"] .f1-track-panel {
+  min-width: 0;
+}
+
+body[data-story-route="formula-1-racing"] .f1-power-sector-grid,
+body[data-story-route="formula-1-racing"] .f1-lap-stack {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-selector--preset {
+  background: rgba(255, 255, 255, 0.76);
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-visual-panel {
+  padding: 1rem;
+  border: 1px solid rgba(24, 29, 35, 0.1);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-band,
+body[data-story-route="formula-1-racing"] .f1-weather-crossover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-band {
+  height: 1rem;
+  background: linear-gradient(90deg, rgba(225, 170, 88, 0.18), rgba(79, 129, 175, 0.16), rgba(54, 90, 133, 0.24));
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-band span {
+  display: block;
+  height: 100%;
+  width: 32%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(201, 91, 49, 0.92), rgba(61, 127, 167, 0.92));
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-crossover {
+  height: 0.8rem;
+  margin-top: 1rem;
+  background: rgba(24, 29, 35, 0.08);
+}
+
+body[data-story-route="formula-1-racing"] .f1-weather-crossover__marker {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  background: #2a819c;
+  transform: translate(-50%, -50%);
+}
+
+body[data-story-route="formula-1-racing"] .f1-race-zone {
+  fill: rgba(180, 58, 51, 0.16);
+  stroke: rgba(180, 58, 51, 0.42);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] .f1-race-detection {
+  fill: rgba(41, 108, 127, 0.32);
+}
+
+body[data-story-route="formula-1-racing"] .f1-race-car .f1-car-shell {
+  fill: rgba(32, 41, 51, 0.18);
+  stroke: rgba(32, 41, 51, 0.3);
+  stroke-width: 2;
+}
+
+body[data-story-route="formula-1-racing"] .f1-race-car--chaser .f1-car-shell {
+  fill: rgba(180, 58, 51, 0.2);
+  stroke: rgba(180, 58, 51, 0.38);
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-telemetry-card {
+  padding: 1rem;
+  border: 1px solid rgba(24, 29, 35, 0.1);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-telemetry-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-telemetry-card__header h3 {
+  margin: 0.22rem 0 0;
+  font-size: 1.2rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(24, 29, 35, 0.06);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend__item::before {
+  content: "";
+  width: 0.72rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend__item--speed {
+  color: #2a819c;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend__item--brake {
+  color: #b43a33;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-legend__item--deploy {
+  color: #8a6f16;
+}
+
+body[data-story-route="formula-1-racing"] .f1-lap-telemetry-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 0.9rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-sector-band {
+  fill: rgba(24, 29, 35, 0.04);
+}
+
+body[data-story-route="formula-1-racing"] .f1-sector-divider {
+  stroke: rgba(24, 29, 35, 0.12);
+  stroke-width: 2;
+  stroke-dasharray: 4 6;
+}
+
+body[data-story-route="formula-1-racing"] .f1-trace {
+  fill: none;
+  stroke-width: 6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+body[data-story-route="formula-1-racing"] .f1-trace--speed {
+  stroke: rgba(42, 129, 156, 0.88);
+}
+
+body[data-story-route="formula-1-racing"] .f1-trace--brake {
+  stroke: rgba(180, 58, 51, 0.88);
+}
+
+body[data-story-route="formula-1-racing"] .f1-trace--deploy {
+  stroke: rgba(138, 111, 22, 0.92);
+}
+
+body[data-story-route="formula-1-racing"] .f1-telemetry-label {
+  fill: rgba(24, 29, 35, 0.66);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+}
+
 body[data-story-route="formula-1-racing"] .f1-scene-note {
   margin: 1rem 0 0;
 }
@@ -492,12 +794,23 @@ body[data-story-route="formula-1-racing"] .f1-scene-note {
   }
 }
 
+@keyframes f1-dirty-air-shift {
+  from {
+    transform: translateY(-2px) scaleX(0.98);
+  }
+  to {
+    transform: translateY(4px) scaleX(1.04);
+  }
+}
+
 @media (max-width: 980px) {
   body[data-story-route="formula-1-racing"] .f1-stage__header,
   body[data-story-route="formula-1-racing"] .f1-overview-grid,
   body[data-story-route="formula-1-racing"] .f1-dual-grid,
   body[data-story-route="formula-1-racing"] .f1-energy-layout,
-  body[data-story-route="formula-1-racing"] .f1-brake-grid {
+  body[data-story-route="formula-1-racing"] .f1-brake-grid,
+  body[data-story-route="formula-1-racing"] .f1-platform-layout,
+  body[data-story-route="formula-1-racing"] .f1-lap-grid {
     grid-template-columns: 1fr;
   }
 
@@ -525,6 +838,10 @@ body[data-story-route="formula-1-racing"] .f1-scene-note {
 @media (max-width: 720px) {
   body[data-story-route="formula-1-racing"] .f1-stage {
     padding: 1rem;
+  }
+
+  body[data-story-route="formula-1-racing"] .f1-lap-telemetry-card__header {
+    flex-direction: column;
   }
 
   body[data-story-route="formula-1-racing"] .f1-selector,

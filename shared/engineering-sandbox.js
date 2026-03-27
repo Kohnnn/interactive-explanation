@@ -77,6 +77,24 @@
       "leaving-platos-cave": "Plato's cave",
       "further-watching-and-reading": "References",
     },
+    "formula-1-racing": {
+      overview: "Overview",
+      airflow: "Airflow",
+      "front-wing": "Front wing",
+      "floor-and-diffuser": "Floor",
+      "rear-wing-and-drs": "Rear wing",
+      "chassis-and-suspension": "Chassis",
+      "power-unit": "Power",
+      tyres: "Tyres",
+      braking: "Braking",
+      "track-layout": "Track",
+      racecraft: "Racecraft",
+      "setup-tradeoffs": "Setup",
+      "weather-and-strategy": "Strategy",
+      "building-a-lap": "Lap",
+      "further-reading": "References",
+      "final-words": "Final words",
+    },
   };
 
   const routeCompanionConfigs = {
