@@ -70,13 +70,15 @@
       "The power scene now dispatches deployment-map state so later synthesis scenes can react to it.",
       "Track presets now apply a representative setup, lap plan, and power map for each named circuit in one click.",
       "The setup board now feeds a dedicated lap-builder scene instead of stopping at one aggregate estimate.",
-      "The lap-builder uses attack-plan buttons to separate garage setup from lap execution style."
+      "The lap-builder uses attack-plan buttons to separate garage setup from lap execution style.",
+      "Track objects now carry their own trace presets so telemetry overlays feel circuit-specific instead of generic."
     ],
     "evidence": [
       "Buttons switch power mode, deployment bias, tyre compounds, and track profiles with updated explanatory copy and metrics.",
       "The setup scene now includes one-click presets for Monza, Monaco, Silverstone, Spa, and Suzuka.",
       "The setup scene recalculates straight-line speed, slow-corner ability, high-speed support, tyre life, braking confidence, and aero balance.",
-      "The lap-builder scene recalculates three sector deltas and a total lap delta from the active track, setup, compound, and lap plan."
+      "The lap-builder scene recalculates three sector deltas and a total lap delta from the active track, setup, compound, and lap plan.",
+      "The telemetry traces now use track-specific base profiles before applying setup, weather, and deployment adjustments."
     ]
   },
   {
@@ -113,6 +115,24 @@
     "evidence": [
       "Weather buttons and sliders now drive recommendation, urgency, pit, and strategic-bias outputs.",
       "The lap builder summary now tracks weather and recommended strategy tyre alongside track, compound, and power state."
+    ]
+  },
+  {
+    "moduleId": "pit-wall-and-race-window-logic",
+    "originalBehavior": "A later route phase was intended to explain pit-lane loss, safety-car timing, and the difference between an undercut and an overcut as a real race-engineering tradeoff.",
+    "localStatus": "The local route now ships a dedicated pit-strategy chapter with tyre-age, traffic, and safety-car controls that estimate raw pit loss, undercut and overcut value, safety-car swing, and a current pit-wall recommendation.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "The pit wall scene is intentionally compact and explanatory rather than a full Monte Carlo strategy simulator.",
+      "The scene listens to track, compound, and weather state so the stop recommendation reacts to the same route-wide context as the lap builder."
+    ],
+    "evidence": [
+      "The route now exposes tyre age, traffic after the stop, and safety-car chance as explicit strategy controls.",
+      "The pit scene produces a raw stop loss, undercut gain, overcut gain, safety-car swing, and a recommended current call."
     ]
   }
 ]

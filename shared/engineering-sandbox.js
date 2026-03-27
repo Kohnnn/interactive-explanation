@@ -91,6 +91,7 @@
       racecraft: "Racecraft",
       "setup-tradeoffs": "Setup",
       "weather-and-strategy": "Strategy",
+      "pit-strategy": "Pit wall",
       "building-a-lap": "Lap",
       "further-reading": "References",
       "final-words": "Final words",

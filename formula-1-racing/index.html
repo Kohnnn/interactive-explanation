@@ -1138,6 +1138,83 @@
               </div>
             </div>
 
+            <h1 id="pit-strategy">Pit Strategy</h1>
+            <p>
+              Weather tells you what tyres are becoming sensible. Pit strategy tells you whether that choice is
+              worth making right now. A stop only pays if the fresh tyre, the traffic picture, and the safety-car
+              risk align well enough to beat the time you are giving away in the pit lane itself.
+            </p>
+            <div class="f1-stage" id="f1-pit-scene">
+              <div class="f1-stage__header">
+                <div>
+                  <p class="f1-stage__eyebrow">Pit wall scene</p>
+                  <h2 class="f1-stage__title">Compare the raw stop loss with the undercut, overcut, and safety-car swing.</h2>
+                </div>
+                <p class="f1-stage__summary">
+                  This scene treats the pit wall as a timing problem. The stop only works if fresh tyres can pay back
+                  the pit lane cost quickly enough, or if a caution period compresses that cost into something much smaller.
+                </p>
+              </div>
+              <div class="f1-control-grid">
+                <label class="f1-control">
+                  <span>Current tyre age <strong id="f1-pit-age-value">14 laps</strong></span>
+                  <input id="f1-pit-age" type="range" min="4" max="28" step="1" value="14">
+                </label>
+                <label class="f1-control">
+                  <span>Traffic after stop <strong id="f1-pit-traffic-value">36%</strong></span>
+                  <input id="f1-pit-traffic" type="range" min="0" max="100" step="1" value="36">
+                </label>
+                <label class="f1-control">
+                  <span>Safety-car chance <strong id="f1-pit-sc-value">18%</strong></span>
+                  <input id="f1-pit-sc" type="range" min="0" max="100" step="1" value="18">
+                </label>
+              </div>
+              <div class="f1-dual-grid">
+                <div class="f1-pit-visual-panel">
+                  <div class="f1-pit-lane-band">
+                    <span class="f1-pit-lane-band__track"></span>
+                    <span class="f1-pit-lane-band__pit" id="f1-pit-loss-band"></span>
+                    <span class="f1-pit-lane-band__marker" id="f1-pit-window-marker"></span>
+                  </div>
+                  <div class="f1-pit-legend">
+                    <span class="f1-pit-legend__item">Main track pace</span>
+                    <span class="f1-pit-legend__item f1-pit-legend__item--pit">Pit-lane loss</span>
+                    <span class="f1-pit-legend__item f1-pit-legend__item--window">Strategic sweet spot</span>
+                  </div>
+                  <p class="f1-scene-note" id="f1-pit-note">
+                    The stop is not yet free enough for a speculative undercut, so the pit wall is still waiting for either a cleaner gap or a stronger reason to commit.
+                  </p>
+                </div>
+                <div class="f1-metric-grid">
+                  <article class="f1-metric-card">
+                    <span class="f1-metric-card__label">Raw pit loss</span>
+                    <strong id="f1-pit-loss">21.0 s</strong>
+                    <p>The baseline time cost of entering, servicing, and rejoining under current conditions.</p>
+                  </article>
+                  <article class="f1-metric-card">
+                    <span class="f1-metric-card__label">Undercut gain</span>
+                    <strong id="f1-pit-undercut">1.6 s</strong>
+                    <p>How much fresh-tyre pace could pay back immediately if the rejoin stays clear enough.</p>
+                  </article>
+                  <article class="f1-metric-card">
+                    <span class="f1-metric-card__label">Overcut gain</span>
+                    <strong id="f1-pit-overcut">0.8 s</strong>
+                    <p>How much value there is in staying out while rivals lose time in traffic or on a slower warm-up.</p>
+                  </article>
+                  <article class="f1-metric-card">
+                    <span class="f1-metric-card__label">Safety-car swing</span>
+                    <strong id="f1-pit-safety">-5.2 s</strong>
+                    <p>How much a caution could shrink the effective stop cost compared with the green-flag baseline.</p>
+                  </article>
+                  <article class="f1-metric-card">
+                    <span class="f1-metric-card__label">Recommended call</span>
+                    <strong id="f1-pit-call">Hold for now</strong>
+                    <p id="f1-pit-call-note">The tyre is aging, but the current stop still gives away more time than the fresh rubber is likely to earn back immediately.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+
             <h1 id="building-a-lap">Building a Lap</h1>
             <p>
               A good setup still has to survive a whole lap. That means the same car may look clever in one

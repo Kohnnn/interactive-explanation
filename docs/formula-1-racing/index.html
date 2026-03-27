@@ -20,7 +20,7 @@
         Sandbox longform article about modern Formula 1 performance. It uses the shared hero, generated
         chapter rail, and footer contract while shipping original Formula 1 scenes for the car overview,
         airflow, front wing, floor, rear wing and DRS, suspension platform, power unit deployment maps,
-        tyres, braking, track layout, racecraft, setup tradeoffs, weather strategy, and sector lap building with telemetry overlays.
+        tyres, braking, track layout, racecraft, setup tradeoffs, weather strategy, pit strategy, and sector lap building with track-specific telemetry overlays.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../formula-1-racing/">Open route</a>
@@ -50,7 +50,7 @@
         <ul class="plain-list">
           <li><code>formula-1-racing/index.html</code> owns the route shell, longform body, and scene markup.</li>
           <li><code>formula-1-racing/css/f1.css</code> provides the Formula 1-specific visual language and scene styling.</li>
-          <li><code>formula-1-racing/js/f1.js</code> drives the hotspot map, richer aero scenes, suspension platform visuals, power deployment maps, track presets, weather strategy logic, racecraft logic, setup board, and sector telemetry builder.</li>
+          <li><code>formula-1-racing/js/f1.js</code> drives the hotspot map, richer aero scenes, suspension platform visuals, power deployment maps, track presets, weather strategy logic, pit-wall timing logic, racecraft logic, setup board, and sector telemetry builder.</li>
           <li><code>shared/engineering-sandbox.css</code> and <code>shared/engineering-sandbox.js</code> provide the shared shell behavior, generated rail, and hero framing.</li>
         </ul>
       </article>
@@ -59,7 +59,7 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>This route is intentionally original, so the docs track implementation parity against the local design spec rather than an upstream replica.</li>
-          <li>The current build now ships track-specific presets, a weather and tyre-strategy layer, and more bespoke SVG car artwork on top of the earlier longform shell.</li>
+          <li>The current build now ships track-specific presets, a weather and tyre-strategy layer, pit-stop timing tradeoffs, track-shaped telemetry presets, and more bespoke SVG car artwork on top of the earlier longform shell.</li>
           <li>Formulas and scene readouts are simplified explanatory models, not an attempt at regulation-grade or telemetry-grade simulation fidelity.</li>
         </ul>
       </article>

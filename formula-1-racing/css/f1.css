@@ -617,11 +617,92 @@ body[data-story-route="formula-1-racing"] .f1-selector--preset {
   background: rgba(255, 255, 255, 0.76);
 }
 
+body[data-story-route="formula-1-racing"] .f1-selector--preset.is-active {
+  background: #8e1f1d;
+  color: #fff9f4;
+}
+
 body[data-story-route="formula-1-racing"] .f1-weather-visual-panel {
   padding: 1rem;
   border: 1px solid rgba(24, 29, 35, 0.1);
   border-radius: 1.2rem;
   background: rgba(255, 255, 255, 0.72);
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-visual-panel {
+  padding: 1rem;
+  border: 1px solid rgba(24, 29, 35, 0.1);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band {
+  position: relative;
+  overflow: hidden;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: rgba(24, 29, 35, 0.08);
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__track,
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__pit,
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__marker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__track {
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(42, 129, 156, 0.16), rgba(24, 29, 35, 0.06));
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__pit {
+  left: 0;
+  width: 24%;
+  background: linear-gradient(90deg, rgba(180, 58, 51, 0.78), rgba(201, 91, 49, 0.9));
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-lane-band__marker {
+  left: 48%;
+  width: 0.9rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.94);
+  background: #2a819c;
+  transform: translateX(-50%);
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.95rem;
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--story-ink-soft);
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-legend__item::before {
+  content: "";
+  width: 0.8rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: #2a819c;
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-legend__item--pit::before {
+  background: #c95b31;
+}
+
+body[data-story-route="formula-1-racing"] .f1-pit-legend__item--window::before {
+  background: #8e1f1d;
 }
 
 body[data-story-route="formula-1-racing"] .f1-weather-band,

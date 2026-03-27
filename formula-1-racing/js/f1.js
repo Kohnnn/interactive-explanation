@@ -290,6 +290,14 @@
       brake: "High",
       pass: "Strong",
       path: "M68 140 C84 84, 152 60, 220 78 S346 142, 422 116 C454 106, 472 134, 450 160 C420 194, 336 204, 292 184 C236 158, 178 182, 150 216 C132 236, 90 228, 84 196 C80 176, 60 170, 68 140 Z",
+      pitLossBase: 21,
+      undercutBias: 7,
+      overcutBias: 4,
+      tracePresets: {
+        speed: [34, 94, 44, 58, 76, 54, 70, 90, 48],
+        brake: [18, 96, 24, 44, 72, 20, 42, 84, 18],
+        deploy: [52, 92, 44, 48, 68, 42, 58, 84, 46],
+      },
       weights: { straight: 0.34, slow: 0.14, fast: 0.12, tyreLife: 0.14, braking: 0.26, balance: 0.0 },
       sectors: [
         {
@@ -321,6 +329,14 @@
       brake: "Medium",
       pass: "Minimal",
       path: "M132 214 C108 196, 98 166, 114 140 C132 110, 164 118, 176 88 C186 60, 216 54, 242 72 C274 94, 310 94, 348 86 C384 80, 410 98, 408 128 C406 168, 446 170, 452 204 C456 228, 430 236, 398 232 C348 226, 304 224, 268 244 C234 262, 194 256, 180 232 C168 210, 148 226, 132 214 Z",
+      pitLossBase: 18.6,
+      undercutBias: 4,
+      overcutBias: 7,
+      tracePresets: {
+        speed: [30, 56, 34, 40, 52, 36, 42, 58, 38],
+        brake: [28, 74, 36, 44, 62, 40, 48, 70, 34],
+        deploy: [34, 58, 32, 36, 50, 34, 38, 56, 34],
+      },
       weights: { straight: 0.08, slow: 0.34, fast: 0.08, tyreLife: 0.16, braking: 0.34, balance: 0.0 },
       sectors: [
         {
@@ -352,6 +368,14 @@
       brake: "Medium",
       pass: "Good",
       path: "M68 164 C72 114, 118 78, 170 82 C220 86, 244 126, 284 126 C338 126, 350 78, 402 70 C446 64, 486 90, 486 132 C486 164, 514 176, 544 156 C578 132, 618 138, 636 170 C654 202, 626 228, 580 226 C542 224, 504 208, 458 214 C404 222, 362 252, 308 250 C250 248, 220 216, 178 210 C130 204, 64 214, 68 164 Z",
+      pitLossBase: 20.4,
+      undercutBias: 6,
+      overcutBias: 5,
+      tracePresets: {
+        speed: [46, 84, 38, 54, 94, 62, 66, 86, 48],
+        brake: [24, 58, 44, 30, 42, 26, 34, 54, 30],
+        deploy: [42, 64, 38, 40, 68, 44, 48, 66, 42],
+      },
       weights: { straight: 0.16, slow: 0.12, fast: 0.34, tyreLife: 0.22, braking: 0.16, balance: 0.0 },
       sectors: [
         {
@@ -383,6 +407,14 @@
       brake: "High",
       pass: "Strong",
       path: "M88 202 C62 174, 62 130, 96 112 C130 94, 180 114, 226 96 C268 80, 302 42, 348 48 C400 54, 418 112, 470 120 C520 128, 566 92, 608 118 C648 142, 638 188, 598 202 C556 216, 502 202, 470 224 C430 250, 392 250, 344 228 C286 200, 222 214, 168 230 C128 242, 102 224, 88 202 Z",
+      pitLossBase: 20.9,
+      undercutBias: 7,
+      overcutBias: 5,
+      tracePresets: {
+        speed: [38, 96, 46, 58, 82, 54, 60, 88, 44],
+        brake: [22, 82, 30, 38, 58, 26, 44, 76, 28],
+        deploy: [50, 90, 42, 46, 70, 40, 54, 82, 46],
+      },
       weights: { straight: 0.24, slow: 0.12, fast: 0.24, tyreLife: 0.16, braking: 0.24, balance: 0.0 },
       sectors: [
         {
@@ -414,6 +446,14 @@
       brake: "Medium",
       pass: "Limited",
       path: "M112 84 C146 52, 208 56, 236 92 C256 118, 246 148, 212 164 C178 180, 170 214, 198 228 C232 246, 296 246, 322 214 C344 186, 376 170, 410 184 C452 202, 492 188, 514 158 C540 122, 584 114, 616 138 C648 162, 642 204, 604 220 C564 236, 530 224, 496 206 C450 182, 418 206, 406 232 C386 272, 326 268, 290 246 C252 222, 192 216, 152 194 C112 172, 96 126, 112 84 Z",
+      pitLossBase: 22.1,
+      undercutBias: 5,
+      overcutBias: 6,
+      tracePresets: {
+        speed: [42, 78, 50, 60, 88, 58, 56, 82, 46],
+        brake: [18, 52, 28, 36, 58, 26, 40, 74, 34],
+        deploy: [40, 58, 36, 42, 64, 42, 48, 68, 40],
+      },
       weights: { straight: 0.14, slow: 0.16, fast: 0.3, tyreLife: 0.24, braking: 0.16, balance: 0.0 },
       sectors: [
         {
@@ -789,6 +829,49 @@
       lapsRemaining,
       rainPressure,
       temperature: temp,
+    };
+  }
+
+  function computePitStrategy(trackKey, weatherState, tyreAge, traffic, safetyCarChance, compoundKey) {
+    const track = tracks[trackKey] || tracks.monza;
+    const weatherPenalty = weatherState?.penalty || 0;
+    const modeKey = weatherState?.modeKey || "dry";
+    const baseLoss = track.pitLossBase + (modeKey === "wet" ? 1.4 : modeKey === "mixed" ? 0.6 : 0);
+    const rawLoss = clamp(baseLoss + traffic * 0.018 - Math.min(tyreAge, 20) * 0.03, 14, 29);
+    const undercut = clamp(
+      tyreAge * 0.26 + track.undercutBias * 0.58 + weatherPenalty * 5.5 - traffic * 0.08 - (compoundKey === "hard" ? 1.6 : 0),
+      -2,
+      9,
+    );
+    const overcut = clamp(
+      track.overcutBias * 0.46 + traffic * 0.05 - tyreAge * 0.1 + (modeKey === "mixed" ? 0.8 : 0),
+      -2,
+      7,
+    );
+    const safetySwing = clamp(-(rawLoss * 0.16 + safetyCarChance * 0.1 + weatherPenalty * 2.2), -18, -2);
+
+    let call = "Hold for now";
+    let note = "The tyre is aging, but the current stop still gives away more time than the fresh rubber is likely to earn back immediately.";
+
+    if (safetyCarChance > 58) {
+      call = "Stretch for safety car";
+      note = "The caution risk is high enough that staying out a little longer could turn a painful stop into a discounted one.";
+    } else if (undercut > overcut + 1.2 && undercut > 2.4) {
+      call = "Box for undercut";
+      note = "Fresh rubber is now worth enough that pitting first has a real chance to beat the pit loss, especially if rejoin traffic stays manageable.";
+    } else if (overcut > undercut + 1 && traffic > 52) {
+      call = "Delay for overcut";
+      note = "The traffic picture after the stop looks too costly, so the pit wall gains more by extending the stint and letting rivals rejoin into slower air.";
+    }
+
+    return {
+      rawLoss,
+      undercut,
+      overcut,
+      safetySwing,
+      call,
+      note,
+      window: clamp(42 + undercut * 4 - traffic * 0.18 + safetyCarChance * 0.12, 12, 88),
     };
   }
 
@@ -1415,6 +1498,17 @@
       });
     });
 
+    document.addEventListener("f1-track-change", (event) => {
+      const trackKey = event.detail?.trackKey;
+      if (!trackKey || !trackPresets[trackKey]) {
+        return;
+      }
+      setActiveByValue(presetButtons, trackKey, "trackPreset");
+      if (noteNode) {
+        noteNode.textContent = trackPresets[trackKey].note;
+      }
+    });
+
     applyPreset("monza");
   }
 
@@ -1472,6 +1566,64 @@
 
     document.addEventListener("f1-track-change", (event) => {
       currentTrack = event.detail?.trackKey || currentTrack;
+      update();
+    });
+
+    document.addEventListener("f1-setup-change", (event) => {
+      currentCompoundKey = event.detail?.compoundKey || currentCompoundKey;
+      update();
+    });
+
+    update();
+  }
+
+  function initPitScene(initialTrack) {
+    const ageInput = document.getElementById("f1-pit-age");
+    const trafficInput = document.getElementById("f1-pit-traffic");
+    const safetyInput = document.getElementById("f1-pit-sc");
+    const lossBand = document.getElementById("f1-pit-loss-band");
+    const marker = document.getElementById("f1-pit-window-marker");
+    if (!ageInput || !trafficInput || !safetyInput || !lossBand || !marker) {
+      return;
+    }
+
+    let currentTrack = initialTrack || "monza";
+    let currentCompoundKey = setupDefaults.compoundKey;
+    let currentWeatherState = computeWeatherStrategy("dry", currentTrack, 31, 18, 18, currentCompoundKey);
+
+    function update() {
+      const tyreAge = Number(ageInput.value);
+      const traffic = Number(trafficInput.value);
+      const safetyChance = Number(safetyInput.value);
+      const strategy = computePitStrategy(currentTrack, currentWeatherState, tyreAge, traffic, safetyChance, currentCompoundKey);
+
+      setText("f1-pit-age-value", `${tyreAge} laps`);
+      setText("f1-pit-traffic-value", `${traffic}%`);
+      setText("f1-pit-sc-value", `${safetyChance}%`);
+      setText("f1-pit-loss", `${strategy.rawLoss.toFixed(1)} s`);
+      setText("f1-pit-undercut", `${strategy.undercut >= 0 ? "+" : ""}${strategy.undercut.toFixed(1)} s`);
+      setText("f1-pit-overcut", `${strategy.overcut >= 0 ? "+" : ""}${strategy.overcut.toFixed(1)} s`);
+      setText("f1-pit-safety", `${strategy.safetySwing.toFixed(1)} s`);
+      setText("f1-pit-call", strategy.call);
+      setText("f1-pit-call-note", strategy.note);
+      setText("f1-pit-note", `${(tracks[currentTrack] || tracks.monza).title}: ${strategy.note}`);
+
+      lossBand.style.width = `${clamp(strategy.rawLoss / 28 * 100, 18, 92)}%`;
+      marker.style.left = `${strategy.window}%`;
+    }
+
+    ageInput.addEventListener("input", update);
+    trafficInput.addEventListener("input", update);
+    safetyInput.addEventListener("input", update);
+
+    document.addEventListener("f1-track-change", (event) => {
+      currentTrack = event.detail?.trackKey || currentTrack;
+      update();
+    });
+
+    document.addEventListener("f1-weather-change", (event) => {
+      currentTrack = event.detail?.trackKey || currentTrack;
+      currentWeatherState = event.detail?.strategy || currentWeatherState;
       update();
     });
 
@@ -1627,6 +1779,9 @@
       const speedTrace = [];
       const brakeTrace = [];
       const deployTrace = [];
+      const speedPreset = track.tracePresets?.speed || [34, 94, 44, 58, 76, 54, 70, 90, 48];
+      const brakePreset = track.tracePresets?.brake || [18, 96, 24, 44, 72, 20, 42, 84, 18];
+      const deployPreset = track.tracePresets?.deploy || [52, 92, 44, 48, 68, 42, 58, 84, 46];
       const sectorDeltas = track.sectors.map((sector, index) => {
         const powerBoost = (currentPowerState.sectorBars[index] || 0) * 0.18;
         const weatherPenalty = currentWeatherState.penalty * (0.24 + (sector.weights.tyreLife || 0) * 1.2 + (sector.weights.braking || 0) * 0.4);
@@ -1639,14 +1794,28 @@
         })[0];
         const note = `${sector.lead}, and the current weak point is ${metricLabels[dominantMetric] || dominantMetric}.`;
 
-        const speedBase = clamp(34 + adjusted.straight * 0.26 + adjusted.fast * 0.18 + powerBoost * 0.32 - (sector.weights.braking || 0) * 24 - currentWeatherState.penalty * 18, 10, 96);
-        const cornerBase = clamp(26 + adjusted.slow * 0.22 + adjusted.balance * 0.18 - (sector.weights.braking || 0) * 8, 12, 82);
-        const brakeBase = clamp(14 + (sector.weights.braking || 0) * 108 - adjusted.braking * 0.12 + plan.adjustments.braking * -1.4 + currentWeatherState.penalty * 22, 4, 96);
-        const deployBase = clamp((currentPowerState.sectorBars[index] || 0) + plan.adjustments.straight * 1.2, 8, 98);
+        const baseIndex = index * 3;
+        const straightTuning = (adjusted.straight - 60) * 0.18;
+        const fastTuning = (adjusted.fast - 60) * 0.14;
+        const slowTuning = (adjusted.slow - 60) * 0.14;
+        const brakeTuning = (adjusted.braking - 60) * 0.16;
+        const balanceTuning = (adjusted.balance - 60) * 0.1;
 
-        speedTrace.push(cornerBase, speedBase, cornerBase + 8);
-        brakeTrace.push(brakeBase, clamp(brakeBase * 0.46, 6, 84), clamp(brakeBase * 0.82, 8, 90));
-        deployTrace.push(deployBase * 0.58, deployBase, deployBase * 0.72);
+        speedTrace.push(
+          clamp(speedPreset[baseIndex] + slowTuning + balanceTuning - currentWeatherState.penalty * 10, 8, 98),
+          clamp(speedPreset[baseIndex + 1] + straightTuning + fastTuning + powerBoost * 0.28 - currentWeatherState.penalty * 14, 8, 98),
+          clamp(speedPreset[baseIndex + 2] + fastTuning + balanceTuning - currentWeatherState.penalty * 9, 8, 98),
+        );
+        brakeTrace.push(
+          clamp(brakePreset[baseIndex] + brakeTuning + currentWeatherState.penalty * 10, 4, 98),
+          clamp(brakePreset[baseIndex + 1] + brakeTuning + currentWeatherState.penalty * 14, 4, 98),
+          clamp(brakePreset[baseIndex + 2] + brakeTuning + currentWeatherState.penalty * 12, 4, 98),
+        );
+        deployTrace.push(
+          clamp(deployPreset[baseIndex] + (currentPowerState.sectorBars[index] - 50) * 0.4, 8, 98),
+          clamp(deployPreset[baseIndex + 1] + (currentPowerState.sectorBars[index] - 50) * 0.5 + plan.adjustments.straight * 1.4, 8, 98),
+          clamp(deployPreset[baseIndex + 2] + (currentPowerState.sectorBars[index] - 50) * 0.34, 8, 98),
+        );
 
         setText(`f1-sector-${index + 1}-title`, sector.label);
         setText(`f1-sector-${index + 1}-focus`, sector.focus);
@@ -1781,6 +1950,7 @@
     initRacecraftScene(initialTrack);
     initSetupScene(initialTrack);
     initWeatherScene(initialTrack);
+    initPitScene(initialTrack);
     initTrackPresetScene();
   }
 
