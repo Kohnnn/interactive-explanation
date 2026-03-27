@@ -39,7 +39,7 @@
   {
     "moduleId": "procedural-canvas-scenes",
     "originalBehavior": "The route should feel closer to the Bartosz family by drawing key scenes procedurally instead of relying on static infographic panels.",
-    "localStatus": "The route now renders the overview, airflow, front-wing, floor, rear-wing, chassis, power, tyre, braking, track, racecraft, setup, weather, pit, and lap scenes procedurally on canvas.",
+    "localStatus": "The route now renders the overview, airflow, front-wing, floor, rear-wing, chassis, power, tyre, braking, track, racecraft, setup, weather, pit, and lap scenes procedurally on canvas, with the overview and aero chapters pushed toward fuller pseudo-3D geometry.",
     "sourceFiles": [
       "../../formula-1-racing/index.html",
       "../../formula-1-racing/js/f1.js",
@@ -47,7 +47,8 @@
     ],
     "notes": [
       "The drawings are explanatory and stylized rather than scan-based or model-import-based.",
-      "The route uses procedural silhouettes, animated flow lines, shaded bands, and dynamic traces to make the scenes feel more alive."
+      "The route uses procedural silhouettes, animated flow lines, shaded bands, and dynamic traces to make the scenes feel more alive.",
+      "Recent updates increased the depth and lighting of the overview and aero chapters so they read less like flat dashboards and more like procedural pseudo-3D scenes."
     ],
     "evidence": [
       "Each chapter scene mounts through a drawer_container instead of static metric-card dashboards.",

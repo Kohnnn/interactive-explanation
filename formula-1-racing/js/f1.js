@@ -244,7 +244,7 @@
     lapPlan: 0,
     tyreCompound: 0,
     weatherMode: 0,
-    overviewRotation: mat3_mul(rot_x_mat3(-0.92), rot_z_mat3(0.42)),
+    overviewRotation: mat3_mul(rot_x_mat3(-0.9), mat3_mul(rot_y_mat3(0.42), rot_z_mat3(0.34))),
     airflowSpeed: 0.44,
     airflowWing: 0.54,
     airflowRide: 0.36,
@@ -559,70 +559,231 @@
     };
   }
 
+  function shadeRgb(rgb, factor, lift) {
+    const lifted = lift || 0;
+    return [
+      clamp(rgb[0] * factor + 255 * lifted, 0, 255),
+      clamp(rgb[1] * factor + 255 * lifted, 0, 255),
+      clamp(rgb[2] * factor + 255 * lifted, 0, 255),
+    ];
+  }
+
+  function pushExtrudedShapeLit(polys, shape, z0, z1, baseRgb, rot, sceneScale, cx, cy, options) {
+    const opts = options || {};
+    const heave = opts.heave || 0;
+    const pitch = opts.pitch || 0;
+    const alpha = opts.alpha === undefined ? 0.96 : opts.alpha;
+    const light = vec_norm([0.42, -0.28, 1.0]);
+    const topNormal = vec_norm(mat3_mul_vec(rot, [0, 0, 1]));
+    const topShade = clamp(0.54 + vec_dot(topNormal, light) * 0.44, 0.22, 1.08);
+
+    const top = shape.map((point) => projectPoint([point[0], point[1], z1 + heave + point[0] * pitch], rot, sceneScale, cx, cy));
+    const bottom = shape.map((point) => projectPoint([point[0], point[1], z0 + heave + point[0] * pitch], rot, sceneScale, cx, cy));
+
+    polys.push({
+      depth: top.reduce((sum, point) => sum + point.z, 0) / top.length,
+      fill: rgba(shadeRgb(baseRgb, topShade, 0.05), alpha),
+      stroke: rgba(COLORS.dark, 0.18),
+      points: top,
+    });
+
+    for (let i = 0; i < shape.length; i += 1) {
+      const next = (i + 1) % shape.length;
+      const edge = [shape[next][0] - shape[i][0], shape[next][1] - shape[i][1], 0];
+      const normal = vec_norm(mat3_mul_vec(rot, [edge[1], -edge[0], 0]));
+      const sideShade = clamp(0.26 + Math.abs(vec_dot(normal, light)) * 0.5, 0.16, 0.9);
+      const side = [bottom[i], bottom[next], top[next], top[i]];
+      polys.push({
+        depth: side.reduce((sum, point) => sum + point.z, 0) / side.length,
+        fill: rgba(shadeRgb(baseRgb, sideShade, 0.01), alpha * 0.96),
+        stroke: rgba(COLORS.dark, 0.12),
+        points: side,
+      });
+    }
+  }
+
+  function drawProjectedPolyline(ctx, points3d, rot, sceneScale, cx, cy, color, width, dash, offset) {
+    const points = points3d.map((point) => projectPoint(point, rot, sceneScale, cx, cy));
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    if (dash) {
+      ctx.setLineDash(dash);
+      ctx.lineDashOffset = offset || 0;
+    }
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      if (index === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
+    });
+    ctx.stroke();
+    if (dash) {
+      ctx.setLineDash([]);
+    }
+  }
+
+  function drawProjectedRibbon(ctx, points3d, rot, sceneScale, cx, cy, color, width) {
+    const points = points3d.map((point) => projectPoint(point, rot, sceneScale, cx, cy));
+    const upper = [];
+    const lower = [];
+    for (let i = 0; i < points.length; i += 1) {
+      const current = points[i];
+      const next = points[Math.min(points.length - 1, i + 1)];
+      const dx = next.x - current.x;
+      const dy = next.y - current.y;
+      const len = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+      const nx = -dy / len;
+      const ny = dx / len;
+      upper.push([current.x + nx * width, current.y + ny * width]);
+      lower.push([current.x - nx * width, current.y - ny * width]);
+    }
+
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    upper.forEach((point, index) => {
+      if (index === 0) {
+        ctx.moveTo(point[0], point[1]);
+      } else {
+        ctx.lineTo(point[0], point[1]);
+      }
+    });
+    for (let i = lower.length - 1; i >= 0; i -= 1) {
+      ctx.lineTo(lower[i][0], lower[i][1]);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
   function drawOverviewScene(ctx, width, height, time, scene) {
     const selected = COMPONENTS[state.component].key;
     const rot = scene.rotation || state.overviewRotation;
     const cx = width * 0.5;
-    const cy = height * 0.56;
-    const sceneScale = Math.min(width, height) * 0.48;
+    const cy = height * 0.58;
+    const sceneScale = Math.min(width, height) * 0.52;
 
     const background = ctx.createLinearGradient(0, 0, 0, height);
     background.addColorStop(0, rgba(COLORS.paper, 1));
-    background.addColorStop(1, rgba(mixRgb(COLORS.paper, COLORS.gray, 0.12), 1));
+    background.addColorStop(1, rgba(mixRgb(COLORS.paper, COLORS.gray, 0.14), 1));
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, width, height);
 
-    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    const glow = ctx.createRadialGradient(cx, height * 0.72, 18, cx, height * 0.8, width * 0.28);
+    glow.addColorStop(0, rgba(COLORS.blue, 0.08));
+    glow.addColorStop(1, rgba(COLORS.blue, 0));
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.1);
     ctx.beginPath();
-    ctx.ellipse(cx, height * 0.83, width * 0.24, height * 0.06, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx, height * 0.86, width * 0.28, height * 0.074, 0, 0, Math.PI * 2);
     ctx.fill();
 
+    const frontWingColor = COMPONENTS.find((item) => item.key === "front-wing").color;
+    const floorColor = COMPONENTS.find((item) => item.key === "floor").color;
+    const sidepodColor = COMPONENTS.find((item) => item.key === "sidepods").color;
+    const powerColor = COMPONENTS.find((item) => item.key === "power-unit").color;
+    const rearColor = COMPONENTS.find((item) => item.key === "rear-wing").color;
+    const haloColor = COMPONENTS.find((item) => item.key === "halo").color;
+    const brakeColor = COMPONENTS.find((item) => item.key === "brakes").color;
+    const wheelColor = selected === "tyres" ? mixRgb(COLORS.dark, COLORS.gray, 0.2) : mixRgb(COLORS.dark, COLORS.gray, 0.08);
+
     const shapes = {
-      "front-wing": [[-1.72, -0.92], [-1.28, -1.12], [-0.78, -1.08], [-0.52, -0.64], [-0.52, 0.64], [-0.78, 1.08], [-1.28, 1.12], [-1.72, 0.92]],
-      nose: [[-0.92, -0.3], [-0.28, -0.2], [-0.16, -0.1], [-0.16, 0.1], [-0.28, 0.2], [-0.92, 0.3]],
-      floor: [[-0.34, -0.86], [0.96, -0.78], [1.18, -0.56], [1.18, 0.56], [0.96, 0.78], [-0.34, 0.86], [-0.58, 0.42], [-0.58, -0.42]],
-      sidepodsL: [[-0.18, -0.82], [0.4, -0.78], [0.68, -0.6], [0.6, -0.34], [0.02, -0.28], [-0.2, -0.52]],
-      sidepodsR: [[-0.18, 0.82], [0.4, 0.78], [0.68, 0.6], [0.6, 0.34], [0.02, 0.28], [-0.2, 0.52]],
-      engine: [[0.18, -0.34], [0.78, -0.28], [1.12, -0.1], [1.12, 0.1], [0.78, 0.28], [0.18, 0.34], [0.02, 0.18], [0.02, -0.18]],
-      gearbox: [[1.02, -0.3], [1.42, -0.26], [1.58, -0.12], [1.58, 0.12], [1.42, 0.26], [1.02, 0.3]],
-      diffuser: [[1.52, -0.42], [1.88, -0.36], [2.02, -0.16], [2.02, 0.16], [1.88, 0.36], [1.52, 0.42]],
-      "rear-wing": [[1.9, -0.88], [2.22, -0.78], [2.24, -0.2], [2.18, 0], [2.24, 0.2], [2.22, 0.78], [1.9, 0.88]],
-      halo: [[0.18, -0.12], [0.28, -0.24], [0.5, -0.24], [0.62, -0.1], [0.54, 0.1], [0.5, 0.18], [0.3, 0.18], [0.16, 0.06]],
+      frontWingMain: [[-1.94, -1.04], [-1.42, -1.18], [-0.88, -1.12], [-0.62, -0.66], [-0.62, 0.66], [-0.88, 1.12], [-1.42, 1.18], [-1.94, 1.04]],
+      frontWingUpper: [[-1.64, -0.82], [-1.18, -0.94], [-0.84, -0.88], [-0.66, -0.52], [-0.66, 0.52], [-0.84, 0.88], [-1.18, 0.94], [-1.64, 0.82]],
+      nose: [[-1.1, -0.28], [-0.54, -0.2], [-0.22, -0.14], [0.02, -0.08], [0.02, 0.08], [-0.22, 0.14], [-0.54, 0.2], [-1.1, 0.28]],
+      chassis: [[-0.24, -0.34], [0.74, -0.34], [1.08, -0.24], [1.08, 0.24], [0.74, 0.34], [-0.24, 0.34], [-0.4, 0.18], [-0.4, -0.18]],
+      floorDeck: [[-0.44, -0.92], [1.14, -0.84], [1.42, -0.58], [1.42, 0.58], [1.14, 0.84], [-0.44, 0.92], [-0.74, 0.44], [-0.74, -0.44]],
+      floorFenceL: [[-0.22, -0.64], [0.82, -0.6], [1.0, -0.48], [0.82, -0.44], [-0.14, -0.46], [-0.34, -0.54]],
+      floorFenceR: [[-0.22, 0.64], [0.82, 0.6], [1.0, 0.48], [0.82, 0.44], [-0.14, 0.46], [-0.34, 0.54]],
+      sidepodL: [[0.04, -0.82], [0.56, -0.78], [0.96, -0.62], [1.0, -0.34], [0.32, -0.22], [0.02, -0.46]],
+      sidepodR: [[0.04, 0.82], [0.56, 0.78], [0.96, 0.62], [1.0, 0.34], [0.32, 0.22], [0.02, 0.46]],
+      engineCover: [[0.1, -0.24], [0.92, -0.2], [1.34, -0.08], [1.34, 0.08], [0.92, 0.2], [0.1, 0.24], [-0.04, 0.14], [-0.04, -0.14]],
+      gearbox: [[1.22, -0.26], [1.62, -0.22], [1.8, -0.1], [1.8, 0.1], [1.62, 0.22], [1.22, 0.26]],
+      diffuser: [[1.74, -0.46], [2.14, -0.38], [2.28, -0.16], [2.28, 0.16], [2.14, 0.38], [1.74, 0.46]],
+      beamWingL: [[1.78, -0.64], [2.06, -0.58], [2.16, -0.38], [1.9, -0.34]],
+      beamWingR: [[1.78, 0.64], [2.06, 0.58], [2.16, 0.38], [1.9, 0.34]],
+      rearWingMain: [[2.08, -0.96], [2.42, -0.84], [2.48, -0.22], [2.38, 0], [2.48, 0.22], [2.42, 0.84], [2.08, 0.96]],
+      rearWingFlap: [[2.18, -0.72], [2.46, -0.66], [2.48, -0.16], [2.42, 0], [2.48, 0.16], [2.46, 0.66], [2.18, 0.72]],
+      haloHoop: [[0.22, -0.14], [0.36, -0.28], [0.56, -0.26], [0.68, -0.06], [0.66, 0.06], [0.56, 0.26], [0.36, 0.28], [0.22, 0.14]],
+      haloSpine: [[0.04, -0.08], [0.3, -0.08], [0.3, 0.08], [0.04, 0.08]],
     };
 
     const polys = [];
-    const neutralWheel = roundedRectPoints(-0.58, -1.28, 0.56, 0.42, 0.12, 3);
-    const frontRightWheel = roundedRectPoints(-0.58, 1.28, 0.56, 0.42, 0.12, 3);
-    const rearLeftWheel = roundedRectPoints(1.22, -1.34, 0.64, 0.46, 0.12, 3);
-    const rearRightWheel = roundedRectPoints(1.22, 1.34, 0.64, 0.46, 0.12, 3);
-
-    pushExtrudedShape(polys, neutralWheel, -0.18, 0.22, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, frontRightWheel, -0.18, 0.22, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, rearLeftWheel, -0.2, 0.26, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, rearRightWheel, -0.2, 0.26, componentColor("tyres", selected).top, componentColor("tyres", selected).side, rot, sceneScale, cx, cy);
-
-    pushExtrudedShape(polys, shapes["front-wing"], -0.02, 0.04, componentColor("front-wing", selected).top, componentColor("front-wing", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.nose, -0.01, 0.11, componentColor("front-wing", selected).top, componentColor("front-wing", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.floor, -0.04, 0.1, componentColor("floor", selected).top, componentColor("floor", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.sidepodsL, 0.0, 0.18, componentColor("sidepods", selected).top, componentColor("sidepods", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.sidepodsR, 0.0, 0.18, componentColor("sidepods", selected).top, componentColor("sidepods", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.engine, 0.02, 0.3, componentColor("power-unit", selected).top, componentColor("power-unit", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.gearbox, 0.02, 0.18, componentColor("gearbox", selected).top, componentColor("gearbox", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.diffuser, -0.02, 0.08, componentColor("diffuser", selected).top, componentColor("diffuser", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes["rear-wing"], 0.04, 0.14, componentColor("rear-wing", selected).top, componentColor("rear-wing", selected).side, rot, sceneScale, cx, cy);
-    pushExtrudedShape(polys, shapes.halo, 0.18, 0.42, componentColor("halo", selected).top, componentColor("halo", selected).side, rot, sceneScale, cx, cy);
-
-    const brakeShapes = [
-      roundedRectPoints(-0.58, -1.28, 0.24, 0.18, 0.06, 2),
-      roundedRectPoints(-0.58, 1.28, 0.24, 0.18, 0.06, 2),
-      roundedRectPoints(1.22, -1.34, 0.28, 0.2, 0.06, 2),
-      roundedRectPoints(1.22, 1.34, 0.28, 0.2, 0.06, 2),
-    ];
-    brakeShapes.forEach((shape) => {
-      pushExtrudedShape(polys, shape, 0.04, 0.12, componentColor("brakes", selected).top, componentColor("brakes", selected).side, rot, sceneScale, cx, cy);
+    [
+      roundedRectPoints(-0.62, -1.34, 0.64, 0.46, 0.12, 4),
+      roundedRectPoints(-0.62, 1.34, 0.64, 0.46, 0.12, 4),
+      roundedRectPoints(1.32, -1.42, 0.74, 0.5, 0.12, 4),
+      roundedRectPoints(1.32, 1.42, 0.74, 0.5, 0.12, 4),
+    ].forEach((shape) => {
+      pushExtrudedShapeLit(polys, shape, -0.28, 0.24, wheelColor, rot, sceneScale, cx, cy, { alpha: 0.98 });
     });
 
+    [
+      roundedRectPoints(-0.62, -1.34, 0.24, 0.18, 0.06, 3),
+      roundedRectPoints(-0.62, 1.34, 0.24, 0.18, 0.06, 3),
+      roundedRectPoints(1.32, -1.42, 0.3, 0.22, 0.06, 3),
+      roundedRectPoints(1.32, 1.42, 0.3, 0.22, 0.06, 3),
+    ].forEach((shape) => {
+      pushExtrudedShapeLit(polys, shape, 0.02, 0.12, brakeColor, rot, sceneScale, cx, cy, { alpha: selected === "brakes" ? 0.98 : 0.84 });
+    });
+
+    [
+      roundedRectPoints(-0.62, -1.34, 0.14, 0.1, 0.03, 2),
+      roundedRectPoints(-0.62, 1.34, 0.14, 0.1, 0.03, 2),
+      roundedRectPoints(1.32, -1.42, 0.16, 0.12, 0.03, 2),
+      roundedRectPoints(1.32, 1.42, 0.16, 0.12, 0.03, 2),
+    ].forEach((shape) => {
+      pushExtrudedShapeLit(polys, shape, 0.04, 0.08, mixRgb(COLORS.paper, COLORS.gray, 0.18), rot, sceneScale, cx, cy, { alpha: 0.9 });
+    });
+
+    pushExtrudedShapeLit(polys, shapes.frontWingMain, -0.04, 0.04, frontWingColor, rot, sceneScale, cx, cy, { alpha: selected === "front-wing" ? 0.99 : 0.92 });
+    pushExtrudedShapeLit(polys, shapes.frontWingUpper, 0.02, 0.08, mixRgb(frontWingColor, COLORS.paper, 0.22), rot, sceneScale, cx, cy, { alpha: selected === "front-wing" ? 0.99 : 0.9 });
+    pushExtrudedShapeLit(polys, shapes.nose, 0.0, 0.18, mixRgb(frontWingColor, COLORS.paper, 0.48), rot, sceneScale, cx, cy, { alpha: 0.98 });
+    pushExtrudedShapeLit(polys, shapes.floorDeck, -0.07, 0.08, floorColor, rot, sceneScale, cx, cy, { alpha: selected === "floor" ? 0.98 : 0.84 });
+    pushExtrudedShapeLit(polys, shapes.floorFenceL, -0.02, 0.02, mixRgb(floorColor, COLORS.paper, 0.2), rot, sceneScale, cx, cy, { alpha: 0.9 });
+    pushExtrudedShapeLit(polys, shapes.floorFenceR, -0.02, 0.02, mixRgb(floorColor, COLORS.paper, 0.2), rot, sceneScale, cx, cy, { alpha: 0.9 });
+    pushExtrudedShapeLit(polys, shapes.chassis, 0.04, 0.24, mixRgb(COLORS.paper, COLORS.gray, 0.08), rot, sceneScale, cx, cy, { alpha: 0.98 });
+    pushExtrudedShapeLit(polys, shapes.sidepodL, 0.08, 0.28, sidepodColor, rot, sceneScale, cx, cy, { alpha: selected === "sidepods" ? 0.98 : 0.92 });
+    pushExtrudedShapeLit(polys, shapes.sidepodR, 0.08, 0.28, sidepodColor, rot, sceneScale, cx, cy, { alpha: selected === "sidepods" ? 0.98 : 0.92 });
+    pushExtrudedShapeLit(polys, shapes.engineCover, 0.12, 0.44, powerColor, rot, sceneScale, cx, cy, { alpha: selected === "power-unit" ? 0.98 : 0.94 });
+    pushExtrudedShapeLit(polys, shapes.gearbox, 0.08, 0.22, COMPONENTS.find((item) => item.key === "gearbox").color, rot, sceneScale, cx, cy, { alpha: selected === "gearbox" ? 0.98 : 0.92 });
+    pushExtrudedShapeLit(polys, shapes.diffuser, -0.06, 0.08, COMPONENTS.find((item) => item.key === "diffuser").color, rot, sceneScale, cx, cy, { alpha: selected === "diffuser" ? 0.98 : 0.9 });
+    pushExtrudedShapeLit(polys, shapes.beamWingL, 0.12, 0.18, mixRgb(rearColor, COLORS.paper, 0.28), rot, sceneScale, cx, cy, { alpha: 0.88 });
+    pushExtrudedShapeLit(polys, shapes.beamWingR, 0.12, 0.18, mixRgb(rearColor, COLORS.paper, 0.28), rot, sceneScale, cx, cy, { alpha: 0.88 });
+    pushExtrudedShapeLit(polys, shapes.rearWingMain, 0.14, 0.28, rearColor, rot, sceneScale, cx, cy, { alpha: selected === "rear-wing" ? 0.98 : 0.94 });
+    pushExtrudedShapeLit(polys, shapes.rearWingFlap, 0.28, 0.34, mixRgb(rearColor, COLORS.paper, 0.18), rot, sceneScale, cx, cy, { alpha: selected === "rear-wing" ? 0.98 : 0.88 });
+    pushExtrudedShapeLit(polys, shapes.haloHoop, 0.32, 0.48, haloColor, rot, sceneScale, cx, cy, { alpha: selected === "halo" ? 0.98 : 0.86 });
+    pushExtrudedShapeLit(polys, shapes.haloSpine, 0.22, 0.32, haloColor, rot, sceneScale, cx, cy, { alpha: selected === "halo" ? 0.98 : 0.86 });
+
     renderPolys(ctx, polys);
+
+    const cockpitOpening = [
+      [-0.02, -0.12], [0.24, -0.12], [0.34, -0.04], [0.38, 0], [0.34, 0.04], [0.24, 0.12], [-0.02, 0.12], [-0.08, 0.04], [-0.08, -0.04],
+    ].map((point) => projectPoint([point[0], point[1], 0.46], rot, sceneScale, cx, cy));
+    ctx.beginPath();
+    cockpitOpening.forEach((point, index) => {
+      if (index === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
+    });
+    ctx.closePath();
+    ctx.fillStyle = rgba(COLORS.dark, 0.28);
+    ctx.fill();
+
+    [
+      [[-0.86, -0.44, 0.16], [-0.42, -0.18, 0.24]],
+      [[-0.86, 0.44, 0.16], [-0.42, 0.18, 0.24]],
+      [[1.02, -0.46, 0.12], [1.54, -0.26, 0.2]],
+      [[1.02, 0.46, 0.12], [1.54, 0.26, 0.2]],
+    ].forEach((segment) => {
+      drawProjectedPolyline(ctx, segment, rot, sceneScale, cx, cy, rgba(COLORS.dark, 0.22), 2.2);
+    });
 
     ctx.save();
     ctx.translate(width - 54, 54);
@@ -643,42 +804,122 @@
     ctx.scale(scaleSize, scaleSize);
     ctx.rotate(pitch);
 
-    ctx.fillStyle = rgba(COLORS.dark, 0.1);
+    const rideY = ride;
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.11);
     ctx.beginPath();
-    ctx.ellipse(0.08, 0.72 + ride, 1.18, 0.18, 0, 0, Math.PI * 2);
+    ctx.ellipse(0.12, 0.82 + rideY, 1.28, 0.2, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = rgba(COLORS.paper, 0.98);
+    const bodyGradient = ctx.createLinearGradient(-1.5, -0.1, 1.8, 0.62);
+    bodyGradient.addColorStop(0, rgba(mixRgb(COLORS.paper, COLORS.gray, 0.05), 1));
+    bodyGradient.addColorStop(0.45, rgba(COLORS.paper, 0.98));
+    bodyGradient.addColorStop(1, rgba(mixRgb(COLORS.paper, COLORS.dark, 0.12), 0.98));
+    ctx.fillStyle = bodyGradient;
     ctx.strokeStyle = rgba(COLORS.dark, 0.22);
-    ctx.lineWidth = 0.02;
+    ctx.lineWidth = 0.024;
     ctx.beginPath();
-    ctx.moveTo(-1.45, 0.36 + ride);
-    ctx.lineTo(-1.0, 0.2 + ride);
-    ctx.lineTo(-0.4, 0.05 + ride);
-    ctx.lineTo(0.2, -0.04 + ride);
-    ctx.lineTo(0.82, -0.01 + ride);
-    ctx.lineTo(1.16, 0.04 + ride);
-    ctx.lineTo(1.62, 0.2 + ride);
-    ctx.lineTo(1.7, 0.3 + ride);
-    ctx.lineTo(1.7, 0.46 + ride);
-    ctx.lineTo(-1.45, 0.46 + ride);
+    ctx.moveTo(-1.54, 0.38 + rideY);
+    ctx.lineTo(-1.06, 0.22 + rideY);
+    ctx.lineTo(-0.44, 0.05 + rideY);
+    ctx.lineTo(0.18, -0.04 + rideY);
+    ctx.lineTo(0.82, -0.01 + rideY);
+    ctx.lineTo(1.18, 0.04 + rideY);
+    ctx.lineTo(1.72, 0.2 + rideY);
+    ctx.lineTo(1.8, 0.32 + rideY);
+    ctx.lineTo(1.8, 0.48 + rideY);
+    ctx.lineTo(-1.54, 0.48 + rideY);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
-    ctx.fillStyle = rgba(COLORS.red, 0.84);
-    ctx.fillRect(-1.52, 0.18 + ride, 0.44, 0.08);
-    ctx.fillRect(1.38, 0.06 + ride - (wingOpen ? 0.08 : 0), 0.46, 0.08);
-    ctx.fillStyle = rgba(COLORS.cyan, 0.72);
-    ctx.fillRect(-0.12, 0.18 + ride, 1.3, 0.08);
-    ctx.fillStyle = rgba(COLORS.ink, 0.08);
-    ctx.fillRect(0.08, 0.02 + ride, 0.44, 0.12);
-
-    ctx.fillStyle = rgba(COLORS.dark, 0.2);
+    ctx.fillStyle = rgba(COLORS.cyan, 0.16);
     ctx.beginPath();
-    ctx.ellipse(-0.82, 0.52 + ride, 0.18, 0.18, 0, 0, Math.PI * 2);
-    ctx.ellipse(1.16, 0.52 + ride, 0.22, 0.22, 0, 0, Math.PI * 2);
+    ctx.moveTo(-0.22, 0.24 + rideY);
+    ctx.lineTo(1.2, 0.24 + rideY);
+    ctx.lineTo(1.42, 0.36 + rideY);
+    ctx.lineTo(1.34, 0.42 + rideY);
+    ctx.lineTo(0.14, 0.42 + rideY);
+    ctx.closePath();
     ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.red, 0.9);
+    ctx.beginPath();
+    ctx.moveTo(-1.62, 0.18 + rideY);
+    ctx.lineTo(-1.08, 0.18 + rideY);
+    ctx.lineTo(-0.94, 0.24 + rideY);
+    ctx.lineTo(-1.18, 0.28 + rideY);
+    ctx.lineTo(-1.62, 0.28 + rideY);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.cyan, 0.78);
+    ctx.beginPath();
+    ctx.moveTo(-0.18, 0.18 + rideY);
+    ctx.lineTo(1.1, 0.16 + rideY);
+    ctx.lineTo(1.28, 0.18 + rideY);
+    ctx.lineTo(1.18, 0.26 + rideY);
+    ctx.lineTo(-0.12, 0.28 + rideY);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.red, 0.9);
+    ctx.beginPath();
+    ctx.moveTo(1.42, 0.08 + rideY - (wingOpen ? 0.1 : 0));
+    ctx.lineTo(1.86, 0.06 + rideY - (wingOpen ? 0.1 : 0));
+    ctx.lineTo(1.88, 0.14 + rideY - (wingOpen ? 0.1 : 0));
+    ctx.lineTo(1.46, 0.16 + rideY - (wingOpen ? 0.1 : 0));
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillRect(1.38, 0.14 + rideY, 0.04, 0.2);
+    ctx.fillRect(1.54, 0.14 + rideY, 0.04, 0.2);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
+    ctx.beginPath();
+    ctx.moveTo(-0.02, 0.04 + rideY);
+    ctx.lineTo(0.48, 0.02 + rideY);
+    ctx.lineTo(0.54, 0.14 + rideY);
+    ctx.lineTo(0.06, 0.14 + rideY);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(COLORS.ink, 0.18);
+    ctx.lineWidth = 0.018;
+    ctx.beginPath();
+    ctx.moveTo(-0.2, 0.06 + rideY);
+    ctx.quadraticCurveTo(0.18, -0.12 + rideY, 0.58, 0.02 + rideY);
+    ctx.stroke();
+
+    ctx.strokeStyle = rgba(COLORS.dark, 0.46);
+    ctx.lineWidth = 0.028;
+    ctx.beginPath();
+    ctx.moveTo(0.1, 0.06 + rideY);
+    ctx.quadraticCurveTo(0.2, -0.08 + rideY, 0.36, -0.06 + rideY);
+    ctx.stroke();
+
+    const tyreGradient = ctx.createLinearGradient(-0.2, 0.2, 0.2, 0.8);
+    tyreGradient.addColorStop(0, rgba(mixRgb(COLORS.dark, COLORS.gray, 0.12), 0.95));
+    tyreGradient.addColorStop(1, rgba(COLORS.dark, 0.98));
+    ctx.fillStyle = tyreGradient;
+    ctx.beginPath();
+    ctx.ellipse(-0.82, 0.54 + rideY, 0.2, 0.22, 0, 0, Math.PI * 2);
+    ctx.ellipse(1.2, 0.56 + rideY, 0.24, 0.26, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.yellow, 0.24);
+    ctx.beginPath();
+    ctx.ellipse(-0.82, 0.54 + rideY, 0.08, 0.08, 0, 0, Math.PI * 2);
+    ctx.ellipse(1.2, 0.56 + rideY, 0.1, 0.1, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(COLORS.paper, 0.34);
+    ctx.lineWidth = 0.018;
+    ctx.beginPath();
+    ctx.moveTo(-0.98, 0.42 + rideY);
+    ctx.lineTo(-0.68, 0.42 + rideY);
+    ctx.moveTo(1.0, 0.42 + rideY);
+    ctx.lineTo(1.34, 0.42 + rideY);
+    ctx.stroke();
 
     ctx.restore();
   }
@@ -975,22 +1216,84 @@
     const speed = state.airflowSpeed;
     const wing = state.airflowWing;
     const ride = state.airflowRide;
+
+    const groundGradient = ctx.createLinearGradient(0, height * 0.66, 0, height);
+    groundGradient.addColorStop(0, rgba(COLORS.ground, 0.16));
+    groundGradient.addColorStop(1, rgba(COLORS.ground, 0.82));
+    ctx.fillStyle = groundGradient;
+    ctx.fillRect(0, height * 0.66, width, height * 0.34);
+
+    ctx.strokeStyle = rgba(COLORS.dark, 0.08);
+    for (let x = -40; x < width + 40; x += 56) {
+      ctx.beginPath();
+      ctx.moveTo(x, height * 0.66);
+      ctx.lineTo(x + 30, height);
+      ctx.stroke();
+    }
+
     for (let i = 0; i < 6; i += 1) {
       const y = height * (0.2 + i * 0.11);
       const amplitude = (i - 2.5) * (14 + wing * 16);
-      drawFlowLine(ctx, width, y, amplitude * (0.24 + speed * 0.32), time, speed, rgba(COLORS.blue, 0.38 + speed * 0.25));
+      drawFlowLine(ctx, width, y, amplitude * (0.24 + speed * 0.32), time, speed, rgba(COLORS.blue, 0.34 + speed * 0.26));
     }
+
     const ridePx = 10 + (1 - ride) * 18;
-    drawSideCar(ctx, width * 0.47, height * 0.48, Math.min(width, height) * 0.19, -0.01, ridePx / 120, false);
-    ctx.fillStyle = rgba(COLORS.cyan, 0.18 + (1 - Math.abs(ride - 0.32) / 0.35) * 0.26);
-    ctx.fillRect(width * 0.36, height * 0.52, width * 0.28, 8 + (1 - ride) * 18);
-    ctx.fillStyle = rgba(COLORS.wake, 0.16 + wing * 0.25);
+    drawSideCar(ctx, width * 0.47, height * 0.5, Math.min(width, height) * 0.2, -0.02, ridePx / 120, false);
+
+    const tunnel = [
+      [width * 0.34, height * 0.6],
+      [width * 0.44, height * (0.62 - ride * 0.08)],
+      [width * 0.6, height * (0.6 - ride * 0.05)],
+      [width * 0.7, height * 0.54],
+      [width * 0.7, height * 0.6],
+      [width * 0.34, height * 0.64],
+    ];
+    ctx.fillStyle = rgba(COLORS.cyan, 0.22 + (1 - Math.abs(ride - 0.32) / 0.35) * 0.24);
+    ctx.beginPath();
+    tunnel.forEach((point, index) => {
+      if (index === 0) {
+        ctx.moveTo(point[0], point[1]);
+      } else {
+        ctx.lineTo(point[0], point[1]);
+      }
+    });
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(COLORS.red, 0.36 + wing * 0.24);
+    ctx.lineWidth = 4 + wing * 8;
+    ctx.beginPath();
+    ctx.moveTo(width * 0.25, height * 0.38);
+    ctx.bezierCurveTo(width * 0.34, height * 0.27, width * 0.48, height * 0.22, width * 0.66, height * 0.32);
+    ctx.stroke();
+
+    const wakeGradient = ctx.createRadialGradient(width * 0.78, height * 0.48, 10, width * 0.82, height * 0.5, width * 0.26);
+    wakeGradient.addColorStop(0, rgba(COLORS.wake, 0.28 + wing * 0.12));
+    wakeGradient.addColorStop(1, rgba(COLORS.wake, 0));
+    ctx.fillStyle = wakeGradient;
     ctx.beginPath();
     ctx.moveTo(width * 0.62, height * 0.28);
     ctx.bezierCurveTo(width * 0.82, height * 0.2, width * 0.96, height * 0.34, width * 0.96, height * 0.5);
     ctx.bezierCurveTo(width * 0.96, height * 0.66, width * 0.82, height * 0.8, width * 0.62, height * 0.72);
     ctx.closePath();
     ctx.fill();
+
+    const flowRot = mat3_mul(rot_x_mat3(-0.76), mat3_mul(rot_y_mat3(-0.64), rot_z_mat3(0.16)));
+    const flowScale = Math.min(width, height) * 0.21;
+    const flowCx = width * 0.43;
+    const flowCy = height * 0.46;
+    [
+      [[-2.8, -1.1, 0.32], [-1.6, -0.96, 0.26], [-0.8, -0.72, 0.28], [0.2, -0.44, 0.24], [1.2, -0.28, 0.2], [2.6, -0.36, 0.18]],
+      [[-2.9, -0.42, 0.22], [-1.8, -0.28, 0.24], [-0.8, -0.2, 0.18], [0.4, -0.08, 0.16], [1.6, 0.0, 0.12], [2.8, -0.12, 0.1]],
+      [[-2.8, 0.4, 0.16], [-1.6, 0.3, 0.18], [-0.8, 0.24, 0.14], [0.2, 0.2, 0.12], [1.4, 0.16, 0.1], [2.6, 0.08, 0.08]],
+    ].forEach((ribbon, index) => {
+      drawProjectedRibbon(ctx, ribbon, flowRot, flowScale, flowCx, flowCy, rgba(COLORS.blue, 0.08 + index * 0.04), 7 - index * 1.2);
+      drawProjectedPolyline(ctx, ribbon, flowRot, flowScale, flowCx, flowCy, rgba(COLORS.blue, 0.42 + speed * 0.24), 2.4, [10, 10], -time * (60 + index * 20));
+    });
+
+    const underfloorRibbon = [[-1.0, 0.08, -0.04], [-0.6, 0.0, -0.12], [0.2, -0.04, -0.2], [1.2, -0.02, -0.1], [2.0, 0.06, 0.0]];
+    drawProjectedRibbon(ctx, underfloorRibbon, flowRot, flowScale, flowCx, flowCy, rgba(COLORS.cyan, 0.16 + (1 - ride) * 0.12), 8);
+    drawProjectedPolyline(ctx, underfloorRibbon, flowRot, flowScale, flowCx, flowCy, rgba(COLORS.cyan, 0.78), 3, [8, 12], -time * 96);
   }
 
   function drawFrontScene(ctx, width, height, time) {
@@ -1016,6 +1319,18 @@
     drawTopCar(ctx, width * (0.2 + dirty * 0.04), height * 0.52, Math.min(width, height) * 0.08, COLORS.gray, 0.96);
     drawTopCar(ctx, width * 0.62, height * 0.56, Math.min(width, height) * 0.1, COLORS.paper, 1);
 
+    const chaseRot = mat3_mul(rot_x_mat3(-0.88), mat3_mul(rot_y_mat3(-0.28), rot_z_mat3(0.14)));
+    const chaseScale = Math.min(width, height) * 0.16;
+    const chaseCx = width * 0.62;
+    const chaseCy = height * 0.56;
+    [
+      [[-1.9, -0.72, 0.16], [-1.16, -0.52, 0.18], [-0.44, -0.38, 0.12], [0.52, -0.28, 0.06]],
+      [[-1.92, 0.72, 0.16], [-1.18, 0.52, 0.18], [-0.46, 0.38, 0.12], [0.5, 0.28, 0.06]],
+    ].forEach((ribbon) => {
+      drawProjectedRibbon(ctx, ribbon, chaseRot, chaseScale, chaseCx, chaseCy, rgba(COLORS.blue, 0.08 + dirty * 0.08), 6);
+      drawProjectedPolyline(ctx, ribbon, chaseRot, chaseScale, chaseCx, chaseCy, rgba(COLORS.blue, 0.44), 2.2, [8, 10], -time * 72);
+    });
+
     ctx.strokeStyle = rgba(COLORS.red, 0.8);
     ctx.lineWidth = 8 + flap * 14;
     ctx.lineCap = "round";
@@ -1023,6 +1338,16 @@
     ctx.moveTo(width * 0.44, height * 0.57);
     ctx.lineTo(width * 0.52, height * (0.57 - demand * 0.12));
     ctx.stroke();
+
+    ctx.strokeStyle = rgba(COLORS.cyan, 0.5 + flap * 0.18);
+    ctx.lineWidth = 3.2;
+    ctx.setLineDash([10, 10]);
+    ctx.lineDashOffset = -time * 88;
+    ctx.beginPath();
+    ctx.moveTo(width * 0.54, height * 0.56);
+    ctx.bezierCurveTo(width * 0.64, height * 0.48, width * 0.74, height * 0.48, width * 0.84, height * 0.56);
+    ctx.stroke();
+    ctx.setLineDash([]);
   }
 
   function drawFloorScene(ctx, width, height, time) {
@@ -1090,6 +1415,17 @@
       ctx.stroke();
     }
     ctx.setLineDash([]);
+
+    const wakeRot = mat3_mul(rot_x_mat3(-0.74), mat3_mul(rot_y_mat3(-0.42), rot_z_mat3(0.08)));
+    const wakeScale = Math.min(width, height) * 0.16;
+    const wakeCx = width * 0.68;
+    const wakeCy = height * 0.44;
+    const wakeRibbon = [[0.8, -0.4, 0.16], [1.4, -0.3, 0.14], [2.0, -0.2, 0.1], [2.8, -0.16, 0.08]];
+    const wakeRibbonLower = [[0.8, 0.4, 0.16], [1.4, 0.3, 0.14], [2.0, 0.2, 0.1], [2.8, 0.16, 0.08]];
+    [wakeRibbon, wakeRibbonLower].forEach((ribbon) => {
+      drawProjectedRibbon(ctx, ribbon, wakeRot, wakeScale, wakeCx, wakeCy, rgba(COLORS.wake, 0.12 + state.rearWing * 0.08), 8);
+      drawProjectedPolyline(ctx, ribbon, wakeRot, wakeScale, wakeCx, wakeCy, rgba(COLORS.blue, 0.44), 2.2, [9, 10], -performance.now() * 0.05);
+    });
   }
 
   function drawChassisScene(ctx, width, height) {
@@ -1487,31 +1823,78 @@
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(size, size);
-    ctx.fillStyle = rgba(color, alpha);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.08);
     ctx.beginPath();
-    ctx.moveTo(-1.26, -0.14);
-    ctx.lineTo(-0.88, -0.26);
-    ctx.lineTo(-0.2, -0.24);
-    ctx.lineTo(0.52, -0.16);
-    ctx.lineTo(0.9, -0.12);
-    ctx.lineTo(1.24, -0.06);
-    ctx.lineTo(1.24, 0.06);
-    ctx.lineTo(0.9, 0.12);
-    ctx.lineTo(0.52, 0.16);
-    ctx.lineTo(-0.2, 0.24);
-    ctx.lineTo(-0.88, 0.26);
-    ctx.lineTo(-1.26, 0.14);
+    ctx.ellipse(0.08, 0.58, 1.22, 0.22, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    const bodyGradient = ctx.createLinearGradient(-1.4, -0.2, 1.4, 0.3);
+    bodyGradient.addColorStop(0, rgba(mixRgb(color, COLORS.paper, 0.24), alpha));
+    bodyGradient.addColorStop(0.48, rgba(color, alpha));
+    bodyGradient.addColorStop(1, rgba(mixRgb(color, COLORS.dark, 0.18), alpha));
+    ctx.fillStyle = bodyGradient;
+    ctx.beginPath();
+    ctx.moveTo(-1.3, -0.12);
+    ctx.lineTo(-0.94, -0.24);
+    ctx.lineTo(-0.22, -0.22);
+    ctx.lineTo(0.54, -0.16);
+    ctx.lineTo(0.96, -0.12);
+    ctx.lineTo(1.28, -0.06);
+    ctx.lineTo(1.28, 0.06);
+    ctx.lineTo(0.96, 0.12);
+    ctx.lineTo(0.54, 0.16);
+    ctx.lineTo(-0.22, 0.22);
+    ctx.lineTo(-0.94, 0.24);
+    ctx.lineTo(-1.3, 0.12);
     ctx.closePath();
     ctx.fill();
-    ctx.fillRect(-1.44, -0.1, 0.34, 0.2);
+
+    ctx.fillStyle = rgba(COLORS.red, alpha * 0.92);
+    ctx.fillRect(-1.46, -0.1, 0.34, 0.2);
     ctx.fillRect(1.1, -0.18, 0.22, 0.36);
-    ctx.fillStyle = rgba(COLORS.dark, 0.2);
+    ctx.fillStyle = rgba(COLORS.cyan, alpha * 0.74);
+    ctx.fillRect(-0.18, -0.08, 1.28, 0.16);
+    ctx.fillStyle = rgba(COLORS.dark, 0.12 + alpha * 0.08);
+    ctx.fillRect(0.08, -0.06, 0.42, 0.12);
+
+    ctx.fillStyle = rgba(COLORS.dark, 0.18);
     ctx.beginPath();
     ctx.ellipse(-0.56, -0.32, 0.18, 0.12, 0, 0, Math.PI * 2);
     ctx.ellipse(-0.56, 0.32, 0.18, 0.12, 0, 0, Math.PI * 2);
     ctx.ellipse(0.82, -0.36, 0.22, 0.14, 0, 0, Math.PI * 2);
     ctx.ellipse(0.82, 0.36, 0.22, 0.14, 0, 0, Math.PI * 2);
     ctx.fill();
+
+    ctx.fillStyle = rgba(COLORS.paper, 0.22);
+    ctx.beginPath();
+    ctx.moveTo(-0.72, -0.08);
+    ctx.lineTo(0.62, -0.1);
+    ctx.lineTo(0.9, -0.06);
+    ctx.lineTo(0.72, 0.02);
+    ctx.lineTo(-0.62, 0.04);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(COLORS.dark, 0.3);
+    ctx.lineWidth = 0.04;
+    ctx.beginPath();
+    ctx.moveTo(-0.14, -0.12);
+    ctx.lineTo(0.24, -0.12);
+    ctx.lineTo(0.34, -0.02);
+    ctx.lineTo(0.34, 0.02);
+    ctx.lineTo(0.24, 0.12);
+    ctx.lineTo(-0.14, 0.12);
+    ctx.stroke();
+
+    ctx.fillStyle = rgba(COLORS.yellow, 0.22);
+    ctx.beginPath();
+    ctx.ellipse(-0.56, -0.32, 0.06, 0.04, 0, 0, Math.PI * 2);
+    ctx.ellipse(-0.56, 0.32, 0.06, 0.04, 0, 0, Math.PI * 2);
+    ctx.ellipse(0.82, -0.36, 0.07, 0.05, 0, 0, Math.PI * 2);
+    ctx.ellipse(0.82, 0.36, 0.07, 0.05, 0, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.restore();
   }
 
