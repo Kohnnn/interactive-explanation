@@ -33,22 +33,43 @@
     <section class="note-grid">
       <article class="note-section">
         <h2>Source snapshot</h2>
-        <p>Document the published page or source family, what was vendored, and the scope of the local route.</p>
+        <p>
+          Vendored from Ableton's Recipes chapter at
+          <code>learningsynths.ableton.com/en/recipes/</code>. The local route keeps the published
+          chapter shell and the fuller subtractive-synth runtime under the route tree so the
+          multi-control panels boot from local assets.
+        </p>
+        <ul class="plain-list">
+          <li>The archive preserves the published Recipes chapter instead of recasting it as a single custom synth widget.</li>
+          <li>Recipes is treated as the synthesis batch payoff because it combines several control families into one sustained scene.</li>
+        </ul>
       </article>
 
       <article class="note-section">
         <h2>Asset handoff</h2>
-        <p>List the local shell, runtime, and route-local assets that define the shipped replica.</p>
+        <ul class="plain-list">
+          <li><code>js/musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the chapter shell and subtractive-synth runtime.</li>
+          <li>Route-local inventory matches the rest of the shipped Learning Synths batch: shared fonts, text payloads, RNBO patch data, and preset catalogs.</li>
+          <li>Assets such as <code>presets/preset-catalog.json</code> and <code>rnbo/patches/learning-synth.json</code> stay on relative paths for subpath hosting.</li>
+        </ul>
       </article>
 
       <article class="note-section">
         <h2>Known deviations</h2>
-        <p>Record any deliberate local shell changes, provenance cleanup, or neutralized upstream surfaces.</p>
+        <ul class="plain-list">
+          <li>A shared footer carries the single original-page reference link; the upstream lesson shell is stripped from the public body.</li>
+          <li>Ableton feedback, privacy, language-switch, analytics, and cookie surfaces are removed from the public route.</li>
+          <li>Local chapter links are rewritten after mount so the shipped synth family stays internally navigable.</li>
+        </ul>
       </article>
 
       <article class="note-section">
         <h2>Validation guidance</h2>
-        <p>List the route-specific smoke expectations and the shared commands required after edits.</p>
+        <ul class="plain-list">
+          <li><code>node tools/check-public-surface.mjs .</code> keeps the public route footer-only.</li>
+          <li><code>node tools/smoke-bundle.mjs . --group music</code> (or <code>--route ableton-learning-synths-recipes</code>) verifies local script loading, a recipe slider update, and the play button's active state.</li>
+          <li>Smoke asserts the expected local asset counts and keeps the no-remote-playable-media guard clean after lesson boot and interaction.</li>
+        </ul>
       </article>
     </section>
 

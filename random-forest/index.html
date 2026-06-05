@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Random Forest</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Interactive introduction to bagging, feature randomness, voting, and ensemble behavior in random forests.">
   <meta property="og:title" content="Random Forest">
   <meta property="og:description" content="Interactive introduction to bagging, feature randomness, voting, and ensemble behavior in random forests.">
@@ -13,6 +13,7 @@
   <link rel="canonical" href="./">
   <link rel="icon" href="mlu_robot.5a492771.png">
   <link rel="stylesheet" href="styles.0f8a2143.css">
+  <link rel="stylesheet" href="./heading-guard.css">
   <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
 </head>
@@ -62,7 +63,7 @@
       </a>
       <h2 class="logo">Replica Hub</h2>
     </div>
-    <h1>Warm-up: can a vote beat one tree?<br></h1>
+    <h2 class="intro-hed">Warm-up: can a vote beat one tree?<br></h2>
     <p id="subtitle">The short answer is yes, if the trees are allowed to disagree for useful reasons.</p>
     <div aria-hidden="true" style="height: 1rem;"></div>
   </section>
@@ -215,7 +216,7 @@
   </section>
 
   <section id="resources" data-story-chapter="References">
-    <h1>Notes & Resources</h1>
+    <h2 class="resources-hed">Notes & Resources</h2>
     <p>To keep the main story concise, some details were left out. This walkthrough follows Breiman's implementation using Scikit-Learn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html?highlight=randomforest#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a>. The resources below go deeper into the history, theory, and tooling behind the model.</p>
     <p class="resource-item"><a href="https://link.springer.com/article/10.1023/A:1010933404324">Random Forests</a><br>(Leo Breiman, 2001).</p>
     <p class="resource-item"><a href="https://www.stat.berkeley.edu/~breiman/RandomForests/cc_graphics.htm">RAFT (RAndom Forest Tool)</a><br>(Leo Breiman; Adele Cutler).</p>
@@ -229,7 +230,7 @@
   <script src="js.a8267221.js"></script>
   <script src="indexRF.7579dc6d.js"></script>
   <script src="indexBarcode.c0641541.js"></script>
-  <script src="../shared/engineering-sandbox.js"></script>
+  <script defer src="../shared/engineering-sandbox.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>
 </html>

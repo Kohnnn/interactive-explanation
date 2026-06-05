@@ -162,6 +162,193 @@
         },
       ],
     },
+    airfoil: {
+      eyebrow: "Companion routes",
+      title: "Follow the flow into other force-and-fluid machines.",
+      summary: "Lift comes from pressure differences in moving air. These routes keep the same force-balance thinking and move it into a larger vehicle and a different working fluid.",
+      links: [
+        {
+          href: "../bicycle/",
+          label: "Bicycle",
+          description: "Trade airflow for ground contact and watch force, balance, and load transfer hold a rider up.",
+        },
+        {
+          href: "../naval-architecture/",
+          label: "Naval Architecture",
+          description: "Swap air for water and see buoyancy, pressure, and stability balance a moving hull.",
+        },
+      ],
+    },
+    bicycle: {
+      eyebrow: "Companion routes",
+      title: "Carry the force-balance intuition into other moving systems.",
+      summary: "The bike turns rider input into stable motion through forces, contact, and load transfer. These routes reuse that thinking in a wing and in a timed engine.",
+      links: [
+        {
+          href: "../airfoil/",
+          label: "Airfoil",
+          description: "Keep balancing forces, but in moving air, where pressure differences become lift.",
+        },
+        {
+          href: "../internal-combustion-engine/",
+          label: "Internal Combustion Engine",
+          description: "Follow torque and timed motion into the machine that could power a larger vehicle.",
+        },
+      ],
+    },
+    "internal-combustion-engine": {
+      eyebrow: "Companion routes",
+      title: "Compare timed motion across other mechanical systems.",
+      summary: "The engine links pistons, valves, and timing into controlled power. These routes show the same linked-motion logic at smaller scale and as a pure gear problem.",
+      links: [
+        {
+          href: "../mechanical-watch/",
+          label: "Mechanical Watch",
+          description: "See another timed machine that stores energy and releases it in precise increments.",
+        },
+        {
+          href: "../gears/",
+          label: "Gears",
+          description: "Strip motion transfer down to meshing teeth, ratios, torque, and contact geometry.",
+        },
+      ],
+    },
+    "naval-architecture": {
+      eyebrow: "Companion routes",
+      title: "Stay with pressure and fluid forces in related routes.",
+      summary: "Ship stability comes from buoyancy, pressure, and free-surface effects. These routes keep working with fluid forces and the wave behavior that moves through them.",
+      links: [
+        {
+          href: "../airfoil/",
+          label: "Airfoil",
+          description: "Move from water to air and watch pressure differences turn into lift.",
+        },
+        {
+          href: "../sound/",
+          label: "Sound",
+          description: "Follow pressure into waves and see how disturbances travel through a medium.",
+        },
+      ],
+    },
+    "earth-and-sun": {
+      eyebrow: "Companion routes",
+      title: "Keep the orbital geometry going in related routes.",
+      summary: "Seasons and day length come from orbits, tilt, and timing. These routes reuse that spatial-and-timing intuition in satellite positioning and a precise mechanical clock.",
+      links: [
+        {
+          href: "../gps/",
+          label: "GPS",
+          description: "Turn orbital geometry and timing into a position fix on the ground.",
+        },
+        {
+          href: "../mechanical-watch/",
+          label: "Mechanical Watch",
+          description: "Drop from celestial timekeeping into the gears that measure time by hand.",
+        },
+      ],
+    },
+    gps: {
+      eyebrow: "Companion routes",
+      title: "Trace timing and geometry into related systems.",
+      summary: "A position fix relies on orbital geometry and very precise timing. These routes expand the geometry above your head and the timing inside a small machine.",
+      links: [
+        {
+          href: "../earth-and-sun/",
+          label: "Earth and Sun",
+          description: "Step back to the orbits and tilt that frame where satellites and seasons come from.",
+        },
+        {
+          href: "../mechanical-watch/",
+          label: "Mechanical Watch",
+          description: "See how precise timing is produced mechanically, not just measured electronically.",
+        },
+      ],
+    },
+    "lights-and-shadows": {
+      eyebrow: "Companion routes",
+      title: "Follow light into the rest of the imaging routes.",
+      summary: "Once radiance, solid angles, and shadows make sense, these routes carry light into a lens system and into the color and compositing math that finishes an image.",
+      links: [
+        {
+          href: "../cameras-and-lenses/",
+          label: "Cameras and Lenses",
+          description: "Send that light through optics, focus, and depth of field to form a real image.",
+        },
+        {
+          href: "../color-spaces/",
+          label: "Color Spaces",
+          description: "Turn captured light into color and see how it is encoded and converted.",
+        },
+      ],
+    },
+    "cameras-and-lenses": {
+      eyebrow: "Companion routes",
+      title: "Continue down the imaging pipeline.",
+      summary: "Lenses turn light into a focused image. These routes sit on either side of that step: where the light comes from, and how the resulting color is encoded.",
+      links: [
+        {
+          href: "../lights-and-shadows/",
+          label: "Lights and Shadows",
+          description: "Back up to the radiance, area lights, and shadows that feed the lens.",
+        },
+        {
+          href: "../color-spaces/",
+          label: "Color Spaces",
+          description: "Move forward into encoding the captured image as color across gamuts.",
+        },
+      ],
+    },
+    "color-spaces": {
+      eyebrow: "Companion routes",
+      title: "Stay in the color and imaging routes.",
+      summary: "Color spaces define how light becomes encoded values. These routes show where that light originates and how encoded layers are blended together.",
+      links: [
+        {
+          href: "../cameras-and-lenses/",
+          label: "Cameras and Lenses",
+          description: "See the optics that form the image before it is encoded as color.",
+        },
+        {
+          href: "../alpha-compositing/",
+          label: "Alpha Compositing",
+          description: "Carry color into the math of opacity, coverage, and layered blending.",
+        },
+      ],
+    },
+    "alpha-compositing": {
+      eyebrow: "Companion routes",
+      title: "Round out the imaging routes.",
+      summary: "Compositing combines layers using opacity and coverage. These routes supply the color encoding it operates on and the lens optics that produce the source images.",
+      links: [
+        {
+          href: "../color-spaces/",
+          label: "Color Spaces",
+          description: "Step back to how color is encoded before layers are blended.",
+        },
+        {
+          href: "../lights-and-shadows/",
+          label: "Lights and Shadows",
+          description: "Trace the imagery further back to the light and shadows in the scene.",
+        },
+      ],
+    },
+    sound: {
+      eyebrow: "Companion routes",
+      title: "Carry wave and pressure intuition into related routes.",
+      summary: "Sound is pressure traveling as waves. These routes reuse that fluid-and-pressure thinking in a ship hull and bring periodic motion into trigonometric form.",
+      links: [
+        {
+          href: "../naval-architecture/",
+          label: "Naval Architecture",
+          description: "Keep working with pressure and fluids, this time holding up and moving a hull.",
+        },
+        {
+          href: "../sine-and-cosine/",
+          label: "Sine and Cosine",
+          description: "Move from physical waves to the trig functions that describe periodic motion.",
+        },
+      ],
+    },
   };
 
   function getSlug() {

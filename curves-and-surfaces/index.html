@@ -73,7 +73,7 @@
 <p>Moreover, we&rsquo;ll see how surfaces like that are a natural extension of plain two dimensional curves like the one below:</p>
 <div class="drawer_container full_width ratio_30" id="cs_curve_hero"></div>
 <p>Throughout this article I&rsquo;ll keep jumping back and forth between curves and surfaces to highlight how the ideas we develop for wiggly lines can be expanded onto three dimensional shells that we can shape.</p>
-<h1 id="defining-the-shape">Defining the Shape<a href="#defining-the-shape" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="defining-the-shape">Defining the Shape<a href="#defining-the-shape" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Before we build complicated curves and surfaces we first have to decide how we&rsquo;d like to control their shape. There are many ways to describe and mold these objects, but some of those ways are better than others. In the demonstration below I built a system that lets you change the shape of a <span class="text_red"><strong>curve</strong></span> by controlling its <span style="color:#000;"><strong>spiral‑ness</strong></span> and <span class="text_yellow"><strong>size</strong></span>:</p>
 <div class="drawer_container ratio_100" id="cs_spiral"></div>
 <div class="slider_black" id="cs_spiral_sl0"></div>
@@ -86,7 +86,7 @@
 <div class="drawer_container full_width ratio_50" id="cs_control_points2"></div>
 <p>With control points we can easily change where the curve starts, ends, and how it flows in the middle. Moreover, the shape of the lines connecting the control points roughly resembles the shape of the resulting curve. This system of control points is simple, yet very powerful.</p>
 <p>So far I&rsquo;ve been quite vague about the rules driving the shape of the resulting curve and the extent to which the control points affect it. I&rsquo;ll try to explain those underlying principles by building this system from a ground up. We&rsquo;ll also see how those ideas extend to surfaces, but before we construct these more complex elements we&rsquo;ll start with the simplest curve – a linear segment.</p>
-<h1 id="linear-segment">Linear Segment<a href="#linear-segment" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="linear-segment">Linear Segment<a href="#linear-segment" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>In the demonstration below you can drag the control points <strong>A</strong> and <strong>B</strong> around to change their position. The slider controls a virtual <span class="text_red"><strong>red pen</strong></span> that is used to draw a segment between those two points:</p>
 <div class="drawer_container full_width ratio_50" id="cs_linear_segment"></div>
 <div class="slider_red" id="cs_linear_segment_sl0"></div>
@@ -217,7 +217,7 @@ t = progress
 </table>
 </div>
 <p>The entire <span class="text_red"><strong>linear segment</strong></span> itself is ultimately created by infinitely many points constructed from all possible values of <strong>t</strong> between 0 and 1.</p>
-<h1 id="a-step-further">A Step Further<a href="#a-step-further" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="a-step-further">A Step Further<a href="#a-step-further" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>So far we&rsquo;ve been dealing with flat 2D segments, but nothing prevents us from doing the same operations in a three dimensional space. In the demonstration below you can control the position of points <strong>A</strong> and <strong>B</strong> in a 3D space by dragging them around. You can also change the viewing angle by dragging anywhere else. The <span class="text_red"><strong>slider</strong></span> controls a virtual pen that paints a <span class="text_red"><strong>linear segment</strong></span>:</p>
 <div class="drawer_container ratio_100" id="cs_linear_segment_3d"></div>
 <div class="slider_red" id="cs_linear_segment_3d_sl0"></div>
@@ -566,7 +566,7 @@ t = progress
 <p>The ideas behind two dimensional cubic Bézier curves naturally extend to the third dimension – the curve can twist and turn as it goes through space:</p>
 <div class="drawer_container ratio_100" id="cs_cubic_bezier_3d"></div>
 <p>We&rsquo;re not just here to talk about curves, so let&rsquo;s try to see how we can extend Bézier curves into surfaces.</p>
-<h1 id="bézier-patches">Bézier Patches<a href="#bézier-patches" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="bézier-patches">Bézier Patches<a href="#bézier-patches" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>When we were creating a simple surface we were sliding a straight segment along some other two linear segments. We can expand this idea to slide a <span class="text_yellow"><strong>straight segment</strong></span> along two <span class="text_purple"><strong>cubic Bézier curves</strong></span>:</p>
 <div class="drawer_container ratio_100" id="cs_cubic_linear_patch"></div>
 <div class="slider_s" id="cs_cubic_linear_patch_sl0"></div>
@@ -663,7 +663,7 @@ t = progress
 <div class="slider_s" id="cs_linear_patch_hats2_sl0"></div>
 <div class="slider_t" id="cs_linear_patch_hats2_sl1"></div>
 <p>Notice the symmetry in all those functions – ultimately there are only three unique shapes here, the others are their reflections and rotations.</p>
-<h1 id="beyond-cubic">Beyond Cubic<a href="#beyond-cubic" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="beyond-cubic">Beyond Cubic<a href="#beyond-cubic" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>While relatively flexible, simple cubic curves and surfaces have their limitations. For example, a <span class="text_red"><strong>cubic Bézier curve</strong></span> can have at most two &ldquo;bends&rdquo; – it&rsquo;s impossible to make it fit the <span style="color:#999"><strong>gray curve</strong></span>:</p>
 <div class="drawer_container full_width ratio_50" id="cs_cubic_fit"></div>
 <p>One approach to solve this problem is to build more complicated Bézier curves by increasing the number of control points. Thankfully, our method of linearly interpolating the linear interpolations that we used to upgrade quadratic Bézier curves to cubic ones allows us to add arbitrary number of control points. In the demonstration below you can see how a Bézier curve with <em>eight</em> control points is built:</p>
@@ -678,7 +678,7 @@ t = progress
 <div class="drawer_container full_width ratio_50" id="cs_septic_curve_plot"></div>
 <div class="slider_black" id="cs_septic_curve_plot_sl0"></div>
 <p>Single Bézier curves with many control points lack the property of <em>local control</em>, making them not as useful for expressing more complicated shapes, so for better or for worse we have to rethink our approach to designing complicated shapes.</p>
-<h1 id="splines">Splines<a href="#splines" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="splines">Splines<a href="#splines" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Instead of using a single curve with many control points, we can use multiple curves with few control points. In the demonstration below I put three <span class="text_yellow"><strong>cubic</strong></span> <span class="text_red"><strong>Bézier</strong></span> <span class="text_blue"><strong>curves</strong></span> that we can arrange to create more complex shapes:</p>
 <div class="drawer_container full_width ratio_50" id="cs_cubic_spline"></div>
 <p>While flexible, this setup is a bit cumbersome to use, as these three curves have gaps unless we <a href="#" class="link_button" onclick="cubic_spline_f0();return false;">connect their end points</a>. We can automate this connection process by having the last control point of the previous curve always match the first point of the next curve:</p>
@@ -706,7 +706,7 @@ t = progress
 <p>For two surfaces to be connected without a sharp edge we need the normals at the joining edge to be aligned in the same direction:</p>
 <div class="drawer_container ratio_100" id="cs_two_cubic_patches_normals"></div>
 <p>Note that even when the surfaces don&rsquo;t have any gaps it still requires a <a href="#" class="link_button" onclick="two_cubic_patches_normals_f0();return false;">lot of adjustments</a> to keep them connected and free of sharp edges. But that&rsquo;s not even the end of the difficulties that joined patches create.</p>
-<h1 id="curved-mirror-on-the-wall">Curved Mirror on The Wall<a href="#curved-mirror-on-the-wall" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="curved-mirror-on-the-wall">Curved Mirror on The Wall<a href="#curved-mirror-on-the-wall" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>It would be reasonable to think that removal of sharp edges is all it takes to create pretty surfaces, but when the surfaces are <em>reflective</em> we still have some work to do. In the demonstration below you can see a mirror-polished surface reflecting a <span class="text_red"><strong>red sphere</strong></span>. By dragging the slider you can bend that surface into an arc of a circle, the <span class="text_black"><strong>black curve</strong></span> below shows a cross section of the mirror&rsquo;s shape:</p>
 <div class="drawer_container ratio_100" id="cs_cubic_patch_mirror"></div>
 <div id="cs_cubic_patch_mirror_sl0"></div>
@@ -785,7 +785,7 @@ t = progress
 <div class="drawer_container full_width ratio_50" id="cs_continuities"></div>
 <div id="cs_continuities_seg0"></div>
 <p>While different tricks and affordances can be employed to maintain these continuities, we should look for a better way to design complex curves and surfaces – a method that has all these continuities built-in.</p>
-<h1 id="building-the-basis">Building the Basis<a href="#building-the-basis" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="building-the-basis">Building the Basis<a href="#building-the-basis" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Let&rsquo;s take a step back and look at the weights of the single Bézier curve with eight control points that we&rsquo;ve already dismissed:</p>
 <div class="drawer_container full_width ratio_50" id="cs_septic_curve_plot2"></div>
 <div class="slider_black" id="cs_septic_curve_plot2_sl0"></div>
@@ -830,7 +830,7 @@ t = progress
 <div class="slider_ocean" id="cs_spline_cubic_knots_plot2_sl1"></div>
 <p>By moving three knots of a cubic B‑spline curve into a single location, we can achieve a sharp corner reigned by just a single control point. With uniformly distributed knots we&rsquo;d need to overlap <em>three</em> consecutive control points to get a sharp corner.</p>
 <p>The curves we&rsquo;ve been playing with are known as a <em>non-uniform</em> B‑splines. However, the world of B‑splines has one more trick up its sleeve.</p>
-<h1 id="b8209spline-extravaganza">B‑spline Extravaganza<a href="#b8209spline-extravaganza" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="b8209spline-extravaganza">B‑spline Extravaganza<a href="#b8209spline-extravaganza" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>So far each of the weighting functions was equally important, but we can easily break that assumption by making some functions more important than others by changing their <em>relative</em> weights. For example, witness what happens to the curve as we modify the <span class="text_red"><strong>weight</strong></span> of the 4<sup>th</sup> control point that I&rsquo;ve marked with a letter <strong>D</strong>:</p>
 <div class="drawer_container full_width ratio_50" id="cs_spline_cubic_weight_plot"></div>
 <div class="slider_black" id="cs_spline_cubic_weight_plot_sl0"></div>
@@ -851,7 +851,7 @@ t = progress
 <p>You may have also noticed that all the meshes of control points we&rsquo;ve been dealing with were rectangular in nature. This heavily limits the types of surfaces we can create. For example, it&rsquo;s impossible to express a surface like the one below using a single B‑spline surface without having to somehow manually stitch it at the edges:</p>
 <div class="drawer_container ratio_100" id="cs_subdiv2"></div>
 <p>However, the entire point of using B‑spline curves and surfaces was to ensure automatic continuity and smoothness in the first place. Let&rsquo;s go back to the drawing board for the last time to devise a scheme that will help to solve all these problems.</p>
-<h1 id="cutting-corners">Cutting Corners<a href="#cutting-corners" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="cutting-corners">Cutting Corners<a href="#cutting-corners" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Instead of an actual drawing board let&rsquo;s start with a clean sheet of paper instead. Those usually come in rectangular shapes, but if we wanted a piece of paper to have a nice rounded corner we&rsquo;d have to do some work. One of the easiest way to do it is to repeatedly <span class="text_red"><strong>cut off</strong></span> the sharp corners:</p>
 <div class="drawer_container ratio_70" id="cs_paper"></div>
 <div class="slider_red" id="cs_paper_sl0"></div>
@@ -880,7 +880,7 @@ t = progress
 <div class="drawer_container full_width ratio_50" id="cs_curve_subdiv_topo"></div>
 <div class="slider_black" id="cs_curve_subdiv_topo_sl0"></div>
 <p>In the vicinity of those branchy points the curve is no longer a B‑spline curve, as those can&rsquo;t fork, but in the &ldquo;regular&rdquo; areas we still use the same subdivision rules that gave us the well-behaved cubic B‑splines functions. The subdivision curves <em>extend</em> the power of B‑splines curves into more arbitrary connectivity. The real magic starts when we employ subdivision rules for surfaces.</p>
-<h1 id="subdivision-surfaces">Subdivision Surfaces<a href="#subdivision-surfaces" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="subdivision-surfaces">Subdivision Surfaces<a href="#subdivision-surfaces" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Inspired by Chaikin&rsquo;s original work for corner cutting in a quadratic B‑spline, <a href="https://en.wikipedia.org/wiki/Edwin_Catmull">Ed Catmull</a> and <a href="https://en.wikipedia.org/wiki/James_H._Clark">James Clark</a> have <a href="https://people.eecs.berkeley.edu/~sequin/CS284/PAPERS/CatmullClark_SDSurf.pdf">extended</a> these ideas to surfaces by creating <a href="https://en.wikipedia.org/wiki/Catmull%E2%80%93Clark_subdivision_surface">Catmull–Clark subdivision surfaces</a>. First, let&rsquo;s see them in action starting with a simple mesh of 4×4 vertices and 9 quadrilateral faces:</p>
 <div class="drawer_container ratio_100" id="cs_subdiv_base_patch"></div>
 <div id="cs_subdiv_base_patch_sl0"></div>
@@ -910,11 +910,11 @@ t = progress
 <div id="cs_subdiv_hero2_sl0"></div>
 <p>This example also has modified the subdivision rules on the edges to use cubic Chaikin subdivision rules. This ensures that the surface doesn&rsquo;t recede from the edges of the initial control mesh like we&rsquo;ve seen happen for a simple subdivided patch.</p>
 <p>Subdivision surfaces make it very convenient to describe perfectly smooth surfaces using relatively simple meshes. To achieve sharper edges one can either move the points closer together, or use <a href="https://graphics.pixar.com/library/Geri/paper.pdf">extensions</a> of Catmull-Clark subdivision scheme that allow specifying edge sharpness.</p>
-<h1 id="further-watching-and-reading">Further Watching and Reading<a href="#further-watching-and-reading" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="further-watching-and-reading">Further Watching and Reading<a href="#further-watching-and-reading" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p><a href="https://pomax.github.io/bezierinfo/">A Primer on Bézier Curves</a> by Mike Kamermans is probably the best resource on the web dedicated to Bézier curves. Over the course of the extremely detailed article the author goes over a myriad of topics related to the curves, some <a href="https://pomax.github.io/bezierinfo/#matrix">very theoretical</a> and some <a href="https://pomax.github.io/bezierinfo/#arclengthapprox">very pragmatic</a>. The site truly is one of the internet&rsquo;s gems.</p>
 <p>For a more advanced set of videos on topics related to curves and surfaces I recommend Keenan Crane&rsquo;s series on <a href="https://www.youtube.com/playlist?list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS">Discrete Differential Geometry</a>. Keenan is a <a href="https://www.cs.cmu.edu/~kmcrane/">professor</a> at Carnegie Mellon University and over the course of his lectures he does an excellent job of explaining the concepts with well made visual cues, while avoiding bogging the viewer down with <em>too</em> much formalism.</p>
 <p>Finally, <a href="http://www.farinhansford.com/books/cagd/">Curves and Surfaces for CAGD</a> by Gerald Farin is a very good textbook on all the topics I&rsquo;ve discussed here any many more. The author does a much deeper dive into the underlying mathematics and the formulas are accompanied by well written explanations.</p>
-<h1 id="final-words">Final Words<a href="#final-words" class="hanchor" ariaLabel="Anchor"><img src="./images/anchor.png" width="16px" height="8px"/></a> </h1>
+<h1 id="final-words">Final Words<a href="#final-words" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>Ed Catmull later co-founded Pixar, and ever since the short film <a href="https://en.wikipedia.org/wiki/Geri%27s_Game">Geri&rsquo;s Game</a>, subdivision surfaces have been used in all of Pixar&rsquo;s movies. Catmull and Clark&rsquo;s invention made it easier for great storytellers to express themselves through computer graphics.</p>
 <p>I find it fascinating that simple rules of repeated linear interpolations of straight segments end up creating delightful Bézier curves. Every letter you read on this website was crafted using Bézier curves, the primary building blocks of fonts.</p>
 <p>Designers who shape exteriors of everyday objects or tweak the shapes used in 2D graphics focus on the visual form of their creations, but their creative freedom is unlocked by carefully composed mathematical formulas that power various design tools. I think it&rsquo;s charming that simple and unassuming equations end up creating beautiful curves and surfaces.</p>

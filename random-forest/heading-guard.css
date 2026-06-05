@@ -1,0 +1,47 @@
+/*
+  Route-local heading guard for random-forest.
+  The in-body content titles were demoted from <h1> to <h2> (with .intro-hed /
+  .resources-hed classes) so the page has a single <h1> (the engineering-sandbox
+  hero) for accessibility. These rules replicate the original tag-bound
+  "#introduction h1" and "section#resources h1" styling so the demoted headings
+  render identically. Scoped to their sections to avoid the .logo h2.
+*/
+#introduction .intro-hed {
+  font-size: 4rem;
+  padding: 1rem;
+  max-width: 50%;
+  color: #f5f5f5;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+section#resources .resources-hed {
+  font-size: 1.2rem;
+  color: #fff;
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+  max-width: 40rem;
+  text-align: left;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  #introduction .intro-hed {
+    padding: 0;
+    max-width: none;
+  }
+
+  section#resources .resources-hed {
+    padding-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #introduction .intro-hed {
+    padding: 0;
+    max-width: none;
+  }
+
+  section#resources .resources-hed {
+    padding-top: 1rem;
+  }
+}

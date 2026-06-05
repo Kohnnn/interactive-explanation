@@ -1097,9 +1097,11 @@ body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] .pag
   padding: 0 1rem;
 }
 
+body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] .page-header h2,
 body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] .page-header h3 {
   margin: 0;
   font-size: clamp(1.45rem, 2vw, 1.85rem);
+  line-height: 1.2;
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] .page-header p {
@@ -1269,6 +1271,34 @@ body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] #reference-footer {
   width: min(64rem, calc(100vw - 2rem));
+}
+
+/* Family-wide practice polish: consistent widget spacing, clearer focus label,
+   and steadier headings across every Ableton Learning Music route. */
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget,
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget-drumpad,
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget-pianoroll {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface > .body-text + .body-text {
+  margin-top: 1.25rem;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label {
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label strong {
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .page-header h2 {
+  letter-spacing: -0.01em;
 }
 
 body[data-story-shell="engineering-sandbox"] .story-legacy-title {

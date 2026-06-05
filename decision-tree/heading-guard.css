@@ -1,0 +1,27 @@
+/*
+  Route-local heading guard for decision-tree.
+  The in-body content title was demoted from <h1> to <h2 class="title-hed">
+  so the page has a single <h1> (the engineering-sandbox hero) for accessibility.
+  These rules replicate the original tag-bound "#title h1" styling so the
+  demoted heading renders identically. Scoped to #title to avoid the .logo h2.
+*/
+#title .title-hed {
+  font-size: 5rem;
+  padding: 1rem;
+  color: #fff;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+@media (max-width: 850px) {
+  #title .title-hed {
+    font-size: 2.7rem;
+    padding: 2.5rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #title .title-hed {
+    font-size: 2.7rem;
+    padding: 2.5rem 1rem;
+  }
+}

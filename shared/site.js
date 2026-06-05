@@ -801,7 +801,58 @@ async function initParity() {
   }
 }
 
+function enhanceAccessibility() {
+  const main = document.querySelector("main.site-page");
+  if (!main) {
+    return;
+  }
+
+  if (!main.id) {
+    main.id = "main";
+  }
+  if (!main.hasAttribute("tabindex")) {
+    main.setAttribute("tabindex", "-1");
+  }
+
+  // Skip-to-content link (WCAG 2.4.1). Injected as the first focusable element.
+  if (!document.querySelector(".skip-link")) {
+    const skipLink = document.createElement("a");
+    skipLink.className = "skip-link";
+    skipLink.href = `#${main.id}`;
+    skipLink.textContent = "Skip to main content";
+    skipLink.addEventListener("click", function () {
+      main.focus({ preventScroll: false });
+    });
+    document.body.insertBefore(skipLink, document.body.firstChild);
+  }
+
+  // Landmark labelling for the home atlas.
+  if (document.body.dataset.pageType === "home") {
+    main.setAttribute("aria-label", "Interactive explanation replica atlas");
+
+    const inventoryToolbar = document.querySelector(".inventory-toolbar");
+    if (inventoryToolbar && !inventoryToolbar.getAttribute("role")) {
+      inventoryToolbar.setAttribute("role", "search");
+      inventoryToolbar.setAttribute("aria-label", "Filter routes");
+    }
+  }
+
+  // Wrap the docs back-link in a labelled navigation landmark.
+  if (document.body.dataset.pageType === "docs") {
+    main.setAttribute("aria-label", "Replica documentation");
+
+    const backLink = document.querySelector(".back-link");
+    if (backLink && backLink.parentElement && backLink.parentElement.tagName !== "NAV") {
+      const nav = document.createElement("nav");
+      nav.setAttribute("aria-label", "Documentation breadcrumb");
+      backLink.parentElement.insertBefore(nav, backLink);
+      nav.appendChild(backLink);
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  enhanceAccessibility();
   initHome();
   initParity();
 });

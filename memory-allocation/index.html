@@ -151,7 +151,7 @@ programs request and return memory.  <code>malloc</code> and <code>free</code> a
 first introduced in a recognisable form in UNIX v7 in 1979(!). Let's take a look
 at a short C program demonstrating their use.</p>
 <blockquote class="haskie">
-<img src="./images/haskie-concerned-200px.png" />
+<img src="./images/haskie-concerned-200px.png" alt="" />
 <p>
   Woah, hold on. I've never written any C code before. Will I still be able
   to follow along?
@@ -205,7 +205,7 @@ buttons. The ticks along the slider represent calls to <code>malloc</code> and <
   <free addr="0xf"></free>
 </div>
 <blockquote class="haskie">
-<img src="./images/haskie-confused-200px.png">
+<img src="./images/haskie-confused-200px.png" alt="">
 <p>
   Wait a sec... What is <code>malloc</code> actually returning as a value?
   What does it mean to "give" memory to a program?
@@ -358,7 +358,7 @@ allocation in our allocation list, and shrink the free list entry accordingly.</
   <malloc id=1 size=4></malloc>
 </div>
 <blockquote class="haskie">
-<img src="./images/haskie-confused-200px.png">
+<img src="./images/haskie-confused-200px.png" alt="">
 <p>
   Where do we save allocations and free list entries? Aren't we pretending our
   computer only has 32 bytes of memory?
@@ -463,7 +463,7 @@ is in at the end.</p>
 blocks of 3 bytes. If we had to service a <code>malloc(6)</code>, while we have enough free
 memory in theory, we wouldn't be able to.  This is called "fragmentation."</p>
 <blockquote class="haskie">
-<img src="./images/haskie-confused-200px.png" />
+<img src="./images/haskie-confused-200px.png" alt="" />
 <p>
   Couldn't we rearrange the memory to get a block of 6 contiguous bytes? Some
   sort of defragmentation process?
@@ -507,7 +507,7 @@ one example. Programs will call <code>malloc</code> and <code>free</code> in ver
 depending on what they do, which makes it challenging to design an allocator
 that always performs well.</p>
 <blockquote class="haskie">
-<img src="./images/haskie-confused-200px.png" />
+<img src="./images/haskie-confused-200px.png" alt="" />
 <p>
   After the first <code>malloc</code>, the start of the free list seems to fall
   out of sync with allocated memory. Is that a bug in the visualisation?
@@ -561,7 +561,7 @@ service that <code>malloc(6)</code>. The trade-off here is that reserving a segm
 memory for smaller allocations gives you less memory to work with for bigger
 ones.</p>
 <blockquote class="haskie">
-<img src="./images/haskie-triumphant-200px.png" />
+<img src="./images/haskie-triumphant-200px.png" alt="" />
 <p>
   Hey, <a simulation="segmented-1" position=4>the first allocation in the dark
   grey free list</a> is 3 bytes! You said this was for allocations 4 bytes and
@@ -608,7 +608,7 @@ Inline bookkeeping</h2>
 information gets stored, and I gave an unsatisfying answer about how it's
 stored in some other area of memory we've reserved for ourselves?</p>
 <blockquote class="haskie">
-<img src="./images/haskie-concerned-200px.png" />
+<img src="./images/haskie-concerned-200px.png" alt="" />
 <p>
   Yes...
 </p>
@@ -633,7 +633,7 @@ first byte of the allocation, here's the layout of a block:</p>
 it's a block containing 29 bytes of memory. The value 1 at <code>0x1</code> indicates that
 the block is free memory.</p>
 <blockquote class="haskie">
-<img src="./images/haskie-concerned-200px.png" />
+<img src="./images/haskie-concerned-200px.png" alt="" />
 <p>
   We store the <span class="size">size</span> twice? Isn't that wasteful?
 </p>
@@ -696,7 +696,7 @@ properly.</p>
 <p>Allocators that store bookkeeping information like this alongside allocations
 are called "boundary tag allocators."</p>
 <blockquote class="haskie">
-<img src="./images/haskie-concerned-200px.png" />
+<img src="./images/haskie-concerned-200px.png" alt="" />
 <p>
   What's stopping a program from modifying the bookkeeping information? Wouldn't
   that completely break memory?
