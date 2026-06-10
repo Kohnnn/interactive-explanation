@@ -1,5 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const cliArgs = process.argv.slice(2);
 
@@ -23,7 +26,7 @@ function getFlagValueIndices() {
 
 const flagValueIndices = getFlagValueIndices();
 const explicitRoot = cliArgs.find((arg, index) => !arg.startsWith("--") && !flagValueIndices.has(index));
-const rootDir = path.resolve(explicitRoot || path.join(process.cwd(), "interactive-explanation"));
+const rootDir = path.resolve(explicitRoot || defaultRoot);
 const manifestPath = path.join(rootDir, "routes.manifest.json");
 const pagesPath = path.join(rootDir, "pages.json");
 

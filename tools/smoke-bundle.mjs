@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import http from "node:http";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+
+const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const cliArgs = process.argv.slice(2);
 
@@ -41,7 +44,7 @@ const explicitRootArg = cliArgs.find((arg, index) => {
   return !previous || !previous.startsWith("--");
 });
 
-const rootDir = path.resolve(explicitRootArg || path.join(process.cwd(), "interactive-explanation"));
+const rootDir = path.resolve(explicitRootArg || defaultRoot);
 const port = Number(process.env.SMOKE_PORT || 4173);
 const host = "127.0.0.1";
 const mountPath = "/interactive-explanation/";

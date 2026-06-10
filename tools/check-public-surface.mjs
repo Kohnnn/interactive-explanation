@@ -1,14 +1,21 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const rootDir = path.resolve(process.argv[2] || path.join(process.cwd(), "interactive-explanation"));
-const rootPublicFiles = ["index.html", "pages.json", "routes.manifest.json"];
+const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const rootDir = path.resolve(process.argv[2] || defaultRoot);
+const rootManifestFiles = ["pages.json", "routes.manifest.json"];
+const rootPublicFiles = fs
+  .readdirSync(rootDir, { withFileTypes: true })
+  .filter((entry) => entry.isFile())
+  .map((entry) => entry.name)
+  .filter((name) => [".html", ".js"].includes(path.extname(name)) || rootManifestFiles.includes(name));
 const siteDirs = fs
   .readdirSync(rootDir, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .filter((name) => !name.startsWith("."))
-  .filter((name) => !["docs", "shared", "tools"].includes(name));
+  .filter((name) => !["docs", "shared", "tools", "node_modules"].includes(name));
 
 const includeExtensions = new Set([".html", ".js", ".md"]);
 const ignoredPathFragments = [

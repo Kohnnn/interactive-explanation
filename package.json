@@ -1,0 +1,17 @@
+{
+  "name": "interactive-explanation",
+  "version": "1.0.0",
+  "description": "Self-contained static site of interactive-explanation replicas (atlas + route folders).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node tools/sync-route-metadata.mjs .",
+    "audit": "node tools/check-public-surface.mjs .",
+    "smoke": "node tools/smoke-bundle.mjs .",
+    "check": "node --check shared/site.js && node --check shared/engineering-sandbox.js && node --check shared/public-footer.js && node --check tools/check-public-surface.mjs && node --check tools/sync-route-metadata.mjs && node --check tools/smoke-bundle.mjs",
+    "test": "npm run sync && npm run audit && npm run check"
+  },
+  "devDependencies": {
+    "playwright": "1.60.0"
+  }
+}
