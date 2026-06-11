@@ -1,8 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import http from "node:http";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import "../shared/route-families.js";
+import { createSmokeServer } from "./smoke/server.mjs";
+
+const RouteFamilies = globalThis.RouteFamilies;
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -62,32 +65,6 @@ function phaseLog(message) {
   rawConsoleLog(message);
 }
 
-const contentTypes = {
-  ".css": "text/css; charset=utf-8",
-  ".eot": "application/vnd.ms-fontobject",
-  ".gif": "image/gif",
-  ".html": "text/html; charset=utf-8",
-  ".ico": "image/x-icon",
-  ".jpeg": "image/jpeg",
-  ".jpg": "image/jpeg",
-  ".js": "application/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".m4a": "audio/mp4",
-  ".md": "text/markdown; charset=utf-8",
-  ".mjs": "application/javascript; charset=utf-8",
-  ".mp3": "audio/mpeg",
-  ".otf": "font/otf",
-  ".opus": "audio/ogg",
-  ".png": "image/png",
-  ".svg": "image/svg+xml",
-  ".ttf": "font/ttf",
-  ".txt": "text/plain; charset=utf-8",
-  ".wav": "audio/wav",
-  ".webm": "video/webm",
-  ".woff": "font/woff",
-  ".woff2": "font/woff2",
-};
-
 const rememberDownloadCardNames = [
   "intro_a",
   "intro_b",
@@ -132,62 +109,11 @@ const selectedGroups = new Set(getArgValues("--group"));
 const selectedRoutes = new Set(getArgValues("--route"));
 
 function inferRouteFamily(route) {
-  if (["blockchain-101-combined-flow", "primary-interactive-hub", "music-interactive-hub"].includes(route.slug)) {
-    return "custom";
-  }
-
-  const referenceUrl = route.referenceUrl || "";
-
-  if (/ncase\.me|ncase\.itch\.io|github\.com\/ncase/i.test(referenceUrl)) {
-    return "ncase";
-  }
-  if (/mlu-explain\.github\.io/i.test(referenceUrl)) {
-    return "mlu";
-  }
-  if (/setosa\.io/i.test(referenceUrl)) {
-    return "setosa";
-  }
-  if (/andersbrownworth\.com/i.test(referenceUrl)) {
-    return "anders";
-  }
-  if (/ciechanow\.ski/i.test(referenceUrl)) {
-    return "engineering-longform";
-  }
-  if (/teoria\.com/i.test(referenceUrl)) {
-    return "teoria";
-  }
-  if (/learningmusic\.ableton\.com|learningsynths\.ableton\.com/i.test(referenceUrl)) {
-    return "ableton";
-  }
-  if (/musicmap\.info/i.test(referenceUrl)) {
-    return "musicmap";
-  }
-  if (/samwho\.dev/i.test(referenceUrl)) {
-    return "samwho";
-  }
-  if (/joshuahhh\.com/i.test(referenceUrl)) {
-    return "horowitz";
-  }
-  if (/sassnow\.ski/i.test(referenceUrl)) {
-    return "sassnowski";
-  }
-
-  return "custom";
+  return RouteFamilies.classifySmokeFamily(route);
 }
 
 function inferRouteGroups(route) {
-  const family = inferRouteFamily(route);
-  const groups = new Set([family]);
-
-  if (
-    ["teoria", "musicmap"].includes(family) ||
-    route.slug === "music-interactive-hub" ||
-    /learningmusic\.ableton\.com|learningsynths\.ableton\.com|musiclab\.chromeexperiments\.com/i.test(route.referenceUrl || "")
-  ) {
-    groups.add("music");
-  }
-
-  return groups;
+  return RouteFamilies.classifySmokeGroups(route);
 }
 
 function shouldRunSlug(slug) {
@@ -219,53 +145,7 @@ function exists(relativePath) {
   return shouldRunSlug(slug);
 }
 
-function serveFile(req, res) {
-  const requestUrl = new URL(req.url, `http://${host}:${port}`);
-
-  if (requestUrl.pathname === "/") {
-    res.writeHead(302, { Location: mountPath });
-    res.end();
-    return;
-  }
-
-  if (!requestUrl.pathname.startsWith(mountPath)) {
-    res.writeHead(404);
-    res.end("Not found");
-    return;
-  }
-
-  let relativePath = decodeURIComponent(requestUrl.pathname.slice(mountPath.length));
-  if (!relativePath || relativePath.endsWith("/")) {
-    relativePath = `${relativePath}index.html`;
-  }
-
-  const fullPath = path.resolve(rootDir, relativePath);
-  if (!fullPath.startsWith(rootDir)) {
-    res.writeHead(403);
-    res.end("Forbidden");
-    return;
-  }
-
-  if (!fs.existsSync(fullPath) || fs.statSync(fullPath).isDirectory()) {
-    res.writeHead(404);
-    res.end("Not found");
-    return;
-  }
-
-  const ext = path.extname(fullPath).toLowerCase();
-  res.writeHead(200, {
-    "Cache-Control": "no-store",
-    "Content-Type": contentTypes[ext] || "application/octet-stream",
-  });
-  fs.createReadStream(fullPath).pipe(res);
-}
-
-function startServer() {
-  const server = http.createServer(serveFile);
-  return new Promise((resolve) => {
-    server.listen(port, host, () => resolve(server));
-  });
-}
+const { start: startServer } = createSmokeServer({ rootDir, host, port, mountPath });
 
 function assert(condition, message) {
   if (!condition) {

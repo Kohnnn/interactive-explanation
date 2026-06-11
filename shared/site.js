@@ -1,9 +1,3 @@
-const LOCAL_HUB_SLUGS = new Set([
-  "blockchain-101-combined-flow",
-  "music-interactive-hub",
-  "primary-interactive-hub",
-]);
-
 const FAMILY_PRIORITY = {
   "local-hubs": -20,
   "engineering-longform": -10,
@@ -185,40 +179,7 @@ function getFamilyKey(page) {
     return page.familyKey;
   }
 
-  if (LOCAL_HUB_SLUGS.has(page.slug) || page.referenceMode === "neutral" || !page.referenceUrl) {
-    return "local-hubs";
-  }
-
-  const host = getReferenceHost(page);
-
-  if (host === "ncase.me" || host === "ncase.itch.io") {
-    return "nicky-case";
-  }
-  if (host === "mlu-explain.github.io") {
-    return "mlu-explain";
-  }
-  if (host === "setosa.io") {
-    return "setosa";
-  }
-  if (host === "andersbrownworth.com") {
-    return "anders-brownworth";
-  }
-  if (host === "ciechanow.ski") {
-    return "engineering-longform";
-  }
-  if (host === "learningmusic.ableton.com" || host === "learningsynths.ableton.com") {
-    return "ableton";
-  }
-  if (host === "teoria.com") {
-    return "teoria";
-  }
-  if (host === "musiclab.chromeexperiments.com" || host === "musicmap.info") {
-    return "music-tools";
-  }
-  if (host === "samwho.dev") {
-    return "samwho";
-  }
-  return "independent-labs";
+  return RouteFamilies.classifySiteFamily(page);
 }
 
 function enrichPage(page, manifestIndex) {
@@ -750,43 +711,35 @@ async function initParity() {
       const article = document.createElement("article");
       article.className = "module-card";
 
-      const sourceFiles = module.sourceFiles
-        .map(function (sourceFile) {
-          return '<span class="chip">' + sourceFile + "</span>";
-        })
-        .join("");
+      article.appendChild(createElement("h3", null, module.moduleId));
 
-      const notes = module.notes
-        .map(function (note) {
-          return "<li>" + note + "</li>";
-        })
-        .join("");
+      const originalBehavior = createElement("p", "meta-line");
+      originalBehavior.appendChild(createElement("strong", null, "Original behavior:"));
+      originalBehavior.appendChild(document.createTextNode(" " + module.originalBehavior));
+      article.appendChild(originalBehavior);
 
-      const evidence = module.evidence
-        .map(function (item) {
-          return "<li>" + item + "</li>";
-        })
-        .join("");
+      const localStatus = createElement("p", "meta-line");
+      localStatus.appendChild(createElement("strong", null, "Local status:"));
+      localStatus.appendChild(document.createTextNode(" " + module.localStatus));
+      article.appendChild(localStatus);
 
-      article.innerHTML =
-        "<h3>" +
-        module.moduleId +
-        "</h3>" +
-        '<p class="meta-line"><strong>Original behavior:</strong> ' +
-        module.originalBehavior +
-        "</p>" +
-        '<p class="meta-line"><strong>Local status:</strong> ' +
-        module.localStatus +
-        "</p>" +
-        '<div class="chip-list">' +
-        sourceFiles +
-        "</div>" +
-        '<ul class="plain-list compact">' +
-        notes +
-        "</ul>" +
-        '<ul class="plain-list compact">' +
-        evidence +
-        "</ul>";
+      const sourceFiles = createElement("div", "chip-list");
+      module.sourceFiles.forEach(function (sourceFile) {
+        sourceFiles.appendChild(createElement("span", "chip", sourceFile));
+      });
+      article.appendChild(sourceFiles);
+
+      const notes = createElement("ul", "plain-list compact");
+      module.notes.forEach(function (note) {
+        notes.appendChild(createElement("li", null, note));
+      });
+      article.appendChild(notes);
+
+      const evidence = createElement("ul", "plain-list compact");
+      module.evidence.forEach(function (item) {
+        evidence.appendChild(createElement("li", null, item));
+      });
+      article.appendChild(evidence);
 
       mount.appendChild(article);
     });

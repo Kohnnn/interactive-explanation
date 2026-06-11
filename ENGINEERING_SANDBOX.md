@@ -11,6 +11,30 @@
 
 ---
 
+## 0. Implementation Status (updated 2026-06-11)
+
+The audit below is preserved as written. Implementation has since shipped the following in the
+nested `interactive-explanation` repo:
+
+- **Done:** M0.2 (AGENTS.md tracked), M0.3 (`package.json` + lockfile, pinned `playwright@1.60.0`,
+  npm scripts), M0.4 (`.github/workflows/ci.yml`; smoke subset scoped to `--group ncase`, the
+  verified-green gate), M1.1 (`mlu-home.html` deleted), M1.2 (policy audit now scans all root
+  `.html`/`.js` files + the two JSON manifests), M1.3 (root `../AGENTS.md` commands aligned),
+  M3.3 (tool default root derived from `import.meta.url`), M3.1 (parity rendering rebuilt with
+  `createElement`/`textContent`; untrusted content renders inert), M2.1 (host→family knowledge
+  extracted to `shared/route-families.js`, dual-consumed by `site.js` and `smoke-bundle.mjs`;
+  identical classification verified for all 80 routes), M2.3 (`node:test` suite under
+  `tools/tests/`: 27 tests covering family logic, manifest validation, and policy regexes).
+- **Partial:** M2.2 — the self-contained static server was extracted to `tools/smoke/server.mjs`
+  (unit-tested; verbose `--group ncase` output verified byte-identical before/after). The full
+  scenario/logger decomposition remains deferred: its acceptance gate is an identical *full-suite*
+  verbose-log diff, which cannot be produced until the pre-existing `chrome-music-lab-song-maker`
+  Web MIDI smoke failure is resolved and CI runs the suite.
+- **Still open (owner-blocked):** M0.1 (git canonicalization, Open Q1), M3.2 (`ev/` relocation,
+  Open Q3), and the remainder of M2.2.
+
+---
+
 ## 1. Executive Summary
 
 **Overall health grade: B−**
