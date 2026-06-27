@@ -83,11 +83,37 @@
           <span class="search-field__label">Search routes</span>
           <input
             type="search"
-            placeholder="Search title, slug, summary, or source host"
+            placeholder="Search title, slug, summary, topic tag, or source host"
             autocomplete="off"
             data-filter-query
           >
         </label>
+
+        <div class="toolbar-row">
+          <label class="select-field">
+            <span class="filter-group__label">Sort routes</span>
+            <select data-sort-select>
+              <option value="featured">Featured first</option>
+              <option value="new">Newest first</option>
+              <option value="title">Title A–Z</option>
+            </select>
+          </label>
+
+          <div class="filter-group view-toggle-group">
+            <div class="filter-group__label">View mode</div>
+            <div class="view-toggle" data-view-toggle>
+              <button class="view-toggle__button is-active" type="button" value="grouped">Grouped by family</button>
+              <button class="view-toggle__button" type="button" value="flat">Flat list</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group__label">Topic filter</div>
+          <div class="filter-pills" data-tag-filters>
+            <div class="empty-state">Loading topic filters...</div>
+          </div>
+        </div>
 
         <div class="filter-group">
           <div class="filter-group__label">Family filter</div>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stargazing Dashboard Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local stargazing-dashboard route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Route documentation</p>
+      <h1>Stargazing Dashboard</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/stargazing-dashboard/</code> is an original Engineering Sandbox
+        lab that builds a first-person topocentric sky dome. It provides a time and location engine, bundled
+        star/constellation/meteor data, ephemeris-style planet positions, guided target navigation, and a
+        telemetry HUD overlay. Wave 1 freezes the page contracts only; the canvas, state store, controls,
+        catalog hooks, scene adapter, and HUD adapter are safe placeholders so later waves can add astronomy
+        without changing public ids or script order.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../stargazing-dashboard/">Open route</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>original local route - no vendored upstream page</code><br>
+        Source family: <code>engineering-longform</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          This route does not mirror one published external article. It is a local original build created for the
+          interactive-explanation collection and written specifically as a first-person stargazing dashboard.
+        </p>
+        <ul class="plain-list">
+          <li>The route uses neutral provenance handling because there is no single upstream article to reference.</li>
+          <li>The shell is the shared Engineering Sandbox lab variant for hero framing and metadata attribution.</li>
+          <li>Astronomy calculations follow standard low-precision algorithms based on Jean Meeus <em>Astronomical Algorithms</em> for Julian date, GMST/LST, equatorial-to-horizontal transforms, and sun/moon/planet positions.</li>
+          <li>Bright star positions come from a HYG/Yale-derived local subset bundled as route-local JSON data.</li>
+          <li>Constellation boundary figures and meteor shower data are authored from public reference knowledge into route-local JSON schemas.</li>
+          <li>Three.js r70 is vendored locally at <code>../ev/scripts/three.js</code> and loaded before route scripts.</li>
+          <li>Wave 1 freezes the public API shape of each module (state, astro, catalog, controls, scene, hud) but returns placeholders only; real rendering and ephemeris computation land in later waves.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>stargazing-dashboard/index.html</code> owns the route shell, hero, observation deck, dashboard grid, HUD panels, and control bench.</li>
+          <li><code>stargazing-dashboard/css/stargazing.css</code> provides the dark night-sky theme, dashboard layout, panel styling, and responsive breakpoints.</li>
+          <li><code>stargazing-dashboard/js/astro.js</code> defines the astronomy API surface: julianDate, gmstHours, lstHours, equatorialToHorizontal, sunPosition, moonPosition, planetPosition (Wave 1: placeholders).</li>
+          <li><code>stargazing-dashboard/js/state.js</code> provides the frozen state store: getState, setState, subscribe, advanceTime with observer, time, toggles, weather, selectedTargetId, and look shapes.</li>
+          <li><code>stargazing-dashboard/js/catalog.js</code> defines lazy async catalog loaders for stars, constellations, and meteor showers from local JSON paths.</li>
+          <li><code>stargazing-dashboard/js/controls.js</code> implements pointer-drag and keyboard look controls that write azimuth and altitude into the state store.</li>
+          <li><code>stargazing-dashboard/js/scene.js</code> defines the Three.js scene lifecycle (createScene with start/stop/resize). Wave 1: no-op adapter.</li>
+          <li><code>stargazing-dashboard/js/hud.js</code> binds DOM controls (location, time, weather, toggles) to the state store and returns an update handle.</li>
+          <li><code>stargazing-dashboard/js/main.js</code> bootstraps the route: WebGL guard, fallback display, adapter wiring, and ready-state signaling.</li>
+          <li><code>../ev/scripts/three.js</code> is a vendored copy of Three.js r70 loaded as a global script before route-local modules.</li>
+          <li><code>../shared/engineering-sandbox.css</code> and <code>../shared/engineering-sandbox.js</code> provide the shared lab shell.</li>
+          <li><code>../shared/public-footer.css</code> and <code>../shared/public-footer.js</code> provide the provenance footer.</li>
+          <li>Future data files expected at <code>./data/stars.json</code>, <code>./data/constellations.json</code>, <code>./data/meteor-showers.json</code>.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>Neutral provenance: there is no referenceUrl because this is an original local route, not an upstream replica. The footer is wired with <code>data-reference-mode="neutral"</code> and a provenance note.</li>
+          <li>Astronomy accuracy is naked-eye visual grade, not ephemeris-grade. Positions are sufficient for identifying bright stars, planets, and constellations by eye but are not suitable for telescope pointing or precise astrometry.</li>
+          <li>The weather panel is a sandbox with sliders (cloud cover, seeing, light pollution). It is not connected to a live weather API. Values feed the state store for future rendering use.</li>
+          <li>Three.js r70 is an older stable version chosen for compatibility. It provides basic WebGLRenderer, PerspectiveCamera, Scene, and SphereGeometry. Later waves may require upgrading or adding supplemental modules.</li>
+          <li>Wave 1 is a contract freeze: all module APIs are defined and wired, but astronomy functions return zeros/null and the scene adapter is a no-op. Smoke checks verify the DOM contract and ready state, not the rendered sky.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the route self-contained and subpath-safe; all assets must remain local to <code>stargazing-dashboard/</code> or the shared shell paths (<code>../shared/</code>, <code>../ev/</code>).</li>
+          <li>Run <code>node tools/sync-route-metadata.mjs .</code> after any manifest changes to keep <code>pages.json</code> in sync.</li>
+          <li>Run <code>node tools/check-public-surface.mjs .</code> after any content or structural changes to the route or docs.</li>
+          <li>Run <code>node tools/smoke-bundle.mjs . --route stargazing-dashboard</code> for route-specific smoke testing (desktop/mobile overflow, footer, console errors, ready-state dataset).</li>
+          <li>Validate JS syntax: <code>node --check stargazing-dashboard/js/main.js</code> (and each module under <code>js/</code>).</li>
+          <li>Validate JSON data files (when added) with <code>node -e "JSON.parse(require('fs').readFileSync('stargazing-dashboard/data/stars.json','utf8'))"</code>.</li>
+          <li>The route body sets <code>data-story-shell="engineering-sandbox"</code> and <code>data-story-variant="lab"</code>. Do not switch to the longform essay variant without updating the hero layout, navigation, and chapter expectations.</li>
+          <li>Parity entries for Wave 1 modules that are still placeholders should remain marked honestly (e.g. "not yet verified" or "Wave 1 contract only") rather than claiming false PASS.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

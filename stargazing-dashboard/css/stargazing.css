@@ -1,0 +1,346 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  --stargazing-bg: #07111f;
+  --stargazing-bg-deep: #030711;
+  --stargazing-panel: rgba(9, 22, 38, 0.82);
+  --stargazing-panel-strong: rgba(13, 31, 52, 0.94);
+  --stargazing-border: rgba(154, 190, 224, 0.22);
+  --stargazing-border-strong: rgba(187, 214, 242, 0.36);
+  --stargazing-text: #edf6ff;
+  --stargazing-muted: #a9bdd0;
+  --stargazing-soft: #6f8aa4;
+  --stargazing-accent: #93d5ff;
+  --stargazing-accent-strong: #c6a46a;
+  --stargazing-danger: #ffb0a6;
+  --stargazing-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+  --stargazing-radius-lg: 1.6rem;
+  --stargazing-radius-md: 1rem;
+  --stargazing-space-1: 0.35rem;
+  --stargazing-space-2: 0.65rem;
+  --stargazing-space-3: 1rem;
+  --stargazing-space-4: 1.35rem;
+  --stargazing-space-5: 1.75rem;
+}
+
+html {
+  min-width: 0;
+  overflow-x: hidden;
+  background: var(--stargazing-bg-deep);
+}
+
+body[data-story-route="stargazing-dashboard"] {
+  min-width: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(91, 145, 202, 0.22), transparent 25rem),
+    radial-gradient(circle at 86% 2%, rgba(198, 164, 106, 0.18), transparent 22rem),
+    linear-gradient(180deg, var(--stargazing-bg) 0%, #081624 44%, var(--stargazing-bg-deep) 100%);
+  color: var(--stargazing-text);
+}
+
+body[data-story-route="stargazing-dashboard"] h1,
+body[data-story-route="stargazing-dashboard"] h2,
+body[data-story-route="stargazing-dashboard"] h3,
+body[data-story-route="stargazing-dashboard"] h4,
+body[data-story-route="stargazing-dashboard"] h5,
+body[data-story-route="stargazing-dashboard"] h6 {
+  color: var(--stargazing-text);
+}
+
+body[data-story-route="stargazing-dashboard"] .story-hero::before {
+  background: linear-gradient(90deg, transparent, rgba(147, 213, 255, 0.34), transparent);
+}
+
+.stargazing-hero {
+  color: var(--stargazing-text);
+}
+
+.stargazing-hero__grid {
+  align-items: stretch;
+}
+
+.stargazing-hero__title {
+  max-width: 11ch;
+  text-wrap: balance;
+}
+
+.stargazing-hero__summary {
+  color: var(--stargazing-muted);
+}
+
+.stargazing-chip {
+  border-color: var(--stargazing-border);
+  background: rgba(147, 213, 255, 0.08);
+  color: var(--stargazing-accent);
+}
+
+.stargazing-hero__panel {
+  background:
+    linear-gradient(180deg, rgba(16, 34, 55, 0.94), rgba(7, 17, 31, 0.88)),
+    radial-gradient(circle at top right, rgba(147, 213, 255, 0.16), transparent 58%);
+  border-color: var(--stargazing-border);
+  color: var(--stargazing-muted);
+}
+
+.stargazing-shell {
+  width: min(100%, var(--story-shell-max, 1180px));
+  margin: 0 auto;
+  padding: 0 var(--stargazing-space-4) 4rem;
+}
+
+.stargazing-intro,
+.stargazing-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--stargazing-space-5);
+  align-items: end;
+  margin-bottom: var(--stargazing-space-4);
+}
+
+.stargazing-intro h2,
+.stargazing-controls h2 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3.5vw, 3rem);
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.stargazing-intro p,
+.stargazing-controls p {
+  margin: 0;
+  color: var(--stargazing-muted);
+}
+
+.stargazing-kicker {
+  margin: 0 0 var(--stargazing-space-2);
+  color: var(--stargazing-accent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stargazing-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.95fr);
+  gap: var(--stargazing-space-4);
+  align-items: stretch;
+  min-width: 0;
+  margin-bottom: var(--stargazing-space-5);
+}
+
+.stargazing-stage {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(24rem, 58vw, 42rem);
+  overflow: hidden;
+  border: 1px solid var(--stargazing-border-strong);
+  border-radius: var(--stargazing-radius-lg);
+  background:
+    radial-gradient(circle at 48% 44%, rgba(147, 213, 255, 0.18), transparent 18rem),
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 76% 28%, rgba(255, 255, 255, 0.75) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 64% 72%, rgba(255, 255, 255, 0.58) 0 1px, transparent 1.5px),
+    linear-gradient(180deg, #10233a 0%, #07111f 55%, #030711 100%);
+  box-shadow: var(--stargazing-shadow);
+}
+
+.stargazing-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8% 10% 12%;
+  border: 1px solid rgba(147, 213, 255, 0.12);
+  border-radius: 50% 50% 44% 44%;
+  background:
+    linear-gradient(90deg, transparent 49.7%, rgba(147, 213, 255, 0.12) 50%, transparent 50.3%),
+    linear-gradient(0deg, transparent 49.7%, rgba(147, 213, 255, 0.1) 50%, transparent 50.3%);
+  pointer-events: none;
+}
+
+#sky-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+}
+
+.stargazing-fallback {
+  position: absolute;
+  inset: auto var(--stargazing-space-3) var(--stargazing-space-3);
+  padding: var(--stargazing-space-3);
+  border: 1px solid rgba(255, 176, 166, 0.4);
+  border-radius: var(--stargazing-radius-md);
+  background: rgba(55, 16, 18, 0.88);
+  color: var(--stargazing-danger);
+}
+
+.stargazing-hud {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--stargazing-space-3);
+  min-width: 0;
+}
+
+.stargazing-hud__panel,
+.stargazing-control-card {
+  min-width: 0;
+  border: 1px solid var(--stargazing-border);
+  border-radius: var(--stargazing-radius-md);
+  background: var(--stargazing-panel);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+}
+
+.stargazing-hud__panel {
+  padding: var(--stargazing-space-3);
+}
+
+.stargazing-hud__panel h3 {
+  margin: 0 0 var(--stargazing-space-2);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.stargazing-hud__panel p {
+  margin: 0;
+  color: var(--stargazing-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.stargazing-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--stargazing-space-4);
+  min-width: 0;
+  margin: 0;
+}
+
+.stargazing-control-card {
+  display: grid;
+  gap: var(--stargazing-space-3);
+  margin: 0;
+  padding: var(--stargazing-space-4);
+}
+
+.stargazing-control-card legend {
+  padding: 0 var(--stargazing-space-2);
+  color: var(--stargazing-accent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stargazing-control-card label,
+.stargazing-toggle {
+  display: grid;
+  gap: var(--stargazing-space-1);
+  min-width: 0;
+  color: var(--stargazing-muted);
+  font-weight: 600;
+}
+
+.stargazing-inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--stargazing-space-2);
+  align-items: end;
+  min-width: 0;
+}
+
+.stargazing-inline-controls label {
+  flex: 1 1 8rem;
+}
+
+.stargazing-toggle {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+button,
+select,
+input {
+  max-width: 100%;
+  color: var(--stargazing-text);
+  font: inherit;
+}
+
+button,
+select,
+input[type="number"] {
+  min-height: 2.75rem;
+  border: 1px solid var(--stargazing-border-strong);
+  border-radius: 0.85rem;
+  background: var(--stargazing-panel-strong);
+}
+
+button {
+  cursor: pointer;
+  padding: 0.65rem 0.95rem;
+  color: #05101d;
+  background: linear-gradient(135deg, var(--stargazing-accent), var(--stargazing-accent-strong));
+  font-weight: 700;
+}
+
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--stargazing-accent);
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--stargazing-accent);
+}
+
+@media (max-width: 920px) {
+  body[data-story-shell="engineering-sandbox"][data-story-variant="lab"] .story-hero__grid.stargazing-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stargazing-intro,
+  .stargazing-controls,
+  .stargazing-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .stargazing-hud,
+  .stargazing-control-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .stargazing-shell {
+    padding-inline: var(--stargazing-space-3);
+  }
+
+  .stargazing-hud,
+  .stargazing-control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stargazing-stage {
+    min-height: 24rem;
+    border-radius: var(--stargazing-radius-md);
+  }
+
+  .stargazing-control-card {
+    padding: var(--stargazing-space-3);
+  }
+}

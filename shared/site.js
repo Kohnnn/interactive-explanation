@@ -68,6 +68,19 @@ const ROUTE_DECORATORS = {
   },
 };
 
+const HOME_SORT_LABELS = {
+  featured: "Featured first",
+  new: "Newest first",
+  title: "Title A–Z",
+};
+
+const HOME_VIEW_LABELS = {
+  grouped: "Grouped by family",
+  flat: "Flat list",
+};
+
+const NEW_ROUTE_WINDOW_DAYS = 30;
+
 const FAMILY_CONFIGS = {
   "nicky-case": {
     key: "nicky-case",
@@ -191,6 +204,8 @@ function enrichPage(page, manifestIndex) {
     ? "Reference archive"
     : getReferenceHost(page);
   const decorator = ROUTE_DECORATORS[page.slug] || {};
+  const topicTags = Array.isArray(page.topicTags) ? page.topicTags : [];
+  const addedDate = typeof page.addedDate === "string" ? page.addedDate : "";
 
   return {
     manifestIndex: manifestIndex,
@@ -200,6 +215,8 @@ function enrichPage(page, manifestIndex) {
     docsUrl: page.docsUrl,
     referenceUrl: page.referenceUrl || "",
     referenceMode: page.referenceMode || "",
+    topicTags: topicTags,
+    addedDate: addedDate,
     family: family,
     referenceHost: referenceHost,
     timeEstimate: decorator.timeEstimate || page.timeEstimate || "",
@@ -210,6 +227,7 @@ function enrichPage(page, manifestIndex) {
       page.title,
       page.slug,
       page.summary,
+      topicTags.join(" "),
       family.label,
       referenceHost,
       decorator.timeEstimate || "",
@@ -250,12 +268,121 @@ function buildFamilyList(pages) {
   });
 }
 
+function buildTopicList(pages) {
+  const topicCounts = new Map();
+
+  pages.forEach(function (page) {
+    page.topicTags.forEach(function (tag) {
+      topicCounts.set(tag, (topicCounts.get(tag) || 0) + 1);
+    });
+  });
+
+  return Array.from(topicCounts.entries())
+    .map(function (entry) {
+      return {
+        tag: entry[0],
+        count: entry[1],
+      };
+    })
+    .sort(function (left, right) {
+      if (right.count !== left.count) {
+        return right.count - left.count;
+      }
+      return left.tag.localeCompare(right.tag);
+    });
+}
+
+function buildRelatedSlugsBySlug(pages) {
+  const familyPages = new Map();
+  const relatedSlugsBySlug = new Map();
+
+  pages.forEach(function (page) {
+    if (!familyPages.has(page.family.key)) {
+      familyPages.set(page.family.key, []);
+    }
+    familyPages.get(page.family.key).push(page);
+  });
+
+  familyPages.forEach(function (pagesInFamily) {
+    const sortedPages = pagesInFamily.slice().sort(comparePages);
+    sortedPages.forEach(function (page) {
+      const relatedSlugs = sortedPages
+        .filter(function (relatedPage) {
+          return relatedPage.slug !== page.slug;
+        })
+        .slice(0, 3)
+        .map(function (relatedPage) {
+          return relatedPage.slug;
+        });
+      relatedSlugsBySlug.set(page.slug, relatedSlugs);
+    });
+  });
+
+  return relatedSlugsBySlug;
+}
+
+function getMaxAddedDate(pages) {
+  return pages.reduce(function (maxDate, page) {
+    if (!isRouteDate(page.addedDate)) {
+      return maxDate;
+    }
+    return page.addedDate > maxDate ? page.addedDate : maxDate;
+  }, "");
+}
+
+function isRouteDate(value) {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function parseRouteDate(value) {
+  if (!isRouteDate(value)) {
+    return null;
+  }
+
+  const time = Date.parse(value + "T00:00:00Z");
+  return Number.isNaN(time) ? null : time;
+}
+
+function isNewPage(page, maxAddedDate) {
+  const maxTime = parseRouteDate(maxAddedDate);
+  const pageTime = parseRouteDate(page.addedDate);
+
+  if (maxTime === null || pageTime === null || pageTime > maxTime) {
+    return false;
+  }
+
+  return maxTime - pageTime <= NEW_ROUTE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+}
+
+function getHomeSort(sort) {
+  return Object.prototype.hasOwnProperty.call(HOME_SORT_LABELS, sort) ? sort : "featured";
+}
+
+function getHomeView(view) {
+  return Object.prototype.hasOwnProperty.call(HOME_VIEW_LABELS, view) ? view : "grouped";
+}
+
 function syncHomeState(state) {
   const url = new URL(window.location.href);
   if (state.family && state.family !== "all") {
     url.searchParams.set("family", state.family);
   } else {
     url.searchParams.delete("family");
+  }
+  if (state.tag && state.tag !== "all") {
+    url.searchParams.set("tag", state.tag);
+  } else {
+    url.searchParams.delete("tag");
+  }
+  if (state.sort && state.sort !== "featured") {
+    url.searchParams.set("sort", state.sort);
+  } else {
+    url.searchParams.delete("sort");
+  }
+  if (state.view && state.view !== "grouped") {
+    url.searchParams.set("view", state.view);
+  } else {
+    url.searchParams.delete("view");
   }
   if (state.query) {
     url.searchParams.set("q", state.query);
@@ -344,6 +471,72 @@ function renderFamilyFilters(mount, families, state, onSelectFamily) {
   });
 }
 
+function renderTopicFilters(mount, topics, totalCount, state, onSelectTag) {
+  if (!mount) {
+    return;
+  }
+
+  mount.innerHTML = "";
+
+  function buildFilterButton(tag, label, count) {
+    const button = createElement("button", "filter-pill filter-pill--topic", null);
+    button.type = "button";
+    if (tag === state.tag) {
+      button.classList.add("is-active");
+    }
+    button.appendChild(createElement("span", "filter-pill__label", label));
+    button.appendChild(createElement("span", "filter-pill__count", String(count)));
+    button.addEventListener("click", function () {
+      onSelectTag(tag);
+    });
+    mount.appendChild(button);
+  }
+
+  buildFilterButton(
+    "all",
+    "All topics",
+    totalCount,
+  );
+
+  topics.forEach(function (topic) {
+    buildFilterButton(topic.tag, topic.tag, topic.count);
+  });
+}
+
+function renderHomeControls(sortSelect, viewToggle, state, onSelectSort, onSelectView) {
+  if (sortSelect) {
+    sortSelect.value = getHomeSort(state.sort);
+    sortSelect.addEventListener("change", function () {
+      onSelectSort(getHomeSort(sortSelect.value));
+    });
+  }
+
+  if (!viewToggle) {
+    return;
+  }
+
+  viewToggle.innerHTML = "";
+
+  Object.keys(HOME_VIEW_LABELS).forEach(function (view) {
+    const button = createElement("button", "view-toggle__button", HOME_VIEW_LABELS[view]);
+    button.type = "button";
+    button.value = view;
+    button.setAttribute("aria-pressed", String(view === state.view));
+    if (view === state.view) {
+      button.classList.add("is-active");
+    }
+    button.addEventListener("click", function () {
+      onSelectView(view);
+      Array.from(viewToggle.querySelectorAll("button")).forEach(function (viewButton) {
+        const isActive = viewButton.value === view;
+        viewButton.classList.toggle("is-active", isActive);
+        viewButton.setAttribute("aria-pressed", String(isActive));
+      });
+    });
+    viewToggle.appendChild(button);
+  });
+}
+
 function renderFamilyBoard(mount, families, state, onSelectFamily) {
   if (!mount) {
     return;
@@ -424,6 +617,30 @@ function comparePages(left, right) {
   return left.title.localeCompare(right.title);
 }
 
+function comparePagesByDate(left, right) {
+  const leftDate = isRouteDate(left.addedDate) ? left.addedDate : "";
+  const rightDate = isRouteDate(right.addedDate) ? right.addedDate : "";
+  if (leftDate !== rightDate) {
+    return rightDate.localeCompare(leftDate);
+  }
+
+  return left.title.localeCompare(right.title);
+}
+
+function comparePagesByTitle(left, right) {
+  return left.title.localeCompare(right.title);
+}
+
+function comparePagesForSort(left, right, sort) {
+  if (sort === "new") {
+    return comparePagesByDate(left, right);
+  }
+  if (sort === "title") {
+    return comparePagesByTitle(left, right);
+  }
+  return comparePages(left, right);
+}
+
 function comparePageFamilies(left, right) {
   const priorityDelta = getFamilyPriority(left) - getFamilyPriority(right);
   if (priorityDelta !== 0) {
@@ -440,7 +657,7 @@ function getFeaturedPages(pages) {
     .sort(comparePages);
 }
 
-function renderFeaturedRoutes(mount, pages) {
+function renderFeaturedRoutes(mount, pages, context) {
   if (!mount) {
     return;
   }
@@ -454,7 +671,7 @@ function renderFeaturedRoutes(mount, pages) {
   }
 
   featuredPages.forEach(function (page) {
-    const article = createPageCard(page);
+    const article = createPageCard(page, context);
     article.classList.add("page-card--featured");
     if (page.spotlight) {
       article.appendChild(createElement("p", "meta-line page-card__spotlight", page.spotlight));
@@ -463,13 +680,20 @@ function renderFeaturedRoutes(mount, pages) {
   });
 }
 
-function createPageCard(page) {
+function createPageCard(page, context) {
   const article = createElement("article", "page-card");
+  const relatedSlugsBySlug = context?.relatedSlugsBySlug || new Map();
+  const maxAddedDate = context?.maxAddedDate || "";
   article.dataset.familyTone = page.family.tone;
 
   const header = createElement("div", "page-card__header");
   header.appendChild(createElement("p", "eyebrow", page.family.label));
-  header.appendChild(createElement("span", "status-pill", page.referenceHost));
+  const statusList = createElement("div", "page-card__status");
+  if (isNewPage(page, maxAddedDate)) {
+    statusList.appendChild(createElement("span", "status-pill status-pill--new", "New"));
+  }
+  statusList.appendChild(createElement("span", "status-pill", page.referenceHost));
+  header.appendChild(statusList);
   article.appendChild(header);
 
   article.appendChild(createElement("h2", null, page.title));
@@ -479,6 +703,14 @@ function createPageCard(page) {
     chipList.appendChild(createElement("span", "chip", label));
   });
   article.appendChild(chipList);
+
+  if (page.topicTags.length) {
+    const tagList = createElement("div", "chip-list page-card__tags");
+    page.topicTags.forEach(function (tag) {
+      tagList.appendChild(createElement("span", "chip chip--tag", tag));
+    });
+    article.appendChild(tagList);
+  }
 
   article.appendChild(createElement("p", "meta-line", page.summary));
 
@@ -508,12 +740,27 @@ function createPageCard(page) {
     ),
   );
 
+  const relatedSlugs = relatedSlugsBySlug.get(page.slug) || [];
+  if (relatedSlugs.length) {
+    const related = createElement("div", "page-card__related");
+    related.appendChild(createElement("p", "eyebrow", "Related"));
+    const relatedList = createElement("div", "chip-list");
+    relatedSlugs.forEach(function (slug) {
+      relatedList.appendChild(createActionLink("./" + slug + "/", slug, "chip"));
+    });
+    related.appendChild(relatedList);
+    article.appendChild(related);
+  }
+
   return article;
 }
 
 function applyHomeFilters(pages, state) {
   return pages.filter(function (page) {
     if (state.family !== "all" && page.family.key !== state.family) {
+      return false;
+    }
+    if (state.tag !== "all" && page.topicTags.indexOf(state.tag) === -1) {
       return false;
     }
     if (state.query && !page.searchText.includes(state.query.toLowerCase())) {
@@ -523,12 +770,13 @@ function applyHomeFilters(pages, state) {
   });
 }
 
-function renderPageList(mount, pages, state, onReset) {
+function renderPageList(mount, pages, state, context, onReset) {
   if (!mount) {
     return;
   }
 
   mount.innerHTML = "";
+  mount.classList.toggle("page-grid--flat", state.view === "flat");
 
   if (!pages.length) {
     const empty = createElement("div", "empty-state");
@@ -541,17 +789,25 @@ function renderPageList(mount, pages, state, onReset) {
     return;
   }
 
+  const sortedPages = pages.slice().sort(function (left, right) {
+    return comparePagesForSort(left, right, state.sort);
+  });
+
+  if (state.view === "flat") {
+    sortedPages.forEach(function (page) {
+      mount.appendChild(createPageCard(page, context));
+    });
+    return;
+  }
+
   const groupedPages = new Map();
 
-  pages
-    .slice()
-    .sort(comparePages)
-    .forEach(function (page) {
-      if (!groupedPages.has(page.family.key)) {
-        groupedPages.set(page.family.key, []);
-      }
-      groupedPages.get(page.family.key).push(page);
-    });
+  sortedPages.forEach(function (page) {
+    if (!groupedPages.has(page.family.key)) {
+      groupedPages.set(page.family.key, []);
+    }
+    groupedPages.get(page.family.key).push(page);
+  });
 
   Array.from(groupedPages.keys())
     .sort(comparePageFamilies)
@@ -569,7 +825,7 @@ function renderPageList(mount, pages, state, onReset) {
 
       const grid = createElement("div", "page-grid page-grid--grouped");
       groupedPages.get(familyKey).forEach(function (page) {
-        grid.appendChild(createPageCard(page));
+        grid.appendChild(createPageCard(page, context));
       });
       section.appendChild(grid);
       mount.appendChild(section);
@@ -587,6 +843,11 @@ function renderResultsSummary(mount, filteredPages, allPages, state) {
 
   let text = "Showing " + filteredPages.length + " of " + allPages.length + " routes.";
   text += " Family: " + familyLabel + ".";
+  if (state.tag !== "all") {
+    text += " Topic: " + state.tag + ".";
+  }
+  text += " Sort: " + HOME_SORT_LABELS[state.sort] + ".";
+  text += " View: " + HOME_VIEW_LABELS[state.view] + ".";
   if (state.query) {
     text += ' Search: "' + state.query + '".';
   }
@@ -598,6 +859,9 @@ function readHomeState() {
   const params = new URLSearchParams(window.location.search);
   return {
     family: params.get("family") || "all",
+    tag: params.get("tag") || "all",
+    sort: getHomeSort(params.get("sort") || "featured"),
+    view: getHomeView(params.get("view") || "grouped"),
     query: params.get("q") || "",
   };
 }
@@ -608,8 +872,11 @@ async function initHome() {
   const featuredMount = document.querySelector("[data-featured-routes]");
   const familyBoardMount = document.querySelector("[data-family-board]");
   const familyFiltersMount = document.querySelector("[data-family-filters]");
+  const topicFiltersMount = document.querySelector("[data-tag-filters]");
   const resultsMount = document.querySelector("[data-page-results]");
   const queryInput = document.querySelector("[data-filter-query]");
+  const sortSelect = document.querySelector("[data-sort-select]");
+  const viewToggle = document.querySelector("[data-view-toggle]");
 
   if (!mount && !statsMount && !featuredMount && !familyBoardMount && !familyFiltersMount) {
     return;
@@ -620,10 +887,21 @@ async function initHome() {
     const manifest = await response.json();
     const pages = manifest.map(enrichPage);
     const families = buildFamilyList(pages);
+    const topics = buildTopicList(pages);
+    const topicSet = new Set(topics.map(function (topic) {
+      return topic.tag;
+    }));
+    const context = {
+      maxAddedDate: getMaxAddedDate(pages),
+      relatedSlugsBySlug: buildRelatedSlugsBySlug(pages),
+    };
     const state = readHomeState();
 
     if (!FAMILY_CONFIGS[state.family] && state.family !== "all") {
       state.family = "all";
+    }
+    if (state.tag !== "all" && !topicSet.has(state.tag)) {
+      state.tag = "all";
     }
 
     if (queryInput) {
@@ -633,9 +911,14 @@ async function initHome() {
     function render() {
       const filteredPages = applyHomeFilters(pages, state);
       renderHomeStats(statsMount, pages, families);
-      renderFeaturedRoutes(featuredMount, pages);
+      renderFeaturedRoutes(featuredMount, pages, context);
       renderFamilyFilters(familyFiltersMount, families, state, function (familyKey) {
         state.family = familyKey;
+        syncHomeState(state);
+        render();
+      });
+      renderTopicFilters(topicFiltersMount, topics, pages.length, state, function (tag) {
+        state.tag = tag;
         syncHomeState(state);
         render();
       });
@@ -645,8 +928,9 @@ async function initHome() {
         render();
       });
       renderResultsSummary(resultsMount, filteredPages, pages, state);
-      renderPageList(mount, filteredPages, state, function () {
+      renderPageList(mount, filteredPages, state, context, function () {
         state.family = "all";
+        state.tag = "all";
         state.query = "";
         if (queryInput) {
           queryInput.value = "";
@@ -656,12 +940,23 @@ async function initHome() {
       });
     }
 
+    renderHomeControls(sortSelect, viewToggle, state, function (sort) {
+      state.sort = sort;
+      syncHomeState(state);
+      render();
+    }, function (view) {
+      state.view = view;
+      syncHomeState(state);
+      render();
+    });
+
     queryInput?.addEventListener("input", function () {
       state.query = queryInput.value.trim();
       syncHomeState(state);
       render();
     });
 
+    syncHomeState(state);
     render();
   } catch (error) {
     const message = '<div class="empty-state">The page manifest could not be loaded. Serve this folder over HTTP to render the route inventory.</div>';
@@ -676,6 +971,9 @@ async function initHome() {
     }
     if (familyFiltersMount) {
       familyFiltersMount.innerHTML = message;
+    }
+    if (topicFiltersMount) {
+      topicFiltersMount.innerHTML = message;
     }
     if (mount) {
       mount.innerHTML = message;

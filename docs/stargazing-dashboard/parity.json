@@ -1,0 +1,230 @@
+[
+  {
+    "moduleId": "route-shell",
+    "originalBehavior": "The route shell wraps the experience with an Engineering Sandbox lab hero, a neutral provenance footer, and a responsive dashboard layout with a stage area, HUD grid, and control bench.",
+    "localStatus": "The route uses the shared Engineering Sandbox lab variant (data-story-shell='engineering-sandbox', data-story-variant='lab', data-story-nav='none') with a night-sky theme in css/stargazing.css. The hero carries a lab contract callout, story chips, and metadata. The public footer uses neutral provenance. All assets are subpath-relative. A route-local mobile override collapses the lab hero grid to a single column at <=920px because the shared lab-variant grid rule has no mobile collapse and out-specifies the generic one.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/index.html",
+      "../../stargazing-dashboard/css/stargazing.css",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The shell provides the lab framework, hero, and provenance footer. Generated chapter navigation is disabled (data-story-nav='none').",
+      "Public provenance is neutral (referenceMode='neutral', no referenceUrl) because the route is an original local build.",
+      "css/stargazing.css loads before engineering-sandbox.css, so the route mobile override raises specificity (chained shell+variant attributes plus both grid classes) rather than relying on source order."
+    ],
+    "evidence": [
+      "Body elements: data-story-shell='engineering-sandbox', data-story-variant='lab', data-story-nav='none', neutral provenance footer.",
+      "Mobile probe at 390x844: .story-hero__grid computes a single 326px column with no horizontal overflow (docScrollWidth=390, bodyScrollWidth=382).",
+      "The dashboard splits into a stage canvas area and a HUD/control grid that collapse to single column on narrow viewports."
+    ]
+  },
+  {
+    "moduleId": "astro-engine",
+    "originalBehavior": "Astronomy math API (window.StargazingAstro) computing Julian date, GMST/LST hours, equatorial-to-horizontal conversion, and sun/moon/planet positions using standard low-precision algorithms, with hours/degrees as the input/output contract.",
+    "localStatus": "Implemented in full. julianDate converts UTC milliseconds to JD; gmstHours/lstHours apply the longitude offset; equatorialToHorizontal returns topocentric {altDeg, azDeg} via hour angle and observer latitude; sunPosition, moonPosition, and planetPosition return real equatorial coordinates. Verified by Node unit tests (node --test) and by live HUD/scene readouts.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/astro.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "Sky mapping used downstream: x=cos(alt)sin(az), y=sin(alt), z=-cos(alt)cos(az).",
+      "Inputs/outputs use hours for sidereal time and degrees for angles, matching the frozen module contract."
+    ],
+    "evidence": [
+      "window.StargazingAstro exposes julianDate, gmstHours, lstHours, equatorialToHorizontal, sunPosition, moonPosition, planetPosition.",
+      "node --test passes for the astro unit suite (part of the 22-test run).",
+      "The HUD telemetry and time panels show non-zero LST and altitude/azimuth values that change with location and time."
+    ]
+  },
+  {
+    "moduleId": "state-store",
+    "originalBehavior": "A frozen state store on window.StargazingState exposing getState, setState, subscribe, and advanceTime, with observer, time, toggles, weather, selectedTargetId, and look fields.",
+    "localStatus": "Shipped with the full API. setState shallow-merges nested keys and notifies subscribers; subscribe returns an unsubscribe function; advanceTime is a pure helper. The store now drives live rendering subscribers (scene, HUD, controls).",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/state.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "The state shape is frozen; behavior was layered on without removing or renaming keys.",
+      "getState returns a fresh clone each call; set({ time: { playing: true } }) updates only time.playing."
+    ],
+    "evidence": [
+      "window.StargazingState exposes getState, setState, subscribe, advanceTime.",
+      "node --test covers state merge and subscribe semantics.",
+      "Live interaction (time scrub, weather sliders, toggles) propagates through the store into the scene."
+    ]
+  },
+  {
+    "moduleId": "controls-module",
+    "originalBehavior": "Pointer-drag and keyboard look controls that write azimuth and altitude into the state store, with 0.15 deg/pixel drag sensitivity, 3-degree arrow-key steps, altitude clamped to [-90, 90], and a { dispose() } cleanup handle.",
+    "localStatus": "Shipped in full. Pointer capture, keyboard navigation, clamp/wrap math, and listener-bag cleanup are implemented and degrade to a noop handle when canvas or state is missing.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/controls.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "DRAG_DEGREES_PER_PIXEL=0.15 and KEY_STEP_DEGREES=3 are frozen constants.",
+      "Altitude clamps to [-90, 90]; azimuth wraps."
+    ],
+    "evidence": [
+      "window.StargazingControls.createLookControls accepts canvas and state and returns { dispose }.",
+      "Dragging the canvas updates state.look azimuth/altitude; arrow keys step the look angles.",
+      "dispose() removes all event listeners."
+    ]
+  },
+  {
+    "moduleId": "star-catalog",
+    "originalBehavior": "Lazy async catalog loaders (window.StargazingCatalog) for stars, constellations, and meteor showers from local JSON, each returning a Promise of parsed data, with validation helpers and a magnitude limit driven by light pollution.",
+    "localStatus": "Shipped and backed by real data. loadStars resolves 2863 naked-eye stars; loadConstellations resolves 88 names and 739 line segments; loadMeteorShowers resolves authored radiants. visibleMagnitudeLimit maps light pollution 0->6.5 and 1->4.0. Verified firsthand via the QA probe.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/catalog.js",
+      "../../stargazing-dashboard/data/stars.json",
+      "../../stargazing-dashboard/data/constellations.json",
+      "../../stargazing-dashboard/data/meteor-showers.json",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "Star format: { i (catalog index), ra (right ascension in hours, 0-24), dec (declination in degrees, -90..90), mag (visual magnitude), bv (optional B-V color index), n (optional name) } from an HYG/Yale-derived subset.",
+      "Constellation format: { names: { id -> displayName }, lines: [ [starIndexA, starIndexB], ... ] } authored from IAU stick figures.",
+      "Fetch is lazy and uses relative ./data/ paths for subpath hosting."
+    ],
+    "evidence": [
+      "QA probe reports 2863 stars, 88 constellation names, and 739 line segments loaded.",
+      "Lowering light pollution increases the visible star count via visibleMagnitudeLimit.",
+      "Data files exist under stargazing-dashboard/data/ and load without 404s."
+    ]
+  },
+  {
+    "moduleId": "scene-render",
+    "originalBehavior": "Three.js scene lifecycle (window.StargazingScene.createScene) accepting canvas, state, catalog, and astro adapters, returning { start, stop, resize }, and rendering a star field, constellation lines, sun/moon/planets, and a horizon against a first-person topocentric dome.",
+    "localStatus": "Implemented in full against vendored Three.js r70 (UMD). createScene builds a WebGLRenderer, PerspectiveCamera, and Scene; the render loop advances state time and calls camera.lookAt. Star and constellation geometry use the r70 API (addAttribute, PointCloud/PointCloudMaterial, LinePieces, VertexColors). Two runtime defects were root-caused and fixed: a visibility bug (empty-geometry objects stayed hidden until vertex count > 0) and a drawArrays buffer-binding flood caused by reassigning geometry on a rendered object. The fix recreates point/line objects (disposeOldObject, recreatePointObject, recreateLineObject) instead of swapping geometry.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/scene.js",
+      "../../stargazing-dashboard/js/main.js",
+      "../../stargazing-dashboard/index.html",
+      "../../ev/scripts/three.js"
+    ],
+    "notes": [
+      "Vendored Three.js r70 mandates addAttribute, PointCloud, PointCloudMaterial, LinePieces, and VertexColors; PointsMaterial, LineSegments, and setAttribute do not exist in r70.",
+      "Geometry updates RECREATE the object (new PointCloud/Line, dispose + remove old) rather than reassigning .geometry, which avoids stale GL buffer bindings under r70.",
+      "rebuildStarCloud and rebuildConstellationLines recreate their objects; maybeRefreshCatalogDerivedGeometry re-runs rebuildStarCloud when light pollution changes beyond an epsilon."
+    ],
+    "evidence": [
+      "window.StargazingScene.createScene returns { start, stop, resize } and mounts a live WebGL canvas (non-clear pixels confirmed by probe).",
+      "drawArrays buffer-binding diagnostic: 0 failures across 3140 draws through the full interaction sequence.",
+      "Screenshots show stars, constellation lines, horizon, and HUD rendering; weather dimming is visible."
+    ]
+  },
+  {
+    "moduleId": "constellation-overlay",
+    "originalBehavior": "Constellation line overlay on the sky dome that reads catalog data, draws stick figures, and toggles visibility from state.toggles.constellations.",
+    "localStatus": "Implemented. Constellation line geometry is built from authored RA/Dec pairs transformed to topocentric alt-az, rendered as r70 Line objects, and shown/hidden by the constellations toggle. Recreated (not geometry-swapped) on catalog-derived refresh.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/scene.js",
+      "../../stargazing-dashboard/js/catalog.js",
+      "../../stargazing-dashboard/js/state.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "739 line segments across 88 constellations are drawn from the catalog.",
+      "Lines use the r70 LinePieces/VertexColors path; frustumCulled is disabled so dome lines are not clipped."
+    ],
+    "evidence": [
+      "Toggling data-toggle='constellations' shows/hides the line overlay (verified in QA probe).",
+      "Probe reports 739 constellation line segments present in the scene."
+    ]
+  },
+  {
+    "moduleId": "hud-telemetry",
+    "originalBehavior": "HUD adapter (window.StargazingHud.createHud) binding location, time, weather, and toggle controls to the state store and refreshing telemetry, weather, meteors, targets, time, and location panels via update().",
+    "localStatus": "Implemented in full. All controls are bound (lat/lon inputs, time speed select, play/now buttons, time scrubber, weather range sliders, toggle checkboxes), and update() renders live panel content for each HUD section. DOM lookups are guarded.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/hud.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "Weather sliders use data-weather attributes; lightpollution maps to state.weather.lightPollution (camelCase).",
+      "The time scrubber spans a 48h window: baseUtcMs + ((value - 50) / 50) * 24h."
+    ],
+    "evidence": [
+      "window.StargazingHud.createHud returns { update } and panels show live values (LST, altitude/azimuth, weather, targets).",
+      "Changing inputs/sliders/toggles fires the correct state.setState patches and updates the rendered panels."
+    ]
+  },
+  {
+    "moduleId": "guided-navigation",
+    "originalBehavior": "Guided target navigation that slews the camera to notable sky targets via a labeled picker, using a smooth shortest-path interpolation that can be cancelled by new input.",
+    "localStatus": "Implemented. Seven guided target buttons render as a sibling picker of the HUD body; selecting one slerps the look direction along the shortest azimuth path with an ease-in-out over roughly 800ms, cancelling on a new selection or pointerdown.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/main.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "Slew uses shortest-azimuth easing to avoid the long way around the dome.",
+      "Active slews cancel on a new target pick or manual pointer drag."
+    ],
+    "evidence": [
+      "QA probe finds 7 guided buttons and confirms a slerp animation on selection.",
+      "Screenshot after guided navigation shows the camera re-aimed at the chosen target."
+    ]
+  },
+  {
+    "moduleId": "weather-sandbox",
+    "originalBehavior": "Weather sandbox with cloud cover, seeing, and light-pollution sliders feeding the state store to drive atmospheric effects (star dimming, twinkle, horizon brightness), with no live weather API.",
+    "localStatus": "Implemented and connected to rendering. The three sliders (cloud, seeing, lightpollution) drive star dimming and the visible magnitude limit; cloud cover visibly dims the field, and light pollution reduces the visible star count. Defaults: cloud=0.18, seeing=0.74, lightPollution=0.32.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/index.html",
+      "../../stargazing-dashboard/js/hud.js",
+      "../../stargazing-dashboard/js/scene.js",
+      "../../stargazing-dashboard/js/state.js"
+    ],
+    "notes": [
+      "Values are abstract 0-1 ranges; no external API calls are made.",
+      "Light pollution drives visibleMagnitudeLimit (0->6.5, 1->4.0), triggering a star-cloud rebuild beyond an epsilon change."
+    ],
+    "evidence": [
+      "Three input[type=range] elements with data-weather='cloud', 'seeing', 'lightpollution'.",
+      "QA probe confirms weather dimming changes the rendered field; screenshot 03 shows the dimmed state."
+    ]
+  },
+  {
+    "moduleId": "webgl-guard",
+    "originalBehavior": "WebGL detection and graceful fallback: main.js tests the canvas context on load, sets body.dataset.stargazingReady to 'true' or 'fallback', and unhides #stargazing-fallback when WebGL is unavailable.",
+    "localStatus": "Implemented in full. hasWebGL tries 'webgl' and 'experimental-webgl' and catches exceptions; on success it wires controls, HUD, and scene and sets stargazingReady='true'; on failure it shows the fallback div and sets 'fallback'. Missing adapters are skipped safely.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/js/main.js",
+      "../../stargazing-dashboard/index.html"
+    ],
+    "notes": [
+      "#stargazing-fallback is always present in the DOM (hidden by default) for screen readers.",
+      "main.js loads last so all adapters are available at bootstrap."
+    ],
+    "evidence": [
+      "QA probe confirms body.dataset.stargazingReady='true' in headless Chromium with no console errors or 404s.",
+      "The eight expected window.Stargazing* globals are present after load."
+    ]
+  },
+  {
+    "moduleId": "route-data-files",
+    "originalBehavior": "Route-local JSON data files for stars, constellations, and meteor showers with authored, verified content.",
+    "localStatus": "Shipped. stargazing-dashboard/data/ contains stars.json (2863 entries), constellations.json (88 names / 739 lines), and meteor-showers.json. Files load via relative fetch at runtime with no 404s.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/data/stars.json",
+      "../../stargazing-dashboard/data/constellations.json",
+      "../../stargazing-dashboard/data/meteor-showers.json",
+      "../../stargazing-dashboard/js/catalog.js"
+    ],
+    "notes": [
+      "Star data is an HYG/Yale-derived naked-eye subset; constellation data is authored IAU stick figures.",
+      "Files are loaded with relative ./data/ paths for subpath hosting under /interactive-explanation/."
+    ],
+    "evidence": [
+      "catalog loaders resolve 2863 stars and 88/739 constellation names/lines firsthand.",
+      "smoke-bundle and the QA probe load the route with no network failures."
+    ]
+  }
+]

@@ -1,0 +1,815 @@
+/* Route-local dark editorial shell for the mechanical-watch longform. */
+body[data-story-route="interactive-mechanical-watch"] {
+  --watch-bg: #0d0f12;
+  --watch-bg-raised: #14171c;
+  --watch-bg-soft: #191d24;
+  --watch-ink: #f3f0e8;
+  --watch-text: #d7dadf;
+  --watch-muted: #9aa0a8;
+  --watch-muted-strong: #b5bbc3;
+  --watch-border: rgba(243, 240, 232, 0.12);
+  --watch-border-strong: rgba(216, 166, 87, 0.32);
+  --watch-brass: #d8a657;
+  --watch-brass-soft: #f0c978;
+  --watch-steel: #87a7bd;
+  --watch-light-panel: #f3f1ec;
+  --watch-light-panel-deep: #e7e1d6;
+  --watch-light-ink: #282b2f;
+  --watch-light-muted: #5f666f;
+  --watch-light-border: rgba(38, 33, 25, 0.16);
+  --watch-radius-sm: 0.55rem;
+  --watch-radius-md: 0.9rem;
+  --watch-radius-lg: 1.25rem;
+  --watch-shadow-soft: 0 22px 70px rgba(0, 0, 0, 0.38);
+  --watch-shadow-panel: 0 22px 58px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  --watch-frame-pad: clamp(0.75rem, 2.2vw, 1.1rem);
+  --story-paper: var(--watch-bg);
+  --story-paper-deep: var(--watch-bg-raised);
+  --story-paper-strong: var(--watch-bg-soft);
+  --story-ink: var(--watch-ink);
+  --story-ink-soft: var(--watch-muted);
+  --story-steel: var(--watch-steel);
+  --story-steel-bright: #b8d7e7;
+  --story-accent: var(--watch-brass);
+  --story-border: var(--watch-border);
+  --story-border-strong: var(--watch-border-strong);
+  --story-shadow: var(--watch-shadow-soft);
+  --story-rail-width: 13rem;
+  --story-rail-gap: 1.5rem;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(216, 166, 87, 0.16), transparent 24rem),
+    radial-gradient(circle at 88% 12%, rgba(135, 167, 189, 0.14), transparent 18rem),
+    linear-gradient(180deg, #14171c 0%, #0d0f12 26rem, #090b0e 100%);
+  color: var(--watch-text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body[data-story-route="interactive-mechanical-watch"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.26) 68%, rgba(0, 0, 0, 0.58) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 16rem);
+}
+
+body[data-story-route="interactive-mechanical-watch"],
+body[data-story-route="interactive-mechanical-watch"] .story-hero,
+body[data-story-route="interactive-mechanical-watch"] .story-rail,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet,
+body[data-story-route="interactive-mechanical-watch"] #main_container,
+body[data-story-route="interactive-mechanical-watch"] .article {
+  color: var(--watch-text);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container p,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container li,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container button,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container input,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container textarea,
+body[data-story-route="interactive-mechanical-watch"] .story-hero,
+body[data-story-route="interactive-mechanical-watch"] .story-hero p,
+body[data-story-route="interactive-mechanical-watch"] .story-callout,
+body[data-story-route="interactive-mechanical-watch"] .story-callout p,
+body[data-story-route="interactive-mechanical-watch"] #reference-footer {
+  font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h1,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h2,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h3,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h4,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h5,
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"][data-story-route="interactive-mechanical-watch"] #main_container h6 {
+  color: var(--watch-ink);
+  font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+  letter-spacing: -0.035em;
+}
+
+/* Hero and shared chapter chrome. */
+body[data-story-route="interactive-mechanical-watch"] .story-hero {
+  margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
+  padding-top: clamp(2.5rem, 6vw, 4.4rem);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-hero::before {
+  background: linear-gradient(90deg, transparent, rgba(216, 166, 87, 0.32), transparent);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-hero__title {
+  color: var(--watch-ink);
+  text-wrap: balance;
+  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-hero__summary,
+body[data-story-route="interactive-mechanical-watch"] .story-callout p {
+  color: var(--watch-muted-strong);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-hero__eyebrow,
+body[data-story-route="interactive-mechanical-watch"] .story-callout__label,
+body[data-story-route="interactive-mechanical-watch"] .story-rail__label,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__eyebrow {
+  color: var(--watch-brass-soft);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-chip {
+  border-color: rgba(216, 166, 87, 0.24);
+  background: rgba(20, 23, 28, 0.78);
+  color: var(--watch-ink);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-callout {
+  border: 1px solid var(--watch-border);
+  background:
+    linear-gradient(180deg, rgba(24, 28, 35, 0.96), rgba(15, 18, 23, 0.94));
+  color: var(--watch-text);
+  box-shadow: var(--watch-shadow-soft);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-callout[data-story-callout="play"],
+body[data-story-route="interactive-mechanical-watch"] .story-callout[data-story-callout="engineering"],
+body[data-story-route="interactive-mechanical-watch"] .story-callout[data-story-callout="story"] {
+  border-color: var(--watch-border-strong);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(216, 166, 87, 0.12), transparent 16rem),
+    linear-gradient(180deg, rgba(24, 28, 35, 0.98), rgba(13, 15, 18, 0.96));
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-button {
+  border-color: rgba(216, 166, 87, 0.42);
+  background: linear-gradient(180deg, #f0c978, var(--watch-brass));
+  color: #17120b;
+  font-weight: 700;
+  box-shadow: 0 12px 28px rgba(216, 166, 87, 0.16);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-button:hover,
+body[data-story-route="interactive-mechanical-watch"] .story-button:focus-visible {
+  background: linear-gradient(180deg, #ffd98b, #e2b463);
+  color: #120e08;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-button--secondary {
+  border-color: rgba(243, 240, 232, 0.16);
+  background: rgba(243, 240, 232, 0.06);
+  color: var(--watch-ink);
+  box-shadow: none;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-button--secondary:hover,
+body[data-story-route="interactive-mechanical-watch"] .story-button--secondary:focus-visible {
+  background: rgba(243, 240, 232, 0.1);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-button:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .article a:focus-visible {
+  outline: 2px solid var(--watch-brass-soft);
+  outline-offset: 0.22rem;
+}
+
+/* Generated chapter rail and progress. */
+body[data-story-route="interactive-mechanical-watch"] .story-rail {
+  top: 5rem;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__panel,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__panel {
+  border: 1px solid var(--watch-border);
+  border-radius: var(--watch-radius-lg);
+  background: rgba(17, 20, 25, 0.9);
+  box-shadow: var(--watch-shadow-soft);
+  backdrop-filter: blur(12px);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-progress {
+  background: rgba(243, 240, 232, 0.1);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-progress__bar {
+  background: linear-gradient(90deg, var(--watch-brass), #f0d58d);
+  box-shadow: 0 0 18px rgba(216, 166, 87, 0.42);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__count,
+body[data-story-route="interactive-mechanical-watch"] .story-rail__position,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__position,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__position,
+body[data-story-route="interactive-mechanical-watch"] .story-progress__value,
+body[data-story-route="interactive-mechanical-watch"] .story-rail__current,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__current {
+  color: var(--watch-muted);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link {
+  color: var(--watch-muted-strong);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link::before {
+  border-color: rgba(216, 166, 87, 0.3);
+  background: rgba(216, 166, 87, 0.1);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link:hover,
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link:hover,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link:hover,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link:focus-visible {
+  background: rgba(216, 166, 87, 0.1);
+  color: var(--watch-ink);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link.is-active,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link.is-active,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link.is-active {
+  background: rgba(216, 166, 87, 0.18);
+  color: var(--watch-ink);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link.is-complete,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link.is-complete,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link.is-complete {
+  color: #d9c6a8;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link.is-active::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link.is-active::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link.is-active::before {
+  background: var(--watch-brass);
+  border-color: rgba(240, 201, 120, 0.72);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-rail__link.is-complete::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link.is-complete::before,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__link.is-complete::before {
+  background: rgba(216, 166, 87, 0.38);
+  border-color: rgba(216, 166, 87, 0.46);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar {
+  border-top: 1px solid var(--watch-border);
+  background: rgba(13, 15, 18, 0.94);
+  box-shadow: 0 -16px 38px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(14px);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__current {
+  color: var(--watch-ink);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__toggle,
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__close {
+  border-color: rgba(216, 166, 87, 0.3);
+  background: rgba(243, 240, 232, 0.08);
+  color: var(--watch-brass-soft);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .story-mobile-sheet__backdrop {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+/* Article measure and reading rhythm. */
+body[data-story-route="interactive-mechanical-watch"] #main_container {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(20, 23, 28, 0.82), rgba(13, 15, 18, 0.64) 12rem, rgba(13, 15, 18, 0));
+  border-radius: var(--watch-radius-lg);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article {
+  margin-top: 0;
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article > *,
+body[data-story-route="interactive-mechanical-watch"] .padding_wrapper {
+  max-width: 44rem;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article p,
+body[data-story-route="interactive-mechanical-watch"] .article li {
+  color: var(--watch-text);
+  font-size: clamp(1.04rem, 1.3vw, 1.16rem);
+  line-height: 1.72;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article p {
+  padding-block: 0.74em;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article strong {
+  color: inherit;
+  font-weight: 700;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article em {
+  color: #ebe4d7;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .post_date,
+body[data-story-route="interactive-mechanical-watch"] .archive_date,
+body[data-story-route="interactive-mechanical-watch"] .article .img_container span,
+body[data-story-route="interactive-mechanical-watch"] .story-shell-caption,
+body[data-story-route="interactive-mechanical-watch"] figcaption,
+body[data-story-route="interactive-mechanical-watch"] caption {
+  color: var(--watch-muted);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .post_date,
+body[data-story-route="interactive-mechanical-watch"] .archive_date {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article h1[id],
+body[data-story-route="interactive-mechanical-watch"] .article h2,
+body[data-story-route="interactive-mechanical-watch"] .article h3 {
+  color: var(--watch-ink);
+  text-wrap: balance;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article h1[id] {
+  margin-top: clamp(3.5rem, 9vw, 6.5rem);
+  padding-top: 0.6rem;
+  padding-bottom: 0.35rem;
+  font-size: clamp(2.15rem, 4.9vw, 3.55rem);
+  line-height: 1.02;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article h2 {
+  margin-top: clamp(2.4rem, 6vw, 4rem);
+  padding-bottom: 0.25rem;
+  font-size: clamp(1.62rem, 3vw, 2.25rem);
+  line-height: 1.12;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article h3 {
+  margin-top: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(1.28rem, 2vw, 1.55rem);
+  line-height: 1.2;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .post_title,
+body[data-story-route="interactive-mechanical-watch"] .post_title a,
+body[data-story-route="interactive-mechanical-watch"] .post_title a:visited {
+  color: var(--watch-ink);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .hanchor img {
+  filter: invert(91%) sepia(16%) saturate(470%) hue-rotate(347deg) brightness(101%) contrast(92%);
+  opacity: 0.66;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article a {
+  color: var(--watch-brass-soft);
+  text-decoration-color: rgba(240, 201, 120, 0.5);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.075em;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article a:visited {
+  color: #c9b3ec;
+  text-decoration-color: rgba(201, 179, 236, 0.42);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article a:hover,
+body[data-story-route="interactive-mechanical-watch"] .article a:focus-visible,
+body[data-story-route="interactive-mechanical-watch"] .article a.link_button:hover,
+body[data-story-route="interactive-mechanical-watch"] .article a.link_button:focus-visible {
+  color: #ffe0a0;
+  text-decoration-color: currentColor;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article a.link_button {
+  color: var(--watch-brass);
+  font-weight: 700;
+}
+
+body[data-story-route="interactive-mechanical-watch"] blockquote {
+  border-left-color: rgba(216, 166, 87, 0.46);
+  color: var(--watch-muted-strong);
+}
+
+body[data-story-route="interactive-mechanical-watch"] p code,
+body[data-story-route="interactive-mechanical-watch"] li code {
+  background: rgba(243, 240, 232, 0.1);
+  color: var(--watch-ink);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .highlight {
+  border-color: var(--watch-border);
+  background: rgba(20, 23, 28, 0.78);
+}
+
+body[data-story-route="interactive-mechanical-watch"] span.equation_div_symbol {
+  background: var(--watch-muted-strong);
+}
+
+/* Light WebGL and control insets. */
+body[data-story-route="interactive-mechanical-watch"] .drawer_container {
+  box-sizing: border-box;
+  margin: clamp(2rem, 5vw, 3.2rem) auto clamp(1.6rem, 4vw, 2.6rem);
+  padding: var(--watch-frame-pad);
+  border: 1px solid var(--watch-light-border);
+  border-radius: var(--watch-radius-lg);
+  background:
+    radial-gradient(circle at 22% 0%, rgba(255, 255, 255, 0.68), transparent 44%),
+    linear-gradient(180deg, var(--watch-light-panel), var(--watch-light-panel-deep));
+  color: var(--watch-light-ink);
+  box-shadow: var(--watch-shadow-panel);
+  overflow: hidden;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container::before {
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: calc(var(--watch-radius-lg) - 0.3rem);
+  pointer-events: none;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container::after {
+  position: relative;
+  z-index: 0;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .canvas_container {
+  inset: var(--watch-frame-pad);
+  z-index: 1;
+  border-radius: var(--watch-radius-md);
+  background: #f8f6f1;
+  overflow: hidden;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container canvas {
+  border-radius: inherit;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .loading_text {
+  z-index: 2;
+  color: #333333;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .play_pause_button,
+body[data-story-route="interactive-mechanical-watch"] .restart_button,
+body[data-story-route="interactive-mechanical-watch"] .undo_button {
+  z-index: 2;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer {
+  left: 0;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(38, 33, 25, 0.16);
+  background: rgba(248, 246, 241, 0.92);
+  color: var(--watch-light-ink);
+  font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+  box-shadow: 0 -10px 24px rgba(38, 33, 25, 0.08);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .slider_container,
+body[data-story-route="interactive-mechanical-watch"] .segmented_container {
+  box-sizing: border-box;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--watch-light-border);
+  border-radius: var(--watch-radius-md);
+  background: linear-gradient(180deg, #f8f6f1, var(--watch-light-panel));
+  color: var(--watch-light-ink);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .slider_left_gutter,
+body[data-story-route="interactive-mechanical-watch"] .slider_right_gutter {
+  height: 5px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.48) inset;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .slider_right_gutter {
+  opacity: 0.28;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .slider_knob {
+  box-shadow:
+    0 10px 22px rgba(38, 33, 25, 0.2),
+    0 0 0 3px rgba(255, 255, 255, 0.78) inset;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container input[type="range"] {
+  width: min(100%, 22rem);
+  accent-color: var(--watch-brass);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .segmented_control_container {
+  background: #ded8cc;
+  box-shadow: inset 0 1px 2px rgba(38, 33, 25, 0.12);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .segmented_control_on {
+  background: #fffdf8;
+  color: var(--watch-light-ink);
+  box-shadow: 0 4px 14px rgba(38, 33, 25, 0.14);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .segmented_control_off {
+  color: var(--watch-light-muted);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .segmented_control_off:hover {
+  background: rgba(255, 255, 255, 0.58);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .play_pause_button,
+body[data-story-route="interactive-mechanical-watch"] .restart_button,
+body[data-story-route="interactive-mechanical-watch"] .undo_button {
+  background-color: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 8px 20px rgba(38, 33, 25, 0.16);
+}
+
+/* Part-color legend chips, tuned separately for dark prose and light insets. */
+body[data-story-route="interactive-mechanical-watch"] .article span[class^="color_"],
+body[data-story-route="interactive-mechanical-watch"] .article span[class*=" color_"] {
+  display: inline;
+  font-weight: 700;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.34);
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article span[class^="color_"]::before,
+body[data-story-route="interactive-mechanical-watch"] .article span[class*=" color_"]::before {
+  content: "";
+  display: inline-block;
+  width: 0.48em;
+  height: 0.48em;
+  margin-right: 0.25em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.16);
+  vertical-align: 0.05em;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .article .color_red { color: #ff817a; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_orange { color: #f2a963; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_yellow { color: #f0c978; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_green { color: #a8cc73; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_cyan { color: #6bd0cc; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_blue { color: #86bdff; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_violet { color: #d79fe0; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_gray { color: #c7ccd2; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_bridge { color: #b9bec5; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_dark_gray { color: #a8afb7; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_hand { color: #f1f3f5; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_jewel { color: #f1a5b8; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_turn { color: #ff8a8a; }
+body[data-story-route="interactive-mechanical-watch"] .article .color_pull { color: #a6bdf1; }
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container span[class^="color_"],
+body[data-story-route="interactive-mechanical-watch"] .drawer_container span[class*=" color_"],
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer span[class^="color_"],
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer span[class*=" color_"] {
+  text-shadow: none;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_red,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_red { color: #b73530; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_orange,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_orange { color: #9a571b; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_yellow,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_yellow { color: #805f14; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_green,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_green { color: #4f7427; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_cyan,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_cyan { color: #21726f; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_blue,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_blue { color: #2f6da8; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_violet,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_violet { color: #7c4b88; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_gray,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_gray { color: #5d6268; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_bridge,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_bridge { color: #62676d; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_dark_gray,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_dark_gray { color: #474c52; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_hand,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_hand { color: #24272d; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_jewel,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_jewel { color: #a8465d; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_turn,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_turn { color: #ad3c3c; }
+body[data-story-route="interactive-mechanical-watch"] .drawer_container .color_pull,
+body[data-story-route="interactive-mechanical-watch"] .gear_train5_explainer .color_pull { color: #465f9c; }
+
+/* Forward-compatible resin image section. */
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure,
+body[data-story-route="interactive-mechanical-watch"] .resin-divider {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  width: min(100%, 44rem);
+  min-height: clamp(15rem, 42vw, 24rem);
+  margin: clamp(2.2rem, 6vw, 4rem) auto;
+  padding: clamp(0.8rem, 2vw, 1.15rem);
+  border: 1px solid rgba(243, 240, 232, 0.13);
+  border-radius: var(--watch-radius-lg);
+  background:
+    linear-gradient(135deg, rgba(216, 166, 87, 0.08) 25%, transparent 25%) 0 0 / 1.2rem 1.2rem,
+    linear-gradient(315deg, rgba(135, 167, 189, 0.07) 25%, transparent 25%) 0 0 / 1.2rem 1.2rem,
+    rgba(20, 23, 28, 0.72);
+  box-shadow: var(--watch-shadow-soft);
+  overflow: hidden;
+}
+
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure::before,
+body[data-story-route="interactive-mechanical-watch"] .resin-divider::before {
+  content: "Image slot";
+  position: absolute;
+  inset: 1rem;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(216, 166, 87, 0.34);
+  border-radius: calc(var(--watch-radius-lg) - 0.35rem);
+  color: rgba(215, 218, 223, 0.42);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure > img,
+body[data-story-route="interactive-mechanical-watch"] .resin-divider > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--watch-radius-md);
+  background: rgba(243, 240, 232, 0.05);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.36);
+}
+
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure > img:not([src]),
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure > img[src=""],
+body[data-story-route="interactive-mechanical-watch"] .resin-divider > img:not([src]),
+body[data-story-route="interactive-mechanical-watch"] .resin-divider > img[src=""] {
+  min-height: clamp(13rem, 36vw, 21rem);
+  opacity: 0;
+}
+
+body[data-story-route="interactive-mechanical-watch"] figure.resin-figure figcaption,
+body[data-story-route="interactive-mechanical-watch"] .resin-divider figcaption {
+  position: relative;
+  z-index: 1;
+  max-width: 36rem;
+  color: var(--watch-muted);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+  text-align: center;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .resin-divider {
+  width: min(100%, 58rem);
+  min-height: clamp(16rem, 48vw, 30rem);
+  margin-inline: max(-7rem, calc((44rem - 100vw) / 2 + 1rem));
+}
+
+/* Footer and small shared surfaces. */
+body[data-story-route="interactive-mechanical-watch"] #reference-footer {
+  box-sizing: border-box;
+  border-color: var(--watch-border);
+  background: rgba(17, 20, 25, 0.74);
+  color: var(--watch-muted-strong);
+  box-shadow: var(--watch-shadow-soft);
+}
+
+body[data-story-route="interactive-mechanical-watch"] #reference-footer .public-footer__inner,
+body[data-story-route="interactive-mechanical-watch"] #reference-footer .public-footer__links,
+body[data-story-route="interactive-mechanical-watch"] #reference-footer .public-footer__note {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+body[data-story-route="interactive-mechanical-watch"] #reference-footer .public-footer__inner {
+  width: 100%;
+}
+
+body[data-story-route="interactive-mechanical-watch"] #reference-footer .public-footer__note {
+  overflow-wrap: anywhere;
+}
+
+body[data-story-route="interactive-mechanical-watch"] #reference-footer a {
+  color: var(--watch-brass-soft);
+}
+
+body[data-story-route="interactive-mechanical-watch"] table {
+  color: var(--watch-text);
+}
+
+body[data-story-route="interactive-mechanical-watch"] td {
+  border-color: var(--watch-border);
+}
+
+/* Responsive and motion preferences. */
+@media (max-width: 720px) {
+  body[data-story-route="interactive-mechanical-watch"] {
+    padding-left: 0;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .story-rail {
+    display: none;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .story-hero {
+    max-width: calc(100vw - 1rem);
+    padding-inline: 0.75rem;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .story-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .article > *,
+  body[data-story-route="interactive-mechanical-watch"] .padding_wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .drawer_container,
+  body[data-story-route="interactive-mechanical-watch"] figure.resin-figure,
+  body[data-story-route="interactive-mechanical-watch"] .resin-divider {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .slider_container,
+  body[data-story-route="interactive-mechanical-watch"] .long_slider .slider_container {
+    width: min(100%, 20rem);
+    max-width: 20rem;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .story-mobile-bar__link {
+    max-width: min(13rem, calc(100vw - 5rem));
+  }
+}
+
+@media (max-width: 420px) {
+  body[data-story-route="interactive-mechanical-watch"] .article > *,
+  body[data-story-route="interactive-mechanical-watch"] .padding_wrapper {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .drawer_container {
+    --watch-frame-pad: 0.62rem;
+    border-radius: 1rem;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .article p,
+  body[data-story-route="interactive-mechanical-watch"] .article li {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-story-route="interactive-mechanical-watch"],
+  body[data-story-route="interactive-mechanical-watch"] *,
+  body[data-story-route="interactive-mechanical-watch"] *::before,
+  body[data-story-route="interactive-mechanical-watch"] *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  body[data-story-route="interactive-mechanical-watch"] .loading_text {
+    animation: none;
+  }
+}

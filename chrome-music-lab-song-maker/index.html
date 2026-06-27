@@ -95,15 +95,13 @@
       }
     });
 
-    if (!navigator.requestMIDIAccess) {
-      navigator.requestMIDIAccess = function () {
-        return Promise.resolve({
-          inputs: new Map(),
-          outputs: new Map(),
-          onstatechange: null,
-        });
-      };
-    }
+    navigator.requestMIDIAccess = function () {
+      return Promise.resolve({
+        inputs: new Map(),
+        outputs: new Map(),
+        onstatechange: null,
+      });
+    };
   </script>
 
   <script src="build/Main.js" charset="utf-8"></script>

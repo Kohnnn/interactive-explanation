@@ -1,12 +1,83 @@
+@import "./tokens.css";
+
+body.has-top-bar {
+  padding-top: var(--topbar-height);
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1200;
+  background: var(--topbar-bg);
+  color: var(--topbar-ink);
+  border-bottom: 1px solid var(--topbar-line);
+  backdrop-filter: blur(6px);
+}
+
+.top-bar__inner {
+  width: min(1100px, 100%);
+  max-width: calc(100vw - 32px);
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-bar__back {
+  color: inherit;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+  transition: color 0.18s ease;
+}
+
+.top-bar__back:hover,
+.top-bar__back:focus-visible {
+  color: var(--topbar-hover);
+}
+
+.top-bar__label {
+  min-width: 0;
+  margin-right: auto;
+  overflow: hidden;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-bar__theme {
+  appearance: none;
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid var(--topbar-line);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.top-bar__theme:hover,
+.top-bar__theme:focus-visible {
+  border-color: var(--topbar-hover);
+  color: var(--topbar-hover);
+}
+
 .public-footer {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: 100%;
   margin-top: 32px;
-  border-top: 1px solid rgba(33, 28, 24, 0.14);
-  background: rgba(255, 250, 244, 0.94);
-  color: #2b241f;
+  border-top: 1px solid var(--footer-line);
+  background: var(--footer-bg);
+  color: var(--footer-ink);
   font-family: "Trebuchet MS", "Gill Sans", sans-serif;
 }
 
@@ -25,7 +96,7 @@
 
 .public-footer__label {
   margin: 0;
-  color: #7b6455;
+  color: var(--footer-label);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -41,7 +112,7 @@
 
 .public-footer__note {
   margin: 0;
-  color: rgba(43, 36, 31, 0.82);
+  color: var(--footer-note);
 }
 
 .public-footer__links a {
@@ -52,14 +123,26 @@
 
 .public-footer__links a:hover,
 .public-footer__links a:focus-visible {
-  color: #a2492d;
+  color: var(--footer-hover);
 }
 
 .public-footer__divider {
-  color: rgba(43, 36, 31, 0.34);
+  color: var(--footer-divider);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-bar__back,
+  .top-bar__theme {
+    transition: none;
+  }
 }
 
 @media (max-width: 720px) {
+  .top-bar__inner {
+    max-width: calc(100vw - 20px);
+    padding: 8px 10px;
+  }
+
   .public-footer {
     margin-top: 24px;
   }

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Mechanical Watch Docs</title>
+  <meta name="description" content="Implementation notes, parity tracking, and validation guidance for the local Interactive Mechanical Watch route.">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to replicas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Route documentation</p>
+      <h1>Interactive Mechanical Watch</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/interactive-mechanical-watch/</code> is a dark-editorial
+        recomposition of the mechanical-watch teardown. It reuses the live WebGL movement engine verbatim and
+        wraps it in a route-local dark reading surface, then extends the article with a "From Pixels to Resin"
+        prototyping case study.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../interactive-mechanical-watch/">Open route</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>original local recomposition - no vendored upstream page surfaced</code><br>
+        Source family: <code>engineering-longform</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          This route is a local sibling build derived from the existing mechanical-watch route inside the
+          interactive-explanation collection. It keeps the interactive teaching content local and surfaces no
+          upstream creator branding or original-page link on the public surface.
+        </p>
+        <ul class="plain-list">
+          <li>The public route uses neutral provenance handling; the original upstream article URL is intentionally not surfaced.</li>
+          <li>The shell uses the shared Engineering Sandbox longform family for hero framing, rail navigation, and mobile chapter behavior.</li>
+          <li>The WebGL movement engine and geometry are reused unchanged; the redesign is a route-local CSS layer plus an additive section.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <ul class="plain-list">
+          <li><code>interactive-mechanical-watch/index.html</code> owns the route shell, longform body, demo mounts, and the new resin section.</li>
+          <li><code>interactive-mechanical-watch/js/watch.js</code> is the live WebGL movement engine, copied 1:1 and treated as unmodified.</li>
+          <li><code>interactive-mechanical-watch/js/base.js</code> is the Bartosz-family base runtime (sliders, drawers, ArcBall), copied unmodified.</li>
+          <li><code>interactive-mechanical-watch/css/base.css</code> and <code>css/watch.css</code> are the original light-surface styles the engine expects.</li>
+          <li><code>interactive-mechanical-watch/css/editorial-shell.css</code> is the route-local dark-editorial override layer, loaded last.</li>
+          <li><code>interactive-mechanical-watch/models/*.dat</code> are the binary vertex/index buffers for the movement, copied 1:1.</li>
+          <li><code>interactive-mechanical-watch/images/generated/</code> holds the editorial art for the resin section; slots degrade gracefully until populated.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Known deviations</h2>
+        <ul class="plain-list">
+          <li>The reading surface is intentionally dark while each WebGL <code>drawer_container</code> sits inside a light framed inset, because the engine's loading text and explainers assume a light backdrop.</li>
+          <li>A new "From Pixels to Resin" chapter extends the article with a resin-casting prototyping case study; it is additive and does not alter any demo behavior.</li>
+          <li>The resin section uses graceful image slots so missing generated art degrades to captioned placeholders without layout breakage.</li>
+          <li>Provenance is neutral rather than linking the upstream original page.</li>
+        </ul>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <ul class="plain-list">
+          <li>Keep the route self-contained and subpath-safe; all assets remain local to <code>interactive-mechanical-watch/</code> or the shared shell.</li>
+          <li>Do not edit the copied <code>js/watch.js</code> or <code>js/base.js</code> engines; restyle through <code>css/editorial-shell.css</code> only.</li>
+          <li>Preserve generated chapter behavior by keeping major sections anchored with top-level <code>h1</code> ids, and preserve every demo element id (the engine binds demos by id).</li>
+          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs .</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs . --route interactive-mechanical-watch</code> after edits.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

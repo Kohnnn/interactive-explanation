@@ -1,0 +1,76 @@
+[
+  {
+    "moduleId": "engineering-sandbox-longform-shell",
+    "originalBehavior": "The route should be a longform Engineering Sandbox article with a shared hero, generated story rail, mobile chapter navigation, and neutral local provenance handling.",
+    "localStatus": "The route uses the shared Engineering Sandbox shell with engineering-longform framing while keeping all public teaching content local and provenance neutral.",
+    "sourceFiles": [
+      "../../interactive-mechanical-watch/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "The shell provides the longform wrapper, generated chapter navigation, and mobile chapter sheet.",
+      "Public provenance is neutral because the route is a local recomposition rather than a surfaced upstream mirror."
+    ],
+    "evidence": [
+      "The route hero, generated chapter rail, and mobile chapter navigation are mounted by the shared shell.",
+      "The public footer renders neutral route provenance via data-reference-mode=\"neutral\" rather than an upstream original-page link."
+    ]
+  },
+  {
+    "moduleId": "webgl-movement-engine-verbatim",
+    "originalBehavior": "The interactive movement should render through the original WebGL engine with all demos, sliders, and binary geometry intact.",
+    "localStatus": "The route ships a 1:1 copy of the WebGL engine, base runtime, and binary vertex/index buffers; demos are bound by their original element ids and left unmodified.",
+    "sourceFiles": [
+      "../../interactive-mechanical-watch/js/watch.js",
+      "../../interactive-mechanical-watch/js/base.js",
+      "../../interactive-mechanical-watch/models/watch_vertices.dat",
+      "../../interactive-mechanical-watch/models/watch_indices.dat"
+    ],
+    "notes": [
+      "The engine binds demos by element id, so every drawer_container and slider id is preserved verbatim.",
+      "The geometry buffers cannot be regenerated locally and are copied unchanged."
+    ],
+    "evidence": [
+      "Each movement demo mounts through its original drawer_container id (for example #hero, #mainspring_barrel, #gear_train5).",
+      "The route loads ./js/base.js and ./js/watch.js unchanged before the shared shell scripts."
+    ]
+  },
+  {
+    "moduleId": "dark-editorial-css-layer",
+    "originalBehavior": "The redesign should present a dark editorial reading surface without breaking the WebGL demos, which assume a light backdrop.",
+    "localStatus": "A route-local editorial-shell.css darkens the prose surface and lightens article text while wrapping each WebGL drawer_container in a light framed inset so loading text and explainers stay legible.",
+    "sourceFiles": [
+      "../../interactive-mechanical-watch/css/editorial-shell.css",
+      "../../interactive-mechanical-watch/css/base.css",
+      "../../interactive-mechanical-watch/css/watch.css"
+    ],
+    "notes": [
+      "All overrides are scoped under body[data-story-route=\"interactive-mechanical-watch\"] so other routes are unaffected.",
+      "The override layer loads last and styles the real shell nav and part-color legend classes rather than inventing new ones."
+    ],
+    "evidence": [
+      "The article surface renders dark with light body text while each drawer_container sits on a light framed card.",
+      "Responsive checks at 375px, 768px, and 1280px show no horizontal overflow on the public route."
+    ]
+  },
+  {
+    "moduleId": "from-pixels-to-resin-section",
+    "originalBehavior": "The route should extend the teardown with an additive prototyping case study that does not alter any existing demo behavior.",
+    "localStatus": "A new \"From Pixels to Resin\" chapter narrates a resin-cast exploded-watch prototyping loop using gracefully degrading editorial image slots.",
+    "sourceFiles": [
+      "../../interactive-mechanical-watch/index.html",
+      "../../interactive-mechanical-watch/css/editorial-shell.css",
+      "../../interactive-mechanical-watch/images/generated/"
+    ],
+    "notes": [
+      "The section is anchored with a top-level h1 id so it joins the generated chapter rail.",
+      "Image slots use figure.resin-figure and .resin-divider with captioned placeholder states so missing art does not break layout."
+    ],
+    "evidence": [
+      "The new #from-pixels-to-resin chapter appears in the generated navigation alongside the original sections.",
+      "Each resin figure renders a styled, captioned frame whether or not the generated PNG is present."
+    ]
+  }
+]

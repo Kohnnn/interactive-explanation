@@ -3453,6 +3453,61 @@ async function smokeGears(context) {
   await page.close();
 }
 
+async function smokeStargazingDashboard(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "stargazing-dashboard/", "#reference-footer");
+
+  await page.waitForFunction(() => {
+    return document.body && typeof document.body.dataset.stargazingReady === "string";
+  }, null, { timeout: 30000 });
+
+  const readyState = await page.evaluate(() => document.body.dataset.stargazingReady);
+  assert(
+    readyState === "true",
+    `stargazing-dashboard did not reach WebGL ready state (was "${readyState}")`,
+  );
+
+  await assertLocalScriptSources(
+    page,
+    [
+      "./js/astro.js",
+      "./js/state.js",
+      "./js/controls.js",
+      "./js/catalog.js",
+      "./js/scene.js",
+      "./js/hud.js",
+      "./js/main.js",
+    ],
+    "stargazing-dashboard",
+  );
+
+  const canvasTabindex = await page.evaluate(() => {
+    const canvas = document.querySelector("#sky-canvas");
+    return canvas ? canvas.getAttribute("tabindex") : null;
+  });
+  assert(canvasTabindex === "0", `#sky-canvas missing tabindex="0" (was ${canvasTabindex})`);
+
+  await page.locator("#sky-canvas").focus();
+  const canvasFocused = await page.evaluate(() => {
+    return document.activeElement === document.querySelector("#sky-canvas");
+  });
+  assert(canvasFocused, "#sky-canvas did not become the active element after focus()");
+
+  const lookBefore = await page.evaluate(() => window.StargazingState.getState().look);
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowUp");
+  await page.waitForFunction((previous) => {
+    const look = window.StargazingState.getState().look;
+    return look.azDeg !== previous.azDeg && look.altDeg !== previous.altDeg;
+  }, lookBefore, { timeout: 5000 });
+  console.log("OK stargazing-dashboard keyboard navigation");
+
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean("stargazing-dashboard route");
+  await page.close();
+}
+
 async function smokeGps(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
@@ -6368,6 +6423,10 @@ async function main() {
       routeChecks.push(["trust/", "#reference-footer"]);
       routeChecks.push(["docs/trust/", "[data-parity-list]"]);
     }
+    if (exists("stargazing-dashboard")) {
+      routeChecks.push(["stargazing-dashboard/", "#sky-canvas"]);
+      routeChecks.push(["docs/stargazing-dashboard/", "[data-parity-list]"]);
+    }
     if (exists("polygons")) {
       routeChecks.push(["polygons/", "#reference-footer"]);
       routeChecks.push(["docs/polygons/", "[data-parity-list]"]);
@@ -6748,6 +6807,9 @@ async function main() {
     }
     if (exists("earth-and-sun")) {
       await smokeEarthAndSun(context);
+    }
+    if (exists("stargazing-dashboard")) {
+      await smokeStargazingDashboard(context);
     }
     if (exists("bicycle")) {
       await smokeBicycle(context);
