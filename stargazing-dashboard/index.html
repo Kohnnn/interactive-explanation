@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Original first-person topocentric stargazing dashboard for sky-dome time, location, weather, target, and telemetry exploration.">
+  <meta name="description" content="Original map-first observatory dashboard for local sky, time, location, weather, overlay, and object detail exploration.">
   <meta property="og:title" content="Stargazing Dashboard">
-  <meta property="og:description" content="Original first-person topocentric stargazing dashboard for sky-dome time, location, weather, target, and telemetry exploration.">
+  <meta property="og:description" content="Original map-first observatory dashboard for local sky, time, location, weather, overlay, and object detail exploration.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="./">
   <link rel="canonical" href="./">
@@ -29,6 +29,7 @@
 <body
   data-reference-mode="neutral"
   data-reference-note="Original local stargazing route authored inside the interactive-explanation collection. See route docs for full provenance."
+  data-show-reference-footer="true"
   data-footer-label="Route provenance"
   data-story-shell="engineering-sandbox"
   data-story-variant="lab"
@@ -37,27 +38,25 @@
   data-story-route="stargazing-dashboard"
 >
   <header class="story-hero stargazing-hero">
-    <p class="story-hero__eyebrow">Engineering Sandbox lab · topocentric sky dome</p>
+    <p class="story-hero__eyebrow">Engineering Sandbox lab · live sky workspace</p>
     <div class="story-hero__grid stargazing-hero__grid">
       <div>
-        <h1 class="story-hero__title stargazing-hero__title">Aim the night from where you stand.</h1>
+        <h1 class="story-hero__title stargazing-hero__title">Open the chart. Tune the night.</h1>
         <p class="story-hero__summary stargazing-hero__summary">
-          A first-person stargazing dashboard: a local sky dome driven by a time and location engine,
-          weather pressure, and target telemetry, with a HUD that keeps the sky readable while real
-          stars, constellations, the sun, the moon, and planets render around you.
+          The map is the observatory floor: set tonight, choose a local position, trim the layers,
+          then inspect what is above the horizon before a telescope ever moves.
         </p>
-        <div class="story-hero__meta">
-          <span class="story-chip stargazing-chip">Location-aware dome</span>
-          <span class="story-chip stargazing-chip">Time scrubber</span>
-          <span class="story-chip stargazing-chip">Telemetry HUD</span>
+        <div class="story-hero__meta" aria-label="Dashboard capabilities">
+          <span class="story-chip stargazing-chip">Live sky map</span>
+          <span class="story-chip stargazing-chip">Selective layers</span>
+          <span class="story-chip stargazing-chip">Object detail panel</span>
         </div>
       </div>
       <aside class="story-callout story-hero__panel stargazing-hero__panel" aria-labelledby="stargazing-lab-note">
-        <span class="story-callout__label" id="stargazing-lab-note">Lab contract</span>
+        <span class="story-callout__label" id="stargazing-lab-note">Operating note</span>
         <p>
-          The canvas, state store, controls, catalog, scene, and HUD share stable public ids and a
-          fixed script order, so the topocentric dome, astronomy, and telemetry stay decoupled and
-          each panel reads live state without reaching across modules.
+          Start with the sky. The canvas keeps focus, the dock only changes observing variables,
+          and the side panels report the current clock, place, weather, and visible targets.
         </p>
       </aside>
     </div>
@@ -66,124 +65,187 @@
   <main class="stargazing-shell" aria-labelledby="dashboard-title">
     <section class="stargazing-intro" aria-labelledby="dashboard-title">
       <div>
-        <p class="stargazing-kicker">Observation deck</p>
-        <h2 id="dashboard-title">A neutral sky lab for time, place, and visibility.</h2>
+        <p class="stargazing-kicker">Live observatory</p>
+        <h2 id="dashboard-title">A map-first bench for tonight's sky.</h2>
       </div>
       <p>
-        Set a position, move time, soften the sky with weather, then watch the HUD describe the current
-        local dome. Drag the canvas or use the arrow keys to aim, and the rendered stars, constellations,
-        sun, moon, and planets update in real time as place and time change.
+        Drag the dome or focus the canvas and use the keyboard. Keep only the overlays needed for
+        the decision: a clean horizon, marked planets, constellation lines, meteor radiants, and
+        the current visibility envelope.
       </p>
     </section>
 
-    <section class="stargazing-dashboard" aria-label="Interactive stargazing dashboard">
+    <section class="stargazing-dashboard" aria-label="Live sky map and observatory status">
       <div class="stargazing-stage" data-stargazing-stage>
-        <canvas id="sky-canvas" data-stargazing-canvas tabindex="0" role="application" aria-label="Stargazing sky dome. Drag or use arrow keys to aim the view."></canvas>
+        <canvas id="sky-canvas" data-stargazing-canvas tabindex="0" role="application" aria-label="Live sky map. Drag or use arrow keys to aim the observatory view."></canvas>
+        <div id="sky-tooltip" class="stargazing-fallback" role="tooltip" hidden>
+          Point at a rendered object to read altitude, azimuth, magnitude, and visibility notes.
+        </div>
         <div id="stargazing-fallback" class="stargazing-fallback" hidden>
           WebGL is unavailable here. The dashboard controls and HUD remain visible, but the sky dome cannot render.
         </div>
       </div>
 
-      <div id="sky-hud" class="stargazing-hud" data-stargazing-hud aria-label="Sky telemetry panels">
+      <aside id="sky-hud" class="stargazing-hud" data-stargazing-hud aria-label="Sky telemetry and object panels">
+        <section id="object-details" class="stargazing-hud__panel" data-open="false" aria-labelledby="object-details-title" hidden>
+          <p class="stargazing-kicker">Selected object</p>
+          <div class="stargazing-inline-controls">
+            <h3 id="object-details-title">Object details</h3>
+            <button id="details-close" type="button" aria-label="Close object details">Close</button>
+          </div>
+          <p id="object-details-summary">
+            Click a star or target marker to inspect its current altitude, azimuth, and RA/Dec before changing layers.
+          </p>
+          <span id="object-details-coords" aria-live="polite" hidden>RA --h --m / Dec --° --'</span>
+        </section>
         <section id="hud-telemetry" class="stargazing-hud__panel" aria-labelledby="hud-telemetry-title">
           <h3 id="hud-telemetry-title">Telemetry</h3>
-          <p>Live altitude, azimuth, field angle, and render status for the current look direction.</p>
+          <p>Live altitude, azimuth, field angle, zoom, and render status for the current look direction.</p>
         </section>
         <section id="hud-weather" class="stargazing-hud__panel" aria-labelledby="hud-weather-title">
           <h3 id="hud-weather-title">Weather</h3>
-          <p>Reports cloud cover, seeing stability, and light pollution as the sliders change the sky.</p>
+          <p>Cloud cover, seeing stability, and light pollution show how much faint detail the map should keep.</p>
         </section>
         <section id="hud-meteors" class="stargazing-hud__panel" aria-labelledby="hud-meteors-title">
           <h3 id="hud-meteors-title">Meteors</h3>
-          <p>Active meteor shower windows and radiant hints from the loaded catalog.</p>
+          <p>Active shower windows and radiant bearings stay visible only when the layer is useful.</p>
         </section>
         <section id="hud-targets" class="stargazing-hud__panel" aria-labelledby="hud-targets-title">
           <h3 id="hud-targets-title">Targets</h3>
-          <p>Summarizes the stars, planets, and constellations currently above the horizon.</p>
+          <p>Stars, planets, and constellations above the horizon are summarized for quick target picking.</p>
         </section>
         <section id="hud-time" class="stargazing-hud__panel" aria-labelledby="hud-time-title">
           <h3 id="hud-time-title">Time</h3>
-          <p>Reports the live UTC clock and simulation speed as time plays or scrubs.</p>
+          <p>The UTC clock, local night position, and simulation speed update as time plays or scrubs.</p>
         </section>
         <section id="hud-location" class="stargazing-hud__panel" aria-labelledby="hud-location-title">
           <h3 id="hud-location-title">Location</h3>
-          <p>Reports latitude, longitude, and topocentric observer data for the current position.</p>
+          <p>Latitude, longitude, and topocentric observer data anchor every object to the current site.</p>
         </section>
-      </div>
+      </aside>
     </section>
 
     <section class="stargazing-controls" aria-labelledby="controls-title">
       <div class="stargazing-controls__header">
-        <p class="stargazing-kicker">Control bench</p>
-        <h2 id="controls-title">Drive the sky with time, place, weather, and overlays.</h2>
+        <p class="stargazing-kicker">Control dock</p>
+        <h2 id="controls-title">Small controls, selective map changes.</h2>
       </div>
+      <p>
+        Use the dock to change the observing state without leaving the chart. The defaults favor a
+        quiet field map, warm labels, and enough telemetry for a real planning decision.
+      </p>
+    </section>
 
-      <form class="stargazing-control-grid" aria-label="Stargazing controls">
-        <fieldset class="stargazing-control-card">
-          <legend>Time controls</legend>
-          <div class="stargazing-inline-controls">
-            <button id="time-play" type="button">Play time</button>
-            <label for="time-speed">
-              Speed
-              <select id="time-speed" name="time-speed">
-                <option value="1">1x</option>
-                <option value="60">60x</option>
-                <option value="3600">3600x</option>
-                <option value="86400">86400x</option>
-              </select>
-            </label>
-            <button id="time-now" type="button">Set now</button>
-          </div>
-          <label for="time-scrub" class="stargazing-range-label">
-            Time scrub
-            <input id="time-scrub" name="time-scrub" type="range" min="0" max="100" value="50">
+    <form class="stargazing-control-grid" aria-label="Stargazing controls">
+      <fieldset class="stargazing-control-card">
+        <legend>Time controls</legend>
+        <div class="stargazing-inline-controls">
+          <button id="tonight-button" type="button">Tonight</button>
+          <button id="time-play" type="button">Play time</button>
+          <label for="time-speed">
+            Speed
+            <select id="time-speed" name="time-speed">
+              <option value="1">1x</option>
+              <option value="60">60x</option>
+              <option value="3600">3600x</option>
+              <option value="86400">86400x</option>
+            </select>
           </label>
-        </fieldset>
+          <button id="time-now" type="button">Set now</button>
+        </div>
+        <label for="time-scrub" class="stargazing-range-label">
+          Time scrub
+          <input id="time-scrub" name="time-scrub" type="range" min="0" max="100" value="50">
+        </label>
+      </fieldset>
 
-        <fieldset class="stargazing-control-card">
-          <legend>Location inputs</legend>
-          <label for="loc-lat">
-            Latitude
-            <input id="loc-lat" name="loc-lat" type="number" min="-90" max="90" step="0.0001" value="37.7749">
-          </label>
-          <label for="loc-lon">
-            Longitude
-            <input id="loc-lon" name="loc-lon" type="number" min="-180" max="180" step="0.0001" value="-122.4194">
-          </label>
-        </fieldset>
+      <fieldset class="stargazing-control-card">
+        <legend>Location inputs</legend>
+        <label for="loc-lat">
+          Latitude
+          <input id="loc-lat" name="loc-lat" type="number" min="-90" max="90" step="0.0001" value="37.7749">
+        </label>
+        <label for="loc-lon">
+          Longitude
+          <input id="loc-lon" name="loc-lon" type="number" min="-180" max="180" step="0.0001" value="-122.4194">
+        </label>
+      </fieldset>
 
-        <fieldset class="stargazing-control-card">
-          <legend>Weather sliders</legend>
-          <label class="stargazing-range-label">
-            Cloud cover
-            <input type="range" data-weather="cloud" name="weather-cloud" min="0" max="1" step="0.01" value="0.18">
-          </label>
-          <label class="stargazing-range-label">
-            Seeing stability
-            <input type="range" data-weather="seeing" name="weather-seeing" min="0" max="1" step="0.01" value="0.74">
-          </label>
-          <label class="stargazing-range-label">
-            Light pollution
-            <input type="range" data-weather="lightpollution" name="weather-lightpollution" min="0" max="1" step="0.01" value="0.32">
-          </label>
-        </fieldset>
+      <fieldset class="stargazing-control-card">
+        <legend>Weather sliders</legend>
+        <label class="stargazing-range-label">
+          Cloud cover
+          <input type="range" data-weather="cloud" name="weather-cloud" min="0" max="1" step="0.01" value="0.18">
+        </label>
+        <label class="stargazing-range-label">
+          Seeing stability
+          <input type="range" data-weather="seeing" name="weather-seeing" min="0" max="1" step="0.01" value="0.74">
+        </label>
+        <label class="stargazing-range-label">
+          Light pollution
+          <input type="range" data-weather="lightpollution" name="weather-lightpollution" min="0" max="1" step="0.01" value="0.32">
+        </label>
+      </fieldset>
 
-        <fieldset class="stargazing-control-card">
-          <legend>Sky overlays</legend>
-          <label class="stargazing-toggle">
-            <input type="checkbox" data-toggle="constellations" name="toggle-constellations" checked>
-            Show constellations
-          </label>
-          <label class="stargazing-toggle">
-            <input type="checkbox" data-toggle="planets" name="toggle-planets" checked>
-            Show planets
-          </label>
-          <label class="stargazing-toggle">
-            <input type="checkbox" data-toggle="labels" name="toggle-labels" checked>
-            Show labels
-          </label>
-        </fieldset>
-      </form>
+      <fieldset class="stargazing-control-card">
+        <legend>Map layers</legend>
+        <label class="stargazing-toggle">
+          <input type="checkbox" data-toggle="constellations" name="toggle-constellations" checked>
+          Constellation lines
+        </label>
+        <label class="stargazing-toggle">
+          <input type="checkbox" data-toggle="planets" name="toggle-planets" checked>
+          Planet markers
+        </label>
+        <label class="stargazing-toggle">
+          <input type="checkbox" data-toggle="labels" name="toggle-labels" checked>
+          Object labels
+        </label>
+      </fieldset>
+
+      <fieldset class="stargazing-control-card">
+        <legend>Map tuning</legend>
+        <label class="stargazing-range-label">
+          Zoom
+          <input id="map-zoom" name="map-zoom" type="range" min="25" max="140" value="72" data-display="zoom">
+          <output for="map-zoom" data-display-value="zoom">72%</output>
+        </label>
+        <label class="stargazing-range-label">
+          Brightness
+          <input id="map-brightness" name="map-brightness" type="range" min="0" max="100" value="68" data-display="brightness">
+          <output for="map-brightness" data-display-value="brightness">68%</output>
+        </label>
+        <label class="stargazing-range-label">
+          Star scale
+          <input id="map-star-scale" name="map-star-scale" type="range" min="50" max="160" value="100" data-display="starScale">
+          <output for="map-star-scale" data-display-value="starScale">1.0x</output>
+        </label>
+        <label class="stargazing-range-label">
+          Magnitude limit
+          <input id="map-mag-limit" name="map-mag-limit" type="range" min="1" max="7" step="0.1" value="5.8" data-display="magLimit">
+          <output for="map-mag-limit" data-display-value="magLimit">5.8</output>
+        </label>
+      </fieldset>
+
+      <section id="sky-legend" class="stargazing-control-card" aria-labelledby="sky-legend-title">
+        <h3 id="sky-legend-title">Sky legend</h3>
+        <p>Read the chart by layer, not decoration.</p>
+        <ul>
+          <li>Stars: fixed point sources sized by relative magnitude.</li>
+          <li>Planets: brighter moving markers tied to the current clock.</li>
+          <li>Constellation lines: optional bearings for orientation.</li>
+          <li>Meteor radiants: shower origins shown when a stream is active.</li>
+          <li>Horizon and grid: altitude and azimuth guides for telescope aiming.</li>
+        </ul>
+      </section>
+    </form>
+
+    <section class="stargazing-control-card" aria-labelledby="shortcut-toggle">
+      <button id="shortcut-toggle" type="button" aria-controls="shortcut-help" aria-expanded="false">Keyboard shortcuts</button>
+      <p id="shortcut-help" hidden>
+        Focus the canvas, then use arrow keys to aim. Drag to pan the sky, adjust the time scrub for
+        tonight's transit, and use the layer controls to reduce clutter before selecting a target.
+      </p>
     </section>
   </main>
 </body>

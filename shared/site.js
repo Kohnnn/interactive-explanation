@@ -445,6 +445,7 @@ function renderFamilyFilters(mount, families, state, onSelectFamily) {
   function buildFilterButton(config) {
     const button = createElement("button", "filter-pill", null);
     button.type = "button";
+    button.setAttribute("aria-pressed", String(config.key === state.family));
     button.dataset.familyTone = config.tone;
     if (config.key === state.family) {
       button.classList.add("is-active");
@@ -481,6 +482,7 @@ function renderTopicFilters(mount, topics, totalCount, state, onSelectTag) {
   function buildFilterButton(tag, label, count) {
     const button = createElement("button", "filter-pill filter-pill--topic", null);
     button.type = "button";
+    button.setAttribute("aria-pressed", String(tag === state.tag));
     if (tag === state.tag) {
       button.classList.add("is-active");
     }

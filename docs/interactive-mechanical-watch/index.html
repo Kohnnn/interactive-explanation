@@ -53,8 +53,9 @@
           <li><code>interactive-mechanical-watch/js/base.js</code> is the Bartosz-family base runtime (sliders, drawers, ArcBall), copied unmodified.</li>
           <li><code>interactive-mechanical-watch/css/base.css</code> and <code>css/watch.css</code> are the original light-surface styles the engine expects.</li>
           <li><code>interactive-mechanical-watch/css/editorial-shell.css</code> is the route-local dark-editorial override layer, loaded last.</li>
+          <li><code>interactive-mechanical-watch/js/exploded-view.js</code> drives the route-local selectable exploded-view SVG used by the resin chapter.</li>
           <li><code>interactive-mechanical-watch/models/*.dat</code> are the binary vertex/index buffers for the movement, copied 1:1.</li>
-          <li><code>interactive-mechanical-watch/images/generated/</code> holds the editorial art for the resin section; slots degrade gracefully until populated.</li>
+          <li><code>interactive-mechanical-watch/images/generated/</code> holds the editorial divider art for the resin process sections.</li>
         </ul>
       </article>
 
@@ -62,8 +63,9 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>The reading surface is intentionally dark while each WebGL <code>drawer_container</code> sits inside a light framed inset, because the engine's loading text and explainers assume a light backdrop.</li>
-          <li>A new "From Pixels to Resin" chapter extends the article with a resin-casting prototyping case study; it is additive and does not alter any demo behavior.</li>
-          <li>The resin section uses graceful image slots so missing generated art degrades to captioned placeholders without layout breakage.</li>
+          <li>A new "From Pixels to Resin" chapter extends the article with a resin-casting prototyping case study; it is additive and does not alter any WebGL demo behavior.</li>
+          <li>The resin chapter now opens with an interactive exploded-view SVG: users can scrub explosion depth and select individual components for subsystem notes.</li>
+          <li>Generated PNGs remain as later process dividers rather than the primary exploded-view interaction.</li>
           <li>Provenance is neutral rather than linking the upstream original page.</li>
         </ul>
       </article>

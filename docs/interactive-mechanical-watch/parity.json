@@ -56,21 +56,23 @@
     ]
   },
   {
-    "moduleId": "from-pixels-to-resin-section",
-    "originalBehavior": "The route should extend the teardown with an additive prototyping case study that does not alter any existing demo behavior.",
-    "localStatus": "A new \"From Pixels to Resin\" chapter narrates a resin-cast exploded-watch prototyping loop using gracefully degrading editorial image slots.",
+    "moduleId": "interactive-exploded-resin-section",
+    "originalBehavior": "The route should extend the teardown with an additive prototyping case study and make the exploded component stack interactive rather than relying on a static hero image.",
+    "localStatus": "A new \"From Pixels to Resin\" chapter opens with a selectable exploded-view SVG: users can scrub explosion depth, choose individual watch components, and read each component's subsystem role. Generated PNGs remain as later process dividers.",
     "sourceFiles": [
       "../../interactive-mechanical-watch/index.html",
+      "../../interactive-mechanical-watch/js/exploded-view.js",
       "../../interactive-mechanical-watch/css/editorial-shell.css",
       "../../interactive-mechanical-watch/images/generated/"
     ],
     "notes": [
       "The section is anchored with a top-level h1 id so it joins the generated chapter rail.",
-      "Image slots use figure.resin-figure and .resin-divider with captioned placeholder states so missing art does not break layout."
+      "The exploded view is route-local and does not mutate the copied WebGL movement engine.",
+      "Each selectable component has a button/list entry, SVG target, and detail panel entry."
     ],
     "evidence": [
-      "The new #from-pixels-to-resin chapter appears in the generated navigation alongside the original sections.",
-      "Each resin figure renders a styled, captioned frame whether or not the generated PNG is present."
+      "The #from-pixels-to-resin chapter contains a data-exploded-watch mount instead of a static hero figure.",
+      "The exploded-view script renders selectable components for power, train, escapement, balance, keyless works, automatic winding, display, structure, and friction subsystems."
     ]
   }
 ]

@@ -33,7 +33,7 @@ test("getState returns a defensive clone when callers mutate the snapshot", asyn
   snapshot.selectedTargetId = "vega";
 
   // Then: the internal store remains unchanged.
-  assert.equal(state.getState().weather.cloud, 0);
+  assert.equal(state.getState().weather.cloud, 0.18);
   assert.equal(state.getState().selectedTargetId, null);
 });
 
@@ -50,8 +50,8 @@ test("setState shallow-merges object top-level keys and replaces primitives", as
   // Then: omitted nested fields are preserved and primitive keys are replaced.
   const weather = state.getState().weather;
   assert.equal(weather.cloud, 0.5);
-  assert.equal(weather.seeing, 0.5);
-  assert.equal(weather.lightPollution, 0.3);
+  assert.equal(weather.seeing, 0.74);
+  assert.equal(weather.lightPollution, 0.32);
   assert.equal(state.getState().selectedTargetId, "mars");
 });
 
@@ -73,7 +73,7 @@ test("setState clamps constrained numeric fields", async () => {
   assert.equal(snapshot.time.speed, 1);
   assert.equal(snapshot.weather.cloud, 0);
   assert.equal(snapshot.weather.seeing, 1);
-  assert.equal(snapshot.weather.lightPollution, 0.3);
+  assert.equal(snapshot.weather.lightPollution, 0.32);
 });
 
 test("subscribe notifies once per commit and unsubscribe removes cleanly", async () => {

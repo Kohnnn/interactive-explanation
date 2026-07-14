@@ -23,6 +23,7 @@
   <link href="./css/editorial-shell.css" rel="stylesheet" type="text/css">
   <script defer src="./js/base.js"></script>
   <script defer src="./js/watch.js"></script>
+  <script defer src="./js/exploded-view.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -1107,10 +1108,23 @@
               out to suspend a complete mechanical watch in clear resin with every component frozen mid-air, as if the
               render had been poured into a block. What looks like a single confident pour is really a long chain of
               prototyping failures, each one teaching the next.</p>
-            <figure class="resin-figure" data-resin-slot="hero">
-              <img src="./images/generated/hero-exploded.png" alt="An exploded mechanical watch suspended in a block of clear resin, every part frozen mid-air." loading="lazy" />
-              <figcaption>The target: a full movement held in suspension, each part frozen where an exploded diagram would place it.</figcaption>
-            </figure>
+            <section class="exploded-watch" aria-labelledby="exploded-watch-title">
+              <div class="exploded-watch__header">
+                <p class="exploded-watch__eyebrow">Interactive exploded view</p>
+                <h2 id="exploded-watch-title">Select a component to inspect its role in the stack.</h2>
+                <p>Scrub the explosion depth, then click any suspended layer. The view is schematic, but each part maps to a real movement subsystem: power, train, escapement, balance, keyless works, automatic winding, hands, and casing.</p>
+              </div>
+              <div class="exploded-watch__stage" data-exploded-watch>
+                <div id="exploded-watch-diagram" class="exploded-watch__canvas" data-exploded-canvas aria-label="Interactive exploded mechanical watch component diagram"></div>
+                <div class="exploded-watch__panel">
+                  <label class="exploded-watch__range-label" for="exploded-depth">Explosion depth</label>
+                  <input id="exploded-depth" data-exploded-depth type="range" min="0" max="100" value="74" aria-controls="exploded-watch-diagram" aria-valuetext="74 percent exploded">
+                  <div class="exploded-watch__parts" data-exploded-parts role="group" aria-label="Watch components"></div>
+                  <article id="exploded-watch-detail" class="exploded-watch__detail" data-exploded-detail aria-live="polite"></article>
+                </div>
+              </div>
+              <p class="exploded-watch__caption">The target: every watch subsystem frozen where an exploded diagram would place it, then translated into real suspension points for resin casting.</p>
+            </section>
             <p>The first problem is gravity. Parts want to sink, drift, and clump while the resin is still liquid, so the
               exploded geometry has to be physically scaffolded before a single drop is poured.</p>
             <figure class="resin-divider" data-resin-slot="scaffolding">

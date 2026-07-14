@@ -57,6 +57,21 @@
     return link;
   }
 
+  function hideFooterFromFocusOrder(footer) {
+    if ("inert" in footer) {
+      footer.inert = true;
+    } else {
+      footer.setAttribute("inert", "");
+    }
+    footer.setAttribute("aria-hidden", "true");
+    const focusable = footer.querySelectorAll(
+      "a[href], button, input, select, textarea, [tabindex]",
+    );
+    focusable.forEach(function (element) {
+      element.tabIndex = -1;
+    });
+  }
+
   function mountFooter(definition) {
     if (!definition) {
       return;
@@ -124,6 +139,10 @@
 
     footer.appendChild(inner);
     document.body.appendChild(footer);
+
+    if (!footerVisible) {
+      hideFooterFromFocusOrder(footer);
+    }
   }
 
   function parseReferenceLinks(serializedLinks) {
@@ -158,7 +177,7 @@
     }
   }
 
-  async function getFooterDefinition() {
+  function getFooterDefinition() {
     const body = document.body;
 
     if (!body) {
@@ -166,22 +185,25 @@
     }
 
     if (body.dataset.pageType === "home") {
-      const response = await fetch("./pages.json", { cache: "no-store" });
-      const pages = await response.json();
-
-      return {
-        label: "References",
-        links: pages
-          .filter(function (page) {
-            return page.referenceUrl;
-          })
-          .map(function (page) {
-            return {
-              href: page.referenceUrl,
-              label: page.title,
-            };
-          }),
-      };
+      return fetch("./pages.json", { cache: "no-store" })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (pages) {
+          return {
+            label: "References",
+            links: pages
+              .filter(function (page) {
+                return page.referenceUrl;
+              })
+              .map(function (page) {
+                return {
+                  href: page.referenceUrl,
+                  label: page.title,
+                };
+              }),
+          };
+        });
     }
 
     if (body.dataset.referenceMode === "neutral") {
@@ -216,12 +238,16 @@
     return null;
   }
 
-  async function initFooter() {
+  function initFooter() {
     ensurePageUrlMetadata();
 
     try {
-      const definition = await getFooterDefinition();
-      mountFooter(definition);
+      const definition = getFooterDefinition();
+      if (definition && typeof definition.then === "function") {
+        definition.then(mountFooter).catch(function () {});
+      } else {
+        mountFooter(definition);
+      }
     } catch (error) {
       // Footer rendering is non-critical for the interactive runtime.
     }

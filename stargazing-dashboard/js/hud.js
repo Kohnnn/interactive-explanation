@@ -421,11 +421,46 @@
 
   function renderTelemetry(snapshot) {
     const look = snapshot && snapshot.look ? snapshot.look : {};
+    const display = snapshot && snapshot.display ? snapshot.display : {};
+    const magLimit = numberOrFallback(display.magLimit, 5.8);
     renderLines("hud-telemetry", [
       `Azimuth: ${formatBearing(look.azDeg)}`,
       `Altitude: ${formatDegrees(look.altDeg, 1)}`,
+      `Mag limit: ${magLimit.toFixed(1)}`,
       `Render: ${readinessLabel()}`,
     ]);
+  }
+
+  function renderDisplay(snapshot) {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const display = snapshot && snapshot.display ? snapshot.display : {};
+    const zoom = numberOrFallback(display.zoom, 72);
+    const brightness = numberOrFallback(display.brightness, 68);
+    const starScale = numberOrFallback(display.starScale, 100);
+    const magLimit = numberOrFallback(display.magLimit, 5.8);
+
+    const zoomOutput = document.querySelector('[data-display-value="zoom"]');
+    if (zoomOutput) {
+      zoomOutput.textContent = `${zoom}%`;
+    }
+
+    const brightnessOutput = document.querySelector('[data-display-value="brightness"]');
+    if (brightnessOutput) {
+      brightnessOutput.textContent = `${brightness}%`;
+    }
+
+    const starScaleOutput = document.querySelector('[data-display-value="starScale"]');
+    if (starScaleOutput) {
+      starScaleOutput.textContent = `${(starScale / 100).toFixed(1)}x`;
+    }
+
+    const magLimitOutput = document.querySelector('[data-display-value="magLimit"]');
+    if (magLimitOutput) {
+      magLimitOutput.textContent = `${magLimit.toFixed(1)}`;
+    }
   }
 
   function bindControls(stateApi, listeners) {
@@ -479,6 +514,15 @@
         }
       });
     });
+
+    document.querySelectorAll("[data-display]").forEach((input) => {
+      bindInput(listeners, input, () => {
+        const key = input.getAttribute("data-display");
+        if (key) {
+          stateApi.setState({ display: { [key]: numberFromInput(input, 0) } });
+        }
+      });
+    });
   }
 
   function createHud(options) {
@@ -515,6 +559,7 @@
     function update() {
       const snapshot = getSnapshot();
       renderTelemetry(snapshot);
+      renderDisplay(snapshot);
       renderWeather(snapshot, catalog);
       renderMeteors(snapshot, meteorState);
       renderTargets(snapshot);

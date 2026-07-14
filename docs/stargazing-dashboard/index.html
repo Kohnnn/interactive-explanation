@@ -19,9 +19,9 @@
         Local route <code>/interactive-explanation/stargazing-dashboard/</code> is an original Engineering Sandbox
         lab that builds a first-person topocentric sky dome. It provides a time and location engine, bundled
         star/constellation/meteor data, ephemeris-style planet positions, guided target navigation, and a
-        telemetry HUD overlay. Wave 1 freezes the page contracts only; the canvas, state store, controls,
-        catalog hooks, scene adapter, and HUD adapter are safe placeholders so later waves can add astronomy
-        without changing public ids or script order.
+        telemetry HUD overlay. The shipped implementation renders stars, constellation figures, horizon guides,
+        cardinal labels, and solar-system markers through a local Three.js scene, with live time, weather,
+        display tuning, guided navigation, hover picking, and keyboard controls.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../stargazing-dashboard/">Open route</a>
@@ -46,7 +46,7 @@
           <li>Bright star positions come from a HYG/Yale-derived local subset bundled as route-local JSON data.</li>
           <li>Constellation boundary figures and meteor shower data are authored from public reference knowledge into route-local JSON schemas.</li>
           <li>Three.js r70 is vendored locally at <code>../ev/scripts/three.js</code> and loaded before route scripts.</li>
-          <li>Wave 1 freezes the public API shape of each module (state, astro, catalog, controls, scene, hud) but returns placeholders only; real rendering and ephemeris computation land in later waves.</li>
+          <li>The route keeps stable module APIs for state, astronomy, catalogs, controls, scene rendering, and HUD updates while shipping the complete local implementation behind those contracts.</li>
         </ul>
       </article>
 
@@ -55,17 +55,17 @@
         <ul class="plain-list">
           <li><code>stargazing-dashboard/index.html</code> owns the route shell, hero, observation deck, dashboard grid, HUD panels, and control bench.</li>
           <li><code>stargazing-dashboard/css/stargazing.css</code> provides the dark night-sky theme, dashboard layout, panel styling, and responsive breakpoints.</li>
-          <li><code>stargazing-dashboard/js/astro.js</code> defines the astronomy API surface: julianDate, gmstHours, lstHours, equatorialToHorizontal, sunPosition, moonPosition, planetPosition (Wave 1: placeholders).</li>
-          <li><code>stargazing-dashboard/js/state.js</code> provides the frozen state store: getState, setState, subscribe, advanceTime with observer, time, toggles, weather, selectedTargetId, and look shapes.</li>
-          <li><code>stargazing-dashboard/js/catalog.js</code> defines lazy async catalog loaders for stars, constellations, and meteor showers from local JSON paths.</li>
+          <li><code>stargazing-dashboard/js/astro.js</code> computes Julian date, sidereal time, equatorial-to-horizontal transforms, and low-precision sun, moon, and planet positions.</li>
+          <li><code>stargazing-dashboard/js/state.js</code> provides the state store and time driver for observer, time, layers, weather, display tuning, target selection, and camera look.</li>
+          <li><code>stargazing-dashboard/js/catalog.js</code> loads and validates local star, constellation, and meteor-shower data and supplies magnitude, color, and line-resolution helpers.</li>
           <li><code>stargazing-dashboard/js/controls.js</code> implements pointer-drag and keyboard look controls that write azimuth and altitude into the state store.</li>
-          <li><code>stargazing-dashboard/js/scene.js</code> defines the Three.js scene lifecycle (createScene with start/stop/resize). Wave 1: no-op adapter.</li>
-          <li><code>stargazing-dashboard/js/hud.js</code> binds DOM controls (location, time, weather, toggles) to the state store and returns an update handle.</li>
-          <li><code>stargazing-dashboard/js/main.js</code> bootstraps the route: WebGL guard, fallback display, adapter wiring, and ready-state signaling.</li>
+          <li><code>stargazing-dashboard/js/scene.js</code> owns the Three.js renderer, sky geometry, catalog refreshes, camera, atmosphere response, body markers, and canvas picking.</li>
+          <li><code>stargazing-dashboard/js/hud.js</code> binds location, time, weather, layer, and display controls to the state store and renders live telemetry.</li>
+          <li><code>stargazing-dashboard/js/main.js</code> bootstraps the route, validates scene startup, wires guided navigation and details, and exposes the ready or fallback state.</li>
           <li><code>../ev/scripts/three.js</code> is a vendored copy of Three.js r70 loaded as a global script before route-local modules.</li>
           <li><code>../shared/engineering-sandbox.css</code> and <code>../shared/engineering-sandbox.js</code> provide the shared lab shell.</li>
           <li><code>../shared/public-footer.css</code> and <code>../shared/public-footer.js</code> provide the provenance footer.</li>
-          <li>Future data files expected at <code>./data/stars.json</code>, <code>./data/constellations.json</code>, <code>./data/meteor-showers.json</code>.</li>
+          <li><code>stargazing-dashboard/data/stars.json</code>, <code>constellations.json</code>, and <code>meteor-showers.json</code> provide the route-local catalogs.</li>
         </ul>
       </article>
 
@@ -74,9 +74,10 @@
         <ul class="plain-list">
           <li>Neutral provenance: there is no referenceUrl because this is an original local route, not an upstream replica. The footer is wired with <code>data-reference-mode="neutral"</code> and a provenance note.</li>
           <li>Astronomy accuracy is naked-eye visual grade, not ephemeris-grade. Positions are sufficient for identifying bright stars, planets, and constellations by eye but are not suitable for telescope pointing or precise astrometry.</li>
-          <li>The weather panel is a sandbox with sliders (cloud cover, seeing, light pollution). It is not connected to a live weather API. Values feed the state store for future rendering use.</li>
-          <li>Three.js r70 is an older stable version chosen for compatibility. It provides basic WebGLRenderer, PerspectiveCamera, Scene, and SphereGeometry. Later waves may require upgrading or adding supplemental modules.</li>
-          <li>Wave 1 is a contract freeze: all module APIs are defined and wired, but astronomy functions return zeros/null and the scene adapter is a no-op. Smoke checks verify the DOM contract and ready state, not the rendered sky.</li>
+          <li>The weather panel is a sandbox, not a live weather feed. Cloud cover dims stars, seeing changes point-size shimmer, and light pollution caps the visible magnitude limit.</li>
+          <li>Three.js r70 is retained for compatibility, so the renderer uses its legacy PointCloud, LinePieces, addAttribute, and VertexColors APIs.</li>
+          <li>Astronomy is naked-eye visual grade and omits precision corrections needed for telescope control, navigation, or astrometry.</li>
+          <li>Meteor data currently feeds the HUD; meteor radiant markers are not drawn in the WebGL scene.</li>
         </ul>
       </article>
 
@@ -86,11 +87,11 @@
           <li>Keep the route self-contained and subpath-safe; all assets must remain local to <code>stargazing-dashboard/</code> or the shared shell paths (<code>../shared/</code>, <code>../ev/</code>).</li>
           <li>Run <code>node tools/sync-route-metadata.mjs .</code> after any manifest changes to keep <code>pages.json</code> in sync.</li>
           <li>Run <code>node tools/check-public-surface.mjs .</code> after any content or structural changes to the route or docs.</li>
-          <li>Run <code>node tools/smoke-bundle.mjs . --route stargazing-dashboard</code> for route-specific smoke testing (desktop/mobile overflow, footer, console errors, ready-state dataset).</li>
-          <li>Validate JS syntax: <code>node --check stargazing-dashboard/js/main.js</code> (and each module under <code>js/</code>).</li>
-          <li>Validate JSON data files (when added) with <code>node -e "JSON.parse(require('fs').readFileSync('stargazing-dashboard/data/stars.json','utf8'))"</code>.</li>
+          <li>Run <code>node tools/smoke-bundle.mjs . --route stargazing-dashboard</code> for route-specific WebGL, interaction, responsive, footer, and runtime checks.</li>
+          <li>Run <code>npm run check</code> and <code>npm run unit</code> after JavaScript changes.</li>
+          <li>Keep the JSON catalog schemas compatible with <code>catalog.js</code> validation and preserve relative data paths for subpath hosting.</li>
           <li>The route body sets <code>data-story-shell="engineering-sandbox"</code> and <code>data-story-variant="lab"</code>. Do not switch to the longform essay variant without updating the hero layout, navigation, and chapter expectations.</li>
-          <li>Parity entries for Wave 1 modules that are still placeholders should remain marked honestly (e.g. "not yet verified" or "Wave 1 contract only") rather than claiming false PASS.</li>
+          <li>Set <code>data-stargazing-ready="true"</code> only after scene initialization succeeds; renderer setup failures must expose the fallback instead.</li>
         </ul>
       </article>
     </section>

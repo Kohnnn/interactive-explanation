@@ -26,9 +26,14 @@
 
   function createNoopScene() {
     return {
-      start() {},
+      start() {
+        return false;
+      },
       stop() {},
       resize() {},
+      pickObjectAt() {
+        return null;
+      },
     };
   }
 
@@ -85,10 +90,11 @@
     const observer = rawState && rawState.observer ? rawState.observer : {};
     const time = rawState && rawState.time ? rawState.time : {};
     const toggles = rawState && rawState.toggles ? rawState.toggles : {};
-    const weather = rawState && rawState.weather ? rawState.weather : {};
-    const look = rawState && rawState.look ? rawState.look : {};
+      const weather = rawState && rawState.weather ? rawState.weather : {};
+      const display = rawState && rawState.display ? rawState.display : {};
+      const look = rawState && rawState.look ? rawState.look : {};
 
-    return {
+      return {
       observer: {
         latDeg: clamp(observer.latDeg, -90, 90, 37.7749),
         lonDeg: clamp(observer.lonDeg, -180, 180, -122.4194),
@@ -105,9 +111,15 @@
         labels: toggles.labels !== false,
       },
       weather: {
-        cloud: clamp(weather.cloud, 0, 1, 0),
-        seeing: clamp(weather.seeing, 0, 1, 0.5),
-        lightPollution: clamp(weather.lightPollution, 0, 1, 0.3),
+        cloud: clamp(weather.cloud, 0, 1, 0.18),
+        seeing: clamp(weather.seeing, 0, 1, 0.74),
+        lightPollution: clamp(weather.lightPollution, 0, 1, 0.32),
+      },
+      display: {
+        zoom: clamp(display.zoom, 25, 140, 72),
+        brightness: clamp(display.brightness, 0, 100, 68),
+        starScale: clamp(display.starScale, 50, 160, 100),
+        magLimit: clamp(display.magLimit, 1, 7, 5.8),
       },
       selectedTargetId: rawState ? rawState.selectedTargetId : null,
       look: {
@@ -139,11 +151,16 @@
     let camera = null;
     let starObject = null;
     let starMaterial = null;
+    let starUsesShader = false;
+    let sharedGlowTexture = null;
     let starGeometry = null;
     let constellationObject = null;
     let constellationMaterial = null;
     let constellationGeometry = null;
     let horizonMaterial = null;
+    let gridGroup = null;
+    let gridMaterial = null;
+    let cardinalGroup = null;
     let bodyGroup = null;
     let labelGroup = null;
     let markers = {};
@@ -261,15 +278,84 @@
       return next;
     }
 
+    function createGlowTexture() {
+      if (typeof document === "undefined" || typeof document.createElement !== "function") {
+        return null;
+      }
+      try {
+        const size = 64;
+        const glowCanvas = document.createElement("canvas");
+        glowCanvas.width = size;
+        glowCanvas.height = size;
+        const ctx = glowCanvas.getContext("2d");
+        if (!ctx) {
+          return null;
+        }
+        const center = size / 2;
+        const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
+        gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+        gradient.addColorStop(0.18, "rgba(255, 255, 255, 0.98)");
+        gradient.addColorStop(0.38, "rgba(255, 255, 255, 0.55)");
+        gradient.addColorStop(0.65, "rgba(255, 255, 255, 0.16)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        const texture = new THREE.Texture(glowCanvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.needsUpdate = true;
+        return texture;
+      } catch (error) {
+        safeWarn(warned, "glow-texture", "StargazingScene: glow texture creation failed.", error);
+        return null;
+      }
+    }
+
     function createStarObject() {
       starGeometry = createBufferGeometry(new Float32Array(0), new Float32Array(0), new Float32Array(0));
-      starMaterial = new THREE.PointCloudMaterial({
-        color: 0xffffff,
-        size: starSizeAverage,
-        transparent: true,
-        opacity: 1,
+      sharedGlowTexture = createGlowTexture();
+      const glowTexture = sharedGlowTexture;
+      starMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTexture: { type: "t", value: glowTexture },
+          uHasTexture: { type: "f", value: glowTexture ? 1 : 0 },
+          uOpacity: { type: "f", value: 1 },
+          uSizeScale: { type: "f", value: 1 },
+        },
         vertexColors: THREE.VertexColors,
-        sizeAttenuation: false,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexShader: [
+          "attribute float size;",
+          "uniform float uSizeScale;",
+          "varying vec3 vColor;",
+          "varying float vGlow;",
+          "void main() {",
+          "  vColor = color;",
+          "  vGlow = clamp((size - 3.0) / 19.0, 0.0, 1.0);",
+          "  gl_PointSize = max(1.0, size * uSizeScale * (1.0 + vGlow * 0.9));",
+          "  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
+          "}",
+        ].join("\n"),
+        fragmentShader: [
+          "uniform sampler2D uTexture;",
+          "uniform float uHasTexture;",
+          "uniform float uOpacity;",
+          "varying vec3 vColor;",
+          "varying float vGlow;",
+          "void main() {",
+          "  vec4 texel = vec4(1.0);",
+          "  if (uHasTexture > 0.5) {",
+          "    texel = texture2D(uTexture, gl_PointCoord);",
+          "  }",
+          "  float alpha = texel.a * uOpacity;",
+          "  if (alpha < 0.02) discard;",
+          "  vec3 tint = mix(vColor, vColor + vec3(1.0), vGlow * 0.7);",
+          "  gl_FragColor = vec4(tint * texel.rgb * (1.0 + vGlow * 1.6), alpha);",
+          "}",
+        ].join("\n"),
       });
       starObject = new THREE.PointCloud(starGeometry, starMaterial);
       starObject.visible = false;
@@ -280,9 +366,9 @@
     function createConstellationObject() {
       constellationGeometry = createBufferGeometry(new Float32Array(0));
       constellationMaterial = new THREE.LineBasicMaterial({
-        color: 0x6d83ad,
+        color: 0x9aabd8,
         transparent: true,
-        opacity: 0.18,
+        opacity: 0.5,
       });
       constellationObject = new THREE.Line(
         constellationGeometry,
@@ -315,15 +401,132 @@
       scene.add(horizon);
     }
 
+    function altParallelPositions(altDeg, segmentCount) {
+      const positions = new Float32Array((segmentCount + 1) * 3);
+      for (let i = 0; i <= segmentCount; i += 1) {
+        const azDeg = (i / segmentCount) * 360;
+        const vector = horizontalToVector(altDeg, azDeg, SKY_RADIUS);
+        positions[i * 3] = vector.x;
+        positions[i * 3 + 1] = vector.y;
+        positions[i * 3 + 2] = vector.z;
+      }
+      return positions;
+    }
+
+    function azMeridianPositions(azDeg, segmentCount) {
+      const positions = new Float32Array((segmentCount + 1) * 3);
+      for (let i = 0; i <= segmentCount; i += 1) {
+        // Stop just shy of the zenith so all meridians do not collapse onto one point.
+        const altDeg = (i / segmentCount) * 88;
+        const vector = horizontalToVector(altDeg, azDeg, SKY_RADIUS);
+        positions[i * 3] = vector.x;
+        positions[i * 3 + 1] = vector.y;
+        positions[i * 3 + 2] = vector.z;
+      }
+      return positions;
+    }
+
+    function createCoordinateGrid() {
+      gridGroup = new THREE.Object3D();
+      gridMaterial = new THREE.LineBasicMaterial({
+        color: 0x315176,
+        transparent: true,
+        opacity: 0.26,
+      });
+
+      [30, 60].forEach((altDeg) => {
+        const geometry = createBufferGeometry(altParallelPositions(altDeg, 96));
+        const line = new THREE.Line(geometry, gridMaterial);
+        line.frustumCulled = false;
+        gridGroup.add(line);
+      });
+
+      for (let azDeg = 0; azDeg < 360; azDeg += 45) {
+        const geometry = createBufferGeometry(azMeridianPositions(azDeg, 48));
+        const line = new THREE.Line(geometry, gridMaterial);
+        line.frustumCulled = false;
+        gridGroup.add(line);
+      }
+
+      scene.add(gridGroup);
+    }
+
+    function createLabelSprite(text, color) {
+      if (typeof document === "undefined" || typeof document.createElement !== "function") {
+        return null;
+      }
+      try {
+        const size = 128;
+        const labelCanvas = document.createElement("canvas");
+        labelCanvas.width = size;
+        labelCanvas.height = size;
+        const ctx = labelCanvas.getContext("2d");
+        if (!ctx) {
+          return null;
+        }
+        ctx.clearRect(0, 0, size, size);
+        ctx.font = "bold 76px 'Segoe UI', Arial, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = color;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+        ctx.shadowBlur = 10;
+        ctx.fillText(text, size / 2, size / 2);
+
+        const texture = new THREE.Texture(labelCanvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.needsUpdate = true;
+
+        const material = new THREE.SpriteMaterial({
+          map: texture,
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+        });
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(10, 10, 1);
+        return sprite;
+      } catch (error) {
+        safeWarn(warned, "label-sprite", "StargazingScene: label sprite creation failed.", error);
+        return null;
+      }
+    }
+
+    function createCardinalLabels() {
+      cardinalGroup = new THREE.Object3D();
+      const cardinals = [
+        { text: "N", azDeg: 0, color: "#9fd0ff" },
+        { text: "E", azDeg: 90, color: "#cdd8ee" },
+        { text: "S", azDeg: 180, color: "#cdd8ee" },
+        { text: "W", azDeg: 270, color: "#cdd8ee" },
+      ];
+      cardinals.forEach((cardinal) => {
+        const sprite = createLabelSprite(cardinal.text, cardinal.color);
+        if (!sprite) {
+          return;
+        }
+        const vector = horizontalToVector(3, cardinal.azDeg, SKY_RADIUS * 0.98);
+        sprite.position.set(vector.x, vector.y, vector.z);
+        cardinalGroup.add(sprite);
+      });
+      scene.add(cardinalGroup);
+    }
+
     function createMarker(style) {
       const geometry = createBufferGeometry(new Float32Array([0, 0, 0]));
-      const material = new THREE.PointCloudMaterial({
+      const materialOptions = {
         color: style.color,
         size: style.size,
         transparent: true,
         opacity: style.opacity,
         sizeAttenuation: false,
-      });
+      };
+      if (sharedGlowTexture) {
+        materialOptions.map = sharedGlowTexture;
+        materialOptions.alphaTest = 0.02;
+      }
+      const material = new THREE.PointCloudMaterial(materialOptions);
       const marker = new THREE.PointCloud(geometry, material);
       marker.visible = false;
       marker.frustumCulled = false;
@@ -381,7 +584,7 @@
         if (typeof renderer.setPixelRatio === "function") {
           renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         }
-        renderer.setClearColor(0x05070f, 1);
+        renderer.setClearColor(0x0a1228, 1);
 
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(68, 1, 0.1, SKY_RADIUS * 3);
@@ -392,6 +595,8 @@
         createStarObject();
         createConstellationObject();
         createHorizonLine();
+        createCoordinateGrid();
+        createCardinalLabels();
         createBodyMarkers();
         resize();
 
@@ -454,7 +659,7 @@
     function safeCatalogSize(star, magLimit) {
       if (catalog && typeof catalog.magnitudeToSize === "function") {
         try {
-          const size = catalog.magnitudeToSize(star.mag, { magLimit, minSize: 1.0, maxSize: 5.8 });
+          const size = catalog.magnitudeToSize(star.mag, { magLimit, minSize: 1.6, maxSize: 22 });
           if (isFiniteNumber(size) && size > 0) {
             return size;
           }
@@ -560,9 +765,11 @@
         return;
       }
 
-      const magLimit = safeCatalogVisibleMagnitudeLimit(snapshot.weather.lightPollution);
+      const weatherLimit = safeCatalogVisibleMagnitudeLimit(snapshot.weather.lightPollution);
+      const displayLimit = snapshot.display ? snapshot.display.magLimit : weatherLimit;
+      const magLimit = Math.min(clamp(displayLimit, 1, 7, weatherLimit), weatherLimit);
       visibleStars = safeCatalogFilterStars(loadedStars, magLimit);
-      visibleStarLightPollution = snapshot.weather.lightPollution;
+      visibleStarLightPollution = snapshot.weather.lightPollution + magLimit * 10;
 
       const positions = new Float32Array(visibleStars.length * 3);
       const colors = new Float32Array(visibleStars.length * 3);
@@ -585,7 +792,6 @@
       // r70 caches GL buffer bindings per-object; swapping geometry leaves them stale, so recreate.
       starObject = recreatePointObject(starObject, nextGeometry, starMaterial);
       starGeometry = nextGeometry;
-      starMaterial.size = starSizeAverage;
       lastStarPositionKey = null;
       updateStarPositions(snapshot, true);
       starObject.visible = visibleStars.length > 0;
@@ -724,10 +930,12 @@
         return;
       }
 
+      const display = snapshot.display || { brightness: 68 };
+      const brightness = clamp(display.brightness, 0, 100, 68) / 100;
       const vector = horizontalToVector(horizontal.altDeg, horizontal.azDeg, SKY_RADIUS * 0.985);
       marker.position.set(vector.x, vector.y, vector.z);
       marker.visible = true;
-      marker.material.opacity = weatherDimming(snapshot.weather) * opacityMultiplier;
+      marker.material.opacity = weatherDimming(snapshot.weather) * brightness * opacityMultiplier;
     }
 
     function safeBodyPosition(name, jd) {
@@ -789,20 +997,27 @@
         return;
       }
 
+      const zoom = snapshot.display ? clamp(snapshot.display.zoom, 25, 140, 72) : 72;
+      camera.fov = 92 - ((zoom - 25) / 115) * 54;
+      camera.updateProjectionMatrix();
+
       const target = horizontalToVector(snapshot.look.altDeg, snapshot.look.azDeg, SKY_RADIUS);
       camera.lookAt(target);
     }
 
     function updateWeather(snapshot, frameMs) {
       const dimming = weatherDimming(snapshot.weather);
+      const display = snapshot.display || { brightness: 68, starScale: 100 };
+      const brightness = clamp(display.brightness, 0, 100, 68) / 100;
+      const starScale = clamp(display.starScale, 50, 160, 100) / 100;
       const seeingJitter = 1 + (1 - snapshot.weather.seeing) * 0.06 * Math.sin(frameMs * 0.004);
 
       if (starMaterial) {
-        starMaterial.opacity = dimming;
-        starMaterial.size = Math.max(0.7, starSizeAverage * seeingJitter);
+        starMaterial.uniforms.uOpacity.value = dimming * brightness;
+        starMaterial.uniforms.uSizeScale.value = Math.max(0.2, seeingJitter * starScale);
       }
       if (constellationMaterial) {
-        constellationMaterial.opacity = 0.2 * dimming;
+        constellationMaterial.opacity = clamp(0.42 * dimming * brightness + 0.14, 0.14, 0.62, 0.42);
       }
       if (horizonMaterial) {
         horizonMaterial.opacity = 0.42 + 0.16 * dimming;
@@ -817,9 +1032,13 @@
         return;
       }
 
+      const weatherLimit = safeCatalogVisibleMagnitudeLimit(snapshot.weather.lightPollution);
+      const displayLimit = snapshot.display ? snapshot.display.magLimit : weatherLimit;
+      const magLimit = Math.min(clamp(displayLimit, 1, 7, weatherLimit), weatherLimit);
+      const starVisibilityKey = snapshot.weather.lightPollution + magLimit * 10;
       if (
         visibleStarLightPollution === null
-        || Math.abs(visibleStarLightPollution - snapshot.weather.lightPollution) > LIGHT_POLLUTION_EPSILON
+        || Math.abs(visibleStarLightPollution - starVisibilityKey) > LIGHT_POLLUTION_EPSILON
       ) {
         rebuildStarCloud(snapshot);
       }
@@ -833,6 +1052,115 @@
           safeWarn(warned, "state-tick", "StargazingScene: state.tick() failed.", error);
         }
       }
+    }
+
+    function projectToCanvas(vector) {
+      if (!camera || !canvas || typeof vector.clone !== "function") {
+        return null;
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      if (!rect || rect.width <= 0 || rect.height <= 0) {
+        return null;
+      }
+
+      const projected = vector.clone();
+      if (typeof projected.project !== "function") {
+        return null;
+      }
+      projected.project(camera);
+      if (
+        projected.x < -1
+        || projected.x > 1
+        || projected.y < -1
+        || projected.y > 1
+        || projected.z < -1
+        || projected.z > 1
+      ) {
+        return null;
+      }
+      return {
+        x: rect.left + ((projected.x + 1) / 2) * rect.width,
+        y: rect.top + ((1 - projected.y) / 2) * rect.height,
+      };
+    }
+
+    function objectDetails(type, id, name, magnitude, horizontal, raHour, decDeg) {
+      return {
+        type,
+        id,
+        name,
+        magnitude: isFiniteNumber(magnitude) ? magnitude : null,
+        ra: isFiniteNumber(raHour) ? raHour : null,
+        dec: isFiniteNumber(decDeg) ? decDeg : null,
+        altitude: horizontal.altDeg,
+        azimuth: horizontal.azDeg,
+      };
+    }
+
+    function pickObjectAt(clientX, clientY) {
+      if (!initialized || !camera || !canvas) {
+        return null;
+      }
+
+      const snapshot = readSnapshot(state, warned);
+      const jd = computeJulianDate(snapshot);
+      if (jd === null) {
+        return null;
+      }
+
+      let best = null;
+      function consider(details, vector, radius) {
+        const point = projectToCanvas(vector);
+        if (!point) {
+          return;
+        }
+        const dx = point.x - clientX;
+        const dy = point.y - clientY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance <= radius && (!best || distance < best.distance)) {
+          best = { distance, details };
+        }
+      }
+
+      Object.keys(markers).forEach((name) => {
+        const marker = markers[name];
+        if (!marker || !marker.visible) {
+          return;
+        }
+        const equatorial = safeBodyPosition(name, jd);
+        const horizontal = equatorialToHorizontal(equatorial, snapshot.observer, jd);
+        if (!horizontal) {
+          return;
+        }
+        consider(
+          objectDetails(
+            "body",
+            name,
+            name,
+            equatorial && equatorial.mag,
+            horizontal,
+            equatorial && equatorial.raHours,
+            equatorial && equatorial.decDeg,
+          ),
+          marker.position,
+          18,
+        );
+      });
+
+      if (starGeometry && visibleStars.length > 0) {
+        const positions = starGeometry.attributes.position.array;
+        for (let i = 0; i < visibleStars.length; i += 1) {
+          const star = visibleStars[i];
+          const vector = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+          const horizontal = equatorialToHorizontal({ raHours: star.ra, decDeg: star.dec }, snapshot.observer, jd);
+          if (horizontal && horizontal.altDeg >= -5) {
+            consider(objectDetails("star", star.id || star.name || "star-" + i, star.name || star.id || "Star", star.mag, horizontal, star.ra, star.dec), vector, 7);
+          }
+        }
+      }
+
+      return best ? best.details : null;
     }
 
     function renderFrame(frameMs) {
@@ -893,18 +1221,20 @@
     function start() {
       try {
         if (running) {
-          return;
+          return true;
         }
         if (!initialize()) {
-          return;
+          return false;
         }
 
         running = true;
         lastFrameMs = null;
         ensureCatalogLoad();
         scheduleFrame();
+        return true;
       } catch (error) {
         safeWarn(warned, "start", "StargazingScene: start() failed.", error);
+        return false;
       }
     }
 
@@ -925,6 +1255,7 @@
       start,
       stop,
       resize,
+      pickObjectAt,
     };
   }
 

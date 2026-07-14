@@ -14,12 +14,18 @@
     "notes": [
       "The shell provides the lab framework, hero, and provenance footer. Generated chapter navigation is disabled (data-story-nav='none').",
       "Public provenance is neutral (referenceMode='neutral', no referenceUrl) because the route is an original local build.",
-      "css/stargazing.css loads before engineering-sandbox.css, so the route mobile override raises specificity (chained shell+variant attributes plus both grid classes) rather than relying on source order."
+      "css/stargazing.css loads before engineering-sandbox.css, so the route mobile override raises specificity (chained shell+variant attributes plus both grid classes) rather than relying on source order.",
+      "#shortcut-help uses hidden attribute (not display:none or visible toggle) so smoke tests detect it as 'attached' state, not 'visible'.",
+      "#shortcut-toggle toggles the help panel; #sky-tooltip performs throttled picking while the pointer moves over #sky-canvas.",
+      "Input[type=range] controls for zoom, brightness, starScale, and magLimit carry [data-display] attributes bound via hud.renderDisplay."
     ],
     "evidence": [
       "Body elements: data-story-shell='engineering-sandbox', data-story-variant='lab', data-story-nav='none', neutral provenance footer.",
       "Mobile probe at 390x844: .story-hero__grid computes a single 326px column with no horizontal overflow (docScrollWidth=390, bodyScrollWidth=382).",
-      "The dashboard splits into a stage canvas area and a HUD/control grid that collapse to single column on narrow viewports."
+      "The dashboard splits into a stage canvas area and a HUD/control grid that collapse to single column on narrow viewports.",
+      "#shortcut-help is 'attached' (not 'visible') — smoke tests and direct probe confirm it's present in the DOM with hidden attribute.",
+      "#sky-tooltip is also 'attached' state, matching the re-usable tooltip contract.",
+      "Display telemetry: [data-display-value] readouts show live zoom/FOV/opacity/star scale/magnitude limit values."
     ]
   },
   {
@@ -50,7 +56,8 @@
     ],
     "notes": [
       "The state shape is frozen; behavior was layered on without removing or renaming keys.",
-      "getState returns a fresh clone each call; set({ time: { playing: true } }) updates only time.playing."
+      "getState returns a fresh clone each call; set({ time: { playing: true } }) updates only time.playing.",
+      "state.display.{zoom, brightness, starScale, magLimit} drive scene rendering: zoom→FOV, brightness→opacity, starScale→point size, magLimit→visible magnitude filter."
     ],
     "evidence": [
       "window.StargazingState exposes getState, setState, subscribe, advanceTime.",
@@ -111,12 +118,14 @@
     "notes": [
       "Vendored Three.js r70 mandates addAttribute, PointCloud, PointCloudMaterial, LinePieces, and VertexColors; PointsMaterial, LineSegments, and setAttribute do not exist in r70.",
       "Geometry updates RECREATE the object (new PointCloud/Line, dispose + remove old) rather than reassigning .geometry, which avoids stale GL buffer bindings under r70.",
-      "rebuildStarCloud and rebuildConstellationLines recreate their objects; maybeRefreshCatalogDerivedGeometry re-runs rebuildStarCloud when light pollution changes beyond an epsilon."
+      "rebuildStarCloud and rebuildConstellationLines recreate their objects; maybeRefreshCatalogDerivedGeometry re-runs rebuildStarCloud when light pollution or the effective magnitude cap changes."
     ],
     "evidence": [
       "window.StargazingScene.createScene returns { start, stop, resize } and mounts a live WebGL canvas (non-clear pixels confirmed by probe).",
       "drawArrays buffer-binding diagnostic: 0 failures across 3140 draws through the full interaction sequence.",
-      "Screenshots show stars, constellation lines, horizon, and HUD rendering; weather dimming is visible."
+      "Screenshots show stars, constellation lines, horizon, and HUD rendering; weather dimming is visible.",
+      "state.display.{zoom, brightness, starScale, magLimit} drive FOV, star opacity, point size, and magnitude filtering; the user limit is capped by the weather-derived naked-eye limit.",
+      "Input[type=range] elements carry [data-display] attrs for zoom, brightness, starScale, magLimit bound via hud.renderDisplay()."
     ]
   },
   {
@@ -148,10 +157,12 @@
     ],
     "notes": [
       "Weather sliders use data-weather attributes; lightpollution maps to state.weather.lightPollution (camelCase).",
-      "The time scrubber spans a 48h window: baseUtcMs + ((value - 50) / 50) * 24h."
+      "The time scrubber spans a 48h window: baseUtcMs + ((value - 50) / 50) * 24h.",
+      "renderDisplay reads state.display.{zoom, brightness, starScale, magLimit} and writes [data-display-value] onto sibling DOM nodes."
     ],
     "evidence": [
       "window.StargazingHud.createHud returns { update } and panels show live values (LST, altitude/azimuth, weather, targets).",
+      "Input[type=range] with [data-display] attrs show live value readouts via [data-display-value] in the rendered HUD.",
       "Changing inputs/sliders/toggles fires the correct state.setState patches and updates the rendered panels."
     ]
   },
@@ -176,15 +187,17 @@
     "moduleId": "weather-sandbox",
     "originalBehavior": "Weather sandbox with cloud cover, seeing, and light-pollution sliders feeding the state store to drive atmospheric effects (star dimming, twinkle, horizon brightness), with no live weather API.",
     "localStatus": "Implemented and connected to rendering. The three sliders (cloud, seeing, lightpollution) drive star dimming and the visible magnitude limit; cloud cover visibly dims the field, and light pollution reduces the visible star count. Defaults: cloud=0.18, seeing=0.74, lightPollution=0.32.",
-    "sourceFiles": [
+"sourceFiles": [
       "../../stargazing-dashboard/index.html",
       "../../stargazing-dashboard/js/hud.js",
+      "../../stargazing-dashboard/js/main.js",
       "../../stargazing-dashboard/js/scene.js",
-      "../../stargazing-dashboard/js/state.js"
+      "../../stargazing-dashboard/js/state.js",
+      "../../tools/smoke-bundle.mjs"
     ],
     "notes": [
       "Values are abstract 0-1 ranges; no external API calls are made.",
-      "Light pollution drives visibleMagnitudeLimit (0->6.5, 1->4.0), triggering a star-cloud rebuild beyond an epsilon change."
+      "Light pollution drives visibleMagnitudeLimit (0->6.5, 1->4.0); the effective limit is min(display.magLimit, visibleMagnitudeLimit), and changes rebuild the star cloud."
     ],
     "evidence": [
       "Three input[type=range] elements with data-weather='cloud', 'seeing', 'lightpollution'.",
@@ -194,7 +207,7 @@
   {
     "moduleId": "webgl-guard",
     "originalBehavior": "WebGL detection and graceful fallback: main.js tests the canvas context on load, sets body.dataset.stargazingReady to 'true' or 'fallback', and unhides #stargazing-fallback when WebGL is unavailable.",
-    "localStatus": "Implemented in full. hasWebGL tries 'webgl' and 'experimental-webgl' and catches exceptions; on success it wires controls, HUD, and scene and sets stargazingReady='true'; on failure it shows the fallback div and sets 'fallback'. Missing adapters are skipped safely.",
+    "localStatus": "Implemented in full. hasWebGL tries 'webgl' and 'experimental-webgl' and catches exceptions; bootstrap sets stargazingReady='true' only when scene.start() confirms renderer initialization, otherwise it shows the fallback and sets 'fallback'. Optional UI adapters remain guarded.",
     "sourceFiles": [
       "../../stargazing-dashboard/js/main.js",
       "../../stargazing-dashboard/index.html"
@@ -205,7 +218,10 @@
     ],
     "evidence": [
       "QA probe confirms body.dataset.stargazingReady='true' in headless Chromium with no console errors or 404s.",
-      "The eight expected window.Stargazing* globals are present after load."
+      "The eight expected window.Stargazing* globals are present after load.",
+      "#tonight-button selects visible targets and opens #object-details; #details-close and Escape close it.",
+      "#shortcut-toggle toggles #shortcut-help (hidden ↔ visible); #sky-tooltip performs requestAnimationFrame-throttled canvas picking and ignores projected points outside the camera frustum.",
+      "T/L/C/R shortcut keys (telescope/light/constellations/reset) fire when not focused on an input or textarea."
     ]
   },
   {

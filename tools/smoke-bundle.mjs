@@ -158,10 +158,57 @@ async function assertRoute(page, relativePath, selector) {
     waitUntil: "domcontentloaded",
   });
   assert(response && response.ok(), `Route failed: ${relativePath}`);
-  if (selector) {
-    await page.waitForSelector(selector, { timeout: 15000 });
+  try {
+    if (selector === "#reference-footer") {
+      await page.waitForFunction(() => Boolean(document.querySelector("#reference-footer")), null, { timeout: 15000 });
+    } else if (selector) {
+      await page.waitForSelector(selector, { timeout: 15000 });
+    }
+  } catch (error) {
+    throw new Error(`Selector ${selector} did not mount on ${relativePath}: ${error.message}`);
   }
+  await assertReferenceFooterFocusContract(page, relativePath);
   console.log(`OK route ${relativePath}`);
+}
+
+async function assertReferenceFooterFocusContract(page, relativePath) {
+  const state = await page.evaluate(() => {
+    const footer = document.querySelector("#reference-footer");
+    if (!footer) {
+      return { present: false };
+    }
+    const focusable = Array.from(
+      footer.querySelectorAll("a[href], button, input, select, textarea, [tabindex]"),
+    );
+    return {
+      present: true,
+      hidden: footer.dataset.visibility === "hidden",
+      inert: footer.inert === true || footer.hasAttribute("inert"),
+      ariaHidden: footer.getAttribute("aria-hidden") === "true",
+      focusableCount: focusable.length,
+      focusableInTabOrder: focusable.filter((element) => element.tabIndex >= 0).length,
+    };
+  });
+
+  if (!state.present) {
+    return;
+  }
+
+  if (state.hidden) {
+    assert(
+      state.inert && state.ariaHidden,
+      `Hidden reference footer on ${relativePath} was not removed from the accessibility tree (inert=${state.inert}, aria-hidden=${state.ariaHidden})`,
+    );
+    assert(
+      state.focusableInTabOrder === 0,
+      `Hidden reference footer on ${relativePath} left ${state.focusableInTabOrder} focusable element(s) in the tab order`,
+    );
+  } else {
+    assert(
+      !state.inert && !state.ariaHidden,
+      `Visible reference footer on ${relativePath} was incorrectly hidden from the accessibility tree`,
+    );
+  }
 }
 
 async function assertEngineeringSandboxShell(page, label, options = {}) {
@@ -2057,15 +2104,17 @@ async function smokeEigenvectorsAndEigenvalues(context) {
 
   const bacteriaBefore = await page.evaluate(() => {
     const scope = angular.element(document.querySelector('[ng-controller="BacteriaCtrl"]')).scope();
+    const readouts = document.querySelectorAll('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]');
     return {
       curGen: scope.opt.curGen,
-      readout: document.querySelector('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]')?.textContent || "",
+      readout: readouts[readouts.length - 1]?.textContent || "",
     };
   });
   await page.locator('[ng-controller="BacteriaCtrl"] button').filter({ hasText: /^forward$/i }).click();
   await page.waitForFunction((previous) => {
     const scope = angular.element(document.querySelector('[ng-controller="BacteriaCtrl"]')).scope();
-    const readout = document.querySelector('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]')?.textContent || "";
+    const readouts = document.querySelectorAll('[ng-controller="BacteriaCtrl"] div[style*="text-align: center"]');
+    const readout = readouts[readouts.length - 1]?.textContent || "";
     return scope.opt.curGen > previous.curGen && readout !== previous.readout;
   }, bacteriaBefore, { timeout: 5000 });
   console.log("OK eigenvectors-and-eigenvalues Fibonacci controls");
@@ -3503,6 +3552,77 @@ async function smokeStargazingDashboard(context) {
   }, lookBefore, { timeout: 5000 });
   console.log("OK stargazing-dashboard keyboard navigation");
 
+  await page.waitForSelector("#tonight-button", { timeout: 15000 });
+  await page.waitForSelector("#shortcut-toggle", { timeout: 15000 });
+  await page.waitForSelector("#shortcut-help", { state: "attached", timeout: 15000 });
+  await page.waitForSelector("#sky-tooltip", { state: "attached", timeout: 15000 });
+  await page.waitForSelector("#object-details", { state: "attached", timeout: 15000 });
+  await page.waitForSelector("#sky-legend", { timeout: 15000 });
+  await page.waitForSelector('[data-display="zoom"]', { timeout: 15000 });
+  await page.waitForSelector('[data-display="brightness"]', { timeout: 15000 });
+  await page.waitForSelector('[data-display="starScale"]', { timeout: 15000 });
+  await page.waitForSelector('[data-display="magLimit"]', { timeout: 15000 });
+
+  const constellationToggleBefore = await page.evaluate(() => {
+    return window.StargazingState.getState().toggles.constellations;
+  });
+  await page.locator('[data-toggle="constellations"]').click();
+  await page.waitForFunction((previous) => {
+    return window.StargazingState.getState().toggles.constellations !== previous;
+  }, constellationToggleBefore, { timeout: 5000 });
+
+  await page.locator('[data-display="magLimit"]').evaluate((input) => {
+    input.value = "4.5";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+  await page.waitForFunction(() => {
+    return Math.abs(window.StargazingState.getState().display.magLimit - 4.5) < 0.01;
+  }, null, { timeout: 5000 });
+
+  const playingBefore = await page.evaluate(() => window.StargazingState.getState().time.playing);
+  await page.locator("#time-play").click();
+  await page.waitForFunction((previous) => {
+    return window.StargazingState.getState().time.playing !== previous;
+  }, playingBefore, { timeout: 5000 });
+
+  await page.locator("#shortcut-toggle").click();
+  await page.waitForFunction(() => {
+    const help = document.querySelector("#shortcut-help");
+    return help && !help.hidden;
+  }, null, { timeout: 5000 });
+  await page.keyboard.press("Escape");
+  await page.waitForFunction(() => {
+    const help = document.querySelector("#shortcut-help");
+    return help && help.hidden;
+  }, null, { timeout: 5000 });
+
+  await page.locator("#tonight-button").click();
+  await page.waitForFunction(() => {
+    const state = window.StargazingState.getState();
+    const details = document.querySelector("#object-details");
+    return Boolean(state.selectedTargetId) && details && details.dataset.open === "true";
+  }, null, { timeout: 5000 });
+  console.log("OK stargazing-dashboard selective map controls");
+
+  await page.locator("#details-close").click();
+  await page.waitForFunction(() => {
+    const details = document.querySelector("#object-details");
+    return details && details.hidden && details.dataset.open === "false";
+  }, null, { timeout: 5000 });
+  console.log("OK stargazing-dashboard details close state");
+
+  // RED: #sky-tooltip shows a fallback instruction on mousemove over empty
+  // sky ("Select a target or point at a star to see details"), and changes
+  // to the selected object's data when an object is beneath the cursor.
+  // Trigger a mousemove over the canvas to make the tooltip visible.
+  const canvas = page.locator("#sky-canvas");
+  await canvas.hover({ force: true });
+  await page.waitForFunction(() => {
+    const tooltip = document.getElementById("sky-tooltip");
+    return tooltip && !tooltip.hidden && tooltip.textContent.length > 0;
+  }, null, { timeout: 5000 });
+
   await page.waitForTimeout(250);
   assertPageRuntimeClean("stargazing-dashboard route");
   await page.close();
@@ -4065,6 +4185,101 @@ async function smokeMechanicalWatch(context) {
   await page.waitForTimeout(250);
   assertPageRuntimeClean("mechanical-watch route");
   console.log("OK mechanical-watch responsive shell");
+  await page.close();
+}
+
+async function smokeInteractiveMechanicalWatch(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  const label = "interactive-mechanical-watch route";
+
+  await assertRoute(page, "interactive-mechanical-watch/", "#reference-footer");
+  await assertLongformResponsiveShell(
+    context,
+    page,
+    "interactive-mechanical-watch/",
+    "[data-exploded-watch] svg",
+    label,
+    {
+      expectedRoute: "interactive-mechanical-watch",
+      minimumChapters: 10,
+      playHref: "#hero",
+    },
+  );
+  await page.waitForSelector("[data-exploded-watch] svg", { timeout: 30000 });
+
+  const explodedState = await page.evaluate(() => {
+    const image = document.querySelector("[data-exploded-canvas] svg image");
+    return {
+      componentCount: document.querySelectorAll("[data-exploded-canvas] [data-component-id]").length,
+      imageHref: image?.getAttribute("href") || image?.getAttribute("xlink:href") || "",
+      resolvedImageHref: image ? new URL(image.getAttribute("href") || image.getAttribute("xlink:href") || "", document.location.href).href : "",
+    };
+  });
+  assert(explodedState.componentCount === 27, `${label} expected 27 exploded SVG components, got ${explodedState.componentCount}`);
+
+  const diagramRole = await page.locator("[data-exploded-watch] svg").getAttribute("role");
+  assert(diagramRole === "group", `${label} interactive SVG should use group semantics, got ${diagramRole || "none"}`);
+
+  const partsRole = await page.locator("[data-exploded-parts]").getAttribute("role");
+  assert(partsRole === "group", `${label} parts selector should use button-group semantics, got ${partsRole || "none"}`);
+
+  const initialDepthValueText = await page.locator("[data-exploded-depth]").getAttribute("aria-valuetext");
+  assert(initialDepthValueText === "74 percent exploded", `${label} expected initial depth aria-valuetext, got ${initialDepthValueText || "none"}`);
+
+  const initialPressedStates = await page.evaluate(() => {
+    const selectedPart = document.querySelector("[data-exploded-parts] .is-selected");
+    const selectedComponent = document.querySelector("[data-exploded-canvas] .is-selected");
+    return {
+      partPressed: selectedPart?.getAttribute("aria-pressed") || "",
+      componentPressed: selectedComponent?.getAttribute("aria-pressed") || "",
+    };
+  });
+  assert(initialPressedStates.partPressed === "true", `${label} selected part should expose aria-pressed=true`);
+  assert(initialPressedStates.componentPressed === "true", `${label} selected SVG component should expose aria-pressed=true`);
+
+  const expectedImageUrl = new URL("interactive-mechanical-watch/images/generated/components/exploded-sheet.png", baseUrl).href;
+  assert(
+    explodedState.resolvedImageHref === expectedImageUrl,
+    `${label} resolved exploded sheet to ${explodedState.resolvedImageHref || "none"}; expected ${expectedImageUrl} from href ${explodedState.imageHref || "none"}`,
+  );
+  const imageResponse = await page.request.get(explodedState.resolvedImageHref);
+  assert(imageResponse.status() === 200, `${label} exploded sheet returned HTTP ${imageResponse.status()} at ${explodedState.resolvedImageHref}`);
+
+  const firstTransform = await page.locator("[data-exploded-canvas] [data-component-id]").first().getAttribute("transform");
+  await setRangeValue(page, "[data-exploded-depth]", 24);
+  await page.waitForFunction((previousTransform) => {
+    return document.querySelector("[data-exploded-canvas] [data-component-id]")?.getAttribute("transform") !== previousTransform;
+  }, firstTransform, { timeout: 5000 });
+  const updatedDepthValueText = await page.locator("[data-exploded-depth]").getAttribute("aria-valuetext");
+  assert(updatedDepthValueText === "24 percent exploded", `${label} expected updated depth aria-valuetext, got ${updatedDepthValueText || "none"}`);
+  console.log("OK interactive-mechanical-watch explosion depth control");
+
+  const detailBeforeClick = await page.locator("[data-exploded-detail] h3").textContent();
+  await page.locator("[data-exploded-parts] [data-component-id]").first().click();
+  await page.waitForFunction((previousText) => {
+    return (document.querySelector("[data-exploded-detail] h3")?.textContent || "").trim() !== (previousText || "").trim();
+  }, detailBeforeClick, { timeout: 5000 });
+  const selectedPartPressed = await page.locator("[data-exploded-parts] .is-selected").getAttribute("aria-pressed");
+  assert(selectedPartPressed === "true", `${label} clicked part should expose aria-pressed=true`);
+  console.log("OK interactive-mechanical-watch part button selection");
+
+  const detailBeforeKeyboard = await page.locator("[data-exploded-detail] h3").textContent();
+  await page.locator("[data-exploded-canvas] [data-component-id]").nth(12).focus();
+  await page.keyboard.press("Enter");
+  await page.waitForFunction((previousText) => {
+    return (document.querySelector("[data-exploded-detail] h3")?.textContent || "").trim() !== (previousText || "").trim();
+  }, detailBeforeKeyboard, { timeout: 5000 });
+  const selectedComponentPressed = await page.locator("[data-exploded-canvas] .is-selected").getAttribute("aria-pressed");
+  assert(selectedComponentPressed === "true", `${label} keyboard-selected SVG component should expose aria-pressed=true`);
+  const focusedComponentId = await page.evaluate(() => document.activeElement?.getAttribute("data-component-id") || "");
+  assert(focusedComponentId === "crown-stem", `${label} should restore focus to the rerendered SVG component, got ${focusedComponentId || "none"}`);
+  console.log("OK interactive-mechanical-watch keyboard component selection");
+
+  await page.waitForTimeout(250);
+  assertPageRuntimeClean(label);
+  await assertViewportUsable(page, label);
+  console.log("OK interactive-mechanical-watch exploded view");
   await page.close();
 }
 
@@ -6593,6 +6808,10 @@ async function main() {
       routeChecks.push(["mechanical-watch/", "#reference-footer"]);
       routeChecks.push(["docs/mechanical-watch/", "[data-parity-list]"]);
     }
+    if (exists("interactive-mechanical-watch")) {
+      routeChecks.push(["interactive-mechanical-watch/", "#reference-footer"]);
+      routeChecks.push(["docs/interactive-mechanical-watch/", "[data-parity-list]"]);
+    }
     if (exists("naval-architecture")) {
       routeChecks.push(["naval-architecture/", "#reference-footer"]);
       routeChecks.push(["docs/naval-architecture/", "[data-parity-list]"]);
@@ -6825,6 +7044,9 @@ async function main() {
     }
     if (exists("mechanical-watch")) {
       await smokeMechanicalWatch(context);
+    }
+    if (exists("interactive-mechanical-watch")) {
+      await smokeInteractiveMechanicalWatch(context);
     }
     if (exists("naval-architecture")) {
       await smokeNavalArchitecture(context);

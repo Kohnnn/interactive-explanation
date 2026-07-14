@@ -27,14 +27,20 @@
       labels: true,
     },
     weather: {
-      cloud: 0,
-      seeing: 0.5,
-      lightPollution: 0.3,
+      cloud: 0.18,
+      seeing: 0.74,
+      lightPollution: 0.32,
+    },
+    display: {
+      zoom: 72,
+      brightness: 68,
+      starScale: 100,
+      magLimit: 5.8,
     },
     selectedTargetId: null,
     look: {
-      azDeg: 0,
-      altDeg: 30,
+      azDeg: 52,
+      altDeg: 28,
     },
   };
 
@@ -94,6 +100,13 @@
         1,
         currentState.weather.lightPollution,
       );
+    }
+
+    if (nextState.display && typeof nextState.display === "object") {
+      nextState.display.zoom = clamp(nextState.display.zoom, 25, 140, currentState.display.zoom);
+      nextState.display.brightness = clamp(nextState.display.brightness, 0, 100, currentState.display.brightness);
+      nextState.display.starScale = clamp(nextState.display.starScale, 50, 160, currentState.display.starScale);
+      nextState.display.magLimit = clamp(nextState.display.magLimit, 1, 7, currentState.display.magLimit);
     }
 
     return nextState;
