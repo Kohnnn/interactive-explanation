@@ -53,6 +53,8 @@ div{
 }
 
 .ui{
+	border: 0;
+	padding: 0;
 	background: url(../img/ui_buttons.png);
 	width:195px;
 	height:52px;
@@ -86,6 +88,24 @@ div{
 #moving.moving{ background-position: 0 -312px; }
 #moving.moving:hover{ background-position: 0 -364px; }
 
+#stats_status{
+	display: block;
+	clear: both;
+	padding-top: 12px;
+}
+.ds input[type=range]{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	margin: 0;
+}
+.ds input[type=range]:focus{
+	width: 100%;
+	height: 20px;
+	opacity: 1;
+	z-index: 2;
+}
 span.highlight{
 	color:#cc2727;
 }

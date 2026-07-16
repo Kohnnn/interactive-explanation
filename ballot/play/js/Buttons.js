@@ -77,12 +77,13 @@ function Button(buttonConfig, onChoose){
 
 	self.config = buttonConfig;
 
-	self.dom = document.createElement("div");
+	self.dom = document.createElement("button");
+	self.dom.type = "button";
 	self.dom.setAttribute("class", "button");
 	self.dom.style.marginRight = buttonConfig.margin+"px";
 
 	// Click!
-	self.dom.innerHTML = buttonConfig.name;
+	self.dom.textContent = buttonConfig.name;
 	self.onClick = function(){
 		onChoose(self, buttonConfig);
 	};
@@ -91,9 +92,11 @@ function Button(buttonConfig, onChoose){
 	// Turn on or off!
 	self.turnOff = function(){
 		self.dom.setAttribute("on", "no");
+		self.dom.setAttribute("aria-pressed", "false");
 	};
 	self.turnOn = function(){
 		self.dom.setAttribute("on", "yes");
+		self.dom.setAttribute("aria-pressed", "true");
 	};
 	self.turnOff();
 

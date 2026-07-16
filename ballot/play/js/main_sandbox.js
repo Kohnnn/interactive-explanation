@@ -258,6 +258,7 @@ function main(config){
 
 		model.onInit(); // NOT init, coz don't update yet...
 		setInPosition();
+		attachModelControls(model);
 
 		// Select the UI!
 		var selectUI = function(){
@@ -273,9 +274,10 @@ function main(config){
 		//////////////////////////
 
 		// CREATE A RESET BUTTON
-		var resetDOM = document.createElement("div");
+		var resetDOM = document.createElement("button");
+		resetDOM.type = "button";
 		resetDOM.id = "reset";
-		resetDOM.innerHTML = "reset";
+		resetDOM.textContent = "reset";
 		resetDOM.style.top = "340px";
 		resetDOM.style.left = "350px";
 		resetDOM.onclick = function(){
@@ -286,6 +288,7 @@ function main(config){
 			model.reset(true);
 			model.onInit();
 			setInPosition();
+			model.keyboardControls.refresh();
 			
 			// Back to ol' UI
 			selectUI();
@@ -359,9 +362,10 @@ function main(config){
 			resetDOM.style.left = "0px";
 
 			// Create a "save" button
-			var saveDOM = document.createElement("div");
+			var saveDOM = document.createElement("button");
+			saveDOM.type = "button";
 			saveDOM.id = "save";
-			saveDOM.innerHTML = "save:";
+			saveDOM.textContent = "save:";
 			saveDOM.style.top = "470px";
 			saveDOM.style.left = "120px";
 			saveDOM.onclick = function(){

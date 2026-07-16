@@ -23,6 +23,7 @@ function DoubleSlider(dom,config){
 
 	self.draggingSliderDOM = null;
 	self.draggingSliderIndex = -1;
+	self.ranges = [];
 
 	// Create DOM
 	self.dom.className = "ds";
@@ -55,32 +56,35 @@ function DoubleSlider(dom,config){
 			dom.addEventListener("mousedown",onMouseDown,true);
 			dom.addEventListener("touchstart",onMouseDown,true);
 		})(dom,i,self);
+		var range = document.createElement("input");
+		range.type = "range";
+		range.min = "0";
+		range.max = "1.02";
+		range.step = "0.01";
+		range.value = self.values[i];
+		range.setAttribute("aria-label", (config.labels && config.labels[i]) || (i ? "Upper threshold" : "Lower threshold"));
+		(function(range,i){
+			range.oninput = function(){ setValue(i, Number(range.value), false); };
+			range.onchange = function(){ if(config.onLetGo) config.onLetGo(); };
+		})(range,i);
+		self.dom.appendChild(range);
+		self.ranges.push(range);
+	}
 
+	function setValue(index, value, letGo){
+		if(index==0) value = Math.min(value, self.values[1]);
+		if(index==1) value = Math.max(value, self.values[0]);
+		value = Math.max(0, Math.min(1.02, value));
+		self.values[index] = value;
+		self.updateUI();
+		config.onChange(self.values);
+		if(letGo && config.onLetGo) config.onLetGo();
 	}
 
 	// Slider logic
 	function onMouseMove(x){
 	    if(self.draggingSliderDOM){
-	    	var val = x/400;
-
-	    	var index = self.draggingSliderIndex;
-	    	var sliderWidth = 0;//0.025;
-	    	if(index==0){
-	    		var edge = self.values[1]-sliderWidth;
-	    		if(val>edge) val=edge;
-	    	}else if(index==1){
-	    		var edge = self.values[0]+sliderWidth;
-	    		if(val<edge) val=edge;
-	    	}
-	    	var edge = sliderWidth/2;
-    		if(val<edge) val=edge;
-	    	var edge = 1-sliderWidth/2;
-	    	if(val>edge) val=edge;
-
-	    	self.values[index] = val;
-	    	self.updateUI();
-	    	config.onChange(self.values);
-
+	    	setValue(self.draggingSliderIndex, x/400, false);
 		}
 	}
 	function onMouseUp(){
@@ -116,6 +120,7 @@ function DoubleSlider(dom,config){
 			var slider = self.sliders[i];
 			var val = self.values[i];
 			slider.style.left = (400*val - 5)+"px";
+			self.ranges[i].value = val;
 		}
 
 		var bg;

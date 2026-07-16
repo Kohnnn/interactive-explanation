@@ -8,7 +8,6 @@ body{
 	font-weight: 100;
 	line-height: 30px;
 
-	min-width:1040px;
 	background-repeat: no-repeat;
 
 	overflow-x:hidden;
@@ -47,12 +46,13 @@ b, strong{
 
 .chapter{
 	margin: 50px auto;
-	width:800px;
+	width:min(800px, calc(100% - 32px));
 }
 .playable{
 	width: 100%;
 	background: #222;
-	overflow: hidden;
+	overflow-x: auto;
+	overflow-y: hidden;
 }
 .playable > #play_title{
 	color: #fff;
@@ -68,6 +68,24 @@ iframe[embedded]{
 	overflow: hidden;
 	border: none;
 	margin:40px;
+}
+@media (max-width: 800px){
+	iframe[embedded]{
+		max-width:100%;
+	}
+	.playable iframe{
+		left:auto !important;
+	}
+	iframe[embedded]{
+		margin-left:0 !important;
+		margin-right:0 !important;
+	}
+	iframe[embedded][style*="float"]{
+		float:none !important;
+	}
+	.chapter > div[style*="clear:both"] > div{
+		display:none;
+	}
 }
 
 #references{

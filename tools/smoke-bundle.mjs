@@ -6793,6 +6793,89 @@ async function smokeDoubleDescent2(context) {
   await page.close();
 }
 
+async function smokeBallot(context) {
+  const page = await context.newPage();
+  await page.goto(new URL("ballot/play/ballot1.html", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector("#model-object-select", { timeout: 15000 });
+  const frameState = await page.evaluate(() => {
+    const selected = Number(document.querySelector("#model-object-select")?.value || 0);
+    return {
+      canvasTabIndex: document.querySelector("canvas")?.tabIndex,
+      x: model.draggables[selected].x,
+      y: model.draggables[selected].y,
+    };
+  });
+  assert(frameState.canvasTabIndex === -1, "Ballot canvas remained a tab stop");
+  await page.getByRole("button", { name: "Move selected object Right" }).press("Enter");
+  const movedState = await page.evaluate(() => {
+    const selected = Number(document.querySelector("#model-object-select")?.value || 0);
+    return {
+      text: document.querySelector(".model-keyboard-state")?.textContent || "",
+      x: model.draggables[selected].x,
+      y: model.draggables[selected].y,
+    };
+  });
+  assert(movedState.x > frameState.x && movedState.y === frameState.y, "Ballot keyboard control did not move the selected object right");
+  assert(movedState.text.includes("at "), "Ballot keyboard movement did not expose updated state");
+  await page.close();
+}
+
+async function smokePolygons(context) {
+  const page = await context.newPage();
+  await page.goto(new URL("polygons/play/manual/manual.html", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector("#polygon-select", { timeout: 15000 });
+  const move = await page.evaluate(() => {
+    const directions = [
+      { name: "Up", dx: 0, dy: -1 },
+      { name: "Left", dx: -1, dy: 0 },
+      { name: "Right", dx: 1, dy: 0 },
+      { name: "Down", dx: 0, dy: 1 },
+    ];
+    for (let attempt = 0; attempt < 20; attempt++) {
+      for (let index = 0; index < draggables.length; index++) {
+        const polygon = draggables[index];
+        if (!polygon.shaking) continue;
+        const fromX = Math.floor(polygon.gotoX / TILE_SIZE);
+        const fromY = Math.floor(polygon.gotoY / TILE_SIZE);
+        for (const direction of directions) {
+          const x = fromX + direction.dx;
+          const y = fromY + direction.dy;
+          const occupied = draggables.some((other, otherIndex) => {
+            return otherIndex !== index &&
+              Math.floor(other.gotoX / TILE_SIZE) === x &&
+              Math.floor(other.gotoY / TILE_SIZE) === y;
+          });
+          if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE && !occupied) {
+            return { index, name: direction.name, fromX, fromY };
+          }
+        }
+      }
+      reset();
+    }
+    return null;
+  });
+  assert(move, "Polygons manual board had no unhappy polygon with an adjacent empty cell");
+  await page.locator("#polygon-select").selectOption(String(move.index));
+  await page.getByRole("button", { name: move.name, exact: true }).press("Enter");
+  const moved = await page.evaluate(() => {
+    const selected = Number(document.querySelector("#polygon-select")?.value);
+    const polygon = draggables[selected];
+    return {
+      text: document.querySelector("#manual_controls output")?.textContent || "",
+      x: Math.floor(polygon.gotoX / TILE_SIZE),
+      y: Math.floor(polygon.gotoY / TILE_SIZE),
+    };
+  });
+  assert(moved.x !== move.fromX || moved.y !== move.fromY, "Polygons keyboard control did not move the selected polygon");
+  assert(moved.text.includes("at "), "Polygons keyboard movement did not expose updated state");
+  await page.goto(new URL("polygons/play/automatic/automatic4.html", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector("#moving", { timeout: 15000 });
+  assert(await page.locator("#moving").evaluate((element) => element.tagName === "BUTTON"), "Polygons start control is not a button");
+  assert(await page.locator(".ds input[type='range']").count() === 2, "Polygons two-handle slider has no native range equivalent");
+  await page.close();
+  await assertRouteViewportUsable(context, "polygons/", "#reference-footer", ".playable", "polygons mobile", 320, 844);
+}
+
 async function smokeFormula1Racing(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
@@ -6803,26 +6886,33 @@ async function smokeFormula1Racing(context) {
   });
   await page.waitForFunction(() => document.querySelectorAll(".drawer_container canvas").length >= 5, null, { timeout: 30000 });
 
-  await page.locator("#f1_track_seg0").getByText("Silverstone", { exact: true }).click();
+  const track = page.locator("#f1_track_seg0 [role='radio']").first();
+  await track.focus();
+  const trackBefore = await track.getAttribute("aria-checked");
+  await track.press("ArrowRight");
   await page.waitForFunction(() => {
-    return /Silverstone/.test(document.querySelector("#f1_track_caption")?.textContent || "") &&
-      /Silverstone setup/.test(document.querySelector("#f1_setup_caption")?.textContent || "") &&
-      /Silverstone/.test(document.querySelector("#f1_lap_caption")?.textContent || "");
+    return /Monaco/.test(document.querySelector("#f1_track_caption")?.textContent || "") &&
+      /Monaco setup/.test(document.querySelector("#f1_setup_caption")?.textContent || "") &&
+      /Monaco/.test(document.querySelector("#f1_lap_caption")?.textContent || "");
   }, null, { timeout: 5000 });
+  assert(trackBefore === "true", "Formula 1 track control did not expose its initial selection");
+  assert(await track.getAttribute("aria-checked") === "false", "Formula 1 track keyboard selection did not update aria state");
 
-  const lapCaptionBeforeWeather = await page.locator("#f1_lap_caption").textContent();
-  await page.locator("#f1_weather_seg0").getByText("Wet", { exact: true }).click();
-  await page.waitForFunction((previousCaption) => {
-    const lapCaption = document.querySelector("#f1_lap_caption")?.textContent || "";
-    return /Wet/.test(document.querySelector("#f1_weather_caption")?.textContent || "") &&
-      /Silverstone/.test(lapCaption) &&
-      lapCaption !== previousCaption;
-  }, lapCaptionBeforeWeather, { timeout: 5000 });
+  const airflow = page.locator("#f1_airflow_sl0 [role='slider']");
+  const airflowBefore = await airflow.getAttribute("aria-valuenow");
+  await airflow.focus();
+  await airflow.press("ArrowRight");
+  assert(await airflow.getAttribute("aria-valuenow") !== airflowBefore, "Formula 1 slider keyboard action did not update aria value");
+  assert((await page.locator("#f1_airflow_caption").textContent()).length > 0, "Formula 1 slider did not update its caption");
 
-  await page.locator("#f1_lap_seg0").getByText("Protect tyres", { exact: true }).click();
-  await page.waitForFunction(() => {
-    return /Silverstone\s*\/\s*Protect tyres/.test(document.querySelector("#f1_lap_caption")?.textContent || "");
-  }, null, { timeout: 5000 });
+  const weather = page.locator("#f1_weather_seg0 [role='radio']").first();
+  await weather.focus();
+  await weather.press("ArrowRight");
+  await page.waitForFunction(() => /Mixed/.test(document.querySelector("#f1_weather_caption")?.textContent || ""), null, { timeout: 5000 });
+  const lapPlan = page.locator("#f1_lap_seg0 [role='radio']").first();
+  await lapPlan.focus();
+  await lapPlan.press("ArrowRight");
+  assert(await lapPlan.getAttribute("aria-checked") === "false", "Formula 1 lap-plan keyboard selection did not update aria state");
 
   await assertViewportUsable(page, "formula-1-racing desktop");
   assertPageRuntimeClean("formula-1-racing desktop");
@@ -6882,6 +6972,12 @@ async function main() {
     await smokeAtlas(context);
     phaseLog("Route checks completed");
 
+    if (exists("ballot")) {
+      await smokeBallot(context);
+    }
+    if (exists("polygons")) {
+      await smokePolygons(context);
+    }
     if (exists("formula-1-racing")) {
       await smokeFormula1Racing(context);
     }

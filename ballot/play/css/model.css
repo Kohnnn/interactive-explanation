@@ -28,6 +28,7 @@ THE MAIN MODEL ITSELF
 .model{
 	overflow: hidden;
 	float:left;
+	position: relative;
 }
 .model .interactive{
     background-image: url(../img/axis.png);
@@ -52,6 +53,45 @@ THE MAIN MODEL ITSELF
 #caption .small{
 	font-size: 0.75em;
 }
+.model-keyboard-controls{
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	max-width: calc(100% - 8px);
+	padding: 2px;
+	background: rgba(255,255,255,0.82);
+	font-size: 11px;
+	line-height: 1;
+	opacity: 0.28;
+	z-index: 1;
+}
+.model-keyboard-controls:focus-within{
+	opacity: 1;
+}
+.model-keyboard-controls label{
+	align-self: center;
+}
+.model-keyboard-controls select{
+	max-width: 96px;
+	font-size: inherit;
+}
+.model-keyboard-arrows{
+	display: flex;
+	gap: 2px;
+}
+.model-keyboard-arrows button{
+	font-size: inherit;
+	padding: 1px 3px;
+}
+.model-keyboard-state{
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
 /*********************
 DAT RESET BUTTON
@@ -59,6 +99,8 @@ DAT RESET BUTTON
 
 #reset, #save{
 	cursor: pointer;
+	font-family: inherit;
+	border: 0;
     background: #aaa;
     color: #fff;
     font-size: 25px;

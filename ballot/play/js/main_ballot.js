@@ -33,6 +33,7 @@ function main(ballotType){
 
 		// Init!
 		model.init();
+		attachModelControls(model);
 
 	};
 

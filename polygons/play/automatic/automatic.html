@@ -15,8 +15,9 @@
 				<div id="stats_text"></div>
 			</div>
 
-			<div class="ui" id="moving" onclick="START_SIM=!START_SIM; doneBuffer = 60; window.writeStats()"></div>
-			<div class="ui" id="reset" onclick="reset()" style="margin-left:9px"></div>
+			<button class="ui" id="moving" type="button" aria-label="Start simulation"></button>
+			<button class="ui" id="reset" type="button" aria-label="Reset simulation" style="margin-left:9px"></button>
+			<output id="stats_status" aria-live="polite"></output>
 		</div>
 	</div>
 </body>

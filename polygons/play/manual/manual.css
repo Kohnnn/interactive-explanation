@@ -4,7 +4,27 @@ body{
 	width:550px;
 	background: #222;
 }
+#manual_controls{
+	height: 30px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0 5px;
+	background: #222;
+	color: #ddd;
+	font: 12px sans-serif;
+}
+#manual_controls select, #manual_controls button{
+	font: inherit;
+}
+#manual_controls output{
+	margin-left: auto;
+	white-space: nowrap;
+}
 #reset{
+	display: block;
+	border: 0;
+	padding: 0;
 	background: url(../img/new_board.png);
 	width:225px;
 	height:60px;

@@ -75,7 +75,7 @@ Acceptance:
 
 ### 4. Canvas interaction accessibility
 
-Status: Pending
+Status: Complete
 
 - Add keyboard-equivalent controls and textual state for Ballot and Polygons drag tasks.
 - Replace suitable custom sliders with native range controls.
@@ -136,3 +136,4 @@ git diff --exit-code pages.json
 - 2026-07-16: Implementation started from clean `main` at `fe27461`.
 - 2026-07-16: Phase 1 verified with metadata policy tests, syntax checks, audit, unit suite, and focused Formula 1 smoke; full smoke deferred to scheduled/manual CI.
 - 2026-07-16: Phase 2 verified with metadata sync, manifest validation, audit, full test suite, focused Music Hub smoke with atlas coverage, and diff hygiene.
+- 2026-07-16: Phase 4 verified with syntax checks, full test suite, focused Ballot, Polygons, and Formula 1 smoke, responsive Polygons overflow coverage, and diff hygiene.

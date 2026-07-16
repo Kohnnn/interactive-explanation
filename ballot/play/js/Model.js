@@ -20,6 +20,7 @@ function Model(config){
 	// RETINA canvas, whatever.
 	var canvas = document.createElement("canvas");
 	canvas.setAttribute("class", "interactive");
+	canvas.tabIndex = -1;
 	canvas.width = canvas.height = self.size*2; // retina!
 	canvas.style.width = canvas.style.height = self.size+"px";
 	canvas.style.borderWidth = self.border+"px";
@@ -73,6 +74,7 @@ function Model(config){
 	self.init = function(){
 		self.onInit();
 		self.update();
+		if(self.keyboardControls) self.keyboardControls.refresh();
 	};
 
 	// Reset!
@@ -111,6 +113,7 @@ function Model(config){
 
 		// Update!
 		self.onUpdate();
+		if(self.keyboardControls) self.keyboardControls.announce();
 		publish(self.id+"-update");
 
 	};

@@ -137,5 +137,24 @@
       "The public-surface audit rejects missing or duplicate iframe titles on the route.",
       "Route inspection confirms the splash is eager and later frames are lazy."
     ]
+  },
+  {
+    "moduleId": "keyboard-model-controls",
+    "originalBehavior": "Voters and candidates are moved by dragging within each election canvas.",
+    "localStatus": "Required draggable models now expose a native object select, four movement buttons, Arrow-key movement, and live position and result text while retaining pointer dragging.",
+    "sourceFiles": [
+      "play/js/KeyboardModel.js",
+      "play/js/Model.js",
+      "play/js/main_ballot.js",
+      "play/js/main_sandbox.js"
+    ],
+    "notes": [
+      "Canvases are removed from the tab order because the select and buttons are the keyboard interaction surface.",
+      "Reset, save, and sandbox option controls use native buttons."
+    ],
+    "evidence": [
+      "Focused smoke selects an object and uses ArrowRight to change its displayed coordinates.",
+      "Live text includes the selected object and current election result."
+    ]
   }
 ]

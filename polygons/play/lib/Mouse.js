@@ -9,6 +9,7 @@
 	exports.Mouse = Mouse;
 
 	var canvas = document.getElementById("canvas");
+	canvas.tabIndex = -1;
 
 	// Event Handling
 	var onMouseMove,onTouchMove;

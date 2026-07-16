@@ -784,6 +784,9 @@ span.equation_div_symbol {
     border-radius: 7px;
     height: 36px;
     cursor: pointer;
+    border: 0;
+    font-family: inherit;
+    color: inherit;
     font-size: 20px;
     line-height: 36px;
     text-align: center;

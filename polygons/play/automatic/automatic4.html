@@ -22,8 +22,9 @@
 			<div id="slider"></div>
 			<br>
 
-			<div class="ui" id="moving" onclick="START_SIM=!START_SIM; doneBuffer = 60; window.writeStats()"></div>
-			<div class="ui" id="reset" onclick="reset()" style="margin-left:9px"></div>
+			<button class="ui" id="moving" type="button" aria-label="Start simulation"></button>
+			<button class="ui" id="reset" type="button" aria-label="Reset simulation" style="margin-left:9px"></button>
+			<output id="stats_status" aria-live="polite"></output>
 		</div>
 	</div>
 </body>
@@ -46,6 +47,7 @@ var whatever = new DoubleSlider(document.getElementById("slider"),{
 		{color:"#555",icon:"ds_sad.png"}
 	],
 	values:[0.10,0.80],
+	labels:["Minimum similarity threshold", "Maximum similarity threshold"],
 	onChange:function(values){
 		
 		window.BIAS = values[0];

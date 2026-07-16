@@ -227,8 +227,10 @@ function reset(){
 			}
 		}
 	}
+	if(window.refreshManualControls) refreshManualControls();
 }
 reset();
+attachManualControls();
 
 function render(){
 

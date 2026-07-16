@@ -13,6 +13,7 @@
 <script src="js/Mouse.js"></script>
 <script src="js/Draggable.js"></script>
 <script src="js/Model.js"></script>
+<script src="js/KeyboardModel.js"></script>
 <script src="js/Candidate.js"></script>
 <script src="js/Voters.js"></script>
 <script src="js/Election.js"></script>
@@ -40,11 +41,13 @@ Loader.onload = function(){
 		Election.plurality(model);
 	};
 	model.init();
+	attachModelControls(model);
 
 	// CREATE A RESET BUTTON
-	var resetDOM = document.createElement("div");
+	var resetDOM = document.createElement("button");
+	resetDOM.type = "button";
 	resetDOM.id = "reset";
-	resetDOM.innerHTML = "reset";
+	resetDOM.textContent = "reset";
 	resetDOM.style.top = "415px";
 	resetDOM.style.left = "110px";
 	resetDOM.onclick = function(){

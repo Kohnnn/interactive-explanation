@@ -846,13 +846,18 @@ window.Dragger = function(target, callback) {
     }
 }
 
+function controlLabel(container_div) {
+    let value = container_div.getAttribute("data-control") || container_div.id || "Control";
+    return value.replace(/[-_]/g, " ");
+}
+
 window.SegmentedControl = function(container_div, callback, values) {
     let container = document.createElement("div");
     container.style.position = "relative";
     container.classList.add("segmented_control_container");
     container.classList.add("non_selectable");
-
-    container.onclick = mouse_click;
+    container.setAttribute("role", "radiogroup");
+    container.setAttribute("aria-label", controlLabel(container_div));
 
     container_div.appendChild(container);
 
@@ -861,16 +866,33 @@ window.SegmentedControl = function(container_div, callback, values) {
     let pad = 2.0;
 
     for (let i = 0; i < values.length; i++) {
-        let el = document.createElement("div");
+        let el = document.createElement("button");
+        el.type = "button";
         el.style.top = pad + "px";
         el.classList.add("segmented_control_off");
-        el.innerHTML = values[i];
+        el.textContent = values[i];
+        el.setAttribute("role", "radio");
+        el.setAttribute("aria-checked", "false");
+        el.tabIndex = i === option ? 0 : -1;
+        el.onclick = function() { setSelection(i); };
+        el.onkeydown = function(e) {
+            if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                e.preventDefault();
+                setSelection((i + values.length - 1) % values.length);
+                segments[(i + values.length - 1) % values.length].focus();
+            } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                e.preventDefault();
+                setSelection((i + 1) % values.length);
+                segments[(i + 1) % values.length].focus();
+            }
+        };
         container.appendChild(el);
         segments.push(el);
     }
 
     segments[option].classList.remove("segmented_control_off");
     segments[option].classList.add("segmented_control_on");
+    segments[option].setAttribute("aria-checked", "true");
 
     window.addEventListener("resize", layout, true);
     window.addEventListener("load", layout, true);
@@ -879,17 +901,19 @@ window.SegmentedControl = function(container_div, callback, values) {
     layout();
     callback(option);
 
-    this.set_selection = function(o) {
+    this.set_selection = setSelection;
 
+    function setSelection(o) {
         if (option != o) {
-
             segments[option].classList.remove("segmented_control_on");
             segments[option].classList.add("segmented_control_off");
+            segments[option].setAttribute("aria-checked", "false");
+            segments[option].tabIndex = -1;
             option = o;
-
             segments[option].classList.remove("segmented_control_off");
             segments[option].classList.add("segmented_control_on");
-
+            segments[option].setAttribute("aria-checked", "true");
+            segments[option].tabIndex = 0;
             callback(option);
         }
     }
@@ -937,6 +961,11 @@ window.SegmentedControl = function(container_div, callback, values) {
 window.Slider = function(container_div, callback, style_prefix, default_value, disable_click) {
     let container = document.createElement("div");
     container.style.width = "100%";
+    container.setAttribute("role", "slider");
+    container.setAttribute("aria-label", controlLabel(container_div));
+    container.setAttribute("aria-valuemin", "0");
+    container.setAttribute("aria-valuemax", "100");
+    container.tabIndex = 0;
     container.style.height = "0";
     container.style.position = "relative";
     container.classList.add("slider_container");
@@ -999,6 +1028,8 @@ window.Slider = function(container_div, callback, style_prefix, default_value, d
 
     function layout() {
 
+        container.setAttribute("aria-valuenow", String(Math.round(percentage * 100)));
+        container.setAttribute("aria-valuetext", Math.round(percentage * 100) + "%");
         let l = (percentage * 100) + "%";
         let r = ((1.0 - percentage) * 100) + "%";
         left_gutter.style.width = l;
@@ -1011,6 +1042,22 @@ window.Slider = function(container_div, callback, style_prefix, default_value, d
     }
 
     let selection_offset = 0;
+
+    container.onkeydown = function(e) {
+        let next = percentage;
+        if (e.key === "ArrowLeft" || e.key === "ArrowDown") next -= 0.01;
+        else if (e.key === "ArrowRight" || e.key === "ArrowUp") next += 0.01;
+        else if (e.key === "Home") next = 0;
+        else if (e.key === "End") next = 1;
+        else return;
+        e.preventDefault();
+        next = Math.max(0, Math.min(1, next));
+        if (percentage != next) {
+            percentage = next;
+            layout();
+            callback(next);
+        }
+    };
 
     new TouchHandler(knob,
         function(e) {

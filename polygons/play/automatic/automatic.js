@@ -359,11 +359,16 @@ window.writeStats = function(){
 	stats_text.style.left = Math.round(x+35)+"px";
 
 	// Button
+	var moving = document.getElementById("moving");
 	if(START_SIM){
-		document.getElementById("moving").classList.add("moving");
+		moving.classList.add("moving");
+		moving.setAttribute("aria-label", "Pause simulation");
 	}else{
-		document.getElementById("moving").classList.remove("moving");
+		moving.classList.remove("moving");
+		moving.setAttribute("aria-label", "Start simulation");
 	}
+	var status = document.getElementById("stats_status");
+	if(status) status.textContent = (START_SIM ? "Running" : "Paused")+": "+Math.floor(segregation*100)+"% segregated after "+STATS.steps+" moves.";
 
 }
 
@@ -445,4 +450,10 @@ window.IS_IN_SIGHT = false;
 
 window.onload=function(){
 	reset();
+	document.getElementById("moving").onclick = function(){
+		START_SIM=!START_SIM;
+		doneBuffer = 60;
+		window.writeStats();
+	};
+	document.getElementById("reset").onclick = function(){ reset(); };
 }

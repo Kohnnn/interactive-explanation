@@ -149,5 +149,25 @@
       "The public-surface audit rejects missing or duplicate iframe titles on the route.",
       "Route inspection confirms the introduction is eager and later frames are lazy."
     ]
+  },
+  {
+    "moduleId": "keyboard-simulation-controls",
+    "originalBehavior": "Manual movement uses canvas dragging, while automatic runs use sprite buttons and two-handle sliders.",
+    "localStatus": "The manual board now provides native polygon selection and directional movement with live state; automatic simulations use buttons, live run status, and paired native ranges synchronized to the visual double slider.",
+    "sourceFiles": [
+      "play/lib/KeyboardControls.js",
+      "play/lib/Mouse.js",
+      "play/manual/manual.html",
+      "play/automatic/automatic.js",
+      "play/automatic/doubleslider.js"
+    ],
+    "notes": [
+      "Decorative mini frames remain pointer-only because they are not required lesson controls.",
+      "Wide simulations keep their native layout and scroll inside the playable container instead of widening the document."
+    ],
+    "evidence": [
+      "Focused smoke selects an unhappy polygon with an adjacent empty cell, presses a direction button with Enter, and verifies its coordinates and live state change.",
+      "Focused smoke verifies native automatic controls and no document overflow at 320 CSS pixels."
+    ]
   }
 ]

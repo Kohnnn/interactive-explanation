@@ -190,6 +190,23 @@ body[data-story-route="formula-1-racing"] .color_gray {
   color: #8f949a;
 }
 
+body[data-story-route="formula-1-racing"] .segmented_control_on:focus-visible,
+body[data-story-route="formula-1-racing"] .segmented_control_off:focus-visible,
+body[data-story-route="formula-1-racing"] .slider_container:focus-visible {
+  outline: 3px solid #171b22;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-story-route="formula-1-racing"] *,
+  body[data-story-route="formula-1-racing"] *::before,
+  body[data-story-route="formula-1-racing"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @media (max-width: 720px) {
   body[data-story-route="formula-1-racing"] .drawer_container {
     border-radius: 20px;

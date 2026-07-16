@@ -381,6 +381,7 @@
       }
     }
 
+    canvas.tabIndex = -1;
     const scene = {
       id,
       canvas,
@@ -457,12 +458,17 @@
   }
 
   function repaintAll() {
-    scenes.forEach((scene) => scene.requestRepaint());
+    scenes.forEach((scene) => {
+      scene.requestRepaint();
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) scene.maybeDraw(0);
+    });
   }
 
   function loop(time) {
     scenes.forEach((scene) => scene.maybeDraw(time * 0.001));
-    window.requestAnimationFrame(loop);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      window.requestAnimationFrame(loop);
+    }
   }
 
   function roundedRectPoints(cx, cy, w, h, r, steps) {
@@ -2196,7 +2202,11 @@
     initScenes();
     applyTrackPreset(0);
     updateCaptions();
-    window.requestAnimationFrame(loop);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      scenes.forEach((scene) => scene.maybeDraw(0));
+    } else {
+      window.requestAnimationFrame(loop);
+    }
   }
 
   if (document.readyState === "loading") {

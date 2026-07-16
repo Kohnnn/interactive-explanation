@@ -71,5 +71,23 @@
       "Selecting a new track preset updates setup sliders, tyre compound, power mode, power bias, and lap plan together.",
       "Weather and pit strategy calculations change the lap-builder caption and the strategic recommendations shown in later chapters."
     ]
+  },
+  {
+    "moduleId": "semantic-keyboard-controls",
+    "originalBehavior": "Formula 1 controls change procedural scene state and linked captions through pointer and touch interaction.",
+    "localStatus": "Shared segmented controls are radio groups with Arrow-key selection, while shared sliders expose slider value semantics and Arrow, Home, and End behavior.",
+    "sourceFiles": [
+      "../../formula-1-racing/js/base.js",
+      "../../formula-1-racing/js/f1.js",
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/css/f1.css"
+    ],
+    "notes": [
+      "Track, weather, lap-plan, and airflow speed have stable data-control selectors.",
+      "Reduced-motion preference stops perpetual repainting but repaints scenes after state changes."
+    ],
+    "evidence": [
+      "Focused smoke uses keyboard input on track, weather, lap-plan, and airflow controls and verifies aria state plus linked captions."
+    ]
   }
 ]
