@@ -17,7 +17,7 @@
 - Smoke port and verbosity: `SMOKE_PORT=4173` and `SMOKE_VERBOSE=1` or `--verbose`.
 
 ## Route Metadata Contract
-- `routes.manifest.json` entries must have unique `slug`, non-empty `title` and `summary`, and `docsUrl` exactly `./docs/<slug>/`.
+- `routes.manifest.json` entries must have unique `slug`, non-empty `title` and `summary`, one required `intent` from `explainer|simulation|practice|create|guided-path`, and `docsUrl` exactly `./docs/<slug>/`.
 - Normal routes need an absolute `referenceUrl`; original/local curated routes use `referenceMode: "neutral"` and must omit `referenceUrl`.
 - After changing `routes.manifest.json`, run `node tools/sync-route-metadata.mjs .` so `pages.json` matches.
 - New shipped routes should include both `docs/<slug>/index.html` and `docs/<slug>/parity.json`; the scaffolder creates stubs that must be replaced before treating a route as verified.

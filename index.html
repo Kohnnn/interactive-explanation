@@ -5,128 +5,68 @@
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Interactive Explanation Replicas</title>
-  <meta name="description" content="Static replica routes for interactive explanations, with separate parity documentation for each build.">
+  <title>Interactive Explanation Atlas</title>
+  <meta name="description" content="Interactive ways to understand, practice, experiment, and build.">
   <link rel="icon" type="image/png" href="./favicon.png">
   <link rel="stylesheet" href="./shared/site.css">
   <link rel="stylesheet" href="./shared/public-footer.css">
 </head>
 <body data-page-type="home">
   <main class="site-page">
-    <section class="hero">
+    <section class="hero hero--atlas">
       <p class="eyebrow">Interactive Explanation Atlas</p>
-      <h1>Replica routes for interactive explanations</h1>
-      <p class="lead">
-        This folder is a self-contained static site for subpath hosting. The public pages stay
-        focused on the interactives themselves, while parity notes and technical provenance live
-        separately under <code>/docs/</code>.
-      </p>
-      <p class="meta-line">
-        Only the routes listed on this page are live replicas. Notes under <code>/compilations/</code>
-        stay as planning or research material until they are vendored, documented, and added to
-        <code>pages.json</code>.
-      </p>
-      <div class="stat-grid" data-home-stats>
-        <div class="empty-state">Loading route stats...</div>
-      </div>
-      <div class="action-row">
-        <a class="action-link" href="#route-inventory">Open route inventory</a>
-        <a class="action-link secondary" href="#featured-routes">Start here</a>
-        <a class="action-link secondary" href="#family-board">Browse source families</a>
-        <a class="action-link ghost" href="./pages.json">Open manifest JSON</a>
-      </div>
-    </section>
-
-    <section class="inventory-section" id="featured-routes">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Featured Routes</p>
-          <h2>Start with the strongest entry points</h2>
-        </div>
-        <p class="meta-line">
-          These picks surface the best onboarding hubs, the clearest editable labs, and the most complete
-          longform routes so new visitors do not have to decode the full atlas first.
-        </p>
-      </div>
-      <section class="page-grid" data-featured-routes>
-        <div class="empty-state">Loading featured routes...</div>
-      </section>
-    </section>
-
-    <section class="inventory-section" id="family-board">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Source Families</p>
-          <h2>Color-coded route groups</h2>
-        </div>
-        <p class="meta-line">
-          Use the source-family board to scan the collection and jump the inventory into a focused
-          subset when you are shipping, QA-ing, or auditing a specific batch.
-        </p>
-      </div>
-      <div class="family-grid" data-family-board>
-        <div class="empty-state">Loading family board...</div>
-      </div>
+      <h1>Understand, practice, experiment, and build.</h1>
+      <p class="lead">Find an interactive route for the question, skill, or idea in front of you.</p>
+      <a class="action-link" href="#route-inventory">Browse all routes</a>
     </section>
 
     <section class="inventory-section" id="route-inventory">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Route Inventory</p>
-          <h2>Filter the shipped replicas</h2>
+          <p class="eyebrow">Route inventory</p>
+          <h2>Choose a way in</h2>
         </div>
-        <p class="meta-line" data-page-results aria-live="polite">
-          Loading route inventory...
-        </p>
+        <p class="meta-line" data-page-results aria-live="polite">Loading routes...</p>
       </div>
 
-      <div class="inventory-toolbar">
+      <div class="inventory-toolbar" data-atlas-controls>
         <label class="search-field">
-          <span class="search-field__label">Search routes</span>
-          <input
-            type="search"
-            placeholder="Search title, slug, summary, topic tag, or source host"
-            autocomplete="off"
-            data-filter-query
-          >
+          <span class="search-field__label">Search</span>
+          <input type="search" placeholder="Title, topic, source, or route" autocomplete="off" data-filter-query>
         </label>
 
-        <div class="toolbar-row">
+        <div class="control-row">
+          <div class="filter-group">
+            <span class="filter-group__label">I want to</span>
+            <div class="filter-pills" data-intent-filters>
+              <button class="filter-pill is-active" type="button" data-atlas-intent="all" aria-pressed="true">All</button>
+              <button class="filter-pill" type="button" data-atlas-intent="explainer" aria-pressed="false">Understand</button>
+              <button class="filter-pill" type="button" data-atlas-intent="simulation" aria-pressed="false">Experiment</button>
+              <button class="filter-pill" type="button" data-atlas-intent="practice" aria-pressed="false">Practice</button>
+              <button class="filter-pill" type="button" data-atlas-intent="create" aria-pressed="false">Build</button>
+              <button class="filter-pill" type="button" data-atlas-intent="guided-path" aria-pressed="false">Follow a path</button>
+            </div>
+          </div>
           <label class="select-field">
-            <span class="filter-group__label">Sort routes</span>
+            <span class="filter-group__label">Sort</span>
             <select data-sort-select>
-              <option value="featured">Featured first</option>
-              <option value="new">Newest first</option>
+              <option value="featured">Featured</option>
+              <option value="new">Newest</option>
               <option value="title">Title A–Z</option>
             </select>
           </label>
-
-          <div class="filter-group view-toggle-group">
-            <div class="filter-group__label">View mode</div>
-            <div class="view-toggle" data-view-toggle>
-              <button class="view-toggle__button is-active" type="button" value="grouped">Grouped by family</button>
-              <button class="view-toggle__button" type="button" value="flat">Flat list</button>
-            </div>
-          </div>
         </div>
 
-        <div class="filter-group">
-          <div class="filter-group__label">Topic filter</div>
-          <div class="filter-pills" data-tag-filters>
-            <div class="empty-state">Loading topic filters...</div>
-          </div>
-        </div>
+        <details class="advanced-filters">
+          <summary>Advanced: source family</summary>
+          <div class="filter-pills" data-family-filters></div>
+        </details>
 
-        <div class="filter-group">
-          <div class="filter-group__label">Family filter</div>
-          <div class="filter-pills" data-family-filters>
-            <div class="empty-state">Loading filters...</div>
-          </div>
-        </div>
+        <button class="action-link secondary action-link--button" type="button" data-clear-filters hidden disabled>Clear filters</button>
       </div>
 
-      <section class="page-grid" data-page-list>
-        <div class="empty-state">Loading page manifest...</div>
+      <section class="page-grid page-grid--inventory" data-page-list>
+        <div class="empty-state">Loading route inventory...</div>
       </section>
     </section>
   </main>

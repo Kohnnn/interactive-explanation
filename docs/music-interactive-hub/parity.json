@@ -18,9 +18,9 @@
     ]
   },
   {
-    "moduleId": "clustered-learning-arc-across-four-families",
+    "moduleId": "clustered-learning-arc-across-five-families",
     "originalBehavior": "The live music routes cover different goals: interval or note drills, multitrack sequencing, painted pattern writing, and genre history.",
-    "localStatus": "The local hub groups those experiences into three editorial clusters and one recommended path so the music collection reads as a progression rather than a flat list.",
+    "localStatus": "The local hub groups 21 routes from five live music families into four editorial clusters and one five-stop recommended path so the collection reads as a progression rather than a flat list.",
     "sourceFiles": [
       "../../music-interactive-hub/index.html",
       "../../teoria-note-ear-training/index.html",
@@ -35,8 +35,8 @@
       "../../musicmap/index.html"
     ],
     "notes": [
-      "The cluster counts are 6 Teoria routes, 8 sequencing routes, and 1 genre-history route.",
-      "The recommended path now walks from ear training into beats, notes, chords, full-loop composition, and finally genre context."
+      "The cluster counts are 6 ear-training routes, 8 sequencing routes, 6 synthesis routes, and 1 genre-history route.",
+      "The recommended path has five starter stops: ear training, beats, playground, synth basics, and Musicmap."
     ],
     "evidence": [
       "The hub groups ear training and notation separately from sequencing and genre context.",

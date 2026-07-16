@@ -14,27 +14,6 @@
   <link rel="stylesheet" href="../shared/site.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
-    .music-hub-page .hero {
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top right, rgba(180, 76, 47, 0.18), transparent 36%),
-        radial-gradient(circle at left center, rgba(31, 108, 99, 0.16), transparent 32%),
-        rgba(255, 250, 241, 0.9);
-    }
-
-    .music-hub-page .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto -4rem -5rem auto;
-      width: 16rem;
-      height: 16rem;
-      border-radius: 50%;
-      background: rgba(31, 108, 99, 0.08);
-      filter: blur(3px);
-      pointer-events: none;
-    }
-
     .cluster {
       margin-top: 26px;
     }
@@ -113,7 +92,6 @@
       <div class="action-row">
         <a class="action-link" href="./#ear-training-cluster">Start with ear training</a>
         <a class="action-link secondary" href="./#synthesis-cluster">Jump to synthesis</a>
-        <a class="action-link ghost" href="../primary-interactive-hub/">Open primary hub</a>
         <a class="action-link ghost" href="../docs/music-interactive-hub/">Docs</a>
       </div>
       <p class="meta-line">
@@ -121,45 +99,23 @@
       </p>
     </header>
 
-    <section class="note-grid">
-      <article class="note-section">
-        <h2>Cross over when ready</h2>
-        <p>
-          If you want systems explainers and story-driven sims after the music track, continue into the
-          <a href="../primary-interactive-hub/">Primary Interactive Hub</a>.
-        </p>
-      </article>
-
-      <article class="note-section">
-        <h2>Cryptography path</h2>
-        <p>
-          For a tighter lab sequence about hashing, signatures, and zero-knowledge proofs, open the
-          <a href="../blockchain-101-combined-flow/">Blockchain Combined Flow</a>.
-        </p>
-      </article>
-    </section>
 
     <section class="path-panel" data-recommended-path>
       <div class="section-heading">
         <h2>Recommended Path</h2>
-        <span class="route-count">9 stops</span>
+        <span class="route-count" data-path-count>5 stops</span>
       </div>
-      <p class="cluster-intro">
-        Follow this sequence if you want one clean arc from hearing pitch relationships to shaping
-        patterns, harmony, timbre, and form before situating those sounds inside a wider map of styles.
-      </p>
-      <ol>
-        <li><a href="../teoria-note-ear-training/">Teoria Note Ear Training</a> to lock in single-note recognition.</li>
-        <li><a href="../teoria-interval-ear-training/">Teoria Interval Ear Training</a> to hear distance and contour between notes.</li>
-        <li><a href="../ableton-learning-music-play-with-beats/">Ableton Play with beats</a> to start building rhythmic motion one bar at a time.</li>
-        <li><a href="../ableton-learning-music-play-with-chords/">Ableton Play with chords</a> to add harmony and stronger progression cues.</li>
-        <li><a href="../ableton-learning-music-playground/">Ableton Learning Music Playground</a> to combine beats, bass, chords, and melody in motion.</li>
-        <li><a href="../ableton-learning-synths-get-started/">Ableton Learning Synths: Get started</a> to connect pitch and pattern work to a playable synth surface.</li>
-        <li><a href="../ableton-learning-synths-how-synths-make-sound/">How synths make sound</a> to hear oscillators and waveform changes as a concrete sound source.</li>
-        <li><a href="../ableton-learning-synths-filter-resonance/">Filter resonance</a> to shape brightness, focus, and motion with a filter instead of only changing notes.</li>
-        <li><a href="../ableton-learning-synths-recipes/">Recipes</a> to hear full subtractive-synth patches as combinations of the earlier controls.</li>
-        <li><a href="../musicmap/">Musicmap</a> to connect those sounds to a broader genre history.</li>
-      </ol>
+        <p class="cluster-intro">
+          Start by hearing interval relationships, build a beat, combine it with chords and melody,
+          shape a first synth sound, then place it in a wider map of styles.
+        </p>
+        <ol>
+          <li><a href="../teoria-interval-ear-training/">Teoria Interval Ear Training</a> to hear distance and contour between notes.</li>
+          <li><a href="../ableton-learning-music-play-with-beats/">Ableton Play with beats</a> to start building rhythmic motion one bar at a time.</li>
+          <li><a href="../ableton-learning-music-playground/">Ableton Learning Music Playground</a> to combine beats, bass, chords, and melody in motion.</li>
+          <li><a href="../ableton-learning-synths-get-started/">Ableton Learning Synths: Get started</a> to connect pitch and pattern work to a playable synth surface.</li>
+          <li><a href="../musicmap/">Musicmap</a> to connect those sounds to a broader genre history.</li>
+        </ol>
     </section>
 
     <section class="cluster" id="ear-training-cluster">

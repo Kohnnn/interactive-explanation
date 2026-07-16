@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const VALID_INTENTS = new Set(["explainer", "simulation", "practice", "create", "guided-path"]);
 
 const cliArgs = process.argv.slice(2);
 
@@ -86,13 +87,15 @@ function validateManifest(manifest) {
   manifest.forEach((route, index) => {
     assertManifest(route && typeof route === "object" && !Array.isArray(route), `entry ${index} must be an object`);
 
-    const { slug, title, summary, referenceUrl, referenceMode, docsUrl } = route;
+    const { slug, title, summary, intent, referenceUrl, referenceMode, docsUrl } = route;
     assertManifest(typeof slug === "string" && slug.trim().length > 0, `entry ${index} is missing slug`);
     assertManifest(!slugs.has(slug), `duplicate slug "${slug}"`);
     slugs.add(slug);
 
     assertManifest(typeof title === "string" && title.trim().length > 0, `route "${slug}" is missing title`);
     assertManifest(typeof summary === "string" && summary.trim().length > 0, `route "${slug}" is missing summary`);
+    assertManifest(typeof intent === "string" && intent.trim().length > 0, `route "${slug}" is missing intent`);
+    assertManifest(VALID_INTENTS.has(intent), `route "${slug}" uses invalid intent "${intent}"`);
     assertManifest(
       referenceMode === undefined || referenceMode === "neutral",
       `route "${slug}" uses unsupported referenceMode "${referenceMode}"`,

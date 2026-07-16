@@ -5619,6 +5619,48 @@ async function smokeMusicmap(context) {
   await page.close();
 }
 
+async function smokeAtlas(context) {
+  const page = await context.newPage();
+  await assertRoute(page, "", "[data-page-list]");
+  await page.waitForFunction(() => document.querySelectorAll("[data-page-list] [data-intent]").length > 0, null, { timeout: 15000 });
+  const initialState = await page.evaluate(() => ({
+    cards: document.querySelectorAll("[data-page-list] [data-intent]").length,
+    controls: document.querySelectorAll("[data-atlas-intent]").length,
+    clearHidden: document.querySelector("[data-clear-filters]")?.hidden,
+    url: window.location.search,
+  }));
+  assert(initialState.controls === 6, `atlas expected All plus five intent buttons, found ${initialState.controls}`);
+  assert(initialState.cards === routeManifest.length, `atlas expected ${routeManifest.length} initial cards, found ${initialState.cards}`);
+  assert(initialState.clearHidden, "atlas clear filters control was visible without active filters");
+  assert(initialState.url === "", `atlas exposed default URL state: ${initialState.url}`);
+  await page.locator("[data-atlas-intent='practice']").click();
+  await page.waitForFunction(() => {
+    const cards = Array.from(document.querySelectorAll("[data-page-list] [data-intent]"));
+    return cards.length > 0 && cards.every((card) => card.dataset.intent === "practice");
+  }, null, { timeout: 5000 });
+  const filteredState = await page.evaluate(() => ({
+    cards: document.querySelectorAll("[data-page-list] [data-intent]").length,
+    clearVisible: !document.querySelector("[data-clear-filters]")?.hidden,
+    url: window.location.search,
+  }));
+  assert(filteredState.clearVisible, "atlas clear filters control did not become visible after an intent filter");
+  assert(new URLSearchParams(filteredState.url).get("intent") === "practice", "atlas did not sync intent state to the URL");
+  await page.locator("[data-clear-filters]").click();
+  await page.waitForFunction((total) => {
+    return document.querySelectorAll("[data-page-list] [data-intent]").length === total;
+  }, routeManifest.length, { timeout: 5000 });
+  const resetState = await page.evaluate(() => ({
+    clearHidden: document.querySelector("[data-clear-filters]")?.hidden,
+    url: window.location.search,
+  }));
+  assert(resetState.clearHidden, "atlas clear filters control remained visible after reset");
+  assert(resetState.url === "", `atlas retained URL state after reset: ${resetState.url}`);
+  await assertViewportUsable(page, "atlas desktop");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await assertViewportUsable(page, "atlas mobile");
+  await page.close();
+}
+
 async function smokeMusicInteractiveHub(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
@@ -5626,7 +5668,7 @@ async function smokeMusicInteractiveHub(context) {
   await assertRoute(page, "music-interactive-hub/", "#reference-footer");
   await page.waitForFunction(() => {
     return document.querySelectorAll("[data-music-card]").length === 21 &&
-      document.querySelectorAll("[data-recommended-path] li").length >= 9;
+      document.querySelectorAll("[data-recommended-path] li").length === 5;
   }, null, { timeout: 15000 });
 
   const hubState = await page.evaluate(() => ({
@@ -5639,6 +5681,8 @@ async function smokeMusicInteractiveHub(context) {
       return href.startsWith("../") || href.startsWith("./#") || href === "../";
     }),
     recommendedPathVisible: Boolean(document.querySelector("[data-recommended-path]")),
+    recommendedPathCount: document.querySelectorAll("[data-recommended-path] li").length,
+    recommendedPathBadge: document.querySelector("[data-path-count]")?.textContent?.trim() || "",
   }));
   assert(hubState.cardCount === 21, `music-interactive-hub route expected 21 route cards, found ${hubState.cardCount}`);
   assert(hubState.routeLinks === 21, "music-interactive-hub route did not expose one local route link per card");
@@ -5649,6 +5693,8 @@ async function smokeMusicInteractiveHub(context) {
   );
   assert(hubState.localOnlyLinks, "music-interactive-hub route exposed a non-local body link");
   assert(hubState.recommendedPathVisible, "music-interactive-hub route did not render the recommended progression");
+  assert(hubState.recommendedPathCount === 5, `music-interactive-hub route expected 5 starter stops, found ${hubState.recommendedPathCount}`);
+  assert(hubState.recommendedPathBadge === "5 stops", `music-interactive-hub route exposed unexpected path badge: ${hubState.recommendedPathBadge}`);
   console.log("OK music-interactive-hub card clusters");
 
   await assertViewportUsable(page, "music-interactive-hub route");
@@ -6783,6 +6829,7 @@ async function main() {
       await assertRoute(routePage, relativePath, selector);
     }
     await routePage.close();
+    await smokeAtlas(context);
     phaseLog("Route checks completed");
 
     if (exists("formula-1-racing")) {

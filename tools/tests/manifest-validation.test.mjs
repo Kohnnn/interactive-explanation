@@ -24,6 +24,7 @@ const validRoute = {
   title: "Demo Route",
   summary: "A valid demo route.",
   referenceUrl: "https://example.com/demo",
+  intent: "explainer",
   docsUrl: "./docs/demo-route/",
 };
 
@@ -38,10 +39,32 @@ test("valid manifest syncs and writes pages.json", () => {
 
 test("neutral route without referenceUrl is valid", () => {
   const root = makeRootWithManifest([
-    { slug: "local-x", title: "Local X", summary: "Curated.", referenceMode: "neutral", docsUrl: "./docs/local-x/" },
+    { slug: "local-x", title: "Local X", summary: "Curated.", intent: "guided-path", referenceMode: "neutral", docsUrl: "./docs/local-x/" },
   ]);
   const result = runSync(root);
   assert.equal(result.status, 0, result.stderr);
+});
+
+test("intent is preserved in pages.json", () => {
+  const root = makeRootWithManifest([{ ...validRoute, intent: "create" }]);
+  const result = runSync(root);
+  assert.equal(result.status, 0, result.stderr);
+  const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
+  assert.equal(pages[0].intent, "create");
+});
+
+test("missing intent fails validation", () => {
+  const route = { ...validRoute };
+  delete route.intent;
+  const result = runSync(makeRootWithManifest([route]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /missing intent/i);
+});
+
+test("invalid intent fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, intent: "unknown" }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /invalid intent/i);
 });
 
 test("duplicate slug fails validation", () => {
@@ -69,7 +92,7 @@ test("wrong docsUrl shape fails validation", () => {
 
 test("neutral route combined with referenceUrl fails validation", () => {
   const root = makeRootWithManifest([
-    { slug: "x", title: "X", summary: "Bad.", referenceMode: "neutral", referenceUrl: "https://example.com/x", docsUrl: "./docs/x/" },
+    { slug: "x", title: "X", summary: "Bad.", intent: "guided-path", referenceMode: "neutral", referenceUrl: "https://example.com/x", docsUrl: "./docs/x/" },
   ]);
   const result = runSync(root);
   assert.equal(result.status, 1);
