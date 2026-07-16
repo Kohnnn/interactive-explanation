@@ -34,9 +34,9 @@
       <article class="note-section">
         <h2>Source snapshot</h2>
         <p>
-          The local route vendors the published article HTML, shared article CSS, page-local CSS,
-          route-local watch model data, and scripts, then patches only the subpath-hosting shell
-          and provenance surfaces needed for the public replica.
+          The local route vendors the published article HTML and loads the watch CSS, scripts, helper images,
+          and model data from the canonical shared runtime, then patches only the subpath-hosting shell and
+          provenance surfaces needed for the public replica.
         </p>
         <ul class="plain-list">
           <li>Live source snapshot verified and archived for this route on 2026-03-21.</li>
@@ -50,9 +50,9 @@
         <h2>Asset handoff</h2>
         <ul class="plain-list">
           <li><code>mechanical-watch/index.html</code> owns the local metadata shell, shared footer hook, and relative article asset paths.</li>
-          <li><code>mechanical-watch/css/base.css</code> and <code>mechanical-watch/css/watch.css</code> preserve the published article layout and interaction styling with subpath-safe helper image URLs.</li>
-          <li><code>mechanical-watch/js/base.js</code> and <code>mechanical-watch/js/watch.js</code> keep the original drag, slider, and animation runtime.</li>
-          <li><code>mechanical-watch/models/</code> contains the route-local geometry blobs requested by the published watch scenes.</li>
+          <li><code>shared/mechanical-watch/css/</code> preserves the published article layout and interaction styling with subpath-safe shared helper image URLs.</li>
+          <li><code>shared/mechanical-watch/js/</code> keeps the original drag, slider, and animation runtime for both watch routes.</li>
+          <li><code>shared/mechanical-watch/models/</code> contains the geometry blobs requested by both watch experiences.</li>
         </ul>
       </article>
 

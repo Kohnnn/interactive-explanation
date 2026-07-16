@@ -1,13 +1,14 @@
 [
   {
-    "moduleId": "article-shell-and-local-watch-runtime-handoff",
+    "moduleId": "article-shell-and-shared-watch-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and watch scripts, then initializes many inline watch-movement scenes under one longform page.",
-    "localStatus": "The local route keeps the published article structure, shared article styling, route-local watch model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",
+    "localStatus": "The local route keeps the published article structure and layers in a compact engineering-sandbox onboarding shell while loading the watch styles, scripts, helper images, and model assets from the canonical shared runtime.",
     "sourceFiles": [
       "../../mechanical-watch/index.html",
-      "../../mechanical-watch/css/base.css",
-      "../../mechanical-watch/js/base.js",
-      "../../mechanical-watch/js/watch.js"
+      "../../shared/mechanical-watch/css/base.css",
+      "../../shared/mechanical-watch/css/watch.css",
+      "../../shared/mechanical-watch/js/base.js",
+      "../../shared/mechanical-watch/js/watch.js"
     ],
     "notes": [
       "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
@@ -25,7 +26,7 @@
     "localStatus": "The local route keeps the opening movement scene and the early spring and winding demonstrations under the original published runtime.",
     "sourceFiles": [
       "../../mechanical-watch/index.html",
-      "../../mechanical-watch/js/watch.js"
+      "../../shared/mechanical-watch/js/watch.js"
     ],
     "notes": [
       "The smoke contract treats one opening slider path and one early power scene as required parity behavior.",
@@ -42,12 +43,12 @@
     "localStatus": "The local route keeps the later automatic winding, reversing wheel, and keyless-works scenes intact through the original article canvas and slider runtime.",
     "sourceFiles": [
       "../../mechanical-watch/index.html",
-      "../../mechanical-watch/js/watch.js",
-      "../../mechanical-watch/models/watch_vertices.dat",
-      "../../mechanical-watch/models/watch_indices.dat"
+      "../../shared/mechanical-watch/js/watch.js",
+      "../../shared/mechanical-watch/models/watch_vertices.dat",
+      "../../shared/mechanical-watch/models/watch_indices.dat"
     ],
     "notes": [
-      "The published 3D watch scenes now load their geometry from the route-local model tree instead of the upstream root path.",
+      "Both watch routes load their byte-identical geometry from the shared model tree instead of maintaining route-local copies.",
       "The shipped `gears` references are rewritten locally in the public body."
     ],
     "evidence": [

@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-filter-runtime",
     "originalBehavior": "The published filter lesson boots the Learning Synths shell and uses an XY control to reshape the filter response in real time.",
-    "localStatus": "The local route keeps that filter lesson shell and XY runtime under the route tree while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that filter lesson shell and XY runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-filter-resonance/index.html",
-      "../../ableton-learning-synths-filter-resonance/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -41,7 +41,7 @@
     "localStatus": "The local route keeps that filter curve scene and note-trigger path while serving the lesson entirely from archived assets.",
     "sourceFiles": [
       "../../ableton-learning-synths-filter-resonance/index.html",
-      "../../ableton-learning-synths-filter-resonance/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The filter curve scene is treated as parity-critical because it is the clearest demonstration in the lesson.",

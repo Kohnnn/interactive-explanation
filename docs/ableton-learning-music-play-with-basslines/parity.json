@@ -42,7 +42,7 @@
     "sourceFiles": [
       "../../ableton-learning-music-play-with-basslines/lessons/sounds",
       "../../ableton-learning-music-play-with-basslines/fonts",
-      "../../ableton-learning-music-play-with-basslines/third-party/tone/tone.min.js"
+      "../../shared/tone.min.js"
     ],
     "notes": [
       "The shipped local inventory includes 31 audio files and 9 font files under the route tree.",

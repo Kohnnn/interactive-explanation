@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-rnbo-runtime",
     "originalBehavior": "The published Get started lesson boots the Learning Synths shell, loads the RNBO-backed synth runtime, and drops straight into a playable XY pad.",
-    "localStatus": "The local route keeps that lesson shell and RNBO runtime under the route tree while replacing the broader lesson chrome with local metadata and the shared footer.",
+    "localStatus": "The local route keeps that lesson shell and RNBO runtime from shared scripts with route-local lesson assets while replacing the broader lesson chrome with local metadata and the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-get-started/index.html",
-      "../../ableton-learning-synths-get-started/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -42,7 +42,7 @@
     "localStatus": "The local route keeps the playable XY pad and its note-trigger state while routing chapter navigation and provenance through local-only surfaces.",
     "sourceFiles": [
       "../../ableton-learning-synths-get-started/index.html",
-      "../../ableton-learning-synths-get-started/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The first synth lesson is treated as the family bootstrap and the smoke gate for the playable XY surface.",

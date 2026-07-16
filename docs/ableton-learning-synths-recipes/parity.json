@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-subtractive-runtime",
     "originalBehavior": "The published Recipes chapter boots the Learning Synths shell and exposes a fuller subtractive-synth panel with multiple controls and preset-style text guidance.",
-    "localStatus": "The local route keeps that chapter shell and subtractive-synth runtime under the route tree while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that chapter shell and subtractive-synth runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-recipes/index.html",
-      "../../ableton-learning-synths-recipes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -41,7 +41,7 @@
     "localStatus": "The local route keeps the playback toggle and slider-driven panel updates while serving the chapter entirely from archived assets.",
     "sourceFiles": [
       "../../ableton-learning-synths-recipes/index.html",
-      "../../ableton-learning-synths-recipes/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The Recipes chapter is treated as the synthesis batch payoff because it combines several control families into one sustained scene.",

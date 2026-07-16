@@ -17,7 +17,7 @@
       <h1>Ableton Learning Synths: Get started</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/ableton-learning-synths-get-started/</code> vendors Ableton's
-        opening Learning Synths lesson, keeps the archived RNBO runtime under the route tree, and
+        opening Learning Synths lesson, keeps the archived RNBO runtime from shared scripts, and
         preserves the playable XY synth pad with local lesson assets.
       </p>
       <div class="action-row">
@@ -36,7 +36,7 @@
         <p>
           Vendored from Ableton's opening Learning Synths lesson at
           <code>learningsynths.ableton.com/en/get-started</code>. The local route keeps the published
-          lesson shell and the RNBO-backed synth runtime under the route tree so the playable XY synth
+          lesson shell and the RNBO-backed synth runtime from shared scripts so the playable XY synth
           pad boots from local assets.
         </p>
         <ul class="plain-list">
@@ -49,7 +49,7 @@
       <article class="note-section">
         <h2>Asset handoff</h2>
         <ul class="plain-list">
-          <li><code>js/musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and RNBO runtime.</li>
+          <li><code>shared/ableton-learning-synths-musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and RNBO runtime.</li>
           <li>Route-local inventory: 12 font files, 4 shared sound assets, 5 lesson WAVs, 4 GLB models, 6 text-payload JSON files, 2 preset catalogs, and 1 RNBO patch.</li>
           <li>Assets such as <code>content/assets/models/synth003b.glb</code> and the lesson WAVs are served from relative paths for subpath hosting.</li>
         </ul>

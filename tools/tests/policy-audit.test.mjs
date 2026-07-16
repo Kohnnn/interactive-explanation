@@ -135,3 +135,23 @@ test("source map directive in shared assets fails the audit", () => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /source map directive/i);
 });
+
+test("route-local copies of consolidated assets fail the audit", () => {
+  const root = makeRoot();
+  const copies = [
+    path.join("ableton-learning-music-demo", "third-party", "tone", "tone.min.js"),
+    path.join("ableton-learning-synths-demo", "js", "externals", "react.production.min.js"),
+    path.join("ableton-learning-synths-demo", "js", "externals", "react-dom.production.min.js"),
+    path.join("ableton-learning-synths-demo", "js", "musiclab.js"),
+    path.join("mechanical-watch", "models", "watch_vertices.dat"),
+    path.join("interactive-mechanical-watch", "images", "sqrt.svg"),
+  ];
+  for (const relativePath of copies) {
+    const fullPath = path.join(root, relativePath);
+    fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+    fs.writeFileSync(fullPath, "duplicate");
+  }
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.equal(result.stderr.match(/route-local duplicate of shared asset/gi)?.length, copies.length);
+});

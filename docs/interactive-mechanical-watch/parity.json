@@ -19,22 +19,22 @@
     ]
   },
   {
-    "moduleId": "webgl-movement-engine-verbatim",
+    "moduleId": "shared-webgl-movement-engine",
     "originalBehavior": "The interactive movement should render through the original WebGL engine with all demos, sliders, and binary geometry intact.",
-    "localStatus": "The route ships a 1:1 copy of the WebGL engine, base runtime, and binary vertex/index buffers; demos are bound by their original element ids and left unmodified.",
+    "localStatus": "The route loads the canonical shared WebGL engine, base runtime, and binary vertex/index buffers; demos remain bound by their original element ids, with only subpath-safe shared model request paths changed.",
     "sourceFiles": [
-      "../../interactive-mechanical-watch/js/watch.js",
-      "../../interactive-mechanical-watch/js/base.js",
-      "../../interactive-mechanical-watch/models/watch_vertices.dat",
-      "../../interactive-mechanical-watch/models/watch_indices.dat"
+      "../../shared/mechanical-watch/js/watch.js",
+      "../../shared/mechanical-watch/js/base.js",
+      "../../shared/mechanical-watch/models/watch_vertices.dat",
+      "../../shared/mechanical-watch/models/watch_indices.dat"
     ],
     "notes": [
       "The engine binds demos by element id, so every drawer_container and slider id is preserved verbatim.",
-      "The geometry buffers cannot be regenerated locally and are copied unchanged."
+      "The geometry buffers cannot be regenerated locally and remain byte-identical in the shared asset tree."
     ],
     "evidence": [
       "Each movement demo mounts through its original drawer_container id (for example #hero, #mainspring_barrel, #gear_train5).",
-      "The route loads ./js/base.js and ./js/watch.js unchanged before the shared shell scripts."
+      "The route loads ../shared/mechanical-watch/js/base.js and ../shared/mechanical-watch/js/watch.js before the shared shell scripts."
     ]
   },
   {
@@ -43,8 +43,8 @@
     "localStatus": "A route-local editorial-shell.css darkens the prose surface and lightens article text while wrapping each WebGL drawer_container in a light framed inset so loading text and explainers stay legible.",
     "sourceFiles": [
       "../../interactive-mechanical-watch/css/editorial-shell.css",
-      "../../interactive-mechanical-watch/css/base.css",
-      "../../interactive-mechanical-watch/css/watch.css"
+      "../../shared/mechanical-watch/css/base.css",
+      "../../shared/mechanical-watch/css/watch.css"
     ],
     "notes": [
       "All overrides are scoped under body[data-story-route=\"interactive-mechanical-watch\"] so other routes are unaffected.",
@@ -64,14 +64,14 @@
       "../../interactive-mechanical-watch/js/exploded-view.js",
       "../../interactive-mechanical-watch/js/exploded-view-three.js",
       "../../interactive-mechanical-watch/vendor/three/",
-      "../../interactive-mechanical-watch/models/watch_vertices.dat",
-      "../../interactive-mechanical-watch/models/watch_indices.dat",
+      "../../shared/mechanical-watch/models/watch_vertices.dat",
+      "../../shared/mechanical-watch/models/watch_indices.dat",
       "../../interactive-mechanical-watch/css/editorial-shell.css",
       "../../interactive-mechanical-watch/images/generated/"
     ],
     "notes": [
       "The section is anchored with a top-level h1 id so it joins the generated chapter rail.",
-      "The exploded view is route-local and does not mutate the copied WebGL movement engine.",
+      "The exploded view is route-local and does not mutate the shared WebGL movement engine.",
       "Each selectable component has a DOM button, Three.js mesh or SVG fallback target, and detail panel entry."
     ],
     "evidence": [

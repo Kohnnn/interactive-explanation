@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-envelope-runtime",
     "originalBehavior": "The published lesson boots the Learning Synths shell and introduces ADSR shaping through a press-and-hold envelope scene.",
-    "localStatus": "The local route keeps that envelope lesson shell and ADSR runtime under the route tree while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that envelope lesson shell and ADSR runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-modulating-amplitude-with-envelopes/index.html",
-      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -41,7 +41,7 @@
     "localStatus": "The local route keeps the ADSR redraw and held-note path while serving the lesson entirely from archived assets.",
     "sourceFiles": [
       "../../ableton-learning-synths-modulating-amplitude-with-envelopes/index.html",
-      "../../ableton-learning-synths-modulating-amplitude-with-envelopes/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The envelope shape scene is treated as parity-critical because it is the clearest demonstration in the lesson.",

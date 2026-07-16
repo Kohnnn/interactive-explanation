@@ -55,9 +55,9 @@
     function bootMusicLab() { if (!isBrowserCompatible()) { document.getElementById("no-browser-support-message")?.classList.add("no-browser-support-message--show"); document.getElementById("initial-loader")?.remove(); return; } MusicLab.init({ staticURL: ".", languageCode: "en" }).then(() => { document.getElementById("initial-loader")?.remove(); MusicLab.createApp(document.getElementById("app")); }).catch(showRuntimeError); }
     if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", bootMusicLab, { once: true }); } else { bootMusicLab(); }
   </script>
-  <script src="./js/externals/react.production.min.js"></script>
-  <script src="./js/externals/react-dom.production.min.js"></script>
-  <script src="./js/musiclab.js"></script>
+  <script src="../shared/ableton-learning-synths-react.production.min.js"></script>
+  <script src="../shared/ableton-learning-synths-react-dom.production.min.js"></script>
+  <script src="../shared/ableton-learning-synths-musiclab.js"></script>
   <script src="../shared/ableton-learning-synths-archive.js"></script>
   <script src="../shared/public-footer.js"></script>
 </body>

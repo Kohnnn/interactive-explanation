@@ -17,7 +17,7 @@
       <h1>Ableton Learning Synths: How synths make sound</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/ableton-learning-synths-how-synths-make-sound/</code> vendors
-        Ableton's oscillator lesson, keeps the archived Learning Synths runtime under the route tree,
+        Ableton's oscillator lesson, keeps the archived Learning Synths runtime from shared scripts,
         and preserves the opening waveform slider scene with local lesson assets.
       </p>
       <div class="action-row">
@@ -36,7 +36,7 @@
         <p>
           Vendored from Ableton's oscillator lesson at
           <code>learningsynths.ableton.com/en/oscillators/how-synths-make-sound</code>. The local route
-          keeps the published lesson shell and oscillator runtime under the route tree so the
+          keeps the published lesson shell and oscillator runtime from shared scripts so the
           slider-driven waveform scene boots from local assets.
         </p>
         <ul class="plain-list">
@@ -48,7 +48,7 @@
       <article class="note-section">
         <h2>Asset handoff</h2>
         <ul class="plain-list">
-          <li><code>js/musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and oscillator runtime.</li>
+          <li><code>shared/ableton-learning-synths-musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and oscillator runtime.</li>
           <li>Route-local media matches the shared Learning Synths bundle: waveform visuals, text payloads, RNBO patch data, GLB models, and images.</li>
           <li>Assets such as <code>content/assets/models/bee-scene.glb</code> and <code>content/texts/en/lesson-visualizations.json</code> stay route-local so the lesson does not fall back to the upstream root path.</li>
         </ul>

@@ -106,11 +106,11 @@ Acceptance:
 
 ### 6. Safe runtime deduplication
 
-Status: Pending
+Status: Complete
 
 - Share the seven identical Tone.js copies.
 - Share identical Learning Synths React, ReactDOM, and application scripts while retaining route-local lesson content.
-- Share mechanical-watch geometry and update all consumers.
+- Share identical mechanical-watch styles, scripts, helper images, and geometry across both watch routes.
 - Defer Learning Synths content-tree consolidation unless browser network verification proves a shared runtime base is safe.
 
 Acceptance:
@@ -138,3 +138,4 @@ git diff --exit-code pages.json
 - 2026-07-16: Phase 2 verified with metadata sync, manifest validation, audit, full test suite, focused Music Hub smoke with atlas coverage, and diff hygiene.
 - 2026-07-16: Phase 4 verified with syntax checks, full test suite, focused Ballot, Polygons, and Formula 1 smoke, responsive Polygons overflow coverage, and diff hygiene.
 - 2026-07-16: Phase 5 removed 70.76 MiB across 34 tracked deploy artifacts, stripped 56 source-map directives, added ignore and audit guardrails, and passed the 226-test suite plus focused browser smoke.
+- 2026-07-16: Phase 6 consolidated seven Tone.js copies, six Learning Synths runtime sets, and the common runtime for both watch routes, reducing tracked runtime payload by 16,213,739 bytes (15.46 MiB), adding an audit guard against restored route-local copies, and passing the 227-test suite, focused smoke across all 15 consumers, and the full 82-route smoke suite.

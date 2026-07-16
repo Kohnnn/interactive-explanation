@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-oscillator-runtime",
     "originalBehavior": "The published lesson boots the Learning Synths shell and walks through oscillator changes with a slider-driven synth visualization.",
-    "localStatus": "The local route keeps that lesson shell and oscillator runtime under the route tree while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that lesson shell and oscillator runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-how-synths-make-sound/index.html",
-      "../../ableton-learning-synths-how-synths-make-sound/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -41,7 +41,7 @@
     "localStatus": "The local route keeps the slider-driven waveform scene and note-trigger logic while serving the full lesson from local assets.",
     "sourceFiles": [
       "../../ableton-learning-synths-how-synths-make-sound/index.html",
-      "../../ableton-learning-synths-how-synths-make-sound/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The route treats the opening slider scene as parity-critical because it is the clearest oscillator control surface in the lesson.",

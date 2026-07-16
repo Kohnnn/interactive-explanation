@@ -2,10 +2,10 @@
   {
     "moduleId": "lesson-shell-and-matching-runtime",
     "originalBehavior": "The published lesson boots the Learning Synths shell and compares synth envelopes against recorded sounds with a shared ADSR control surface.",
-    "localStatus": "The local route keeps that matching lesson shell and ADSR runtime under the route tree while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that matching lesson shell and ADSR runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
     "sourceFiles": [
       "../../ableton-learning-synths-matching-envelopes/index.html",
-      "../../ableton-learning-synths-matching-envelopes/js/musiclab.js",
+      "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
@@ -41,7 +41,7 @@
     "localStatus": "The local route keeps the envelope redraw and held-note path while serving the lesson entirely from archived assets.",
     "sourceFiles": [
       "../../ableton-learning-synths-matching-envelopes/index.html",
-      "../../ableton-learning-synths-matching-envelopes/js/musiclab.js"
+      "../../shared/ableton-learning-synths-musiclab.js"
     ],
     "notes": [
       "The envelope-matching scene is treated as parity-critical because it is the payoff interaction in the lesson.",

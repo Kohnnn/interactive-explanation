@@ -12,19 +12,21 @@ in-place edit of the source route.
 
 ## Steps
 
-### 1. Copy the engine 1:1
-Copy the entire source route folder to the new slug, preserving structure:
+### 1. Reuse the shared engine
+Copy the source route's `index.html` into the new sibling folder, then keep the
+common runtime references pointed at:
 ```
-interactive-explanation/<source-slug>/  ->  interactive-explanation/<new-slug>/
+../shared/mechanical-watch/css/
+../shared/mechanical-watch/js/
+../shared/mechanical-watch/images/
+../shared/mechanical-watch/models/
 ```
-Include everything the engine binds to: `index.html`, `css/*`, `js/*`,
-`models/*.dat` (binary geometry cannot be regenerated), and all `images/*`.
-Keep paths relative (`./`, `../`) for subpath hosting under
-`/interactive-explanation/`.
+Copy only route-specific CSS, scripts, images, and vendor modules. Keep paths
+relative (`./`, `../`) for subpath hosting under `/interactive-explanation/`.
 
 > The interactive engine binds demos by element `id`. Preserve EVERY demo id and
 > the DOM structure verbatim. Restyle only through a route-local CSS layer; never
-> rewrite the markup or edit `js/*`.
+> rewrite the markup or fork the shared engine.
 
 ### 2. Add the manifest entry
 In `routes.manifest.json`, add an entry modeled on `formula-1-racing` (the neutral
@@ -63,7 +65,7 @@ node tools/sync-route-metadata.mjs .
     data-story-nav="generated" data-story-route="<new-slug>">
   ```
 - `data-story-route` MUST equal the slug — the shell and route-local CSS scope
-  off it.
+  from it.
 
 ### 4. Add a route-local CSS override layer
 Create `css/<route>-shell.css` (here: `editorial-shell.css`), linked LAST in the
@@ -76,8 +78,8 @@ For a dark surface over a light interactive engine:
   engine assumes a light backdrop (loading text is `#333`, explainers are light).
   Darkening the canvas host breaks legibility.
 - Style only classes that actually exist in `shared/engineering-sandbox.css`
-  (e.g. `.story-rail`, `.story-progress`, `.story-mobile-bar`) and `css/watch.css`
-  (`.color_*` legend). Do not invent classes.
+  (e.g. `.story-rail`, `.story-progress`, `.story-mobile-bar`) and
+  `shared/mechanical-watch/css/watch.css` (`.color_*` legend). Do not invent classes.
 - Respect `prefers-reduced-motion`; guarantee no horizontal overflow at 375 /
   768 / 1280 px (the smoke test checks desktop AND mobile).
 
@@ -128,9 +130,10 @@ upstream creator/article link. The smoke run checks footer presence, route
 selectors, and desktop/mobile overflow.
 
 ## Gotchas
-- Binary `.dat` geometry is opaque and cannot be regenerated — always copy it.
-- Keep the copied `js/*` engine unmodified; all visual change goes through the
-  route-local CSS layer.
+- Binary `.dat` geometry is opaque and cannot be regenerated — reuse it from
+  `shared/mechanical-watch/models/` rather than creating another copy.
+- Keep the shared watch engine unmodified apart from subpath-safe shared asset
+  requests; all visual change goes through the route-local CSS layer.
 - Neutral provenance is required for recomposed routes so the audit does not flag
   the original upstream link.
 - Preserve all demo element ids; the engine binds by id.

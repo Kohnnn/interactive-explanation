@@ -18,6 +18,12 @@ const iframeTitleRoutes = new Set([
   path.join("polygons", "index.html"),
   path.join("covid-19", "index.html"),
 ]);
+const consolidatedAssetCopyPatterns = [
+  /^ableton-learning-music-[^/]+\/third-party\/tone\/tone\.min\.js$/i,
+  /^ableton-learning-synths-[^/]+\/js\/externals\/react(?:-dom)?\.production\.min\.js$/i,
+  /^ableton-learning-synths-[^/]+\/js\/musiclab\.js$/i,
+  /^(?:interactive-)?mechanical-watch\/(?:css\/(?:base|watch)\.css|js\/(?:base|watch)\.js|models\/watch_(?:vertices|indices)\.dat|images\/(?:anchor|play_pause|play_pause_white|undo)\.png|images\/sqrt\.svg|images\/social\/icons\.png)$/i,
+];
 const rootPublicFiles = fs
   .readdirSync(rootDir, { withFileTypes: true })
   .filter((entry) => entry.isFile())
@@ -488,6 +494,11 @@ function scanSourceMapFile(fullPath) {
 function scanFile(fullPath) {
   const ext = path.extname(fullPath);
   const relativePath = path.relative(rootDir, fullPath);
+  const portablePath = relativePath.split(path.sep).join("/");
+
+  if (consolidatedAssetCopyPatterns.some((pattern) => pattern.test(portablePath))) {
+    addIssue(relativePath, "", "route-local duplicate of shared asset");
+  }
 
   if (!includeExtensions.has(ext) && !["pages.json", "routes.manifest.json"].includes(relativePath)) {
     return;

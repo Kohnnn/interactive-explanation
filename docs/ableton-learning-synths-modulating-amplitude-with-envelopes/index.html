@@ -17,8 +17,7 @@
       <h1>Ableton Learning Synths: Modulating amplitude with envelopes</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/ableton-learning-synths-modulating-amplitude-with-envelopes/</code>
-        vendors Ableton's amplitude-envelope lesson, keeps the archived ADSR runtime under the route
-        tree, and preserves the published press-and-hold and envelope-shape scenes with local assets.
+        vendors Ableton's amplitude-envelope lesson, keeps the archived ADSR runtime in shared scripts with route-local lesson assets, and preserves the published press-and-hold and envelope-shape scenes with local assets.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../ableton-learning-synths-modulating-amplitude-with-envelopes/">Open replica</a>
@@ -36,7 +35,7 @@
         <p>
           Vendored from Ableton's amplitude-envelope lesson at
           <code>learningsynths.ableton.com/en/envelopes/modulating-amplitude-with-envelopes</code>. The
-          local route keeps the published lesson shell and ADSR runtime under the route tree so the
+          local route keeps the published lesson shell and ADSR runtime from shared scripts so the
           press-and-hold envelope scene boots from local assets.
         </p>
         <ul class="plain-list">
@@ -48,7 +47,7 @@
       <article class="note-section">
         <h2>Asset handoff</h2>
         <ul class="plain-list">
-          <li><code>js/musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and ADSR runtime.</li>
+          <li><code>shared/ableton-learning-synths-musiclab.js</code> plus <code>shared/ableton-learning-synths-archive.js</code> drive the lesson shell and ADSR runtime.</li>
           <li>Route-local inventory matches the rest of the shipped Learning Synths batch: shared fonts, text payloads, RNBO patch data, and lesson WAVs.</li>
           <li>Assets such as <code>content/lessons/en/synthesis/sustain-clarinet.wav</code> and <code>rnbo/patches/learning-synth.json</code> stay on relative paths for subpath hosting.</li>
         </ul>

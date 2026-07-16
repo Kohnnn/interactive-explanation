@@ -4192,7 +4192,7 @@ async function smokeMechanicalWatch(context) {
   }, null, { timeout: 30000 });
   await page.waitForTimeout(3000);
 
-  await assertLocalScriptSources(page, ["./js/base.js", "./js/watch.js"], "mechanical-watch");
+  await assertLocalScriptSources(page, ["../shared/mechanical-watch/js/base.js", "../shared/mechanical-watch/js/watch.js"], "mechanical-watch");
 
   await dragCanvasUntilChanged(
     page,
@@ -4262,7 +4262,12 @@ async function smokeInteractiveMechanicalWatch(context) {
   await assertRoute(page, "interactive-mechanical-watch/", "#reference-footer");
   await assertLocalScriptSources(
     page,
-    ["./js/exploded-view.js", "./js/exploded-view-three.js"],
+    [
+      "../shared/mechanical-watch/js/base.js",
+      "../shared/mechanical-watch/js/watch.js",
+      "./js/exploded-view.js",
+      "./js/exploded-view-three.js",
+    ],
     "interactive-mechanical-watch",
   );
   await assertLongformResponsiveShell(
@@ -4277,6 +4282,7 @@ async function smokeInteractiveMechanicalWatch(context) {
       playHref: "#hero",
     },
   );
+  await page.waitForSelector("#hero canvas", { timeout: 30000 });
   await page.waitForSelector(canvasSelector, { timeout: 30000 });
 
   const explodedState = await page.evaluate(() => {
@@ -4833,7 +4839,7 @@ async function smokeAbletonLearningMusicPlayground(context) {
     page,
     [
       "./third-party/polyfills/polyfills.js",
-      "./third-party/tone/tone.min.js",
+      "../shared/tone.min.js",
       "./third-party/microevent/microevent.js",
       "./widgets/build/widgets.min.js",
       "./widgets/build/SimplePianoRoll.js",
@@ -4940,7 +4946,7 @@ async function smokeAbletonLearningMusicLesson(context, config) {
     page,
     [
       "./third-party/polyfills/polyfills.js",
-      "./third-party/tone/tone.min.js",
+      "../shared/tone.min.js",
       "./third-party/microevent/microevent.js",
       "./widgets/build/widgets.min.js",
       "./widgets/build/SimplePianoRoll.js",
@@ -5095,7 +5101,7 @@ async function smokeAbletonLearningMusicPlayWithSongStructures(context) {
     page,
     [
       "./third-party/polyfills/polyfills.js",
-      "./third-party/tone/tone.min.js",
+      "../shared/tone.min.js",
       "./third-party/microevent/microevent.js",
       "./widgets/build/widgets.min.js",
       "../shared/public-footer.js",
@@ -5172,9 +5178,9 @@ async function smokeAbletonLearningSynthLesson(context, config) {
   await assertLocalScriptSources(
     page,
     [
-      "./js/externals/react.production.min.js",
-      "./js/externals/react-dom.production.min.js",
-      "./js/musiclab.js",
+      "../shared/ableton-learning-synths-react.production.min.js",
+      "../shared/ableton-learning-synths-react-dom.production.min.js",
+      "../shared/ableton-learning-synths-musiclab.js",
       "../shared/ableton-learning-synths-archive.js",
       "../shared/public-footer.js",
     ],

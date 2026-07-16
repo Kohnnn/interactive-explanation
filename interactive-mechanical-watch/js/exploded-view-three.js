@@ -204,8 +204,8 @@ function createComponent(config, vertices, indices) {
 
 async function loadMovementGeometry() {
   const [vertexResponse, indexResponse] = await Promise.all([
-    fetch("./models/watch_vertices.dat"),
-    fetch("./models/watch_indices.dat"),
+    fetch("../shared/mechanical-watch/models/watch_vertices.dat"),
+    fetch("../shared/mechanical-watch/models/watch_indices.dat"),
   ]);
   if (!vertexResponse.ok || !indexResponse.ok) {
     throw new Error(`Movement geometry request failed: ${vertexResponse.status}/${indexResponse.status}`);
