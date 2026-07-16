@@ -652,4 +652,3 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"d3-selection":"lm1C","d3-axis":"y9Kr","d3-scale":"ztAj"}],"QvaY":[function(require,module,exports) {
 "use strict";var a=require("./Scatter"),t=require("./DeltaChart"),e=[-.1,-.1,-6,-6,-600,-.1],n=[25.1,25.1,25.1,25.1,1250,25.1],r=[[],[],[2.5],[1.25,2.5,3.75,4.5],[1.99,2.5,3.75,4.5],[]];[1,2,3,4,5,6].map(function(t,i){var c=i+1;new a.Scatter({container:"#chart".concat(c),lineIndex:"line".concat(c),yMin:e[i],yMax:n[i],pts:r[i]})});var i=new a.Scatter({container:"#animation-chart",lineIndex:"line4",yMin:-50.1,yMax:125.1,pts:[1.9,2.5,3.75,4.5]});i.animate(),new t.DeltaChart({container:"#delta-chart"});
 },{"./Scatter":"BbGa","./DeltaChart":"nhMF"}]},{},["QvaY"], null)
-//# sourceMappingURL=js.47ac2d4d.js.map

@@ -1092,4 +1092,3 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"d3":"BG5c","./data":"QHdL","./Tree":"JB7l"}],"lfli":[function(require,module,exports) {
 "use strict";var r=require("./BarcodeGrid"),e=require("./CantorChartCircles"),t=require("./CantorChartTrees"),a=new r.BarcodeGrid({chartContainer:"#barcode-chart",maxDepth:7}),n=new t.CantorChartTrees({chartContainer:"#cantor-treegrid"}),i=new e.CantorChartCircles({CantorChartTrees:n,chartContainer:"#cantor-scatter",nrows:10,ncols:window.innerWidth<600?10:29}),o=window.onresize=function(){a.resizeChart(),n.resizeChart(),i.resizeChart()};window.addEventListener("resize",o);
 },{"./BarcodeGrid":"TMDd","./CantorChartCircles":"prGD","./CantorChartTrees":"JaSk"}]},{},["lfli"], null)
-//# sourceMappingURL=indexBarcode.c0641541.js.map

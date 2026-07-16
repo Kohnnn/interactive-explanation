@@ -234,43 +234,6 @@ const checks = Object.entries(policyTables).flatMap(([family, entries]) => {
   return entries.map((entry) => ({ ...entry, family }));
 });
 
-const legacyTrackedArtifacts = new Set([
-  "covid-19/pics/no_text/dp3t.xcf",
-  "covid-19/pics/no_text/dp3t_rtl.xcf",
-  "covid-19/pics/no_text/exponential.xcf",
-  "covid-19/pics/no_text/masks.xcf",
-  "covid-19/pics/no_text/mitigation_vs_suppression.xcf",
-  "covid-19/pics/no_text/plan.xcf",
-  "covid-19/pics/no_text/r2.xcf",
-  "covid-19/pics/no_text/r3.xcf",
-  "covid-19/pics/no_text/r4.xcf",
-  "covid-19/pics/no_text/seir.xcf",
-  "covid-19/pics/no_text/seirs.xcf",
-  "covid-19/pics/no_text/sir.xcf",
-  "covid-19/pics/no_text/spread.xcf",
-  "covid-19/pics/no_text/susceptibles.xcf",
-  "covid-19/pics/no_text/susceptibles_rtl.xcf",
-  "covid-19/pics/no_text/timeline1.xcf",
-  "covid-19/pics/no_text/timeline2.xcf",
-  "covid-19/pics/no_text/timeline3.xcf",
-  "decision-tree/annotatedTree.53ab4bb5.js.map",
-  "decision-tree/js.0203594f.js.map",
-  "decision-tree/katex.min.aaa9b03f.css.map",
-  "decision-tree/katexCalls.5eeadbac.js.map",
-  "decision-tree/main.37eaf4da.css.map",
-  "double-descent/scrollCenter.9b85e06e.js.map",
-  "double-descent/scrollSide.ff79d116.js.map",
-  "double-descent/styles.758827dc.css.map",
-  "double-descent2/js.47ac2d4d.js.map",
-  "double-descent2/katex.min.3c2484b0.css.map",
-  "double-descent2/katexCalls.a524eba6.js.map",
-  "double-descent2/styles.d50a6b6f.css.map",
-  "output/playwright/interactive-mechanical-watch-desktop.png",
-  "output/playwright/interactive-mechanical-watch-mobile.png",
-  "output/playwright/interactive-mechanical-watch-tablet.png",
-  "random-forest/styles.0f8a2143.css.map",
-]);
-
 const issues = [];
 
 function addIssue(relativePath, source, label, index = 0) {
@@ -345,10 +308,7 @@ function scanTrackedArtifacts() {
   }
 
   for (const relativePath of result.stdout.split(/\r?\n/).filter(Boolean)) {
-    if (
-      !legacyTrackedArtifacts.has(relativePath) &&
-      (relativePath === "output" || relativePath.startsWith("output/") || /\.(?:xcf|map)$/i.test(relativePath))
-    ) {
+    if (relativePath === "output" || relativePath.startsWith("output/") || /\.(?:xcf|map)$/i.test(relativePath)) {
       addIssue(relativePath, "", "tracked deploy artifact");
     }
   }
@@ -381,6 +341,148 @@ function allowKnownReferenceConfig(relativePath, source) {
   }
 
   return normalizedSource;
+}
+
+function findSourceMapDirective(source) {
+  const stack = [{ type: "code", templateExpression: false, braceDepth: 0, previous: "", parens: [] }];
+  const regexPrefixes = new Set(["", "(", "[", "{", "=", ":", ",", ";", "!", "?", "+", "-", "*", "%", "&", "|", "^", "~", "<", ">", "return", "case", "throw", "delete", "typeof", "void", "new", "in", "instanceof", "yield", "await", "control"]);
+  const controlHeaders = new Set(["if", "while", "for", "with", "switch", "catch"]);
+
+  for (let index = 0; index < source.length; index += 1) {
+    const state = stack[stack.length - 1];
+    const character = source[index];
+    const next = source[index + 1];
+
+    if (state.type === "string") {
+      if (state.escaped) {
+        state.escaped = false;
+      } else if (character === "\\") {
+        state.escaped = true;
+      } else if (character === state.quote) {
+        stack.pop();
+        stack[stack.length - 1].previous = "value";
+      }
+      continue;
+    }
+
+    if (state.type === "regex") {
+      if (state.escaped) {
+        state.escaped = false;
+      } else if (character === "\\") {
+        state.escaped = true;
+      } else if (character === "[") {
+        state.characterClass = true;
+      } else if (character === "]") {
+        state.characterClass = false;
+      } else if (character === "/" && !state.characterClass) {
+        while (/[a-z]/i.test(source[index + 1] || "")) index += 1;
+        stack.pop();
+        stack[stack.length - 1].previous = "value";
+      }
+      continue;
+    }
+
+    if (state.type === "template") {
+      if (state.escaped) {
+        state.escaped = false;
+      } else if (character === "\\") {
+        state.escaped = true;
+      } else if (character === "`") {
+        stack.pop();
+        stack[stack.length - 1].previous = "value";
+      } else if (character === "$" && next === "{") {
+        stack.push({ type: "code", templateExpression: true, braceDepth: 0, previous: "", parens: [] });
+        index += 1;
+      }
+      continue;
+    }
+
+    if (state.templateExpression && character === "}") {
+      if (state.braceDepth === 0) {
+        stack.pop();
+        continue;
+      }
+      state.braceDepth -= 1;
+      state.previous = "}";
+      continue;
+    }
+
+    if (/\s/.test(character)) {
+      continue;
+    }
+
+    if (character === "/" && next === "/") {
+      const end = source.indexOf("\n", index + 2);
+      const body = source.slice(index + 2, end < 0 ? source.length : end);
+      if (/^[#@]\s*sourceMappingURL\s*=/i.test(body)) {
+        return index;
+      }
+      index = end < 0 ? source.length : end;
+      continue;
+    }
+
+    if (character === "/" && next === "*") {
+      const end = source.indexOf("*/", index + 2);
+      const body = source.slice(index + 2, end < 0 ? source.length : end);
+      if (/^[#@]\s*sourceMappingURL\s*=/i.test(body)) {
+        return index;
+      }
+      index = end < 0 ? source.length : end + 1;
+      continue;
+    }
+
+    if (character === "/" && regexPrefixes.has(state.previous)) {
+      stack.push({ type: "regex", escaped: false, characterClass: false });
+      continue;
+    }
+
+    if (["\"", "'"].includes(character)) {
+      stack.push({ type: "string", quote: character, escaped: false });
+      continue;
+    }
+
+    if (character === "`") {
+      stack.push({ type: "template", escaped: false });
+      continue;
+    }
+
+    if (/[A-Za-z_$]/.test(character)) {
+      const match = source.slice(index).match(/^[A-Za-z_$][\w$]*/)[0];
+      state.previous = match;
+      index += match.length - 1;
+      continue;
+    }
+
+    if (character === "(") {
+      state.parens.push(state.previous);
+      state.previous = character;
+      continue;
+    }
+
+    if (character === ")") {
+      state.previous = controlHeaders.has(state.parens.pop()) ? "control" : "value";
+      continue;
+    }
+
+    if (state.templateExpression && character === "{") {
+      state.braceDepth += 1;
+    }
+    state.previous = /[\w\]]/.test(character) ? "value" : character;
+  }
+
+  return -1;
+}
+
+function scanSourceMapFile(fullPath) {
+  if (![".css", ".js"].includes(path.extname(fullPath))) {
+    return;
+  }
+
+  const source = fs.readFileSync(fullPath, "utf8");
+  const index = findSourceMapDirective(source);
+  if (index >= 0) {
+    addIssue(path.relative(rootDir, fullPath), source, "source map directive", index);
+  }
 }
 
 function scanFile(fullPath) {
@@ -440,7 +542,23 @@ function walk(dirPath) {
   }
 }
 
+function walkSourceMapFiles(dirPath) {
+  for (const entry of fs.readdirSync(dirPath, { withFileTypes: true })) {
+    if (entry.isDirectory() && (entry.name.startsWith(".") || ["node_modules", "output", "tools"].includes(entry.name))) {
+      continue;
+    }
+
+    const fullPath = path.join(dirPath, entry.name);
+    if (entry.isDirectory()) {
+      walkSourceMapFiles(fullPath);
+    } else {
+      scanSourceMapFile(fullPath);
+    }
+  }
+}
+
 scanTrackedArtifacts();
+walkSourceMapFiles(rootDir);
 
 for (const rootPublicFile of rootPublicFiles) {
   scanFile(path.join(rootDir, rootPublicFile));

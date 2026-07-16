@@ -31,6 +31,13 @@ function runAudit(root) {
   return spawnSync(process.execPath, [auditTool, root], { encoding: "utf8" });
 }
 
+function trackAll(root) {
+  const init = spawnSync("git", ["init", "--quiet"], { cwd: root, encoding: "utf8" });
+  assert.equal(init.status, 0, init.stderr);
+  const add = spawnSync("git", ["add", "--all"], { cwd: root, encoding: "utf8" });
+  assert.equal(add.status, 0, add.stderr);
+}
+
 test("exact production metadata passes the audit", () => {
   const result = runAudit(makeRoot());
   assert.equal(result.status, 0, result.stderr);
@@ -67,4 +74,64 @@ test("analytics tag in public HTML fails the audit", () => {
   const result = runAudit(root);
   assert.equal(result.status, 1);
   assert.match(result.stderr, /external promo widget/i);
+});
+
+for (const [label, relativePath] of [
+  ["output file", path.join("output", "playwright", "screen.png")],
+  ["XCF file", path.join("demo", "source.xcf")],
+  ["source map", path.join("demo", "bundle.js.map")],
+]) {
+  test(`tracked ${label} fails the audit`, () => {
+    const root = makeRoot();
+    const fullPath = path.join(root, relativePath);
+    fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+    fs.writeFileSync(fullPath, "artifact");
+    trackAll(root);
+    const result = runAudit(root);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /tracked deploy artifact/i);
+  });
+}
+
+for (const extension of ["js", "css"]) {
+  test(`source map directive in ${extension.toUpperCase()} fails the audit`, () => {
+    const root = makeRoot();
+    const comment = extension === "js" ? "//# sourceMappingURL=bundle.js.map" : "/*# sourceMappingURL=styles.css.map */";
+    fs.writeFileSync(path.join(root, "demo", `asset.${extension}`), comment);
+    const result = runAudit(root);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /source map directive/i);
+  });
+}
+
+test("source map text inside a JavaScript string passes the audit", () => {
+  const root = makeRoot();
+  fs.writeFileSync(path.join(root, "demo", "asset.js"), 'const generated = "//# sourceMappingURL=bundle.js.map";');
+  const result = runAudit(root);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("source map directive after a control-header regex fails the audit", () => {
+  const root = makeRoot();
+  fs.writeFileSync(path.join(root, "demo", "asset.js"), "if (enabled) /'/;\n//# sourceMappingURL=asset.js.map");
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /source map directive/i);
+});
+
+test("source map directive inside a template expression fails the audit", () => {
+  const root = makeRoot();
+  fs.writeFileSync(path.join(root, "demo", "asset.js"), "const value = `${/*# sourceMappingURL=asset.js.map */ 1}`;");
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /source map directive/i);
+});
+
+test("source map directive in shared assets fails the audit", () => {
+  const root = makeRoot();
+  fs.mkdirSync(path.join(root, "shared"));
+  fs.writeFileSync(path.join(root, "shared", "asset.js"), "//@ sourceMappingURL=asset.js.map");
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /source map directive/i);
 });
