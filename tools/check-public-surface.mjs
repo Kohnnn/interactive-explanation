@@ -13,6 +13,11 @@ const requiredMetadataUrls = new Map([
   ["index.html", PUBLIC_BASE_URL],
   ...routeManifest.map((route) => [path.join(route.slug, "index.html"), `${PUBLIC_BASE_URL}${route.slug}/`]),
 ]);
+const iframeTitleRoutes = new Set([
+  path.join("ballot", "index.html"),
+  path.join("polygons", "index.html"),
+  path.join("covid-19", "index.html"),
+]);
 const rootPublicFiles = fs
   .readdirSync(rootDir, { withFileTypes: true })
   .filter((entry) => entry.isFile())
@@ -311,6 +316,25 @@ function scanMetadata(relativePath, source) {
   }
 }
 
+function scanIframeTitles(relativePath, source) {
+  if (!iframeTitleRoutes.has(relativePath)) {
+    return;
+  }
+
+  const titles = new Set();
+  for (const match of source.matchAll(/<iframe\b[^>]*>/gi)) {
+    const title = match[0].match(/\btitle=["']([^"']*)["']/i)?.[1].trim() || "";
+    if (!title) {
+      addIssue(relativePath, source, "iframe missing title", match.index);
+    } else if (titles.has(title)) {
+      addIssue(relativePath, source, "iframe duplicate title", match.index);
+    } else {
+      titles.add(title);
+    }
+  }
+}
+
+
 function scanTrackedArtifacts() {
   const result = spawnSync("git", ["ls-files", "--", "output", "*.xcf", "*.map"], {
     cwd: rootDir,
@@ -375,6 +399,7 @@ function scanFile(fullPath) {
 
   if (ext === ".html") {
     scanMetadata(relativePath, source);
+    scanIframeTitles(relativePath, source);
   }
 
   source = source.replace(/data-reference-url="https?:\/\/[^\"]*"/gi, 'data-reference-url="ALLOWED_REFERENCE_URL"');

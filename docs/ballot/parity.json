@@ -120,5 +120,22 @@
       "The upstream sandbox route is preserved locally and still exposes a generated save link.",
       "Local patching touched save-link generation specifically to satisfy subpath-safe sharing."
     ]
+  },
+  {
+    "moduleId": "iframe-accessibility-and-loading",
+    "originalBehavior": "The article presents a sequence of embedded election models and sandbox scenes.",
+    "localStatus": "Every public iframe has a unique descriptive title; below-fold simulations use native lazy loading while the opening splash remains eager.",
+    "sourceFiles": [
+      "index.html",
+      "../tools/check-public-surface.mjs"
+    ],
+    "notes": [
+      "Iframe titles identify each model without changing its embedded runtime.",
+      "Loading behavior is limited to the outer article frames."
+    ],
+    "evidence": [
+      "The public-surface audit rejects missing or duplicate iframe titles on the route.",
+      "Route inspection confirms the splash is eager and later frames are lazy."
+    ]
   }
 ]

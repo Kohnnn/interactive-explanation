@@ -44,7 +44,7 @@
 	<!-- SPLASH -->
 	<div id="intro_container">
 		<div id="intro">
-			<iframe src="play/intro/intro.html?v=2" id="intro_background" scrolling="no"></iframe>
+			<iframe src="play/intro/intro.html?v=2" id="intro_background" scrolling="no" title="Parable of the Polygons introduction"></iframe>
 		</div>
 	</div>
 
@@ -58,7 +58,7 @@
 			In fact, every polygon <i>prefers</i> being in a diverse crowd:
 		</p>
 
-		<iframe id="mini_intro" playable src="play/mini/mini_intro.html" width="800" height="385" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe id="mini_intro" playable src="play/mini/mini_intro.html" width="800" height="385" scrolling="no" style="margin:0 auto;display:block" embedded title="Neighborhood diversity example" loading="lazy"></iframe>
 
 		<p>
 			You can only move them if they're unhappy with their immediate neighborhood.
@@ -71,9 +71,9 @@
 			“I wanna move if less than 1/3 of my neighbors are like me.”
 			</b>
 		</p>
-		<iframe playable src="play/mini/mini_unhappy.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px; position:relative; left:-30px"  embedded></iframe>
-		<iframe playable src="play/mini/mini_happy.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px"  embedded></iframe>
-		<iframe playable src="play/mini/mini_bored.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px; position:relative; left:30px"  embedded></iframe>
+		<iframe playable src="play/mini/mini_unhappy.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px; position:relative; left:-30px" embedded title="Unhappy polygon example" loading="lazy"></iframe>
+		<iframe playable src="play/mini/mini_happy.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px" embedded title="Happy polygon example" loading="lazy"></iframe>
+		<iframe playable src="play/mini/mini_bored.html" width="250" height="320" scrolling="no" style="float:left; margin:0; margin-left:10px; position:relative; left:30px" embedded title="Bored polygon example" loading="lazy"></iframe>
 		<div style="clear:both;height: 0;position: relative;top:-20px;">
 			<div style="width: 4px; height: 290px; background: #bbb;position: absolute;top: -292px;left: 245px;"></div>
 			<div style="width: 4px; height: 290px; background: #bbb;position: absolute;top: -292px;left: 537px;"></div>
@@ -94,7 +94,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/manual/manual.html" width="550" height="650"></iframe>
+		<iframe playable src="play/manual/manual.html" width="550" height="650" title="Manual neighborhood simulation" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -109,7 +109,7 @@
 			they can't help it if squares ain't interested.
 		</p>
 		
-		<iframe id="mini_neighborhood" playable src="play/mini/mini_neighborhood.html" width="730" height="240" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe id="mini_neighborhood" playable src="play/mini/mini_neighborhood.html" width="730" height="240" scrolling="no" style="margin:0 auto;display:block" embedded title="Neighborhood segregation example" loading="lazy"></iframe>
 
 		<p>
 			In this next bit, unhappy shapes automatically move to random empty spots.
@@ -122,7 +122,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/automatic/automatic.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+		<iframe playable src="play/automatic/automatic.html" style="position:relative;left:10px" width="1050" height="600" title="Automatic segregation simulation" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -132,7 +132,7 @@
 			And yet, though every individual only has a slight bias, the entire shape society cracks and splits.
 		</p>
 		
-		<iframe id="mini_checkerboard" playable src="play/mini/mini_checkerboard.html" width="730" height="240" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe id="mini_checkerboard" playable src="play/mini/mini_checkerboard.html" width="730" height="240" scrolling="no" style="margin:0 auto;display:block" embedded title="Bias threshold example" loading="lazy"></iframe>
 
 		<p>
 			<strong>Small individual bias can lead to large collective bias.</strong>
@@ -150,7 +150,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/automatic/automatic2.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+		<iframe playable src="play/automatic/automatic2.html" style="position:relative;left:10px" width="1050" height="600" title="Bias threshold simulation" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -162,8 +162,8 @@
 		</p>
 		
 		<br>
-		<iframe id="mini_bias_1" playable src="play/mini/mini_bias_1.html" width="310" height="440" scrolling="no" style="float:left; margin:0; margin-left:50px" embedded></iframe>
-		<iframe id="mini_bias_2" playable src="play/mini/mini_bias_2.html" width="310" height="440" scrolling="no" style="float:right; margin:0; margin-right:50px" embedded></iframe>
+		<iframe id="mini_bias_1" playable src="play/mini/mini_bias_1.html" width="310" height="440" scrolling="no" style="float:left; margin:0; margin-left:50px" embedded title="One-third bias example" loading="lazy"></iframe>
+		<iframe id="mini_bias_2" playable src="play/mini/mini_bias_2.html" width="310" height="440" scrolling="no" style="float:right; margin:0; margin-right:50px" embedded title="One-half bias example" loading="lazy"></iframe>
 		<div style="clear:both;height: 0;position: relative;top:-20px;">
 			<div style="width: 6px; height: 400px; background: #bbb;position: absolute;top: -420px;left: 397px;"></div>
 		</div>
@@ -181,7 +181,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/automatic/automatic3.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+		<iframe playable src="play/automatic/automatic3.html" style="position:relative;left:10px" width="1050" height="600" title="Segregated world simulation" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -194,7 +194,7 @@
 			What if shapes wanted to seek out just a lil' more variety?
 		</p>
 		
-		<iframe id="mini_nonconform" playable src="play/mini/mini_nonconform.html" width="400" height="440" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe id="mini_nonconform" playable src="play/mini/mini_nonconform.html" width="400" height="440" scrolling="no" style="margin:0 auto;display:block" embedded title="Anti-bias example" loading="lazy"></iframe>
 
 		<p>
 			Woah. Even though each polygon would be okay with having up to 90% of their neighbors that are like them,
@@ -209,7 +209,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/automatic/automatic4.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+		<iframe playable src="play/automatic/automatic4.html" style="position:relative;left:10px" width="1050" height="600" title="Anti-bias simulation" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -237,7 +237,7 @@
 			</b>
 		</p>
 
-		<iframe playable src="play/mini/mini_cooperate.html" width="810" height="290" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe playable src="play/mini/mini_cooperate.html" width="810" height="290" scrolling="no" style="margin:0 auto;display:block" embedded title="Cooperation example" loading="lazy"></iframe>
 		
 		<p>
 			At first, going out on your own can be isolating...
@@ -251,7 +251,7 @@
 
 	<!-- PLAYABLE -->
 	<div class="playable">
-		<iframe playable src="play/automatic/automatic_sandbox.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+		<iframe playable src="play/automatic/automatic_sandbox.html" style="position:relative;left:10px" width="1050" height="600" title="Segregation sandbox" loading="lazy"></iframe>
 	</div>
 
 	<!-- CHAPTER -->
@@ -280,7 +280,7 @@
 			If you're all triangles, you're missing out on some amazing squares in your life -
 			that's unfair to everyone. Reach out, beyond your immediate neighbors.
 		</p>
-		<iframe playable src="play/mini/mini_ending.html" width="600" height="80" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe playable src="play/mini/mini_ending.html" width="600" height="80" scrolling="no" style="margin:0 auto;display:block" embedded title="Parable conclusion" loading="lazy"></iframe>
 	</div>
 
 	<!-- References &amp; Remixes (Writing|Professor|Infographic|Video|Music -->
@@ -339,7 +339,7 @@
 	<!-- SPLASH -->
 	<div id="outro_container">
 		<div id="outro">
-			<iframe src="play/outro/outro.html?v=2" id="outro_background" scrolling="no"></iframe>
+			<iframe src="play/outro/outro.html?v=2" id="outro_background" scrolling="no" title="Parable of the Polygons conclusion" loading="lazy"></iframe>
 		</div>
 	</div>
 

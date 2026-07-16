@@ -551,9 +551,11 @@ Routes opting into this shell should expose:
 
 Navigation modes:
 
-- `generated`:
-  - uses the shared chapter rail on desktop when the viewport is wide enough for a reserved gutter
-  - collapses to the shared compact mobile bar below the desktop breakpoint
+ - `generated`:
+   - uses the shared chapter rail on desktop when the viewport is wide enough for a reserved gutter
+   - collapses to the shared compact mobile bar below the desktop breakpoint
+   - opens chapter browsing in a native modal dialog; Escape closes it and focus returns to the Browse control
+
 - `native`:
   - keeps the route's existing route-level navigation as the official navigation system
   - opts into shared styling and active-state enhancement when anchor-based sections exist

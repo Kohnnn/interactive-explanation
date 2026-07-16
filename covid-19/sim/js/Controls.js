@@ -307,13 +307,15 @@ sbDOM.onclick = ()=>{
 let _updateButtons = ()=>{
 
 	if(daysCurrent > daysTotal){
-
+		
 		bbDOM.setAttribute('label','reset');
+		bbDOM.setAttribute('aria-label','Reset simulation');
 		//sbDOM.setAttribute('label','');
 	
 	}else if(IS_PLAYING){
 	
 		bbDOM.setAttribute('label','pause');
+		bbDOM.setAttribute('aria-label','Pause simulation');
 		$('#sb_reset').style.display = 'block';
 		if(CURRENT_STAGE.PLAY_RECORDING){
 			$('#sb_replay').style.display = 'block';
@@ -324,9 +326,11 @@ let _updateButtons = ()=>{
 	
 		if(daysCurrent==0){
 			bbDOM.setAttribute('label','start');
+			bbDOM.setAttribute('aria-label','Start simulation');
 			//sbDOM.setAttribute('label','NONE');
 		}else{
 			bbDOM.setAttribute('label','continue');
+			bbDOM.setAttribute('aria-label','Continue simulation');
 			//sbDOM.setAttribute('label','reset');
 		}
 	

@@ -113,5 +113,24 @@
       "The plan requires a long-term strategy sandbox that works under the nested <code>/interactive-explanation/</code> base path.",
       "The local bundle keeps the original sandbox stage and serves all assets relative to the route root."
     ]
+  },
+  {
+    "moduleId": "accessible-simulation-controls-and-summary",
+    "originalBehavior": "The simulation exposes parameter inputs, start and reset actions, and a canvas graph of model state.",
+    "localStatus": "Controls use native buttons and labelled inputs; the graph has a live text summary, visible focus indicators, and reduced-motion styling while preserving model math.",
+    "sourceFiles": [
+      "sim/index.html",
+      "sim/js/Controls.js",
+      "sim/js/Model.js",
+      "sim/css/sim.css"
+    ],
+    "notes": [
+      "The live summary reports day, SEIR percentages, R0, and current R from the existing model state.",
+      "Only outer article frames are lazy-loaded; the splash remains eager."
+    ],
+    "evidence": [
+      "Focused smoke coverage starts the model with Enter, verifies the graph summary, and checks native controls and input names.",
+      "The public-surface audit rejects missing or duplicate iframe titles on the article route."
+    ]
   }
 ]

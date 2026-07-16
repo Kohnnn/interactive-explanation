@@ -245,11 +245,11 @@ Loader.addSounds([
 		optionsDOM.style.top = "200px";
 		Options.showing = true;
 		Game.pause();
-		Howler.mute(false); // hack
+		Howler.mute(false);
 	});
 
-	subscribe("hide_options", function(){	
-		sfx("ui_click");	
+	subscribe("hide_options", function(){
+		sfx("ui_click");
 		optionsDOM.style.top = "";
 		Options.showing = false;
 		Game.onUnpause();

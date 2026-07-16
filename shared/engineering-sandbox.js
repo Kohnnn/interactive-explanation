@@ -578,7 +578,11 @@
     }
 
     body.dataset.storyNavOpen = isOpen ? "true" : "false";
-    sheet.hidden = !isOpen;
+    if (isOpen && !sheet.open) {
+      sheet.showModal();
+    } else if (!isOpen && sheet.open) {
+      sheet.close();
+    }
     document.querySelectorAll(".story-mobile-bar__toggle").forEach((button) => {
       button.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
@@ -588,24 +592,21 @@
     const toggle = document.querySelector(".story-mobile-bar__toggle");
     const sheet = document.querySelector(".story-mobile-sheet");
     const closeButton = document.querySelector(".story-mobile-sheet__close");
-    const backdrop = document.querySelector(".story-mobile-sheet__backdrop");
     if (!toggle || !sheet) {
       return;
     }
 
     toggle.addEventListener("click", () => {
-      setMobileSheetOpen(sheet.hidden);
+      setMobileSheetOpen(!sheet.open);
     });
     closeButton?.addEventListener("click", () => setMobileSheetOpen(false));
-    backdrop?.addEventListener("click", () => setMobileSheetOpen(false));
     sheet.querySelectorAll(".story-mobile-sheet__link").forEach((link) => {
       link.addEventListener("click", () => setMobileSheetOpen(false));
     });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !sheet.hidden) {
-        setMobileSheetOpen(false);
-      }
+    sheet.addEventListener("close", () => {
+      document.body.dataset.storyNavOpen = "false";
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.focus();
     });
   }
 
@@ -706,12 +707,11 @@
     `;
     const mobileNav = mobile.querySelector(".story-mobile-bar__nav");
 
-    const sheet = document.createElement("div");
+    const sheet = document.createElement("dialog");
     sheet.className = "story-mobile-sheet";
-    sheet.hidden = true;
+    sheet.setAttribute("aria-labelledby", "story-mobile-sheet-title");
     sheet.innerHTML = `
-      <button type="button" class="story-mobile-sheet__backdrop" aria-label="Close chapter navigation"></button>
-      <div class="story-callout story-mobile-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="story-mobile-sheet-title">
+      <div class="story-callout story-mobile-sheet__panel">
         <div class="story-mobile-sheet__header">
           <div class="story-mobile-sheet__meta">
             <div class="story-mobile-bar__eyebrow">Chapter rail</div>

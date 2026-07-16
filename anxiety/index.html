@@ -32,7 +32,7 @@
 
 
 
-<div id="game_container">
+<div id="game_container" tabindex="0" aria-label="Story stage. Press Space to advance dialogue. Use Tab to reach choices and controls.">
 
 	
 	<canvas id="game_canvas"></canvas>
@@ -60,16 +60,16 @@
 	<div id="special_attack"></div>
 
 	
-	<div id="gear" style="display:none" onclick="publish('show_options'); sfx('ui_button1');">
+	<button id="gear" type="button" aria-label="Story options" style="display:none" onclick="publish('show_options'); sfx('ui_button1');">
 		<div class="icon">
 			<div class="mini-icon" pic="gear"></div>
 		</div>
-	</div>
-	<div id="huh" style="display:none">
+	</button>
+	<button id="huh" type="button" aria-label="About this story" style="display:none">
 		<div class="icon">
 			<div class="mini-icon" pic="about"></div>
 		</div>
-	</div>
+	</button>
 
 	
 	<div id="paused">
@@ -89,7 +89,7 @@
 	</div>
 
 	
-	<div id="content_notes">
+	<dialog id="content_notes" aria-label="Content notes">
 
 		
 		<p style="margin-top: 0.6em;">
@@ -111,14 +111,14 @@
 			<a target="_blank" href="https://ncase.me/mental-health/">mental health tips &amp; resources</a>
 			&#x1f517;
 		</p>
-		<div id="cn_ok" onclick="publish('hide_cn');" style="float:none">
-			ok <div class="mini-icon" pic="ok" style="top: 3px;"></div>
-		</div>
+		<button id="cn_ok" type="button" onclick="publish('hide_cn');" style="float:none">
+			ok <span class="mini-icon" pic="ok" style="top: 3px;"></span>
+		</button>
 
-	</div>
+	</dialog>
 
 	
-	<div id="about">
+	<dialog id="about" aria-label="About this story">
 		<div id="about_words">
 
 			
@@ -133,13 +133,13 @@
 
 			</div>
 
-			<div id="replay"></div>
+			<button id="replay" type="button" aria-label="Replay the story"></button>
 
 			<div style="clear:both;"></div>
-			<div id="close_about" style="margin: 0; float: right; margin-top: 20px;">close</div> 
+			<button id="close_about" type="button" style="margin: 0; float: right; margin-top: 20px;">close</button> 
 
 		</div>
-	</div>
+	</dialog>
 
 	
 	<div id="options">
@@ -150,16 +150,16 @@
 		<div style="float: right; width: 135px; height: 63px;">
 			
 			And advance
-			<div id="text_automatic_toggle">on click</div>
+			<button id="text_automatic_toggle" type="button">on click</button>
 		</div>
 		<div style="clear:both"></div>
 		<span id="volume_options">
 			<div>Volume:</div> 
 			<input id="volume_slider" type="range" min=0 max=1 value=1 step="0.01"/>
 		</span>
-		<div id="options_ok">
-			ok <div class="mini-icon" pic="ok" style="top: 3px;"></div> 
-		</div>
+		<button id="options_ok" type="button">
+			ok <span class="mini-icon" pic="ok" style="top: 3px;"></span>
+		</button>
 	</div>
 
 	

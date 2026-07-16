@@ -415,31 +415,31 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
     assert(mobileState.activeLinkVisible, `${label} did not keep the active mobile chapter chip in view`);
 
     await mobilePage.locator(".story-mobile-bar__toggle").click();
-    await mobilePage.waitForFunction(() => {
-      const sheet = document.querySelector(".story-mobile-sheet");
-      return Boolean(sheet && !sheet.hidden);
-    }, null, { timeout: 5000 });
+    await mobilePage.waitForFunction(() => document.querySelector(".story-mobile-sheet")?.open, null, { timeout: 5000 });
     const sheetState = await mobilePage.evaluate(() => {
       const sheet = document.querySelector(".story-mobile-sheet");
       const panel = document.querySelector(".story-mobile-sheet__panel");
       return {
-        sheetVisible: Boolean(sheet && !sheet.hidden && panel && panel.getBoundingClientRect().height > 0),
+        isDialog: sheet?.tagName === "DIALOG",
+        sheetVisible: Boolean(sheet?.open && panel && panel.getBoundingClientRect().height > 0),
         sheetLinkCount: document.querySelectorAll(".story-mobile-sheet__nav a").length,
         sheetCurrent: document.querySelector(".story-mobile-sheet__current")?.textContent?.trim() || "",
         sheetProgress: document.querySelector(".story-mobile-sheet .story-progress__value")?.textContent?.trim() || "",
         sheetPosition: document.querySelector(".story-mobile-sheet__position")?.textContent?.trim() || "",
       };
     });
+    assert(sheetState.isDialog, `${label} mobile chapter tray is not a native dialog`);
     assert(sheetState.sheetVisible, `${label} did not open the mobile chapter tray`);
     assert(sheetState.sheetLinkCount > 0, `${label} did not populate the mobile chapter tray`);
     assert(sheetState.sheetCurrent.length > 0, `${label} did not mirror the current chapter into the mobile tray`);
     assert(sheetState.sheetProgress.length > 0, `${label} did not mirror story progress into the mobile tray`);
     assert(sheetState.sheetPosition.length > 0, `${label} did not mirror chapter position into the mobile tray`);
 
-    await mobilePage.locator(".story-mobile-sheet__close").click();
-    await mobilePage.waitForFunction(() => {
-      return Boolean(document.querySelector(".story-mobile-sheet")?.hidden);
-    }, null, { timeout: 5000 });
+    await mobilePage.keyboard.press("Escape");
+    await mobilePage.waitForFunction(() => !document.querySelector(".story-mobile-sheet")?.open, null, { timeout: 5000 });
+    const focusRestored = await mobilePage.evaluate(() => document.activeElement?.classList.contains("story-mobile-bar__toggle"));
+    assert(focusRestored, `${label} did not restore focus after closing the mobile chapter tray`);
+
     await mobilePage.close();
   } else {
     const layoutState = await page.evaluate(() => {
@@ -795,14 +795,14 @@ async function dragCanvasUntilChanged(page, canvasSelector, drags, label) {
 }
 
 async function clickChoice(page, text) {
-  const choice = page.locator("#game_choices > div").filter({ hasText: text }).first();
+  const choice = page.locator("#game_choices > button").filter({ hasText: text }).first();
   await choice.waitFor({ state: "visible", timeout: 20000 });
   await choice.click();
 }
 
 async function waitForIntroChoices(page) {
   await page.waitForFunction(() => {
-    const choices = Array.from(document.querySelectorAll("#game_choices > div"));
+    const choices = Array.from(document.querySelectorAll("#game_choices > button"));
     return choices.some((choice) => /PLAY|REPLAY|Chapter Select|content notes/i.test(choice.textContent || ""));
   }, null, { timeout: 20000 });
 }
@@ -997,7 +997,38 @@ async function smokeAnxiety(context) {
     const words = document.querySelector("#game_words")?.textContent || "";
     return /Welcome! This is less of a "game," more of an interactive story/i.test(words);
   }, null, { timeout: 20000 });
-  console.log("OK anxiety intro start");
+  const anxietyControls = await introPage.evaluate(() => ({
+    gearIsButton: document.querySelector("#gear")?.tagName === "BUTTON",
+    aboutIsButton: document.querySelector("#huh")?.tagName === "BUTTON",
+    choicesAreButtons: Array.from(document.querySelectorAll("#game_choices > *")).every((choice) => choice.tagName === "BUTTON"),
+  }));
+  assert(anxietyControls.gearIsButton && anxietyControls.aboutIsButton, "anxiety persistent controls are not native buttons");
+  assert(anxietyControls.choicesAreButtons, "anxiety actionable choices are not native buttons");
+
+  await introPage.evaluate(() => {
+    const opener = document.querySelector("#huh");
+    opener.style.display = "block";
+    opener.focus();
+    opener.click();
+  });
+  await introPage.waitForFunction(() => document.querySelector("#about")?.open, null, { timeout: 5000 });
+  await introPage.keyboard.press("Escape");
+  await introPage.waitForFunction(() => !document.querySelector("#about")?.open, null, { timeout: 5000 });
+  const aboutFocusRestored = await introPage.evaluate(() => document.activeElement?.id === "huh");
+  assert(aboutFocusRestored, "anxiety about dialog did not restore focus to its opener");
+
+  await introPage.evaluate(() => {
+    const opener = document.querySelector("#gear");
+    opener.style.display = "block";
+    opener.focus();
+    publish("show_cn");
+  });
+  await introPage.waitForFunction(() => document.querySelector("#content_notes")?.open, null, { timeout: 5000 });
+  await introPage.keyboard.press("Escape");
+  await introPage.waitForFunction(() => !document.querySelector("#content_notes")?.open, null, { timeout: 5000 });
+  const contentNotesFocusRestored = await introPage.evaluate(() => document.activeElement?.id === "gear");
+  assert(contentNotesFocusRestored, "anxiety content-notes dialog did not restore focus to its opener");
+  console.log("OK anxiety intro start and native dialogs");
   await introPage.close();
 
   const replayPage = await context.newPage();
@@ -1013,7 +1044,7 @@ async function smokeAnxiety(context) {
   await waitForIntroChoices(replayPage);
   await clickChoice(replayPage, "Chapter Select");
   await replayPage.waitForFunction(() => {
-    return Array.from(document.querySelectorAll("#game_choices > div")).some((choice) => {
+    return Array.from(document.querySelectorAll("#game_choices > button")).some((choice) => {
       return /IV\. The Other Sandwich/i.test(choice.textContent || "");
     });
   }, null, { timeout: 20000 });
@@ -1218,12 +1249,19 @@ async function smokeCovid(context) {
   const articlePage = await context.newPage();
   await assertRoute(articlePage, "covid-19/", "#reference-footer");
   const embeddedStages = await articlePage.evaluate(() => {
-    return Array.from(document.querySelectorAll("iframe[src*='sim/?stage=']")).map((frame) => frame.getAttribute("src") || "");
+    return Array.from(document.querySelectorAll("iframe[src*='sim/?stage=']")).map((frame) => ({
+      src: frame.getAttribute("src") || "",
+      title: frame.getAttribute("title")?.trim() || "",
+      loading: frame.getAttribute("loading") || "",
+    }));
   });
-  assert(embeddedStages.some((src) => src.includes("stage=epi-7")), "covid-19 article is missing the SEIR-with-R stage");
-  assert(embeddedStages.some((src) => src.includes("stage=int-4")), "covid-19 article is missing the lockdown stage");
-  assert(embeddedStages.some((src) => src.includes("stage=yrs-5")), "covid-19 article is missing the ICU-capacity stage");
-  assert(embeddedStages.some((src) => src.includes("stage=SB")), "covid-19 article is missing the sandbox stage");
+  assert(embeddedStages.some((frame) => frame.src.includes("stage=epi-7")), "covid-19 article is missing the SEIR-with-R stage");
+  assert(embeddedStages.some((frame) => frame.src.includes("stage=int-4")), "covid-19 article is missing the lockdown stage");
+  assert(embeddedStages.some((frame) => frame.src.includes("stage=yrs-5")), "covid-19 article is missing the ICU-capacity stage");
+  assert(embeddedStages.some((frame) => frame.src.includes("stage=SB")), "covid-19 article is missing the sandbox stage");
+  assert(embeddedStages.every((frame) => frame.title), "covid-19 article has an unnamed simulation iframe");
+  assert(new Set(embeddedStages.map((frame) => frame.title)).size === embeddedStages.length, "covid-19 article reuses iframe titles");
+  assert(embeddedStages.some((frame) => frame.loading === "lazy"), "covid-19 article does not lazy-load below-fold simulation iframes");
   console.log("OK covid article stage map");
   await articlePage.close();
 
@@ -1233,10 +1271,22 @@ async function smokeCovid(context) {
   });
   await seirPage.waitForSelector("#bb_start", { timeout: 15000 });
   await seirPage.waitForFunction(() => typeof daysCurrent === "number" && typeof restart === "function", null, { timeout: 10000 });
-  await seirPage.evaluate(() => document.querySelector(".big_button").onclick());
+  const simAccessibility = await seirPage.evaluate(() => ({
+    primaryIsButton: document.querySelector(".big_button")?.tagName === "BUTTON",
+    resetIsButton: document.querySelector("#sb_reset")?.tagName === "BUTTON",
+    replayIsButton: document.querySelector("#sb_replay")?.tagName === "BUTTON",
+    namedInputs: Array.from(document.querySelectorAll("input")).every((input) => input.labels?.length > 0),
+    graphDescription: document.querySelector("#graphCanvas")?.getAttribute("aria-describedby") === "graph_summary",
+  }));
+  assert(simAccessibility.primaryIsButton && simAccessibility.resetIsButton && simAccessibility.replayIsButton, "covid-19 simulation controls are not native buttons");
+  assert(simAccessibility.namedInputs, "covid-19 simulation has an input without a native label");
+  assert(simAccessibility.graphDescription, "covid-19 simulation graph is missing its text alternative");
+  await seirPage.locator(".big_button").focus();
+  await seirPage.keyboard.press("Enter");
   await seirPage.waitForFunction(() => daysCurrent > 5, null, { timeout: 10000 });
-  await seirPage.evaluate(() => document.querySelector(".big_button").onclick());
-  await seirPage.evaluate(() => document.querySelector("#sb_reset").onclick());
+  await seirPage.waitForFunction(() => (document.querySelector("#graph_summary")?.textContent || "").trim().length > 0, null, { timeout: 5000 });
+  await seirPage.locator(".big_button").click();
+  await seirPage.locator("#sb_reset").click();
   await seirPage.waitForFunction(() => daysCurrent <= 1 && IS_PLAYING === false, null, { timeout: 5000 });
   console.log("OK covid SEIR run and reset");
   await seirPage.close();

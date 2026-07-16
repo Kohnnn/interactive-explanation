@@ -579,20 +579,17 @@ body[data-story-shell="engineering-sandbox"][data-story-nav-open="true"] {
 
 body[data-story-shell="engineering-sandbox"] .story-mobile-sheet {
   position: fixed;
-  inset: 0;
+  inset: auto 0 0;
   z-index: 13;
-  display: grid;
-  align-items: end;
-}
-
-body[data-story-shell="engineering-sandbox"] .story-mobile-sheet[hidden] {
-  display: none;
-}
-
-body[data-story-shell="engineering-sandbox"] .story-mobile-sheet__backdrop {
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
   border: 0;
+  background: transparent;
+}
+
+body[data-story-shell="engineering-sandbox"] .story-mobile-sheet::backdrop {
   background: rgba(18, 32, 42, 0.3);
 }
 

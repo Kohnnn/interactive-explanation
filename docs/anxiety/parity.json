@@ -120,5 +120,25 @@
       "The recheck plan explicitly called out corrected local share behavior and any new subpages.",
       "Current source rewrites share URLs from <code>window.location</code> and retains the shipped media assets."
     ]
+  },
+  {
+    "moduleId": "native-dialog-and-choice-accessibility",
+    "originalBehavior": "Content notes, about information, persistent controls, and dialogue choices are part of the story flow.",
+    "localStatus": "Content notes and about use native dialogs with Escape handling and opener-focus restoration; persistent controls and actionable dialogue choices are native buttons.",
+    "sourceFiles": [
+      "index.html",
+      "scripts/game/About.js",
+      "scripts/game/ContentNotes.js",
+      "scripts/game/Game.js",
+      "styles/game.css"
+    ],
+    "notes": [
+      "The legacy options overlay remains unchanged because its pause architecture does not safely support a second concurrent native dialog.",
+      "Focus indicators and reduced-motion overrides apply without changing story timing logic."
+    ],
+    "evidence": [
+      "Focused smoke coverage opens each dialog, sends Escape, and verifies focus returns to the opener.",
+      "Smoke coverage confirms actionable choices and persistent controls use native buttons."
+    ]
   }
 ]

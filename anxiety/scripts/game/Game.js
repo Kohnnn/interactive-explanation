@@ -160,7 +160,7 @@ Game.pausedDOM.onclick = function(e){
 		publish("hide_options");
 	}else if(About.showing){
 		$("#close_about").onclick();
-	}else if(About.showing){
+	}else if(ContentNotes.showing){
 		publish("hide_cn");
 	}else{
 		Game.onUnpause();
@@ -773,8 +773,9 @@ Game.executeChoice = function(line){
 		choiceText = choiceText.slice(0,startOfMatch) + "<b>" + results[1] + "</b>" + choiceText.slice(endOfMatch);
 	}
 
-	var div = document.createElement("div");
+	var div = document.createElement(THERE_IS_NO_CHOICE ? "div" : "button");
 	div.innerHTML = choiceText;
+	if(!THERE_IS_NO_CHOICE) div.type = "button";
 	div.setAttribute("speaker", Game.OVERRIDE_CHOICE_SPEAKER ? Game.OVERRIDE_CHOICE_SPEAKER : "b");
 	if(!THERE_IS_NO_CHOICE){
 		div.onclick = function(event){
@@ -1093,13 +1094,9 @@ Game.updateCanvas = function(delta){
 
 };
 
-// HACK: PREVENT ACCIDENTALLY TABBING & BREAKING UI
 window.addEventListener("keydown", function(e){
-	if(e.keyCode==9){
+	if(e.keyCode==32 && document.activeElement===Game.dom){
 		e.preventDefault();
-		e.stopPropagation();
-	}
-	if(e.keyCode==32){ // SPACE TO ADVANCE
 		_unpauseOrSkip();
 	}
 });

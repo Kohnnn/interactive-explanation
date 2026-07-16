@@ -6,11 +6,16 @@ body{
 	background: #ddd;
 	line-height: 15px;
 }
-div{
-	-webkit-user-select: none;  /* Chrome all / Safari all */
-	-moz-user-select: none;     /* Firefox all */
-	-ms-user-select: none;      /* IE 10+ */
-	user-select: none;          /* Likely future */ 
+.visually_hidden{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
 #sandbox{
@@ -104,6 +109,10 @@ div{
 }
 #sb_reset:hover, #sb_replay:hover{
 	color: #bbb;
+}
+.big_button:focus-visible, #sb_reset:focus-visible, #sb_replay:focus-visible, input:focus-visible{
+	outline: 3px solid #005fcc;
+	outline-offset: 2px;
 }
 #sb_reset{
 	right: 0px;
@@ -305,6 +314,14 @@ icon[r]{
 	}
 	100% {
 		transform: translate(0px,0px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce){
+	*, *::before, *::after{
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
 	}
 }
 

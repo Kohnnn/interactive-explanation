@@ -132,5 +132,22 @@
       "Local audit notes explicitly call out the large sandbox as a final module.",
       "Smoke testing targeted the sandbox route because it stresses the nested iframe pathing."
     ]
+  },
+  {
+    "moduleId": "iframe-accessibility-and-loading",
+    "originalBehavior": "The narrative uses a broad sequence of embedded playable neighborhood scenes.",
+    "localStatus": "Every public iframe has a unique descriptive title; below-fold playable scenes use native lazy loading while the introduction remains eager.",
+    "sourceFiles": [
+      "index.html",
+      "../tools/check-public-surface.mjs"
+    ],
+    "notes": [
+      "Titles describe the embedded scene without modifying its runtime.",
+      "The outer article controls loading behavior only."
+    ],
+    "evidence": [
+      "The public-surface audit rejects missing or duplicate iframe titles on the route.",
+      "Route inspection confirms the introduction is eager and later frames are lazy."
+    ]
   }
 ]

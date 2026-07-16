@@ -25,27 +25,34 @@
 						<span id="label_transmission_caveat">
 							(at the start of the epidemic)<br>
 						</span>
+						<label class="visually_hidden" for="p_transmission">Days between transmissions</label>
 						<input class="sim_input" type="range" id="p_transmission" min="1" max="30" step="1" value="4">
 					</div>
 
 					<div id="label_c_exposed">
+						<label class="visually_hidden" for="c_exposed">Include exposed stage</label>
 						<input class="sim_checkbox" type="checkbox" id="c_exposed">
 						Takes <span id="label_p_exposed">N</span> days to go from <icon e></icon> to <icon i></icon>
 						<br>
+						<label class="visually_hidden" for="p_exposed">Days spent exposed</label>
 						<input class="sim_input" type="range" id="p_exposed" min="1" max="30" step="1" value="3">
 					</div>
 					
 					<div id="label_c_recovery">
+						<label class="visually_hidden" for="c_recovery">Include recovery</label>
 						<input class="sim_checkbox" type="checkbox" id="c_recovery">
 						Takes <span id="label_p_recovery">N</span> days to go from <icon i></icon> to <icon r></icon>
 						<br>
+						<label class="visually_hidden" for="p_recovery">Days until recovery</label>
 						<input class="sim_input" type="range" id="p_recovery" min="1" max="30" step="1" value="10">
 					</div>
 					
 					<div id="label_c_waning">
+						<label class="visually_hidden" for="c_waning">Include waning immunity</label>
 						<input class="sim_checkbox" type="checkbox" id="c_waning">
 						Loses immunity <icon s></icon> in <span id="label_p_waning">N</span> months
 						<br>
+						<label class="visually_hidden" for="p_waning">Months until immunity wanes</label>
 						<input class="sim_input" type="range" id="p_waning" min="1" max="60" step="1" value="12">
 					</div>
 
@@ -62,6 +69,7 @@
 
 					<span id="label_s">
 						% of people who are <i>NOT</i> <icon s></icon>
+						<label class="visually_hidden" for="p_s">People no longer susceptible</label>
 						<input class="sim_input" type="range" id="p_s" min="0" max="1" step="0.001" value="0" disabled>
 						<div class="herd"></div>
 						<br>
@@ -70,40 +78,47 @@
 					<span id="int_block_0">
 						Increased Hygiene
 						<br>
+						<label class="visually_hidden" for="p_hygiene">Increased hygiene</label>
 						<input class="sim_input recordable" type="range" id="p_hygiene" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
 					<span id="int_block_1">
 						Physical Distancing
 						<br>
+						<label class="visually_hidden" for="p_distancing">Physical distancing</label>
 						<input class="sim_input recordable" type="range" id="p_distancing" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
 					<span id="int_block_2">
 						Isolating Cases
 						<br>
+						<label class="visually_hidden" for="p_isolate">Isolating cases</label>
 						<input class="sim_input recordable" type="range" id="p_isolate" min="0" max="1" step="0.001" value="0">
 						<br>
 						Quarantining Contacts
 						<br>
+						<label class="visually_hidden" for="p_quarantine">Quarantining contacts</label>
 						<input class="sim_input recordable" type="range" id="p_quarantine" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
 					<span id="int_block_3">
 						Face Masks
 						<br>
+						<label class="visually_hidden" for="p_masks">Face masks</label>
 						<input class="sim_input recordable" type="range" id="p_masks" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
 					<span id="int_block_4">
 						Strength of Summer
 						<br>
+						<label class="visually_hidden" for="p_summer">Strength of summer</label>
 						<input class="sim_input recordable" type="range" id="p_summer" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
 					<span id="int_block_5">
 						Vaccinations
 						<br>
+						<label class="visually_hidden" for="p_vaccines">Vaccinations</label>
 						<input class="sim_input recordable" type="range" id="p_vaccines" min="0" max="1" step="0.001" value="0">
 						<br>
 					</span>
@@ -117,6 +132,7 @@
 					<span id="hospital_capacity">
 						ICU capacity at <span id="label_p_hospital">N</span>%
 						<br>
+						<label class="visually_hidden" for="p_hospital">ICU capacity</label>
 						<input class="sim_input recordable" type="range" id="p_hospital" min="100" max="1000" step="1" value="333">
 					</span>
 
@@ -129,18 +145,20 @@
 					Simulate <span id="label_p_years" toFixed="1">N</span> years
 					<span id="section_meta_years">
 						<br>
+						<label class="visually_hidden" for="p_years">Years to simulate</label>
 						<input class="sim_input" type="range" id="p_years" min="0.5" max="10" step="0.5" value="2">
 						<br>
 					</span>
 					in <span id="label_p_speed">N</span> seconds
 					<br>
+					<label class="visually_hidden" for="p_speed">Simulation duration in seconds</label>
 					<input class="sim_input" type="range" id="p_speed" min="1" max="60" step="1" value="30">
 
 				</div>
 			</div>
 
 			<div id="sim_controls">
-				<div class="big_button">
+				<button class="big_button" type="button" aria-label="Start, pause, continue, or reset simulation">
 					<div id="bb_start">
 						<div class='control_icon' start></div>
 						Start
@@ -157,22 +175,23 @@
 						<div class='control_icon' reset></div>
 						Reset
 					</div>
-				</div>
+				</button>
 				<!--div id="sb_stop">
 					Stop
 				</div-->
-				<div id="sb_reset">
+				<button id="sb_reset" type="button">
 					Reset All
-				</div>
-				<div id="sb_replay">
+				</button>
+				<button id="sb_replay" type="button">
 					Replay Recording
-				</div>
+				</button>
 			</div>
 
 		</div>
 
 		<div id="graph">
-			<canvas id="graphCanvas"></canvas>
+			<canvas id="graphCanvas" role="img" aria-describedby="graph_summary"></canvas>
+			<div id="graph_summary" role="status" aria-live="polite"></div>
 			<div id="month_ticks">
 				<!--
 				<div><span>2020</span></div>

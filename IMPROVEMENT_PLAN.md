@@ -57,7 +57,7 @@ Acceptance:
 
 ### 3. Native accessibility and iframe loading
 
-Status: Pending
+Status: Complete
 
 - Add unique titles to Ballot, Polygons, and COVID-19 iframes.
 - Lazily load below-fold simulation frames.

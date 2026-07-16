@@ -139,6 +139,7 @@ let updateModel = (days, fake)=>{
 /////////////////////////////////////
 
 let canvas = $('#graphCanvas');
+let graphSummary = $('#graph_summary');
 let context = canvas.getContext('2d');
 let canvasScale = 2;
 canvas.width = 500*canvasScale;
@@ -407,6 +408,7 @@ let draw = ()=>{
 
 		updateRBar(label_p_r0, canvas_r0, r0);
 		updateRBar(label_p_re, canvas_re, re, true);
+		graphSummary.textContent = `Day ${Math.round(daysCurrent)}. Susceptible ${(S*100).toFixed(1)}%, exposed ${(E*100).toFixed(1)}%, infectious ${(I*100).toFixed(1)}%, recovered ${(R*100).toFixed(1)}%. R0 ${r0.toFixed(2)}, current R ${re.toFixed(2)}.`;
 
 		// Herd Immunity
 		herdDOM.style.left = (1-(1/r0))*250 + 'px';
