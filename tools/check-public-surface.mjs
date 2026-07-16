@@ -1,10 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const rootDir = path.resolve(process.argv[2] || defaultRoot);
+const PUBLIC_BASE_URL = "https://kohnnn.github.io/interactive-explanation/";
 const rootManifestFiles = ["pages.json", "routes.manifest.json"];
+const routeManifestPath = path.join(rootDir, "routes.manifest.json");
+const routeManifest = JSON.parse(fs.readFileSync(routeManifestPath, "utf8"));
+const requiredMetadataUrls = new Map([
+  ["index.html", PUBLIC_BASE_URL],
+  ...routeManifest.map((route) => [path.join(route.slug, "index.html"), `${PUBLIC_BASE_URL}${route.slug}/`]),
+]);
 const rootPublicFiles = fs
   .readdirSync(rootDir, { withFileTypes: true })
   .filter((entry) => entry.isFile())
@@ -221,7 +229,106 @@ const checks = Object.entries(policyTables).flatMap(([family, entries]) => {
   return entries.map((entry) => ({ ...entry, family }));
 });
 
+const legacyTrackedArtifacts = new Set([
+  "covid-19/pics/no_text/dp3t.xcf",
+  "covid-19/pics/no_text/dp3t_rtl.xcf",
+  "covid-19/pics/no_text/exponential.xcf",
+  "covid-19/pics/no_text/masks.xcf",
+  "covid-19/pics/no_text/mitigation_vs_suppression.xcf",
+  "covid-19/pics/no_text/plan.xcf",
+  "covid-19/pics/no_text/r2.xcf",
+  "covid-19/pics/no_text/r3.xcf",
+  "covid-19/pics/no_text/r4.xcf",
+  "covid-19/pics/no_text/seir.xcf",
+  "covid-19/pics/no_text/seirs.xcf",
+  "covid-19/pics/no_text/sir.xcf",
+  "covid-19/pics/no_text/spread.xcf",
+  "covid-19/pics/no_text/susceptibles.xcf",
+  "covid-19/pics/no_text/susceptibles_rtl.xcf",
+  "covid-19/pics/no_text/timeline1.xcf",
+  "covid-19/pics/no_text/timeline2.xcf",
+  "covid-19/pics/no_text/timeline3.xcf",
+  "decision-tree/annotatedTree.53ab4bb5.js.map",
+  "decision-tree/js.0203594f.js.map",
+  "decision-tree/katex.min.aaa9b03f.css.map",
+  "decision-tree/katexCalls.5eeadbac.js.map",
+  "decision-tree/main.37eaf4da.css.map",
+  "double-descent/scrollCenter.9b85e06e.js.map",
+  "double-descent/scrollSide.ff79d116.js.map",
+  "double-descent/styles.758827dc.css.map",
+  "double-descent2/js.47ac2d4d.js.map",
+  "double-descent2/katex.min.3c2484b0.css.map",
+  "double-descent2/katexCalls.a524eba6.js.map",
+  "double-descent2/styles.d50a6b6f.css.map",
+  "output/playwright/interactive-mechanical-watch-desktop.png",
+  "output/playwright/interactive-mechanical-watch-mobile.png",
+  "output/playwright/interactive-mechanical-watch-tablet.png",
+  "random-forest/styles.0f8a2143.css.map",
+]);
+
 const issues = [];
+
+function addIssue(relativePath, source, label, index = 0) {
+  const line = source.slice(0, index).split(/\r?\n/).length;
+  issues.push({
+    file: relativePath,
+    line,
+    label,
+    context: source.split(/\r?\n/)[line - 1]?.trim() || "",
+  });
+}
+
+function scanMetadata(relativePath, source) {
+  const expectedUrl = requiredMetadataUrls.get(relativePath);
+  const canonicalMatches = Array.from(source.matchAll(/<link\s+[^>]*\brel=["']canonical["'][^>]*>/gi));
+  const ogUrlMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bproperty=["']og:url["'][^>]*>/gi));
+
+  if (expectedUrl) {
+    if (canonicalMatches.length !== 1) {
+      addIssue(relativePath, source, "canonical metadata count");
+    } else {
+      const href = canonicalMatches[0][0].match(/\bhref=["']([^"']*)["']/i)?.[1] || "";
+      if (href !== expectedUrl) {
+        addIssue(relativePath, source, "canonical metadata URL", canonicalMatches[0].index);
+      }
+    }
+
+    if (ogUrlMatches.length !== 1) {
+      addIssue(relativePath, source, "og:url metadata count");
+    } else {
+      const content = ogUrlMatches[0][0].match(/\bcontent=["']([^"']*)["']/i)?.[1] || "";
+      if (content !== expectedUrl) {
+        addIssue(relativePath, source, "og:url metadata URL", ogUrlMatches[0].index);
+      }
+    }
+  }
+
+  for (const match of source.matchAll(/<(?:link|meta)\s+[^>]*(?:\brel=["']canonical["']|\bproperty=["']og:url["'])[^>]*>/gi)) {
+    const value = match[0].match(/\b(?:href|content)=["']([^"']*)["']/i)?.[1] || "";
+    if (/https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:[\/]|$)/i.test(value)) {
+      addIssue(relativePath, source, "loopback canonical or og:url", match.index);
+    }
+  }
+}
+
+function scanTrackedArtifacts() {
+  const result = spawnSync("git", ["ls-files", "--", "output", "*.xcf", "*.map"], {
+    cwd: rootDir,
+    encoding: "utf8",
+  });
+  if (result.status !== 0) {
+    return;
+  }
+
+  for (const relativePath of result.stdout.split(/\r?\n/).filter(Boolean)) {
+    if (
+      !legacyTrackedArtifacts.has(relativePath) &&
+      (relativePath === "output" || relativePath.startsWith("output/") || /\.(?:xcf|map)$/i.test(relativePath))
+    ) {
+      addIssue(relativePath, "", "tracked deploy artifact");
+    }
+  }
+}
 
 function allowKnownReferenceConfig(relativePath, source) {
   if (relativePath === "pages.json" || relativePath === "routes.manifest.json") {
@@ -266,7 +373,11 @@ function scanFile(fullPath) {
 
   let source = fs.readFileSync(fullPath, "utf8");
 
-  source = source.replace(/data-reference-url="https?:\/\/[^"]*"/gi, 'data-reference-url="ALLOWED_REFERENCE_URL"');
+  if (ext === ".html") {
+    scanMetadata(relativePath, source);
+  }
+
+  source = source.replace(/data-reference-url="https?:\/\/[^\"]*"/gi, 'data-reference-url="ALLOWED_REFERENCE_URL"');
   source = source.replace(/https?:\/\/ncase\.me\/mental-health\/?/gi, "ALLOWED_EDUCATIONAL_URL");
   source = allowKnownReferenceConfig(relativePath, source);
 
@@ -303,6 +414,8 @@ function walk(dirPath) {
     scanFile(fullPath);
   }
 }
+
+scanTrackedArtifacts();
 
 for (const rootPublicFile of rootPublicFiles) {
   scanFile(path.join(rootDir, rootPublicFile));

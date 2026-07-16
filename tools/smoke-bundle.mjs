@@ -107,6 +107,7 @@ const routeManifest = fs.existsSync(routeManifestPath)
 const routeGroupsBySlug = new Map(routeManifest.map((route) => [route.slug, inferRouteGroups(route)]));
 const selectedGroups = new Set(getArgValues("--group"));
 const selectedRoutes = new Set(getArgValues("--route"));
+const manifestSlugs = new Set(routeManifest.map((route) => route.slug));
 
 function inferRouteFamily(route) {
   return RouteFamilies.classifySmokeFamily(route);
@@ -143,6 +144,20 @@ function exists(relativePath) {
 
   const slug = relativePath.split(/[\\/]/)[0];
   return shouldRunSlug(slug);
+}
+
+function validateSelections() {
+  const unknownRoutes = Array.from(selectedRoutes).filter((slug) => !manifestSlugs.has(slug));
+  assert(unknownRoutes.length === 0, `Unknown --route slug(s): ${unknownRoutes.join(", ")}`);
+  assert(routeManifest.length > 0, `Missing or empty routes.manifest.json at ${routeManifestPath}`);
+  assert(
+    routeManifest.some((route) => shouldRunSlug(route.slug)),
+    `Route/group filters selected no manifest routes: routes=${Array.from(selectedRoutes).join(", ") || "(none)"}; groups=${Array.from(selectedGroups).join(", ") || "(none)"}`,
+  );
+}
+
+function selectedManifestRoutes() {
+  return routeManifest.filter((route) => shouldRunSlug(route.slug));
 }
 
 const { start: startServer } = createSmokeServer({ rootDir, host, port, mountPath });
@@ -6682,6 +6697,51 @@ async function smokeDoubleDescent2(context) {
   await page.close();
 }
 
+async function smokeFormula1Racing(context) {
+  const page = await context.newPage();
+  const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await assertRoute(page, "formula-1-racing/", "#reference-footer");
+  await assertEngineeringSandboxShell(page, "formula-1-racing route", {
+    expectedFamily: "engineering-longform",
+    expectedRoute: "formula-1-racing",
+  });
+  await page.waitForFunction(() => document.querySelectorAll(".drawer_container canvas").length >= 5, null, { timeout: 30000 });
+
+  await page.locator("#f1_track_seg0").getByText("Silverstone", { exact: true }).click();
+  await page.waitForFunction(() => {
+    return /Silverstone/.test(document.querySelector("#f1_track_caption")?.textContent || "") &&
+      /Silverstone setup/.test(document.querySelector("#f1_setup_caption")?.textContent || "") &&
+      /Silverstone/.test(document.querySelector("#f1_lap_caption")?.textContent || "");
+  }, null, { timeout: 5000 });
+
+  const lapCaptionBeforeWeather = await page.locator("#f1_lap_caption").textContent();
+  await page.locator("#f1_weather_seg0").getByText("Wet", { exact: true }).click();
+  await page.waitForFunction((previousCaption) => {
+    const lapCaption = document.querySelector("#f1_lap_caption")?.textContent || "";
+    return /Wet/.test(document.querySelector("#f1_weather_caption")?.textContent || "") &&
+      /Silverstone/.test(lapCaption) &&
+      lapCaption !== previousCaption;
+  }, lapCaptionBeforeWeather, { timeout: 5000 });
+
+  await page.locator("#f1_lap_seg0").getByText("Protect tyres", { exact: true }).click();
+  await page.waitForFunction(() => {
+    return /Silverstone\s*\/\s*Protect tyres/.test(document.querySelector("#f1_lap_caption")?.textContent || "");
+  }, null, { timeout: 5000 });
+
+  await assertViewportUsable(page, "formula-1-racing desktop");
+  assertPageRuntimeClean("formula-1-racing desktop");
+  await page.close();
+
+  const mobilePage = await context.newPage();
+  const assertMobileRuntimeClean = createRuntimeMonitor(mobilePage);
+  await mobilePage.setViewportSize({ width: 390, height: 844 });
+  await assertRoute(mobilePage, "formula-1-racing/", "#reference-footer");
+  await mobilePage.waitForSelector("#f1_lap_caption", { timeout: 30000 });
+  await assertViewportUsable(mobilePage, "formula-1-racing mobile");
+  assertMobileRuntimeClean("formula-1-racing mobile");
+  await mobilePage.close();
+}
+
 async function createSmokeContext(browser) {
   return browser.newContext({
     acceptDownloads: true,
@@ -6690,6 +6750,7 @@ async function createSmokeContext(browser) {
 }
 
 async function main() {
+  validateSelections();
   phaseLog(`Starting smoke run${selectedGroups.size ? ` [groups: ${Array.from(selectedGroups).join(", ")}]` : ""}${selectedRoutes.size ? ` [routes: ${Array.from(selectedRoutes).join(", ")}]` : ""}`);
   const server = await startServer();
   const browser = await chromium.launch({ headless: true });
@@ -6699,311 +6760,34 @@ async function main() {
     const routePage = await context.newPage();
     const routeChecks = [
       ["", "[data-page-list]"],
+      ...selectedManifestRoutes().flatMap((route) => [
+        [`${route.slug}/`, "#reference-footer"],
+        [`docs/${route.slug}/`, "[data-parity-list]"],
+      ]),
     ];
 
-    if (exists("trust")) {
-      routeChecks.push(["trust/", "#reference-footer"]);
-      routeChecks.push(["docs/trust/", "[data-parity-list]"]);
-    }
-    if (exists("stargazing-dashboard")) {
-      routeChecks.push(["stargazing-dashboard/", "#sky-canvas"]);
-      routeChecks.push(["docs/stargazing-dashboard/", "[data-parity-list]"]);
-    }
-    if (exists("polygons")) {
-      routeChecks.push(["polygons/", "#reference-footer"]);
-      routeChecks.push(["docs/polygons/", "[data-parity-list]"]);
-    }
-    if (exists("ballot")) {
-      routeChecks.push(["ballot/", "#reference-footer"]);
-      routeChecks.push(["docs/ballot/", "[data-parity-list]"]);
-    }
-    if (exists("crowds")) {
-      routeChecks.push(["crowds/", "#reference-footer"]);
-      routeChecks.push(["docs/crowds/", "[data-parity-list]"]);
-    }
-    if (exists("loopy")) {
-      routeChecks.push(["loopy/", "#reference-footer"]);
-      routeChecks.push(["docs/loopy/", "[data-parity-list]"]);
-    }
-    if (exists("neurons")) {
-      routeChecks.push(["neurons/", "#reference-footer"]);
-      routeChecks.push(["docs/neurons/", "[data-parity-list]"]);
-    }
-    if (exists("remember")) {
-      routeChecks.push(["remember/", "#reference-footer"]);
-      routeChecks.push(["docs/remember/", "[data-parity-list]"]);
-    }
-    if (exists("anxiety")) {
-      routeChecks.push(["anxiety/", "#reference-footer"]);
+    if (exists("anxiety/sharing")) {
       routeChecks.push(["anxiety/sharing/", "#reference-footer"]);
-      routeChecks.push(["docs/anxiety/", "[data-parity-list]"]);
     }
-
-    if (exists("wbwwb")) {
-      routeChecks.push(["wbwwb/", "#reference-footer"]);
-      routeChecks.push(["docs/wbwwb/", "[data-parity-list]"]);
-    }
-    if (exists("coming-out-simulator-2014")) {
-      routeChecks.push(["coming-out-simulator-2014/", "#reference-footer"]);
-      routeChecks.push(["docs/coming-out-simulator-2014/", "[data-parity-list]"]);
-    }
-    if (exists("covid-19")) {
-      routeChecks.push(["covid-19/", "#reference-footer"]);
-      routeChecks.push(["docs/covid-19/", "[data-parity-list]"]);
-    }
-    if (exists("simulating")) {
-      routeChecks.push(["simulating/", "main"]);
+    if (exists("simulating/original")) {
       routeChecks.push(["simulating/original/", "#splash_iframe"]);
+    }
+    if (exists("simulating/model")) {
       routeChecks.push(["simulating/model/", "#play_controls"]);
-      routeChecks.push(["docs/simulating/", "[data-parity-list]"]);
     }
-    if (exists("sim")) {
-      routeChecks.push(["sim/", "#play_controls"]);
-      routeChecks.push(["docs/sim/", "[data-parity-list]"]);
-    }
-    if (exists("decision-tree")) {
-      routeChecks.push(["decision-tree/", "#reference-footer"]);
-      routeChecks.push(["docs/decision-tree/", "[data-parity-list]"]);
-    }
-    if (exists("random-forest")) {
-      routeChecks.push(["random-forest/", "#reference-footer"]);
-      routeChecks.push(["docs/random-forest/", "[data-parity-list]"]);
-    }
-    if (exists("conditional-probability")) {
-      routeChecks.push(["conditional-probability/", "#reference-footer"]);
-      routeChecks.push(["docs/conditional-probability/", "[data-parity-list]"]);
-    }
-    if (exists("markov-chains")) {
-      routeChecks.push(["markov-chains/", "#reference-footer"]);
+    if (exists("markov-chains/playground")) {
       routeChecks.push(["markov-chains/playground/", "#reference-footer"]);
       routeChecks.push(["markov-chains/playground/playground.html", "#reference-footer"]);
-      routeChecks.push(["docs/markov-chains/", "[data-parity-list]"]);
     }
-    if (exists("principal-component-analysis")) {
-      routeChecks.push(["principal-component-analysis/", "#reference-footer"]);
-      routeChecks.push(["docs/principal-component-analysis/", "[data-parity-list]"]);
-    }
-    if (exists("exponentiation")) {
-      routeChecks.push(["exponentiation/", "#reference-footer"]);
-      routeChecks.push(["docs/exponentiation/", "[data-parity-list]"]);
-    }
-    if (exists("pi")) {
-      routeChecks.push(["pi/", "#reference-footer"]);
-      routeChecks.push(["docs/pi/", "[data-parity-list]"]);
-    }
-    if (exists("sine-and-cosine")) {
-      routeChecks.push(["sine-and-cosine/", "#reference-footer"]);
-      routeChecks.push(["docs/sine-and-cosine/", "[data-parity-list]"]);
-    }
-    if (exists("eigenvectors-and-eigenvalues")) {
-      routeChecks.push(["eigenvectors-and-eigenvalues/", "#reference-footer"]);
-      routeChecks.push(["docs/eigenvectors-and-eigenvalues/", "[data-parity-list]"]);
-    }
-    if (exists("image-kernels")) {
-      routeChecks.push(["image-kernels/", "#reference-footer"]);
-      routeChecks.push(["docs/image-kernels/", "[data-parity-list]"]);
-    }
-    if (exists("ordinary-least-squares-regression")) {
-      routeChecks.push(["ordinary-least-squares-regression/", "#reference-footer"]);
-      routeChecks.push(["docs/ordinary-least-squares-regression/", "[data-parity-list]"]);
-    }
-    if (exists("blockchain")) {
-      routeChecks.push(["blockchain/", "#reference-footer"]);
-      routeChecks.push(["docs/blockchain/", "[data-parity-list]"]);
-    }
-    if (exists("public-private-keys")) {
-      routeChecks.push(["public-private-keys/", "#reference-footer"]);
-      routeChecks.push(["docs/public-private-keys/", "[data-parity-list]"]);
-    }
-    if (exists("zero-knowledge-proof-demo")) {
-      routeChecks.push(["zero-knowledge-proof-demo/", "#reference-footer"]);
-      routeChecks.push(["docs/zero-knowledge-proof-demo/", "[data-parity-list]"]);
-    }
-    if (exists("alpha-compositing")) {
-      routeChecks.push(["alpha-compositing/", "#reference-footer"]);
-      routeChecks.push(["docs/alpha-compositing/", "[data-parity-list]"]);
-    }
-    if (exists("color-spaces")) {
-      routeChecks.push(["color-spaces/", "#reference-footer"]);
-      routeChecks.push(["docs/color-spaces/", "[data-parity-list]"]);
-    }
-    if (exists("sound")) {
-      routeChecks.push(["sound/", "#reference-footer"]);
-      routeChecks.push(["docs/sound/", "[data-parity-list]"]);
-    }
-    if (exists("cameras-and-lenses")) {
-      routeChecks.push(["cameras-and-lenses/", "#reference-footer"]);
-      routeChecks.push(["docs/cameras-and-lenses/", "[data-parity-list]"]);
-    }
-    if (exists("lights-and-shadows")) {
-      routeChecks.push(["lights-and-shadows/", "#reference-footer"]);
-      routeChecks.push(["docs/lights-and-shadows/", "[data-parity-list]"]);
-    }
-    if (exists("tesseract")) {
-      routeChecks.push(["tesseract/", "#reference-footer"]);
-      routeChecks.push(["docs/tesseract/", "[data-parity-list]"]);
-    }
-    if (exists("gears")) {
-      routeChecks.push(["gears/", "#reference-footer"]);
-      routeChecks.push(["docs/gears/", "[data-parity-list]"]);
-    }
-    if (exists("gps")) {
-      routeChecks.push(["gps/", "#reference-footer"]);
-      routeChecks.push(["docs/gps/", "[data-parity-list]"]);
-    }
-    if (exists("earth-and-sun")) {
-      routeChecks.push(["earth-and-sun/", "#reference-footer"]);
-      routeChecks.push(["docs/earth-and-sun/", "[data-parity-list]"]);
-    }
-    if (exists("bicycle")) {
-      routeChecks.push(["bicycle/", "#reference-footer"]);
-      routeChecks.push(["docs/bicycle/", "[data-parity-list]"]);
-    }
-    if (exists("airfoil")) {
-      routeChecks.push(["airfoil/", "#reference-footer"]);
-      routeChecks.push(["docs/airfoil/", "[data-parity-list]"]);
-    }
-    if (exists("curves-and-surfaces")) {
-      routeChecks.push(["curves-and-surfaces/", "#reference-footer"]);
-      routeChecks.push(["docs/curves-and-surfaces/", "[data-parity-list]"]);
-    }
-    if (exists("internal-combustion-engine")) {
-      routeChecks.push(["internal-combustion-engine/", "#reference-footer"]);
-      routeChecks.push(["docs/internal-combustion-engine/", "[data-parity-list]"]);
-    }
-    if (exists("mechanical-watch")) {
-      routeChecks.push(["mechanical-watch/", "#reference-footer"]);
-      routeChecks.push(["docs/mechanical-watch/", "[data-parity-list]"]);
-    }
-    if (exists("interactive-mechanical-watch")) {
-      routeChecks.push(["interactive-mechanical-watch/", "#reference-footer"]);
-      routeChecks.push(["docs/interactive-mechanical-watch/", "[data-parity-list]"]);
-    }
-    if (exists("naval-architecture")) {
-      routeChecks.push(["naval-architecture/", "#reference-footer"]);
-      routeChecks.push(["docs/naval-architecture/", "[data-parity-list]"]);
-    }
-    if (exists("reading-qr-codes-without-a-computer")) {
-      routeChecks.push(["reading-qr-codes-without-a-computer/", "#reference-footer"]);
-      routeChecks.push(["docs/reading-qr-codes-without-a-computer/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-interval-ear-training")) {
-      routeChecks.push(["teoria-interval-ear-training/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-interval-ear-training/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-note-ear-training")) {
-      routeChecks.push(["teoria-note-ear-training/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-note-ear-training/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-key-and-note-ear-training")) {
-      routeChecks.push(["teoria-key-and-note-ear-training/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-key-and-note-ear-training/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-random-key-and-note-ear-training")) {
-      routeChecks.push(["teoria-random-key-and-note-ear-training/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-random-key-and-note-ear-training/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-scale-construction")) {
-      routeChecks.push(["teoria-scale-construction/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-scale-construction/", "[data-parity-list]"]);
-    }
-    if (exists("teoria-interval-identification-and-inversion")) {
-      routeChecks.push(["teoria-interval-identification-and-inversion/", "#reference-footer"]);
-      routeChecks.push(["docs/teoria-interval-identification-and-inversion/", "[data-parity-list]"]);
-    }
-    if (exists("ableton-learning-music-playground")) {
-      routeChecks.push(["ableton-learning-music-playground/", "#reference-footer"]);
-      routeChecks.push(["docs/ableton-learning-music-playground/", "[data-parity-list]"]);
-    }
-    for (const slug of abletonLessonBatchSlugs) {
-      if (!exists(slug)) {
-        continue;
-      }
-      routeChecks.push([`${slug}/`, "#reference-footer"]);
-      routeChecks.push([`docs/${slug}/`, "[data-parity-list]"]);
-    }
-    for (const slug of abletonSynthLessonSlugs) {
-      if (!exists(slug)) {
-        continue;
-      }
-      routeChecks.push([`${slug}/`, "#reference-footer"]);
-      routeChecks.push([`docs/${slug}/`, "[data-parity-list]"]);
-    }
-    if (exists("chrome-music-lab-song-maker")) {
-      routeChecks.push(["chrome-music-lab-song-maker/", "#reference-footer"]);
-      routeChecks.push(["docs/chrome-music-lab-song-maker/", "[data-parity-list]"]);
-    }
-    if (exists("musicmap")) {
-      routeChecks.push(["musicmap/", "#reference-footer"]);
-      routeChecks.push(["docs/musicmap/", "[data-parity-list]"]);
-    }
-    if (exists("music-interactive-hub")) {
-      routeChecks.push(["music-interactive-hub/", "#reference-footer"]);
-      routeChecks.push(["docs/music-interactive-hub/", "[data-parity-list]"]);
-    }
-    if (exists("memory-allocation")) {
-      routeChecks.push(["memory-allocation/", "#reference-footer"]);
-      routeChecks.push(["docs/memory-allocation/", "[data-parity-list]"]);
-    }
-    if (exists("load-balancing")) {
-      routeChecks.push(["load-balancing/", "#reference-footer"]);
-      routeChecks.push(["docs/load-balancing/", "[data-parity-list]"]);
-    }
-    if (exists("hysteresis-slack")) {
-      routeChecks.push(["hysteresis-slack/", "#reference-footer"]);
-      routeChecks.push(["docs/hysteresis-slack/", "[data-parity-list]"]);
-    }
-    if (exists("rigid-body-collisions")) {
-      routeChecks.push(["rigid-body-collisions/", "#reference-footer"]);
-      routeChecks.push(["docs/rigid-body-collisions/", "[data-parity-list]"]);
-    }
-    if (exists("blockchain-101-combined-flow")) {
-      routeChecks.push(["blockchain-101-combined-flow/", "#reference-footer"]);
-      routeChecks.push(["docs/blockchain-101-combined-flow/", "[data-parity-list]"]);
-    }
-    if (exists("primary-interactive-hub")) {
-      routeChecks.push(["primary-interactive-hub/", "#reference-footer"]);
-      routeChecks.push(["docs/primary-interactive-hub/", "[data-parity-list]"]);
-    }
-    if (exists("linear-regression")) {
-      routeChecks.push(["linear-regression/", "#reference-footer"]);
-      routeChecks.push(["docs/linear-regression/", "[data-parity-list]"]);
-    }
-    if (exists("logistic-regression")) {
-      routeChecks.push(["logistic-regression/", "#reference-footer"]);
-      routeChecks.push(["docs/logistic-regression/", "[data-parity-list]"]);
-    }
-    if (exists("precision-recall")) {
-      routeChecks.push(["precision-recall/", "#reference-footer"]);
-      routeChecks.push(["docs/precision-recall/", "[data-parity-list]"]);
-    }
-    if (exists("roc-auc")) {
-      routeChecks.push(["roc-auc/", "#reference-footer"]);
-      routeChecks.push(["docs/roc-auc/", "[data-parity-list]"]);
-    }
-    if (exists("bias-variance")) {
-      routeChecks.push(["bias-variance/", "#reference-footer"]);
-      routeChecks.push(["docs/bias-variance/", "[data-parity-list]"]);
-    }
-    if (exists("train-test-validation")) {
-      routeChecks.push(["train-test-validation/", "#reference-footer"]);
-      routeChecks.push(["docs/train-test-validation/", "[data-parity-list]"]);
-    }
-    if (exists("double-descent")) {
-      routeChecks.push(["double-descent/", "#reference-footer"]);
-      routeChecks.push(["docs/double-descent/", "[data-parity-list]"]);
-    }
-    if (exists("double-descent2")) {
-      routeChecks.push(["double-descent2/", "#reference-footer"]);
-      routeChecks.push(["docs/double-descent2/", "[data-parity-list]"]);
-    }
-
     for (const [relativePath, selector] of routeChecks) {
       await assertRoute(routePage, relativePath, selector);
     }
     await routePage.close();
     phaseLog("Route checks completed");
 
+    if (exists("formula-1-racing")) {
+      await smokeFormula1Racing(context);
+    }
     if (exists("remember")) {
       await smokeRemember(context);
     }
