@@ -24,6 +24,7 @@
   <script defer src="./js/base.js"></script>
   <script defer src="./js/watch.js"></script>
   <script defer src="./js/exploded-view.js"></script>
+  <script type="module" src="./js/exploded-view-three.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -1112,7 +1113,7 @@
               <div class="exploded-watch__header">
                 <p class="exploded-watch__eyebrow">Interactive exploded view</p>
                 <h2 id="exploded-watch-title">Select a component to inspect its role in the stack.</h2>
-                <p>Scrub the explosion depth, then click any suspended layer. The view is schematic, but each part maps to a real movement subsystem: power, train, escapement, balance, keyless works, automatic winding, hands, and casing.</p>
+                <p>Scrub the explosion depth, drag to orbit, scroll to zoom, then click any suspended layer. Each part uses the movement's original binary geometry where available, mapped into power, train, escapement, balance, keyless works, automatic winding, display, and casing systems.</p>
               </div>
               <div class="exploded-watch__stage" data-exploded-watch>
                 <div id="exploded-watch-diagram" class="exploded-watch__canvas" data-exploded-canvas aria-label="Interactive exploded mechanical watch component diagram"></div>

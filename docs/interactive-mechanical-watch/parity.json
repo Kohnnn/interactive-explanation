@@ -58,21 +58,26 @@
   {
     "moduleId": "interactive-exploded-resin-section",
     "originalBehavior": "The route should extend the teardown with an additive prototyping case study and make the exploded component stack interactive rather than relying on a static hero image.",
-    "localStatus": "A new \"From Pixels to Resin\" chapter opens with a selectable exploded-view SVG: users can scrub explosion depth, choose individual watch components, and read each component's subsystem role. Generated PNGs remain as later process dividers.",
+    "localStatus": "A new \"From Pixels to Resin\" chapter opens with a selectable Three.js exploded view built from the movement's local binary geometry. Users can scrub explosion depth, orbit, zoom, choose individual watch components, and read each component's subsystem role; an accessible SVG fallback remains available if WebGL initialization fails.",
     "sourceFiles": [
       "../../interactive-mechanical-watch/index.html",
       "../../interactive-mechanical-watch/js/exploded-view.js",
+      "../../interactive-mechanical-watch/js/exploded-view-three.js",
+      "../../interactive-mechanical-watch/vendor/three/",
+      "../../interactive-mechanical-watch/models/watch_vertices.dat",
+      "../../interactive-mechanical-watch/models/watch_indices.dat",
       "../../interactive-mechanical-watch/css/editorial-shell.css",
       "../../interactive-mechanical-watch/images/generated/"
     ],
     "notes": [
       "The section is anchored with a top-level h1 id so it joins the generated chapter rail.",
       "The exploded view is route-local and does not mutate the copied WebGL movement engine.",
-      "Each selectable component has a button/list entry, SVG target, and detail panel entry."
+      "Each selectable component has a DOM button, Three.js mesh or SVG fallback target, and detail panel entry."
     ],
     "evidence": [
       "The #from-pixels-to-resin chapter contains a data-exploded-watch mount instead of a static hero figure.",
-      "The exploded-view script renders selectable components for power, train, escapement, balance, keyless works, automatic winding, display, structure, and friction subsystems."
+      "The Three.js adapter maps 27 semantic components across power, train, escapement, balance, keyless works, automatic winding, display, structure, and friction subsystems.",
+      "Smoke coverage verifies depth, keyboard and pointer selection, orbit, zoom, and the SVG fallback."
     ]
   }
 ]

@@ -285,9 +285,12 @@
     const detail = root.querySelector("[data-exploded-detail]");
     if (!canvas || !parts || !detail) return;
 
-    renderDiagram(canvas);
+    if (root.dataset.threeReady !== "true") renderDiagram(canvas);
     renderParts(parts);
     renderDetail(detail);
+    root.dispatchEvent(new CustomEvent("exploded-watch:state", {
+      detail: { depth: state.depth, selectedId: state.selectedId },
+    }));
   }
 
   function init(root) {
@@ -303,6 +306,9 @@
     root.addEventListener("click", (event) => {
       const target = event.target.closest("[data-component-id]");
       if (target) selectComponent(target.dataset.componentId, root);
+    });
+    root.addEventListener("exploded-watch:select", (event) => {
+      selectComponent(event.detail.id, root);
     });
     root.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;

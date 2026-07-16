@@ -4192,13 +4192,19 @@ async function smokeInteractiveMechanicalWatch(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
   const label = "interactive-mechanical-watch route";
+  const canvasSelector = "[data-exploded-canvas] canvas.exploded-watch__webgl";
 
   await assertRoute(page, "interactive-mechanical-watch/", "#reference-footer");
+  await assertLocalScriptSources(
+    page,
+    ["./js/exploded-view.js", "./js/exploded-view-three.js"],
+    "interactive-mechanical-watch",
+  );
   await assertLongformResponsiveShell(
     context,
     page,
     "interactive-mechanical-watch/",
-    "[data-exploded-watch] svg",
+    canvasSelector,
     label,
     {
       expectedRoute: "interactive-mechanical-watch",
@@ -4206,20 +4212,25 @@ async function smokeInteractiveMechanicalWatch(context) {
       playHref: "#hero",
     },
   );
-  await page.waitForSelector("[data-exploded-watch] svg", { timeout: 30000 });
+  await page.waitForSelector(canvasSelector, { timeout: 30000 });
 
   const explodedState = await page.evaluate(() => {
-    const image = document.querySelector("[data-exploded-canvas] svg image");
+    const root = document.querySelector("[data-exploded-watch]");
+    const mount = root?.querySelector("[data-exploded-canvas]");
+    const canvas = mount?.querySelector("canvas.exploded-watch__webgl");
     return {
-      componentCount: document.querySelectorAll("[data-exploded-canvas] [data-component-id]").length,
-      imageHref: image?.getAttribute("href") || image?.getAttribute("xlink:href") || "",
-      resolvedImageHref: image ? new URL(image.getAttribute("href") || image.getAttribute("xlink:href") || "", document.location.href).href : "",
+      ready: root?.dataset.threeReady || "",
+      renderMode: mount?.dataset.renderMode || "",
+      componentCount: Number(canvas?.dataset.componentCount || 0),
+      ariaHidden: canvas?.getAttribute("aria-hidden") || "",
+      svgCount: mount?.querySelectorAll("svg").length || 0,
     };
   });
-  assert(explodedState.componentCount === 27, `${label} expected 27 exploded SVG components, got ${explodedState.componentCount}`);
-
-  const diagramRole = await page.locator("[data-exploded-watch] svg").getAttribute("role");
-  assert(diagramRole === "group", `${label} interactive SVG should use group semantics, got ${diagramRole || "none"}`);
+  assert(explodedState.ready === "true", `${label} did not report a ready Three.js renderer`);
+  assert(explodedState.renderMode === "three", `${label} exposed render mode ${explodedState.renderMode || "none"}`);
+  assert(explodedState.componentCount === 27, `${label} expected 27 Three.js components, got ${explodedState.componentCount}`);
+  assert(explodedState.ariaHidden === "true", `${label} pointer canvas should remain hidden from assistive technology`);
+  assert(explodedState.svgCount === 0, `${label} should replace the SVG after Three.js initialization`);
 
   const partsRole = await page.locator("[data-exploded-parts]").getAttribute("role");
   assert(partsRole === "group", `${label} parts selector should use button-group semantics, got ${partsRole || "none"}`);
@@ -4227,30 +4238,16 @@ async function smokeInteractiveMechanicalWatch(context) {
   const initialDepthValueText = await page.locator("[data-exploded-depth]").getAttribute("aria-valuetext");
   assert(initialDepthValueText === "74 percent exploded", `${label} expected initial depth aria-valuetext, got ${initialDepthValueText || "none"}`);
 
-  const initialPressedStates = await page.evaluate(() => {
-    const selectedPart = document.querySelector("[data-exploded-parts] .is-selected");
-    const selectedComponent = document.querySelector("[data-exploded-canvas] .is-selected");
-    return {
-      partPressed: selectedPart?.getAttribute("aria-pressed") || "",
-      componentPressed: selectedComponent?.getAttribute("aria-pressed") || "",
-    };
-  });
-  assert(initialPressedStates.partPressed === "true", `${label} selected part should expose aria-pressed=true`);
-  assert(initialPressedStates.componentPressed === "true", `${label} selected SVG component should expose aria-pressed=true`);
+  const initialPartPressed = await page.locator("[data-exploded-parts] .is-selected").getAttribute("aria-pressed");
+  assert(initialPartPressed === "true", `${label} selected part should expose aria-pressed=true`);
 
-  const expectedImageUrl = new URL("interactive-mechanical-watch/images/generated/components/exploded-sheet.png", baseUrl).href;
-  assert(
-    explodedState.resolvedImageHref === expectedImageUrl,
-    `${label} resolved exploded sheet to ${explodedState.resolvedImageHref || "none"}; expected ${expectedImageUrl} from href ${explodedState.imageHref || "none"}`,
-  );
-  const imageResponse = await page.request.get(explodedState.resolvedImageHref);
-  assert(imageResponse.status() === 200, `${label} exploded sheet returned HTTP ${imageResponse.status()} at ${explodedState.resolvedImageHref}`);
-
-  const firstTransform = await page.locator("[data-exploded-canvas] [data-component-id]").first().getAttribute("transform");
+  const webglCanvas = page.locator(canvasSelector);
+  await webglCanvas.scrollIntoViewIfNeeded();
+  const renderCountBeforeDepth = Number(await webglCanvas.getAttribute("data-render-count") || 0);
   await setRangeValue(page, "[data-exploded-depth]", 24);
-  await page.waitForFunction((previousTransform) => {
-    return document.querySelector("[data-exploded-canvas] [data-component-id]")?.getAttribute("transform") !== previousTransform;
-  }, firstTransform, { timeout: 5000 });
+  await page.waitForFunction((previousCount) => {
+    return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
+  }, renderCountBeforeDepth, { timeout: 5000 });
   const updatedDepthValueText = await page.locator("[data-exploded-depth]").getAttribute("aria-valuetext");
   assert(updatedDepthValueText === "24 percent exploded", `${label} expected updated depth aria-valuetext, got ${updatedDepthValueText || "none"}`);
   console.log("OK interactive-mechanical-watch explosion depth control");
@@ -4265,16 +4262,86 @@ async function smokeInteractiveMechanicalWatch(context) {
   console.log("OK interactive-mechanical-watch part button selection");
 
   const detailBeforeKeyboard = await page.locator("[data-exploded-detail] h3").textContent();
-  await page.locator("[data-exploded-canvas] [data-component-id]").nth(12).focus();
+  await page.locator("[data-exploded-parts] [data-component-id]").nth(12).focus();
   await page.keyboard.press("Enter");
   await page.waitForFunction((previousText) => {
     return (document.querySelector("[data-exploded-detail] h3")?.textContent || "").trim() !== (previousText || "").trim();
   }, detailBeforeKeyboard, { timeout: 5000 });
-  const selectedComponentPressed = await page.locator("[data-exploded-canvas] .is-selected").getAttribute("aria-pressed");
-  assert(selectedComponentPressed === "true", `${label} keyboard-selected SVG component should expose aria-pressed=true`);
-  const focusedComponentId = await page.evaluate(() => document.activeElement?.getAttribute("data-component-id") || "");
-  assert(focusedComponentId === "crown-stem", `${label} should restore focus to the rerendered SVG component, got ${focusedComponentId || "none"}`);
+  const keyboardState = await page.evaluate(() => ({
+    componentId: document.activeElement?.getAttribute("data-component-id") || "",
+    pressed: document.activeElement?.getAttribute("aria-pressed") || "",
+  }));
+  assert(keyboardState.pressed === "true", `${label} keyboard-selected part should expose aria-pressed=true`);
+  assert(keyboardState.componentId === "crown-stem", `${label} should restore focus to the selected part button, got ${keyboardState.componentId || "none"}`);
   console.log("OK interactive-mechanical-watch keyboard component selection");
+
+  const canvasBox = await webglCanvas.boundingBox();
+  assert(canvasBox, `${label} did not expose the Three.js canvas bounds`);
+  const selectedBeforeRaycast = await page.locator("[data-exploded-parts] .is-selected").getAttribute("data-component-id");
+  let selectedAfterRaycast = selectedBeforeRaycast;
+  const raycastPoints = [[0.5, 0.5], [0.4, 0.45], [0.6, 0.45], [0.35, 0.6], [0.65, 0.6]];
+  for (const [x, y] of raycastPoints) {
+    await page.mouse.click(canvasBox.x + canvasBox.width * x, canvasBox.y + canvasBox.height * y);
+    selectedAfterRaycast = await page.locator("[data-exploded-parts] .is-selected").getAttribute("data-component-id");
+    if (selectedAfterRaycast !== selectedBeforeRaycast) break;
+  }
+  assert(selectedAfterRaycast !== selectedBeforeRaycast, `${label} raycast selection did not update the active component`);
+  console.log("OK interactive-mechanical-watch raycast selection");
+
+  const renderCountBeforeOrbit = Number(await webglCanvas.getAttribute("data-render-count") || 0);
+  await page.mouse.move(canvasBox.x + canvasBox.width * 0.58, canvasBox.y + canvasBox.height * 0.5);
+  await page.mouse.down();
+  await page.mouse.move(canvasBox.x + canvasBox.width * 0.72, canvasBox.y + canvasBox.height * 0.58, { steps: 12 });
+  await page.mouse.up();
+  await page.waitForFunction((previousCount) => {
+    return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
+  }, renderCountBeforeOrbit, { timeout: 5000 });
+  const renderCountBeforeZoom = Number(await webglCanvas.getAttribute("data-render-count") || 0);
+  await page.mouse.move(canvasBox.x + canvasBox.width / 2, canvasBox.y + canvasBox.height / 2);
+  await page.mouse.wheel(0, -360);
+  await page.waitForFunction((previousCount) => {
+    return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
+  }, renderCountBeforeZoom, { timeout: 5000 });
+  console.log("OK interactive-mechanical-watch orbit and zoom controls");
+
+  const fallbackPage = await context.newPage();
+  await fallbackPage.route("**/models/watch_vertices.dat", (route) => route.fulfill({ status: 503, body: "" }));
+  await fallbackPage.goto(new URL("interactive-mechanical-watch/?smoke-fallback=1", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await fallbackPage.waitForSelector("[data-exploded-canvas] svg", { timeout: 30000 });
+  await fallbackPage.waitForFunction(() => document.querySelector("[data-exploded-watch]")?.dataset.threeError, null, { timeout: 30000 });
+  const fallbackState = await fallbackPage.evaluate(() => {
+    const root = document.querySelector("[data-exploded-watch]");
+    const image = root?.querySelector("[data-exploded-canvas] svg image");
+    const imageHref = image?.getAttribute("href") || image?.getAttribute("xlink:href") || "";
+    return {
+      canvasCount: root?.querySelectorAll("[data-exploded-canvas] canvas").length || 0,
+      componentCount: root?.querySelectorAll("[data-exploded-canvas] [data-component-id]").length || 0,
+      diagramRole: root?.querySelector("[data-exploded-canvas] svg")?.getAttribute("role") || "",
+      imageHref,
+      resolvedImageHref: image ? new URL(imageHref, document.location.href).href : "",
+    };
+  });
+  assert(fallbackState.canvasCount === 0, `${label} fallback should retain the SVG without a canvas`);
+  assert(fallbackState.componentCount === 27, `${label} fallback expected 27 SVG components, got ${fallbackState.componentCount}`);
+  assert(fallbackState.diagramRole === "group", `${label} fallback SVG should use group semantics`);
+  const expectedImageUrl = new URL("interactive-mechanical-watch/images/generated/components/exploded-sheet.png", baseUrl).href;
+  assert(
+    fallbackState.resolvedImageHref === expectedImageUrl,
+    `${label} fallback resolved exploded sheet to ${fallbackState.resolvedImageHref || "none"}; expected ${expectedImageUrl} from href ${fallbackState.imageHref || "none"}`,
+  );
+  const imageResponse = await fallbackPage.request.get(fallbackState.resolvedImageHref);
+  assert(imageResponse.status() === 200, `${label} fallback exploded sheet returned HTTP ${imageResponse.status()}`);
+  const firstTransform = await fallbackPage.locator("[data-exploded-canvas] [data-component-id]").first().getAttribute("transform");
+  await setRangeValue(fallbackPage, "[data-exploded-depth]", 24);
+  await fallbackPage.waitForFunction((previousTransform) => {
+    return document.querySelector("[data-exploded-canvas] [data-component-id]")?.getAttribute("transform") !== previousTransform;
+  }, firstTransform, { timeout: 5000 });
+  await fallbackPage.locator("[data-exploded-canvas] [data-component-id]").nth(12).focus();
+  await fallbackPage.keyboard.press("Enter");
+  const focusedFallbackId = await fallbackPage.evaluate(() => document.activeElement?.getAttribute("data-component-id") || "");
+  assert(focusedFallbackId === "crown-stem", `${label} fallback should restore SVG focus, got ${focusedFallbackId || "none"}`);
+  console.log("OK interactive-mechanical-watch SVG fallback");
+  await fallbackPage.close();
 
   await page.waitForTimeout(250);
   assertPageRuntimeClean(label);
