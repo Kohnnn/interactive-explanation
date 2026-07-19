@@ -37,8 +37,8 @@
 
         <div class="control-row">
           <div class="filter-group">
-            <span class="filter-group__label">I want to</span>
-            <div class="filter-pills" data-intent-filters>
+            <span class="filter-group__label" id="intent-filter-label">I want to</span>
+            <div class="filter-pills" data-intent-filters role="group" aria-labelledby="intent-filter-label">
               <button class="filter-pill is-active" type="button" data-atlas-intent="all" aria-pressed="true">All</button>
               <button class="filter-pill" type="button" data-atlas-intent="explainer" aria-pressed="false">Understand</button>
               <button class="filter-pill" type="button" data-atlas-intent="simulation" aria-pressed="false">Experiment</button>
@@ -47,14 +47,22 @@
               <button class="filter-pill" type="button" data-atlas-intent="guided-path" aria-pressed="false">Follow a path</button>
             </div>
           </div>
-          <label class="select-field">
-            <span class="filter-group__label">Sort</span>
-            <select data-sort-select>
-              <option value="featured">Featured</option>
-              <option value="new">Newest</option>
-              <option value="title">Title A–Z</option>
-            </select>
-          </label>
+          <div class="filter-selects">
+            <label class="select-field">
+              <span class="filter-group__label">Topic</span>
+              <select data-topic-select>
+                <option value="all">All topics</option>
+              </select>
+            </label>
+            <label class="select-field">
+              <span class="filter-group__label">Sort</span>
+              <select data-sort-select>
+                <option value="featured">Featured</option>
+                <option value="new">Newest</option>
+                <option value="title">Title A–Z</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <details class="advanced-filters">
@@ -65,7 +73,18 @@
         <button class="action-link secondary action-link--button" type="button" data-clear-filters hidden disabled>Clear filters</button>
       </div>
 
-      <section class="page-grid page-grid--inventory" data-page-list>
+      <section class="guided-paths" aria-labelledby="guided-paths-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Guided paths</p>
+            <h2 id="guided-paths-title">Start with a sequence</h2>
+          </div>
+          <p class="meta-line">Three curated ways through related routes.</p>
+        </div>
+        <div class="page-grid page-grid--guided" data-guided-path-list></div>
+      </section>
+
+      <section class="page-grid page-grid--inventory" data-page-list aria-label="Complete route inventory">
         <div class="empty-state">Loading route inventory...</div>
       </section>
     </section>

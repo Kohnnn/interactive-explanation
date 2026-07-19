@@ -207,9 +207,15 @@ a {
 
 .control-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(10rem, 14rem);
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
   gap: 18px;
   align-items: end;
+}
+
+.filter-selects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .filter-pills,
@@ -283,6 +289,20 @@ a {
 .page-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   margin-top: 26px;
+}
+
+.guided-paths {
+  margin-top: 34px;
+  padding: 28px 0 8px;
+  border-block: 1px solid var(--line-soft);
+}
+
+.page-grid--guided {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-grid--guided .page-card {
+  border-color: var(--accent);
 }
 
 .note-grid {
@@ -428,7 +448,9 @@ code {
     font-size: clamp(2.5rem, 14vw, 4rem);
   }
 
-  .control-row {
+  .control-row,
+  .filter-selects,
+  .page-grid--guided {
     grid-template-columns: 1fr;
   }
 

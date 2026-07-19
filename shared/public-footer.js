@@ -263,6 +263,17 @@
     return "./index.html";
   }
 
+  function docsHref() {
+    var data = document.body.dataset;
+    var slug = data.storyRoute;
+    if (!slug) {
+      var segments = window.location.pathname.split("/").filter(Boolean);
+      var rootIndex = segments.indexOf("interactive-explanation");
+      slug = rootIndex >= 0 ? segments[rootIndex + 1] : segments[0];
+    }
+    return new URL("docs/" + slug + "/", atlasHref()).href;
+  }
+
   function topBarDisabled() {
     var body = document.body;
     if (!body) {
@@ -369,6 +380,12 @@
       back.href = atlasHref();
       back.textContent = "Atlas";
       inner.appendChild(back);
+
+      var docs = document.createElement("a");
+      docs.className = "top-bar__docs";
+      docs.href = docsHref();
+      docs.textContent = "Docs";
+      inner.appendChild(docs);
 
       var label = document.createElement("span");
       label.className = "top-bar__label";

@@ -158,6 +158,8 @@ Acceptance:
 
 ### 8. Discovery and wayfinding
 
+Status: Complete
+
 - Add topic filtering, guided-path promotion, and useful card labels to the atlas.
 - Restore filter state through the native History API and keep Atlas and Docs exits deterministic.
 - Preserve the current static-site architecture and relative GitHub Pages paths.
@@ -214,3 +216,4 @@ Acceptance:
 
 - 2026-07-19: Phase 7 implementation started; generic route isolation, iframe policy coverage, and route contract validation in progress.
 - 2026-07-19: Phase 7 passed the 312-test suite, audit, syntax checks, diff hygiene, focused route smoke, and the full 82-route desktop/mobile and interaction suite at port 49173. Universal coverage also corrected responsive overflow in `neurons` and `wbwwb`, a subpath loader URL in Song Maker, and local blob request classification.
+- 2026-07-19: Phase 8 added exact topic filtering, three promoted guided paths without removing inventory entries, clearer route labels, Back/Forward-restorable atlas state, and deterministic Atlas/Docs exits. The 312-test suite, focused discovery checks, OLS coordinate regression check, and full 82-route smoke suite passed.

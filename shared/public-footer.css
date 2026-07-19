@@ -28,7 +28,8 @@ body.has-top-bar {
   gap: 12px;
 }
 
-.top-bar__back {
+.top-bar__back,
+.top-bar__docs {
   color: inherit;
   font-weight: 700;
   text-decoration-thickness: 1px;
@@ -37,7 +38,9 @@ body.has-top-bar {
 }
 
 .top-bar__back:hover,
-.top-bar__back:focus-visible {
+.top-bar__back:focus-visible,
+.top-bar__docs:hover,
+.top-bar__docs:focus-visible {
   color: var(--topbar-hover);
 }
 

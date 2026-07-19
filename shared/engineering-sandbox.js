@@ -365,6 +365,36 @@
     return parts[interactiveIndex + 1] || "";
   }
 
+  function ensureWayfinding(slug) {
+    const hero = document.querySelector(".story-hero");
+    if (!hero || !slug) {
+      return;
+    }
+    let actions = hero.querySelector(".story-hero__actions");
+    if (!actions) {
+      actions = document.createElement("div");
+      actions.className = "story-hero__actions";
+      (hero.querySelector(".story-hero__panel") || hero).appendChild(actions);
+    }
+    const destinations = [
+      { kind: "atlas", href: new URL("../", window.location.href).href, label: "Atlas" },
+      { kind: "docs", href: new URL("../docs/" + slug + "/", window.location.href).href, label: "Docs" },
+    ];
+    destinations.forEach(function (destination) {
+      const existing = Array.from(hero.querySelectorAll("a[href]")).find(function (link) {
+        return link.href === destination.href;
+      });
+      const link = existing || document.createElement("a");
+      link.dataset.storyWayfinding = destination.kind;
+      if (!existing) {
+        link.className = "story-button story-button--secondary";
+        link.href = destination.href;
+        link.textContent = destination.label;
+        actions.appendChild(link);
+      }
+    });
+  }
+
   function sanitizeChapterTitle(value) {
     return String(value || "")
       .replace(/\s+/g, " ")
@@ -899,12 +929,14 @@
     }
 
     const navMode = body.dataset.storyNav || "generated";
+    const slug = getSlug();
     prepareLongformEngineeringArticle(body);
-    await applyRouteChapterConfig(getSlug());
+    await applyRouteChapterConfig(slug);
 
     const sections = Array.from(document.querySelectorAll("[data-story-chapter]"));
-    applyRouteChapterNavLabels(getSlug(), sections);
-    renderCompanionRoutes(getSlug());
+    applyRouteChapterNavLabels(slug, sections);
+    renderCompanionRoutes(slug);
+    ensureWayfinding(slug);
     if (navMode === "none") {
       return;
     }
