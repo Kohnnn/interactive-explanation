@@ -103,3 +103,18 @@ ul.share-buttons li{
 ul.share-buttons li:hover{
 	top:-5px;
 }
+
+@media (max-width: 960px) {
+	iframe{
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 960px;
+		height: auto;
+		aspect-ratio: 16 / 9;
+	}
+	.info{
+		box-sizing: border-box;
+		width: 100%;
+		padding: 32px 20px;
+	}
+}

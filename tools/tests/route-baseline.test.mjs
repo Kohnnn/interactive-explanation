@@ -4,20 +4,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Static per-route UI/UX baseline contract.
-// Every shipped route index.html must inherit the shared chrome and the
-// document fundamentals that keep the site accessible, encoded correctly,
-// and responsive. New routes are picked up automatically from pages.json,
-// so this test is the enforcement surface that makes new notes follow the
-// established baseline.
-//
-// This is a static-HTML contract only. Runtime behavior (e.g. the hidden
-// reference-footer focus order) is enforced separately in the Playwright
-// smoke suite via assertReferenceFooterFocusContract.
-
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..", "..");
 const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, "routes.manifest.json"), "utf8"));
 
 const requirements = [
   {
@@ -47,20 +37,54 @@ const requirements = [
   },
 ];
 
-for (const page of pages) {
-  const routeHtml = path.join(root, page.slug, "index.html");
+function assertNonEmptyStringArray(value, label) {
+  assert.ok(Array.isArray(value) && value.length > 0, `${label} must be a non-empty array`);
+  for (const entry of value) {
+    assert.equal(typeof entry, "string", `${label} entries must be strings`);
+    assert.ok(entry.trim(), `${label} entries must be non-empty`);
+  }
+}
 
-  test(`route "${page.slug}" has an index.html`, () => {
-    assert.ok(fs.existsSync(routeHtml), `missing ${page.slug}/index.html`);
+test("pages metadata exactly matches the route manifest", () => {
+  assert.deepEqual(pages, manifest);
+});
+
+for (const route of manifest) {
+  const routeHtml = path.join(root, route.slug, "index.html");
+  const docsDir = path.join(root, "docs", route.slug);
+  const docsHtml = path.join(docsDir, "index.html");
+  const parityPath = path.join(docsDir, "parity.json");
+
+  test(`route "${route.slug}" has an index.html`, () => {
+    assert.ok(fs.existsSync(routeHtml), `missing ${route.slug}/index.html`);
   });
 
-  test(`route "${page.slug}" satisfies the UI/UX baseline`, () => {
+  test(`route "${route.slug}" satisfies the UI/UX baseline`, () => {
     const html = fs.readFileSync(routeHtml, "utf8");
     for (const requirement of requirements) {
       assert.ok(
         requirement.test(html),
-        `${page.slug}/index.html is missing the ${requirement.name}: ${requirement.hint}`,
+        `${route.slug}/index.html is missing the ${requirement.name}: ${requirement.hint}`,
       );
+    }
+  });
+
+  test(`route "${route.slug}" has authoritative docs and parity metadata`, () => {
+    assert.equal(route.docsUrl, `./docs/${route.slug}/`);
+    assert.ok(fs.existsSync(docsHtml), `missing docs/${route.slug}/index.html`);
+    assert.ok(fs.existsSync(parityPath), `missing docs/${route.slug}/parity.json`);
+
+    const modules = JSON.parse(fs.readFileSync(parityPath, "utf8"));
+    assert.ok(Array.isArray(modules) && modules.length > 0, `${route.slug} parity.json must be a non-empty array`);
+    for (const [index, module] of modules.entries()) {
+      assert.ok(module && typeof module === "object" && !Array.isArray(module), `${route.slug} module ${index} must be an object`);
+      for (const field of ["moduleId", "originalBehavior", "localStatus"]) {
+        assert.equal(typeof module[field], "string", `${route.slug} module ${index} ${field} must be a string`);
+        assert.ok(module[field].trim(), `${route.slug} module ${index} ${field} must be non-empty`);
+      }
+      for (const field of ["sourceFiles", "notes", "evidence"]) {
+        assertNonEmptyStringArray(module[field], `${route.slug} module ${index} ${field}`);
+      }
     }
   });
 }

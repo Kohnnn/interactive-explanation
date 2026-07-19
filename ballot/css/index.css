@@ -251,3 +251,32 @@ ul.share-buttons .sr-only {
   width: 1px;
   overflow: hidden;
 }
+
+@media (max-width: 700px) {
+  .words,
+  .sim-intro,
+  .sim-ballot,
+  .sim-test,
+  .sim-sandbox,
+  #credits,
+  #further_reading,
+  #supporters {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  iframe,
+  .banner img,
+  #content p img.real {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  #splash img {
+    width: 100%;
+    height: auto;
+  }
+}

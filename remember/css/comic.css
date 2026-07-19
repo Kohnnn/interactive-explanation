@@ -326,3 +326,28 @@ a:hover{
 #language_options a:hover{
 	color: #ccc;
 }
+
+@media (max-width: 650px) {
+	.divider > #divider_container > div {
+		width: calc(100% - 32px);
+		min-width: 0;
+	}
+	.divider > #divider_container > #chapter_name {
+		font-size: 56px;
+	}
+	.comic {
+		width: 100%;
+	}
+	#credits > div {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0 16px;
+	}
+	#credits iframe {
+		max-width: 100%;
+	}
+	#language_options {
+		left: auto;
+		right: 8px;
+	}
+}

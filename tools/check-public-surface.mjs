@@ -13,11 +13,7 @@ const requiredMetadataUrls = new Map([
   ["index.html", PUBLIC_BASE_URL],
   ...routeManifest.map((route) => [path.join(route.slug, "index.html"), `${PUBLIC_BASE_URL}${route.slug}/`]),
 ]);
-const iframeTitleRoutes = new Set([
-  path.join("ballot", "index.html"),
-  path.join("polygons", "index.html"),
-  path.join("covid-19", "index.html"),
-]);
+const manifestRouteSlugs = new Set(routeManifest.map((route) => route.slug));
 const consolidatedAssetCopyPatterns = [
   /^ableton-learning-music-[^/]+\/third-party\/tone\/tone\.min\.js$/i,
   /^ableton-learning-synths-[^/]+\/js\/externals\/react(?:-dom)?\.production\.min\.js$/i,
@@ -286,7 +282,8 @@ function scanMetadata(relativePath, source) {
 }
 
 function scanIframeTitles(relativePath, source) {
-  if (!iframeTitleRoutes.has(relativePath)) {
+  const [routeSlug] = relativePath.split(path.sep);
+  if (!manifestRouteSlugs.has(routeSlug)) {
     return;
   }
 

@@ -155,3 +155,23 @@ test("route-local copies of consolidated assets fail the audit", () => {
   assert.equal(result.status, 1);
   assert.equal(result.stderr.match(/route-local duplicate of shared asset/gi)?.length, copies.length);
 });
+
+test("nested route iframe missing a title fails the audit", () => {
+  const root = makeRoot();
+  const nested = path.join(root, "demo", "nested", "frame.html");
+  fs.mkdirSync(path.dirname(nested), { recursive: true });
+  fs.writeFileSync(nested, "<iframe src=\"local.html\"></iframe>");
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /iframe missing title/i);
+});
+
+test("duplicate iframe titles within a nested route document fail the audit", () => {
+  const root = makeRoot();
+  const nested = path.join(root, "demo", "nested", "frame.html");
+  fs.mkdirSync(path.dirname(nested), { recursive: true });
+  fs.writeFileSync(nested, '<iframe title="Demo frame"></iframe><iframe title="Demo frame"></iframe>');
+  const result = runAudit(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /iframe duplicate title/i);
+});

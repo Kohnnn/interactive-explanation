@@ -52,6 +52,7 @@ const port = Number(process.env.SMOKE_PORT || 4173);
 const host = "127.0.0.1";
 const mountPath = "/interactive-explanation/";
 const baseUrl = `http://${host}:${port}${mountPath}`;
+const baseOrigin = new URL(baseUrl).origin;
 const verbose = hasFlag("--verbose") || process.env.SMOKE_VERBOSE === "1";
 const rawConsoleLog = console.log.bind(console);
 
@@ -481,11 +482,20 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
   await page.close();
 }
 
-function createRuntimeMonitor(page) {
+function createRuntimeMonitor(page, options = {}) {
+  const { rejectOffOriginRequests = false } = options;
   const issues = [];
 
   page.on("pageerror", (error) => {
     issues.push(`pageerror: ${error.message}`);
+  });
+
+  page.on("request", (request) => {
+    const requestUrl = request.url();
+    const isLocalBlob = requestUrl.startsWith(`blob:${baseOrigin}/`);
+    if (rejectOffOriginRequests && !requestUrl.startsWith(baseUrl) && !isLocalBlob) {
+      issues.push(`off-origin request: ${requestUrl}`);
+    }
   });
 
   page.on("requestfailed", (request) => {
@@ -511,6 +521,28 @@ function createRuntimeMonitor(page) {
   return function assertRuntimeClean(label) {
     assert(issues.length === 0, `${label} had runtime issues:\n${issues.join("\n")}`);
   };
+}
+
+async function assertManifestRouteBaseline(context, route) {
+  const relativePath = `${route.slug}/`;
+  const viewports = [
+    { name: "desktop", width: 1400, height: 1000 },
+    { name: "mobile", width: 390, height: 844 },
+  ];
+
+  for (const viewport of viewports) {
+    const page = await context.newPage();
+    const assertRuntimeClean = createRuntimeMonitor(page, { rejectOffOriginRequests: true });
+    try {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await assertRoute(page, relativePath, "#reference-footer");
+      await assertViewportUsable(page, `${route.slug} ${viewport.name} baseline`);
+      assertRuntimeClean(`${route.slug} ${viewport.name} baseline`);
+      console.log(`OK ${route.slug} ${viewport.name} baseline`);
+    } finally {
+      await page.close();
+    }
+  }
 }
 
 async function setRangeValue(page, selector, value) {
@@ -6949,6 +6981,10 @@ async function main() {
   let context = await createSmokeContext(browser);
 
   try {
+    for (const route of selectedManifestRoutes()) {
+      await assertManifestRouteBaseline(context, route);
+    }
+
     const routePage = await context.newPage();
     const routeChecks = [
       ["", "[data-page-list]"],

@@ -139,3 +139,78 @@ git diff --exit-code pages.json
 - 2026-07-16: Phase 4 verified with syntax checks, full test suite, focused Ballot, Polygons, and Formula 1 smoke, responsive Polygons overflow coverage, and diff hygiene.
 - 2026-07-16: Phase 5 removed 70.76 MiB across 34 tracked deploy artifacts, stripped 56 source-map directives, added ignore and audit guardrails, and passed the 226-test suite plus focused browser smoke.
 - 2026-07-16: Phase 6 consolidated seven Tone.js copies, six Learning Synths runtime sets, and the common runtime for both watch routes, reducing tracked runtime payload by 16,213,739 bytes (15.46 MiB), adding an audit guard against restored route-local copies, and passing the 227-test suite, focused smoke across all 15 consumers, and the full 82-route smoke suite.
+
+## Approved Phase 7–11 roadmap
+
+### 7. Universal route baseline
+
+Status: Complete
+
+- Isolate desktop and mobile generic smoke coverage for every selected manifest route.
+- Enforce local, off-origin-clean baseline requests and complete iframe title policy coverage.
+- Validate manifest, docs, and parity contracts from their authoritative sources.
+
+Acceptance:
+
+- Every selected route passes isolated desktop and 390 × 844 mobile baseline checks.
+- Every iframe under a manifest route has a title unique within its document.
+- Route, docs, and parity inventory contracts pass without hard-coded counts.
+
+### 8. Discovery and wayfinding
+
+- Add topic filtering, guided-path promotion, and useful card labels to the atlas.
+- Restore filter state through the native History API and keep Atlas and Docs exits deterministic.
+- Preserve the current static-site architecture and relative GitHub Pages paths.
+
+Acceptance:
+
+- Atlas filters are keyboard-usable, URL-restorable, and responsive.
+- Guided paths are easier to identify without hiding the complete route inventory.
+- Representative route and docs exits resolve under `/interactive-explanation/`.
+
+### 9. Learning paths and progress
+
+- Add optional advisory difficulty, duration, order, and prerequisite metadata to the manifest contract.
+- Persist progress only through explicit Start, Resume, or numbered-path actions and expire it after 30 days.
+- Add native sharing with a clipboard fallback while keeping Music and Blockchain guidance advisory.
+
+Acceptance:
+
+- Manifest sync validates optional learning metadata and generates matching `pages.json` output.
+- Resume state restores only valid, unexpired, explicit progress.
+- Music and Blockchain paths expose clear next steps; `primary-interactive-hub` remains promotional.
+
+### 10. Accessibility and semantics
+
+- Add meaningful main landmarks where static route structure permits and preserve intentional runtime-populated mains.
+- Improve iframe, canvas, keyboard, focus, and narrow-screen semantics without rewriting vendored runtimes.
+- Extend automated coverage for the accessibility contracts applied.
+
+Acceptance:
+
+- Every route has a usable main-content path or a documented runtime-populated equivalent.
+- Interactive surfaces expose deterministic names and keyboard or adjacent native controls.
+- Desktop and mobile smoke coverage passes without layout regressions.
+
+### 11. Resilience and release readiness
+
+- Add consistent canonical, robots, social text metadata, and early theme initialization to docs surfaces.
+- Consolidate verified duplicate assets only after browser playback proves shared paths preserve behavior.
+- Re-run complete audit and smoke coverage, resolve release blockers, and prepare one deployment handoff.
+
+Acceptance:
+
+- Docs metadata and theme behavior are consistent under GitHub Pages subpath hosting.
+- Any asset consolidation is guarded by audit coverage and representative browser checks.
+- Tests, audit, syntax checks, full smoke, CI, Pages deployment, and production probes pass.
+
+## Phase 7–11 delivery decisions
+
+- Make one verified commit per phase, continue automatically between phases, then push and deploy once after Phase 11.
+- Use explicit resume writes with a 30-day expiry.
+- Treat Music and Blockchain metadata as proposed advisory metadata until separately approved.
+
+## Phase 7 progress
+
+- 2026-07-19: Phase 7 implementation started; generic route isolation, iframe policy coverage, and route contract validation in progress.
+- 2026-07-19: Phase 7 passed the 312-test suite, audit, syntax checks, diff hygiene, focused route smoke, and the full 82-route desktop/mobile and interaction suite at port 49173. Universal coverage also corrected responsive overflow in `neurons` and `wbwwb`, a subpath loader URL in Song Maker, and local blob request classification.
