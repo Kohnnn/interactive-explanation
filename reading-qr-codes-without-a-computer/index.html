@@ -18,7 +18,9 @@
           }
         </style>
 
-      <script type="module" crossorigin src="./assets/index-m4DBYcND.js"></script>
+      <script>window.failQrModule = function () { const app = document.getElementById("app"); if (app) { app.textContent = "The QR code walkthrough could not load."; app.setAttribute("aria-busy", "false"); } };</script>
+      <script type="module" crossorigin src="./assets/index-m4DBYcND.js" onerror="window.failQrModule()"></script>
+      <script type="module">import("./assets/index-m4DBYcND.js").catch(window.failQrModule);</script>
       <link rel="stylesheet" crossorigin href="./assets/index-s1eyThQf.css">
       <script defer src="../shared/public-footer.js"></script>
       <script>
@@ -47,12 +49,20 @@
             }
           }
 
-          prunePromoSurfaces();
-          new MutationObserver(prunePromoSurfaces).observe(app, { childList: true, subtree: true });
+            prunePromoSurfaces();
+            if (app.children.length) {
+              app.setAttribute("aria-busy", "false");
+            }
+            new MutationObserver(function () {
+              prunePromoSurfaces();
+              if (app.children.length) {
+                app.setAttribute("aria-busy", "false");
+              }
+            }).observe(app, { childList: true, subtree: true });
         });
       </script>
     </head>
     <body data-reference-url="https://qr.blinry.org/" data-reference-text="Reading QR codes without a computer!" data-footer-label="Original page">
-        <div id="app"></div>
+        <main id="app" data-runtime-main aria-label="Reading QR codes without a computer interactive walkthrough" aria-busy="true">Loading QR code walkthrough…</main>
     </body>
 </html>

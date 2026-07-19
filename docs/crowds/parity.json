@@ -115,5 +115,22 @@
       "Local smoke testing targets sandbox mode because it exercises the broadest tool set on the route.",
       "Source files explicitly separate the sandbox UI from the base simulation transport."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-and-canvas-semantics",
+    "originalBehavior": "The guide loads its slideshow and simulation canvases into one article-stage container.",
+    "localStatus": "That container is now the route's single meaningful main landmark with an explicit loading state; decorative scratch and pencil canvases are hidden from assistive technology.",
+    "sourceFiles": [
+      "index.html",
+      "js/main.js"
+    ],
+    "notes": [
+      "The slideshow remains responsible for the interactive canvas behavior and chapter progression.",
+      "No canvas interaction was rewritten for the landmark change."
+    ],
+    "evidence": [
+      "Focused browser coverage waits for the runtime main landmark to finish loading.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

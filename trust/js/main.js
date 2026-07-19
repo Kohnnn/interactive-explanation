@@ -47,6 +47,7 @@ window.onload = function(){
 			Loader.manifest,
 			function(){
 				publish("preloader/done");
+				document.getElementById("main").setAttribute("aria-busy", "false");
 			},
 			function(ratio){
 				publish("preloader/progress", [ratio]);
@@ -56,6 +57,15 @@ window.onload = function(){
 		// First slide!
 		slideshow.nextSlide();
 
+	}, function(){
+		var preloader = $("#preloader");
+		var main = $("#main");
+		if(preloader && preloader.parentNode){
+			preloader.parentNode.removeChild(preloader);
+		}
+		main.textContent = "The interactive guide could not load.";
+		main.style.display = "block";
+		main.setAttribute("aria-busy", "false");
 	});
 
 };

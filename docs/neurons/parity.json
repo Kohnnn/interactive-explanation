@@ -112,5 +112,24 @@
       "Smoke review targeted the end-of-route controls and credits progression because that is where most public-surface cleanup was required.",
       "The recheck plan explicitly called out footer-only references and narration cleanup for the new explorable article route."
     ]
+  },
+  {
+    "moduleId": "phase-10-main-canvas-and-native-controls",
+    "originalBehavior": "The article hosts a named interactive frame whose canvas story uses playback, volume, and caption controls.",
+    "localStatus": "The article content is the route's single meaningful main landmark; the interactive canvas has a descriptive name, and playback, volume, caption, and resume controls are named native controls with state-synchronized labels.",
+    "sourceFiles": [
+      "index.html",
+      "interactive.html",
+      "scripts/core/Controls.js",
+      "styles/interactive.css"
+    ],
+    "notes": [
+      "The iframe retains the original animation runtime and responsive layout.",
+      "Control labels update when play, mute, and captions state changes."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies the frame title, canvas name, native controls, and loaded interaction state.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

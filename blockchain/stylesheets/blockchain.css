@@ -9,7 +9,7 @@ body {
   height: 100%;
 }
 
-body > .container {
+body > main > .story-lab-main > .container {
   padding: 60px 15px 0;
 }
 
@@ -17,7 +17,7 @@ body > .container {
   margin: 20px 0;
 }
 
-body > .container-fluid {
+body > main > .story-lab-main > .container-fluid {
   padding: 60px 15px 0;
 }
 

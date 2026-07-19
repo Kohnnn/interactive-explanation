@@ -52,5 +52,22 @@
       "Music smoke coverage verifies the XY control position changes and that the route enters and exits the note-trigger state cleanly.",
       "The public shell stays responsive on narrow viewports and retains footer-only provenance after the lesson mounts."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-loading-contract",
+    "originalBehavior": "The lesson initializes the shared Learning Synths runtime before mounting its playable Get started scene.",
+    "localStatus": "The app mount is the named runtime main with loading text; successful initialization clears busy state, while unsupported browsers and initialization failures replace it with a concise status message.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-get-started/index.html"
+    ],
+    "notes": [
+      "The shared lesson runtime and XY interaction remain unchanged.",
+      "All terminal loading paths clear the busy state."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies successful mount, unsupported-browser messaging, and initialization failure handling.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]
+

@@ -25,6 +25,7 @@ Loader.load(function(progress){
 	};
 
 	Game.init();
+	$("#game_container").setAttribute("aria-busy", "false");
 
 });
 

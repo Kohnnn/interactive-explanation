@@ -44,8 +44,7 @@ Words.convert = function(filepath){
 
 		// error handler (optional)
 		function(data, xhr) {
-			alert("AHHHHHHHHHHHH, PROBLEM LOADING WORDS");
-			console.error(data, xhr.status)
+			deferred.reject(new Error("Could not load words: " + xhr.status));
 		}
 
 	);

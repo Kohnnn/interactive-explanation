@@ -51,5 +51,22 @@
       "Music smoke coverage verifies the ADSR envelope path redraws and that the route can hold a synth note after parameter changes.",
       "Responsive checks keep the matching lesson usable on narrow viewports under the local archive shell."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-loading-contract",
+    "originalBehavior": "The lesson initializes the shared Learning Synths runtime before mounting its envelope-matching scene.",
+    "localStatus": "The app mount is the named runtime main with loading text; successful initialization clears busy state, while unsupported browsers and initialization failures replace it with a concise status message.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-matching-envelopes/index.html"
+    ],
+    "notes": [
+      "The shared lesson runtime and ADSR interaction remain unchanged.",
+      "All terminal loading paths clear the busy state."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies successful mount, unsupported-browser messaging, and initialization failure handling.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]
+

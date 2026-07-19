@@ -96,5 +96,22 @@
       "The route now loads under <code>/interactive-explanation/wbwwb/</code> with a shared footer and local canonical metadata.",
       "Audit coverage passes with the route included in the public-surface sweep."
     ]
+  },
+  {
+    "moduleId": "phase-10-named-pixi-stage-loading-contract",
+    "originalBehavior": "The PIXI game initializes into the stage container after the page load event.",
+    "localStatus": "The stage is now the named runtime main with a loading fallback; successful PIXI initialization removes that fallback and clears busy state.",
+    "sourceFiles": [
+      "index.html",
+      "js/core/Game.js"
+    ],
+    "notes": [
+      "The existing WebGL warning remains the failure surface for unsupported initialization.",
+      "The PIXI scene graph and camera game flow remain unchanged."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies the named stage, fallback removal, and successful busy completion.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]

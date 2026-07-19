@@ -634,6 +634,28 @@ async function assertManifestRouteBaseline(context, route) {
     try {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await assertRoute(page, relativePath, "#reference-footer");
+      await page.waitForFunction(() => {
+        const main = document.querySelector("main[data-runtime-main]");
+        return !main || main.getAttribute("aria-busy") !== "true";
+      }, null, { timeout: 30000 });
+      const mainState = await page.evaluate(() => {
+        const mains = Array.from(document.querySelectorAll("main"));
+        const main = mains[0];
+        const style = main ? getComputedStyle(main) : null;
+        return {
+          count: mains.length,
+          visible: Boolean(main && !main.hidden && main.getAttribute("aria-hidden") !== "true" && !main.hasAttribute("inert") && style?.display !== "none" && style?.visibility !== "hidden"),
+          meaningful: Boolean(main && (
+            (main.textContent || "").trim() ||
+            main.getAttribute("aria-label") ||
+            main.getAttribute("aria-labelledby") ||
+            main.querySelector("iframe[title], canvas, svg, [role='application']")
+          )),
+        };
+      });
+      assert(mainState.count === 1, `${route.slug} ${viewport.name} baseline expected one main landmark, found ${mainState.count}`);
+      assert(mainState.visible, `${route.slug} ${viewport.name} baseline main landmark was hidden`);
+      assert(mainState.meaningful, `${route.slug} ${viewport.name} baseline main landmark was empty and unnamed`);
       await assertViewportUsable(page, `${route.slug} ${viewport.name} baseline`);
       assertRuntimeClean(`${route.slug} ${viewport.name} baseline`);
       console.log(`OK ${route.slug} ${viewport.name} baseline`);
@@ -941,6 +963,10 @@ async function smokeRemember(context) {
   const page = await context.newPage();
 
   await assertRoute(page, "remember/", "iframe.splash");
+  await page.waitForFunction(() => document.querySelectorAll("iframe.simulation").length > 0, null, { timeout: 15000 });
+  const iframeNames = await page.locator("iframe").evaluateAll((iframes) => iframes.map((iframe) => iframe.title));
+  assert(iframeNames.every(Boolean), "Remember generated iframe lacked a title");
+  assert(new Set(iframeNames).size === iframeNames.length, "Remember generated iframe titles were not unique");
   const rememberDownloadLabels = await page.evaluate((cardNames) => {
     const labelIds = [
       "download_all",
@@ -1579,6 +1605,54 @@ async function smokeSimulating(context) {
   await modelPage.close();
 }
 
+async function smokeNeurons(context) {
+  const page = await context.newPage();
+  await assertRoute(page, "neurons/", "iframe[title='Neurotic Neurons interactive']");
+  const frame = page.frames().find((candidate) => /\/neurons\/interactive\.html$/.test(candidate.url()));
+  assert(frame, "Neurons interactive frame did not load");
+  await frame.waitForSelector("#canvas[loading='no']", { timeout: 30000 });
+  const canvasName = await frame.locator("#canvas").getAttribute("aria-label");
+  assert(Boolean(canvasName), "Neurons canvas lacked an accessible name");
+  const controls = frame.locator("#control_play, #control_volume, #control_captions");
+  assert(await controls.count() === 3, "Neurons native controls did not mount");
+  assert(await controls.evaluateAll((elements) => elements.every((element) => element.tagName === "BUTTON" && Boolean(element.getAttribute("aria-label")))), "Neurons controls were not named native buttons");
+  await frame.locator("#control_play").click();
+  assert(await frame.locator("#control_play").getAttribute("aria-label") === "Resume", "Neurons play control did not expose paused state");
+  await frame.locator("#control_volume").click();
+  assert(await frame.locator("#control_volume").getAttribute("aria-label") === "Unmute", "Neurons volume control did not expose muted state");
+  await frame.locator("#control_captions").click();
+  assert(await frame.locator("#control_captions").getAttribute("aria-label") === "Show captions", "Neurons caption control did not expose hidden state");
+  console.log("OK neurons accessible controls");
+  await page.close();
+}
+
+async function smokeLoopy(context) {
+  const page = await context.newPage();
+  await assertRoute(page, "loopy/", "#sidebar");
+  await page.waitForFunction(() => Boolean(window.loopy), null, { timeout: 15000 });
+  await page.evaluate(() => publish("modal", ["examples"]));
+  assert(await page.locator("iframe[title='LOOPY simulation examples']").count() === 1, "LOOPY examples frame lacked its deterministic title");
+  await page.evaluate(() => publish("modal", ["embed"]));
+  const preview = page.locator("iframe[title='LOOPY embed preview']");
+  await preview.waitFor({ state: "visible", timeout: 5000 });
+  const embedCode = await page.locator("#modal_page .component_output:visible").inputValue();
+  assert(embedCode.includes('title="LOOPY simulation"'), "LOOPY generated embed code lacked a title");
+  console.log("OK loopy generated iframe titles");
+  await page.close();
+}
+
+async function smokeTrustFallback(context) {
+  const page = await context.newPage();
+  await page.route("**/trust/words.html*", (route) => route.fulfill({ status: 500, body: "failed" }));
+  await page.goto(new URL("trust/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => document.querySelector("main")?.getAttribute("aria-busy") === "false", null, { timeout: 15000 });
+  const main = page.locator("main");
+  assert(await main.isVisible(), "Trust failure fallback main remained hidden");
+  assert(/could not load/i.test(await main.textContent()), "Trust failure fallback did not explain the failure");
+  console.log("OK trust load failure fallback");
+  await page.close();
+}
+
 async function smokeSim(context) {
   const simPage = await context.newPage();
   await assertRoute(simPage, "sim/", "#play_controls");
@@ -1629,6 +1703,17 @@ async function smokeSim(context) {
   assert(description.includes("../polygons/"), "sim schelling preset did not localize the polygons reference");
   console.log("OK sim preset loading");
   await presetPage.close();
+
+  for (const query of ["?lz=invalid", "?lz=%E0%A4%A"]) {
+    const failurePage = await context.newPage();
+    await failurePage.goto(new URL(`sim/${query}`, baseUrl).href, { waitUntil: "domcontentloaded" });
+    await failurePage.waitForFunction(() => document.querySelector("main")?.getAttribute("aria-busy") === "false", null, { timeout: 15000 });
+    const main = failurePage.locator("main");
+    assert(await main.isVisible(), `sim ${query} failure fallback main remained hidden`);
+    assert(/could not load/i.test(await main.textContent()), `sim ${query} failure fallback did not explain the failure`);
+    await failurePage.close();
+  }
+  console.log("OK sim malformed URL fallbacks");
 }
 
 async function smokeDecisionTree(context) {
@@ -7221,6 +7306,15 @@ async function main() {
     }
     if (exists("remember")) {
       await smokeRemember(context);
+    }
+    if (exists("neurons")) {
+      await smokeNeurons(context);
+    }
+    if (exists("loopy")) {
+      await smokeLoopy(context);
+    }
+    if (exists("trust")) {
+      await smokeTrustFallback(context);
     }
     if (exists("anxiety")) {
       await smokeAnxiety(context);

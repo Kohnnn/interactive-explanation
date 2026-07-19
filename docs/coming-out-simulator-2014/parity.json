@@ -99,5 +99,22 @@
       "The route still opens with the original loading container and asset bootstrap sequence.",
       "The local shell now resolves cleanly under <code>/interactive-explanation/coming-out-simulator-2014/</code>."
     ]
+  },
+  {
+    "moduleId": "phase-10-named-main-and-asset-load-contract",
+    "originalBehavior": "The story displays a loading screen while its art, sound, and dialogue assets initialize before the opening scene.",
+    "localStatus": "The game container is now the named semantic runtime main, and the existing successful asset-load handoff clears its busy state before the story becomes interactive.",
+    "sourceFiles": [
+      "index.html",
+      "js/main.js"
+    ],
+    "notes": [
+      "The original loading bar and asset bootstrap remain responsible for scene readiness.",
+      "The landmark change does not alter dialogue choices or branch state."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies the named main and successful asset-load completion.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]

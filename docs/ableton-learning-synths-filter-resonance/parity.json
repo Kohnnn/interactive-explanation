@@ -51,5 +51,22 @@
       "Music smoke coverage verifies the filter curve path changes, the macro values update, and the route enters the active note state during the interaction.",
       "Responsive checks keep the filter lesson usable on narrow viewports under the local archive shell."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-loading-contract",
+    "originalBehavior": "The lesson initializes the shared Learning Synths runtime before mounting its filter-resonance scene.",
+    "localStatus": "The app mount is the named runtime main with loading text; successful initialization clears busy state, while unsupported browsers and initialization failures replace it with a concise status message.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/index.html"
+    ],
+    "notes": [
+      "The shared lesson runtime and filter interaction remain unchanged.",
+      "All terminal loading paths clear the busy state."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies successful mount, unsupported-browser messaging, and initialization failure handling.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]
+

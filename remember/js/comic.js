@@ -46,12 +46,13 @@ window.onload = function(){
 	});
 
 	// Sims have iframes in them. (Pass in the labels!)
-	sims.forEach(function(sim){
+	sims.forEach(function(sim, index){
 
 		// Create & append iframe
 		var iframe = document.createElement("iframe");
 		//iframe.src = sim.getAttribute("src");
 		var src = sim.getAttribute("src");
+		iframe.title = "Remember interactive activity " + (index + 1) + " of " + sims.length;
 		iframe.setAttribute("will_source", src);
 		iframe.scrolling = "no";
 		iframe.className = "simulation";

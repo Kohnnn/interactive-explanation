@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/game.css">
 </head>
 <body data-top-bar="off" data-reference-url="https://ncase.itch.io/wbwwb" data-reference-text="We Become What We Behold">
-  <div id="stage"></div>
+  <main id="stage" data-runtime-main aria-label="We Become What We Behold interactive game" aria-busy="true"><span id="stage_fallback">Loading We Become What We Behold…</span></main>
   <div id="modal_shade"></div>
   <div class="overlay" id="warning">
     <div>Heads up.</div>
@@ -87,6 +87,8 @@
     window.onload = function () {
       try {
         Game.init();
+        document.getElementById("stage_fallback").remove();
+        document.getElementById("stage").setAttribute("aria-busy", "false");
       } catch (error) {
         document.getElementById("warning").style.display = "block";
       }

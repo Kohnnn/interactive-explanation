@@ -110,5 +110,22 @@
       "Smoke review targeted save-link and embed output because the tool depends on URL serialization for sharing.",
       "The upstream code still generates <code>?data=...</code> and <code>?embed=1&amp;data=...</code> links from <code>window.location</code>."
     ]
+  },
+  {
+    "moduleId": "phase-10-main-and-named-iframe-contract",
+    "originalBehavior": "The editor keeps its canvas, toolbar, sidebar, and modal-hosted examples, help, preview, and export surfaces in one workspace.",
+    "localStatus": "The workspace is now the route's single meaningful main landmark, and runtime-created iframes and generated embed markup receive descriptive titles.",
+    "sourceFiles": [
+      "index.html",
+      "js/Modal.js"
+    ],
+    "notes": [
+      "Canvas and modal behavior remain owned by the upstream editor runtime.",
+      "Named iframes distinguish examples, help, credits, previews, exports, and shared simulations."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies modal iframe titles and the editor workspace landmark.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

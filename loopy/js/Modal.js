@@ -56,6 +56,7 @@ function Modal(loopy){
 		var iframe = page.addComponent(new ModalIframe({
 			page: page,
 			src: "pages/examples/",
+			title: "LOOPY simulation examples",
 			width: 640,
 			height: 520
 		}));
@@ -71,6 +72,7 @@ function Modal(loopy){
 		page.addComponent(new ModalIframe({
 			page: page,
 			src: "pages/howto.html",
+			title: "How to use LOOPY",
 			width: 500,
 			height: 350
 		}));
@@ -94,6 +96,7 @@ function Modal(loopy){
 		page.addComponent(new ModalIframe({
 			page: page,
 			src: "pages/credits/",
+			title: "LOOPY credits",
 			width: 660,
 			height: 500
 		}))
@@ -158,7 +161,7 @@ function Modal(loopy){
 		// ON UPDATE DIMENSIONS
 		var iframeSRC;
 		var _onUpdate = function(){
-			var embedCode = '<iframe width="'+width.getValue()+'" height="'+height.getValue()+'" frameborder="0" src="'+iframeSRC+'"></iframe>';
+			var embedCode = '<iframe width="'+width.getValue()+'" height="'+height.getValue()+'" frameborder="0" title="LOOPY simulation" src="'+iframeSRC+'"></iframe>';
 			output.output(embedCode);
 		};
 
@@ -214,6 +217,7 @@ function Modal(loopy){
 			page: page,
 			manual: true,
 			src: "",
+			title: "LOOPY embed preview",
 			width: 500,
 			height: 440
 		})).dom;
@@ -249,6 +253,7 @@ function Modal(loopy){
 		page.addComponent(new ModalIframe({
 			page: page,
 			src: "pages/gif.html",
+			title: "LOOPY GIF export",
 			width: 500,
 			height: 350
 		}))
@@ -266,6 +271,7 @@ function ModalIframe(config){
 	self.dom = iframe;
 	iframe.width = config.width;
 	iframe.height = config.height;
+	iframe.title = config.title;
 
 	// Show & Hide
 	if(!config.manual){

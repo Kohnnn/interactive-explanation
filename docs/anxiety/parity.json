@@ -140,5 +140,25 @@
       "Focused smoke coverage opens each dialog, sends Escape, and verifies focus returns to the opener.",
       "Smoke coverage confirms actionable choices and persistent controls use native buttons."
     ]
+  },
+  {
+    "moduleId": "phase-10-main-dialog-and-native-controls",
+    "originalBehavior": "The story runtime loads into one game stage with content notes, about information, dialogue choices, and persistent controls.",
+    "localStatus": "The game stage is the route's single meaningful main landmark; loading state clears after boot, content notes and about use native dialogs, and choices and persistent controls use named native buttons.",
+    "sourceFiles": [
+      "index.html",
+      "scripts/main.js",
+      "scripts/game/About.js",
+      "scripts/game/ContentNotes.js",
+      "scripts/game/Game.js"
+    ],
+    "notes": [
+      "The native dialog focus and Escape behavior preserves the original pause architecture.",
+      "The canvas remains the visual stage while adjacent native controls provide keyboard operation."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies dialog dismissal, focus restoration, choice controls, and the loaded main landmark.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

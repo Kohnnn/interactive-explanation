@@ -1,6 +1,6 @@
 # Interactive Explanation Improvement Plan
 
-Last updated: 2026-07-16
+Last updated: 2026-07-20
 
 ## Goal
 
@@ -218,3 +218,4 @@ Acceptance:
 - 2026-07-19: Phase 7 passed the 312-test suite, audit, syntax checks, diff hygiene, focused route smoke, and the full 82-route desktop/mobile and interaction suite at port 49173. Universal coverage also corrected responsive overflow in `neurons` and `wbwwb`, a subpath loader URL in Song Maker, and local blob request classification.
 - 2026-07-19: Phase 8 added exact topic filtering, three promoted guided paths without removing inventory entries, clearer route labels, Back/Forward-restorable atlas state, and deterministic Atlas/Docs exits. The 312-test suite, focused discovery checks, OLS coordinate regression check, and full 82-route smoke suite passed.
 - 2026-07-19: Phase 9 added validated advisory learning metadata, explicit 30-day Start/Resume/numbered-step progress, and native sharing with clipboard fallback for the bounded Music and Blockchain paths. The promotional primary hub stayed progress-free; 321 tests, audit, syntax, focused browser checks, and the full 82-route smoke suite passed.
+- 2026-07-20: Phase 10 completed exactly-one meaningful main-landmark source/browser contracts, runtime loading/failure semantics, and named iframe, canvas, and native controls. 321 tests, audit, syntax, diff hygiene, focused checks, and full 82-route desktop-mobile smoke passed.

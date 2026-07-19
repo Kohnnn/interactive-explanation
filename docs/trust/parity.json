@@ -131,5 +131,23 @@
       "Local audit notes call out policy sandbox behavior and long-run equilibrium changes.",
       "Upstream source separates sandbox slide scripting from shared numeric controls."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-loading-and-failure-contract",
+    "originalBehavior": "The guide preloads text and scene assets before revealing the slideshow runtime.",
+    "localStatus": "The slideshow is the route's single meaningful main landmark; it clears loading state after successful preload and exposes a concise in-place failure state when required words cannot load.",
+    "sourceFiles": [
+      "index.html",
+      "js/main.js",
+      "js/core/Words.js"
+    ],
+    "notes": [
+      "The normal preload sequence, slide order, and simulation runtime remain unchanged.",
+      "The failed word request now rejects into the existing preload flow instead of opening a blocking alert."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies successful preload and the visible failure path.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

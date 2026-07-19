@@ -38,6 +38,7 @@ subscribe("prepreload/done", function(){
 
 	}
 	window.requestAnimationFrame(update);
+	$("#container").setAttribute("aria-busy", "false");
 
 	// Go to THE SPLASH
 	slideshow.gotoChapter("Preloader");

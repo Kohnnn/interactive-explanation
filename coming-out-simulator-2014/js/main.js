@@ -12,6 +12,7 @@ window.onload = function(){
 		setTimeout(function(){
 			document.getElementById("game").setAttribute("screen","game");
 			Start();
+			document.getElementById("game_container").setAttribute("aria-busy", "false");
 		},1500);
 	});
 

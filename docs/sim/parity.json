@@ -90,5 +90,22 @@
       "The route now loads under <code>/interactive-explanation/sim/</code> with local canonical metadata.",
       "Audit coverage passes with the shipped <code>sim</code> route included in the public-surface sweep."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-loading-and-failure-contract",
+    "originalBehavior": "The editor loads a preset or compressed URL model before mounting the grid and controls.",
+    "localStatus": "The editor workspace is the route's single meaningful main landmark; it clears loading state after a successful mount and shows a concise failure message for malformed parameters, invalid compressed data, or failed model requests.",
+    "sourceFiles": [
+      "index.html",
+      "scripts/engine/Load.js"
+    ],
+    "notes": [
+      "Valid preset, compressed-link, and export behavior remains upstream-driven.",
+      "Failure handling is limited to the existing model-loading boundary."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies successful loading and malformed-link failure semantics.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

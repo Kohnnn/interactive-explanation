@@ -32,6 +32,7 @@
     data-story-route="markov-chains"
   >
     <section class="menu"><a href="../">Back to replicas</a></section>
+    <main>
     <section class="story-hero">
       <p class="story-hero__eyebrow">Engineering Sandbox rollout · probability essays</p>
       <div class="story-hero__grid">
@@ -184,6 +185,11 @@
 
 <p>Above, we&#39;ve included a Markov chain &quot;playground&quot;, where you can make your own Markov chains by messing around with a transition matrix. Here&#39;s a few to work from as an example: <a href="javascript:update_playground('long')">ex1</a>, <a href="javascript:update_playground('large')">ex2</a>, <a href="javascript:update_playground('three')">ex3</a> or generate one <a href="javascript:update_playground('random')">randomly</a>. The transition matrix text will turn red if the provided matrix isn&#39;t a valid transition matrix. <em>The rows of the transition matrix must total to 1.</em> There also has to be the same number of rows as columns.</p>
 <p>You can also open the local fullscreen playground at <a href="./playground/">markov-chains/playground/</a>.</p>
+    </section>
+    <section>
+      <p class="or">Use the embedded playground for quick preset swaps, then open the local fullscreen view to edit the full matrix directly.</p>
+    </section>
+    </main>
 <script>
 function randomMatrix(){
   var n = Math.floor(Math.random() * 9) + 1;
@@ -223,10 +229,6 @@ function update_playground(type){
 }
 update_playground('three');
 </script>
-    </section>
-    <section>
-      <p class="or">Use the embedded playground for quick preset swaps, then open the local fullscreen view to edit the full matrix directly.</p>
-    </section>
   <script type="text/javascript">
     'use strict'
     var myApp = angular.module('myApp', [])

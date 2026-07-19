@@ -39,7 +39,7 @@
   <div id="no-browser-support-message" class="no-browser-support-message">Your browser does not support this site. Please try using a recent version of Chrome, Firefox, Safari, Edge, or Opera.</div>
   <div id="runtime-error-message" class="runtime-error-message">The local archive could not finish booting this Learning Synths lesson.</div>
   <noscript><div class="no-script-message">Please enable JavaScript in order to use this site.</div></noscript>
-  <main id="app" data-ableton-synth-lesson="ableton-learning-synths-matching-envelopes"></main>
+  <main id="app" data-ableton-synth-lesson="ableton-learning-synths-matching-envelopes" data-runtime-main aria-label="Ableton Learning Synths: Matching envelopes" aria-busy="true">Loading Ableton Learning Synths: Matching envelopes…</main>
   <script>
     window.process = { cwd: () => "" };
     window.__MUSIC_LAB_BASENAME__ = "/interactive-explanation/ableton-learning-synths-matching-envelopes";
@@ -51,8 +51,8 @@
       const supportsWebAudio = Object.prototype.hasOwnProperty.call(window, "AudioContext") || Object.prototype.hasOwnProperty.call(window, "webkitAudioContext");
       return supportsES6() && supportsWebAudio && Object.prototype.hasOwnProperty.call(window, "Promise") && Object.prototype.hasOwnProperty.call(window, "Worker") && supportsWasm();
     }
-    function showRuntimeError(error) { console.error(error); document.getElementById("initial-loader")?.remove(); document.getElementById("runtime-error-message")?.classList.add("runtime-error-message--show"); }
-    function bootMusicLab() { if (!isBrowserCompatible()) { document.getElementById("no-browser-support-message")?.classList.add("no-browser-support-message--show"); document.getElementById("initial-loader")?.remove(); return; } MusicLab.init({ staticURL: ".", languageCode: "en" }).then(() => { document.getElementById("initial-loader")?.remove(); MusicLab.createApp(document.getElementById("app")); }).catch(showRuntimeError); }
+    function showRuntimeError(error) { console.error(error); document.getElementById("initial-loader")?.remove(); document.getElementById("runtime-error-message")?.classList.add("runtime-error-message--show"); const app = document.getElementById("app"); if (app) { app.textContent = "This lesson could not load."; app.setAttribute("aria-busy", "false"); } }
+    function bootMusicLab() { if (!isBrowserCompatible()) { document.getElementById("no-browser-support-message")?.classList.add("no-browser-support-message--show"); document.getElementById("initial-loader")?.remove(); const app = document.getElementById("app"); if (app) { app.textContent = "This lesson is not supported by this browser."; app.setAttribute("aria-busy", "false"); } return; } try { MusicLab.init({ staticURL: ".", languageCode: "en" }).then(() => { document.getElementById("initial-loader")?.remove(); MusicLab.createApp(document.getElementById("app")); document.getElementById("app")?.setAttribute("aria-busy", "false"); }).catch(showRuntimeError); } catch (error) { showRuntimeError(error); } }
     if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", bootMusicLab, { once: true }); } else { bootMusicLab(); }
   </script>
   <script src="../shared/ableton-learning-synths-react.production.min.js"></script>

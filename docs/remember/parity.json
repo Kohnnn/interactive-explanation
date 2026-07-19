@@ -92,5 +92,22 @@
       "The vendored tree still contains PDF assets and the bundled download helper scripts.",
       "The ending sequence in the local page retains the same resource-oriented structure after cleanup."
     ]
+  },
+  {
+    "moduleId": "phase-10-main-and-named-iframe-contract",
+    "originalBehavior": "The comic loads chapter splash scenes and interactive activities through dynamically sourced iframes.",
+    "localStatus": "The comic is wrapped in the route's single meaningful main landmark; chapter splashes, generated activities, and the tutorial frame have descriptive titles, while decorative images are hidden from assistive technology.",
+    "sourceFiles": [
+      "index.html",
+      "js/comic.js"
+    ],
+    "notes": [
+      "Deferred iframe sourcing and comic pacing remain unchanged.",
+      "The responsive viewport change permits browser zoom and narrow-screen layout without replacing the comic runtime."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies static and runtime-created iframe titles after activity loading.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

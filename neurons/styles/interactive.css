@@ -99,6 +99,8 @@ div, canvas{
 	top:0; left:0;
 	display: none;
 	width: 100%; height: 100%;
+	padding: 0;
+	border: 0;
 	background: rgba(0,0,0,0.75);
 }
 #resume > #resume_button{	
@@ -137,13 +139,23 @@ div, canvas{
 	height: 40px;
 	background: rgba(0,0,0,0.5);
 }
-#controls > div:hover{
+#resume,
+#control_play,
+#control_volume,
+#control_captions{
+	-webkit-appearance: none;
+	appearance: none;
+}
+#controls > div:hover,
+#controls > button:hover{
 	background-color: rgba(0,0,0,0.8);
 }
 #control_play{
 	float: left;
 	width: 59px;
 	height: 40px;
+	padding: 0;
+	border: 0;
 	background-image: url(../assets/ui/play.png);
 	cursor: pointer;
 }
@@ -157,6 +169,8 @@ div, canvas{
 	float: left;
 	width: 47px;
 	height: 40px;
+	padding: 0;
+	border: 0;
 	background-image: url(../assets/ui/volume.png);
 	cursor: pointer;
 }
@@ -169,6 +183,8 @@ div, canvas{
 	float: right;
 	width: 47px;
 	height: 40px;
+	padding: 0;
+	border: 0;
 	background-image: url(../assets/ui/captions.png);
 	cursor: pointer;
 }

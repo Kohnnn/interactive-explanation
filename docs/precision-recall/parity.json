@@ -88,5 +88,23 @@
       "The public-surface audit blocks creator names, MLU branding, upstream domains, promo links, and contributor callouts in shipped route code.",
       "The route now advertises only the shared footer link back to the live original page."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-contract",
+    "originalBehavior": "The compiled lesson mounts its interactive content into a single application root after the page loads.",
+    "localStatus": "The additive shell now exposes that mount as the route's single meaningful main landmark, including loading semantics and a textual fallback while the compiled lesson initializes.",
+    "sourceFiles": [
+      "index.html",
+      "build/bundle.js",
+      "../shared/engineering-sandbox.js"
+    ],
+    "notes": [
+      "The compiled threshold and metric controls retain ownership of their runtime DOM.",
+      "Removing the fixed zoom restriction preserves browser zoom without changing lesson behavior."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies the mounted lesson clears its loading state before threshold and metric interactions.",
+      "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
   }
 ]

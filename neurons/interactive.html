@@ -18,23 +18,23 @@
 				<div id="loading_bar_graphic"></div>
 			</div>
 		</div>
-		<canvas id="canvas" width="960" height="540" loading="yes"></canvas>
-		<div id="resume">
-			<div id="resume_button"></div>
-		</div>
+		<canvas id="canvas" width="960" height="540" loading="yes" aria-label="Neurotic Neurons interactive animation"></canvas>
+		<button id="resume" type="button" aria-label="Resume interactive">
+			<span id="resume_button"></span>
+		</button>
 		<div id="ui">
 			<div id="captions"><span></span></div>
 			<div id="controls">
 				
 				<!-- to the left, to the left -->
-				<div id="control_play" playing="true"></div>
-				<div id="control_volume"></div>
-				<input id="control_volume_slider" type="range" min="0" max="1" step="0.1" value="1"/>
+				<button id="control_play" type="button" aria-label="Pause interactive" playing="true"></button>
+				<button id="control_volume" type="button" aria-label="Mute sound"></button>
+				<input id="control_volume_slider" type="range" min="0" max="1" step="0.1" value="1" aria-label="Volume"/>
 
 				<!-- to the right, to the right -->
-				<select id="control_captions_select" type="select"></select>
-				<div id="control_captions" captions="true"></div>
-
+				<select id="control_captions_select" type="select" aria-label="Caption language"></select>
+				<button id="control_captions" type="button" aria-label="Hide captions" captions="true"></button>
+				
 			</div>
 		</div>
 	</div>

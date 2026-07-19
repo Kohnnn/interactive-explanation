@@ -69,5 +69,22 @@
       "The public-surface audit verifies the route ships without hardcoded upstream runtime asset URLs in the static shell.",
       "Shared smoke coverage verifies the route remains usable after the promo cleanup and that the shared footer is present as the surviving provenance surface."
     ]
+  },
+  {
+    "moduleId": "phase-10-runtime-main-and-bundle-failure-contract",
+    "originalBehavior": "The route starts with an empty app root while the hashed module bundle loads and mounts the QR walkthrough.",
+    "localStatus": "The app root is now a named runtime main with loading fallback text; the rendered bundle clears busy state, while either module load path reports an in-place failure message and clears busy state.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/index.html",
+      "../../reading-qr-codes-without-a-computer/assets/index-m4DBYcND.js"
+    ],
+    "notes": [
+      "The hashed walkthrough bundle remains otherwise unchanged.",
+      "The mutation observer continues promo cleanup while recognizing successful mount."
+    ],
+    "evidence": [
+      "Focused browser coverage verifies loading fallback, successful busy completion, and bundle-load failure messaging.",
+      "Phase 10 source and browser contracts require one meaningful runtime main."
+    ]
   }
 ]

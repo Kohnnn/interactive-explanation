@@ -35,6 +35,16 @@ const requirements = [
     test: (html) => /<title>[^<]*\S[^<]*<\/title>/i.test(html),
     hint: "add a non-empty <title>",
   },
+  {
+    name: "single meaningful main landmark",
+    test: (html) => {
+      const openings = html.match(/<main(?:\s[^>]*)?>/gi) || [];
+      const closings = html.match(/<\/main>/gi) || [];
+      const content = html.match(/<main(?:\s[^>]*)?>([\s\S]*?)<\/main>/i)?.[1] || "";
+      return openings.length === 1 && closings.length === 1 && content.trim().length > 0;
+    },
+    hint: "wrap the primary route content in exactly one non-empty <main>",
+  },
 ];
 
 function assertNonEmptyStringArray(value, label) {

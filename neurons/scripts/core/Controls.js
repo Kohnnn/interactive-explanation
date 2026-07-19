@@ -48,9 +48,11 @@ resume_screen.onclick = function(){
 var _updatePauseUI = function(){
 	if(Interactive.PLAYING){
 		play.setAttribute("playing","true");
+		play.setAttribute("aria-label","Pause");
 		resume.style.display = "none";
 	}else{
 		play.setAttribute("playing","false");
+		play.setAttribute("aria-label","Resume");
 		resume.style.display = "block";
 	}
 };
@@ -94,6 +96,7 @@ var _updateVolumeIcon = function(){
 	}
 	state = 3-state;
 	volumeIcon.style.backgroundPosition = (-state*47)+"px 0px";
+	volumeIcon.setAttribute("aria-label",(createjs.Sound.muted || createjs.Sound.volume==0) ? "Unmute" : "Mute");
 };
 
 // The slider
@@ -122,6 +125,7 @@ captionsIcon.onclick = function(){
 };
 var _updateCaptionsUI = function(){
 	captionsIcon.style.backgroundPosition = (CAPTION_LANGUAGE=="") ? "47px 0px" : "0px 0px";
+	captionsIcon.setAttribute("aria-label",CAPTION_LANGUAGE=="" ? "Show captions" : "Hide captions");
 	captionsSelect.value = CAPTION_LANGUAGE;
 };
 
