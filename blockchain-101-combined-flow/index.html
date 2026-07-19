@@ -40,6 +40,7 @@
       background: var(--accent);
       color: #fffaf4;
       font-weight: 700;
+      text-decoration: none;
     }
 
     .chapter-card h2 {
@@ -76,6 +77,8 @@
   data-story-family="anders-lab"
   data-story-nav="none"
   data-story-route="blockchain-101-combined-flow"
+  data-learning-progress-slug="blockchain-101-combined-flow"
+  data-learning-step-count="3"
   style="--story-shell-max: 1100px;"
 >
   <main class="site-page">
@@ -105,17 +108,21 @@
             about privacy instead of authenticity.
           </p>
           <div class="story-hero__actions">
-            <a class="story-button" href="#chapter-hash">Start with hashing</a>
+            <a class="story-button" data-learning-start href="#chapter-hash">Start with hashing</a>
+            <a class="story-button" data-learning-resume hidden href="#chapter-hash">Resume learning path</a>
+            <button class="story-button story-button--secondary" type="button" data-share-route>Share this path</button>
             <a class="story-button story-button--secondary" href="../docs/blockchain-101-combined-flow/">Docs</a>
             <a class="story-button story-button--secondary" href="../primary-interactive-hub/">Open primary hub</a>
           </div>
+          <p class="meta-line" data-learning-progress-status role="status" aria-live="polite"></p>
+          <p class="meta-line" data-share-status role="status" aria-live="polite"></p>
         </div>
       </div>
     </header>
 
     <section class="chapter-grid">
       <article class="chapter-card" id="chapter-hash">
-        <span class="chapter-step">1</span>
+        <a class="chapter-step" data-learning-step="1" href="#chapter-hash" aria-label="Step 1: Hashing and linked blocks">1</a>
         <h2>Hashing and linked blocks</h2>
         <p class="meta-line">
           Begin with block fields, nonce updates, and the tamper cascade. This chapter builds the
@@ -134,7 +141,7 @@
       </article>
 
       <article class="chapter-card" id="chapter-signatures">
-        <span class="chapter-step">2</span>
+        <a class="chapter-step" data-learning-step="2" href="#chapter-signatures" aria-label="Step 2: Keys, signatures, and transactions">2</a>
         <h2>Keys, signatures, and transactions</h2>
         <p class="meta-line">
           Continue into key generation, signing, verification, and transaction flow. This chapter
@@ -154,7 +161,7 @@
       </article>
 
       <article class="chapter-card" id="chapter-zkp">
-        <span class="chapter-step">3</span>
+        <a class="chapter-step" data-learning-step="3" href="#chapter-zkp" aria-label="Step 3: Proof without disclosure">3</a>
         <h2>Proof without disclosure</h2>
         <p class="meta-line">
           End with the map-based proof scene. It shifts the lesson from authenticity to privacy by

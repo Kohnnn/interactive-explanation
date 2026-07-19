@@ -53,6 +53,85 @@ test("intent is preserved in pages.json", () => {
   assert.equal(pages[0].intent, "create");
 });
 
+test("learning metadata is optional and preserved in pages.json", () => {
+  const learning = {
+    difficulty: "beginner",
+    durationMinutes: 12,
+    order: 2,
+    prerequisites: ["intro-route"],
+  };
+  const root = makeRootWithManifest([
+    {
+      ...validRoute,
+      slug: "intro-route",
+      referenceUrl: "https://example.com/intro",
+      docsUrl: "./docs/intro-route/",
+    },
+    { ...validRoute, learning },
+  ]);
+  const result = runSync(root);
+  assert.equal(result.status, 0, result.stderr);
+  const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
+  assert.deepEqual(pages[1].learning, learning);
+});
+
+test("invalid learning object fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: [] }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /learning metadata must be an object/i);
+});
+
+test("invalid learning difficulty fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { difficulty: "expert" } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /invalid learning difficulty/i);
+});
+
+test("invalid learning duration fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { durationMinutes: 1.5 } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /durationMinutes must be a positive integer/i);
+});
+
+test("invalid learning order fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { order: 0 } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /order must be a positive integer/i);
+});
+
+test("invalid learning prerequisites fail validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { prerequisites: "intro-route" } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /prerequisites must be an array/i);
+});
+
+test("unknown learning prerequisite fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { prerequisites: ["missing-route"] } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /unknown prerequisite/i);
+});
+
+test("self learning prerequisite fails validation", () => {
+  const result = runSync(makeRootWithManifest([{ ...validRoute, learning: { prerequisites: [validRoute.slug] } }]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /cannot require itself/i);
+});
+
+test("duplicate learning prerequisite fails validation", () => {
+  const prerequisite = {
+    ...validRoute,
+    slug: "intro-route",
+    referenceUrl: "https://example.com/intro",
+    docsUrl: "./docs/intro-route/",
+  };
+  const result = runSync(makeRootWithManifest([
+    prerequisite,
+    { ...validRoute, learning: { prerequisites: [prerequisite.slug, prerequisite.slug] } },
+  ]));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /duplicate prerequisite/i);
+});
+
 test("missing intent fails validation", () => {
   const route = { ...validRoute };
   delete route.intent;

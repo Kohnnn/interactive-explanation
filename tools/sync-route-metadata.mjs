@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const VALID_INTENTS = new Set(["explainer", "simulation", "practice", "create", "guided-path"]);
+const VALID_LEARNING_DIFFICULTIES = new Set(["beginner", "intermediate", "advanced"]);
 
 const cliArgs = process.argv.slice(2);
 
@@ -87,7 +88,7 @@ function validateManifest(manifest) {
   manifest.forEach((route, index) => {
     assertManifest(route && typeof route === "object" && !Array.isArray(route), `entry ${index} must be an object`);
 
-    const { slug, title, summary, intent, referenceUrl, referenceMode, docsUrl } = route;
+    const { slug, title, summary, intent, referenceUrl, referenceMode, docsUrl, learning } = route;
     assertManifest(typeof slug === "string" && slug.trim().length > 0, `entry ${index} is missing slug`);
     assertManifest(!slugs.has(slug), `duplicate slug "${slug}"`);
     slugs.add(slug);
@@ -119,6 +120,47 @@ function validateManifest(manifest) {
       docsUrl === `./docs/${slug}/`,
       `route "${slug}" must use docsUrl "./docs/${slug}/"`,
     );
+
+    if (learning !== undefined) {
+      assertManifest(
+        learning && typeof learning === "object" && !Array.isArray(learning),
+        `route "${slug}" learning metadata must be an object`,
+      );
+      assertManifest(
+        learning.difficulty === undefined || VALID_LEARNING_DIFFICULTIES.has(learning.difficulty),
+        `route "${slug}" uses invalid learning difficulty "${learning.difficulty}"`,
+      );
+      assertManifest(
+        learning.durationMinutes === undefined || Number.isInteger(learning.durationMinutes) && learning.durationMinutes > 0,
+        `route "${slug}" learning durationMinutes must be a positive integer`,
+      );
+      assertManifest(
+        learning.order === undefined || Number.isInteger(learning.order) && learning.order > 0,
+        `route "${slug}" learning order must be a positive integer`,
+      );
+      assertManifest(
+        learning.prerequisites === undefined || Array.isArray(learning.prerequisites),
+        `route "${slug}" learning prerequisites must be an array`,
+      );
+    }
+  });
+
+  manifest.forEach(({ slug, learning }) => {
+    if (!learning?.prerequisites) {
+      return;
+    }
+
+    const prerequisites = new Set();
+    learning.prerequisites.forEach((prerequisite) => {
+      assertManifest(
+        typeof prerequisite === "string" && prerequisite.trim().length > 0,
+        `route "${slug}" learning prerequisite must be a non-empty slug`,
+      );
+      assertManifest(prerequisite !== slug, `route "${slug}" cannot require itself`);
+      assertManifest(!prerequisites.has(prerequisite), `route "${slug}" has duplicate prerequisite "${prerequisite}"`);
+      assertManifest(slugs.has(prerequisite), `route "${slug}" has unknown prerequisite "${prerequisite}"`);
+      prerequisites.add(prerequisite);
+    });
   });
 }
 

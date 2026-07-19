@@ -76,6 +76,8 @@
   data-reference-mode="neutral"
   data-reference-note="This curated route spans multiple local music families. See the local docs for the full source inventory."
   data-footer-label="Provenance"
+  data-learning-progress-slug="music-interactive-hub"
+  data-learning-step-count="5"
 >
   <main class="site-page music-hub-page" data-music-hub>
     <a class="back-link" href="../">Back to replicas</a>
@@ -90,17 +92,21 @@
         interactive music map.
       </p>
       <div class="action-row">
-        <a class="action-link" href="./#ear-training-cluster">Start with ear training</a>
+        <a class="action-link" data-learning-start href="./#recommended-path">Start learning path</a>
+        <a class="action-link" data-learning-resume hidden href="./#recommended-path">Resume learning path</a>
+        <button class="action-link ghost action-link--button" type="button" data-share-route>Share this path</button>
         <a class="action-link secondary" href="./#synthesis-cluster">Jump to synthesis</a>
         <a class="action-link ghost" href="../docs/music-interactive-hub/">Docs</a>
       </div>
       <p class="meta-line">
         21 local routes across five live music families: Teoria, Ableton Learning Music, Ableton Learning Synths, Chrome Music Lab, and Musicmap.
       </p>
+      <p class="meta-line" data-learning-progress-status role="status" aria-live="polite"></p>
+      <p class="meta-line" data-share-status role="status" aria-live="polite"></p>
     </header>
 
 
-    <section class="path-panel" data-recommended-path>
+    <section class="path-panel" id="recommended-path" data-recommended-path>
       <div class="section-heading">
         <h2>Recommended Path</h2>
         <span class="route-count" data-path-count>5 stops</span>
@@ -110,11 +116,11 @@
           shape a first synth sound, then place it in a wider map of styles.
         </p>
         <ol>
-          <li><a href="../teoria-interval-ear-training/">Teoria Interval Ear Training</a> to hear distance and contour between notes.</li>
-          <li><a href="../ableton-learning-music-play-with-beats/">Ableton Play with beats</a> to start building rhythmic motion one bar at a time.</li>
-          <li><a href="../ableton-learning-music-playground/">Ableton Learning Music Playground</a> to combine beats, bass, chords, and melody in motion.</li>
-          <li><a href="../ableton-learning-synths-get-started/">Ableton Learning Synths: Get started</a> to connect pitch and pattern work to a playable synth surface.</li>
-          <li><a href="../musicmap/">Musicmap</a> to connect those sounds to a broader genre history.</li>
+          <li><a data-learning-step="1" href="../teoria-interval-ear-training/">Teoria Interval Ear Training</a> to hear distance and contour between notes.</li>
+          <li><a data-learning-step="2" href="../ableton-learning-music-play-with-beats/">Ableton Play with beats</a> to start building rhythmic motion one bar at a time.</li>
+          <li><a data-learning-step="3" href="../ableton-learning-music-playground/">Ableton Learning Music Playground</a> to combine beats, bass, chords, and melody in motion.</li>
+          <li><a data-learning-step="4" href="../ableton-learning-synths-get-started/">Ableton Learning Synths: Get started</a> to connect pitch and pattern work to a playable synth surface.</li>
+          <li><a data-learning-step="5" href="../musicmap/">Musicmap</a> to connect those sounds to a broader genre history.</li>
         </ol>
     </section>
 

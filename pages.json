@@ -347,7 +347,13 @@
     ],
     "addedDate": "2026-03-18",
     "intent": "simulation",
-    "docsUrl": "./docs/blockchain/"
+    "docsUrl": "./docs/blockchain/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 8,
+      "order": 1,
+      "prerequisites": []
+    }
   },
   {
     "slug": "public-private-keys",
@@ -361,7 +367,15 @@
     ],
     "addedDate": "2026-03-18",
     "intent": "simulation",
-    "docsUrl": "./docs/public-private-keys/"
+    "docsUrl": "./docs/public-private-keys/",
+    "learning": {
+      "difficulty": "intermediate",
+      "durationMinutes": 12,
+      "order": 2,
+      "prerequisites": [
+        "blockchain"
+      ]
+    }
   },
   {
     "slug": "zero-knowledge-proof-demo",
@@ -375,7 +389,15 @@
     ],
     "addedDate": "2026-03-18",
     "intent": "simulation",
-    "docsUrl": "./docs/zero-knowledge-proof-demo/"
+    "docsUrl": "./docs/zero-knowledge-proof-demo/",
+    "learning": {
+      "difficulty": "intermediate",
+      "durationMinutes": 8,
+      "order": 3,
+      "prerequisites": [
+        "public-private-keys"
+      ]
+    }
   },
   {
     "slug": "alpha-compositing",
@@ -643,7 +665,13 @@
     ],
     "addedDate": "2026-03-21",
     "intent": "practice",
-    "docsUrl": "./docs/teoria-interval-ear-training/"
+    "docsUrl": "./docs/teoria-interval-ear-training/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 8,
+      "order": 1,
+      "prerequisites": []
+    }
   },
   {
     "slug": "teoria-note-ear-training",
@@ -727,7 +755,15 @@
     ],
     "addedDate": "2026-03-21",
     "intent": "create",
-    "docsUrl": "./docs/ableton-learning-music-playground/"
+    "docsUrl": "./docs/ableton-learning-music-playground/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 10,
+      "order": 3,
+      "prerequisites": [
+        "ableton-learning-music-play-with-beats"
+      ]
+    }
   },
   {
     "slug": "ableton-learning-music-play-with-beats",
@@ -741,7 +777,15 @@
     ],
     "addedDate": "2026-03-21",
     "intent": "create",
-    "docsUrl": "./docs/ableton-learning-music-play-with-beats/"
+    "docsUrl": "./docs/ableton-learning-music-play-with-beats/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 8,
+      "order": 2,
+      "prerequisites": [
+        "teoria-interval-ear-training"
+      ]
+    }
   },
   {
     "slug": "ableton-learning-music-play-with-notes-and-scales",
@@ -825,7 +869,15 @@
     ],
     "addedDate": "2026-03-21",
     "intent": "create",
-    "docsUrl": "./docs/ableton-learning-synths-get-started/"
+    "docsUrl": "./docs/ableton-learning-synths-get-started/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 8,
+      "order": 4,
+      "prerequisites": [
+        "ableton-learning-music-playground"
+      ]
+    }
   },
   {
     "slug": "ableton-learning-synths-how-synths-make-sound",
@@ -923,7 +975,15 @@
     ],
     "addedDate": "2026-03-21",
     "intent": "explainer",
-    "docsUrl": "./docs/musicmap/"
+    "docsUrl": "./docs/musicmap/",
+    "learning": {
+      "difficulty": "beginner",
+      "durationMinutes": 10,
+      "order": 5,
+      "prerequisites": [
+        "ableton-learning-synths-get-started"
+      ]
+    }
   },
   {
     "slug": "music-interactive-hub",

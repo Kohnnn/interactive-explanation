@@ -20,9 +20,11 @@
   {
     "moduleId": "clustered-learning-arc-across-five-families",
     "originalBehavior": "The live music routes cover different goals: interval or note drills, multitrack sequencing, painted pattern writing, and genre history.",
-    "localStatus": "The local hub groups 21 routes from five live music families into four editorial clusters and one five-stop recommended path so the collection reads as a progression rather than a flat list.",
+    "localStatus": "The local hub groups 21 routes from five live music families into four editorial clusters and one advisory five-stop path with explicit Start, Resume, numbered-step progress, and native sharing.",
     "sourceFiles": [
       "../../music-interactive-hub/index.html",
+      "../../routes.manifest.json",
+      "../../shared/public-footer.js",
       "../../teoria-note-ear-training/index.html",
       "../../ableton-learning-music-playground/index.html",
       "../../ableton-learning-music-play-with-beats/index.html",

@@ -187,6 +187,104 @@ async function assertRoute(page, relativePath, selector) {
   console.log(`OK route ${relativePath}`);
 }
 
+async function clickWithoutNavigation(page, selector) {
+  await page.locator(selector).evaluate((element) => {
+    element.addEventListener("click", (event) => event.preventDefault(), { once: true });
+    element.click();
+  });
+}
+
+async function assertLearningPathControls(context, relativePath, slug, stepCount, selectedStep) {
+  const key = `ie-learning-progress:v1:${slug}`;
+  const routeUrl = new URL(relativePath, baseUrl).href;
+  const page = await context.newPage();
+  await assertRoute(page, relativePath, "#reference-footer");
+  await page.evaluate((storageKey) => window.localStorage.removeItem(storageKey), key);
+  await page.reload({ waitUntil: "domcontentloaded" });
+
+  const initial = await page.evaluate(() => ({
+    startHidden: document.querySelector("[data-learning-start]")?.hidden,
+    resumeHidden: document.querySelector("[data-learning-resume]")?.hidden,
+  }));
+  assert(initial.startHidden === false, `${slug} hid Start without saved progress`);
+  assert(initial.resumeHidden === true, `${slug} exposed Resume without saved progress`);
+
+  await clickWithoutNavigation(page, "[data-learning-start]");
+  const started = await page.evaluate((storageKey) => JSON.parse(window.localStorage.getItem(storageKey)), key);
+  assert(started.step === 1 && Number.isFinite(started.updatedAt), `${slug} did not save explicit Start progress`);
+
+  await clickWithoutNavigation(page, `[data-learning-step="${selectedStep}"]`);
+  const selected = await page.evaluate((storageKey) => JSON.parse(window.localStorage.getItem(storageKey)), key);
+  assert(selected.step === selectedStep, `${slug} did not save numbered-step progress`);
+
+  await page.reload({ waitUntil: "domcontentloaded" });
+  const restored = await page.evaluate((storageKey) => ({
+    startHidden: document.querySelector("[data-learning-start]")?.hidden,
+    resumeHidden: document.querySelector("[data-learning-resume]")?.hidden,
+    resumeHref: document.querySelector("[data-learning-resume]")?.href,
+    stepHref: document.querySelector(`[data-learning-step="${JSON.parse(window.localStorage.getItem(storageKey))?.step}"]`)?.href,
+    stored: JSON.parse(window.localStorage.getItem(storageKey)),
+  }), key);
+  assert(restored.startHidden === true, `${slug} did not hide Start after restoring progress`);
+  assert(restored.resumeHidden === false, `${slug} did not expose Resume after restoring progress`);
+  assert(restored.resumeHref === restored.stepHref, `${slug} Resume did not target the stored step`);
+  assert(restored.stored.updatedAt === selected.updatedAt, `${slug} updated progress without an explicit action`);
+
+  await page.waitForTimeout(10);
+  await clickWithoutNavigation(page, "[data-learning-resume]");
+  const resumed = await page.evaluate((storageKey) => JSON.parse(window.localStorage.getItem(storageKey)), key);
+  assert(resumed.step === selectedStep && resumed.updatedAt > selected.updatedAt, `${slug} did not refresh progress on explicit Resume`);
+
+  await page.evaluate(({ storageKey, count }) => {
+    window.localStorage.setItem(storageKey, JSON.stringify({ step: count, updatedAt: Date.now() - 31 * 24 * 60 * 60 * 1000 }));
+  }, { storageKey: key, count: stepCount });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  const expired = await page.evaluate((storageKey) => ({
+    stored: window.localStorage.getItem(storageKey),
+    startHidden: document.querySelector("[data-learning-start]")?.hidden,
+    resumeHidden: document.querySelector("[data-learning-resume]")?.hidden,
+  }), key);
+  assert(expired.stored === null, `${slug} retained progress older than 30 days`);
+  assert(expired.startHidden === false && expired.resumeHidden === true, `${slug} restored expired progress`);
+  await page.close();
+
+  const sharePage = await context.newPage();
+  await sharePage.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: async (payload) => {
+        window.__learningSharePayload = payload;
+      },
+    });
+  });
+  await assertRoute(sharePage, relativePath, "#reference-footer");
+  await sharePage.locator("[data-share-route]").click();
+  await sharePage.waitForFunction(() => document.querySelector("[data-share-status]")?.textContent === "Path shared.");
+  const sharePayload = await sharePage.evaluate(() => window.__learningSharePayload);
+  assert(sharePayload?.url === routeUrl, `${slug} native share used an unexpected route URL`);
+  assert(sharePayload?.title === await sharePage.title(), `${slug} native share omitted the route title`);
+  await sharePage.close();
+
+  const clipboardPage = await context.newPage();
+  await clipboardPage.addInitScript(() => {
+    Object.defineProperty(navigator, "share", { configurable: true, value: undefined });
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: async (value) => {
+          window.__learningCopiedUrl = value;
+        },
+      },
+    });
+  });
+  await assertRoute(clipboardPage, relativePath, "#reference-footer");
+  await clipboardPage.locator("[data-share-route]").click();
+  await clipboardPage.waitForFunction(() => document.querySelector("[data-share-status]")?.textContent === "Path link copied.");
+  const copiedUrl = await clipboardPage.evaluate(() => window.__learningCopiedUrl);
+  assert(copiedUrl === routeUrl, `${slug} clipboard fallback used an unexpected route URL`);
+  await clipboardPage.close();
+}
+
 async function assertReferenceFooterFocusContract(page, relativePath) {
   const state = await page.evaluate(() => {
     const footer = document.querySelector("#reference-footer");
@@ -5859,6 +5957,15 @@ async function smokeMusicInteractiveHub(context) {
   assert(hubState.recommendedPathBadge === "5 stops", `music-interactive-hub route exposed unexpected path badge: ${hubState.recommendedPathBadge}`);
   console.log("OK music-interactive-hub card clusters");
 
+  await assertLearningPathControls(
+    context,
+    "music-interactive-hub/",
+    "music-interactive-hub",
+    5,
+    3,
+  );
+  console.log("OK music-interactive-hub progress and sharing");
+
   await assertViewportUsable(page, "music-interactive-hub route");
   await assertRouteViewportUsable(
     context,
@@ -6197,11 +6304,20 @@ async function smokeBlockchain101CombinedFlow(context) {
   }
   console.log("OK blockchain-101-combined-flow local chapter links");
 
-  await page.locator("a[href='#chapter-hash']").click();
+  await page.locator("[data-learning-start]").click();
   await page.waitForTimeout(250);
   const hashAnchorVisible = await page.locator("#chapter-hash").isVisible();
   assert(hashAnchorVisible, "blockchain-101-combined-flow chapter anchor navigation failed");
   console.log("OK blockchain-101-combined-flow chapter anchor");
+
+  await assertLearningPathControls(
+    context,
+    "blockchain-101-combined-flow/",
+    "blockchain-101-combined-flow",
+    3,
+    2,
+  );
+  console.log("OK blockchain-101-combined-flow progress and sharing");
 
   await assertEngineeringSandboxLayout(context, "blockchain-101-combined-flow/", "blockchain-101-combined-flow route", {
     navMode: "none",
@@ -6237,11 +6353,15 @@ async function smokePrimaryInteractiveHub(context) {
   const hubState = await page.evaluate(() => {
     const hrefs = Array.from(document.querySelectorAll(".route-card a[href]"))
       .map((node) => node.getAttribute("href") || "");
-    return {
-      hrefs,
-      countText: document.querySelector("[data-hub-count]")?.textContent || "",
-    };
-  });
+     return {
+       hrefs,
+       countText: document.querySelector("[data-hub-count]")?.textContent || "",
+       hasProgressContract: Boolean(
+         document.body.dataset.learningProgressSlug ||
+         document.querySelector("[data-learning-start], [data-learning-resume], [data-learning-step]"),
+       ),
+     };
+   });
   for (const expectedHref of [
     "../trust/",
     "../docs/trust/",
@@ -6257,6 +6377,7 @@ async function smokePrimaryInteractiveHub(context) {
     );
   }
   assert(/12 local routes/i.test(hubState.countText), "primary-interactive-hub count summary did not render");
+  assert(!hubState.hasProgressContract, "primary-interactive-hub incorrectly exposed a strict progress contract");
   console.log("OK primary-interactive-hub local route grid");
 
   await page.locator("a[href='./#stories-cluster']").click();

@@ -20,9 +20,10 @@
   {
     "moduleId": "combined-flow-shell-and-chapter-roadmap",
     "originalBehavior": "The source family is split across separate blockchain, signing, and proof demos with distinct entry routes and teaching surfaces.",
-    "localStatus": "The local route adds one lightweight roadmap page that introduces the full sequence and keeps each chapter accessible through local links.",
+    "localStatus": "The local route adds one lightweight advisory roadmap with local chapter links, explicit Start, Resume, numbered-step progress, and native sharing.",
     "sourceFiles": [
       "../../blockchain-101-combined-flow/index.html",
+      "../../routes.manifest.json",
       "../../shared/public-footer.js"
     ],
     "notes": [

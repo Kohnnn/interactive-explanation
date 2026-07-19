@@ -57,6 +57,155 @@
     return link;
   }
 
+  function removeStoredLearningProgress(key) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readStoredLearningProgress(key, stepCount) {
+    try {
+      const stored = JSON.parse(window.localStorage.getItem(key));
+      const now = Date.now();
+      const valid = stored &&
+        Number.isInteger(stored.step) &&
+        stored.step >= 1 &&
+        stored.step <= stepCount &&
+        Number.isFinite(stored.updatedAt) &&
+        stored.updatedAt <= now &&
+        now - stored.updatedAt <= 30 * 24 * 60 * 60 * 1000;
+      if (valid) {
+        return stored;
+      }
+    } catch (error) {}
+
+    removeStoredLearningProgress(key);
+    return null;
+  }
+
+  function writeStoredLearningProgress(key, step) {
+    const progress = { step, updatedAt: Date.now() };
+    try {
+      window.localStorage.setItem(key, JSON.stringify(progress));
+      return progress;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function initLearningProgress() {
+    const body = document.body;
+    const slug = body?.dataset.learningProgressSlug;
+    const stepCount = Number(body?.dataset.learningStepCount);
+    if (!slug || !Number.isInteger(stepCount) || stepCount < 1) {
+      return;
+    }
+
+    const key = `ie-learning-progress:v1:${slug}`;
+    const start = document.querySelector("[data-learning-start]");
+    const resume = document.querySelector("[data-learning-resume]");
+    const status = document.querySelector("[data-learning-progress-status]");
+    const steps = Array.from(document.querySelectorAll("[data-learning-step]"));
+
+    function render(progress, message) {
+      const step = progress && document.querySelector(`[data-learning-step="${progress.step}"]`);
+      if (start) {
+        start.hidden = Boolean(step);
+      }
+      if (resume) {
+        resume.hidden = !step;
+        if (step) {
+          resume.href = step.href;
+          resume.textContent = `Resume at step ${progress.step}`;
+          resume.setAttribute("aria-label", `Resume learning path at step ${progress.step} of ${stepCount}`);
+        }
+      }
+      if (status) {
+        status.textContent = message || (step
+          ? `Progress saved at step ${progress.step} of ${stepCount}.`
+          : "Path not started. Choose Start or a numbered step.");
+      }
+    }
+
+    function save(step, message) {
+      const progress = writeStoredLearningProgress(key, step);
+      render(progress, progress ? message : "Progress is unavailable in this browser.");
+    }
+
+    let progress = readStoredLearningProgress(key, stepCount);
+    render(progress);
+
+    if (start) {
+      start.addEventListener("click", function () {
+        save(1, `Started at step 1 of ${stepCount}.`);
+      });
+    }
+
+    if (resume) {
+      resume.addEventListener("click", function () {
+        progress = readStoredLearningProgress(key, stepCount);
+        if (progress) {
+          save(progress.step, `Resuming at step ${progress.step} of ${stepCount}.`);
+        }
+      });
+    }
+
+    steps.forEach(function (step) {
+      const stepNumber = Number(step.dataset.learningStep);
+      if (!Number.isInteger(stepNumber) || stepNumber < 1 || stepNumber > stepCount) {
+        return;
+      }
+      step.addEventListener("click", function () {
+        save(stepNumber, `Step ${stepNumber} of ${stepCount} selected.`);
+      });
+    });
+  }
+
+  function copyLearningPathUrl(url, status) {
+    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+      status.textContent = "Copy unavailable. Copy the page URL from your browser.";
+      return Promise.resolve();
+    }
+
+    return navigator.clipboard.writeText(url).then(function () {
+      status.textContent = "Path link copied.";
+    }).catch(function () {
+      status.textContent = "Copy unavailable. Copy the page URL from your browser.";
+    });
+  }
+
+  function initLearningShare() {
+    const buttons = document.querySelectorAll("[data-share-route]");
+    const status = document.querySelector("[data-share-status]");
+    if (!buttons.length || !status) {
+      return;
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", async function () {
+        const url = new URL(window.location.href);
+        url.hash = "";
+        if (typeof navigator.share === "function") {
+          try {
+            await navigator.share({
+              title: document.title,
+              text: "Continue this interactive learning path.",
+              url: url.href,
+            });
+            status.textContent = "Path shared.";
+            return;
+          } catch (error) {
+            if (error?.name === "AbortError") {
+              status.textContent = "Sharing canceled.";
+              return;
+            }
+          }
+        }
+        await copyLearningPathUrl(url.href, status);
+      });
+    });
+  }
+
   function hideFooterFromFocusOrder(footer) {
     if ("inert" in footer) {
       footer.inert = true;
@@ -410,6 +559,8 @@
   function boot() {
     initFooter();
     initTopBar();
+    initLearningProgress();
+    initLearningShare();
   }
 
   if (document.readyState === "loading") {
