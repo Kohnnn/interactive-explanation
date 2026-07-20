@@ -15,8 +15,8 @@ function makeRootWithManifest(manifest) {
   return root;
 }
 
-function runSync(root) {
-  return spawnSync(process.execPath, [syncTool, root], { encoding: "utf8" });
+function runSync(root, ...args) {
+  return spawnSync(process.execPath, [syncTool, root, ...args], { encoding: "utf8" });
 }
 
 const validRoute = {
@@ -35,6 +35,22 @@ test("valid manifest syncs and writes pages.json", () => {
   const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
   assert.equal(pages.length, 1);
   assert.equal(pages[0].slug, "demo-route");
+});
+
+test("docs scaffolding emits the release metadata and theme contract", () => {
+  const root = makeRootWithManifest([validRoute]);
+  const result = runSync(root, "--scaffold", validRoute.slug);
+  assert.equal(result.status, 0, result.stderr);
+  const source = fs.readFileSync(path.join(root, "docs", validRoute.slug, "index.html"), "utf8");
+  const docsUrl = `https://kohnnn.github.io/interactive-explanation/docs/${validRoute.slug}/`;
+  assert.match(source, /<meta name="robots" content="noindex,follow">/);
+  assert.match(source, /<meta property="og:title" content="Demo Route Replica Docs">/);
+  assert.match(source, /<meta property="og:description" content="Provenance, parity notes, and implementation references for the local demo-route route\.">/);
+  assert.match(source, /<meta property="og:type" content="website">/);
+  assert.match(source, new RegExp(`<meta property="og:url" content="${docsUrl}">`));
+  assert.match(source, new RegExp(`<link rel="canonical" href="${docsUrl}">`));
+  assert.ok(source.indexOf("../../shared/theme-init.js") < source.indexOf("../../shared/site.css"));
+  assert.match(source, />Back to Atlas<\/a>/);
 });
 
 test("neutral route without referenceUrl is valid", () => {

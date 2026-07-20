@@ -167,6 +167,8 @@ function validateManifest(manifest) {
 function docsTemplate(route) {
   const escapedTitle = escapeHtml(route.title);
   const escapedSlug = escapeHtml(route.slug);
+  const description = `Provenance, parity notes, and implementation references for the local ${escapedSlug} route.`;
+  const docsUrl = `https://kohnnn.github.io/interactive-explanation/docs/${escapedSlug}/`;
   const escapedReferenceUrl = route.referenceUrl ? escapeAttribute(route.referenceUrl) : "";
   const actionLinks = route.referenceMode === "neutral"
     ? `        <a class="action-link" href="../../${escapedSlug}/">Open replica</a>\n`
@@ -184,13 +186,20 @@ function docsTemplate(route) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapedTitle} Replica Docs</title>
-  <meta name="description" content="Provenance, parity notes, and implementation references for the local ${escapedSlug} route.">
+  <meta name="description" content="${description}">
+  <meta name="robots" content="noindex,follow">
+  <meta property="og:title" content="${escapedTitle} Replica Docs">
+  <meta property="og:description" content="${description}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${docsUrl}">
+  <link rel="canonical" href="${docsUrl}">
   <link rel="icon" type="image/png" href="../../favicon.png">
+  <script src="../../shared/theme-init.js"></script>
   <link rel="stylesheet" href="../../shared/site.css">
 </head>
 <body data-page-type="docs" data-parity-url="./parity.json">
   <main class="site-page docs-page">
-    <a class="back-link" href="../../">Back to replicas</a>
+    <a class="back-link" href="../../">Back to Atlas</a>
 
     <header class="hero hero-compact">
       <p class="eyebrow">Replica documentation</p>

@@ -14,7 +14,12 @@ function metadata(url) {
   return `<link rel="canonical" href="${url}"><meta property="og:url" content="${url}">`;
 }
 
-function makeRoot(routeMetadata = metadata(`${publicBaseUrl}demo/`), rootMetadata = metadata(publicBaseUrl)) {
+function docsMetadata(url = `${publicBaseUrl}docs/demo/`) {
+  const description = "Demo route documentation.";
+  return `<title>Demo Docs</title><meta name="description" content="${description}"><meta name="robots" content="noindex,follow"><meta property="og:title" content="Demo Docs"><meta property="og:description" content="${description}"><meta property="og:type" content="website"><meta property="og:url" content="${url}"><link rel="canonical" href="${url}"><script src="../../shared/theme-init.js"></script><link rel="stylesheet" href="../../shared/site.css">`;
+}
+
+function makeRoot(routeMetadata = metadata(`${publicBaseUrl}demo/`), rootMetadata = metadata(publicBaseUrl), docsHead = docsMetadata()) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "policy-test-"));
   const manifest = [
     { slug: "demo", title: "Demo", summary: "Demo route.", referenceUrl: "https://example.com/demo", docsUrl: "./docs/demo/" },
@@ -24,6 +29,8 @@ function makeRoot(routeMetadata = metadata(`${publicBaseUrl}demo/`), rootMetadat
   fs.writeFileSync(path.join(root, "index.html"), `<!doctype html><head>${rootMetadata}</head><p>atlas</p>`);
   fs.mkdirSync(path.join(root, "demo"), { recursive: true });
   fs.writeFileSync(path.join(root, "demo", "index.html"), `<!doctype html><head>${routeMetadata}</head><p>clean replica</p>`);
+  fs.mkdirSync(path.join(root, "docs", "demo"), { recursive: true });
+  fs.writeFileSync(path.join(root, "docs", "demo", "index.html"), `<!doctype html><head>${docsHead}</head><p>clean docs</p>`);
   return root;
 }
 
@@ -49,6 +56,21 @@ test("missing entry metadata fails the audit", () => {
   assert.match(result.stderr, /canonical metadata count/i);
   assert.match(result.stderr, /og:url metadata count/i);
 });
+
+for (const [label, mutate, expectedIssue] of [
+  ["robots policy", (head) => head.replace('<meta name="robots" content="noindex,follow">', ""), /docs robots metadata/i],
+  ["social title", (head) => head.replace('content="Demo Docs"', 'content="Wrong Docs"'), /docs og:title metadata/i],
+  ["social description", (head) => head.replace('property="og:description" content="Demo route documentation."', 'property="og:description" content="Wrong description."'), /docs og:description metadata/i],
+  ["social type", (head) => head.replace('property="og:type" content="website"', 'property="og:type" content="article"'), /docs og:type metadata/i],
+  ["theme initialization", (head) => head.replace('<script src="../../shared/theme-init.js"></script>', ""), /docs theme initialization count/i],
+  ["theme initialization order", (head) => head.replace('<script src="../../shared/theme-init.js"></script><link rel="stylesheet" href="../../shared/site.css">', '<link rel="stylesheet" href="../../shared/site.css"><script src="../../shared/theme-init.js"></script>'), /docs theme initialization order/i],
+]) {
+  test(`invalid docs ${label} fails the audit`, () => {
+    const result = runAudit(makeRoot(undefined, undefined, mutate(docsMetadata())));
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, expectedIssue);
+  });
+}
 
 test("loopback metadata fails the audit", () => {
   const result = runAudit(makeRoot(metadata("http://localhost:4173/interactive-explanation/demo/")));

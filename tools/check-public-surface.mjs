@@ -11,8 +11,14 @@ const routeManifestPath = path.join(rootDir, "routes.manifest.json");
 const routeManifest = JSON.parse(fs.readFileSync(routeManifestPath, "utf8"));
 const requiredMetadataUrls = new Map([
   ["index.html", PUBLIC_BASE_URL],
-  ...routeManifest.map((route) => [path.join(route.slug, "index.html"), `${PUBLIC_BASE_URL}${route.slug}/`]),
+  ...routeManifest.flatMap((route) => [
+    [path.join(route.slug, "index.html"), `${PUBLIC_BASE_URL}${route.slug}/`],
+    [path.join("docs", route.slug, "index.html"), `${PUBLIC_BASE_URL}docs/${route.slug}/`],
+  ]),
 ]);
+const requiredDocsMetadataPaths = new Set(
+  routeManifest.map((route) => path.join("docs", route.slug, "index.html")),
+);
 const manifestRouteSlugs = new Set(routeManifest.map((route) => route.slug));
 const consolidatedAssetCopyPatterns = [
   /^ableton-learning-music-[^/]+\/third-party\/tone\/tone\.min\.js$/i,
@@ -248,6 +254,49 @@ function addIssue(relativePath, source, label, index = 0) {
   });
 }
 
+function scanDocsMetadata(relativePath, source) {
+  if (!requiredDocsMetadataPaths.has(relativePath)) {
+    return;
+  }
+
+  const title = source.match(/<title>([^<]+)<\/title>/i)?.[1].trim() || "";
+  const descriptionMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bname=["']description["'][^>]*>/gi));
+  const robotsMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bname=["']robots["'][^>]*>/gi));
+  const ogTitleMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bproperty=["']og:title["'][^>]*>/gi));
+  const ogDescriptionMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bproperty=["']og:description["'][^>]*>/gi));
+  const ogTypeMatches = Array.from(source.matchAll(/<meta\s+[^>]*\bproperty=["']og:type["'][^>]*>/gi));
+  const themeScriptMatches = Array.from(source.matchAll(/<script\s+[^>]*\bsrc=["']\.\.\/\.\.\/shared\/theme-init\.js["'][^>]*><\/script>/gi));
+  const siteStylesheetMatches = Array.from(source.matchAll(/<link\s+[^>]*\bhref=["']\.\.\/\.\.\/shared\/site\.css["'][^>]*>/gi));
+  const content = (match) => match?.[0].match(/\bcontent=["']([^"']*)["']/i)?.[1] || "";
+
+  if (!title) {
+    addIssue(relativePath, source, "docs title");
+  }
+  if (descriptionMatches.length !== 1 || !content(descriptionMatches[0])) {
+    addIssue(relativePath, source, "docs description metadata");
+  }
+  if (robotsMatches.length !== 1 || content(robotsMatches[0]) !== "noindex,follow") {
+    addIssue(relativePath, source, "docs robots metadata");
+  }
+  if (ogTitleMatches.length !== 1 || content(ogTitleMatches[0]) !== title) {
+    addIssue(relativePath, source, "docs og:title metadata");
+  }
+  if (ogDescriptionMatches.length !== 1 || content(ogDescriptionMatches[0]) !== content(descriptionMatches[0])) {
+    addIssue(relativePath, source, "docs og:description metadata");
+  }
+  if (ogTypeMatches.length !== 1 || content(ogTypeMatches[0]) !== "website") {
+    addIssue(relativePath, source, "docs og:type metadata");
+  }
+  if (themeScriptMatches.length !== 1) {
+    addIssue(relativePath, source, "docs theme initialization count");
+  }
+  if (siteStylesheetMatches.length !== 1) {
+    addIssue(relativePath, source, "docs stylesheet count");
+  } else if (themeScriptMatches.length === 1 && themeScriptMatches[0].index > siteStylesheetMatches[0].index) {
+    addIssue(relativePath, source, "docs theme initialization order", themeScriptMatches[0].index);
+  }
+}
+
 function scanMetadata(relativePath, source) {
   const expectedUrl = requiredMetadataUrls.get(relativePath);
   const canonicalMatches = Array.from(source.matchAll(/<link\s+[^>]*\brel=["']canonical["'][^>]*>/gi));
@@ -272,6 +321,8 @@ function scanMetadata(relativePath, source) {
       }
     }
   }
+
+  scanDocsMetadata(relativePath, source);
 
   for (const match of source.matchAll(/<(?:link|meta)\s+[^>]*(?:\brel=["']canonical["']|\bproperty=["']og:url["'])[^>]*>/gi)) {
     const value = match[0].match(/\b(?:href|content)=["']([^"']*)["']/i)?.[1] || "";
@@ -574,6 +625,13 @@ for (const rootPublicFile of rootPublicFiles) {
 
 for (const siteDir of siteDirs) {
   walk(path.join(rootDir, siteDir));
+}
+
+for (const relativePath of requiredDocsMetadataPaths) {
+  const fullPath = path.join(rootDir, relativePath);
+  if (fs.existsSync(fullPath)) {
+    scanMetadata(relativePath, fs.readFileSync(fullPath, "utf8"));
+  }
 }
 
 if (issues.length > 0) {

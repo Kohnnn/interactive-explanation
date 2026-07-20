@@ -5916,15 +5916,32 @@ async function smokeWayfinding(context) {
   const nestedDocs = await page.locator(".top-bar__docs").getAttribute("href");
   assert(new URL(nestedDocs, page.url()).pathname === `${mountPath}docs/anxiety/`, `nested route exposed an unexpected Docs exit: ${nestedDocs}`);
 
+  await page.addInitScript(() => localStorage.setItem("ie-theme", "dark"));
   await assertRoute(page, "docs/trust/", ".back-link");
   const docsState = await page.evaluate(() => ({
     label: document.querySelector(".back-link")?.textContent?.trim() || "",
     atlas: document.querySelector(".back-link")?.href || "",
     route: document.querySelector(".action-link")?.href || "",
+    theme: document.documentElement.dataset.theme || "",
+    canonical: document.querySelector('link[rel="canonical"]')?.href || "",
+    ogUrl: document.querySelector('meta[property="og:url"]')?.content || "",
+    robots: document.querySelector('meta[name="robots"]')?.content || "",
+    description: document.querySelector('meta[name="description"]')?.content || "",
+    ogTitle: document.querySelector('meta[property="og:title"]')?.content || "",
+    ogDescription: document.querySelector('meta[property="og:description"]')?.content || "",
+    ogType: document.querySelector('meta[property="og:type"]')?.content || "",
+    title: document.title,
   }));
+  const docsUrl = "https://kohnnn.github.io/interactive-explanation/docs/trust/";
   assert(docsState.label === "Back to Atlas", `docs exposed an unexpected Atlas label: ${docsState.label}`);
   assert(new URL(docsState.atlas).pathname === mountPath, `docs exposed an unexpected Atlas exit: ${docsState.atlas}`);
   assert(new URL(docsState.route).pathname === `${mountPath}trust/`, `docs exposed an unexpected route exit: ${docsState.route}`);
+  assert(docsState.theme === "dark", `docs did not apply the stored theme before rendering: ${docsState.theme}`);
+  assert(docsState.canonical === docsUrl && docsState.ogUrl === docsUrl, "docs production URL metadata did not match");
+  assert(docsState.robots === "noindex,follow", `docs exposed an unexpected robots policy: ${docsState.robots}`);
+  assert(docsState.ogTitle === docsState.title, "docs social title did not match its page title");
+  assert(docsState.ogDescription === docsState.description, "docs social description did not match its page description");
+  assert(docsState.ogType === "website", `docs exposed an unexpected social type: ${docsState.ogType}`);
   await page.close();
 }
 

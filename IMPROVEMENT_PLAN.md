@@ -172,6 +172,8 @@ Acceptance:
 
 ### 9. Learning paths and progress
 
+Status: Complete
+
 - Add optional advisory difficulty, duration, order, and prerequisite metadata to the manifest contract.
 - Persist progress only through explicit Start, Resume, or numbered-path actions and expire it after 30 days.
 - Add native sharing with a clipboard fallback while keeping Music and Blockchain guidance advisory.
@@ -184,6 +186,8 @@ Acceptance:
 
 ### 10. Accessibility and semantics
 
+Status: Complete
+
 - Add meaningful main landmarks where static route structure permits and preserve intentional runtime-populated mains.
 - Improve iframe, canvas, keyboard, focus, and narrow-screen semantics without rewriting vendored runtimes.
 - Extend automated coverage for the accessibility contracts applied.
@@ -195,6 +199,8 @@ Acceptance:
 - Desktop and mobile smoke coverage passes without layout regressions.
 
 ### 11. Resilience and release readiness
+
+Status: Complete
 
 - Add consistent canonical, robots, social text metadata, and early theme initialization to docs surfaces.
 - Consolidate verified duplicate assets only after browser playback proves shared paths preserve behavior.
@@ -219,3 +225,4 @@ Acceptance:
 - 2026-07-19: Phase 8 added exact topic filtering, three promoted guided paths without removing inventory entries, clearer route labels, Back/Forward-restorable atlas state, and deterministic Atlas/Docs exits. The 312-test suite, focused discovery checks, OLS coordinate regression check, and full 82-route smoke suite passed.
 - 2026-07-19: Phase 9 added validated advisory learning metadata, explicit 30-day Start/Resume/numbered-step progress, and native sharing with clipboard fallback for the bounded Music and Blockchain paths. The promotional primary hub stayed progress-free; 321 tests, audit, syntax, focused browser checks, and the full 82-route smoke suite passed.
 - 2026-07-20: Phase 10 completed exactly-one meaningful main-landmark source/browser contracts, runtime loading/failure semantics, and named iframe, canvas, and native controls. 321 tests, audit, syntax, diff hygiene, focused checks, and full 82-route desktop-mobile smoke passed.
+- 2026-07-20: Phase 11 standardized all 82 docs pages on `noindex,follow`, absolute canonical and Open Graph URLs, matching social text, early persisted-theme initialization, and clearer Atlas navigation. Audit, scaffolder, fixture, and browser contracts guard the release metadata. Learning Synths WAV consolidation was deferred because shared-media audit coverage and browser playback proof are not yet available. All 328 tests, audit, syntax checks, diff hygiene, focused Trust/docs smoke, and full 82-route desktop-mobile smoke passed.
