@@ -59,6 +59,17 @@ test("pages metadata exactly matches the route manifest", () => {
   assert.deepEqual(pages, manifest);
 });
 
+test("sim emoji fallback resolves to its shipped font asset", () => {
+  const scriptPath = path.join(root, "sim", "scripts", "libraries", "emojiFallback.js");
+  const source = fs.readFileSync(scriptPath, "utf8");
+  const assetUrl = source.match(/src: url\("([^"]+OpenSansEmoji\.otf)"\)/)?.[1];
+  assert.ok(assetUrl, "sim emoji fallback must declare its local font URL");
+  assert.ok(
+    fs.existsSync(path.resolve(path.join(root, "sim"), assetUrl)),
+    `sim emoji fallback asset does not resolve: ${assetUrl}`,
+  );
+});
+
 for (const route of manifest) {
   const routeHtml = path.join(root, route.slug, "index.html");
   const docsDir = path.join(root, "docs", route.slug);

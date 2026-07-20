@@ -79,15 +79,18 @@
     "localStatus": "The local shell normalizes canonical and Open Graph URLs to the current page, preserves relative asset loading under the nested subpath, and adds the shared footer as the only original-page reference surface.",
     "sourceFiles": [
       "index.html",
+      "scripts/libraries/emojiFallback.js",
       "../shared/public-footer.css",
       "../shared/public-footer.js"
     ],
     "notes": [
       "The route still loads its assets relatively from the shipped folder instead of relying on root-path hosting.",
+      "The emoji fallback reuses the shipped font from the sibling <code>simulating</code> route instead of requesting a missing route-local copy.",
       "The shared footer is injected at document level only and does not alter the grid or editor runtime."
     ],
     "evidence": [
       "The route now loads under <code>/interactive-explanation/sim/</code> with local canonical metadata.",
+      "Unit coverage resolves the fallback font URL on case-sensitive deployment filesystems.",
       "Audit coverage passes with the shipped <code>sim</code> route included in the public-surface sweep."
     ]
   },

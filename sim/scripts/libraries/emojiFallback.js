@@ -7,7 +7,7 @@ IfDoesNotSupportEmoji(function(){
 	style.innerHTML = ''+
 	'@font-face {'+
 		'font-family: "OpenSansEmoji";'+
-		'src: url("../styles/fonts/OpenSansEmoji.otf") format("opentype");'+
+		'src: url("../simulating/styles/fonts/OpenSansEmoji.otf") format("opentype");'+
 	'}';
 	document.body.appendChild(style);
 
