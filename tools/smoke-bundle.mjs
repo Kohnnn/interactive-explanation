@@ -488,10 +488,18 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
       const mobileBar = document.querySelector(".story-mobile-bar");
       const activeLink = document.querySelector(".story-mobile-bar__link.is-active");
       const toggle = document.querySelector(".story-mobile-bar__toggle");
+      const article = document.querySelector(".article");
       const barRect = mobileBar?.getBoundingClientRect();
       const linkRect = activeLink?.getBoundingClientRect();
+      const articleRect = article?.getBoundingClientRect();
       return {
         mobileBarVisible: Boolean(barRect && barRect.height > 0),
+        placementValid: document.body.dataset.storyMobileNavPlacement !== "after-hero" || Boolean(
+          barRect &&
+          articleRect &&
+          barRect.top < articleRect.top &&
+          (mobileBar.compareDocumentPosition(article) & Node.DOCUMENT_POSITION_FOLLOWING)
+        ),
         currentLabel: document.querySelector(".story-mobile-bar__current")?.textContent?.trim() || "",
         progressValue: document.querySelector(".story-mobile-bar .story-progress__value")?.textContent?.trim() || "",
         progressVisible: Boolean(document.querySelector(".story-mobile-bar .story-progress")?.getBoundingClientRect().width > 0),
@@ -506,6 +514,7 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
       };
     });
     assert(mobileState.mobileBarVisible, `${label} did not expose the mobile chapter bar at 390px`);
+    assert(mobileState.placementValid, `${label} placed the route-specific mobile chapter bar after the article`);
     assert(mobileState.currentLabel.length > 0, `${label} did not expose the active mobile chapter label`);
     assert(mobileState.progressVisible, `${label} did not expose the mobile story progress bar`);
     assert(mobileState.progressValue.length > 0, `${label} did not expose the mobile story progress label`);
@@ -538,6 +547,24 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
     await mobilePage.waitForFunction(() => !document.querySelector(".story-mobile-sheet")?.open, null, { timeout: 5000 });
     const focusRestored = await mobilePage.evaluate(() => document.activeElement?.classList.contains("story-mobile-bar__toggle"));
     assert(focusRestored, `${label} did not restore focus after closing the mobile chapter tray`);
+
+    await mobilePage.locator(".story-mobile-bar__toggle").click();
+    await mobilePage.waitForFunction(() => document.querySelector(".story-mobile-sheet")?.open, null, { timeout: 5000 });
+    const chapterLink = mobilePage.locator(".story-mobile-sheet__link").nth(1);
+    const chapterTarget = await chapterLink.getAttribute("data-story-target");
+    assert(chapterTarget, `${label} mobile chapter link did not expose a target`);
+    await chapterLink.click();
+    await mobilePage.waitForFunction((targetId) => (
+      !document.querySelector(".story-mobile-sheet")?.open &&
+      window.location.hash === `#${targetId}`
+    ), chapterTarget, { timeout: 15000 });
+    if (await mobilePage.evaluate(() => document.body.dataset.storyMobileNavPlacement === "after-hero")) {
+      await mobilePage.waitForFunction((targetId) => document.activeElement === document.getElementById(targetId), chapterTarget, { timeout: 15000 });
+      await mobilePage.waitForFunction((targetId) => {
+        const rect = document.getElementById(targetId)?.getBoundingClientRect();
+        return Boolean(rect && rect.bottom > 0 && rect.top < window.innerHeight);
+      }, chapterTarget, { timeout: 15000 });
+    }
 
     await mobilePage.close();
   } else {
@@ -944,6 +971,51 @@ async function dragCanvasUntilChanged(page, canvasSelector, drags, label) {
   }
 
   throw new Error(`${label} did not update after drag attempts`);
+}
+
+async function dragNativeTouch(page, selector, deltaX, deltaY, label) {
+  const target = page.locator(selector).first();
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = "auto";
+  });
+  await target.evaluate(async (element) => {
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      element.scrollIntoView({ block: "center", behavior: "instant" });
+      await new Promise((resolve) => window.setTimeout(resolve, 100));
+    }
+  });
+  const box = await target.boundingBox();
+  assert(box, `${label} did not expose ${selector}`);
+  const targetMatches = await target.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2) === element;
+  });
+  assert(targetMatches, `${label} coordinates did not resolve to ${selector}`);
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  const client = await page.context().newCDPSession(page);
+  try {
+    await client.send("Input.dispatchTouchEvent", {
+      type: "touchStart",
+      touchPoints: [{ x, y, radiusX: 4, radiusY: 4, force: 1, id: 1 }],
+    });
+    for (let step = 1; step <= 8; step += 1) {
+      await client.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [{
+          x: x + deltaX * step / 8,
+          y: y + deltaY * step / 8,
+          radiusX: 4,
+          radiusY: 4,
+          force: 1,
+          id: 1,
+        }],
+      });
+    }
+    await client.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  } finally {
+    await client.detach();
+  }
 }
 
 async function clickChoice(page, text) {
@@ -4480,6 +4552,8 @@ async function smokeInteractiveMechanicalWatch(context) {
     [
       "../shared/mechanical-watch/js/base.js",
       "../shared/mechanical-watch/js/watch.js",
+      "./js/legacy-watch-accessibility.js",
+      "./js/watch-parts.js",
       "./js/exploded-view.js",
       "./js/exploded-view-three.js",
     ],
@@ -4499,6 +4573,71 @@ async function smokeInteractiveMechanicalWatch(context) {
   );
   await page.waitForSelector("#hero canvas", { timeout: 30000 });
   await page.waitForSelector(canvasSelector, { timeout: 30000 });
+  await page.waitForFunction(() => document.body.dataset.watchAccessibility === "ready", null, { timeout: 5000 });
+
+  const chapterState = await page.evaluate(() => {
+    const ids = Array.from(document.querySelectorAll("[data-story-chapter]")).map((section) => section.id);
+    const labels = Object.fromEntries(Array.from(document.querySelectorAll(".story-rail__link")).map((link) => [
+      link.dataset.storyTarget,
+      {
+        text: link.textContent?.trim() || "",
+        title: link.title,
+        ariaLabel: link.getAttribute("aria-label"),
+      },
+    ]));
+    return { ids, labels };
+  });
+  assert(
+    chapterState.ids.indexOf("from-pixels-to-resin") < chapterState.ids.indexOf("further-watching-and-reading"),
+    `${label} should place the resin synthesis before references`,
+  );
+  assert(chapterState.labels["from-pixels-to-resin"]?.text === "Resin prototype", `${label} did not expose the compact resin label`);
+  assert(chapterState.labels["from-pixels-to-resin"]?.title === "From Pixels to Resin", `${label} compact resin label lost its full title`);
+  assert(chapterState.labels["from-pixels-to-resin"]?.ariaLabel === "From Pixels to Resin", `${label} compact resin label lost its accessible name`);
+
+  const legacyCanvas = page.locator("#hero canvas").first();
+  await legacyCanvas.scrollIntoViewIfNeeded();
+  await legacyCanvas.evaluate((canvas) => canvas.closest(".drawer_container")?.drawer?.set_paused(true));
+  const legacyCanvasBefore = await legacyCanvas.evaluate((canvas) => canvas.toDataURL());
+  await legacyCanvas.focus();
+  await legacyCanvas.press("ArrowRight");
+  await page.waitForFunction((previous) => document.querySelector("#hero canvas")?.toDataURL() !== previous, legacyCanvasBefore, { timeout: 5000 });
+  assert(await legacyCanvas.getAttribute("tabindex") === "0", `${label} legacy canvas should be keyboard focusable`);
+
+  const verticalCanvas = page.locator("#hero_movement canvas").first();
+  await verticalCanvas.scrollIntoViewIfNeeded();
+  await verticalCanvas.evaluate((canvas) => canvas.closest(".drawer_container")?.drawer?.set_paused(true));
+  const verticalCanvasBefore = await verticalCanvas.evaluate((canvas) => canvas.toDataURL());
+  await verticalCanvas.focus();
+  await verticalCanvas.press("ArrowUp");
+  await page.waitForFunction((previous) => document.querySelector("#hero_movement canvas")?.toDataURL() !== previous, verticalCanvasBefore, { timeout: 5000 });
+  assert(await verticalCanvas.getAttribute("aria-keyshortcuts") === "ArrowUp ArrowDown Escape", `${label} y-only canvas advertised ineffective horizontal keys`);
+
+  const multiSliderLabels = await page.locator("#torsion_spring3_sl0 .slider_knob, #torsion_spring3_sl1 .slider_knob, #torsion_spring3_sl2 .slider_knob").evaluateAll((knobs) => knobs.map((knob) => knob.getAttribute("aria-label")));
+  assert(new Set(multiSliderLabels).size === 3 && multiSliderLabels.every(Boolean), `${label} multi-slider controls should expose unique accessible names`);
+
+  const legacySlider = page.locator("#hero_sl0 .slider_knob").first();
+  await legacySlider.scrollIntoViewIfNeeded();
+  const legacySliderBefore = await legacySlider.getAttribute("aria-valuenow");
+  await legacySlider.focus();
+  await legacySlider.press("ArrowRight");
+  assert(await legacySlider.getAttribute("role") === "slider", `${label} legacy slider should expose slider semantics`);
+  assert(await legacySlider.getAttribute("aria-valuenow") !== legacySliderBefore, `${label} legacy slider keyboard action did not update its value`);
+
+  const legacySegment = page.locator("#gear_train3_seg0 [role='radio']").first();
+  await legacySegment.scrollIntoViewIfNeeded();
+  await legacySegment.focus();
+  await legacySegment.press("ArrowRight");
+  assert(await legacySegment.getAttribute("aria-checked") === "false", `${label} legacy segmented control keyboard action did not update its state`);
+  assert(await page.locator("#gear_train3_seg0 [role='radio']").nth(1).getAttribute("aria-checked") === "true", `${label} legacy segmented control did not select the next option`);
+
+  const legacyPlay = page.locator("#hero .play_pause_button").first();
+  const playStateBefore = await legacyPlay.getAttribute("aria-pressed");
+  await legacyPlay.focus();
+  await legacyPlay.press("Space");
+  assert(await legacyPlay.getAttribute("role") === "button", `${label} legacy play control should expose button semantics`);
+  assert(await legacyPlay.getAttribute("aria-pressed") !== playStateBefore, `${label} legacy play control keyboard action did not toggle state`);
+  console.log("OK interactive-mechanical-watch legacy keyboard controls");
 
   const explodedState = await page.evaluate(() => {
     const root = document.querySelector("[data-exploded-watch]");
@@ -4514,9 +4653,51 @@ async function smokeInteractiveMechanicalWatch(context) {
   });
   assert(explodedState.ready === "true", `${label} did not report a ready Three.js renderer`);
   assert(explodedState.renderMode === "three", `${label} exposed render mode ${explodedState.renderMode || "none"}`);
-  assert(explodedState.componentCount === 27, `${label} expected 27 Three.js components, got ${explodedState.componentCount}`);
+  assert(explodedState.componentCount === 71, `${label} expected 71 Three.js components, got ${explodedState.componentCount}`);
   assert(explodedState.ariaHidden === "true", `${label} pointer canvas should remain hidden from assistive technology`);
   assert(explodedState.svgCount === 0, `${label} should replace the SVG after Three.js initialization`);
+
+  const webglCanvas = page.locator(canvasSelector);
+  await webglCanvas.evaluate((canvas) => canvas.scrollIntoView({ block: "center" }));
+  const mechanismState = await page.evaluate(() => {
+    const root = document.querySelector("[data-exploded-watch]");
+    const canvas = root?.querySelector("canvas.exploded-watch__webgl");
+    return {
+      objectCount: Number(root?.dataset.objectCount || 0),
+      partCount: Number(root?.dataset.partCount || 0),
+      playing: canvas?.dataset.playing || "",
+      speed: canvas?.dataset.speed || "",
+      time: Number(canvas?.dataset.simulationTime || 0),
+      windingTravel: Number(canvas?.dataset.windingTravel || 0),
+    };
+  });
+  assert(mechanismState.partCount === 71, `${label} expected the canonical 71-part inventory, got ${mechanismState.partCount}`);
+  assert(mechanismState.objectCount > mechanismState.partCount, `${label} should render generated detail beyond one object per part`);
+  assert(mechanismState.playing === "true", `${label} mechanism should start playing without reduced motion`);
+  assert(mechanismState.speed === "8", `${label} mechanism should default to 8x, got ${mechanismState.speed || "none"}`);
+  await page.waitForFunction(({ time, windingTravel }) => {
+    const canvas = document.querySelector("[data-exploded-canvas] canvas");
+    return Number(canvas?.dataset.simulationTime || 0) > time
+      && Number(canvas?.dataset.windingTravel || 0) > windingTravel;
+  }, { time: mechanismState.time, windingTravel: mechanismState.windingTravel }, { timeout: 5000 });
+  await page.locator("[data-exploded-play]").click();
+  await page.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "false", null, { timeout: 5000 });
+  assert(await page.locator("[data-exploded-play]").getAttribute("aria-pressed") === "false", `${label} play control did not expose paused state`);
+  await page.locator("[data-exploded-speed] [data-speed='60']").click();
+  await page.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.speed === "60", null, { timeout: 5000 });
+  const speed60 = page.locator("[data-exploded-speed] [data-speed='60']");
+  assert(await speed60.getAttribute("aria-checked") === "true", `${label} speed control did not select 60x`);
+  await speed60.focus();
+  await speed60.press("Home");
+  assert(await page.locator("[data-exploded-speed] [data-speed='1']").getAttribute("aria-checked") === "true", `${label} speed radiogroup Home key did not select 1x`);
+  await page.keyboard.press("End");
+  assert(await speed60.getAttribute("aria-checked") === "true", `${label} speed radiogroup End key did not select 60x`);
+  await page.keyboard.press("ArrowLeft");
+  const speed8 = page.locator("[data-exploded-speed] [data-speed='8']");
+  assert(await speed8.getAttribute("aria-checked") === "true", `${label} speed radiogroup ArrowLeft key did not select 8x`);
+  assert(await speed8.getAttribute("tabindex") === "0", `${label} selected speed did not receive the roving tab stop`);
+  await page.locator("[data-exploded-play]").click();
+  console.log("OK interactive-mechanical-watch mechanism playback");
 
   const partsRole = await page.locator("[data-exploded-parts]").getAttribute("role");
   assert(partsRole === "group", `${label} parts selector should use button-group semantics, got ${partsRole || "none"}`);
@@ -4527,15 +4708,23 @@ async function smokeInteractiveMechanicalWatch(context) {
   const initialPartPressed = await page.locator("[data-exploded-parts] .is-selected").getAttribute("aria-pressed");
   assert(initialPartPressed === "true", `${label} selected part should expose aria-pressed=true`);
 
-  const webglCanvas = page.locator(canvasSelector);
-  await webglCanvas.scrollIntoViewIfNeeded();
   const renderCountBeforeDepth = Number(await webglCanvas.getAttribute("data-render-count") || 0);
+  await page.locator("[data-exploded-parts]").evaluate((parts) => {
+    parts.scrollTop = 48;
+    parts.firstElementChild.dataset.depthIdentity = "preserved";
+  });
   await setRangeValue(page, "[data-exploded-depth]", 24);
   await page.waitForFunction((previousCount) => {
     return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
   }, renderCountBeforeDepth, { timeout: 5000 });
-  const updatedDepthValueText = await page.locator("[data-exploded-depth]").getAttribute("aria-valuetext");
-  assert(updatedDepthValueText === "24 percent exploded", `${label} expected updated depth aria-valuetext, got ${updatedDepthValueText || "none"}`);
+  const updatedDepthState = await page.evaluate(() => ({
+    valueText: document.querySelector("[data-exploded-depth]")?.getAttribute("aria-valuetext") || "",
+    identity: document.querySelector("[data-exploded-parts]")?.firstElementChild?.dataset.depthIdentity || "",
+    scrollTop: document.querySelector("[data-exploded-parts]")?.scrollTop || 0,
+  }));
+  assert(updatedDepthState.valueText === "24 percent exploded", `${label} expected updated depth aria-valuetext, got ${updatedDepthState.valueText || "none"}`);
+  assert(updatedDepthState.identity === "preserved", `${label} rebuilt the component list during a depth-only change`);
+  assert(updatedDepthState.scrollTop > 0, `${label} reset component-list scroll during a depth-only change`);
   console.log("OK interactive-mechanical-watch explosion depth control");
 
   const detailBeforeClick = await page.locator("[data-exploded-detail] h3").textContent();
@@ -4545,10 +4734,15 @@ async function smokeInteractiveMechanicalWatch(context) {
   }, detailBeforeClick, { timeout: 5000 });
   const selectedPartPressed = await page.locator("[data-exploded-parts] .is-selected").getAttribute("aria-pressed");
   assert(selectedPartPressed === "true", `${label} clicked part should expose aria-pressed=true`);
+  const caseLessonHref = await page.locator("[data-exploded-detail] .exploded-watch__lesson-link").getAttribute("href");
+  assert(caseLessonHref === "#mainplate", `${label} case detail should link back to assembly, got ${caseLessonHref || "none"}`);
+  await page.locator("[data-exploded-parts] [data-component-id='barrel-drum']").click();
+  const barrelLessonHref = await page.locator("[data-exploded-detail] .exploded-watch__lesson-link").getAttribute("href");
+  assert(barrelLessonHref === "#power", `${label} barrel detail should link back to power, got ${barrelLessonHref || "none"}`);
   console.log("OK interactive-mechanical-watch part button selection");
 
   const detailBeforeKeyboard = await page.locator("[data-exploded-detail] h3").textContent();
-  await page.locator("[data-exploded-parts] [data-component-id]").nth(12).focus();
+  await page.locator("[data-exploded-parts] [data-component-id='winding-stem']").focus();
   await page.keyboard.press("Enter");
   await page.waitForFunction((previousText) => {
     return (document.querySelector("[data-exploded-detail] h3")?.textContent || "").trim() !== (previousText || "").trim();
@@ -4558,36 +4752,45 @@ async function smokeInteractiveMechanicalWatch(context) {
     pressed: document.activeElement?.getAttribute("aria-pressed") || "",
   }));
   assert(keyboardState.pressed === "true", `${label} keyboard-selected part should expose aria-pressed=true`);
-  assert(keyboardState.componentId === "crown-stem", `${label} should restore focus to the selected part button, got ${keyboardState.componentId || "none"}`);
+  assert(keyboardState.componentId === "winding-stem", `${label} should restore focus to the selected part button, got ${keyboardState.componentId || "none"}`);
   console.log("OK interactive-mechanical-watch keyboard component selection");
 
+  await page.locator("[data-exploded-play]").click();
+  await page.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "false", null, { timeout: 5000 });
+  await webglCanvas.evaluate((canvas) => canvas.scrollIntoView({ block: "center" }));
   const canvasBox = await webglCanvas.boundingBox();
   assert(canvasBox, `${label} did not expose the Three.js canvas bounds`);
   const selectedBeforeRaycast = await page.locator("[data-exploded-parts] .is-selected").getAttribute("data-component-id");
   let selectedAfterRaycast = selectedBeforeRaycast;
   const raycastPoints = [[0.5, 0.5], [0.4, 0.45], [0.6, 0.45], [0.35, 0.6], [0.65, 0.6]];
   for (const [x, y] of raycastPoints) {
-    await page.mouse.click(canvasBox.x + canvasBox.width * x, canvasBox.y + canvasBox.height * y);
+    const clickX = canvasBox.x + canvasBox.width * x;
+    const clickY = canvasBox.y + canvasBox.height * y;
+    const canvasReceivesClick = await page.evaluate(({ clickX, clickY }) => {
+      return document.elementFromPoint(clickX, clickY)?.matches("canvas.exploded-watch__webgl") || false;
+    }, { clickX, clickY });
+    if (!canvasReceivesClick) continue;
+    await page.mouse.click(clickX, clickY);
     selectedAfterRaycast = await page.locator("[data-exploded-parts] .is-selected").getAttribute("data-component-id");
     if (selectedAfterRaycast !== selectedBeforeRaycast) break;
   }
   assert(selectedAfterRaycast !== selectedBeforeRaycast, `${label} raycast selection did not update the active component`);
   console.log("OK interactive-mechanical-watch raycast selection");
 
-  const renderCountBeforeOrbit = Number(await webglCanvas.getAttribute("data-render-count") || 0);
+  const cameraBeforeOrbit = await webglCanvas.getAttribute("data-camera-position");
   await page.mouse.move(canvasBox.x + canvasBox.width * 0.58, canvasBox.y + canvasBox.height * 0.5);
   await page.mouse.down();
   await page.mouse.move(canvasBox.x + canvasBox.width * 0.72, canvasBox.y + canvasBox.height * 0.58, { steps: 12 });
   await page.mouse.up();
-  await page.waitForFunction((previousCount) => {
-    return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
-  }, renderCountBeforeOrbit, { timeout: 5000 });
-  const renderCountBeforeZoom = Number(await webglCanvas.getAttribute("data-render-count") || 0);
+  await page.waitForFunction((previousPosition) => {
+    return document.querySelector("[data-exploded-canvas] canvas")?.dataset.cameraPosition !== previousPosition;
+  }, cameraBeforeOrbit, { timeout: 5000 });
+  const cameraBeforeZoom = await webglCanvas.getAttribute("data-camera-position");
   await page.mouse.move(canvasBox.x + canvasBox.width / 2, canvasBox.y + canvasBox.height / 2);
   await page.mouse.wheel(0, -360);
-  await page.waitForFunction((previousCount) => {
-    return Number(document.querySelector("[data-exploded-canvas] canvas")?.dataset.renderCount || 0) > previousCount;
-  }, renderCountBeforeZoom, { timeout: 5000 });
+  await page.waitForFunction((previousPosition) => {
+    return document.querySelector("[data-exploded-canvas] canvas")?.dataset.cameraPosition !== previousPosition;
+  }, cameraBeforeZoom, { timeout: 5000 });
   console.log("OK interactive-mechanical-watch orbit and zoom controls");
 
   const fallbackPage = await context.newPage();
@@ -4608,7 +4811,7 @@ async function smokeInteractiveMechanicalWatch(context) {
     };
   });
   assert(fallbackState.canvasCount === 0, `${label} fallback should retain the SVG without a canvas`);
-  assert(fallbackState.componentCount === 27, `${label} fallback expected 27 SVG components, got ${fallbackState.componentCount}`);
+  assert(fallbackState.componentCount === 71, `${label} fallback expected 71 SVG components, got ${fallbackState.componentCount}`);
   assert(fallbackState.diagramRole === "group", `${label} fallback SVG should use group semantics`);
   const expectedImageUrl = new URL("interactive-mechanical-watch/images/generated/components/exploded-sheet.png", baseUrl).href;
   assert(
@@ -4617,17 +4820,101 @@ async function smokeInteractiveMechanicalWatch(context) {
   );
   const imageResponse = await fallbackPage.request.get(fallbackState.resolvedImageHref);
   assert(imageResponse.status() === 200, `${label} fallback exploded sheet returned HTTP ${imageResponse.status()}`);
-  const firstTransform = await fallbackPage.locator("[data-exploded-canvas] [data-component-id]").first().getAttribute("transform");
+  const firstComponentMarkup = await fallbackPage.locator("[data-exploded-canvas] [data-component-id]").first().innerHTML();
   await setRangeValue(fallbackPage, "[data-exploded-depth]", 24);
-  await fallbackPage.waitForFunction((previousTransform) => {
-    return document.querySelector("[data-exploded-canvas] [data-component-id]")?.getAttribute("transform") !== previousTransform;
-  }, firstTransform, { timeout: 5000 });
-  await fallbackPage.locator("[data-exploded-canvas] [data-component-id]").nth(12).focus();
+  await fallbackPage.waitForFunction((previousMarkup) => {
+    return document.querySelector("[data-exploded-canvas] [data-component-id]")?.innerHTML !== previousMarkup;
+  }, firstComponentMarkup, { timeout: 5000 });
+  await fallbackPage.locator("[data-exploded-canvas] [data-component-id='winding-stem']").focus();
   await fallbackPage.keyboard.press("Enter");
   const focusedFallbackId = await fallbackPage.evaluate(() => document.activeElement?.getAttribute("data-component-id") || "");
-  assert(focusedFallbackId === "crown-stem", `${label} fallback should restore SVG focus, got ${focusedFallbackId || "none"}`);
+  assert(focusedFallbackId === "winding-stem", `${label} fallback should restore SVG focus, got ${focusedFallbackId || "none"}`);
   console.log("OK interactive-mechanical-watch SVG fallback");
   await fallbackPage.close();
+
+  const browser = context.browser();
+  assert(browser, `${label} could not create route-specific input contexts`);
+
+  const reducedContext = await browser.newContext({
+    reducedMotion: "reduce",
+    viewport: { width: 1280, height: 900 },
+  });
+  const reducedPage = await reducedContext.newPage();
+  await assertRoute(reducedPage, "interactive-mechanical-watch/", "#hero canvas");
+  await reducedPage.waitForFunction(() => document.body.dataset.watchReducedMotion === "paused", null, { timeout: 30000 });
+  const reducedState = await reducedPage.evaluate(() => ({
+    playingCount: document.querySelectorAll(".play_pause_button.playing").length,
+    runningDrawerCount: Array.from(document.querySelectorAll(".drawer_container")).filter((container) => container.drawer && !container.drawer.paused).length,
+  }));
+  assert(reducedState.playingCount === 0, `${label} reduced-motion startup left ${reducedState.playingCount} play controls running`);
+  assert(reducedState.runningDrawerCount === 0, `${label} reduced-motion startup left ${reducedState.runningDrawerCount} drawers running`);
+  await reducedPage.waitForSelector(canvasSelector, { timeout: 30000 });
+  assert(await reducedPage.locator("[data-exploded-play]").getAttribute("aria-pressed") === "false", `${label} reduced motion should pause the exploded mechanism at startup`);
+  assert(await reducedPage.locator(canvasSelector).getAttribute("data-playing") === "false", `${label} reduced motion left the Three.js mechanism running`);
+  await reducedPage.locator("[data-exploded-play]").click();
+  await reducedPage.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "true", null, { timeout: 5000 });
+  const reducedPlay = reducedPage.locator("#hero .play_pause_button").first();
+  await reducedPlay.focus();
+  await reducedPlay.press("Space");
+  assert(await reducedPlay.getAttribute("aria-pressed") === "true", `${label} reduced-motion policy should allow explicit playback`);
+  await reducedContext.close();
+  console.log("OK interactive-mechanical-watch reduced motion");
+
+  const touchContext = await browser.newContext({
+    hasTouch: true,
+    isMobile: true,
+    viewport: { width: 390, height: 844 },
+  });
+  const touchPage = await touchContext.newPage();
+  await assertRoute(touchPage, "interactive-mechanical-watch/", "#hero_sl0 .slider_knob");
+  await touchPage.waitForSelector(canvasSelector, { timeout: 30000 });
+  const touchCutaway = touchPage.locator("#hero canvas").first();
+  await touchCutaway.scrollIntoViewIfNeeded();
+  await touchPage.waitForFunction(() => {
+    const hero = document.querySelector("#hero");
+    hero?.drawer?.set_visible(true);
+    hero?.drawer?.request_repaint();
+    return !hero?.querySelector(".loading_text");
+  }, null, { timeout: 30000 });
+  await touchCutaway.evaluate((canvas) => canvas.closest(".drawer_container")?.drawer?.set_paused(true));
+  const touchCutawayBefore = await touchCutaway.evaluate((canvas) => canvas.toDataURL());
+  const touchSliderBefore = await touchPage.locator("#hero_sl0 .slider_knob").getAttribute("aria-valuenow");
+  await dragNativeTouch(touchPage, "#hero_sl0 .slider_knob", 70, 0, `${label} touch slider`);
+  assert(await touchPage.locator("#hero_sl0 .slider_knob").getAttribute("aria-valuenow") !== touchSliderBefore, `${label} touch slider did not update its value`);
+  await touchPage.waitForFunction((previous) => document.querySelector("#hero canvas")?.toDataURL() !== previous, touchCutawayBefore, { timeout: 5000 });
+  const touchWebgl = touchPage.locator(canvasSelector);
+  await touchPage.locator("[data-exploded-play]").click();
+  await touchPage.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "false", null, { timeout: 5000 });
+  const touchCameraBefore = await touchWebgl.getAttribute("data-camera-position");
+  await dragNativeTouch(touchPage, canvasSelector, 54, 28, `${label} touch orbit`);
+  await touchPage.waitForFunction((previousPosition) => document.querySelector("[data-exploded-canvas] canvas")?.dataset.cameraPosition !== previousPosition, touchCameraBefore, { timeout: 5000 });
+  await touchPage.locator("[data-exploded-parts] [data-component-id='rotor']").tap();
+  assert(await touchPage.locator("[data-exploded-detail] .exploded-watch__lesson-link").getAttribute("href") === "#automatic-winding", `${label} touch selection did not expose the rotor lesson link`);
+  await assertViewportUsable(touchPage, `${label} touch mobile`);
+  await touchContext.close();
+  console.log("OK interactive-mechanical-watch touch controls");
+
+  const narrowPage = await context.newPage();
+  await narrowPage.setViewportSize({ width: 320, height: 844 });
+  await assertRoute(narrowPage, "interactive-mechanical-watch/", "[data-exploded-parts]");
+  const narrowState = await narrowPage.locator("[data-exploded-parts]").evaluate((parts) => {
+    const button = parts.querySelector("button");
+    const style = getComputedStyle(parts);
+    return {
+      clientHeight: parts.clientHeight,
+      scrollHeight: parts.scrollHeight,
+      overflowY: style.overflowY,
+      buttonHeight: button?.getBoundingClientRect().height || 0,
+      detailTop: document.querySelector("[data-exploded-detail]")?.getBoundingClientRect().top || 0,
+    };
+  });
+  assert(narrowState.scrollHeight > narrowState.clientHeight, `${label} 320px component list should remain capped and scrollable`);
+  assert(["auto", "scroll"].includes(narrowState.overflowY), `${label} 320px component list exposed overflow-y ${narrowState.overflowY}`);
+  assert(narrowState.buttonHeight >= 44, `${label} 320px part target measured ${narrowState.buttonHeight}px`);
+  assert(narrowState.detailTop > 0, `${label} 320px detail panel was not reachable below the component list`);
+  await assertViewportUsable(narrowPage, `${label} 320px`);
+  await narrowPage.close();
+  console.log("OK interactive-mechanical-watch narrow layout");
 
   await page.waitForTimeout(250);
   assertPageRuntimeClean(label);

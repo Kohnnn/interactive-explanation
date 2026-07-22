@@ -23,6 +23,8 @@
   <link href="./css/editorial-shell.css" rel="stylesheet" type="text/css">
   <script defer src="../shared/mechanical-watch/js/base.js"></script>
   <script defer src="../shared/mechanical-watch/js/watch.js"></script>
+  <script defer src="./js/legacy-watch-accessibility.js"></script>
+  <script defer src="./js/watch-parts.js"></script>
   <script defer src="./js/exploded-view.js"></script>
   <script type="module" src="./js/exploded-view-three.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
@@ -31,9 +33,11 @@
 
   <body data-reference-mode="neutral"
   data-reference-note="Dark-editorial mechanical-watch teardown authored inside the interactive-explanation collection, extending the live WebGL movement with a resin-prototyping case study."
+  data-reference-url="../docs/interactive-mechanical-watch/" data-reference-text="Route documentation"
   data-footer-label="Route provenance" data-show-reference-footer="true" data-canonical-url="./"
   data-story-shell="engineering-sandbox" data-story-family="engineering-longform"
-  data-story-nav="generated" data-story-route="interactive-mechanical-watch">
+  data-story-nav="generated" data-story-route="interactive-mechanical-watch"
+  data-story-mobile-nav-placement="after-hero">
   <main>
   <section class="story-hero">
     <p class="story-hero__eyebrow">Engineering Sandbox original · dark-editorial horology notebook</p>
@@ -1084,48 +1088,41 @@
             <p>That rounded rectangle surrounding the watch corresponds to the size of a credit card – if you have one
               handy you can put it on screen and drag the slider until the card fits in that outline. Hopefully, this
               really puts in perspective how small all the parts we&rsquo;ve talked about are.</p>
-            <h1 id="further-watching-and-reading">Further Watching and Reading<a href="#further-watching-and-reading"
-                class="hanchor" aria-label="Anchor"><img src="../shared/mechanical-watch/images/anchor.png" width="16px" height="8px" alt="" /></a> </h1>
-            <p>Another great YouTube channel is <a href="https://www.youtube.com/watch?v=KehXHqVtGME" target="_blank"
-                rel="noopener noreferrer">Swiss ETA 2824-2
-                watch movement repair (Assembly tutorial, guide, manual)</a>
-              , which is the core reference for this page. It is a very detailed video that covers the entire process of
-              assembling an ETA 2824-2 movement.</p>
-            <p>There are many YouTube channels dedicated to mechanical watches, but I particularly like <a
-                href="https://www.youtube.com/c/WristwatchRevival/videos" target="_blank"
-                rel="noopener noreferrer">Wristwatch Revival</a>, which is dedicated to
-              fixing broken watches, which very often involves a complete dissection of a movement, and a repair or
-              replacement of broken parts. Although the creator is not a professional watchmaker, the videos are packed
-              with information and are very enjoyable to watch.</p>
-            <p><a href="https://www.amazon.com/Watchmaking-George-Daniels/dp/0856677043" target="_blank"
-                rel="noopener noreferrer">Watchmaking</a> by George
-              Daniels is a book dedicated to the process of actually <em>making</em> watches from scratch. While few
-              will endeavor this journey, the publication also explains many of the considerations required when
-              designing a watch movement and its parts. Many of the book&rsquo;s pages are accompanied by pretty
-              technical illustrations that help to explain the concepts.</p>
             <h1 id="from-pixels-to-resin">From Pixels to Resin<a href="#from-pixels-to-resin" class="hanchor"
                 aria-label="Anchor"><img src="../shared/mechanical-watch/images/anchor.png" width="16px" height="8px" alt="" /></a> </h1>
-            <p>Everything above lives as math and triangles. But the same exploded view that helps you read a movement
-              on screen turns out to be a brutal manufacturing brief in the physical world. Designer Lars Ellertsen set
-              out to suspend a complete mechanical watch in clear resin with every component frozen mid-air, as if the
-              render had been poured into a block. What looks like a single confident pour is really a long chain of
-              prototyping failures, each one teaching the next.</p>
+            <p>Everything above lives as math and triangles. This technical-museum view separates the movement into
+              seventy-one inspectable assemblies and components, then runs the power train continuously so the ratios
+              remain visible even while the watch is exploded. Designer Lars Ellertsen set out to suspend a complete
+              mechanical watch in clear resin with every component frozen mid-air, as if the render had been poured into
+              a block. What looks like a single confident pour is really a long chain of prototyping failures, each one
+              teaching the next.</p>
             <section class="exploded-watch" aria-labelledby="exploded-watch-title">
               <div class="exploded-watch__header">
-                <p class="exploded-watch__eyebrow">Interactive exploded view</p>
-                <h2 id="exploded-watch-title">Select a component to inspect its role in the stack.</h2>
-                <p>Scrub the explosion depth, drag to orbit, scroll to zoom, then click any suspended layer. Each part uses the movement's original binary geometry where available, mapped into power, train, escapement, balance, keyless works, automatic winding, display, and casing systems.</p>
+                <p class="exploded-watch__eyebrow">Technical museum &middot; 71 components</p>
+                <h2 id="exploded-watch-title">Run the movement, separate every layer, and inspect the mechanism.</h2>
+                <p>The view combines the movement&rsquo;s canonical meshes with generated teeth, pinions, staffs, screws,
+                  dial markers, springs, case, and crystal. Orbit or zoom the 3D view, or use the complete component list
+                  as the primary keyboard and assistive-technology inspection path.</p>
               </div>
               <div class="exploded-watch__stage" data-exploded-watch>
                 <div id="exploded-watch-diagram" class="exploded-watch__canvas" data-exploded-canvas aria-label="Interactive exploded mechanical watch component diagram"></div>
                 <div class="exploded-watch__panel">
+                  <div class="exploded-watch__transport">
+                    <button class="exploded-watch__play" type="button" data-exploded-play aria-pressed="true">Pause mechanism</button>
+                    <div class="exploded-watch__speed" data-exploded-speed role="radiogroup" aria-label="Simulation speed">
+                      <button type="button" role="radio" data-speed="1" aria-checked="false" tabindex="-1">1&times;</button>
+                      <button type="button" role="radio" data-speed="8" aria-checked="true" class="is-selected" tabindex="0">8&times;</button>
+                      <button type="button" role="radio" data-speed="60" aria-checked="false" tabindex="-1">60&times;</button>
+                    </div>
+                  </div>
                   <label class="exploded-watch__range-label" for="exploded-depth">Explosion depth</label>
                   <input id="exploded-depth" data-exploded-depth type="range" min="0" max="100" value="74" aria-controls="exploded-watch-diagram" aria-valuetext="74 percent exploded">
+                  <p class="exploded-watch__part-count">71 selectable components &middot; canonical and generated geometry</p>
                   <div class="exploded-watch__parts" data-exploded-parts role="group" aria-label="Watch components"></div>
                   <article id="exploded-watch-detail" class="exploded-watch__detail" data-exploded-detail aria-live="polite"></article>
                 </div>
               </div>
-              <p class="exploded-watch__caption">The target: every watch subsystem frozen where an exploded diagram would place it, then translated into real suspension points for resin casting.</p>
+              <p class="exploded-watch__caption">The target: a working movement separated into readable systems, then frozen at coordinates that can become real suspension points for resin casting.</p>
             </section>
             <p>The first problem is gravity. Parts want to sink, drift, and clump while the resin is still liquid, so the
               exploded geometry has to be physically scaffolded before a single drop is poured.</p>
@@ -1166,6 +1163,25 @@
               held &ndash; clear, stable, and faithful to the diagram. The lesson maps cleanly onto any prototyping
               loop: the clean final artifact hides a stack of failures, and each one narrowed the design space until
               only the working approach was left.</p>
+            <h1 id="further-watching-and-reading">Further Watching and Reading<a href="#further-watching-and-reading"
+                class="hanchor" aria-label="Anchor"><img src="../shared/mechanical-watch/images/anchor.png" width="16px" height="8px" alt="" /></a> </h1>
+            <p>Another great YouTube channel is <a href="https://www.youtube.com/watch?v=KehXHqVtGME" target="_blank"
+                rel="noopener noreferrer">Swiss ETA 2824-2
+                watch movement repair (Assembly tutorial, guide, manual)</a>
+              , which is the core reference for this page. It is a very detailed video that covers the entire process of
+              assembling an ETA 2824-2 movement.</p>
+            <p>There are many YouTube channels dedicated to mechanical watches, but I particularly like <a
+                href="https://www.youtube.com/c/WristwatchRevival/videos" target="_blank"
+                rel="noopener noreferrer">Wristwatch Revival</a>, which is dedicated to
+              fixing broken watches, which very often involves a complete dissection of a movement, and a repair or
+              replacement of broken parts. Although the creator is not a professional watchmaker, the videos are packed
+              with information and are very enjoyable to watch.</p>
+            <p><a href="https://www.amazon.com/Watchmaking-George-Daniels/dp/0856677043" target="_blank"
+                rel="noopener noreferrer">Watchmaking</a> by George
+              Daniels is a book dedicated to the process of actually <em>making</em> watches from scratch. While few
+              will endeavor this journey, the publication also explains many of the considerations required when
+              designing a watch movement and its parts. Many of the book&rsquo;s pages are accompanied by pretty
+              technical illustrations that help to explain the concepts.</p>
 
             <h1 id="final-words">Final Words<a href="#final-words" class="hanchor" aria-label="Anchor"><img
                   src="../shared/mechanical-watch/images/anchor.png" width="16px" height="8px" alt="" /></a> </h1>

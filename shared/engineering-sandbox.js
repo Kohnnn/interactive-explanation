@@ -46,6 +46,22 @@
       "the-size-of-it-all": "Scale",
       "further-watching-and-reading": "References",
     },
+    "interactive-mechanical-watch": {
+      power: "Power",
+      gears: "Gear train",
+      escapement: "Escapement",
+      balance: "Balance",
+      mainplate: "Assembly",
+      click: "Winding lock",
+      "motion-works": "Hands",
+      date: "Date",
+      "keyless-works": "Crown controls",
+      "automatic-winding": "Auto winding",
+      "the-size-of-it-all": "Scale",
+      "from-pixels-to-resin": "Resin prototype",
+      "further-watching-and-reading": "References",
+      "final-words": "Wrap up",
+    },
     gears: {
       transmission: "Gear train",
       torque: "Torque",
@@ -550,13 +566,15 @@
 
   function revealActiveLinks(links, activeId) {
     links.forEach((link) => {
-      if (link.dataset.storyTarget !== activeId) {
+      if (link.dataset.storyTarget !== activeId || !link.getClientRects().length) {
         return;
       }
-      link.scrollIntoView({
-        block: "nearest",
-        inline: link.classList.contains("story-mobile-bar__link") ? "center" : "nearest",
-      });
+      const nav = link.closest(".story-mobile-bar__nav");
+      if (nav) {
+        nav.scrollTo({
+          left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2,
+        });
+      }
     });
   }
 
@@ -626,17 +644,32 @@
       return;
     }
 
+    const focusChapterDestination = document.body.dataset.storyMobileNavPlacement === "after-hero";
+    let chapterTarget = null;
     toggle.addEventListener("click", () => {
+      chapterTarget = null;
       setMobileSheetOpen(!sheet.open);
     });
     closeButton?.addEventListener("click", () => setMobileSheetOpen(false));
     sheet.querySelectorAll(".story-mobile-sheet__link").forEach((link) => {
-      link.addEventListener("click", () => setMobileSheetOpen(false));
+      link.addEventListener("click", () => {
+        chapterTarget = focusChapterDestination
+          ? document.getElementById(link.dataset.storyTarget || "")
+          : null;
+        setMobileSheetOpen(false);
+      });
     });
     sheet.addEventListener("close", () => {
       document.body.dataset.storyNavOpen = "false";
       toggle.setAttribute("aria-expanded", "false");
-      toggle.focus();
+      if (chapterTarget) {
+        chapterTarget.tabIndex = -1;
+        chapterTarget.scrollIntoView({ block: "start" });
+        chapterTarget.focus({ preventScroll: true });
+        chapterTarget = null;
+      } else {
+        toggle.focus();
+      }
     });
   }
 
@@ -771,7 +804,11 @@
     });
 
     document.body.appendChild(rail);
-    document.body.appendChild(mobile);
+    if (document.body.dataset.storyMobileNavPlacement === "after-hero") {
+      document.querySelector(".story-hero")?.insertAdjacentElement("afterend", mobile);
+    } else {
+      document.body.appendChild(mobile);
+    }
     document.body.appendChild(sheet);
     wireMobileSheet();
     observeActiveSection(sections, linkGroups);

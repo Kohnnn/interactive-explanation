@@ -24,9 +24,9 @@
       <h1>Interactive Mechanical Watch</h1>
       <p class="lead">
         Local route <code>/interactive-explanation/interactive-mechanical-watch/</code> is a dark-editorial
-        recomposition of the mechanical-watch teardown. It reuses the live WebGL movement engine verbatim and
-        wraps it in a route-local dark reading surface, then extends the article with a "From Pixels to Resin"
-        prototyping case study.
+        recomposition of the mechanical-watch teardown. It keeps the shared WebGL movement engine unchanged,
+        adds route-local keyboard and reduced-motion support, and places a linked "From Pixels to Resin"
+        prototyping case study before the closing resources.
       </p>
       <div class="action-row">
         <a class="action-link" href="../../interactive-mechanical-watch/">Open route</a>
@@ -47,8 +47,9 @@
         </p>
         <ul class="plain-list">
           <li>The public route uses neutral provenance handling; the original upstream article URL is intentionally not surfaced.</li>
-          <li>The shell uses the shared Engineering Sandbox longform family for hero framing, rail navigation, and mobile chapter behavior.</li>
-          <li>The original WebGL movement behavior remains intact through the shared engine; the resin chapter reuses its shared binary geometry through a route-local Three.js adapter.</li>
+          <li>The shell uses the shared Engineering Sandbox longform family for hero framing, compact chapter labels, rail navigation, and an immediately reachable mobile chapter bar placed after the hero.</li>
+          <li>The original WebGL movement behavior remains intact through the shared engine; a route-local adapter adds keyboard semantics and reduced-motion startup without duplicating simulation logic.</li>
+          <li>The resin chapter reuses shared binary geometry through a route-local Three.js adapter and links selected components back to the relevant lessons.</li>
         </ul>
       </article>
 
@@ -60,8 +61,10 @@
           <li><code>shared/mechanical-watch/js/base.js</code> is the shared Bartosz-family base runtime for sliders, drawers, and ArcBall controls.</li>
           <li><code>shared/mechanical-watch/css/</code> holds the original light-surface styles the engine expects.</li>
           <li><code>interactive-mechanical-watch/css/editorial-shell.css</code> is the route-local dark-editorial override layer, loaded last.</li>
-          <li><code>interactive-mechanical-watch/js/exploded-view-three.js</code> maps the shared movement geometry into the selectable Three.js resin exploder.</li>
-          <li><code>interactive-mechanical-watch/js/exploded-view.js</code> owns the accessible component controls, detail state, and SVG fallback.</li>
+          <li><code>interactive-mechanical-watch/js/watch-parts.js</code> is the canonical 71-part inventory shared by the accessible controller and Three.js renderer.</li>
+          <li><code>interactive-mechanical-watch/js/exploded-view-three.js</code> maps canonical movement meshes and generated watchmaking geometry into the animated Three.js exploder.</li>
+          <li><code>interactive-mechanical-watch/js/exploded-view.js</code> owns accessible playback and speed controls, component selection, incremental depth updates, lesson links, detail state, and SVG fallback.</li>
+          <li><code>interactive-mechanical-watch/js/legacy-watch-accessibility.js</code> adapts the shared canvases, sliders, segmented controls, and playback controls for keyboard and reduced-motion use.</li>
           <li><code>interactive-mechanical-watch/vendor/three/</code> holds the pinned Three.js module, orbit controls, and license.</li>
           <li><code>shared/mechanical-watch/models/*.dat</code> are the binary vertex/index buffers used by the original movement engine and route-local Three.js adapter.</li>
           <li><code>interactive-mechanical-watch/images/generated/</code> holds the editorial divider art for the resin process sections.</li>
@@ -72,9 +75,12 @@
         <h2>Known deviations</h2>
         <ul class="plain-list">
           <li>The reading surface is intentionally dark while each WebGL <code>drawer_container</code> sits inside a light framed inset, because the engine's loading text and explainers assume a light backdrop.</li>
-          <li>A new "From Pixels to Resin" chapter extends the article with a resin-casting prototyping case study; it is additive and does not alter the original WebGL demos.</li>
-          <li>The resin chapter opens with a Three.js exploded view built from the movement's shared binary geometry; users can scrub depth, orbit, zoom, and select components for subsystem notes.</li>
-          <li>The canvas is pointer-only and hidden from assistive technology; DOM component buttons remain the keyboard surface, and the selectable SVG stays mounted if Three.js initialization fails.</li>
+          <li>A new "From Pixels to Resin" chapter extends the article before the closing resources; it is additive and does not alter the original WebGL demos.</li>
+          <li>The resin chapter opens with a 71-part Three.js exploded view. Canonical meshes cover the modeled movement components; route-local procedural geometry supplies missing teeth, pinions, staffs, screws, dial markers, springs, case, crystal, and caseback.</li>
+          <li>The mechanism runs continuously with source-derived gear, escapement, balance, hand, calendar, rotor, and automatic-winding relationships at selectable 1&times;, 8&times;, and 60&times; speeds.</li>
+          <li>The Three.js canvas is pointer-only and hidden from assistive technology; DOM component buttons remain the keyboard surface, and a 71-target selectable SVG stays mounted if Three.js initialization fails.</li>
+          <li>Legacy teaching canvases and controls gain keyboard semantics through the route-local adapter while continuing to delegate to the shared runtime's existing handlers; y-only views advertise only effective keys and multi-slider demos expose unique names.</li>
+          <li>Reduced-motion preference pauses automatic startup but preserves explicit playback.</li>
           <li>Generated PNGs remain as later process dividers and the SVG fallback backdrop rather than the primary exploded-view interaction.</li>
           <li>Provenance is neutral rather than linking the upstream original page.</li>
         </ul>
@@ -85,10 +91,24 @@
         <ul class="plain-list">
           <li>Keep the route self-contained and subpath-safe; route-specific assets remain under <code>interactive-mechanical-watch/</code> and the common watch runtime remains under <code>shared/mechanical-watch/</code>.</li>
           <li>Do not fork the shared <code>watch.js</code> or <code>base.js</code> engines; restyle through <code>css/editorial-shell.css</code> only.</li>
-          <li>Preserve generated chapter behavior by keeping major sections anchored with top-level <code>h1</code> ids, and preserve every demo element id (the engine binds demos by id).</li>
-          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs .</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs . --route interactive-mechanical-watch</code> after edits.</li>
+          <li>Preserve generated chapter behavior by keeping major sections anchored with top-level <code>h1</code> ids, and preserve every demo element id because the engine binds demos by id.</li>
+          <li>Keep resin depth updates incremental so the component-list DOM and scroll position remain stable.</li>
+          <li>Targeted smoke coverage checks effective keyboard controls, unique slider names, mobile chapter placement and destination focus, reduced-motion startup, native legacy touch sliders, Three.js touch orbit, lesson links, and the 320px component-list layout.</li>
+          <li>Run both <code>node tools/check-public-surface.mjs .</code> and <code>SMOKE_PORT=4174 node tools/smoke-bundle.mjs . --route interactive-mechanical-watch</code> from the <code>interactive-explanation/</code> directory after edits.</li>
         </ul>
       </article>
+    </section>
+
+    <section class="note-section">
+      <h2>Detailed exploder plan and progress</h2>
+      <ol class="plain-list">
+        <li><strong>Completed:</strong> replaced duplicated 27-part definitions with one canonical 71-part inventory shared by DOM, SVG, and Three.js.</li>
+        <li><strong>Completed:</strong> exposed omitted calendar, keyless, regulator, shock, bridge, jewel, and automatic-winding meshes from the canonical buffers.</li>
+        <li><strong>Completed:</strong> generated missing watchmaking detail locally with Three.js geometry rather than importing an inseparable image-to-3D model.</li>
+        <li><strong>Completed:</strong> added continuous mechanism kinematics with 1&times;, 8&times;, and 60&times; playback, offscreen suspension, reduced-motion startup, and explicit replay.</li>
+        <li><strong>Completed:</strong> preserved DOM-first selection, lesson links, live details, SVG fallback, touch orbit, and subpath-safe local assets.</li>
+        <li><strong>Validation:</strong> syntax checks, public-surface audit, unit tests, and targeted Playwright smoke cover the shipped route contract.</li>
+      </ol>
     </section>
 
     <section class="note-section">
