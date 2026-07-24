@@ -7,17 +7,18 @@
       if (!root) {
         return;
       }
+      if (root.getAttribute("saved-theme")) {
+        return;
+      }
       var stored = null;
       try {
-        stored = window.localStorage.getItem("ie-theme");
+        stored = window.localStorage.getItem("theme");
       } catch (storageError) {
         stored = null;
       }
-      if (stored === "dark") {
-        root.setAttribute("data-theme", "dark");
-      } else if (stored === "light") {
-        root.setAttribute("data-theme", "light");
-      }
+      var userPref = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      var theme = stored === "dark" || stored === "light" ? stored : userPref;
+      root.setAttribute("saved-theme", theme);
     } catch (error) {
       // Theme application is non-critical chrome behavior.
     }
@@ -465,23 +466,15 @@
     return slug ? formatSlug(slug) : "Interactive";
   }
 
-  function readStoredTheme() {
-    try {
-      return window.localStorage.getItem("ie-theme");
-    } catch (error) {
-      return null;
-    }
-  }
-
   function writeStoredTheme(value) {
     try {
-      window.localStorage.setItem("ie-theme", value);
+      window.localStorage.setItem("theme", value);
     } catch (error) {}
   }
 
   function isDarkActive() {
     var root = document.documentElement;
-    return !!root && root.getAttribute("data-theme") === "dark";
+    return !!root && root.getAttribute("saved-theme") === "dark";
   }
 
   function updateThemeButton(button) {
@@ -499,7 +492,7 @@
           return;
         }
         var next = isDarkActive() ? "light" : "dark";
-        root.setAttribute("data-theme", next);
+        root.setAttribute("saved-theme", next);
         writeStoredTheme(next);
         updateThemeButton(button);
       } catch (error) {}
@@ -556,9 +549,21 @@
     }
   }
 
+  function initHomeThemeToggle() {
+    try {
+      var button = document.querySelector("[data-home-theme-toggle]");
+      if (button) {
+        wireThemeButton(button);
+      }
+    } catch (error) {
+      // Theme toggle is non-critical chrome behavior.
+    }
+  }
+
   function boot() {
     initFooter();
     initTopBar();
+    initHomeThemeToggle();
     initLearningProgress();
     initLearningShare();
   }

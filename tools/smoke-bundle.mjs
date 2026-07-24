@@ -6203,13 +6203,13 @@ async function smokeWayfinding(context) {
   const nestedDocs = await page.locator(".top-bar__docs").getAttribute("href");
   assert(new URL(nestedDocs, page.url()).pathname === `${mountPath}docs/anxiety/`, `nested route exposed an unexpected Docs exit: ${nestedDocs}`);
 
-  await page.addInitScript(() => localStorage.setItem("ie-theme", "dark"));
+  await page.addInitScript(() => localStorage.setItem("theme", "dark"));
   await assertRoute(page, "docs/trust/", ".back-link");
   const docsState = await page.evaluate(() => ({
     label: document.querySelector(".back-link")?.textContent?.trim() || "",
     atlas: document.querySelector(".back-link")?.href || "",
     route: document.querySelector(".action-link")?.href || "",
-    theme: document.documentElement.dataset.theme || "",
+    theme: document.documentElement.getAttribute("saved-theme") || "",
     canonical: document.querySelector('link[rel="canonical"]')?.href || "",
     ogUrl: document.querySelector('meta[property="og:url"]')?.content || "",
     robots: document.querySelector('meta[name="robots"]')?.content || "",

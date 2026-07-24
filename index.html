@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interactive Explanation Atlas</title>
   <meta name="description" content="Interactive ways to understand, practice, experiment, and build.">
+  <script src="./shared/theme-init.js"></script>
   <link rel="icon" type="image/png" href="./favicon.png">
   <link rel="stylesheet" href="./shared/site.css">
   <link rel="stylesheet" href="./shared/public-footer.css">
@@ -17,7 +18,10 @@
       <p class="eyebrow">Interactive Explanation Atlas</p>
       <h1>Understand, practice, experiment, and build.</h1>
       <p class="lead">Find an interactive route for the question, skill, or idea in front of you.</p>
-      <a class="action-link" href="#route-inventory">Browse all routes</a>
+      <div class="action-row action-row--compact">
+        <a class="action-link" href="#route-inventory">Browse all routes</a>
+        <button class="action-link secondary action-link--button" type="button" data-home-theme-toggle aria-pressed="false">Theme: Light</button>
+      </div>
     </section>
 
     <section class="inventory-section" id="route-inventory">

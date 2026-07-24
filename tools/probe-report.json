@@ -1,0 +1,1358 @@
+[
+  {
+    "slug": "trust",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 123,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "polygons",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 5310,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ballot",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 22869,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "crowds",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 3,
+      "blankCanvases": 3,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 116,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "loopy",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 270,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "neurons",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 592,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "remember",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 18037,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "anxiety",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 1,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 368,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "wbwwb",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 39,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "coming-out-simulator-2014",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 67,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "covid-19",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 27307,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "simulating",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 507,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "sim",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2225,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "decision-tree",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 23,
+      "emptySvgs": 0,
+      "bodyTextLen": 17443,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "random-forest",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 192,
+      "emptySvgs": 0,
+      "bodyTextLen": 11588,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "conditional-probability",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 3,
+      "emptySvgs": 0,
+      "bodyTextLen": 2499,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "markov-chains",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 3,
+      "emptySvgs": 0,
+      "bodyTextLen": 5026,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "principal-component-analysis",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 3,
+      "blankCanvases": 1,
+      "svgs": 7,
+      "emptySvgs": 0,
+      "bodyTextLen": 4967,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "exponentiation",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 1,
+      "svgs": 4,
+      "emptySvgs": 0,
+      "bodyTextLen": 2176,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "pi",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 2,
+      "emptySvgs": 0,
+      "bodyTextLen": 1855,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "sine-and-cosine",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 6,
+      "emptySvgs": 0,
+      "bodyTextLen": 3270,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "eigenvectors-and-eigenvalues",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 1,
+      "svgs": 10,
+      "emptySvgs": 0,
+      "bodyTextLen": 6048,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "image-kernels",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 3,
+      "blankCanvases": 1,
+      "svgs": 3,
+      "emptySvgs": 0,
+      "bodyTextLen": 2899,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ordinary-least-squares-regression",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 0,
+      "svgs": 12,
+      "emptySvgs": 0,
+      "bodyTextLen": 4264,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "blockchain",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2048,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "public-private-keys",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 1940,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "zero-knowledge-proof-demo",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 1,
+      "emptySvgs": 0,
+      "bodyTextLen": 1821,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "alpha-compositing",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 20,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 39029,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "color-spaces",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 10,
+      "blankCanvases": 8,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 39416,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "sound",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 48,
+      "blankCanvases": 45,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 48294,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "cameras-and-lenses",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 56,
+      "blankCanvases": 47,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 37781,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "lights-and-shadows",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 44,
+      "blankCanvases": 23,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 29551,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "tesseract",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 28,
+      "blankCanvases": 24,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 18294,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "gears",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 30,
+      "blankCanvases": 19,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 27926,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "gps",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 62,
+      "blankCanvases": 62,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 57251,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "earth-and-sun",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 21,
+      "blankCanvases": 18,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 22178,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "bicycle",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 118,
+      "blankCanvases": 118,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 90937,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "airfoil",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 81,
+      "blankCanvases": 81,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 85896,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "curves-and-surfaces",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 89,
+      "blankCanvases": 89,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 47350,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "internal-combustion-engine",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 69,
+      "blankCanvases": 69,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 34768,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "mechanical-watch",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 93,
+      "blankCanvases": 93,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 47433,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "naval-architecture",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 47,
+      "blankCanvases": 38,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 29774,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "formula-1-racing",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 15,
+      "blankCanvases": 15,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 8676,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "interactive-mechanical-watch",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 94,
+      "blankCanvases": 93,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 52668,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "reading-qr-codes-without-a-computer",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 34,
+      "emptySvgs": 0,
+      "bodyTextLen": 6975,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "teoria-interval-ear-training",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 3,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2160,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "teoria-note-ear-training",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 3,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2026,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "teoria-key-and-note-ear-training",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2180,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "teoria-random-key-and-note-ear-training",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2199,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "teoria-scale-construction",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2519,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "teoria-interval-identification-and-inversion",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 2,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2215,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "ableton-learning-music-playground",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 126,
+      "emptySvgs": 0,
+      "bodyTextLen": 2894,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-beats",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 12,
+      "emptySvgs": 0,
+      "bodyTextLen": 2341,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-notes-and-scales",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 46,
+      "emptySvgs": 0,
+      "bodyTextLen": 2361,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-chords",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 46,
+      "emptySvgs": 0,
+      "bodyTextLen": 2152,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-basslines",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 47,
+      "emptySvgs": 0,
+      "bodyTextLen": 2103,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-melodies",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 47,
+      "emptySvgs": 0,
+      "bodyTextLen": 2142,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-music-play-with-song-structures",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2321,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-get-started",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 8,
+      "emptySvgs": 0,
+      "bodyTextLen": 1824,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-how-synths-make-sound",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 0,
+      "svgs": 4,
+      "emptySvgs": 0,
+      "bodyTextLen": 1561,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-filter-resonance",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 9,
+      "emptySvgs": 0,
+      "bodyTextLen": 1385,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 8,
+      "emptySvgs": 0,
+      "bodyTextLen": 1531,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-matching-envelopes",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 27,
+      "emptySvgs": 0,
+      "bodyTextLen": 2330,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "ableton-learning-synths-recipes",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 15,
+      "emptySvgs": 0,
+      "bodyTextLen": 2194,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "chrome-music-lab-song-maker",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 2,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 510,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "musicmap",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 3,
+      "emptySvgs": 0,
+      "bodyTextLen": 13598,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "music-interactive-hub",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 5330,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "linear-regression",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 7,
+      "emptySvgs": 0,
+      "bodyTextLen": 20627,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "logistic-regression",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 5,
+      "emptySvgs": 0,
+      "bodyTextLen": 12581,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "precision-recall",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 5,
+      "emptySvgs": 0,
+      "bodyTextLen": 12781,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "roc-auc",
+    "navError": null,
+    "consoleErrors": [
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\".",
+      "Error: <path> attribute d: Expected path command, \"…2 24.422 24.539z\\\"/\\u003E\\n\\u003Cpath d=\\\"m17…\"."
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 9,
+      "emptySvgs": 0,
+      "bodyTextLen": 11781,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "bias-variance",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 25,
+      "emptySvgs": 9,
+      "bodyTextLen": 12307,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "train-test-validation",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 19,
+      "emptySvgs": 5,
+      "bodyTextLen": 5679,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "double-descent",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 3,
+      "emptySvgs": 0,
+      "bodyTextLen": 9103,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "double-descent2",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 23,
+      "emptySvgs": 0,
+      "bodyTextLen": 20847,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "memory-allocation",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 19,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 18444,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "load-balancing",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 14,
+      "blankCanvases": 0,
+      "svgs": 22,
+      "emptySvgs": 0,
+      "bodyTextLen": 15967,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "hysteresis-slack",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 9,
+      "emptySvgs": 0,
+      "bodyTextLen": 6182,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "rigid-body-collisions",
+    "navError": null,
+    "consoleErrors": [
+      "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4321/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4321/interactive-explanation/rigid-body-collisions/_nux",
+      "Hydration completed but contains mismatches."
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 1,
+      "svgs": 32,
+      "emptySvgs": 0,
+      "bodyTextLen": 21873,
+      "hasMain": true
+    },
+    "severity": "SUSPECT"
+  },
+  {
+    "slug": "blockchain-101-combined-flow",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 3076,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "primary-interactive-hub",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 0,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2610,
+      "hasMain": true
+    },
+    "severity": "ok"
+  },
+  {
+    "slug": "stargazing-dashboard",
+    "navError": null,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "visual": {
+      "canvases": 1,
+      "blankCanvases": 0,
+      "svgs": 0,
+      "emptySvgs": 0,
+      "bodyTextLen": 2283,
+      "hasMain": true
+    },
+    "severity": "ok"
+  }
+]
