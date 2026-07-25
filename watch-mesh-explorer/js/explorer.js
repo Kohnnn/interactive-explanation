@@ -1,6 +1,13 @@
 import * as THREE from "../../interactive-mechanical-watch/vendor/three/three.module.min.js";
 import { OrbitControls } from "../../interactive-mechanical-watch/vendor/three/OrbitControls.js";
-import { MODEL_TABLE, systemForMesh } from "./model-table.js";
+import {
+  MODEL_TABLE,
+  systemForMesh,
+  angleForSystem,
+  radiusScaleForSystem,
+  memberIndex,
+  systemSize,
+} from "./model-table.js";
 
 const STRIDE = 6;
 const VERTICES_URL = "../shared/mechanical-watch/models/watch_vertices.dat";
@@ -107,12 +114,20 @@ function buildScene() {
 }
 
 // Robust framing center + radius. The .dat stores each mesh at its modeling
-// origin, not an assembled position, so a few parts (hands, setting-lever
-// jumper) sit far off-cluster and would blow up a naive bounding box. We frame
-// on the dense core using a median center and a percentile radius; outliers
-// stay reachable via focus-on-select.
+// origin, not an assembled position: the movement core is stacked coaxially on
+// Z while ~20% of meshes (hands, date digits, keyless levers) sit parked far
+// off-cluster. At rest we keep the pure raw .dat layout framed on the dense
+// core; the explode slider fans every mesh into a depth-layered subsystem
+// diagram, pulling the parked outliers back into their functional groups.
 let globalCenter = new THREE.Vector3();
 let globalRadius = 20;
+let explodedRadius = 60;
+
+// Explode tuning constants.
+const CORE_ZGAP = 3.6;     // vertical spacing between depth layers
+const FAN_RADIUS = 30;     // base ring the subsystems fan out to
+const MEMBER_GAP = 3.2;    // radial spacing between members of one subsystem
+const MEMBER_WEDGE = 0.55; // angular spread of a subsystem's members (radians)
 
 function median(values) {
   if (values.length === 0) return 0;
@@ -128,6 +143,15 @@ function percentile(values, p) {
   return sorted[idx];
 }
 
+function signedSqrt(v) {
+  return Math.sign(v) * Math.sqrt(Math.abs(v));
+}
+
+// Cubic ease so the explode feels like it settles into place.
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
 function buildMeshes() {
   const names = Object.keys(MODEL_TABLE);
   const centroids = [];
@@ -138,7 +162,11 @@ function buildMeshes() {
     const system = systemForMesh(name);
     const color = SYSTEM_COLORS[system] ?? 0x8a8f96;
     const group = new THREE.Group();
-    group.userData = { name, system, home: new THREE.Vector3() };
+    group.userData = {
+      name, system,
+      home: new THREE.Vector3(),
+      explodeTarget: new THREE.Vector3(),
+    };
 
     let tri = null;
     const centroid = new THREE.Vector3();
@@ -179,46 +207,75 @@ function buildMeshes() {
     median(centroids.map((c) => c.y)),
     median(centroids.map((c) => c.z)),
   );
-  // Robust radius = 85th percentile of (centroid distance + mesh radius),
-  // so the dense movement core fills the frame without the stray hands.
-  const reach = centroids.map((c, i) => c.distanceTo(globalCenter));
+  // Frame the dense core at rest: percentile of (core reach + radius) keeps the
+  // stacked movement filling the frame while the parked outliers stay offscreen
+  // until the user explodes (per the "pure raw .dat at rest" contract).
   const reachWithRadius = [];
-  let ci = 0;
   for (const name of names) {
     const [, triC] = MODEL_TABLE[name];
     if (triC < 3) continue;
-    reachWithRadius.push(reach[ci] + state.meshes.get(name).group.userData.radius);
-    ci += 1;
+    const g = state.meshes.get(name).group.userData;
+    reachWithRadius.push(g.centroid.distanceTo(globalCenter) + g.radius);
   }
-  // ~20% of meshes (date digits, hands, keyless works, regulator index) are
-  // authored at far modeling origins, so the median reach (~20u) reflects the
-  // dense core while p85 (~96u) does not. Define the core as meshes within
-  // 2x the median reach and frame on the core's own max extent.
   globalRadius = Math.max(24, Math.min(48, percentile(reachWithRadius, 0.6) * 1.35));
 
-  // Second pass: recenter the whole movement on the robust center and derive
-  // each part's explode direction from the same center.
+  // Second pass: home = raw .dat position (recentered so the core sits at the
+  // origin); explodeTarget = a depth-layered subsystem fan computed from each
+  // mesh's centroid depth + its functional group. group.position is set so the
+  // mesh CENTROID lands where we want, regardless of its raw modeling origin.
+  let maxExploded = globalRadius;
   for (const { group } of state.meshes.values()) {
-    group.position.copy(globalCenter).multiplyScalar(-1);
-    group.userData.home.copy(group.position);
-    const dir = group.userData.centroid.clone().sub(globalCenter);
-    if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
-    group.userData.explodeDir = dir.normalize();
+    const { centroid, system, name, radius } = group.userData;
+    const homePos = globalCenter.clone().multiplyScalar(-1);
+    group.userData.home.copy(homePos);
+
+    // Depth layer: signed-sqrt compresses the runaway hands (z=-121 -> ~-11)
+    // and expands the tightly packed core so layers read as clean strata.
+    const zRel = centroid.z - globalCenter.z;
+    const layerZ = signedSqrt(zRel) * CORE_ZGAP;
+
+    // Radial fan: each subsystem gets a compass angle; members stagger across a
+    // small wedge and step outward so coaxial wheels separate into a spoke.
+    const n = systemSize(system);
+    const i = memberIndex(name);
+    const baseAngle = angleForSystem(system);
+    const wedge = n > 1 ? (i / (n - 1) - 0.5) * MEMBER_WEDGE : 0;
+    const angle = baseAngle + wedge;
+    const centred = n > 1 ? i - (n - 1) / 2 : 0;
+    const ring = FAN_RADIUS * radiusScaleForSystem(system) + centred * MEMBER_GAP;
+
+    // Target CENTROID position (world/centered space).
+    const targetCentroid = new THREE.Vector3(
+      Math.cos(angle) * ring,
+      Math.sin(angle) * ring,
+      layerZ,
+    );
+    // group.position such that (centroid + position) == targetCentroid.
+    group.userData.explodeTarget.copy(targetCentroid).sub(centroid);
+
+    const reach = Math.hypot(targetCentroid.x, targetCentroid.y) + radius;
+    if (reach > maxExploded) maxExploded = reach;
+    if (Math.abs(targetCentroid.z) + radius > maxExploded) maxExploded = Math.abs(targetCentroid.z) + radius;
+
+    group.position.copy(homePos);
   }
+  explodedRadius = maxExploded * 1.06;
 
   fitCamera();
 }
 
-// Frame the movement core from the robust radius, or a single mesh when one
-// is selected (so far-off parts like the hands can still be inspected).
+// Frame the diagram. Radius grows with the explode amount so the fanned layout
+// never clips at full explode, while the rest view stays tight on the core. A
+// selected mesh focuses the camera on that single part.
 function fitCamera(focusName = null) {
   const fov = (camera.fov * Math.PI) / 180;
   let target = new THREE.Vector3(0, 0, 0);
-  let radius = globalRadius;
+  const framed = globalRadius + (explodedRadius - globalRadius) * state.explode;
+  let radius = framed;
 
   if (focusName && state.meshes.has(focusName)) {
     const { group } = state.meshes.get(focusName);
-    // World-space centroid = modeling centroid + group offset (-globalCenter).
+    // World-space centroid = modeling centroid + current group position.
     target = group.userData.centroid.clone().add(group.position);
     radius = Math.max(2, group.userData.radius * 1.4);
   }
@@ -226,21 +283,23 @@ function fitCamera(focusName = null) {
   const dist = radius / Math.sin(fov / 2);
   const dir = new THREE.Vector3(0, -0.15, 1).normalize();
   camera.position.copy(target).addScaledVector(dir, dist);
-  camera.near = Math.max(0.05, dist - globalRadius * 6);
-  camera.far = dist + globalRadius * 12;
+  camera.near = Math.max(0.05, dist - explodedRadius * 6);
+  camera.far = dist + explodedRadius * 12;
   camera.updateProjectionMatrix();
   controls.target.copy(target);
   controls.minDistance = radius * 0.4;
-  controls.maxDistance = globalRadius * 8;
+  controls.maxDistance = explodedRadius * 8;
   controls.update();
 }
 
 function applyExplode() {
-  const amount = state.explode;
+  const t = easeInOutCubic(state.explode);
   for (const { group } of state.meshes.values()) {
-    const dir = group.userData.explodeDir;
-    group.position.copy(group.userData.home).addScaledVector(dir, amount * 22);
+    group.position.lerpVectors(group.userData.home, group.userData.explodeTarget, t);
   }
+  // Keep the whole fanned diagram in frame as it expands (only when no single
+  // part is focused, so selection framing is not overridden mid-drag).
+  if (!state.selected) fitCamera();
 }
 
 function applyVisibility() {
@@ -435,11 +494,37 @@ async function init() {
   const rbSize = new THREE.Vector3(); rb.getSize(rbSize);
   window.__EXPLORER_DEBUG__ = {
     globalRadius,
+    explodedRadius,
     globalCenter: globalCenter.toArray(),
     rootSize: rbSize.toArray(),
     cameraPos: camera.position.toArray(),
     near: camera.near, far: camera.far,
     minD: controls.minDistance, maxD: controls.maxDistance,
+  };
+  // Test hook: drive explode programmatically and read back framing.
+  window.__EXP_SET_EXPLODE__ = (pct) => {
+    state.explode = Math.max(0, Math.min(1, pct / 100));
+    els.explode.value = String(Math.round(state.explode * 100));
+    els.explodeVal.textContent = `${els.explode.value}%`;
+    applyExplode();
+    return { explode: state.explode, framed: globalRadius + (explodedRadius - globalRadius) * state.explode };
+  };
+  // Test hook: project every mesh centroid to normalized screen space so a probe
+  // can quantify separation/overlap of the exploded diagram.
+  window.__EXP_PROJECT__ = () => {
+    const rect = els.canvas.getBoundingClientRect();
+    const out = [];
+    const v = new THREE.Vector3();
+    for (const [name, { group, tri }] of state.meshes.entries()) {
+      if (!tri) continue;
+      v.copy(group.userData.centroid).add(group.position).project(camera);
+      out.push({
+        name, system: group.userData.system,
+        x: (v.x + 1) / 2, y: (1 - v.y) / 2,
+        onScreen: v.x >= -1 && v.x <= 1 && v.y >= -1 && v.y <= 1 && v.z < 1,
+      });
+    }
+    return out;
   };
   fillStats();
   applyVisibility();

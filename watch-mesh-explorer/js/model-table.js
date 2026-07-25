@@ -121,3 +121,71 @@ const NAME_TO_SYSTEM = (() => {
 export function systemForMesh(name) {
   return NAME_TO_SYSTEM.get(name) ?? "Other";
 }
+
+// Each subsystem is assigned a compass angle (radians) so the exploded view
+// fans groups outward into distinct sectors. Structure stays near the center
+// (small radial push) as the chassis everything else lifts away from; the rest
+// are spread evenly around the dial. Angles are hand-ordered so neighbouring
+// sectors are functionally related (power -> train -> escapement -> regulator).
+const SYSTEM_ORDER = [
+  "Structure",
+  "Power",
+  "Gear train",
+  "Escapement",
+  "Regulator",
+  "Shock protection",
+  "Motion works",
+  "Display",
+  "Calendar",
+  "Keyless works",
+  "Automatic winding",
+  "Friction",
+  "Hardware",
+  "Date digits",
+  "Reference geometry",
+  "Other",
+];
+
+// Radial multiplier per subsystem: Structure hugs the center, reference/dev
+// geometry is parked far out of the way, everything else fans at a common ring.
+const SYSTEM_RADIUS = {
+  Structure: 0.35,
+  "Reference geometry": 1.7,
+  "Date digits": 1.35,
+};
+
+export const SYSTEM_ANGLES = (() => {
+  const angles = new Map();
+  const fanned = SYSTEM_ORDER.filter((s) => s !== "Structure");
+  fanned.forEach((system, i) => {
+    angles.set(system, (i / fanned.length) * Math.PI * 2);
+  });
+  angles.set("Structure", 0);
+  return angles;
+})();
+
+export function angleForSystem(system) {
+  return SYSTEM_ANGLES.get(system) ?? 0;
+}
+
+export function radiusScaleForSystem(system) {
+  return SYSTEM_RADIUS[system] ?? 1;
+}
+
+// Stable index of a mesh within its subsystem, used to stagger coaxial parts
+// (e.g. the stacked gear-train wheels) into distinct spots when exploded.
+const MEMBER_INDEX = (() => {
+  const map = new Map();
+  for (const names of Object.values(SYSTEM_MAP)) {
+    names.forEach((name, i) => map.set(name, i));
+  }
+  return map;
+})();
+
+export function memberIndex(name) {
+  return MEMBER_INDEX.get(name) ?? 0;
+}
+
+export function systemSize(system) {
+  return (SYSTEM_MAP[system] ?? []).length || 1;
+}
