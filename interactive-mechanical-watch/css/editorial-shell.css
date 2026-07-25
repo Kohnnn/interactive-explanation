@@ -746,7 +746,7 @@ body[data-story-route="interactive-mechanical-watch"] .exploded-watch__stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
   gap: clamp(1rem, 3vw, 1.6rem);
-  align-items: stretch;
+  align-items: start;
 }
 
 body[data-story-route="interactive-mechanical-watch"] .exploded-watch__canvas {

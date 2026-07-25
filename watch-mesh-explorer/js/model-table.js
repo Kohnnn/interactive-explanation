@@ -1,0 +1,123 @@
+// The authoritative ciechanowski watch mesh table, parsed directly from
+// shared/mechanical-watch/js/watch.js `models = {...}`. Each entry is
+// [triIndexOffset, triIndexCount, lineIndexOffset, lineIndexCount] into
+// watch_indices.dat. Triangle blocks build solid meshes; line blocks are
+// GL_LINES wireframe pairs. All 85 meshes, 100% of the index buffer.
+export const MODEL_TABLE = {
+  "Arrow_curve": [0, 600, 600, 654],
+  "Arrow": [1254, 72, 1326, 126],
+  "Automatic_device_bridge": [1452, 2712, 4164, 2586],
+  "Automatic_device_framework": [6750, 8154, 14904, 8448],
+  "Balance_bridge": [23352, 6942, 30294, 7044],
+  "Balance_jewel": [37338, 732, 38070, 756],
+  "Balance_safety": [38826, 1224, 40050, 1248],
+  "Balance_shaft_end": [41298, 687, 41985, 156],
+  "Balance_spring_base": [42141, 564, 42705, 624],
+  "Balance_wheel": [43329, 3006, 46335, 3018],
+  "Barrel_arbor": [49353, 3483, 52836, 3552],
+  "Barrel_bridge": [56388, 8646, 65034, 8952],
+  "Barrel_cut": [73986, 4182, 78168, 5010],
+  "Barrel_lid": [83178, 3036, 86214, 3036],
+  "Barrel_main": [89250, 7020, 96270, 6480],
+  "Cannon_pinion": [102750, 1752, 104502, 1440],
+  "Cannon_wheel": [105942, 1242, 107184, 750],
+  "Click_spring": [107934, 1140, 109074, 1182],
+  "Click": [110256, 672, 110928, 690],
+  "Corrector_lever": [111618, 1356, 112974, 1422],
+  "Crown_wheel": [114396, 1620, 116016, 1080],
+  "Crown": [117096, 1200, 118296, 1452],
+  "Cube": [119748, 36, 119784, 72],
+  "Cylinder": [119856, 540, 120396, 552],
+  "D0": [120948, 546, 121494, 0],
+  "D1": [121494, 123, 121617, 0],
+  "D2": [121617, 441, 122058, 0],
+  "D3": [122058, 795, 122853, 0],
+  "D4": [122853, 180, 123033, 0],
+  "D5": [123033, 480, 123513, 0],
+  "D6": [123513, 765, 124278, 0],
+  "D7": [124278, 162, 124440, 0],
+  "D8": [124440, 990, 125430, 0],
+  "D9": [125430, 765, 126195, 0],
+  "Date_corrector": [126195, 2220, 128415, 2316],
+  "Date_indicator_spring": [130731, 1245, 131976, 1776],
+  "Date_jumper_plate": [133752, 3594, 137346, 3636],
+  "Date_jumper": [140982, 1590, 142572, 1416],
+  "Date_ring": [143988, 3312, 147300, 4056],
+  "Dial": [151356, 1524, 152880, 1560],
+  "Escape_wheel": [154440, 4938, 159378, 5598],
+  "Fourth_wheel": [164976, 2064, 167040, 1620],
+  "Hour_hand": [168660, 744, 169404, 792],
+  "Hour_wheel": [170196, 1518, 171714, 1350],
+  "Jewel_bearing": [173064, 666, 173730, 666],
+  "Jewel_pretty": [174396, 3654, 178050, 0],
+  "Lower_index": [178050, 1080, 179130, 1152],
+  "Mainplate": [180282, 28308, 208590, 28956],
+  "Mainspring_base": [237546, 1350, 238896, 1374],
+  "Mainspring_cut": [240270, 228, 240498, 336],
+  "Minute_hand": [240834, 588, 241422, 636],
+  "Minute_train_bridge": [242058, 1956, 244014, 2070],
+  "Pallet_bridge": [246084, 4236, 250320, 4290],
+  "Pallet_fork_horn": [254610, 1134, 255744, 1170],
+  "Pallet_fork": [256914, 1848, 258762, 1980],
+  "Pallet_jewel_1": [260742, 48, 260790, 90],
+  "Pallet_jewel_2": [260880, 36, 260916, 72],
+  "Pinion_center": [260988, 546, 261534, 432],
+  "Ratchet_wheel": [261966, 1128, 263094, 72],
+  "Reversing_wheel_bottom": [263166, 5838, 269004, 5526],
+  "Reversing_wheel_cut": [274530, 4026, 278556, 4614],
+  "Reversing_wheel_lever": [283170, 960, 284130, 972],
+  "Reversing_wheel_top": [285102, 4302, 289404, 4722],
+  "Screw_head": [294126, 390, 294516, 426],
+  "Second_hand": [294942, 372, 295314, 420],
+  "Second_wheel": [295734, 2262, 297996, 1746],
+  "Setting_lever_jumper": [299742, 4728, 304470, 4224],
+  "Setting_lever": [308694, 756, 309450, 816],
+  "Shock_base_cut": [310266, 984, 311250, 1878],
+  "Shock_base": [313128, 3918, 317046, 3942],
+  "Shock_center_cut": [320988, 435, 321423, 894],
+  "Shock_center": [322317, 1620, 323937, 1620],
+  "Shock_jewel": [325557, 648, 326205, 444],
+  "Shock_spring": [326649, 1224, 327873, 1008],
+  "Sliding_pinion": [328881, 1854, 330735, 2268],
+  "Stop_lever": [333003, 990, 333993, 1032],
+  "Stud_base": [335025, 1002, 336027, 1074],
+  "Stud": [337101, 1476, 338577, 1074],
+  "Third_wheel": [339651, 2112, 341763, 1656],
+  "Train_bridge": [343419, 6312, 349731, 6570],
+  "Upper_index": [356301, 1842, 358143, 1950],
+  "Weight": [360093, 4440, 364533, 4518],
+  "Winding_pinion": [369051, 2268, 371319, 1836],
+  "Winding_stem": [373155, 897, 374052, 1134],
+  "Yoke": [375186, 1512, 376698, 1602],
+};
+
+// Map each mesh to a functional subsystem so the explorer can group parts.
+const SYSTEM_MAP = {
+  Structure: ["Mainplate", "Barrel_bridge", "Train_bridge", "Pallet_bridge", "Balance_bridge", "Minute_train_bridge", "Date_jumper_plate", "Automatic_device_framework", "Automatic_device_bridge"],
+  Power: ["Barrel_main", "Barrel_lid", "Barrel_arbor", "Barrel_cut", "Mainspring_base", "Mainspring_cut", "Ratchet_wheel"],
+  "Gear train": ["Second_wheel", "Third_wheel", "Fourth_wheel", "Pinion_center"],
+  Escapement: ["Escape_wheel", "Pallet_fork", "Pallet_fork_horn", "Pallet_jewel_1", "Pallet_jewel_2"],
+  Regulator: ["Balance_wheel", "Balance_shaft_end", "Balance_safety", "Balance_spring_base", "Lower_index", "Upper_index", "Stud", "Stud_base"],
+  "Shock protection": ["Shock_base", "Shock_base_cut", "Shock_center", "Shock_center_cut", "Shock_jewel", "Shock_spring"],
+  "Motion works": ["Cannon_pinion", "Cannon_wheel", "Hour_wheel"],
+  Display: ["Dial", "Hour_hand", "Minute_hand", "Second_hand"],
+  Calendar: ["Date_ring", "Date_jumper", "Date_indicator_spring", "Date_corrector"],
+  "Keyless works": ["Crown", "Crown_wheel", "Winding_stem", "Winding_pinion", "Sliding_pinion", "Yoke", "Setting_lever", "Setting_lever_jumper", "Corrector_lever", "Stop_lever", "Click", "Click_spring"],
+  "Automatic winding": ["Weight", "Reversing_wheel_top", "Reversing_wheel_bottom", "Reversing_wheel_cut", "Reversing_wheel_lever"],
+  Friction: ["Jewel_bearing", "Jewel_pretty", "Balance_jewel"],
+  Hardware: ["Screw_head"],
+  "Date digits": ["D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"],
+  "Reference geometry": ["Arrow", "Arrow_curve", "Cube", "Cylinder"],
+};
+
+const NAME_TO_SYSTEM = (() => {
+  const map = new Map();
+  for (const [system, names] of Object.entries(SYSTEM_MAP)) {
+    for (const name of names) map.set(name, system);
+  }
+  return map;
+})();
+
+export function systemForMesh(name) {
+  return NAME_TO_SYSTEM.get(name) ?? "Other";
+}

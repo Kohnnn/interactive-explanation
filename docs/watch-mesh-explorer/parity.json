@@ -1,0 +1,55 @@
+[
+  {
+    "moduleId": "dat-decoder",
+    "originalBehavior": "The mechanical-watch runtime reads watch_vertices.dat and watch_indices.dat and slices per-part index ranges from the models table in shared/mechanical-watch/js/watch.js.",
+    "localStatus": "Explorer reuses the same two .dat buffers with an embedded MODEL_TABLE (85 meshes, [triOffset, triCount, lineOffset, lineCount]) derived from that models table; STRIDE=6 float32 (position.xyz + normal.xyz), Uint32 indices.",
+    "sourceFiles": [
+      "../../watch-mesh-explorer/js/model-table.js",
+      "../../watch-mesh-explorer/js/explorer.js",
+      "../../shared/mechanical-watch/models/watch_vertices.dat",
+      "../../shared/mechanical-watch/models/watch_indices.dat"
+    ],
+    "notes": [
+      "Each mesh stores two consecutive index blocks: a triangle block and a wireframe line block; the two blocks tile the whole 378,300-index buffer with no gaps or overlap.",
+      "Manifest of all 85 decoded components lives at docs/mechanical-watch/decoded/manifest.json."
+    ],
+    "evidence": [
+      "Stats readout reports 85 meshes / 189,558 vertices / 64,196 triangles / 92,856 line pairs.",
+      "tools/decode-dat.mjs --model-table reproduces the same per-part index ranges."
+    ]
+  },
+  {
+    "moduleId": "viewport-framing",
+    "originalBehavior": "N/A - the explorer is an original local route, not a replica of an upstream page.",
+    "localStatus": "Three.js scene frames the dense movement core using a robust radius (clamped percentile of centroid reach + mesh radius), since .dat parts are stored at modeling origins, not assembled positions. Selecting a mesh recenters the camera so far-off parts (hands, date digits, keyless works) stay reachable.",
+    "sourceFiles": [
+      "../../watch-mesh-explorer/js/explorer.js"
+    ],
+    "notes": [
+      "Outlier meshes (Second_hand/Minute_hand at z=-121, Setting_lever_jumper at z=91, date digits) would blow up a naive bounding box; framing targets the core and clamps radius to [24,48].",
+      "fitCamera(name) focuses a single mesh; setSelected(name) calls it unless focus:false."
+    ],
+    "evidence": [
+      "Composited screenshot: lit-pixel bbox fills the frame (fillX/fillY = 1.0) and is centered (cx/cy = 0.5).",
+      "__EXP_DBG() reports globalCenter [0,0,-0.4] and clamped globalRadius ~42."
+    ]
+  },
+  {
+    "moduleId": "route-shell",
+    "originalBehavior": "N/A - original local route; provenance surface is the public footer only.",
+    "localStatus": "Standalone page with route-local css/explorer.css and js/explorer.js (module) plus mesh list, subsystem grouping (15 systems), search, raycaster picking, explode slider, and solid/wire/spin toggles. Vendored Three.js is reused from ../interactive-mechanical-watch/vendor/three/.",
+    "sourceFiles": [
+      "../../watch-mesh-explorer/index.html",
+      "../../watch-mesh-explorer/css/explorer.css",
+      "../../watch-mesh-explorer/js/explorer.js",
+      "../../watch-mesh-explorer/js/model-table.js"
+    ],
+    "notes": [
+      "referenceMode is neutral; the route has no upstream original page.",
+      "Three.js is loaded from the sibling mechanical-watch vendor folder rather than re-vendored."
+    ],
+    "evidence": [
+      "check-public-surface.mjs passes; smoke-bundle.mjs --route watch-mesh-explorer passes."
+    ]
+  }
+]

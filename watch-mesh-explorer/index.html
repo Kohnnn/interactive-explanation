@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d11">
+  <meta name="description" content="Interactive explorer for the decoded ETA 2824-2 movement mesh: all 85 named meshes from the ciechanowski .dat binary, with solid and wireframe views, explode, and per-mesh index metadata.">
+  <meta property="og:title" content="Watch Mesh Explorer">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Explore every one of the 85 decoded meshes of the ETA 2824-2 movement: triangle and wireframe line blocks straight from the binary .dat.">
+  <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/watch-mesh-explorer/">
+  <title>Watch Mesh Explorer · Decoded ETA 2824-2</title>
+  <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/watch-mesh-explorer/">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" href="../shared/public-footer.css">
+  <link rel="stylesheet" href="./css/explorer.css">
+  <script type="module" src="./js/explorer.js"></script>
+  <script defer src="../shared/public-footer.js"></script>
+</head>
+
+<body data-reference-mode="neutral"
+  data-reference-note="Original mesh-inspection tool built inside the interactive-explanation collection. It reads the same watch_vertices.dat / watch_indices.dat binary as the mechanical-watch route and slices it with the authoritative 85-mesh model table decoded from watch.js."
+  data-reference-url="../docs/mechanical-watch/decoded/manifest.json" data-reference-text="Decoded mesh manifest"
+  data-footer-label="Tool provenance" data-show-reference-footer="true" data-canonical-url="./">
+  <main class="explorer">
+    <header class="explorer__head">
+      <p class="explorer__eyebrow">Decoded geometry · reverse-engineered .dat</p>
+      <h1 class="explorer__title">Watch Mesh Explorer</h1>
+      <p class="explorer__lede">
+        Every named mesh in the ETA 2824-2 movement, sliced straight from the binary
+        <code>watch_vertices.dat</code> / <code>watch_indices.dat</code> using the authoritative
+        85-mesh model table. Each mesh carries both a solid triangle block and a wireframe line
+        block. Rotate, explode, toggle wireframe, and click any part to read its exact index range.
+      </p>
+      <div id="stats" class="explorer__stats"><span>Loading geometry…</span></div>
+    </header>
+
+    <div class="explorer__layout">
+      <aside class="explorer__sidebar" aria-label="Mesh list">
+        <label class="explorer__search">
+          <span class="visually-hidden">Filter meshes</span>
+          <input id="search" type="search" placeholder="Filter meshes…" autocomplete="off">
+        </label>
+        <div id="mesh-list" class="mesh-list"></div>
+      </aside>
+
+      <section class="explorer__stage">
+        <div class="stage__viewport-wrap">
+          <canvas id="viewport" aria-label="3D watch movement viewport"></canvas>
+          <p id="status" class="stage__status">Loading movement geometry…</p>
+        </div>
+
+        <div class="stage__controls" role="group" aria-label="Viewport controls">
+          <label class="ctrl ctrl--range">
+            <span>Explode <b id="explode-val">0%</b></span>
+            <input id="explode" type="range" min="0" max="100" value="0" step="1">
+          </label>
+          <label class="ctrl"><input id="toggle-solid" type="checkbox" checked> Solid</label>
+          <label class="ctrl"><input id="toggle-wire" type="checkbox"> Wireframe</label>
+          <label class="ctrl"><input id="toggle-spin" type="checkbox" checked> Auto-spin</label>
+          <button id="reset" type="button" class="ctrl ctrl--btn">Reset view</button>
+        </div>
+      </section>
+
+      <aside id="mesh-info" class="explorer__info" aria-live="polite">
+        <p class="info-hint">Select a mesh from the list or click it in the viewport.</p>
+      </aside>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watch Mesh Explorer Replica Docs</title>
+  <meta name="description" content="Provenance, parity notes, and implementation references for the local watch-mesh-explorer route.">
+  <meta name="robots" content="noindex,follow">
+  <meta property="og:title" content="Watch Mesh Explorer Replica Docs">
+  <meta property="og:description" content="Provenance, parity notes, and implementation references for the local watch-mesh-explorer route.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/docs/watch-mesh-explorer/">
+  <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/docs/watch-mesh-explorer/">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <script src="../../shared/theme-init.js"></script>
+  <link rel="stylesheet" href="../../shared/site.css">
+</head>
+<body data-page-type="docs" data-parity-url="./parity.json">
+  <main class="site-page docs-page">
+    <a class="back-link" href="../../">Back to Atlas</a>
+
+    <header class="hero hero-compact">
+      <p class="eyebrow">Replica documentation</p>
+      <h1>Watch Mesh Explorer</h1>
+      <p class="lead">
+        Local route <code>/interactive-explanation/watch-mesh-explorer/</code> is tracked through the
+        standard docs, parity, and public-footer contract used by the rest of the replica site.
+      </p>
+      <div class="action-row">
+        <a class="action-link" href="../../watch-mesh-explorer/">Open replica</a>
+      </div>
+      <p class="meta-line">
+        Upstream snapshot: <code>original local route (no upstream page)</code><br>
+        Source geometry: <code>shared/mechanical-watch/models/watch_*.dat</code>
+      </p>
+    </header>
+
+    <section class="note-grid">
+      <article class="note-section">
+        <h2>Source snapshot</h2>
+        <p>
+          Original companion tool for the <a href="../interactive-mechanical-watch/">Interactive Mechanical Watch</a>
+          route. It reads the same binary geometry that powers that page's WebGL core
+          (<code>watch_vertices.dat</code>, <code>watch_indices.dat</code>) and exposes every named
+          sub-mesh individually instead of as one assembled movement.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Asset handoff</h2>
+        <p>
+          Route-local <code>index.html</code>, <code>css/explorer.css</code>, and ES modules
+          <code>js/explorer.js</code> + <code>js/model-table.js</code>. Three.js is reused from
+          <code>../interactive-mechanical-watch/vendor/three/</code>; geometry is fetched from
+          <code>../shared/mechanical-watch/models/</code>. No assets are duplicated into this folder.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Decoded format</h2>
+        <p>
+          The <code>.dat</code> pair is ciechanowski-style interleaved geometry: <code>Float32</code>
+          vertices at a 24-byte stride (position.xyz + normal.xyz), <code>Uint32</code> indices.
+          Each of the 85 named meshes owns two consecutive index blocks — a triangle block and a
+          wireframe line block — covering the buffer with no gaps or overlap. The authoritative table
+          is <code>shared/mechanical-watch/js/watch.js</code>; per-component ranges are captured in
+          <code>docs/mechanical-watch/decoded/manifest.json</code>.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Framing note</h2>
+        <p>
+          Meshes are stored at their modeling origins, not assembled positions, so ~20% of parts
+          (hands, date digits, keyless works, regulator index) sit far off the movement core. The
+          camera frames on a robust core radius (clamped percentile of centroid reach) and
+          recenters on any part when it is selected, so outliers stay inspectable.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Validation guidance</h2>
+        <p>
+          Run <code>node tools/check-public-surface.mjs .</code> and
+          <code>node tools/smoke-bundle.mjs . --route watch-mesh-explorer</code> after edits. The
+          smoke run expects the <code>#viewport</code> canvas, an 85-item mesh list, and a mounted
+          <code>#reference-footer</code>.
+        </p>
+      </article>
+    </section>
+
+    <section class="note-section">
+      <div class="section-heading">
+        <h2>Parity checklist</h2>
+        <span data-module-count class="meta-pill">Loading...</span>
+      </div>
+      <div class="parity-list" data-parity-list>
+        <div class="empty-state">Loading parity contract...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/site.js"></script>
+</body>
+</html>

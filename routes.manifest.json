@@ -1209,5 +1209,20 @@
     "docsUrl": "./docs/stargazing-dashboard/",
     "referenceMode": "neutral",
     "familyKey": "engineering-longform"
+  },
+  {
+    "slug": "watch-mesh-explorer",
+    "title": "Watch Mesh Explorer",
+    "summary": "Original 3D explorer that decodes the raw ETA 2824-2 movement geometry buffers into all 85 named meshes, grouped by subsystem, with solid/wireframe toggles, an explode slider, click-to-focus picking, and per-part triangle, line, and bounding-box readouts.",
+    "topicTags": [
+      "horology",
+      "visualization",
+      "webgl"
+    ],
+    "addedDate": "2026-07-25",
+    "intent": "simulation",
+    "docsUrl": "./docs/watch-mesh-explorer/",
+    "referenceMode": "neutral",
+    "familyKey": "engineering-longform"
   }
 ]
