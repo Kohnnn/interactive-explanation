@@ -992,13 +992,16 @@
     const thermalPenalty = thermalDistance * 1.3;
     const wear = clamp(stint * tyre.wear + Math.max(0, load - 0.58) * 0.48, 0, 1.3);
     const grip = clamp(tyre.baseGrip - thermalPenalty - wear * 0.22, 0.24, 0.98);
+    const scorePenalty = clamp((0.76 - grip) * 0.42, 0, 0.22);
     let stateLabel = "in the window";
     if (temp < tyre.window[0]) {
       stateLabel = "too cold";
     } else if (temp > tyre.window[1]) {
       stateLabel = "overheated";
+    } else if (wear > 0.72) {
+      stateLabel = "worn";
     }
-    return { tyre, temp, load, stint, wear, grip, stateLabel };
+    return { tyre, temp, load, stint, wear, grip, scorePenalty, stateLabel };
   }
 
   function computeWeatherStrategy() {
@@ -1096,12 +1099,39 @@
     return { track, gap, deploy, brakeConfidence, drsOn, dirtyPenalty, closingRate, brakingWindow, passChance };
   }
 
+  function computeFloorState() {
+    const rideError = Math.abs(state.floorRide - 0.34);
+    const pitchError = Math.abs(state.floorPitch - 0.52);
+    const suction = clamp(96 - rideError * 180 - pitchError * 48 - Math.max(0, state.floorPitch - 0.7) * 70, 12, 98);
+    const stability = clamp(96 - rideError * 110 - pitchError * 58 - Math.max(0, 0.22 - state.floorRide) * 130, 12, 98);
+    const health = clamp((suction * 0.62 + stability * 0.38) / 100, 0.12, 0.98);
+    const scorePenalty = clamp((0.86 - health) * 0.34, 0, 0.25);
+    const risk = health < 0.48 ? "high" : health < 0.68 ? "elevated" : health < 0.84 ? "moderate" : "controlled";
+    return { suction, stability, health, scorePenalty, risk };
+  }
+
   function computeLapState() {
     const track = getTrack();
     const setup = computeSetupScores();
+    const floor = computeFloorState();
+    const tyre = computeTyreState();
     const power = computePowerState();
     const weather = computeWeatherStrategy();
     const plan = getLapPlan();
+    const floorWeights = {
+      monza: [0.24, 0.42, 0.5],
+      monaco: [0.14, 0.22, 0.18],
+      silverstone: [0.52, 1, 0.84],
+      spa: [0.38, 0.82, 0.74],
+      suzuka: [0.68, 0.96, 0.82],
+    }[track.key];
+    const tyreWeights = {
+      monza: [0.44, 0.58, 0.52],
+      monaco: [0.76, 0.9, 0.82],
+      silverstone: [0.68, 0.96, 0.84],
+      spa: [0.5, 0.78, 0.68],
+      suzuka: [0.78, 1, 0.92],
+    }[track.key];
 
     const adjusted = {
       straight: clamp(setup.straight + plan.adjustments.straight * 0.01, 0.12, 0.99),
@@ -1112,14 +1142,23 @@
       balance: clamp(setup.balance + plan.adjustments.balance * 0.01, 0.12, 0.99),
     };
 
+    let floorDelta = 0;
+    let tyreDelta = 0;
     const sectorScores = track.sectors.map(function (_, index) {
       const powerBoost = power.sectorBars[index] * 0.16;
       const bias = index === 0 ? adjusted.straight * 0.34 + adjusted.braking * 0.3 : index === 1 ? adjusted.fast * 0.36 + adjusted.balance * 0.24 : adjusted.fast * 0.26 + adjusted.slow * 0.14 + adjusted.tyre * 0.18;
-      return clamp(bias + powerBoost - weather.penalty * (0.18 + index * 0.06), 0.14, 0.98);
+      const scoreWithoutFloorOrTyre = clamp(bias + powerBoost - weather.penalty * (0.18 + index * 0.06), 0.14, 0.98);
+      const scoreWithFloor = clamp(scoreWithoutFloorOrTyre - floor.scorePenalty * floorWeights[index], 0.14, 0.98);
+      const score = clamp(scoreWithFloor - tyre.scorePenalty * tyreWeights[index], 0.14, 0.98);
+      floorDelta += (scoreWithoutFloorOrTyre - scoreWithFloor) * 1.8;
+      tyreDelta += (scoreWithFloor - score) * 1.8;
+      return score;
     });
-
-    const totalDelta = sectorScores.reduce(function (sum, score) {
-      return sum + ((0.9 - score) * 1.8);
+    const sectorDeltas = sectorScores.map(function (score) {
+      return (0.9 - score) * 1.8;
+    });
+    const totalDelta = sectorDeltas.reduce(function (sum, delta) {
+      return sum + delta;
     }, 0);
 
     const speedTrace = [];
@@ -1127,12 +1166,12 @@
     const deployTrace = [];
     for (let i = 0; i < 9; i += 1) {
       const sector = Math.floor(i / 3);
-      speedTrace.push(clamp(track.traces.speed[i] + (adjusted.straight - 0.6) * 38 + (adjusted.fast - 0.6) * 26 - weather.penalty * 12, 10, 98));
-      brakeTrace.push(clamp(track.traces.brake[i] + (adjusted.braking - 0.6) * 34 + weather.penalty * 12, 4, 98));
+      speedTrace.push(clamp(track.traces.speed[i] + (adjusted.straight - 0.6) * 38 + (adjusted.fast - 0.6) * 26 - weather.penalty * 12 - floor.scorePenalty * floorWeights[sector] * 90 - tyre.scorePenalty * tyreWeights[sector] * 72, 10, 98));
+      brakeTrace.push(clamp(track.traces.brake[i] + (adjusted.braking - 0.6) * 34 + weather.penalty * 12 + tyre.scorePenalty * tyreWeights[sector] * 54, 4, 98));
       deployTrace.push(clamp(track.traces.deploy[i] + (power.sectorBars[sector] - 0.5) * 52, 8, 98));
     }
 
-    return { track, setup, power, weather, plan, sectorScores, totalDelta, speedTrace, brakeTrace, deployTrace };
+    return { track, setup, floor, tyre, power, weather, plan, sectorScores, sectorDeltas, floorDelta, tyreDelta, totalDelta, speedTrace, brakeTrace, deployTrace };
   }
 
   function updateCaptions() {
@@ -1157,9 +1196,9 @@
     const frontState = dirty > 60 ? "washed out" : dirty > 36 ? "fading" : "usable";
     setCaption("f1_front_caption", `<strong>${componentColorName("front-wing")}</strong> - Front bite is around <strong>${Math.round(bite)}%</strong> and floor feed quality around <strong>${Math.round(feed)}%</strong>. In this wake condition the front axle feels <strong>${frontState}</strong>.`);
 
-    const suction = clamp(42 + (1 - Math.abs(state.floorRide - 0.34) / 0.3) * 54 - Math.max(0, state.floorPitch - 0.55) * 34, 12, 98);
-    const risk = state.floorRide < 0.22 || state.floorPitch > 0.7 ? "high" : state.floorRide < 0.3 ? "elevated" : "moderate";
-    setCaption("f1_floor_caption", `<strong>Ground effect</strong> - Underfloor suction is near <strong>${Math.round(suction)}%</strong>. The diffuser still recovers cleanly, but platform risk is now <strong>${risk}</strong> as the throat narrows and pitch grows.`);
+    const floor = computeFloorState();
+    const floorBehavior = floor.health < 0.48 ? "The floor is separating from its useful window." : floor.health < 0.68 ? "The platform is losing consistency as the diffuser works harder." : "The diffuser is recovering the underfloor flow cleanly.";
+    setCaption("f1_floor_caption", `<strong>Ground effect</strong> - Underfloor suction is near <strong>${Math.round(floor.suction)}%</strong> and platform stability near <strong>${Math.round(floor.stability)}%</strong>. Risk is <strong>${floor.risk}</strong>. ${floorBehavior}`);
 
     const rearSupport = clamp(38 + state.rearWing * 48 + state.rearSpeed * 12 - state.rearDrc * 18, 18, 98);
     const rearDrag = clamp(14 + state.rearWing * 38 + state.rearSpeed * 10 - state.rearDrc * 14, 8, 68);
@@ -1201,7 +1240,10 @@
     setCaption("f1_pit_caption", `<strong>${pit.call}</strong> - Raw pit loss is about <strong>${pit.rawLoss.toFixed(1)} s</strong>, undercut value about <strong>${pit.undercut >= 0 ? "+" : ""}${pit.undercut.toFixed(1)} s</strong>, and safety-car swing about <strong>${pit.safetySwing.toFixed(1)} s</strong>. ${pit.note}`);
 
     const lap = computeLapState();
-    setCaption("f1_lap_caption", `<strong>${lap.track.label} / ${lap.plan.label}</strong> - The current build projects sector deltas of <strong>${lap.totalDelta.toFixed(2)} s</strong> across the lap once setup, deployment, tyre, and weather are all pushing on the same traces.`);
+    const sectorSummary = lap.sectorDeltas.map(function (delta, index) {
+      return `S${index + 1} ${delta >= 0 ? "+" : ""}${delta.toFixed(2)} s`;
+    }).join(" / ");
+    setCaption("f1_lap_caption", `<strong>${lap.track.label} / ${lap.plan.label}</strong> - ${sectorSummary}; total <strong>${lap.totalDelta.toFixed(2)} s</strong>. Live floor posture contributes <strong>+${lap.floorDelta.toFixed(2)} s</strong> and tyre condition contributes <strong>+${lap.tyreDelta.toFixed(2)} s</strong>; platform risk is <strong>${lap.floor.risk}</strong> and the tyre is <strong>${lap.tyre.stateLabel}</strong>.`);
   }
 
   function componentColorName(key) {
@@ -1360,6 +1402,7 @@
     drawSceneBackground(ctx, width, height, COLORS.cyan);
     const ride = state.floorRide;
     const pitch = state.floorPitch;
+    const floor = computeFloorState();
     const bodyY = height * 0.42 + pitch * 12;
     ctx.fillStyle = rgba(COLORS.ground, 0.82);
     ctx.fillRect(0, height * 0.74, width, height * 0.26);
@@ -1374,8 +1417,8 @@
 
     drawSideCar(ctx, width * 0.46, bodyY, Math.min(width, height) * 0.19, -0.08 + pitch * 0.12, ride * 0.14, false);
 
-    ctx.strokeStyle = rgba(COLORS.cyan, 0.78);
-    ctx.lineWidth = 10 + (1 - Math.abs(ride - 0.34) / 0.35) * 14;
+    ctx.strokeStyle = rgba(COLORS.cyan, 0.48 + floor.health * 0.34);
+    ctx.lineWidth = 8 + floor.health * 16;
     ctx.lineCap = "round";
     ctx.beginPath();
     ctx.moveTo(width * 0.28, height * 0.61);
@@ -1801,6 +1844,7 @@
       ctx.font = "600 12px IBM Plex Mono, monospace";
       ctx.textAlign = "left";
       ctx.fillText(lap.track.sectors[index], width * x + 10, height * 0.18);
+      ctx.fillText((lap.sectorDeltas[index] >= 0 ? "+" : "") + lap.sectorDeltas[index].toFixed(2) + " s", width * x + 10, height * 0.23);
     });
 
     strokeTrace(ctx, speedPoints, rgba(COLORS.blue, 0.92), 6);

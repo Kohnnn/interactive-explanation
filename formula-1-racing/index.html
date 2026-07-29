@@ -89,7 +89,7 @@
               and isolate each major component family.
             </p>
             <div class="drawer_container ratio_65" id="f1_overview"></div>
-            <div id="f1_overview_seg0" class="segmented_container"></div>
+            <div id="f1_overview_seg0" class="segmented_container f1_labeled_control" data-control="Component"></div>
             <p class="f1_live_note" id="f1_overview_caption"></p>
 
             <h1 id="airflow">Airflow</h1>
@@ -99,9 +99,9 @@
               and whether the floor gets the clean feed it needs.
             </p>
             <div class="drawer_container ratio_55" id="f1_airflow"></div>
-            <div id="f1_airflow_sl0" class="slider_blue" data-control="airflow-speed"></div>
-            <div id="f1_airflow_sl1" class="slider_red"></div>
-            <div id="f1_airflow_sl2" class="slider_cyan"></div>
+            <div id="f1_airflow_sl0" class="slider_blue f1_labeled_control" data-control="Air speed"></div>
+            <div id="f1_airflow_sl1" class="slider_red f1_labeled_control" data-control="Aerodynamic load"></div>
+            <div id="f1_airflow_sl2" class="slider_cyan f1_labeled_control" data-control="Platform height"></div>
             <p class="f1_live_note" id="f1_airflow_caption"></p>
 
             <h1 id="front-wing">Front Wing</h1>
@@ -111,9 +111,9 @@
               another car's wake starts corrupting the air ahead of it.
             </p>
             <div class="drawer_container ratio_52" id="f1_front"></div>
-            <div id="f1_front_sl0" class="slider_orange"></div>
-            <div id="f1_front_sl1" class="slider_red"></div>
-            <div id="f1_front_sl2" class="slider_violet"></div>
+            <div id="f1_front_sl0" class="slider_orange f1_labeled_control" data-control="Following distance"></div>
+            <div id="f1_front_sl1" class="slider_red f1_labeled_control" data-control="Flap angle"></div>
+            <div id="f1_front_sl2" class="slider_violet f1_labeled_control" data-control="Cornering demand"></div>
             <p class="f1_live_note" id="f1_front_caption"></p>
 
             <h1 id="floor-and-diffuser">Floor and Diffuser</h1>
@@ -123,8 +123,16 @@
               forgiving zone where the car becomes nervous or inconsistent.
             </p>
             <div class="drawer_container ratio_48" id="f1_floor"></div>
-            <div id="f1_floor_sl0" class="slider_cyan"></div>
-            <div id="f1_floor_sl1" class="slider_red"></div>
+            <div class="f1_control_grid" role="group" aria-label="Floor platform controls">
+              <div class="f1_control">
+                <div class="f1_control_label"><span>Live ride height</span><small>low to high</small></div>
+                <div id="f1_floor_sl0" class="slider_cyan" data-control="Live ride height"></div>
+              </div>
+              <div class="f1_control">
+                <div class="f1_control_label"><span>Pitch</span><small>shallow to steep</small></div>
+                <div id="f1_floor_sl1" class="slider_red" data-control="Floor pitch"></div>
+              </div>
+            </div>
             <p class="f1_live_note" id="f1_floor_caption"></p>
 
             <h1 id="rear-wing-and-drs">Rear Wing and DRS</h1>
@@ -134,9 +142,9 @@
               straight and a smaller confidence window at the next braking zone.
             </p>
             <div class="drawer_container ratio_48" id="f1_rear"></div>
-            <div id="f1_rear_seg0" class="segmented_container"></div>
-            <div id="f1_rear_sl0" class="slider_red"></div>
-            <div id="f1_rear_sl1" class="slider_blue"></div>
+            <div id="f1_rear_seg0" class="segmented_container f1_labeled_control" data-control="DRS state"></div>
+            <div id="f1_rear_sl0" class="slider_red f1_labeled_control" data-control="Rear wing load"></div>
+            <div id="f1_rear_sl1" class="slider_blue f1_labeled_control" data-control="Car speed"></div>
             <p class="f1_live_note" id="f1_rear_caption"></p>
 
             <h1 id="chassis-and-suspension">Chassis and Suspension</h1>
@@ -146,9 +154,9 @@
               and kerbs become expensive to ride.
             </p>
             <div class="drawer_container ratio_52" id="f1_chassis"></div>
-            <div id="f1_chassis_sl0" class="slider_green"></div>
-            <div id="f1_chassis_sl1" class="slider_orange"></div>
-            <div id="f1_chassis_sl2" class="slider_red"></div>
+            <div id="f1_chassis_sl0" class="slider_green f1_labeled_control" data-control="Suspension stiffness"></div>
+            <div id="f1_chassis_sl1" class="slider_orange f1_labeled_control" data-control="Kerb severity"></div>
+            <div id="f1_chassis_sl2" class="slider_red f1_labeled_control" data-control="Braking load"></div>
             <p class="f1_live_note" id="f1_chassis_caption"></p>
 
             <h1 id="power-unit">Power Unit</h1>
@@ -158,8 +166,8 @@
               save for later sectors.
             </p>
             <div class="drawer_container ratio_46" id="f1_power"></div>
-            <div id="f1_power_seg0" class="segmented_container"></div>
-            <div id="f1_power_seg1" class="segmented_container"></div>
+            <div id="f1_power_seg0" class="segmented_container f1_labeled_control" data-control="Energy mode"></div>
+            <div id="f1_power_seg1" class="segmented_container f1_labeled_control" data-control="Deployment bias"></div>
             <p class="f1_live_note" id="f1_power_caption"></p>
 
             <h1 id="tyres">Tyres</h1>
@@ -168,10 +176,10 @@
               braking load, and power delivery actually become lap time or simply become another form of heat and wear.
             </p>
             <div class="drawer_container ratio_52" id="f1_tyre"></div>
-            <div id="f1_tyre_seg0" class="segmented_container"></div>
-            <div id="f1_tyre_sl0" class="slider_orange"></div>
-            <div id="f1_tyre_sl1" class="slider_cyan"></div>
-            <div id="f1_tyre_sl2" class="slider_gray long_slider"></div>
+            <div id="f1_tyre_seg0" class="segmented_container f1_labeled_control" data-control="Tyre compound"></div>
+            <div id="f1_tyre_sl0" class="slider_orange f1_labeled_control" data-control="Tyre temperature"></div>
+            <div id="f1_tyre_sl1" class="slider_cyan f1_labeled_control" data-control="Tyre load"></div>
+            <div id="f1_tyre_sl2" class="slider_gray long_slider f1_labeled_control" data-control="Stint progress"></div>
             <p class="f1_live_note" id="f1_tyre_caption"></p>
 
             <h1 id="braking">Braking</h1>
@@ -181,9 +189,9 @@
               rotation on release.
             </p>
             <div class="drawer_container ratio_48" id="f1_brake"></div>
-            <div id="f1_brake_sl0" class="slider_red"></div>
-            <div id="f1_brake_sl1" class="slider_blue"></div>
-            <div id="f1_brake_sl2" class="slider_yellow"></div>
+            <div id="f1_brake_sl0" class="slider_red f1_labeled_control" data-control="Entry speed"></div>
+            <div id="f1_brake_sl1" class="slider_blue f1_labeled_control" data-control="Brake bias"></div>
+            <div id="f1_brake_sl2" class="slider_yellow f1_labeled_control" data-control="Energy recovery"></div>
             <p class="f1_live_note" id="f1_brake_caption"></p>
 
             <h1 id="track-layout">Track Layout</h1>
@@ -193,7 +201,7 @@
               strength can turn into a different weakness from circuit to circuit.
             </p>
             <div class="drawer_container ratio_46" id="f1_track"></div>
-            <div id="f1_track_seg0" class="segmented_container" data-control="track"></div>
+            <div id="f1_track_seg0" class="segmented_container f1_labeled_control" data-control="Circuit"></div>
             <p class="f1_live_note" id="f1_track_caption"></p>
 
             <h1 id="racecraft">Racecraft</h1>
@@ -203,10 +211,10 @@
               the same place at the same time.
             </p>
             <div class="drawer_container ratio_48" id="f1_race"></div>
-            <div id="f1_race_seg0" class="segmented_container"></div>
-            <div id="f1_race_sl0" class="slider_violet"></div>
-            <div id="f1_race_sl1" class="slider_yellow"></div>
-            <div id="f1_race_sl2" class="slider_red"></div>
+            <div id="f1_race_seg0" class="segmented_container f1_labeled_control" data-control="DRS availability"></div>
+            <div id="f1_race_sl0" class="slider_violet f1_labeled_control" data-control="Following gap"></div>
+            <div id="f1_race_sl1" class="slider_yellow f1_labeled_control" data-control="Energy deployment"></div>
+            <div id="f1_race_sl2" class="slider_red f1_labeled_control" data-control="Braking confidence"></div>
             <p class="f1_live_note" id="f1_race_caption"></p>
 
             <h1 id="setup-tradeoffs">Setup Tradeoffs</h1>
@@ -216,11 +224,11 @@
               being expressed in wing, ride height, stiffness, and brake balance.
             </p>
             <div class="drawer_container ratio_52" id="f1_setup"></div>
-            <div id="f1_setup_seg0" class="segmented_container"></div>
-            <div id="f1_setup_sl0" class="slider_red"></div>
-            <div id="f1_setup_sl1" class="slider_cyan"></div>
-            <div id="f1_setup_sl2" class="slider_green"></div>
-            <div id="f1_setup_sl3" class="slider_blue"></div>
+            <div id="f1_setup_seg0" class="segmented_container f1_labeled_control" data-control="Circuit preset"></div>
+            <div id="f1_setup_sl0" class="slider_red f1_labeled_control" data-control="Wing level"></div>
+            <div id="f1_setup_sl1" class="slider_cyan f1_labeled_control" data-control="Setup ride height"></div>
+            <div id="f1_setup_sl2" class="slider_green f1_labeled_control" data-control="Setup stiffness"></div>
+            <div id="f1_setup_sl3" class="slider_blue f1_labeled_control" data-control="Setup brake bias"></div>
             <p class="f1_live_note" id="f1_setup_caption"></p>
 
             <h1 id="weather-and-strategy">Weather and Tyre Strategy</h1>
@@ -229,10 +237,10 @@
               changes tyre logic, crossover timing, and how brave the pit wall can be with long stints or delayed stops.
             </p>
             <div class="drawer_container ratio_44" id="f1_weather"></div>
-            <div id="f1_weather_seg0" class="segmented_container" data-control="weather"></div>
-            <div id="f1_weather_sl0" class="slider_orange"></div>
-            <div id="f1_weather_sl1" class="slider_gray"></div>
-            <div id="f1_weather_sl2" class="slider_blue"></div>
+            <div id="f1_weather_seg0" class="segmented_container f1_labeled_control" data-control="Weather state"></div>
+            <div id="f1_weather_sl0" class="slider_orange f1_labeled_control" data-control="Track temperature"></div>
+            <div id="f1_weather_sl1" class="slider_gray f1_labeled_control" data-control="Laps remaining"></div>
+            <div id="f1_weather_sl2" class="slider_blue f1_labeled_control" data-control="Rain pressure"></div>
             <p class="f1_live_note" id="f1_weather_caption"></p>
 
             <h1 id="pit-strategy">Pit Strategy</h1>
@@ -242,19 +250,20 @@
               timing.
             </p>
             <div class="drawer_container ratio_44" id="f1_pit"></div>
-            <div id="f1_pit_sl0" class="slider_gray"></div>
-            <div id="f1_pit_sl1" class="slider_violet"></div>
-            <div id="f1_pit_sl2" class="slider_yellow"></div>
+            <div id="f1_pit_sl0" class="slider_gray f1_labeled_control" data-control="Tyre age"></div>
+            <div id="f1_pit_sl1" class="slider_violet f1_labeled_control" data-control="Rejoin traffic"></div>
+            <div id="f1_pit_sl2" class="slider_yellow f1_labeled_control" data-control="Safety-car chance"></div>
             <p class="f1_live_note" id="f1_pit_caption"></p>
 
             <h1 id="building-a-lap">Building a Lap</h1>
             <p>
-              The final scene collapses everything back into the lap. Setup, tyre choice, deployment, track type,
-              weather, and plan shape all bend the same three traces. The point is not exact simulation. The point is
-              to see where the lap is being won and where the earlier compromises are finally showing up.
+              The final scene collapses everything back into the lap. Setup, live floor posture, tyre choice,
+              deployment, track type, weather, and plan shape all bend the same three traces. The point is not exact
+              simulation. The point is to see where the lap is being won and where the earlier compromises are finally
+              showing up.
             </p>
             <div class="drawer_container ratio_58" id="f1_lap"></div>
-            <div id="f1_lap_seg0" class="segmented_container" data-control="lap-plan"></div>
+            <div id="f1_lap_seg0" class="segmented_container f1_labeled_control" data-control="Lap plan"></div>
             <p class="f1_live_note" id="f1_lap_caption"></p>
 
             <h1 id="further-reading">Further Reading</h1>

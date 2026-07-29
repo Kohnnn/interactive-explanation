@@ -66,7 +66,7 @@
   {
     "moduleId": "interactive-exploded-resin-section",
     "originalBehavior": "The route should extend the teardown with an additive prototyping case study and make the exploded component stack interactive rather than relying on a static hero image.",
-    "localStatus": "A new \"From Pixels to Resin\" chapter precedes the closing resources and opens with a 71-part technical-museum Three.js exploded view. Canonical movement meshes combine with generated teeth, pinions, staffs, screws, markers, springs, case, crystal, and caseback. The movement runs continuously at selectable speeds while depth, orbit, selection, lesson links, DOM controls, and the SVG fallback remain available.",
+    "localStatus": "A new \"From Pixels to Resin\" chapter precedes the closing resources and opens with a 71-part technical-museum Three.js exploded view. Canonical movement meshes combine with generated teeth, pinions, staffs, screws, markers, springs, case, crystal, and caseback; 16 pivot-sensitive meshes retain archived local offsets, flips, and ZYX rotation composition. The movement runs continuously at selectable speeds while depth, orbit, selection, lesson links, DOM controls, and the SVG fallback remain available.",
     "sourceFiles": [
       "../../interactive-mechanical-watch/index.html",
       "../../interactive-mechanical-watch/js/watch-parts.js",

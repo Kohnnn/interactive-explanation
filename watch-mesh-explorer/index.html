@@ -1,73 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0d11">
-  <meta name="description" content="Interactive explorer for the decoded ETA 2824-2 movement mesh: all 85 named meshes from the ciechanowski .dat binary, with solid and wireframe views, explode, and per-mesh index metadata.">
-  <meta property="og:title" content="Watch Mesh Explorer">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f0ecdf">
+  <meta name="description" content="Learn how an ETA 2824-2 mechanical watch stores, regulates, and displays time through ten focused interactive lessons.">
+  <meta property="og:title" content="Inside a Mechanical Watch · ETA 2824-2">
   <meta property="og:type" content="website">
-  <meta property="og:description" content="Explore every one of the 85 decoded meshes of the ETA 2824-2 movement: triangle and wireframe line blocks straight from the binary .dat.">
+  <meta property="og:description" content="Ten focused lessons connect stored energy, gears, escapement, regulation, winding, and display in one interactive movement.">
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/watch-mesh-explorer/">
-  <title>Watch Mesh Explorer · Decoded ETA 2824-2</title>
+  <title>Inside a Mechanical Watch · ETA 2824-2</title>
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/watch-mesh-explorer/">
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <link rel="stylesheet" href="./css/explorer.css">
+  <script defer src="../interactive-mechanical-watch/js/watch-parts.js"></script>
   <script type="module" src="./js/explorer.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
-
 <body data-reference-mode="neutral"
-  data-reference-note="Original mesh-inspection tool built inside the interactive-explanation collection. It reads the same watch_vertices.dat / watch_indices.dat binary as the mechanical-watch route and slices it with the authoritative 85-mesh model table decoded from watch.js."
-  data-reference-url="../docs/mechanical-watch/decoded/manifest.json" data-reference-text="Decoded mesh manifest"
-  data-footer-label="Tool provenance" data-show-reference-footer="true" data-canonical-url="./">
-  <main class="explorer">
-    <header class="explorer__head">
-      <p class="explorer__eyebrow">Decoded geometry · reverse-engineered .dat</p>
-      <h1 class="explorer__title">Watch Mesh Explorer</h1>
-      <p class="explorer__lede">
-        Every named mesh in the ETA 2824-2 movement, sliced straight from the binary
-        <code>watch_vertices.dat</code> / <code>watch_indices.dat</code> using the authoritative
-        85-mesh model table. Each mesh carries both a solid triangle block and a wireframe line
-        block. Rotate, explode, toggle wireframe, and click any part to read its exact index range.
-      </p>
-      <div id="stats" class="explorer__stats"><span>Loading geometry…</span></div>
+  data-reference-note="Original semantic horology workbench using the local ETA 2824-2 mesh archive and a new Three.js interaction system."
+  data-reference-url="../docs/watch-mesh-explorer/" data-reference-text="Workbench documentation"
+  data-footer-label="Route provenance" data-show-reference-footer="true" data-canonical-url="./">
+  <main class="workbench" data-watch-workbench>
+    <header class="workbench__header">
+      <div class="brand-block">
+        <p class="eyebrow">Calibre study 2824–2 · ten connected lessons</p>
+        <h1>Inside a<br>Mechanical Watch</h1>
+      </div>
+      <article class="lesson-brief" aria-live="polite">
+        <p class="lesson-kicker" data-lesson-kicker>Lesson 01 · Power source</p>
+        <h2 data-lesson-title>Store energy</h2>
+        <p class="lesson-problem"><span>Problem</span><strong data-lesson-problem>How can a watch keep running after it leaves your hand?</strong></p>
+        <div class="lesson-causality">
+          <p><span>Mechanism</span><b data-lesson-mechanism>Winding coils a spring inside a toothed barrel.</b></p>
+          <p><span>Result</span><b data-lesson-result>The barrel releases a slow, sustained turning force.</b></p>
+        </div>
+      </article>
+      <div class="lesson-controls">
+        <p class="mode-copy" data-mode-copy>Only the parts needed for this step remain active. Select one to inspect its job.</p>
+        <div class="lesson-stepper">
+          <button type="button" data-prev-lesson>Previous</button>
+          <button type="button" data-next-lesson>Next lesson</button>
+        </div>
+      </div>
     </header>
 
-    <div class="explorer__layout">
-      <aside class="explorer__sidebar" aria-label="Mesh list">
-        <label class="explorer__search">
-          <span class="visually-hidden">Filter meshes</span>
-          <input id="search" type="search" placeholder="Filter meshes…" autocomplete="off">
-        </label>
-        <div id="mesh-list" class="mesh-list"></div>
-      </aside>
-
-      <section class="explorer__stage">
-        <div class="stage__viewport-wrap">
-          <canvas id="viewport" aria-label="3D watch movement viewport"></canvas>
-          <p id="status" class="stage__status">Loading movement geometry…</p>
+    <section class="workbench__surface" aria-label="Interactive watch movement workbench">
+      <aside class="service-rail guide-rail" aria-labelledby="sequence-title">
+        <div class="rail-heading">
+          <span id="sequence-title">Guided mechanism</span>
+          <strong data-lesson-count>01 / 10</strong>
         </div>
-
-        <div class="stage__controls" role="group" aria-label="Viewport controls">
-          <label class="ctrl ctrl--range">
-            <span>Explode <b id="explode-val">0%</b></span>
-            <input id="explode" type="range" min="0" max="100" value="0" step="1">
+        <nav class="lesson-list" data-lesson-list aria-label="Watch lessons"></nav>
+        <div class="rail-rule" aria-hidden="true"></div>
+        <button class="return-guide" type="button" data-return-guide>Return to guided lesson</button>
+        <details class="explore-tools">
+          <summary>Explore complete movement</summary>
+          <p>Leave the lesson path to inspect assembly order, all parts, or the full torque path.</p>
+          <div class="mode-switch" role="toolbar" aria-label="Complete movement views">
+            <button type="button" data-mode="service" aria-pressed="false">Service order</button>
+            <button type="button" data-mode="atlas" aria-pressed="false">Part atlas</button>
+            <button type="button" data-mode="energy" aria-pressed="false">Energy flow</button>
+          </div>
+        </details>
+        <div class="service-controls" data-service-controls>
+          <div class="rail-heading">
+            <span>Assembly sequence</span>
+            <strong data-stage-count>01 / 06</strong>
+          </div>
+          <label class="stage-control">
+            <span class="visually-hidden">Assembly stage</span>
+            <input data-stage-range type="range" min="0" max="5" step="0.01" value="0" aria-valuetext="Movement">
           </label>
-          <label class="ctrl"><input id="toggle-solid" type="checkbox" checked> Solid</label>
-          <label class="ctrl"><input id="toggle-wire" type="checkbox"> Wireframe</label>
-          <label class="ctrl"><input id="toggle-spin" type="checkbox" checked> Auto-spin</label>
-          <button id="reset" type="button" class="ctrl ctrl--btn">Reset view</button>
+          <div class="stage-list" data-stage-list></div>
         </div>
-      </section>
-
-      <aside id="mesh-info" class="explorer__info" aria-live="polite">
-        <p class="info-hint">Select a mesh from the list or click it in the viewport.</p>
+        <div class="transport">
+          <button type="button" data-play aria-pressed="true">Pause movement</button>
+          <div class="speed-switch" role="radiogroup" aria-label="Movement speed">
+            <button type="button" data-speed="1" role="radio" aria-checked="true">1×</button>
+            <button type="button" data-speed="8" role="radio" aria-checked="false">8×</button>
+          </div>
+        </div>
       </aside>
-    </div>
+
+      <div class="movement-stage" data-stage>
+        <div id="viewport" class="movement-stage__viewport" data-viewport aria-busy="true">
+          <p class="viewport-status" data-viewport-status>Preparing movement geometry…</p>
+          <div class="territory-labels" data-territory-labels></div>
+          <div class="flow-readout" data-flow-readout aria-hidden="true">
+            <span>Power</span><i></i><span>Train</span><i></i><span>Regulation</span><i></i><span>Display</span>
+          </div>
+          <div class="axis-readout" aria-hidden="true"><span>−X</span><i></i><span>+X</span></div>
+        </div>
+        <div class="stage-toolbar">
+          <p><span data-mode-label>Service bench</span><strong data-stage-label aria-live="polite">Movement datum</strong></p>
+          <div class="stage-actions">
+            <button type="button" data-reset-view>Reset view</button>
+            <button type="button" data-orbit aria-pressed="false" disabled>Free orbit</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="inspector" aria-labelledby="inspector-title">
+        <div class="inspector__heading">
+          <span id="inspector-title" data-register-title>Parts in this lesson</span>
+          <strong data-visible-count>71</strong>
+        </div>
+        <label class="part-search">
+          <span class="visually-hidden">Find a component</span>
+          <input data-part-search type="search" placeholder="Find a component" autocomplete="off">
+        </label>
+        <div class="system-filter" data-system-filter aria-label="Filter by subsystem"></div>
+        <div class="part-list" data-part-list></div>
+        <article class="part-detail" data-part-detail aria-live="polite"></article>
+      </aside>
+    </section>
+
+    <footer class="workbench__legend">
+      <p><span>Lesson rule</span> One problem, one mechanism, one visible result.</p>
+      <p><span>Datum</span> Mainplate remains fixed while each module separates along its mounting axis.</p>
+      <p><span>Full atlas</span> All 71 assemblies remain available under Explore complete movement.</p>
+    </footer>
   </main>
 </body>
-
 </html>

@@ -57,19 +57,42 @@
   },
   {
     "moduleId": "formula-1-system-state-sync",
-    "originalBehavior": "Track, setup, power, tyre, weather, and pit decisions should connect back into a shared lap-time story rather than living as isolated widgets.",
-    "localStatus": "The route keeps a shared Formula 1 state model so track presets, setup sliders, tyre choice, power maps, weather, and pit timing all propagate into the lap-builder scene and chapter summaries.",
+    "originalBehavior": "Track, setup, floor posture, power, tyre, and weather decisions should connect back into a shared lap-time story rather than living as isolated widgets.",
+    "localStatus": "The route keeps a shared Formula 1 state model so track presets, setup sliders, live floor posture, tyre choice, power maps, and weather propagate into the lap-builder scene and chapter summaries.",
     "sourceFiles": [
       "../../formula-1-racing/js/f1.js",
       "../../formula-1-racing/index.html"
     ],
     "notes": [
       "Track presets change setup, tyre, power, and lap-plan defaults together.",
-      "The lap traces are still simplified explanatory curves, but they now respond to the route-wide state rather than staying fixed."
+      "The live floor controls model the platform during the lap while setup ride height remains the selected baseline.",
+      "Pit timing remains a separate race-strategy calculation because the final scene models one lap rather than a stint or race."
     ],
     "evidence": [
       "Selecting a new track preset updates setup sliders, tyre compound, power mode, power bias, and lap plan together.",
-      "Weather and pit strategy calculations change the lap-builder caption and the strategic recommendations shown in later chapters."
+      "Changing live floor ride height or pitch updates floor health, track-weighted sector scores, the speed trace, and the final lap caption.",
+      "Weather changes the lap model while pit state remains confined to the pit-strategy scene and caption."
+    ]
+  },
+  {
+    "moduleId": "floor-to-lap-causality",
+    "originalBehavior": "The Floor and Diffuser chapter should show why platform posture matters and carry that consequence into the final lap rather than ending at a local animation.",
+    "localStatus": "Named ride-height and pitch controls feed one computeFloorState result for suction, stability, risk, sector loss, trace shape, and the final floor contribution.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/css/f1.css",
+      "../../formula-1-racing/js/f1.js",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "Track-specific weights make floor posture matter most on high-speed circuits and sectors.",
+      "The result is deliberately explanatory rather than telemetry-grade, CFD-derived, or suspension-simulated.",
+      "The next planned depth pass is explicit labeling for the remaining controls, followed by tyre thermal coupling."
+    ],
+    "evidence": [
+      "The floor scene and caption consume the same computed health state as the lap model.",
+      "The lap canvas labels all three sector deltas and the lap caption identifies the floor-attributed loss.",
+      "Focused smoke drives live ride height to its keyboard maximum and verifies changed floor and lap captions, high platform risk, and nonzero floor loss."
     ]
   },
   {
@@ -83,11 +106,13 @@
       "../../formula-1-racing/css/f1.css"
     ],
     "notes": [
-      "Track, weather, lap-plan, and airflow speed have stable data-control selectors.",
+      "Track, weather, lap-plan, airflow speed, live floor ride height, and floor pitch have stable data-control selectors.",
+      "The floor controls also provide visible labels without modifying the shared base runtime.",
       "Reduced-motion preference stops perpetual repainting but repaints scenes after state changes."
     ],
     "evidence": [
-      "Focused smoke uses keyboard input on track, weather, lap-plan, and airflow controls and verifies aria state plus linked captions."
+      "Focused smoke uses keyboard input on track, weather, lap-plan, airflow, and live floor controls and verifies aria state plus linked captions.",
+      "The floor keyboard check proves the same input updates both its local explanation and the final lap result."
     ]
   }
 ]

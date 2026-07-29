@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Watch Mesh Explorer Replica Docs</title>
-  <meta name="description" content="Provenance, parity notes, and implementation references for the local watch-mesh-explorer route.">
+  <title>Inside a Mechanical Watch Docs</title>
+  <meta name="description" content="Implementation and provenance notes for the local guided mechanical-watch route.">
   <meta name="robots" content="noindex,follow">
-  <meta property="og:title" content="Watch Mesh Explorer Replica Docs">
-  <meta property="og:description" content="Provenance, parity notes, and implementation references for the local watch-mesh-explorer route.">
+  <meta property="og:title" content="Inside a Mechanical Watch Docs">
+  <meta property="og:description" content="Implementation and provenance notes for the local guided mechanical-watch route.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/docs/watch-mesh-explorer/">
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/docs/watch-mesh-explorer/">
@@ -20,82 +20,89 @@
     <a class="back-link" href="../../">Back to Atlas</a>
 
     <header class="hero hero-compact">
-      <p class="eyebrow">Replica documentation</p>
-      <h1>Watch Mesh Explorer</h1>
+      <p class="eyebrow">Original route documentation</p>
+      <h1>Inside a Mechanical Watch</h1>
       <p class="lead">
-        Local route <code>/interactive-explanation/watch-mesh-explorer/</code> is tracked through the
-        standard docs, parity, and public-footer contract used by the rest of the replica site.
+        Local route <code>/interactive-explanation/watch-mesh-explorer/</code> turns the ETA 2824-2
+        mesh archive into ten causal lessons with the complete workbench available as a secondary tool.
       </p>
       <div class="action-row">
-        <a class="action-link" href="../../watch-mesh-explorer/">Open replica</a>
+        <a class="action-link" href="../../watch-mesh-explorer/">Open workbench</a>
       </div>
       <p class="meta-line">
-        Upstream snapshot: <code>original local route (no upstream page)</code><br>
+        Semantic inventory: <code>interactive-mechanical-watch/js/watch-parts.js</code><br>
         Source geometry: <code>shared/mechanical-watch/models/watch_*.dat</code>
       </p>
     </header>
 
     <section class="note-grid">
       <article class="note-section">
-        <h2>Source snapshot</h2>
+        <h2>Design intent</h2>
         <p>
-          Original companion tool for the <a href="../interactive-mechanical-watch/">Interactive Mechanical Watch</a>
-          route. It reads the same binary geometry that powers that page's WebGL core
-          (<code>watch_vertices.dat</code>, <code>watch_indices.dat</code>) and exposes every named
-          sub-mesh individually instead of as one assembled movement.
+          The route is an original guided explanation, not an embedded copy of the archived watch
+          renderer. Each step pairs one problem with one mechanism and one visible result on an ivory
+          drawing plane with restrained materials, authored framing, and one active-state color.
         </p>
       </article>
 
       <article class="note-section">
-        <h2>Asset handoff</h2>
+        <h2>Semantic model</h2>
         <p>
-          Route-local <code>index.html</code>, <code>css/explorer.css</code>, and ES modules
-          <code>js/explorer.js</code> + <code>js/model-table.js</code>. Three.js is reused from
-          <code>../interactive-mechanical-watch/vendor/three/</code>; geometry is fetched from
-          <code>../shared/mechanical-watch/models/</code>. No assets are duplicated into this folder.
+          Seventy-one meaningful assemblies provide names, roles, systems, mounting positions, explode
+          vectors, and animation labels. Sixteen pivot-sensitive source meshes preserve archived local
+          offsets, flips, and ZYX rotation composition after per-source centering. The assemblies reference
+          the 85 physical mesh templates only when source geometry is needed; digits, cutaway templates,
+          and reference shapes are not presented as installed components.
         </p>
       </article>
 
       <article class="note-section">
-        <h2>Decoded format</h2>
+        <h2>Guided lessons</h2>
         <p>
-          The <code>.dat</code> pair is ciechanowski-style interleaved geometry: <code>Float32</code>
-          vertices at a 24-byte stride (position.xyz + normal.xyz), <code>Uint32</code> indices.
-          Each of the 85 named meshes owns two consecutive index blocks — a triangle block and a
-          wireframe line block — covering the buffer with no gaps or overlap. The authoritative table
-          is <code>shared/mechanical-watch/js/watch.js</code>; per-component ranges are captured in
-          <code>docs/mechanical-watch/decoded/manifest.json</code>.
+          Ten ordered lessons isolate Power, Gear Train, Escapement, Balance, Mainplate, Click, Motion Works,
+          Keyless Works, Automatic Winding, and Physical Scale. Previous and next controls update the causal
+          explanation, focused camera, active parts, register, and selected component together.
         </p>
       </article>
 
       <article class="note-section">
-        <h2>Framing note</h2>
+        <h2>Component inspection</h2>
         <p>
-          Meshes are stored at their modeling origins, not assembled positions, so ~20% of parts
-          (hands, date digits, keyless works, regulator index) sit far off the movement core. The
-          camera frames on a robust core radius (clamped percentile of centroid reach) and
-          recenters on any part when it is selected, so outliers stay inspectable.
+          Canvas picking and the searchable register select the same assembly. Guided mode limits both
+          surfaces to the current module; the inspector reports role, lesson, service stage, mounting direction,
+          source templates, triangle count, and actionable neighbors. Reset view restores authored framing.
+        </p>
+      </article>
+
+      <article class="note-section">
+        <h2>Runtime handoff</h2>
+        <p>
+          Route-local <code>index.html</code>, <code>css/explorer.css</code>,
+          <code>js/explorer.js</code>, and <code>js/model-table.js</code> own the experience. Three.js and
+          <code>OrbitControls</code> are reused from the sibling route; no new dependency or duplicate
+          geometry asset is introduced.
         </p>
       </article>
 
       <article class="note-section">
         <h2>Validation guidance</h2>
         <p>
-          Run <code>node tools/check-public-surface.mjs .</code> and
-          <code>node tools/smoke-bundle.mjs . --route watch-mesh-explorer</code> after edits. The
-          smoke run expects the <code>#viewport</code> canvas, an 85-item mesh list, and a mounted
-          <code>#reference-footer</code>.
+          Run <code>node --check watch-mesh-explorer/js/explorer.js</code>,
+          <code>node tools/check-public-surface.mjs .</code>, and
+          <code>node tools/smoke-bundle.mjs . --route watch-mesh-explorer</code>. Browser checks should
+           verify ten lessons, lesson-to-part isolation, Previous and Next progression, 71 complete-atlas
+           components, all secondary modes, camera reset, paused render quiescence, footer mounting, and no overflow.
         </p>
       </article>
     </section>
 
     <section class="note-section">
       <div class="section-heading">
-        <h2>Parity checklist</h2>
+        <h2>Implementation contract</h2>
         <span data-module-count class="meta-pill">Loading...</span>
       </div>
       <div class="parity-list" data-parity-list>
-        <div class="empty-state">Loading parity contract...</div>
+        <div class="empty-state">Loading implementation contract...</div>
       </div>
     </section>
   </main>

@@ -1,55 +1,77 @@
 [
   {
-    "moduleId": "dat-decoder",
-    "originalBehavior": "The mechanical-watch runtime reads watch_vertices.dat and watch_indices.dat and slices per-part index ranges from the models table in shared/mechanical-watch/js/watch.js.",
-    "localStatus": "Explorer reuses the same two .dat buffers with an embedded MODEL_TABLE (85 meshes, [triOffset, triCount, lineOffset, lineCount]) derived from that models table; STRIDE=6 float32 (position.xyz + normal.xyz), Uint32 indices.",
+    "moduleId": "semantic-geometry",
+    "originalBehavior": "Original local implementation: meaningful watch assemblies are modeled separately from physical source mesh templates.",
+    "localStatus": "The workbench validates 71 unique semantic components against the 85-entry binary mesh table, creates source-backed and procedural geometry, preserves the mainplate as the datum, and restores archived local offsets and ZYX rotation order for 16 pivot-sensitive source meshes.",
     "sourceFiles": [
-      "../../watch-mesh-explorer/js/model-table.js",
       "../../watch-mesh-explorer/js/explorer.js",
+      "../../watch-mesh-explorer/js/model-table.js",
+      "../../interactive-mechanical-watch/js/watch-parts.js",
       "../../shared/mechanical-watch/models/watch_vertices.dat",
       "../../shared/mechanical-watch/models/watch_indices.dat"
     ],
     "notes": [
-      "Each mesh stores two consecutive index blocks: a triangle block and a wireframe line block; the two blocks tile the whole 378,300-index buffer with no gaps or overlap.",
-      "Manifest of all 85 decoded components lives at docs/mechanical-watch/decoded/manifest.json."
+      "Semantic assemblies carry user-facing names, roles, systems, mounting positions, and animation labels.",
+      "Pivot-sensitive hands, power, train, escapement, and balance meshes retain archived source-local offsets, flips, and ZYX rotation composition after per-source AABB centering.",
+      "The raw table retains all 85 templates for source accountability without presenting each template as an installed watch component."
     ],
     "evidence": [
-      "Stats readout reports 85 meshes / 189,558 vertices / 64,196 triangles / 92,856 line pairs.",
-      "tools/decode-dat.mjs --model-table reproduces the same per-part index ranges."
+      "The WebGL canvas exposes data-component-count=71 after successful initialization.",
+      "Source references are validated before renderer initialization and invalid ranges fail fast."
     ]
   },
   {
-    "moduleId": "viewport-framing",
-    "originalBehavior": "N/A - the explorer is an original local route, not a replica of an upstream page.",
-    "localStatus": "Three.js scene frames the dense movement core using a robust radius (clamped percentile of centroid reach + mesh radius), since .dat parts are stored at modeling origins, not assembled positions. Selecting a mesh recenters the camera so far-off parts (hands, date digits, keyless works) stay reachable.",
+    "moduleId": "guided-lessons",
+    "originalBehavior": "Original local implementation: one problem, one mechanism, and one visible result explain each module in a causal sequence.",
+    "localStatus": "Ten ordered lessons isolate Power, Gear Train, Escapement, Balance, Mainplate, Click, Motion Works, Keyless Works, Automatic Winding, and Physical Scale while retaining the mainplate as a quiet datum.",
     "sourceFiles": [
-      "../../watch-mesh-explorer/js/explorer.js"
+      "../../watch-mesh-explorer/index.html",
+      "../../watch-mesh-explorer/js/explorer.js",
+      "../../watch-mesh-explorer/css/explorer.css",
+      "../../interactive-mechanical-watch/js/watch-parts.js"
     ],
     "notes": [
-      "Outlier meshes (Second_hand/Minute_hand at z=-121, Setting_lever_jumper at z=91, date digits) would blow up a naive bounding box; framing targets the core and clamps radius to [24,48].",
-      "fitCamera(name) focuses a single mesh; setSelected(name) calls it unless focus:false."
+      "Lesson progression updates explanatory copy, active semantic assemblies, camera focus, register rows, and selected part as one state change.",
+      "Relevant components separate only along their mounting axes; unrelated assemblies become inactive and disappear."
     ],
     "evidence": [
-      "Composited screenshot: lit-pixel bbox fills the frame (fillX/fillY = 1.0) and is centered (cx/cy = 0.5).",
-      "__EXP_DBG() reports globalCenter [0,0,-0.4] and clamped globalRadius ~42."
+      "The guide exposes ten lesson buttons with aria-current on the active step and a 01 / 10 progress counter.",
+      "The Power lesson exposes four register parts, then Next lesson changes the scene and explanation to Gear Train."
+    ]
+  },
+  {
+    "moduleId": "atlas-and-energy",
+    "originalBehavior": "Original local implementation: service order, full-part navigation, and mechanical motion remain available after the guided explanation.",
+    "localStatus": "A secondary Explore complete movement disclosure exposes Service, Atlas, and Energy views. Service assembles along mounting axes, Atlas arranges seven territories, and Energy sends animated torque through regulation, hour, minute, and seconds branches.",
+    "sourceFiles": [
+      "../../watch-mesh-explorer/js/explorer.js",
+      "../../watch-mesh-explorer/css/explorer.css"
+    ],
+    "notes": [
+        "Each mode has an authored camera pose; free orbit is opt-in and Reset view restores the authored framing.",
+        "Reduced-motion preference pauses startup animation and makes position transitions immediate; settled paused scenes stop requesting frames."
+    ],
+    "evidence": [
+      "Atlas mode exposes seven projected territory labels and sets data-mode=atlas on the WebGL canvas.",
+      "Energy mode marks the torque-path assemblies in the component register and updates the animated scene while playing."
     ]
   },
   {
     "moduleId": "route-shell",
-    "originalBehavior": "N/A - original local route; provenance surface is the public footer only.",
-    "localStatus": "Standalone page with route-local css/explorer.css and js/explorer.js (module) plus mesh list, subsystem grouping (15 systems), search, raycaster picking, explode slider, and solid/wire/spin toggles. Vendored Three.js is reused from ../interactive-mechanical-watch/vendor/three/.",
+    "originalBehavior": "Original local implementation with neutral provenance and no upstream runtime embed.",
+    "localStatus": "The page uses a route-local responsive shell, the sibling vendored Three.js modules, local binary assets, and the shared public footer.",
     "sourceFiles": [
       "../../watch-mesh-explorer/index.html",
       "../../watch-mesh-explorer/css/explorer.css",
-      "../../watch-mesh-explorer/js/explorer.js",
-      "../../watch-mesh-explorer/js/model-table.js"
+      "../../watch-mesh-explorer/js/explorer.js"
     ],
     "notes": [
-      "referenceMode is neutral; the route has no upstream original page.",
-      "Three.js is loaded from the sibling mechanical-watch vendor folder rather than re-vendored."
+      "The archived mechanical-watch base.js and watch.js runtime are not loaded by this route.",
+      "Desktop keeps one bounded lesson surface; tablet and mobile stack the explanation, canvas, lesson rail, register, and inspector without horizontal overflow."
     ],
     "evidence": [
-      "check-public-surface.mjs passes; smoke-bundle.mjs --route watch-mesh-explorer passes."
+      "check-public-surface.mjs passes.",
+      "smoke-bundle.mjs --route watch-mesh-explorer passes desktop and mobile baselines."
     ]
   }
 ]

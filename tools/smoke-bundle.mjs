@@ -4647,6 +4647,8 @@ async function smokeInteractiveMechanicalWatch(context) {
       ready: root?.dataset.threeReady || "",
       renderMode: mount?.dataset.renderMode || "",
       componentCount: Number(canvas?.dataset.componentCount || 0),
+      transformedSourceCount: Number(canvas?.dataset.transformedSourceCount || 0),
+      sourceRotationOrder: canvas?.dataset.sourceRotationOrder || "",
       ariaHidden: canvas?.getAttribute("aria-hidden") || "",
       svgCount: mount?.querySelectorAll("svg").length || 0,
     };
@@ -4654,6 +4656,8 @@ async function smokeInteractiveMechanicalWatch(context) {
   assert(explodedState.ready === "true", `${label} did not report a ready Three.js renderer`);
   assert(explodedState.renderMode === "three", `${label} exposed render mode ${explodedState.renderMode || "none"}`);
   assert(explodedState.componentCount === 71, `${label} expected 71 Three.js components, got ${explodedState.componentCount}`);
+  assert(explodedState.transformedSourceCount === 16, `${label} expected 16 authored source transforms, got ${explodedState.transformedSourceCount}`);
+  assert(explodedState.sourceRotationOrder === "ZYX", `${label} source transforms should preserve archived ZYX rotation order`);
   assert(explodedState.ariaHidden === "true", `${label} pointer canvas should remain hidden from assistive technology`);
   assert(explodedState.svgCount === 0, `${label} should replace the SVG after Three.js initialization`);
 
@@ -7527,6 +7531,21 @@ async function smokeFormula1Racing(context) {
   assert(await airflow.getAttribute("aria-valuenow") !== airflowBefore, "Formula 1 slider keyboard action did not update aria value");
   assert((await page.locator("#f1_airflow_caption").textContent()).length > 0, "Formula 1 slider did not update its caption");
 
+  const floorRide = page.getByRole("slider", { name: "Live ride height" });
+  const floorCaptionBefore = await page.locator("#f1_floor_caption").textContent();
+  const lapCaptionBefore = await page.locator("#f1_lap_caption").textContent();
+  await floorRide.focus();
+  await floorRide.press("End");
+  await page.waitForFunction(({ floorCaption, lapCaption }) => {
+    return document.querySelector("#f1_floor_caption")?.textContent !== floorCaption &&
+      document.querySelector("#f1_lap_caption")?.textContent !== lapCaption;
+  }, { floorCaption: floorCaptionBefore, lapCaption: lapCaptionBefore }, { timeout: 5000 });
+  const floorLapCaption = await page.locator("#f1_lap_caption").textContent();
+  const floorDelta = Number(floorLapCaption.match(/floor posture contributes \+([\d.]+) s/i)?.[1] || 0);
+  assert(await floorRide.getAttribute("aria-valuenow") === "100", "Formula 1 ride-height control did not reach its keyboard maximum");
+  assert(/platform risk high/i.test(floorLapCaption), "Formula 1 lap summary did not expose the floor-platform risk");
+  assert(floorDelta > 0, "Formula 1 floor posture did not add measurable lap loss");
+
   const weather = page.locator("#f1_weather_seg0 [role='radio']").first();
   await weather.focus();
   await weather.press("ArrowRight");
@@ -7548,6 +7567,96 @@ async function smokeFormula1Racing(context) {
   await assertViewportUsable(mobilePage, "formula-1-racing mobile");
   assertMobileRuntimeClean("formula-1-racing mobile");
   await mobilePage.close();
+}
+
+async function smokeWatchMeshExplorer(context) {
+  const page = await context.newPage();
+  const assertRuntimeClean = createRuntimeMonitor(page, { rejectOffOriginRequests: true });
+  await assertRoute(page, "watch-mesh-explorer/", "#reference-footer");
+  await page.waitForFunction(() => document.querySelector("[data-watch-workbench]")?.dataset.threeReady === "true", null, { timeout: 30000 });
+
+  const initial = await page.evaluate(() => {
+    const canvas = document.querySelector("[data-viewport] canvas");
+    return {
+      busy: document.querySelector("[data-viewport]")?.getAttribute("aria-busy"),
+      componentCount: Number(canvas?.dataset.componentCount || 0),
+      hidden: canvas?.getAttribute("aria-hidden"),
+      lessonPlacementError: Number(canvas?.dataset.lessonPlacementError || Infinity),
+      transformedSourceCount: Number(canvas?.dataset.transformedSourceCount || 0),
+      sourceRotationOrder: canvas?.dataset.sourceRotationOrder || "",
+      touchAction: canvas?.style.touchAction,
+    };
+  });
+  assert(initial.busy === "false", "Watch workbench did not clear its loading state");
+  assert(initial.componentCount === 71, `Watch workbench expected 71 components, got ${initial.componentCount}`);
+  assert(initial.hidden === "true", "Watch workbench pointer canvas should remain hidden from assistive technology");
+  assert(initial.lessonPlacementError === 0, `Watch workbench lesson parts moved away from assembled positions by ${initial.lessonPlacementError}`);
+  assert(initial.transformedSourceCount === 16, `Watch workbench expected 16 authored source transforms, got ${initial.transformedSourceCount}`);
+  assert(initial.sourceRotationOrder === "ZYX", "Watch workbench source transforms should preserve archived ZYX rotation order");
+  assert(initial.touchAction === "pan-y", "Watch workbench should preserve page scrolling while orbit is locked");
+  assert(await page.locator("[data-lesson-list] button").count() === 10, "Watch workbench did not expose ten guided lessons");
+  assert(await page.locator("[data-lesson-count]").textContent() === "01 / 10", "Watch workbench did not start at lesson one");
+  assert(await page.locator("[data-viewport] canvas").getAttribute("data-mode") === "lesson", "Watch workbench did not start in guided mode");
+  assert(await page.locator("[data-viewport] canvas").getAttribute("data-lesson-id") === "power", "Watch workbench did not start with the power lesson");
+  assert(await page.locator("[data-part-list] button:not([hidden])").count() === 4, "Watch workbench power lesson did not isolate four register parts");
+
+  await page.locator("[data-next-lesson]").click();
+  await page.waitForFunction(() => document.querySelector("[data-viewport] canvas")?.dataset.lessonId === "gears");
+  assert(await page.locator("[data-lesson-count]").textContent() === "02 / 10", "Watch workbench next control did not advance the lesson");
+  assert((await page.locator("[data-lesson-problem]").textContent()).includes("barrel's slow rotation"), "Watch workbench lesson did not update its causal explanation");
+  assert(Number(await page.locator("[data-viewport] canvas").getAttribute("data-lesson-placement-error")) === 0, "Watch workbench moved gear lesson parts away from assembled positions");
+
+  await page.locator(".explore-tools summary").click();
+  await page.locator("[data-mode='atlas']").click();
+  await page.getByRole("button", { name: "Power", exact: true }).click();
+  await page.waitForFunction(() => {
+    const canvas = document.querySelector("[data-viewport] canvas");
+    return canvas?.dataset.mode === "atlas" && canvas?.dataset.systemFilter === "Power" && canvas?.dataset.selectedId === "barrel-drum";
+  });
+  const filtered = await page.evaluate(() => ({
+    filteredCount: Number(document.querySelector("[data-viewport] canvas")?.dataset.filteredCount || 0),
+    visibleRows: Array.from(document.querySelectorAll("[data-part-list] button")).filter((button) => getComputedStyle(button).display !== "none").length,
+  }));
+  assert(filtered.filteredCount === 5, `Watch workbench Power filter expected four parts plus mainplate, got ${filtered.filteredCount}`);
+  assert(filtered.visibleRows === 4, `Watch workbench Power register expected four rows, got ${filtered.visibleRows}`);
+
+  await page.locator("button[data-orbit]").click();
+  assert(await page.locator("button[data-orbit]").getAttribute("aria-pressed") === "true", "Watch workbench did not enable free orbit");
+  assert(await page.locator("[data-viewport] canvas").evaluate((canvas) => canvas.style.touchAction) === "none", "Watch workbench orbit did not claim touch gestures");
+  await page.locator("[data-reset-view]").click();
+  assert(await page.locator("button[data-orbit]").getAttribute("aria-pressed") === "false", "Watch workbench reset did not lock the camera");
+  assert(await page.locator("[data-viewport] canvas").evaluate((canvas) => canvas.style.touchAction) === "pan-y", "Watch workbench reset did not restore page scrolling");
+
+  await page.locator("[data-play]").click();
+  await page.waitForFunction(() => document.querySelector("[data-viewport] canvas")?.dataset.playing === "false");
+  await page.waitForTimeout(800);
+  const pausedRenderCount = Number(await page.locator("[data-viewport] canvas").getAttribute("data-render-count"));
+  await page.waitForTimeout(250);
+  assert(Number(await page.locator("[data-viewport] canvas").getAttribute("data-render-count")) === pausedRenderCount, "Watch workbench kept rendering while paused and settled");
+
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  await page.locator("[data-mode='energy']").click();
+  await page.waitForFunction(() => document.querySelector("[data-viewport] canvas")?.dataset.mode === "energy");
+  assert(await page.locator("[data-part-list] .is-flowing").count() === 14, "Watch workbench energy mode did not expose all torque branches");
+
+  const speed1 = page.locator("button[data-speed='1']");
+  const speed8 = page.locator("button[data-speed='8']");
+  await speed1.focus();
+  await speed1.press("ArrowRight");
+  assert(await speed8.getAttribute("aria-checked") === "true", "Watch workbench speed keyboard control did not select 8x");
+  assert(await speed8.getAttribute("tabindex") === "0", "Watch workbench selected speed did not receive the roving tab stop");
+
+  await page.getByRole("button", { name: "Calendar", exact: true }).click();
+  await page.locator("[data-component-id='date-ring']").click();
+  assert((await page.locator("[data-part-detail]").textContent()).includes("Service stageCalendar"), "Watch workbench assigned the date ring to the wrong service stage");
+  await page.locator("[data-install-stage]").click();
+  assert(await page.locator("[data-stage-count]").textContent() === "04 / 06", "Watch workbench inspector action did not open the Calendar stage");
+  await page.locator("[data-stage-list] button").nth(5).click();
+  assert(await page.locator("[data-stage-count]").textContent() === "06 / 06", "Watch workbench did not reach the Hands stage");
+
+  await assertViewportUsable(page, "watch-mesh-explorer desktop interactions");
+  assertRuntimeClean("watch-mesh-explorer interactions");
+  await page.close();
 }
 
 async function createSmokeContext(browser) {
@@ -7607,6 +7716,9 @@ async function main() {
     }
     if (exists("formula-1-racing")) {
       await smokeFormula1Racing(context);
+    }
+    if (exists("watch-mesh-explorer")) {
+      await smokeWatchMeshExplorer(context);
     }
     if (exists("remember")) {
       await smokeRemember(context);

@@ -302,6 +302,32 @@ function addMesh(parent, geometry, material, componentId, pickables, position = 
   return mesh;
 }
 
+function addTransformedSources(parent, part, vertices, indices, pickables, geometryCache, material) {
+  let count = 0;
+  part.source.forEach((source) => {
+    let geometry = geometryCache.get(source);
+    if (!geometry) {
+      geometry = createBinaryGeometry([source], vertices, indices);
+      geometryCache.set(source, geometry);
+    }
+    const transform = part.sourceTransforms[source];
+    (part.instances || [[0, 0, 0]]).forEach((position) => {
+      const instance = new THREE.Group();
+      instance.position.fromArray(position);
+      const sourceGroup = new THREE.Group();
+      sourceGroup.position.fromArray(transform.position || [0, 0, 0]);
+      sourceGroup.rotation.order = "ZYX";
+      sourceGroup.rotation.fromArray(transform.rotation || [0, 0, 0]);
+      sourceGroup.scale.fromArray(transform.scale || [1, 1, 1]);
+      instance.add(sourceGroup);
+      parent.add(instance);
+      addMesh(sourceGroup, geometry, material, part.id, pickables);
+      count += 1;
+    });
+  });
+  return count;
+}
+
 function addDialMarkers(parent, material, componentId, pickables) {
   const geometry = new THREE.BoxGeometry(0.18, 1.15, 0.12);
   for (let i = 0; i < 60; i += 1) {
@@ -335,19 +361,24 @@ function createComponent(part, vertices, indices, pickables, geometryCache) {
   const assembly = new THREE.Group();
   const pivot = new THREE.Group();
   const material = createMaterial(part);
+  let transformedSourceCount = 0;
   assembly.add(pivot);
 
   if (part.source?.length) {
-    const cacheKey = part.source.join("|");
-    let sourceGeometry = geometryCache.get(cacheKey);
-    if (!sourceGeometry) {
-      sourceGeometry = createBinaryGeometry(part.source, vertices, indices);
-      geometryCache.set(cacheKey, sourceGeometry);
-    }
-    if (part.kind === "screws") addScrews(pivot, sourceGeometry, material, part.id, pickables);
-    else {
-      const positions = part.instances || [[0, 0, 0]];
-      positions.forEach((position) => addMesh(pivot, sourceGeometry, material, part.id, pickables, position));
+    if (part.sourceTransforms) {
+      transformedSourceCount = addTransformedSources(pivot, part, vertices, indices, pickables, geometryCache, material);
+    } else {
+      const cacheKey = part.source.join("|");
+      let sourceGeometry = geometryCache.get(cacheKey);
+      if (!sourceGeometry) {
+        sourceGeometry = createBinaryGeometry(part.source, vertices, indices);
+        geometryCache.set(cacheKey, sourceGeometry);
+      }
+      if (part.kind === "screws") addScrews(pivot, sourceGeometry, material, part.id, pickables);
+      else {
+        const positions = part.instances || [[0, 0, 0]];
+        positions.forEach((position) => addMesh(pivot, sourceGeometry, material, part.id, pickables, position));
+      }
     }
   }
 
@@ -371,7 +402,7 @@ function createComponent(part, vertices, indices, pickables, geometryCache) {
     addMesh(pivot, gearB, material, part.id, pickables, [1.35, 0.7, 0.18]);
   }
 
-  assembly.userData = { config: part, material, pivot };
+  assembly.userData = { config: part, material, pivot, transformedSourceCount };
   return assembly;
 }
 
@@ -486,6 +517,9 @@ function initExploder(root) {
       componentGroups.set(part.id, assembly);
       scene.add(assembly);
     });
+    renderer.domElement.dataset.transformedSourceCount = String(Array.from(componentGroups.values())
+      .reduce((count, assembly) => count + assembly.userData.transformedSourceCount, 0));
+    renderer.domElement.dataset.sourceRotationOrder = "ZYX";
 
     const guideMaterial = new THREE.LineBasicMaterial({ color: 0xd8a657, transparent: true, opacity: 0.16 });
     const guidePositions = [];
