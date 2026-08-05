@@ -1004,6 +1004,28 @@
     return { tyre, temp, load, stint, wear, grip, scorePenalty, stateLabel };
   }
 
+  function computeBrakeState() {
+    const speed = 140 + state.brakeSpeed * 200;
+    const bias = state.brakeBias;
+    const recovery = state.brakeRecovery;
+    const rearRotation = clamp((0.64 - bias) * 140 + recovery * 22 + 50, 0, 100);
+    const authority = clamp(72 + (speed - 180) * 0.08 - Math.abs(bias - 0.58) * 46 - recovery * 9, 28, 96);
+    const frontLoad = clamp(56 + state.brakeSpeed * 16 + (bias - 0.55) * 34 + recovery * 12, 46, 84);
+    const stability = clamp(0.98 - Math.abs(bias - 0.58) * 1.1 - Math.max(0, recovery - 0.68) * 0.7 - Math.max(0, rearRotation - 68) * 0.004, 0.32, 0.98);
+    const scorePenalty = clamp((0.76 - stability) * 0.32, 0, 0.16);
+    let stateLabel = "controlled";
+    if (stability < 0.7) {
+      stateLabel = "compromised";
+    } else if (rearRotation > 80) {
+      stateLabel = "unstable";
+    } else if (rearRotation > 68) {
+      stateLabel = "aggressive";
+    } else if (rearRotation < 35) {
+      stateLabel = "front-limited";
+    }
+    return { speed, bias, recovery, rearRotation, authority, frontLoad, stability, scorePenalty, stateLabel };
+  }
+
   function computeWeatherStrategy() {
     const track = getTrack();
     const mode = getWeatherMode();
@@ -1115,6 +1137,7 @@
     const setup = computeSetupScores();
     const floor = computeFloorState();
     const tyre = computeTyreState();
+    const brake = computeBrakeState();
     const power = computePowerState();
     const weather = computeWeatherStrategy();
     const plan = getLapPlan();
@@ -1132,6 +1155,13 @@
       spa: [0.5, 0.78, 0.68],
       suzuka: [0.78, 1, 0.92],
     }[track.key];
+    const brakeWeights = track.sectors.map(function (_, index) {
+      const sectorTrace = track.traces.brake.slice(index * 3, index * 3 + 3);
+      const peakDemand = sectorTrace.reduce(function (peak, value) {
+        return Math.max(peak, value);
+      }, 0);
+      return clamp(peakDemand / 100, 0.35, 1);
+    });
 
     const adjusted = {
       straight: clamp(setup.straight + plan.adjustments.straight * 0.01, 0.12, 0.99),
@@ -1144,14 +1174,17 @@
 
     let floorDelta = 0;
     let tyreDelta = 0;
+    let brakeDelta = 0;
     const sectorScores = track.sectors.map(function (_, index) {
       const powerBoost = power.sectorBars[index] * 0.16;
       const bias = index === 0 ? adjusted.straight * 0.34 + adjusted.braking * 0.3 : index === 1 ? adjusted.fast * 0.36 + adjusted.balance * 0.24 : adjusted.fast * 0.26 + adjusted.slow * 0.14 + adjusted.tyre * 0.18;
-      const scoreWithoutFloorOrTyre = clamp(bias + powerBoost - weather.penalty * (0.18 + index * 0.06), 0.14, 0.98);
-      const scoreWithFloor = clamp(scoreWithoutFloorOrTyre - floor.scorePenalty * floorWeights[index], 0.14, 0.98);
-      const score = clamp(scoreWithFloor - tyre.scorePenalty * tyreWeights[index], 0.14, 0.98);
-      floorDelta += (scoreWithoutFloorOrTyre - scoreWithFloor) * 1.8;
-      tyreDelta += (scoreWithFloor - score) * 1.8;
+      const scoreWithoutFloorTyreOrBrake = clamp(bias + powerBoost - weather.penalty * (0.18 + index * 0.06), 0.14, 0.98);
+      const scoreWithFloor = clamp(scoreWithoutFloorTyreOrBrake - floor.scorePenalty * floorWeights[index], 0.14, 0.98);
+      const scoreWithTyre = clamp(scoreWithFloor - tyre.scorePenalty * tyreWeights[index], 0.14, 0.98);
+      const score = clamp(scoreWithTyre - brake.scorePenalty * brakeWeights[index], 0.14, 0.98);
+      floorDelta += (scoreWithoutFloorTyreOrBrake - scoreWithFloor) * 1.8;
+      tyreDelta += (scoreWithFloor - scoreWithTyre) * 1.8;
+      brakeDelta += (scoreWithTyre - score) * 1.8;
       return score;
     });
     const sectorDeltas = sectorScores.map(function (score) {
@@ -1166,12 +1199,12 @@
     const deployTrace = [];
     for (let i = 0; i < 9; i += 1) {
       const sector = Math.floor(i / 3);
-      speedTrace.push(clamp(track.traces.speed[i] + (adjusted.straight - 0.6) * 38 + (adjusted.fast - 0.6) * 26 - weather.penalty * 12 - floor.scorePenalty * floorWeights[sector] * 90 - tyre.scorePenalty * tyreWeights[sector] * 72, 10, 98));
-      brakeTrace.push(clamp(track.traces.brake[i] + (adjusted.braking - 0.6) * 34 + weather.penalty * 12 + tyre.scorePenalty * tyreWeights[sector] * 54, 4, 98));
+      speedTrace.push(clamp(track.traces.speed[i] + (adjusted.straight - 0.6) * 38 + (adjusted.fast - 0.6) * 26 - weather.penalty * 12 - floor.scorePenalty * floorWeights[sector] * 90 - tyre.scorePenalty * tyreWeights[sector] * 72 - brake.scorePenalty * brakeWeights[sector] * 42, 10, 98));
+      brakeTrace.push(clamp(track.traces.brake[i] + (adjusted.braking - 0.6) * 34 + weather.penalty * 12 + tyre.scorePenalty * tyreWeights[sector] * 54 + brake.scorePenalty * brakeWeights[sector] * 72, 4, 98));
       deployTrace.push(clamp(track.traces.deploy[i] + (power.sectorBars[sector] - 0.5) * 52, 8, 98));
     }
 
-    return { track, setup, floor, tyre, power, weather, plan, sectorScores, sectorDeltas, floorDelta, tyreDelta, totalDelta, speedTrace, brakeTrace, deployTrace };
+    return { track, setup, floor, tyre, brake, power, weather, plan, sectorScores, sectorDeltas, floorDelta, tyreDelta, brakeDelta, totalDelta, speedTrace, brakeTrace, deployTrace };
   }
 
   function updateCaptions() {
@@ -1216,11 +1249,8 @@
     const tyre = computeTyreState();
     setCaption("f1_tyre_caption", `<strong>${tyre.tyre.label}</strong> - Grip is around <strong>${Math.round(tyre.grip * 100)}%</strong>, wear pressure around <strong>${Math.round(tyre.wear * 60)}%</strong>, and the tyre now looks <strong>${tyre.stateLabel}</strong>.`);
 
-    const brakeSpeed = 140 + state.brakeSpeed * 200;
-    const rearRotation = clamp((0.64 - state.brakeBias) * 140 + state.brakeRecovery * 22 + 50, 0, 100);
-    const brakingAuthority = clamp(72 + (brakeSpeed - 180) * 0.08 - Math.abs(state.brakeBias - 0.58) * 46 - state.brakeRecovery * 9, 28, 96);
-    const brakingState = rearRotation < 35 ? "locked-in" : rearRotation > 68 ? "aggressive" : "controlled";
-    setCaption("f1_brake_caption", `<strong>${Math.round(brakeSpeed)} km/h entry</strong> - Stopping authority is around <strong>${Math.round(brakingAuthority)}%</strong> and the rear now feels <strong>${brakingState}</strong> on release.`);
+    const brake = computeBrakeState();
+    setCaption("f1_brake_caption", `<strong>${Math.round(brake.speed)} km/h entry</strong> - Stopping authority is around <strong>${Math.round(brake.authority)}%</strong>, energy recovery is <strong>${Math.round(brake.recovery * 100)}%</strong>, and braking now looks <strong>${brake.stateLabel}</strong>.`);
 
     const track = getTrack();
     setCaption("f1_track_caption", `<strong>${track.label}</strong> - ${track.caption}`);
@@ -1243,7 +1273,7 @@
     const sectorSummary = lap.sectorDeltas.map(function (delta, index) {
       return `S${index + 1} ${delta >= 0 ? "+" : ""}${delta.toFixed(2)} s`;
     }).join(" / ");
-    setCaption("f1_lap_caption", `<strong>${lap.track.label} / ${lap.plan.label}</strong> - ${sectorSummary}; total <strong>${lap.totalDelta.toFixed(2)} s</strong>. Live floor posture contributes <strong>+${lap.floorDelta.toFixed(2)} s</strong> and tyre condition contributes <strong>+${lap.tyreDelta.toFixed(2)} s</strong>; platform risk is <strong>${lap.floor.risk}</strong> and the tyre is <strong>${lap.tyre.stateLabel}</strong>.`);
+    setCaption("f1_lap_caption", `<strong>${lap.track.label} / ${lap.plan.label}</strong> - ${sectorSummary}; total <strong>${lap.totalDelta.toFixed(2)} s</strong>. Live floor posture contributes <strong>+${lap.floorDelta.toFixed(2)} s</strong>, tyre condition contributes <strong>+${lap.tyreDelta.toFixed(2)} s</strong>, and braking balance contributes <strong>+${lap.brakeDelta.toFixed(2)} s</strong>; platform risk is <strong>${lap.floor.risk}</strong>, the tyre is <strong>${lap.tyre.stateLabel}</strong>, and braking is <strong>${lap.brake.stateLabel}</strong>.`);
   }
 
   function componentColorName(key) {
@@ -1609,24 +1639,21 @@
 
   function drawBrakeScene(ctx, width, height) {
     drawSceneBackground(ctx, width, height, COLORS.red);
-    const speed = 140 + state.brakeSpeed * 200;
-    const bias = state.brakeBias;
-    const recovery = state.brakeRecovery;
-    const pitch = -0.03 - state.brakeSpeed * 0.08 - recovery * 0.05;
+    const brake = computeBrakeState();
+    const pitch = -0.03 - state.brakeSpeed * 0.08 - brake.recovery * 0.05;
     drawSideCar(ctx, width * 0.42, height * 0.54, Math.min(width, height) * 0.19, pitch, 0.02, false);
 
     ctx.fillStyle = rgba(COLORS.red, 0.7);
     ctx.arrow(width * 0.74, height * 0.24, width * 0.58, height * 0.24, 18, 28, 24);
     ctx.fill();
 
-    const frontLoad = clamp(56 + state.brakeSpeed * 16 + (bias - 0.55) * 34 + recovery * 12, 46, 84);
-    const rearLoad = clamp(100 - frontLoad, 16, 54);
-    drawBarPair(ctx, width * 0.74, height * 0.44, frontLoad / 100, rearLoad / 100, "Front", "Rear", COLORS.red, COLORS.blue);
+    const rearLoad = clamp(100 - brake.frontLoad, 16, 54);
+    drawBarPair(ctx, width * 0.74, height * 0.44, brake.frontLoad / 100, rearLoad / 100, "Front", "Rear", COLORS.red, COLORS.blue);
 
     ctx.fillStyle = rgba(COLORS.ink, 0.76);
     ctx.font = "600 15px IBM Plex Mono, monospace";
     ctx.textAlign = "left";
-    ctx.fillText(Math.round(speed) + " km/h", width * 0.66, height * 0.76);
+    ctx.fillText(Math.round(brake.speed) + " km/h", width * 0.66, height * 0.76);
   }
 
   function drawTrackScene(ctx, width, height) {
@@ -1836,6 +1863,11 @@
     const brakePoints = buildTracePoints(lap.brakeTrace, width, height);
     const deployPoints = buildTracePoints(lap.deployTrace, width, height);
 
+    ctx.fillStyle = rgba(COLORS.ink, 0.78);
+    ctx.font = "600 12px IBM Plex Mono, monospace";
+    ctx.textAlign = "right";
+    ctx.fillText("Total delta " + lap.totalDelta.toFixed(2) + " s", width * 0.92, height * 0.1);
+
     const bands = [0.08, 0.37, 0.66];
     bands.forEach(function (x, index) {
       ctx.fillStyle = rgba(COLORS.dark, 0.04);
@@ -1851,22 +1883,39 @@
     strokeTrace(ctx, brakePoints, rgba(COLORS.red, 0.92), 6);
     strokeTrace(ctx, deployPoints, rgba(COLORS.yellow, 0.94), 6);
 
+    const contributions = [
+      { label: "Floor", value: lap.floorDelta, color: COLORS.cyan },
+      { label: "Tyre", value: lap.tyreDelta, color: lap.tyre.tyre.color },
+      { label: width < 420 ? "Brake" : "Braking", value: lap.brakeDelta, color: COLORS.red },
+    ];
+    const compactContributions = width < 420;
+    const contributionGap = compactContributions ? 6 : 10;
+    const contributionWidth = (width * 0.84 - contributionGap * 2) / 3;
+    const contributionY = height * (compactContributions ? 0.76 : 0.78);
+    ctx.font = "600 " + (compactContributions ? 8.5 : 11) + "px IBM Plex Mono, monospace";
+    ctx.textAlign = "center";
+    contributions.forEach(function (contribution, index) {
+      const x = width * 0.08 + index * (contributionWidth + contributionGap);
+      ctx.fillStyle = rgba(contribution.color, 0.56);
+      ctx.fillRect(x, contributionY, contributionWidth, 2);
+      ctx.fillStyle = rgba(COLORS.ink, 0.78);
+      ctx.fillText(contribution.label + " +" + contribution.value.toFixed(2) + " s", x + contributionWidth * 0.5, contributionY + 13);
+    });
+
     ctx.fillStyle = rgba(COLORS.ink, 0.78);
     ctx.font = "600 12px IBM Plex Mono, monospace";
     ctx.textAlign = "left";
-    ctx.fillText("Speed", width * 0.08, height * 0.88);
+    ctx.fillText("Speed", width * 0.08, height * 0.92);
     ctx.fillStyle = rgba(COLORS.blue, 0.92);
-    ctx.fillRect(width * 0.15, height * 0.868, 18, 4);
+    ctx.fillRect(width * 0.15, height * 0.908, 18, 4);
     ctx.fillStyle = rgba(COLORS.ink, 0.78);
-    ctx.fillText("Brake", width * 0.28, height * 0.88);
+    ctx.fillText("Brake", width * 0.28, height * 0.92);
     ctx.fillStyle = rgba(COLORS.red, 0.92);
-    ctx.fillRect(width * 0.35, height * 0.868, 18, 4);
+    ctx.fillRect(width * 0.35, height * 0.908, 18, 4);
     ctx.fillStyle = rgba(COLORS.ink, 0.78);
-    ctx.fillText("Deploy", width * 0.48, height * 0.88);
+    ctx.fillText("Deploy", width * 0.48, height * 0.92);
     ctx.fillStyle = rgba(COLORS.yellow, 0.94);
-    ctx.fillRect(width * 0.58, height * 0.868, 18, 4);
-    ctx.fillStyle = rgba(COLORS.ink, 0.78);
-    ctx.fillText("Total delta " + lap.totalDelta.toFixed(2) + " s", width * 0.72, height * 0.88);
+    ctx.fillRect(width * 0.58, height * 0.908, 18, 4);
   }
 
   function drawTopCar(ctx, x, y, size, color, alpha) {

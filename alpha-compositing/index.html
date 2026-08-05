@@ -74,6 +74,7 @@
 <h1 id="opacity">Opacity<a href="#opacity" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>
 <p>If you ever had a chance to look through rose-tinted glasses you may have experienced something akin to the simulation below. Try dragging the glasses around to see how they affect what&rsquo;s seen through them:</p>
 <div class="alpha_glass_container" id="alpha_rose_glasses_container"></div>
+<p class="alpha_observation" role="note"><strong>Observation:</strong> Move the glasses across bright and dark details. The tint changes how much of each color channel passes through, while the fully covered scene still has no gaps. The next example separates that channel filtering from uniform opacity.</p>
 <p>The way these kind of glasses work is that they let through a lot of red light, a decent amount of blue light, and only some amount of green light. We can write down the math behind these specific glasses using the following set of three equations. The letter <strong>R</strong> is the result of the operation and the letter <strong>D</strong> describes the destination we&rsquo;re looking at. The RGB subscripts denote the red, green, and blue color components:</p>
 <div class="alpha_equation">
 R<sub>R</sub> = D<sub>R</sub> &times; 1.0<br>

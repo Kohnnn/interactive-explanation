@@ -79,6 +79,8 @@
           <li>The resin chapter opens with a 71-part Three.js exploded view. Canonical meshes cover the modeled movement components; 16 pivot-sensitive meshes preserve archived local offsets, flips, and ZYX rotation composition, while route-local procedural geometry supplies missing teeth, pinions, staffs, screws, dial markers, springs, case, crystal, and caseback.</li>
           <li>The mechanism runs continuously with source-derived gear, escapement, balance, hand, calendar, rotor, and automatic-winding relationships at selectable 1&times;, 8&times;, and 60&times; speeds.</li>
           <li>The Three.js canvas is pointer-only and hidden from assistive technology; DOM component buttons remain the keyboard surface, and a 71-target selectable SVG stays mounted if Three.js initialization fails.</li>
+          <li>The exploded view opens with an ordered three-step first-run guide (reassemble with depth, select a component, watch which layers move) because the section previously stated its goal without an explicit first action.</li>
+          <li>The exploded-view detail region is <code>aria-atomic</code>; <code>renderDetail</code> replaces the whole subtree, so partial announcements were otherwise possible.</li>
           <li>Legacy teaching canvases and controls gain keyboard semantics through the route-local adapter while continuing to delegate to the shared runtime's existing handlers; y-only views advertise only effective keys and multi-slider demos expose unique names.</li>
           <li>Reduced-motion preference pauses automatic startup but preserves explicit playback.</li>
           <li>Generated PNGs remain as later process dividers and the SVG fallback backdrop rather than the primary exploded-view interaction.</li>

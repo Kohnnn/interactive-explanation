@@ -29,11 +29,12 @@
     ],
     "notes": [
       "The picker scenes still rely on the original ColorMatcher runtime and its published DOM IDs.",
-      "The route keeps the article's inline plate and mismatch sections in their original order rather than flattening them into a custom demo."
+      "The route keeps the article's inline plate and mismatch sections in their original order rather than flattening them into a custom demo.",
+      "An additive two-number prompt asks readers to compare matching RGB values across the opening pickers and identify the missing color-space context."
     ],
     "evidence": [
       "Implementation planning treated one early slider-driven picker scene and one intensity-focused scene as smoke-critical.",
-      "Shared smoke coverage verifies a color-picker slider changes both compared plates and that a later synchronized plot scene updates from slider input."
+      "Shared smoke coverage verifies a color-picker slider changes both compared plates, a later synchronized plot scene updates from slider input, and the opening prompt preserves the RGB and color-space distinction."
     ]
   },
   {

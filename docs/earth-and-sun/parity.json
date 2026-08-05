@@ -12,7 +12,7 @@
     "notes": [
       "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
       "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite.",
-      "The shipped shell adds a local hero and reinforced generated chapter navigation without replacing the underlying article runtime."
+      "The shipped shell adds a local hero, reinforced generated chapter navigation, and an opening date-versus-time comparison cue without replacing the underlying article runtime."
     ],
     "evidence": [
       "Implementation planning treated the published article shell, globe textures, and both scripts as parity-critical.",

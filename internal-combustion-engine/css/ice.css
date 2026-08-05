@@ -68,6 +68,21 @@
   max-width: 450px;
 }
 
+.ice-cycle-map {
+  border-left: 3px solid rgb(102, 182, 74);
+  margin: 1.25em 0;
+  padding-left: 1.75em;
+}
+
+.ice-cycle-map li + li {
+  margin-top: 0.35em;
+}
+
+.ice-cycle-map a {
+  color: inherit;
+  font-weight: bold;
+}
+
 .drawer_container:after {
   padding-top: 100%;
 }

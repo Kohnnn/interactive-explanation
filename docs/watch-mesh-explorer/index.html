@@ -75,6 +75,16 @@
       </article>
 
       <article class="note-section">
+        <h2>Announcement and grouping semantics</h2>
+        <p>
+          The lesson brief and part detail are <code>aria-atomic</code>. <code>setLesson</code> rewrites five
+          sibling nodes and <code>showPart</code> replaces the detail subtree, so polite regions alone could
+          announce partial updates. The subsystem filter container carries <code>role="group"</code> next to
+          its existing accessible name so its generated pressed buttons form one named group.
+        </p>
+      </article>
+
+      <article class="note-section">
         <h2>Runtime handoff</h2>
         <p>
           Route-local <code>index.html</code>, <code>css/explorer.css</code>,

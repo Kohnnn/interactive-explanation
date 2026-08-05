@@ -84,13 +84,16 @@
       "A single watch-parts.js inventory keeps all 71 DOM, SVG, and Three.js component identities synchronized.",
       "Depth changes update geometry and state without replacing the component-list DOM or losing its scroll position.",
       "Continuous animation ports only the source-derived mechanism relationships and pauses offscreen or at reduced-motion startup.",
-      "Each selectable component has a DOM button, Three.js mesh or SVG fallback target, detail panel entry, and related-lesson metadata."
+      "Each selectable component has a DOM button, Three.js mesh or SVG fallback target, detail panel entry, and related-lesson metadata.",
+      "The exploded-view opening supplies an ordered three-step first-run guide (depth, component selection, running-layer observation) so the section states an explicit first action.",
+      "The exploded-view detail region is aria-atomic because renderDetail replaces the whole subtree at once."
     ],
     "evidence": [
       "The #from-pixels-to-resin chapter contains a data-exploded-watch mount instead of a static hero figure.",
       "The Three.js adapter maps 71 selectable components across casing, display, calendar, power, winding, keyless works, gear train, motion works, escapement, regulator, shock protection, friction, structure, hardware, and automatic winding.",
       "Contextual detail links route components such as the barrel, mainplate, and rotor to their relevant lessons.",
-      "Targeted smoke verifies continuous playback, 1x/8x/60x speed changes, incremental depth updates, keyboard and pointer selection, native touch orbit, lesson links, SVG fallback, and capped 320px component-list density."
+      "Targeted smoke verifies continuous playback, 1x/8x/60x speed changes, incremental depth updates, keyboard and pointer selection, native touch orbit, lesson links, SVG fallback, and capped 320px component-list density.",
+      "Targeted smoke asserts ol.exploded-watch__firstrun exposes three steps with the expected label and that [data-exploded-detail] carries aria-atomic=true."
     ]
   }
 ]

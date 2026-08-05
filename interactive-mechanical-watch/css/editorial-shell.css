@@ -742,6 +742,20 @@ body[data-story-route="interactive-mechanical-watch"] .exploded-watch__caption {
   color: var(--watch-muted-strong);
 }
 
+body[data-story-route="interactive-mechanical-watch"] .exploded-watch__firstrun {
+  margin: 0.9rem 0 0;
+  padding-left: 1.35rem;
+  display: grid;
+  gap: 0.35rem;
+  color: var(--watch-muted-strong);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+body[data-story-route="interactive-mechanical-watch"] .exploded-watch__firstrun strong {
+  color: var(--watch-ink);
+}
+
 body[data-story-route="interactive-mechanical-watch"] .exploded-watch__stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);

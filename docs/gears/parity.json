@@ -22,7 +22,7 @@
   {
     "moduleId": "angular-velocity-torque-and-ratio-scenes",
     "originalBehavior": "The published article opens with animated spinning and angular-velocity scenes, then continues through disc-contact, torque, and gear-ratio sections driven by sliders and synchronized canvas updates.",
-    "localStatus": "The local route keeps the opening motion scenes, the play-pause controls, the angular-velocity slider interactions, and the later ratio and torque demonstrations under the original published runtime.",
+    "localStatus": "The local route keeps the opening motion scenes, the play-pause controls, the angular-velocity slider interactions, and the later ratio and torque demonstrations under the original published runtime, with an additive ratio check beside the resize scene.",
     "sourceFiles": [
       "../../gears/index.html",
       "../../gears/js/gears.js"

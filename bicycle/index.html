@@ -216,6 +216,12 @@ I&rsquo;m using <span class="imperial_word">imperial</span><span class="metric_w
 <div class="drawer_container ratio_100" id="wheel_velocity1"></div>
 <div class="slider_force6" id="wheel_velocity1_sl0"></div>
 <div class="slider_force1" id="wheel_velocity1_sl1"></div>
+<nav class="wheel-velocity-guide" aria-label="Wheel motion presets">
+  <span>Try:</span>
+  <a href="#wheel_velocity1" onclick="wheel_velocity1_f0();return false;">sliding</a>
+  <a href="#wheel_velocity1" onclick="wheel_velocity1_f1();return false;">spinning</a>
+  <a href="#wheel_velocity1" onclick="wheel_velocity1_f2();return false;">rolling</a>
+</nav>
 <p>You may have noticed that in <a href="#" class="link_button" onclick="wheel_velocity1_f0();return false;">some positions</a> the wheel looks like it&rsquo;s mostly sliding, in <a href="#" class="link_button" onclick="wheel_velocity1_f1();return false;">others</a> it looks like it&rsquo;s mostly spinning. These two situations may look a little unusual, but you&rsquo;ve probably seen a vehicle&rsquo;s wheels sliding when braking, or spinning when accelerating too quickly. When we keep the two velocities at the <a href="#" class="link_button" onclick="wheel_velocity1_f2();return false;"> right</a> <a href="#" class="link_button" onclick="wheel_velocity1_f3();return false;"> proportions</a>, the wheel looks like it&rsquo;s rolling smoothly, and the paint marks it leaves are more or less as long as the ones on the tire.</p>
 <p>When the wheel rotates &ldquo;just right&rdquo;, its angular velocity denoted with a Greek letter omega <strong>ω</strong>, is tied to its linear velocity <strong>v</strong> with a simple equation involving the <em>effective</em> radius <strong>r</strong> of that wheel, which is slightly smaller than the outer radius of the tire as it compresses a little under load:</p>
 <div class="equation">

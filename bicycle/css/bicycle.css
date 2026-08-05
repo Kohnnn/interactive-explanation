@@ -3,6 +3,26 @@
     max-width: 480px;
 }
 
+.wheel-velocity-guide {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45em;
+    margin: 0.7em 0 1.2em;
+}
+
+.wheel-velocity-guide a {
+    border-bottom: 1px solid currentColor;
+    color: #2870C2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.wheel-velocity-guide a:focus-visible {
+    outline: 2px solid #2870C2;
+    outline-offset: 3px;
+}
+
 #gyro, #gyro2 {
     max-width: 400px;
 }

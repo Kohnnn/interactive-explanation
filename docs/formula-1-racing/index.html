@@ -66,10 +66,14 @@
         <ul class="plain-list">
           <li>The route now ships a rotatable overview car, animated airflow, front-wing wake, floor, rear-wing, chassis, power, tyre, braking, track, racecraft, setup, weather, pit, and lap scenes.</li>
           <li>The overview and aero chapters now use fuller pseudo-3D procedural geometry instead of flatter dashboard-style illustrations.</li>
-          <li>The Floor and Diffuser chapter exposes named live ride-height and pitch controls, one shared floor-health calculation, and visible suction, stability, and risk results.</li>
-          <li>Live floor health now changes track-weighted sector scores, the speed trace, per-sector deltas, and the final lap summary.</li>
+          <li>All 42 mounted controls now expose visible domain labels and matching accessible names while retaining the unmodified Bartosz-family controls.</li>
+          <li>The Floor and Diffuser chapter exposes live ride-height and pitch controls, one shared floor-health calculation, and visible suction, stability, and risk results.</li>
+          <li>Live floor health changes track-weighted sector scores, the speed trace, per-sector deltas, and the final lap summary.</li>
+          <li>The Tyres chapter carries compound, temperature, load, and stint condition into track-weighted sector scores, speed and braking traces, and tyre-attributed lap loss.</li>
+          <li>The Braking chapter now carries brake bias and energy recovery into a shared stability state, brake-demand-weighted sector loss, trace shape, and brake-attributed lap loss.</li>
+          <li>The final lap canvas now labels floor, tyre, and braking contributions beside the existing sector deltas and traces.</li>
           <li>The scenes are procedural and explanatory rather than regulation-grade or telemetry-grade simulations.</li>
-          <li>Track selection, setup presets, live floor posture, tyre choice, power maps, and weather influence the final lap-builder scene. Pit timing remains a separate race-strategy calculation.</li>
+          <li>Track selection, setup presets, live floor posture, live tyre condition, braking balance, power maps, and weather influence the final lap-builder scene. Pit timing remains a separate race-strategy calculation.</li>
         </ul>
       </article>
 
@@ -77,8 +81,9 @@
         <h2>Keyboard interaction</h2>
         <ul class="plain-list">
           <li>Track, weather, lap-plan, and every shared segmented control are semantic radio groups with Arrow-key selection and synchronized checked state.</li>
-          <li>Shared sliders expose names, values, and Arrow, Home, and End keyboard behavior while their existing callbacks continue to update captions and canvases.</li>
-          <li>The two floor controls add visible labels while preserving the unmodified Bartosz-family slider runtime and its keyboard contract.</li>
+          <li>All slider and segmented-control mounts use <code>data-control</code> as the shared source for their visible labels and accessible names.</li>
+          <li>Shared sliders expose values plus Arrow, Home, and End keyboard behavior while their existing callbacks continue to update captions and canvases.</li>
+          <li>The two floor controls retain richer directional labels while preserving the same unmodified Bartosz-family slider runtime and keyboard contract.</li>
           <li>Reduced-motion preference stops perpetual scene repainting while state changes still repaint the visible canvas.</li>
         </ul>
       </article>
@@ -86,9 +91,9 @@
       <article class="note-section">
         <h2>Progress and next plan</h2>
         <ul class="plain-list">
-          <li>Completed: named floor inputs, centralized floor health, track-weighted sector coupling, per-sector delta labels, floor contribution in the lap summary, and focused keyboard smoke coverage.</li>
-          <li>Model boundary: the live floor posture is a teaching input layered over the selected setup preset; it is not telemetry, a CFD solver, or a suspension simulation.</li>
-          <li>Next: label the remaining route controls before deepening another chapter, then connect tyre thermal state to sector behavior without adding another scene.</li>
+          <li>Completed: all 42 control names, centralized floor, tyre, and braking states, track-weighted lap coupling, per-sector and per-system contribution labels, independently attributed losses, and focused keyboard smoke coverage.</li>
+          <li>Model boundary: live floor, tyre, and braking states are teaching inputs layered over the setup; they are not telemetry, CFD, a suspension solver, a brake-by-wire simulation, or a full tyre-energy model.</li>
+          <li>Next: keep the single-lap model stable; add another contribution only when a chapter gains an independently attributable loss.</li>
           <li>Deferred: pit strategy stays outside the single-lap model unless the route adds a stint or race-time view.</li>
         </ul>
       </article>
@@ -100,8 +105,9 @@
           <li>Do not edit <code>formula-1-racing/js/base.js</code> unless the route intentionally forks the Bartosz-family engine.</li>
           <li>Preserve generated chapter behavior by keeping major sections anchored with top-level <code>h1</code> ids.</li>
           <li>Run <code>node tools/check-public-surface.mjs .</code> and <code>node tools/smoke-bundle.mjs . --route formula-1-racing</code> from the <code>interactive-explanation/</code> directory after edits.</li>
-          <li>The floor-causality pass completed JS syntax, parity JSON, metadata, public-surface, focused route smoke, and <code>engineering-longform</code> family smoke checks.</li>
-          <li>The all-route smoke run completed route baselines but exceeded the local ten-minute command window before its final smoke phase; the affected family run completed separately.</li>
+          <li>The control-label, causality, and lap-contribution passes completed JS syntax, parity JSON, metadata, public-surface, focused route smoke, and <code>engineering-longform</code> family smoke checks.</li>
+          <li>Responsive browser checks passed at 390px and 320px with 42 matching visible and accessible names, 50px slider hit areas, single-column floor controls, no horizontal overflow, measurable tyre and braking lap losses, and compact contribution labels that fit the 320px canvas.</li>
+          <li>The earlier all-route smoke run completed route baselines but exceeded the local ten-minute command window before its final smoke phase; focused route and affected-family runs completed separately.</li>
         </ul>
       </article>
     </section>

@@ -29,11 +29,12 @@
     ],
     "notes": [
       "The early scenes still rely on the original slider and drag runtime rather than a local rewrite.",
-      "The pinhole sections keep the published inversion, field-of-view, brightness, and sharpness interactions tied to the paired controls."
+      "The pinhole sections keep the published inversion, field-of-view, brightness, and sharpness interactions tied to the paired controls.",
+      "An additive ordered guide asks readers to isolate one opening camera control at a time before comparing subject and background sharpness tradeoffs."
     ],
     "evidence": [
       "Implementation planning treated one exposure slider scene, one early drag scene, and the pinhole dual-slider scene as smoke-critical.",
-      "Shared smoke coverage verifies the detector exposure scene redraws from slider input, the early scene responds to drag, and both pinhole sliders update the captured-image scene."
+      "Shared smoke coverage verifies the detector exposure scene redraws from slider input, the early scene responds to drag, both pinhole sliders update the captured-image scene, and the three-step opening guide remains ordered and labeled."
     ]
   },
   {

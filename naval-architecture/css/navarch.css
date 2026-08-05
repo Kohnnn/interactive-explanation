@@ -118,6 +118,23 @@ background-color:#ddd;
 margin: 0 auto;
 }
 
+.na-tank-states {
+    border-top: 1px solid #8ab8d0;
+    color: #244d66;
+    font-size: 0.95em;
+    margin: 1em 0 1.4em;
+    padding: 0.75em 0 0.1em 1.4em;
+}
+
+.na-tank-states li + li {
+    margin-top: 0.35em;
+}
+
+.na-tank-states a {
+    color: inherit;
+    font-weight: bold;
+}
+
 .na_water_bg_70 .drawer_container {
 margin: 0 auto;
 }

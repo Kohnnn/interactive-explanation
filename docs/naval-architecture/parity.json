@@ -39,7 +39,7 @@
   {
     "moduleId": "stability-free-surface-and-propulsion-sections",
     "originalBehavior": "The published article continues through hull stability, wind loading, cargo shifts, free-surface effects, waves, and propeller pitch or twist scenes with synchronized sliders, drag state, and animated water overlays.",
-    "localStatus": "The local route keeps the later stability, free-surface, wave, and propulsion scenes intact through the original article canvas and slider runtime.",
+    "localStatus": "The local route keeps the later stability, free-surface, wave, and propulsion scenes intact through the original article canvas and slider runtime, with additive links that compare fixed and shifting tank loads.",
     "sourceFiles": [
       "../../naval-architecture/index.html",
       "../../naval-architecture/js/navarch.js",

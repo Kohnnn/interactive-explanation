@@ -48,8 +48,8 @@
       "../../watch-mesh-explorer/css/explorer.css"
     ],
     "notes": [
-        "Each mode has an authored camera pose; free orbit is opt-in and Reset view restores the authored framing.",
-        "Reduced-motion preference pauses startup animation and makes position transitions immediate; settled paused scenes stop requesting frames."
+      "Each mode has an authored camera pose; free orbit is opt-in and Reset view restores the authored framing.",
+      "Reduced-motion preference pauses startup animation and makes position transitions immediate; settled paused scenes stop requesting frames."
     ],
     "evidence": [
       "Atlas mode exposes seven projected territory labels and sets data-mode=atlas on the WebGL canvas.",
@@ -67,11 +67,14 @@
     ],
     "notes": [
       "The archived mechanical-watch base.js and watch.js runtime are not loaded by this route.",
-      "Desktop keeps one bounded lesson surface; tablet and mobile stack the explanation, canvas, lesson rail, register, and inspector without horizontal overflow."
+      "Desktop keeps one bounded lesson surface; tablet and mobile stack the explanation, canvas, lesson rail, register, and inspector without horizontal overflow.",
+      "The lesson brief and part detail are aria-atomic; setLesson updates five sibling nodes and showPart replaces the detail subtree, so partial announcements were possible without it.",
+      "The subsystem filter container exposes role=group alongside its existing aria-label so its generated pressed buttons form a named group."
     ],
     "evidence": [
       "check-public-surface.mjs passes.",
-      "smoke-bundle.mjs --route watch-mesh-explorer passes desktop and mobile baselines."
+      "smoke-bundle.mjs --route watch-mesh-explorer passes desktop and mobile baselines.",
+      "Targeted smoke asserts aria-atomic=true on .lesson-brief and [data-part-detail], and role=group plus the accessible name on div.system-filter."
     ]
   }
 ]

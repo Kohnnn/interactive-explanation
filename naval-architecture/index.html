@@ -328,6 +328,10 @@ F = m &times; g
 </div>
 <div class="na_wind_slider" id="na_free_surface_sl0"></div>
 <div class="na_oil_slider" id="na_free_surface_sl1"></div>
+<ul class="na-tank-states" aria-label="Free-surface comparison">
+  <li><a href="#na_free_surface" onclick="free_surface_3();return false;">Empty</a> and <a href="#na_free_surface" onclick="free_surface_4();return false;">full</a> tanks keep their load fixed.</li>
+  <li><a href="#na_free_surface" onclick="free_surface_0();return false;">Partly filled</a> tanks let liquid shift toward the low side, amplifying heel.</li>
+</ul>
 <p>Once the ship <a href="#" class="link_button" onclick="free_surface_0();return false;">starts to tilt</a> the <span style="color:#341500"><strong>liquid</strong></span> inside will move to the side as well, which changes the center of gravity of the ship, which causes even further tilt. Even when the <a href="#" class="link_button" onclick="free_surface_1();return false;">wind stops</a> the ship won&rsquo;t return to the straight position. However, the <a href="#" class="link_button" onclick="free_surface_2();return false;">opposite wind</a> may be able to move the ship to the other extreme. It&rsquo;s worth pointing out that neither <a href="#" class="link_button" onclick="free_surface_3();return false;">empty</a> nor <a href="#" class="link_button" onclick="free_surface_4();return false;">full</a> tanks exhibit this problem.</p>
 <p>This <a href="https://en.wikipedia.org/wiki/Free_surface_effect"><em>free surface effect</em></a> is very dangerous for the ship&rsquo;s stability. Even ships that aren&rsquo;t purposely carrying liquid cargo still have to keep fuel and ballast water on board. Moreover, small, bulk materials like sand, gravel, and grains also exhibit a fluid-like behavior and will move around when the relative direction of gravity changes.
 One of the most straightforward solutions to this free surface problem is to separate the liquid into multiple compartments. This severely limits the movement of the liquid making the ship much more stable:</p>

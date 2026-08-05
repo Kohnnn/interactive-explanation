@@ -1103,6 +1103,11 @@
                 <p>The view combines the movement&rsquo;s canonical meshes with generated teeth, pinions, staffs, screws,
                   dial markers, springs, case, and crystal. Orbit or zoom the 3D view, or use the complete component list
                   as the primary keyboard and assistive-technology inspection path.</p>
+                <ol class="exploded-watch__firstrun" aria-label="Where to start with the exploded view">
+                  <li>Drag <strong>Explosion depth</strong> to 0 to reassemble the movement into one stack, then back up to separate the layers again.</li>
+                  <li>Pick a component from the list to read which system it belongs to and what it does.</li>
+                  <li>Leave the mechanism running at 8&times; and watch which separated layers actually move.</li>
+                </ol>
               </div>
               <div class="exploded-watch__stage" data-exploded-watch>
                 <div id="exploded-watch-diagram" class="exploded-watch__canvas" data-exploded-canvas aria-label="Interactive exploded mechanical watch component diagram"></div>
@@ -1119,7 +1124,7 @@
                   <input id="exploded-depth" data-exploded-depth type="range" min="0" max="100" value="74" aria-controls="exploded-watch-diagram" aria-valuetext="74 percent exploded">
                   <p class="exploded-watch__part-count">71 selectable components &middot; canonical and generated geometry</p>
                   <div class="exploded-watch__parts" data-exploded-parts role="group" aria-label="Watch components"></div>
-                  <article id="exploded-watch-detail" class="exploded-watch__detail" data-exploded-detail aria-live="polite"></article>
+                  <article id="exploded-watch-detail" class="exploded-watch__detail" data-exploded-detail aria-live="polite" aria-atomic="true"></article>
                 </div>
               </div>
               <p class="exploded-watch__caption">The target: a working movement separated into readable systems, then frozen at coordinates that can become real suspension points for resin casting.</p>

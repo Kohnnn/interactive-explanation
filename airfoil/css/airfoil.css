@@ -298,3 +298,22 @@ td {
 .slider_velocity .slider_knob {
     background: #64759a;
 }
+
+.airfoil_flow_prompt {
+    max-width: 500px;
+    margin: 1.5em auto;
+    padding: 0.8em 1em;
+    border: 1px solid #B7C89F;
+    border-radius: 0.5em;
+    background: #F5F9EF;
+}
+
+.airfoil_flow_prompt summary {
+    cursor: pointer;
+    color: #526D37;
+    font-weight: 600;
+}
+
+.airfoil_flow_prompt p {
+    margin: 0.7em 0 0;
+}

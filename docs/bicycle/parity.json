@@ -39,7 +39,7 @@
   {
     "moduleId": "wheel-slip-and-stability-sections",
     "originalBehavior": "The published article continues through longitudinal, lateral, slip-angle, cornering, and stability sections with linked bicycle geometry, wheel contact, and slider-driven state changes.",
-    "localStatus": "The local route keeps the wheel, slip, and stability scenes intact through the original article canvas and slider runtime.",
+    "localStatus": "The local route keeps the wheel, slip, and stability scenes intact through the original article canvas and slider runtime, with additive keyboard-focusable preset links for the wheel-velocity scene.",
     "sourceFiles": [
       "../../bicycle/index.html",
       "../../bicycle/js/bicycle.js",

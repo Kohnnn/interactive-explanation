@@ -169,6 +169,45 @@ function assert(condition, message) {
   }
 }
 
+async function assertElementContract(page, selector, contract, label) {
+  const elements = page.locator(selector);
+  assert(await elements.count() === 1, `${label} expected one ${selector}`);
+  const matches = await elements.evaluate((element, expected) => {
+    const text = (element.textContent || "").replace(/\s+/g, " ").trim();
+    return (!expected.tagName || element.tagName === expected.tagName) &&
+      Object.entries(expected.attributes || {}).every(([name, value]) => element.getAttribute(name) === value) &&
+      (expected.textFragments || []).every((fragment) => text.includes(fragment));
+  }, contract);
+  assert(matches, `${label} content contract failed`);
+}
+
+async function assertLinkSequence(page, selector, expected, label) {
+  const actual = await page.locator(selector).evaluateAll((links) => links.map((link) => ({
+    text: (link.textContent || "").replace(/\s+/g, " ").trim(),
+    href: link.getAttribute("href"),
+    onclick: link.getAttribute("onclick"),
+  })));
+  assert(JSON.stringify(actual) === JSON.stringify(expected), `${label} link contract failed`);
+
+  const dead = await page.locator(selector).evaluateAll((links) => links.reduce((problems, link) => {
+    const href = link.getAttribute("href") || "";
+    if (href.startsWith("#") && href.length > 1 && !document.getElementById(href.slice(1))) {
+      problems.push(`missing fragment target ${href}`);
+    }
+    const onclick = link.getAttribute("onclick");
+    if (onclick) {
+      const handler = onclick.match(/^\s*([A-Za-z_$][\w$]*)\s*\(/);
+      if (!handler) {
+        problems.push(`unparsable onclick "${onclick}"`);
+      } else if (typeof window[handler[1]] !== "function") {
+        problems.push(`onclick handler ${handler[1]} is not a function`);
+      }
+    }
+    return problems;
+  }, []));
+  assert(dead.length === 0, `${label} link targets unresolved: ${dead.join("; ")}`);
+}
+
 async function assertRoute(page, relativePath, selector) {
   const response = await page.goto(new URL(relativePath, baseUrl).href, {
     waitUntil: "domcontentloaded",
@@ -957,20 +996,47 @@ async function dragCanvasUntilChanged(page, canvasSelector, drags, label) {
   const box = await canvas.boundingBox();
   assert(box, `${label} did not expose ${canvasSelector}`);
 
+  const idleFirst = await canvas.evaluate((element) => element.toDataURL());
+  await page.waitForTimeout(150);
+  const idleSecond = await canvas.evaluate((element) => element.toDataURL());
+  const selfAnimating = idleFirst !== idleSecond;
+
+  if (selfAnimating) {
+    await page.evaluate(() => {
+      window.__smokeDragAccepted = 0;
+      document.addEventListener("mousedown", (event) => {
+        if (event.defaultPrevented) {
+          window.__smokeDragAccepted += 1;
+        }
+      }, false);
+    });
+  }
+
   for (const drag of drags) {
-    const before = await canvas.evaluate((element) => element.toDataURL());
+    const before = selfAnimating ? null : await canvas.evaluate((element) => element.toDataURL());
     await page.mouse.move(box.x + box.width * drag.from.x, box.y + box.height * drag.from.y);
     await page.mouse.down();
     await page.mouse.move(box.x + box.width * drag.to.x, box.y + box.height * drag.to.y, { steps: 12 });
     await page.mouse.up();
     await page.waitForTimeout(150);
+    if (selfAnimating) {
+      const accepted = await page.evaluate(() => window.__smokeDragAccepted);
+      if (accepted > 0) {
+        return;
+      }
+      continue;
+    }
     const after = await canvas.evaluate((element) => element.toDataURL());
     if (after !== before) {
       return;
     }
   }
 
-  throw new Error(`${label} did not update after drag attempts`);
+  throw new Error(
+    selfAnimating
+      ? `${label} never consumed a pointer grab on ${canvasSelector}`
+      : `${label} did not update after drag attempts`,
+  );
 }
 
 async function dragNativeTouch(page, selector, deltaX, deltaY, label) {
@@ -3019,6 +3085,10 @@ async function smokeAlphaCompositing(context) {
   }, null, { timeout: 30000 });
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/alpha_compositing.js"], "alpha-compositing");
+  await assertElementContract(page, ".alpha_observation", {
+    attributes: { role: "note" },
+    textFragments: ["Observation:", "fully covered scene still has no gaps", "uniform opacity"],
+  }, "alpha-compositing observation note");
 
   await dragCanvasUntilChanged(page, "#alpha_rose_glasses_container canvas", [
     { from: { x: 0.45, y: 0.45 }, to: { x: 0.7, y: 0.3 } },
@@ -3109,6 +3179,9 @@ async function smokeColorSpaces(context) {
   }, null, { timeout: 30000 });
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/color_spaces.js"], "color-spaces");
+  await assertElementContract(page, ".color_experiment_prompt", {
+    textFragments: ["Two-number test:", "Matching RGB numbers", "until the color space is known"],
+  }, "color-spaces experiment prompt");
 
   const earlyKnob = page.locator("#color_plain_linear_quadratic_slider_container .color_slider_knob").first();
   await earlyKnob.scrollIntoViewIfNeeded();
@@ -3206,6 +3279,16 @@ async function smokeSound(context) {
   await page.waitForTimeout(2000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/sound.js"], "sound");
+  await assertElementContract(page, "#hero_keyboard", {
+    attributes: {
+      role: "group",
+      "aria-label": "Three-note sound keyboard",
+      "aria-describedby": "hero_keyboard_cue",
+    },
+  }, "sound keyboard group");
+  await assertElementContract(page, "#hero_keyboard_cue", {
+    textFragments: ["Listening cue:", "W", "E", "R", "map left to right"],
+  }, "sound keyboard listening cue");
 
   const waveformButton = page.locator("#waveform1_keyboard .keyboard_button").first();
   const waveformCanvas = page.locator("#waveform1 canvas");
@@ -3344,6 +3427,12 @@ async function smokeCamerasAndLenses(context) {
   await page.waitForTimeout(2500);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/lenses.js"], "cameras-and-lenses");
+  await assertElementContract(page, ".lens_hero_guide", {
+    tagName: "OL",
+    attributes: { "aria-label": "Opening camera experiment" },
+    textFragments: ["Move one control at a time", "compare its sharpness with the background", "tradeoff"],
+  }, "cameras-and-lenses opening guide");
+  assert(await page.locator(".lens_hero_guide > li").count() === 3, "cameras-and-lenses opening guide did not keep three steps");
 
   const detectorCanvas = page.locator("#lens_detector canvas").first();
   await detectorCanvas.scrollIntoViewIfNeeded();
@@ -3517,6 +3606,10 @@ async function smokeLightsAndShadows(context) {
   await page.waitForTimeout(2500);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/light.js"], "lights-and-shadows");
+  await assertElementContract(page, ".lns_prediction", {
+    attributes: { role: "note" },
+    textFragments: ["Prediction:", "shadow edge sharper or softer", "effect of size from direction"],
+  }, "lights-and-shadows prediction note");
 
   const openingCanvas = page.locator("#lns_shadow2 canvas").first();
   await openingCanvas.scrollIntoViewIfNeeded();
@@ -3653,6 +3746,9 @@ async function smokeTesseract(context) {
   await page.waitForTimeout(2500);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/tesseract.js"], "tesseract");
+  await assertElementContract(page, ".tesseract-slice-cue", {
+    textFragments: ["Reading the slice:", "only the 3D viewpoint", "4D object intersects our world"],
+  }, "tesseract slice-reading cue");
 
   const openingCanvas = page.locator("#ts_3D_demo_slice_container canvas").first();
   await openingCanvas.scrollIntoViewIfNeeded();
@@ -3791,6 +3887,10 @@ async function smokeGears(context) {
   await page.waitForTimeout(2500);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/gears.js"], "gears");
+  await assertElementContract(page, ".gear-ratio-check", {
+    attributes: { role: "note" },
+    textFragments: ["Ratio check:", "half as many turns", "direction still reverses"],
+  }, "gears ratio note");
 
   const openingCanvas = page.locator("#gears_angular_velocity canvas").first();
   await openingCanvas.scrollIntoViewIfNeeded();
@@ -3995,6 +4095,9 @@ async function smokeGps(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/gps.js"], "gps");
+  await assertElementContract(page, ".gps-orbit-cue", {
+    textFragments: ["Orientation check:", "not the satellite timing", "turns the constellation into ranges"],
+  }, "gps orbit-orientation cue");
 
   await dragCanvasUntilChanged(
     page,
@@ -4060,6 +4163,9 @@ async function smokeEarthAndSun(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/earth_sun.js"], "earth-and-sun");
+  await assertElementContract(page, ".earth-sun-comparison-cue", {
+    textFragments: ["hold the date fixed while moving time", "reveals rotation", "seasonal shift in sunlight"],
+  }, "earth-and-sun comparison cue");
 
   await dragCanvasUntilChanged(
     page,
@@ -4140,6 +4246,15 @@ async function smokeBicycle(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/bicycle.js"], "bicycle");
+  await assertElementContract(page, ".wheel-velocity-guide", {
+    tagName: "NAV",
+    attributes: { "aria-label": "Wheel motion presets" },
+  }, "bicycle wheel-motion presets");
+  await assertLinkSequence(page, ".wheel-velocity-guide a", [
+    { text: "sliding", href: "#wheel_velocity1", onclick: "wheel_velocity1_f0();return false;" },
+    { text: "spinning", href: "#wheel_velocity1", onclick: "wheel_velocity1_f1();return false;" },
+    { text: "rolling", href: "#wheel_velocity1", onclick: "wheel_velocity1_f2();return false;" },
+  ], "bicycle wheel-motion presets");
 
   const heroPlayButton = page.locator("#hero .play_pause_button").first();
   await heroPlayButton.scrollIntoViewIfNeeded();
@@ -4228,6 +4343,10 @@ async function smokeAirfoil(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/airfoil.js"], "airfoil");
+  await assertElementContract(page, ".airfoil_flow_prompt[open]", {
+    tagName: "DETAILS",
+    textFragments: ["What to watch in the opening flow", "leading edge", "trailing edge"],
+  }, "airfoil opening-flow guide");
 
   const heroCanvas = page.locator("#hero_fvm canvas").first();
   await heroCanvas.scrollIntoViewIfNeeded();
@@ -4308,6 +4427,9 @@ async function smokeCurvesAndSurfaces(context) {
   await page.waitForTimeout(2500);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/curves.js"], "curves-and-surfaces");
+  await assertElementContract(page, ".curves-handle-cue", {
+    textFragments: ["white points are handles", "does not pass through them"],
+  }, "curves-and-surfaces handle cue");
 
   const controlCanvas = page.locator("#cs_control_points canvas").first();
   await controlCanvas.scrollIntoViewIfNeeded();
@@ -4403,6 +4525,16 @@ async function smokeInternalCombustionEngine(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/ice.js"], "internal-combustion-engine");
+  await assertElementContract(page, ".ice-cycle-map", {
+    tagName: "OL",
+    attributes: { "aria-label": "Four-stroke cycle" },
+  }, "internal-combustion-engine cycle map");
+  await assertLinkSequence(page, ".ice-cycle-map a", [
+    { text: "Intake", href: "#ice_cylinder_valve_stroke0", onclick: null },
+    { text: "Compression", href: "#ice_cylinder_valve_stroke1", onclick: null },
+    { text: "Power", href: "#ice_cylinder_valve_stroke2", onclick: null },
+    { text: "Exhaust", href: "#ice_cylinder_valve_stroke3", onclick: null },
+  ], "internal-combustion-engine cycle map");
 
   await dragCanvasUntilChanged(
     page,
@@ -4480,6 +4612,24 @@ async function smokeMechanicalWatch(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["../shared/mechanical-watch/js/base.js", "../shared/mechanical-watch/js/watch.js"], "mechanical-watch");
+  const escapementStatuses = await page.locator(".gear_train5_explainer").evaluateAll((elements) => elements.map((element) => ({
+    id: element.id,
+    role: element.getAttribute("role"),
+    live: element.getAttribute("aria-live"),
+    atomic: element.getAttribute("aria-atomic"),
+    text: (element.textContent || "").replace(/\s+/g, " ").trim(),
+  })));
+  assert(escapementStatuses.length === 6, "mechanical-watch escapement did not expose six phase statuses");
+  assert(
+    escapementStatuses.every((status, index) =>
+      status.id === `gear_train5_explainer${index + 1}` &&
+      status.role === "status" &&
+      status.live === "polite" &&
+      status.atomic === "true"),
+    "mechanical-watch escapement status semantics changed",
+  );
+  assert(escapementStatuses[0].text.includes("balance wheel is swinging back"), "mechanical-watch first escapement phase changed");
+  assert(escapementStatuses[5].text.includes("balance wheel continues its swing"), "mechanical-watch final escapement phase changed");
 
   await dragCanvasUntilChanged(
     page,
@@ -4660,6 +4810,20 @@ async function smokeInteractiveMechanicalWatch(context) {
   assert(explodedState.sourceRotationOrder === "ZYX", `${label} source transforms should preserve archived ZYX rotation order`);
   assert(explodedState.ariaHidden === "true", `${label} pointer canvas should remain hidden from assistive technology`);
   assert(explodedState.svgCount === 0, `${label} should replace the SVG after Three.js initialization`);
+
+  await assertElementContract(page, ".exploded-watch__firstrun", {
+    tagName: "OL",
+    attributes: { "aria-label": "Where to start with the exploded view" },
+    textFragments: ["Explosion depth", "read which system it belongs to", "8×"],
+  }, `${label} exploded-view first-run guide`);
+  assert(
+    await page.locator(".exploded-watch__firstrun > li").count() === 3,
+    `${label} exploded-view first-run guide expected three steps`,
+  );
+  assert(
+    await page.locator("[data-exploded-detail]").getAttribute("aria-atomic") === "true",
+    `${label} exploded-view detail region should announce atomically`,
+  );
 
   const webglCanvas = page.locator(canvasSelector);
   await webglCanvas.evaluate((canvas) => canvas.scrollIntoView({ block: "center" }));
@@ -4945,6 +5109,15 @@ async function smokeNavalArchitecture(context) {
   await page.waitForTimeout(3000);
 
   await assertLocalScriptSources(page, ["./js/base.js", "./js/navarch.js"], "naval-architecture");
+  await assertElementContract(page, ".na-tank-states", {
+    tagName: "UL",
+    attributes: { "aria-label": "Free-surface comparison" },
+  }, "naval-architecture tank-state comparison");
+  await assertLinkSequence(page, ".na-tank-states a", [
+    { text: "Empty", href: "#na_free_surface", onclick: "free_surface_3();return false;" },
+    { text: "full", href: "#na_free_surface", onclick: "free_surface_4();return false;" },
+    { text: "Partly filled", href: "#na_free_surface", onclick: "free_surface_0();return false;" },
+  ], "naval-architecture tank-state comparison");
 
   const pressureCanvas = page.locator("#na_syringe_pressure canvas").first();
   await pressureCanvas.scrollIntoViewIfNeeded();
@@ -7505,12 +7678,37 @@ async function smokePolygons(context) {
 async function smokeFormula1Racing(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
+  await page.addInitScript(() => {
+    const fillText = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (text, ...args) {
+      if (/^(?:Floor|Tyre|Brake|Braking) \+[\d.]+ s$/.test(String(text))) {
+        window.__formula1ContributionLabels = window.__formula1ContributionLabels || [];
+        window.__formula1ContributionLabels.push(String(text));
+      }
+      return fillText.call(this, text, ...args);
+    };
+  });
   await assertRoute(page, "formula-1-racing/", "#reference-footer");
   await assertEngineeringSandboxShell(page, "formula-1-racing route", {
     expectedFamily: "engineering-longform",
     expectedRoute: "formula-1-racing",
   });
   await page.waitForFunction(() => document.querySelectorAll(".drawer_container canvas").length >= 5, null, { timeout: 30000 });
+  const namedControls = await page.locator(".padding_wrapper [data-control]").evaluateAll((mounts) => {
+    return mounts.map((mount) => {
+      const control = mount.querySelector("[role='slider'], [role='radiogroup']");
+      return {
+        name: mount.getAttribute("data-control") || "",
+        ariaLabel: control?.getAttribute("aria-label") || "",
+        visibleLabel: mount.classList.contains("f1_labeled_control")
+          ? getComputedStyle(mount, "::before").content.replace(/^['\"]|['\"]$/g, "")
+          : mount.parentElement?.querySelector(".f1_control_label span")?.textContent?.trim() || "",
+      };
+    });
+  });
+  assert(namedControls.length === 42, `Formula 1 expected 42 named controls, found ${namedControls.length}`);
+  assert(namedControls.every((control) => control.name === control.ariaLabel), "Formula 1 control names did not match their aria labels");
+  assert(namedControls.every((control) => control.name === control.visibleLabel || control.name === "Floor pitch" && control.visibleLabel === "Pitch"), "Formula 1 did not expose every control name visibly");
 
   const track = page.locator("#f1_track_seg0 [role='radio']").first();
   await track.focus();
@@ -7543,8 +7741,50 @@ async function smokeFormula1Racing(context) {
   const floorLapCaption = await page.locator("#f1_lap_caption").textContent();
   const floorDelta = Number(floorLapCaption.match(/floor posture contributes \+([\d.]+) s/i)?.[1] || 0);
   assert(await floorRide.getAttribute("aria-valuenow") === "100", "Formula 1 ride-height control did not reach its keyboard maximum");
-  assert(/platform risk high/i.test(floorLapCaption), "Formula 1 lap summary did not expose the floor-platform risk");
+  assert(/platform risk (?:is )?high/i.test(floorLapCaption), "Formula 1 lap summary did not expose the floor-platform risk");
   assert(floorDelta > 0, "Formula 1 floor posture did not add measurable lap loss");
+
+  const tyreTemperature = page.getByRole("slider", { name: "Tyre temperature" });
+  const tyreCaptionBefore = await page.locator("#f1_tyre_caption").textContent();
+  const tyreLapCaptionBefore = await page.locator("#f1_lap_caption").textContent();
+  await tyreTemperature.focus();
+  await tyreTemperature.press("End");
+  await page.waitForFunction(({ tyreCaption, lapCaption }) => {
+    return document.querySelector("#f1_tyre_caption")?.textContent !== tyreCaption &&
+      document.querySelector("#f1_lap_caption")?.textContent !== lapCaption;
+  }, { tyreCaption: tyreCaptionBefore, lapCaption: tyreLapCaptionBefore }, { timeout: 5000 });
+  const tyreLapCaption = await page.locator("#f1_lap_caption").textContent();
+  const tyreDelta = Number(tyreLapCaption.match(/tyre condition contributes \+([\d.]+) s/i)?.[1] || 0);
+  assert(await tyreTemperature.getAttribute("aria-valuenow") === "100", "Formula 1 tyre-temperature control did not reach its keyboard maximum");
+  assert(/overheated/i.test(await page.locator("#f1_tyre_caption").textContent()), "Formula 1 tyre summary did not expose overheating");
+  assert(/tyre is overheated/i.test(tyreLapCaption), "Formula 1 lap summary did not expose tyre condition");
+  assert(tyreDelta > 0, "Formula 1 tyre condition did not add measurable lap loss");
+
+  const brakeRecovery = page.getByRole("slider", { name: "Energy recovery" });
+  const brakeCaptionBefore = await page.locator("#f1_brake_caption").textContent();
+  const brakeLapCaptionBefore = await page.locator("#f1_lap_caption").textContent();
+  await brakeRecovery.focus();
+  await brakeRecovery.press("End");
+  await page.waitForFunction(({ brakeCaption, lapCaption }) => {
+    return document.querySelector("#f1_brake_caption")?.textContent !== brakeCaption &&
+      document.querySelector("#f1_lap_caption")?.textContent !== lapCaption;
+  }, { brakeCaption: brakeCaptionBefore, lapCaption: brakeLapCaptionBefore }, { timeout: 5000 });
+  const brakeLapCaption = await page.locator("#f1_lap_caption").textContent();
+  const brakeDelta = Number(brakeLapCaption.match(/braking balance contributes \+([\d.]+) s/i)?.[1] || 0);
+  assert(await brakeRecovery.getAttribute("aria-valuenow") === "100", "Formula 1 recovery control did not reach its keyboard maximum");
+  assert(/braking now looks compromised/i.test(await page.locator("#f1_brake_caption").textContent()), "Formula 1 brake summary did not expose compromised braking");
+  assert(/braking is compromised/i.test(brakeLapCaption), "Formula 1 lap summary did not expose braking condition");
+  assert(brakeDelta > 0, "Formula 1 braking balance did not add measurable lap loss");
+
+  await page.evaluate(() => {
+    window.__formula1ContributionLabels = [];
+  });
+  await page.locator("#f1_lap").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => window.__formula1ContributionLabels?.length >= 3, null, { timeout: 5000 });
+  const contributionLabels = await page.evaluate(() => window.__formula1ContributionLabels.slice(-3));
+  assert(contributionLabels.includes(`Floor +${floorDelta.toFixed(2)} s`), "Formula 1 lap canvas did not label its floor contribution");
+  assert(contributionLabels.includes(`Tyre +${tyreDelta.toFixed(2)} s`), "Formula 1 lap canvas did not label its tyre contribution");
+  assert(contributionLabels.includes(`Braking +${brakeDelta.toFixed(2)} s`), "Formula 1 lap canvas did not label its braking contribution");
 
   const weather = page.locator("#f1_weather_seg0 [role='radio']").first();
   await weather.focus();
@@ -7599,6 +7839,20 @@ async function smokeWatchMeshExplorer(context) {
   assert(await page.locator("[data-viewport] canvas").getAttribute("data-mode") === "lesson", "Watch workbench did not start in guided mode");
   assert(await page.locator("[data-viewport] canvas").getAttribute("data-lesson-id") === "power", "Watch workbench did not start with the power lesson");
   assert(await page.locator("[data-part-list] button:not([hidden])").count() === 4, "Watch workbench power lesson did not isolate four register parts");
+
+  const workbenchLiveRegions = await page.evaluate(() => ({
+    lessonBrief: document.querySelector(".lesson-brief")?.getAttribute("aria-atomic") || "",
+    partDetail: document.querySelector("[data-part-detail]")?.getAttribute("aria-atomic") || "",
+    systemFilterRole: document.querySelector("div.system-filter[data-system-filter]")?.getAttribute("role") || "",
+    systemFilterLabel: document.querySelector("div.system-filter[data-system-filter]")?.getAttribute("aria-label") || "",
+  }));
+  assert(workbenchLiveRegions.lessonBrief === "true", "Watch workbench lesson brief should announce atomically");
+  assert(workbenchLiveRegions.partDetail === "true", "Watch workbench part detail should announce atomically");
+  assert(workbenchLiveRegions.systemFilterRole === "group", "Watch workbench subsystem filter should expose a group role");
+  assert(
+    workbenchLiveRegions.systemFilterLabel === "Filter by subsystem",
+    "Watch workbench subsystem filter lost its accessible name",
+  );
 
   await page.locator("[data-next-lesson]").click();
   await page.waitForFunction(() => document.querySelector("[data-viewport] canvas")?.dataset.lessonId === "gears");

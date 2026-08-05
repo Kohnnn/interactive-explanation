@@ -29,11 +29,12 @@
     ],
     "notes": [
       "The drag scenes still use the published canvas redraw logic and DOM IDs expected by the original script.",
-      "The alpha slider remains wired through the published shared slider helper rather than a local custom control."
+      "The alpha slider remains wired through the published shared slider helper rather than a local custom control.",
+      "An additive observation note explains that channel filtering can tint a fully covered scene without introducing gaps, preparing the contrast with uniform opacity."
     ],
     "evidence": [
       "Implementation planning treated one early drag scene, the triangle coverage scene, and the alpha slider chart as smoke-critical.",
-      "Shared smoke coverage drags an early scene, drags the geometry coverage scene, and verifies the alpha slider changes the active chart output."
+      "Shared smoke coverage drags an early scene, drags the geometry coverage scene, verifies the alpha slider changes the active chart output, and checks the observation note semantics and teaching distinction."
     ]
   },
   {

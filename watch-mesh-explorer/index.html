@@ -28,7 +28,7 @@
         <p class="eyebrow">Calibre study 2824–2 · ten connected lessons</p>
         <h1>Inside a<br>Mechanical Watch</h1>
       </div>
-      <article class="lesson-brief" aria-live="polite">
+      <article class="lesson-brief" aria-live="polite" aria-atomic="true">
         <p class="lesson-kicker" data-lesson-kicker>Lesson 01 · Power source</p>
         <h2 data-lesson-title>Store energy</h2>
         <p class="lesson-problem"><span>Problem</span><strong data-lesson-problem>How can a watch keep running after it leaves your hand?</strong></p>
@@ -111,9 +111,9 @@
           <span class="visually-hidden">Find a component</span>
           <input data-part-search type="search" placeholder="Find a component" autocomplete="off">
         </label>
-        <div class="system-filter" data-system-filter aria-label="Filter by subsystem"></div>
+        <div class="system-filter" data-system-filter role="group" aria-label="Filter by subsystem"></div>
         <div class="part-list" data-part-list></div>
-        <article class="part-detail" data-part-detail aria-live="polite"></article>
+        <article class="part-detail" data-part-detail aria-live="polite" aria-atomic="true"></article>
       </aside>
     </section>
 

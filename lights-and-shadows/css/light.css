@@ -249,4 +249,14 @@
 
 #lns_shadow2, #lns_rough_inv,#lns_lambert,#lns_lambert_inv, #lns_shadow,#lns_ambient_proj,#lns_ambient_occ, #lns_ambient_dots,#lns_ambient_hemi, #lns_bounce_steps, #lns_color,#lns_bounce, #lns_color_rgb, #lns_shadow_hemi, #lns_power_rays, #lns_power_surf,#lns_radiance,#lns_mirror_simple, #lns_rough, #lns_mirror, #lns_lambert_emitter,#lns_steradian_sphere,#lns_hemisphere_proj, #lns_hemisphere, #lns_area2, #lns_steradian2, #lns_cosine_flat, #lns_ray_flat, #lns_cosine_sphere, #lns_inv_square, #lns_area, #lns_steradian {
   cursor: move;
-} 
+}
+
+.lns_prediction {
+  max-width: 28em;
+  margin: 1.5em auto;
+  padding: 0.8em 1em;
+  border: 1px solid #6A8ECD;
+  border-radius: 0.5em;
+  background: #F1F6FF;
+  color: #1D3557;
+}

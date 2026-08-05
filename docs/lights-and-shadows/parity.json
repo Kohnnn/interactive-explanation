@@ -29,11 +29,12 @@
     ],
     "notes": [
       "The opening and early scenes still rely on the original Drawer runtime rather than a local rewrite.",
-      "The power and position sections keep the published slider-to-canvas synchronization for emitted power, distance, and angle."
+      "The power and position sections keep the published slider-to-canvas synchronization for emitted power, distance, and angle.",
+      "An additive prediction note asks readers to test shadow-edge sharpness and distinguish source-size effects from source direction."
     ],
     "evidence": [
       "Implementation planning treated one opening slider scene, one early drag scene, and one power or brightness scene as smoke-critical.",
-      "Shared smoke coverage verifies the opening scene redraws from slider input and drag interaction, and an early power scene updates from its published slider."
+      "Shared smoke coverage verifies the opening scene redraws from slider input and drag interaction, an early power scene updates from its published slider, and the prediction note retains its semantic role and size-versus-direction prompt."
     ]
   },
   {

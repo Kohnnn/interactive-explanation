@@ -470,6 +470,15 @@ body.color_dark {
 }
 
 
+.color_experiment_prompt {
+    max-width: 400px;
+    margin: -0.5em auto 2em;
+    padding: 0.75em 1em;
+    border: 1px solid #9FAFEB;
+    border-radius: 0.5em;
+    background: #F4F6FF;
+}
+
 @media only screen and (max-width: 360px) {
 
     .color_matcher_container {

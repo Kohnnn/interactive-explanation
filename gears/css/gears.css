@@ -2,6 +2,14 @@
     opacity: 0.75;
 }
 
+.gear-ratio-check {
+    border-left: 3px solid #2052BB;
+    color: #24436f;
+    font-size: 0.95em;
+    margin: 1.25em 0;
+    padding: 0.55em 0 0.55em 0.9em;
+}
+
 #gears_demo {
     max-width: 500px;
 }

@@ -57,8 +57,8 @@
   },
   {
     "moduleId": "formula-1-system-state-sync",
-    "originalBehavior": "Track, setup, floor posture, power, tyre, and weather decisions should connect back into a shared lap-time story rather than living as isolated widgets.",
-    "localStatus": "The route keeps a shared Formula 1 state model so track presets, setup sliders, live floor posture, tyre choice, power maps, and weather propagate into the lap-builder scene and chapter summaries.",
+    "originalBehavior": "Track, setup, floor posture, power, tyre, braking, and weather decisions should connect back into a shared lap-time story rather than living as isolated widgets.",
+    "localStatus": "The route keeps a shared Formula 1 state model so track presets, setup sliders, live floor posture, live tyre condition, braking balance, power maps, and weather propagate into the lap-builder scene and chapter summaries.",
     "sourceFiles": [
       "../../formula-1-racing/js/f1.js",
       "../../formula-1-racing/index.html"
@@ -71,6 +71,8 @@
     "evidence": [
       "Selecting a new track preset updates setup sliders, tyre compound, power mode, power bias, and lap plan together.",
       "Changing live floor ride height or pitch updates floor health, track-weighted sector scores, the speed trace, and the final lap caption.",
+      "Changing tyre compound, temperature, load, or stint progress updates tyre health, track-weighted sector scores, speed and braking traces, and the final lap caption.",
+      "Changing brake bias or energy recovery updates braking stability, brake-demand-weighted sector scores, speed and braking traces, and the final lap caption.",
       "Weather changes the lap model while pit state remains confined to the pit-strategy scene and caption."
     ]
   },
@@ -87,7 +89,7 @@
     "notes": [
       "Track-specific weights make floor posture matter most on high-speed circuits and sectors.",
       "The result is deliberately explanatory rather than telemetry-grade, CFD-derived, or suspension-simulated.",
-      "The next planned depth pass is explicit labeling for the remaining controls, followed by tyre thermal coupling."
+      "Tyre condition now has a separate attributed loss so floor and tyre explanations do not overwrite each other."
     ],
     "evidence": [
       "The floor scene and caption consume the same computed health state as the lap model.",
@@ -96,9 +98,67 @@
     ]
   },
   {
+    "moduleId": "tyre-to-lap-causality",
+    "originalBehavior": "The Tyres chapter should explain how compound, thermal state, load, and stint wear become lap performance rather than ending at a local tyre animation.",
+    "localStatus": "One computeTyreState result now drives the tyre scene, condition label, track-weighted sector loss, speed and braking traces, and tyre-attributed lap loss.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The bounded grip penalty activates below the model's usable grip threshold and is weighted by each circuit's sector demands.",
+      "The result is a teaching model rather than telemetry, a carcass-temperature solver, or a full tyre-energy simulation.",
+      "Pit timing remains outside this single-lap model because it describes race strategy rather than one lap."
+    ],
+    "evidence": [
+      "The tyre scene and lap model consume the same compound, temperature, load, stint, wear, grip, and condition state.",
+      "The final lap caption reports tyre-attributed loss independently from floor-attributed loss.",
+      "Focused smoke drives tyre temperature to its keyboard maximum and verifies overheating plus nonzero tyre-attributed lap loss."
+    ]
+  },
+  {
+    "moduleId": "braking-to-lap-causality",
+    "originalBehavior": "The Braking chapter should explain how bias and energy recovery alter stability and carry that consequence into the final lap rather than ending at a local load-transfer animation.",
+    "localStatus": "One computeBrakeState result now drives the braking scene, authority and stability labels, brake-demand-weighted sector loss, speed and braking traces, and brake-attributed lap loss.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html",
+      "../../formula-1-racing/js/f1.js",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "Sector weights derive from each circuit's existing brake-demand trace instead of adding another circuit-specific table.",
+      "Entry speed remains scene context; brake bias and energy recovery determine the attributed stability penalty.",
+      "The result is a teaching model rather than telemetry, a brake-by-wire controller, or a tyre-lock simulation."
+    ],
+    "evidence": [
+      "The braking scene, chapter caption, and lap model consume the same authority, rear-rotation, stability, penalty, and condition state.",
+      "The final lap caption reports brake-attributed loss independently from floor- and tyre-attributed losses.",
+      "Focused smoke drives energy recovery to its keyboard maximum and verifies compromised braking plus nonzero brake-attributed lap loss."
+    ]
+  },
+  {
+    "moduleId": "lap-contribution-labels",
+    "originalBehavior": "The final lap canvas should make independently attributed floor, tyre, and braking losses visible without forcing readers to infer them from trace shape or prose alone.",
+    "localStatus": "The existing lap canvas now renders one compact contribution row for live floor posture, tyre condition, and braking balance while retaining sector deltas, total delta, and the three traces.",
+    "sourceFiles": [
+      "../../formula-1-racing/js/f1.js",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The row reuses computeLapState outputs and does not introduce another scene, state model, or attribution calculation.",
+      "The mobile canvas uses shorter labels and tighter type while preserving all three values at 320px."
+    ],
+    "evidence": [
+      "Floor, tyre, and braking labels repaint with the same values exposed by the final lap caption.",
+      "Focused smoke captures canvas text and verifies all three labels against the independently computed caption losses.",
+      "A 320px browser check verifies no page overflow and enough canvas width for each compact label."
+    ]
+  },
+  {
     "moduleId": "semantic-keyboard-controls",
     "originalBehavior": "Formula 1 controls change procedural scene state and linked captions through pointer and touch interaction.",
-    "localStatus": "Shared segmented controls are radio groups with Arrow-key selection, while shared sliders expose slider value semantics and Arrow, Home, and End behavior.",
+    "localStatus": "All 42 mounted controls expose visible domain labels and matching accessible names; segmented controls retain Arrow-key selection while sliders retain value semantics plus Arrow, Home, and End behavior.",
     "sourceFiles": [
       "../../formula-1-racing/js/base.js",
       "../../formula-1-racing/js/f1.js",
@@ -106,13 +166,13 @@
       "../../formula-1-racing/css/f1.css"
     ],
     "notes": [
-      "Track, weather, lap-plan, airflow speed, live floor ride height, and floor pitch have stable data-control selectors.",
-      "The floor controls also provide visible labels without modifying the shared base runtime.",
+      "Every mounted control uses data-control as the shared source for its visible domain label and accessible name.",
+      "The two floor controls retain richer directional labels without modifying the shared base runtime.",
       "Reduced-motion preference stops perpetual repainting but repaints scenes after state changes."
     ],
     "evidence": [
-      "Focused smoke uses keyboard input on track, weather, lap-plan, airflow, and live floor controls and verifies aria state plus linked captions.",
-      "The floor keyboard check proves the same input updates both its local explanation and the final lap result."
+      "Focused smoke verifies all 42 data-control names against mounted aria labels and rendered visible labels.",
+      "Focused smoke uses keyboard input on track, weather, lap-plan, airflow, live floor, tyre-temperature, and energy-recovery controls and verifies linked captions and lap consequences."
     ]
   }
 ]

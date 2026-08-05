@@ -22,7 +22,7 @@
   {
     "moduleId": "opening-crank-and-assembly-scenes",
     "originalBehavior": "The published article opens with a draggable assembled engine view, then steps through crank, cannon, and simple assembly examples with linked sliders and animated cross-sections.",
-    "localStatus": "The local route keeps the opening drag scene and the early crank and cannon demonstrations under the original published runtime.",
+    "localStatus": "The local route keeps the opening drag scene and the early crank and cannon demonstrations under the original published runtime, with an additive linked recap of the four-stroke cycle.",
     "sourceFiles": [
       "../../internal-combustion-engine/index.html",
       "../../internal-combustion-engine/js/ice.js"

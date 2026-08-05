@@ -23,7 +23,7 @@
   {
     "moduleId": "opening-movement-and-power-scenes",
     "originalBehavior": "The published article opens with a draggable assembled movement view, then steps through coil spring, torsion spring, mainspring, winding, and barrel scenes with linked sliders and animated cross-sections.",
-    "localStatus": "The local route keeps the opening movement scene and the early spring and winding demonstrations under the original published runtime.",
+    "localStatus": "The local route keeps the opening movement scene and the early spring and winding demonstrations under the original published runtime; the later escapement scrubber now exposes its visible state through polite live status.",
     "sourceFiles": [
       "../../mechanical-watch/index.html",
       "../../shared/mechanical-watch/js/watch.js"

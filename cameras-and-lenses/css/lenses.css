@@ -181,3 +181,16 @@ color: #dfb870;
   max-width: 350px;
 }
 
+.lens_hero_guide {
+  max-width: 38em;
+  margin: 0 auto 2em;
+  padding: 0.9em 1.2em 0.9em 2.4em;
+  border: 1px solid #D8C49A;
+  border-radius: 0.5em;
+  background: #FFFBEF;
+}
+
+.lens_hero_guide li + li {
+  margin-top: 0.45em;
+}
+

@@ -29,11 +29,12 @@
     ],
     "notes": [
       "The smoke contract treats one opening slider path and one dragable particle scene as required parity behavior.",
-      "The route preserves the published progression from flow visualization into particle-level reasoning instead of flattening those sections into static diagrams."
+      "The route preserves the published progression from flow visualization into particle-level reasoning instead of flattening those sections into static diagrams.",
+      "An additive open guide asks readers to track the leading-edge flow split and trailing-edge departure before inferring lift."
     ],
     "evidence": [
       "Post-bicycle rollout planning called for one flow-speed or angle-control path, one drag-based viewing scene, and responsive-shell validation.",
-      "Shared smoke coverage verifies the opening hero scene updates from slider input and a particle scene responds to drag."
+      "Shared smoke coverage verifies the opening hero scene updates from slider input, a particle scene responds to drag, and the opening-flow guide remains expanded with its intended observation sequence."
     ]
   },
   {
