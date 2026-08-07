@@ -61,6 +61,12 @@ let cubic_patch_curvature_circle_principal;
         container.style.width = "0";
         container.style.position = "relative";
         container.classList.add("slider_container");
+        container.setAttribute("role", "slider");
+        container.setAttribute("aria-label", (container_div.getAttribute("data-control") || container_div.id || "Control").replace(/[-_]/g, " "));
+        container.setAttribute("aria-orientation", "vertical");
+        container.setAttribute("aria-valuemin", "0");
+        container.setAttribute("aria-valuemax", "100");
+        container.tabIndex = 0;
 
         var left_gutter = document.createElement("div");
         left_gutter.classList.add("slider_left_gutter");
@@ -106,6 +112,9 @@ let cubic_patch_curvature_circle_principal;
         function layout() {
             var height = container.getBoundingClientRect().height;
 
+            container.setAttribute("aria-valuenow", String(Math.round(percentage * 100)));
+            container.setAttribute("aria-valuetext", Math.round(percentage * 100) + "%");
+
             left_gutter.style.height = height * percentage + "px";
             left_gutter.style.top = height * (1 - percentage) + "px";
 
@@ -116,6 +125,22 @@ let cubic_patch_curvature_circle_principal;
         }
 
         var selection_offset;
+
+        container.onkeydown = function (e) {
+            var next = percentage;
+            if (e.key === "ArrowDown" || e.key === "ArrowLeft") next -= 0.01;
+            else if (e.key === "ArrowUp" || e.key === "ArrowRight") next += 0.01;
+            else if (e.key === "Home") next = 0;
+            else if (e.key === "End") next = 1;
+            else return;
+            e.preventDefault();
+            next = Math.max(0, Math.min(1, next));
+            if (percentage != next) {
+                percentage = next;
+                layout();
+                callback(next);
+            }
+        };
 
         var move_handler = genericTouchHandler(mouse_move);
 

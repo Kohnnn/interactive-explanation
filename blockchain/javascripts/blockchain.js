@@ -21,13 +21,31 @@ function sha256(block, chain) {
   return CryptoJS.SHA256(getText(block, chain));
 }
 
+function stateLabel(block, chain) {
+  var well = $('#block'+block+'chain'+chain+'well');
+  if (!well.length) {
+    return $();
+  }
+  var label = well.children('.block-state');
+  if (!label.length) {
+    label = $('<p class="block-state"></p>').prependTo(well);
+  }
+  return label;
+}
+
 function updateState(block, chain) {
   // set the well background red or green for this block
-  if ($('#block'+block+'chain'+chain+'hash').val().substr(0, difficulty) === pattern) {
+  var valid = $('#block'+block+'chain'+chain+'hash').val().substr(0, difficulty) === pattern;
+  if (valid) {
     $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
   }
   else {
     $('#block'+block+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
+  }
+  var label = stateLabel(block, chain);
+  var text = 'Block ' + block + ': ' + (valid ? 'valid, hash starts with ' + difficulty + ' zeros' : 'invalid, hash does not start with ' + difficulty + ' zeros');
+  if (label.length && label.text() !== text) {
+    label.text(text);
   }
 }
 

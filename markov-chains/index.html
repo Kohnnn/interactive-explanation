@@ -73,8 +73,8 @@
     </section>
 
       <p id="two-state-demo" data-story-chapter="Watch a two-state chain" ng-controller="NoControlsCtrl">
-        <input type="range" ng-model="speedRange" min="1" max="20" step="1" class="speedRange">
-        <label>speed</label>
+        <input type="range" ng-model="speedRange" min="1" max="20" step="1" class="speedRange" id="two-state-speed">
+        <label for="two-state-speed">speed</label>
         <st-diagram states="states" transition-matrix="transitionMatrix" style="width:100%;height:230px;display:block;" center="diagramCenter" duration="duration"></st-diagram>
       </p><p>With two states (A and B) in our state space, there are 4 possible transitions (not 2, because a state can transition back into itself). If we&#39;re at &#39;A&#39; we could transition to &#39;B&#39; or stay at &#39;A&#39;. If we&#39;re at &#39;B&#39; we could transition to &#39;A&#39; or stay at &#39;B&#39;. In this two state diagram, the probability of transitioning from any state to any other state is 0.5.</p>
 <p>Of course, real modelers don&#39;t always draw out Markov chain diagrams. Instead they use a &quot;transition matrix&quot; to tally the transition probabilities. Every state in the state space is included once as a row and again as a column, and each cell in the matrix tells you the probability of transitioning from its row&#39;s state to its column&#39;s state. So, in the matrix, the cells do the same job that the arrows do in the diagram.</p>
@@ -82,8 +82,8 @@
       <div id="transition-matrix" data-story-chapter="Tune the transition matrix" ng-controller="TransitionMatrixCtrl" style="position: relative; height: 230px;margin-bottom:0px">
         <div class="controls" style="position: absolute; top: 0">
           <input class="speedRange" type="range" ng-model="speedRange"
-            min="1" max="20" step="1">
-          <label> speed </label>
+            min="1" max="20" step="1" id="transition-matrix-speed">
+          <label for="transition-matrix-speed"> speed </label>
         </div>
         <st-diagram center="diagramCenter" states="states"
           transition-matrix="transitionMatrix" duration="duration"
@@ -107,6 +107,7 @@
                 </div>
                 <div class="control">
                   <input type="range" min="0" max="1" step="0.01"
+                    aria-label="Probability of staying at A, P(A given A)"
                     ng-change="onChangeMatrixValue(0, 0)"
                     ng-model="transitionMatrix[0][0]">
                 </div>
@@ -118,6 +119,7 @@
                 </div>
                 <div class="control">
                   <input type="range" min="0" max="1" step="0.01"
+                    aria-label="Probability of moving from A to B, P(B given A)"
                     ng-change="onChangeMatrixValue(0, 1)"
                     ng-model="transitionMatrix[0][1]">
                 </div>
@@ -137,6 +139,7 @@
                 </div>
                 <div class="control">
                   <input type="range" min="0" max="1" step="0.01"
+                    aria-label="Probability of moving from B to A, P(A given B)"
                     ng-change="onChangeMatrixValue(1, 0)"
                     ng-model="transitionMatrix[1][0]">
                 </div>
@@ -148,6 +151,7 @@
                 </div>
                 <div class="control">
                   <input type="range" min="0" max="1" step="0.01"
+                    aria-label="Probability of staying at B, P(B given B)"
                     ng-change="onChangeMatrixValue(1, 1)"
                     ng-model="transitionMatrix[1][1]">
                 </div>
@@ -170,8 +174,8 @@
       <div id="sticky-weather" data-story-chapter="Model sticky weather" ng-controller="RandomSequenceMarkovCtrl" style="width:100%; height: 230px;position: relative">
         <div class="controls" style="position: absolute; top: 0">
           <input class="speedRange" type="range" ng-model="speedRange"
-            min="1" max="10" step="1">
-          <label> speed </label>
+            min="1" max="10" step="1" id="sticky-weather-speed">
+          <label for="sticky-weather-speed"> speed </label>
         </div>
         <st-diagram center="diagramCenter" states="states"
           transition-matrix="transitionMatrix" duration="duration"

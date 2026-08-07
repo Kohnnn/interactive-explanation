@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="../shared/mechanical-watch/js/base.js"></script>
+  <script defer src="../shared/canvas-figure-buttons.js"></script>
   <script defer src="../shared/mechanical-watch/js/watch.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
@@ -84,13 +85,10 @@
               each one. The world of watchmaking is jargon-heavy, so many of the components may have unfamiliar names,
               but you shouldn&rsquo;t feel pressured to remember them – the names and parts will be <span
                 class="color_red"><strong>color-coded</strong></span> for easy reference.</p>
-            <p>In a functioning watch many parts are in constant motion. By default all animations in this article are
-              <span id="global_animate_on">enabled, but if you find them distracting, or if you want to save power, you
-                can <a href="#" class="link_button" onclick="global_animate(false);return false;">globally pause</a> all
-                the following demonstrations.</span><span id="global_animate_off" class="hidden">disabled, but if you
-                prefer to have things moving as you read you can <a href="#" class="link_button"
-                  onclick="global_animate(true);return false;">globally unpause</a> them and have animations
-                running.</span>
+            <p>In a functioning watch many parts are in constant motion. Animations in this article are
+              <span id="global_animate_on">enabled</span><span id="global_animate_off" class="hidden">disabled</span>.
+              <button id="global-animation-toggle" type="button" class="link_button" aria-pressed="false">Pause all
+                animations</button> if you find them distracting or want to save power.
             </p>
             <p>While the entire watch movement has many parts, the timekeeping system, which forms the core function of
               any watch, consists of just seven major elements which we can lay out in a straight line:</p>
@@ -236,8 +234,8 @@
             <div class="drawer_container ratio_50" id="gears_base2"></div>
             <div id="gears_base2_seg0"></div>
             <p>These gears are intended to work with each other so the ratio of teeth is equivalent to the ratio of the
-              gear radii. When the <span class="color_red"><strong>driving gear</strong></span> has <a href="#"
-                class="link_button" onclick="gears_base2_f0();return false;">more teeth</a> than the <span
+               gear radii. When the <span class="color_red"><strong>driving gear</strong></span> has <button type="button"
+                 class="link_button" onclick="gears_base2_f0();">more teeth</button> than the <span
                 class="color_yellow"><strong>driven gear</strong></span>, the <span class="color_yellow"><strong>driven
                   gear</strong></span> makes more rotations than the <span class="color_red"><strong>driving
                   gear</strong></span>. We can use this behavior to make the second hand of a watch rotate many times on
@@ -364,7 +362,7 @@
               forth at a fairly high frequency:</p>
             <div class="drawer_container ratio_100" id="balance_wheel"></div>
             <div id="balance_wheel_sl0" class="slider_violet"></div>
-            <p>At the <a href="#" class="link_button" onclick="balance_wheel_f0();return false;">bottom side</a> of the
+            <p>At the <button type="button" class="link_button" onclick="balance_wheel_f0();">bottom side</button> of the
               balance wheel you&rsquo;ll find another pinkish transparent jewel called <span
                 class="color_jewel"><strong>jewel roller</strong></span>. While small, this part is very important –
               this <span class="color_jewel"><strong>jewel</strong></span> hits the other end of the <span

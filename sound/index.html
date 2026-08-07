@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <script defer src="./js/base.js"></script>
+  <script defer src="../shared/canvas-figure-buttons.js"></script>
   <script defer src="./js/sound.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
@@ -204,7 +205,7 @@
 <p>More importantly, this <a href="#" class="link_button" onclick="waveform_addition4_f0();return false;">square pattern</a> that repeats once per second contains in it many sine waves of much higher frequencies. This explains why we were able to hear a plate jumping back and forth once per second – while we can&rsquo;t hear many of those lower frequencies, we <em>can</em> hear the higher pure tones. A <a href="#" class="link_button" onclick="waveform_addition4_f1();return false;">sine wave at 1Hz frequency</a> contains only a 1Hz signal that we <em>can&rsquo;t</em> hear.</p>
 <p>Let&rsquo;s look at the frequency spectrum of the things in your environment. In the demonstration below, you can press the button to start using your microphone. I&rsquo;ll then draw a plot of different frequencies and their amplitudes as heard by the device:</p>
 <div class="drawer_container ratio_40" id="analyser"></div>
-<button id="analyser_button"></button>
+<button id="analyser_button" aria-label="Record from microphone" aria-pressed="false"></button>
 <p>I recommend whistling, or singing <em>&ldquo;aaaaaa&rdquo;</em> using lower and higher voice to see different frequencies appear. If you have any musical instruments handy or applications that can recreate their sounds, the resulting diagrams will in many cases also show interesting distributions. More complicated sounds like speech or music will rapidly change their shapes, which reflects their dynamic nature.</p>
 <p>When singing or playing your simple notes into the microphone you may have noticed repeating patterns of frequencies – a certain base frequency gets a strong sibling at double, triple, and higher multiples of that initial frequency. These repeating patterns can happen for different reasons, and in the next section I&rsquo;ll explain how they&rsquo;re created by some of the simplest vibrating objects.</p>
 <h1 id="masses-and-springs">Masses and Springs<a href="#masses-and-springs" class="hanchor" aria-label="Anchor"><img src="./images/anchor.png" width="16px" height="8px" alt=""/></a> </h1>

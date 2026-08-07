@@ -245,7 +245,7 @@
 
   <main class="container content-container story-lab-main">
     <section class="story-callout zkp-status-panel" aria-label="Proof status">
-      <div class="zkp-status-grid">
+      <div class="zkp-status-grid" role="status" aria-atomic="true">
         <div class="zkp-status-card">
           <span class="story-callout__label">Rounds tested</span>
           <strong id="zkp-round-count">0</strong>
@@ -259,7 +259,7 @@
           <strong id="zkp-selection-status">No states selected</strong>
         </div>
       </div>
-      <p class="story-shell-caption" id="zkp-status-message">
+      <p class="story-shell-caption" id="zkp-status-message" role="status">
         The partition starts hidden. Reveal it once, then hide it again before running local challenge rounds.
       </p>
       <p class="story-shell-caption zkp-status-caption">

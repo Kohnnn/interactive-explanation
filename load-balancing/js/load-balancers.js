@@ -208,6 +208,7 @@ class Simulation extends Application {
                 <option value="random">Random</option>
             `;
             algorithmSelector.value = algorithm;
+            algorithmSelector.setAttribute('aria-label', algorithmSelectorLabel.innerText);
             algorithmSelectorContainer.appendChild(algorithmSelector);
             algorithmSelectorContainer.appendChild(algorithmSelectorLabel);
             algorithmSelector.addEventListener('change', (e) => {
@@ -226,6 +227,7 @@ class Simulation extends Application {
             rpsSlider.max = 40;
             rpsSlider.value = Math.min(rps, parseInt(rpsSlider.max));
             rps = parseInt(rpsSlider.value);
+            rpsSlider.setAttribute('aria-label', rpsSliderLabel.innerText);
             rpsSliderContainer.appendChild(rpsSlider);
             rpsSliderContainer.appendChild(rpsSliderLabel);
             rpsSlider.addEventListener('input', (e) => {
@@ -244,6 +246,7 @@ class Simulation extends Application {
             rpsVarianceSlider.max = 100;
             rpsVarianceSlider.value = Math.min(rpsVariance * 100, parseInt(rpsVarianceSlider.max));
             rpsVariance = parseInt(rpsVarianceSlider.value) / 100;
+            rpsVarianceSlider.setAttribute('aria-label', rpsVarianceSliderLabel.innerText);
             rpsVarianceSliderContainer.appendChild(rpsVarianceSlider);
             rpsVarianceSliderContainer.appendChild(rpsVarianceSliderLabel);
             rpsVarianceSlider.addEventListener('input', (e) => {
@@ -261,6 +264,7 @@ class Simulation extends Application {
             requestVarianceSlider.min = requestCost.min;
             requestVarianceSlider.max = requestCostMax;
             requestVarianceSlider.value = requestCost.max;
+            requestVarianceSlider.setAttribute('aria-label', requestVarianceSliderLabel.innerText);
             requestVarianceSliderContainer.appendChild(requestVarianceSlider);
             requestVarianceSliderContainer.appendChild(requestVarianceSliderLabel);
             requestVarianceSlider.addEventListener('input', (e) => {
@@ -281,6 +285,7 @@ class Simulation extends Application {
             serverPowerSlider.min = serverPower.min;
             serverPowerSlider.max = serverPowerMax;
             serverPowerSlider.value = serverPower.min;
+            serverPowerSlider.setAttribute('aria-label', serverPowerSliderLabel.innerText);
             serverPowerSliderContainer.appendChild(serverPowerSlider);
             serverPowerSliderContainer.appendChild(serverPowerSliderLabel);
             serverPowerSlider.addEventListener('input', (e) => {
@@ -303,6 +308,7 @@ class Simulation extends Application {
             numServersSlider.max = Math.floor(this.screen.width / serverSize);
             numServersSlider.value = Math.min(parseInt(numServersSlider.max), numServers);
             numServers = parseInt(numServersSlider.value);
+            numServersSlider.setAttribute('aria-label', numServersSliderLabel.innerText);
             numServersSliderContainer.appendChild(numServersSlider);
             numServersSliderContainer.appendChild(numServersSliderLabel);
             numServersSlider.addEventListener('input', (e) => {

@@ -413,6 +413,13 @@ var platforms = [
 	"reddit",
 	"email"
 ];
+var share_labels = {
+	facebook: "Share on Facebook",
+	twitter: "Share on Twitter",
+	tumblr: "Share on Tumblr",
+	reddit: "Share on Reddit",
+	email: "Share by email"
+};
 
 platforms.forEach(function(platform){
 
@@ -420,11 +427,13 @@ platforms.forEach(function(platform){
 	var link = document.createElement("a");
 	link.href = hrefs[platform];
 	link.target = "_blank";
+	link.setAttribute("aria-label", share_labels[platform]);
 	$("#share_buttons").appendChild(link);
 	
 	// Image
 	var img = new Image();
 	img.src = "./sharing/"+platform+".svg";
+	img.alt = "";
 	link.appendChild(img);
 
 });

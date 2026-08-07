@@ -81,9 +81,9 @@
         <p>Here's a simple visualization to help conceptualize this type of growth. It starts off <b>{{opts.rateLabel}}</b> with every step. Adjust the rate to see {{opts.otherRateLabels.join(' and ')}}.</p>
         <button ng-click="$emit('restart')" class="btn btn-primary">Restart</button>
         <label>rate:</label>
-        <select ng-model="opts.rate" ng-options="num as 'x' + num for num in [2,3,4]"></select>
-        <input type="range" ng-model="opts.steps" min="1" max="8"><span>steps: {{opts.steps}}</span>
-        <input type="range" ng-model="opts.speed" min="1" step="1" max="10"><span>speed: {{opts.speed}}</span><br><br>
+        <select aria-label="Growth rate multiplier" ng-model="opts.rate" ng-options="num as 'x' + num for num in [2,3,4]"></select>
+        <input type="range" aria-label="Number of steps" ng-model="opts.steps" min="1" max="8"><span>steps: {{opts.steps}}</span>
+        <input type="range" aria-label="Animation speed" ng-model="opts.speed" min="1" step="1" max="10"><span>speed: {{opts.speed}}</span><br><br>
         <simple-growth></simple-growth>
       </div>
     </section>
@@ -93,9 +93,9 @@
       <div ng-controller="LinearGrowthDemoCtrl">
         <button ng-click="$emit('reset')" class="btn btn-primary">restart</button>
         <label>rate:</label>
-        <select ng-model="opts.rate" ng-options="num as '+' + num for num in [1,2,3,4,5]"></select>
-        <input type="range" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
-        <input type="range" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
+        <select aria-label="Linear growth rate, amount added each step" ng-model="opts.rate" ng-options="num as '+' + num for num in [1,2,3,4,5]"></select>
+        <input type="range" aria-label="Number of steps, linear growth" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
+        <input type="range" aria-label="Animation speed, linear growth" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
         <div class="viz-scroll">
           <growth-demo growth-type="linear"></growth-demo>
         </div>
@@ -107,9 +107,9 @@
       <div ng-controller="ExponentialGrowthDemoCtrl">
         <button ng-click="$emit('reset')" class="btn btn-primary">restart</button>
         <label>rate:</label>
-        <select ng-model="opts.rate" ng-options="num as 'x' + num for num in [2,3,4]"></select>
-        <input type="range" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
-        <input type="range" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
+        <select aria-label="Exponential growth rate multiplier" ng-model="opts.rate" ng-options="num as 'x' + num for num in [2,3,4]"></select>
+        <input type="range" aria-label="Number of steps, exponential growth" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
+        <input type="range" aria-label="Animation speed, exponential growth" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
         <div class="viz-scroll">
           <growth-demo growth-type="exponential"></growth-demo>
         </div>
@@ -120,7 +120,7 @@
       <p>The following is a naive model of the spread of a virus in a population. The number of infected individuals grows exponentially up until the virus runs out of people to infect.</p>
       <div ng-controller="ViralDemoCtrl">
         <button ng-click="$emit('restart')" class="btn btn-primary">restart</button>
-        <input type="range" ng-model="opts.speed" min="1" step="1" max="10"><span>speed: {{opts.speed}}</span>
+        <input type="range" aria-label="Animation speed, virus model" ng-model="opts.speed" min="1" step="1" max="10"><span>speed: {{opts.speed}}</span>
         <div class="viz-scroll">
           <virus-demo></virus-demo>
         </div>

@@ -220,12 +220,14 @@ decimal numbers and hexadecimal numbers.</p>
   id="hexadecimal-demo"
   style="display: flex; width: 100%; flex-direction: column;"
 >
-  <div style="width: 100%; font-size: 2.5rem; display: flex; justify-content: center;">
+  <div style="width: 100%; font-size: 2.5rem; display: flex; justify-content: center;" role="status" aria-atomic="true">
     <code id="decimal" style="min-width: 4rem; text-align: right">0</code>
-    <code style="min-width: 5rem; text-align: center">==</code>
+    <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">in hexadecimal is</span>
+    <code style="min-width: 5rem; text-align: center" aria-hidden="true">==</code>
     <code id="hexadecimal" style="min-width: 7rem; text-align: left">0x0</code>
   </div>
   <div>
+    <label for="hexadecimal-slider">Decimal value to convert to hexadecimal</label>
     <input
       id="hexadecimal-slider"
       type="range"

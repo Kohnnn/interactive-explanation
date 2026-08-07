@@ -62,6 +62,13 @@ function _createLabel(message){
 	return label;
 }
 
+var _labelSeq = 0;
+function _associateLabel(label, control){
+	if(!label || !control) return;
+	if(!label.id) label.id = "component_label_"+(++_labelSeq);
+	control.setAttribute("aria-labelledby", label.id);
+}
+
 function _createButton(label, onclick){
 	var button = document.createElement("div");
 	button.innerHTML = label;

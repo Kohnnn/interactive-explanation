@@ -6240,6 +6240,7 @@ let firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
                 analyser[0].request_repaint(false);
                 analyser_button.classList.remove("selected");
                 analyser_button.classList.remove("pressed");
+                analyser_button.setAttribute("aria-pressed", "false");
             } else if (navigator.mediaDevices) {
                 analyser_button.classList.add("pressed");
 
@@ -6249,6 +6250,7 @@ let firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
                     if (microphone_source) {
                         analyser_button.classList.add("selected");
+                        analyser_button.setAttribute("aria-pressed", "true");
                         analyser[0].request_repaint(false);
                     }
                 };
@@ -6257,6 +6259,7 @@ let firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
                     .then(handleSuccess)
                     .catch(function() {
                         analyser_button.classList.remove("pressed");
+                        analyser_button.setAttribute("aria-pressed", "false");
                     });
             }
         }

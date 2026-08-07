@@ -1179,6 +1179,9 @@ class Simulation extends Application {
             this.slider.step = "any";
             this.slider.value = 0;
             this.slider.style.width = `${this.memory.width}px`;
+            this.slider.setAttribute("aria-label", "Allocation step");
+            this.text.id = `step-text-${this.id}`;
+            this.slider.setAttribute("aria-describedby", this.text.id);
 
             let prevButton = document.createElement('div');
             let nextButton = document.createElement('div');
@@ -1186,10 +1189,16 @@ class Simulation extends Application {
             prevButton.innerHTML = "⬅️";
             prevButton.style.marginRight = "0.5rem";
             prevButton.style.cursor = "pointer";
+            prevButton.setAttribute("role", "button");
+            prevButton.setAttribute("tabindex", "0");
+            prevButton.setAttribute("aria-label", "Previous allocation step");
 
             nextButton.innerHTML = "➡️";
             nextButton.style.marginLeft = "0.5rem";
             nextButton.style.cursor = "pointer";
+            nextButton.setAttribute("role", "button");
+            nextButton.setAttribute("tabindex", "0");
+            nextButton.setAttribute("aria-label", "Next allocation step");
 
             bottomContainer.appendChild(prevButton);
             bottomContainer.appendChild(this.slider);
@@ -1241,6 +1250,15 @@ class Simulation extends Application {
                 this.player.next();
                 this.updateState();
             });
+
+            for (let [button, step] of [[prevButton, 'prev'], [nextButton, 'next']]) {
+                button.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+                    e.preventDefault();
+                    this.player[step]();
+                    this.updateState();
+                });
+            }
 
 
             this.updateText(this.text, position);

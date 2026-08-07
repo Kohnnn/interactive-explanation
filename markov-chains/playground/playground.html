@@ -98,12 +98,12 @@ body {
         selected-transition="selectedTransition"
       ></st-diagram>
       <div class="matrixInput">
-        <p>edit below this line</p>
-        <textarea ng-class="{ 'valid' : validTransitionMatrix }" ng-model="transitionMatrixJSON">{{transitionMatrix | json}}</textarea>
+        <p id="matrix-input-hint">edit below this line</p>
+        <textarea aria-label="Transition matrix as JSON" aria-describedby="matrix-input-hint" ng-class="{ 'valid' : validTransitionMatrix }" ng-model="transitionMatrixJSON">{{transitionMatrix | json}}</textarea>
       </div>
       <div class="controls">
-        <input class="speedRange" type="range" ng-model="speedRange" min="1" max="20" step="1">
-        <label> speed </label>
+        <input class="speedRange" type="range" ng-model="speedRange" min="1" max="20" step="1" id="playground-speed">
+        <label for="playground-speed"> speed </label>
       </div>
     </main>
     <script>

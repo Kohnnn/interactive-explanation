@@ -295,6 +295,7 @@ Grid.createUI = function(){
 	return EditorHelper()
 			.label("This world is a ")
 			.number(config.size, "width", {
+				ariaLabel:"World width in cells",
 				integer:true,
 				min:5, max:50,
 				step:1,
@@ -302,6 +303,7 @@ Grid.createUI = function(){
 			})
 			.label(" by ")
 			.number(config.size, "height", {
+				ariaLabel:"World height in cells",
 				integer:true,
 				min:5, max:50,
 				step:1,
@@ -317,6 +319,7 @@ Grid.createUI = function(){
 				{ name:"the 4 spots to its sides", value:Grid.NEIGHBORHOOD_NEUMANN },
 				{ name:"the 8 spots to its sides & corners", value:Grid.NEIGHBORHOOD_MOORE }
 			],config,"neighborhood",{
+				ariaLabel:"Which spots count as neighbors",
 				maxWidth: "none"
 			})
 			.label(" to be its neighboring spots.")

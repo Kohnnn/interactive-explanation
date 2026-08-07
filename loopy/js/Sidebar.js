@@ -300,6 +300,7 @@ function ComponentInput(config){
 	var label = _createLabel(config.label);
 	var className = config.textarea ? "component_textarea" : "component_input";
 	var input = _createInput(className, config.textarea);
+	_associateLabel(label, input);
 	input.oninput = function(event){
 		self.setValue(input.value);
 	};

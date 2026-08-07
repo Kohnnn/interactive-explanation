@@ -871,6 +871,7 @@ window.SegmentedControl = function(container_div, callback, values) {
         el.style.top = pad + "px";
         el.classList.add("segmented_control_off");
         el.textContent = values[i];
+        if (!el.textContent.trim()) el.setAttribute("aria-label", "Option " + (i + 1));
         el.setAttribute("role", "radio");
         el.setAttribute("aria-checked", "false");
         el.tabIndex = i === option ? 0 : -1;

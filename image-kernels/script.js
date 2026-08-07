@@ -103,6 +103,13 @@ myApp.controller('MainCtrl', function($scope) {
     $scope.selectedKernel = 'custom'
   }
 
+  var kernelRows = ['top', 'middle', 'bottom']
+  var kernelCols = ['left', 'centre', 'right']
+  $scope.kernelCellLabel = function(idx) {
+    var i = +idx
+    return 'Kernel value, ' + kernelRows[Math.floor(i / 3)] + ' ' + kernelCols[i % 3]
+  }
+
   $scope.$watch('data1', updateData2)
 
   $scope.$watch('selectedKernel', function() {
@@ -536,7 +543,8 @@ myApp.directive('kernelPlayground', function() {
     var iFile = el.append('input').attr({
       type: 'file',
       name: 'file',
-      accept: 'image/x-png, image/gif, image/jpeg'
+      accept: 'image/x-png, image/gif, image/jpeg',
+      'aria-label': 'Upload your own image'
     })
 
     iFile.node().addEventListener('change', function(e) {

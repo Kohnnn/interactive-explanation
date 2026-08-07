@@ -37,6 +37,19 @@ input {
   background: rgb(250, 220, 220);
 }
 
+.block-state {
+  margin: 0 0 10px;
+  font-weight: bold;
+}
+
+.well-success .block-state {
+  color: rgb(43, 84, 44);
+}
+
+.well-error .block-state {
+  color: rgb(132, 32, 32);
+}
+
 .github-ribbon {
   position: absolute;
   top: 0;

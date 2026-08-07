@@ -14,7 +14,7 @@ Editor.create = function(){
 	///////////////////////
 
 	// Description
-	var desc = Editor.createTextArea(Model.data.meta, "description", {fontSize:18});
+	var desc = Editor.createTextArea(Model.data.meta, "description", {fontSize:18, ariaLabel:"Description of your simulation"});
 	Editor.descriptionDOM = desc;
 	Editor.dom.appendChild(Editor.descriptionDOM);
 
@@ -134,6 +134,7 @@ Editor.create = function(){
 		saveLink.type = "text";
 		saveLink.className = "editor_save_link";
 		saveLink.setAttribute("readonly",true);
+		saveLink.setAttribute("aria-label", "Link to your saved model");
 		saveLink.onclick = function(){
 			saveLink.select();
 		};
@@ -150,6 +151,7 @@ Editor.create = function(){
 		embedLink.type = "text";
 		embedLink.className = "editor_save_link";
 		embedLink.setAttribute("readonly",true);
+		embedLink.setAttribute("aria-label", "Embed code for your saved model");
 		embedLink.onclick = function(){
 			embedLink.select();
 		};
@@ -215,6 +217,7 @@ Editor.createTextArea = function(config, propName, options){
 	input.value = config[propName];
 	input.className ="editor_textarea";
 	input.style.fontSize = (options.fontSize || 16)+"px";
+	input.setAttribute("aria-label", options.ariaLabel || (propName+" text"));
 
 	// Update on change
 	input.oninput = function(){
@@ -267,6 +270,7 @@ Editor.createStateUI = function(stateConfig){
 	icon.className = "editor_icon";
 	icon.type = "text";
 	icon.value = stateConfig.icon;
+	icon.setAttribute("aria-label", "Icon for this kind of thing");
 	icon.oninput = function(){
 		stateConfig.icon = icon.value;
 		publish("/ui/updateStateHeaders");
@@ -281,6 +285,7 @@ Editor.createStateUI = function(stateConfig){
 	name.className = "editor_name";
 	name.type = "text";
 	name.value = stateConfig.name;
+	name.setAttribute("aria-label", "Name for this kind of thing");
 	name.oninput = function(){
 		stateConfig.name = name.value;
 		publish("/ui/updateStateHeaders");
@@ -304,7 +309,7 @@ Editor.createStateUI = function(stateConfig){
 	}
 
 	// Description
-	var description = Editor.createTextArea(stateConfig, "description");
+	var description = Editor.createTextArea(stateConfig, "description", {ariaLabel:"Description of this kind of thing"});
 	dom.appendChild(description);
 
 	// Actions
@@ -410,7 +415,7 @@ Editor.createActionAdder = function(actionConfigs, dom){
 	// Create select (placeholder options)
 	var actionConfig = {action:""};
 	var propName = "action";
-	var select = Editor.createSelector(keyValues,actionConfig,propName);
+	var select = Editor.createSelector(keyValues,actionConfig,propName,{ariaLabel:"Add a new action"});
 
 	// Select has new oninput
 	select.onchange = function(){
@@ -451,6 +456,7 @@ Editor.createSelector = function(keyValues, actionConfig, propName, options){
 	// Options
 	options = options || {};
 	if(options.maxWidth) select.style.maxWidth = options.maxWidth;
+	select.setAttribute("aria-label", options.ariaLabel || propName);
 
 	// Populate options: icon + name for each state, value is the ID.
 	for(var i=0;i<keyValues.length;i++){
@@ -481,11 +487,13 @@ Editor.createSelector = function(keyValues, actionConfig, propName, options){
 
 };
 
-Editor.createStateSelector = function(actionConfig, propName){
+Editor.createStateSelector = function(actionConfig, propName, options){
 
 	// Select.
 	var select = document.createElement("select");
 	select.type = "select";
+	options = options || {};
+	select.setAttribute("aria-label", options.ariaLabel || "which kind of thing");
 
 	// Populate options: icon + name for each state, value is the ID.
 	var _populateList = function(){
@@ -557,6 +565,7 @@ Editor.createNumber = function(actionConfig, propName, options){
 	input.value = actionConfig[propName]*options.multiplier;
 	input.className ="editor_number";
 	input.options = options;
+	input.setAttribute("aria-label", options.ariaLabel || propName);
 
 	// Decode value
 	var _decodeValue = function(){
@@ -667,6 +676,7 @@ Editor.createProportions = function(){
 			slider.min = 0;
 			slider.max = 100;
 			slider.step = 1;
+			slider.setAttribute("aria-label", "Starting proportion of " + Model.getStateByID(stateID).name);
 			sliders.push(slider);
 			lineDOM.appendChild(slider);
 

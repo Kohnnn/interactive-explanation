@@ -1551,6 +1551,50 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {
   }
 }
 
+body[data-story-family="engineering-longform"] .segmented_control_on,
+body[data-story-family="engineering-longform"] .segmented_control_off {
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+body[data-story-family="engineering-longform"] .article button.link_button {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ca9839;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.1em;
+  cursor: pointer;
+}
+
+body[data-story-family="engineering-longform"] .article button.link_button:hover {
+  color: #2794ee;
+}
+
+body[data-story-family="engineering-longform"] .drawer_container canvas:focus-visible,
+body[data-story-family="engineering-longform"] .canvas_container canvas:focus-visible,
+body[data-story-family="engineering-longform"] .slider_knob:focus-visible,
+body[data-story-family="engineering-longform"] .segmented_control_container [role="radio"]:focus-visible,
+body[data-story-family="engineering-longform"] .play_pause_button:focus-visible,
+body[data-story-family="engineering-longform"] .restart_button:focus-visible,
+body[data-story-family="engineering-longform"] .undo_button:focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 3px;
+}
+
+body[data-story-family="engineering-longform"] .slider_container:focus {
+  outline: none;
+}
+
+body[data-story-family="engineering-longform"] .slider_container:focus-visible .slider_knob {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body[data-story-shell="engineering-sandbox"] .story-button,
   body[data-story-shell="engineering-sandbox"] .story-rail__link,

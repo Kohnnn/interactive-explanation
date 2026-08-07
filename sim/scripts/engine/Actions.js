@@ -42,7 +42,7 @@ Actions.go_to_state = {
 	ui: function(config){
 		return EditorHelper()
 				.label("Turn into ")
-				.stateSelector(config, "stateID")
+				.stateSelector(config, "stateID", {ariaLabel:"Turn into which kind of thing"})
 				.dom;
 	}
 
@@ -102,15 +102,16 @@ Actions.if_neighbor = {
 					{ name:"more than (>)", value:">" },
 					{ name:"at least (≥)", value:">=" },
 					{ name:"exactly (=)", value:"=" }
-				],config,"sign")
+				],config,"sign",{ariaLabel:"Neighbor count comparison"})
 				.label(" ")
 				.number(config, "num", {
+					ariaLabel:"How many neighbors",
 					integer:true,
 					min:0, max:8,
 					step:1
 				})
 				.label(" neighbors are ")
-				.stateSelector(config, "stateID")
+				.stateSelector(config, "stateID", {ariaLabel:"Neighbors of which kind of thing"})
 				.actionsUI(config.actions)
 				.dom;
 
@@ -142,6 +143,7 @@ Actions.if_random = {
 		return EditorHelper()
 				.label("With a ")
 				.number(config, "probability", {
+					ariaLabel:"Percent chance",
 					multiplier:100,
 					min:0, max:100,
 					step:0.1
@@ -203,10 +205,10 @@ Actions.move_to = {
 				.selector([
 					{ name:"a neighboring", value:0 },
 					{ name:"any", value:1 }
-				],config,"space")
-				.stateSelector(config, "spotStateID")
+				],config,"space",{ariaLabel:"Move to which area"})
+				.stateSelector(config, "spotStateID", {ariaLabel:"Move onto which kind of thing"})
 				.label(" spot & leave behind ")
-				.stateSelector(config, "leaveStateID")
+				.stateSelector(config, "leaveStateID", {ariaLabel:"Leave behind which kind of thing"})
 				.dom;
 
 	}

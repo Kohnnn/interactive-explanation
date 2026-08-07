@@ -145,7 +145,7 @@
 	<div id="options">
 		<div style="width: 150px; height: 63px; float: left;">
 			<div id="text_speed_preview"></div>
-			<input id="text_speed_slider" type="range" min=0 value=0.5 max=1 step="0.01"/>
+			<input id="text_speed_slider" aria-label="Text speed" type="range" min=0 value=0.5 max=1 step="0.01"/>
 		</div>
 		<div style="float: right; width: 135px; height: 63px;">
 			
@@ -154,8 +154,8 @@
 		</div>
 		<div style="clear:both"></div>
 		<span id="volume_options">
-			<div>Volume:</div> 
-			<input id="volume_slider" type="range" min=0 max=1 value=1 step="0.01"/>
+			<div id="volume_slider_label">Volume:</div> 
+			<input id="volume_slider" aria-labelledby="volume_slider_label" type="range" min=0 max=1 value=1 step="0.01"/>
 		</span>
 		<button id="options_ok" type="button">
 			ok <span class="mini-icon" pic="ok" style="top: 3px;"></span>
@@ -195,15 +195,15 @@ Share this story:
 	I just played this story-game about a human and their anxiety! You play *as* the anxiety. 😱
 </span>
 <div id="share">
-	<a id="share_link_fb" href="./" target="_blank" class="no_deco">
+	<a id="share_link_fb" href="./" target="_blank" class="no_deco" aria-label="Share on Facebook">
 		<div id="share_fb"></div>
 	</a>
 	<a id="share_link_tw" href="./"
-		target="_blank" class="no_deco">
+		target="_blank" class="no_deco" aria-label="Share on Twitter">
 		<div id="share_tw"></div>
 	</a>
 	<a id="share_link_em" href="./"
-		target="_blank" class="no_deco">
+		target="_blank" class="no_deco" aria-label="Share by email">
 		<div id="share_em"></div>
 	</a>
 </div>
