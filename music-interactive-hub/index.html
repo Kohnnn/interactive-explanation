@@ -11,9 +11,15 @@
   <meta property="og:description" content="Editorial local hub that connects shipped ear-training drills, sequencing tools, synth lessons, and the genre-history map into one music-focused learning path.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/music-interactive-hub/">
+  <meta name="color-scheme" content="light dark">
+  <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="../shared/site.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
+    .music-hub-page :is(h1, h2) {
+      color: var(--ink);
+    }
+
     .cluster {
       margin-top: 26px;
     }
@@ -23,8 +29,8 @@
       align-items: center;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(31, 108, 99, 0.12);
-      color: var(--accent-deep);
+      background: var(--accent-soft);
+      color: var(--accent);
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -56,7 +62,7 @@
       padding: 24px;
       border: 1px solid var(--line);
       border-radius: 24px;
-      background: rgba(255, 250, 241, 0.92);
+      background: var(--surface-panel);
       box-shadow: var(--shadow);
     }
 
@@ -71,6 +77,8 @@
       margin-top: 10px;
     }
   </style>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
 </head>
 <body
   data-reference-mode="neutral"
@@ -78,6 +86,11 @@
   data-footer-label="Provenance"
   data-learning-progress-slug="music-interactive-hub"
   data-learning-step-count="5"
+  data-story-shell="engineering-sandbox"
+  data-story-route="music-interactive-hub"
+  data-story-family="local-hub"
+  data-story-variant="essay"
+  data-story-nav="generated"
 >
   <main class="site-page music-hub-page" data-music-hub>
     <a class="back-link" href="../">Back to replicas</a>

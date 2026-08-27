@@ -2,19 +2,20 @@
   {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly into the split narrative shell without a separate editorial hero, chapter rail, or play-first framing layer.",
-    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original nav, scroll-linked chart shell, and compiled interaction logic intact.",
+    "localStatus": "The local route adds token-driven light and dark styling for shared chrome, authored prose, the native TOC, and verified feature controls while leaving compiled chart scenes intrinsic; its Summary link now resolves to the shipped section at every supported viewport.",
     "sourceFiles": [
       "index.html",
       "../shared/engineering-sandbox.css",
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
-      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and the internal TOC can continue to operate."
+      "The mlu-pilot adapter themes only authored HTML, the native TOC, and verified controls; compiled scenes, SVG, canvas, images, dimensions, and transforms remain intrinsic.",
+      "The existing #toc anchor navigation remains the sole navigation owner, preserving the route's original section order and DOM IDs.",
+      "The Summary anchor keeps data-page=all for compiled scene selection while href resolves to #summary; Route-scoped mobile styles reveal and wrap the same TOC without adding generated navigation or moving runtime geometry."
     ],
     "evidence": [
-      "The pilot plan requires a shared Engineering Sandbox layer with local Be Vietnam Pro and IBM Plex Mono assets, a hero, play-first prompt, and chapter jump rail.",
-      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original drag, feature-toggle, and table scenes."
+      "Stored light and dark probes confirm that authored surfaces change without altering intrinsic scene geometry or interaction ownership.",
+      "Strict MLU experience and Route smoke coverage validate all seven native TOC links, compliant pointer targets, and approved intrinsic geometry at desktop, mobile, and narrow viewports before exercising the original drag, feature-toggle, and table scenes."
     ]
   },
   {
@@ -85,6 +86,22 @@
     "evidence": [
       "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
       "The route now exposes only the shared-footer link back to the live original page."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../train-test-validation/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

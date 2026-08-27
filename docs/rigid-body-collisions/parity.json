@@ -69,5 +69,39 @@
       "Implementation planning treated the later collision-normal and dot-product article flow as parity-sensitive route behavior.",
       "Shared smoke coverage verifies the route stays responsive, keeps local script and font handoff intact, and remains free of upstream runtime requests."
     ]
+  },
+  {
+    "moduleId": "complete-systems-family-experience",
+    "originalBehavior": "The Nuxt article kept its compiled prose and controls, global WebGL canvas, delayed scene mounts, and authored z-20 content stack without a complete shared-shell ownership record.",
+    "localStatus": "The completed systems-family route themes only shared shell surfaces, renders four exact manifest-owned chapters, and lifts generated navigation above the authored z-20 prose stack while leaving Nuxt, KaTeX, controls, and WebGL output unchanged.",
+    "sourceFiles": [
+      "../../rigid-body-collisions/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The shell-only adapter does not recolor Nuxt-emitted prose, KaTeX, controls, or canvas output.",
+      "The exact-route navigation stacking rule restores mobile tray pointer ownership without changing Nuxt lifecycle, canvas backing dimensions, transforms, scissor behavior, or control geometry."
+    ],
+    "evidence": [
+      "Focused strict systems-family coverage validates stored and system shell themes, exact generated chapter titles and order, mobile tray pointer access after primary-surface scrolling, persisted Nuxt and WebGL geometry, local chunks, and a deterministic range-control update."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../rigid-body-collisions/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

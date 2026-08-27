@@ -132,5 +132,21 @@
       "Focused smoke coverage starts the model with Enter, verifies the graph summary, and checks native controls and input names.",
       "The public-surface audit rejects missing or duplicate iframe titles on the article route."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../covid-19/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

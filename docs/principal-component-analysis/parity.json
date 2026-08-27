@@ -2,19 +2,19 @@
   {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
-    "localStatus": "The local route now adds the lighter Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original EV runtime and chart logic intact.",
+    "localStatus": "The local route adds token-driven light and dark styling for shared chrome, authored prose, labels, links, and native controls plus manifest-owned chapter navigation while leaving intrinsic EV runtime output unchanged.",
     "sourceFiles": [
       "index.html",
       "../shared/engineering-sandbox.css",
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The shell uses the lighter EV essay variant so the original chart layouts stay visually dominant while the page gains local typography and chapter navigation.",
-      "Chapter links are generated from data-story-chapter markers embedded in the static page structure."
+      "The ev-essay adapter selects only authored shell and top-level chapter text or native controls; SVG, canvas, WebGL, iframe, media, MathJax, custom runtime elements, dimensions, and transforms remain intrinsic.",
+      "Chapter links resolve from manifest-owned selectors and preserve existing authored IDs; deterministic IDs are assigned only to ID-less top-level chapter roots."
     ],
     "evidence": [
-      "The hardened rollout expands the Engineering Sandbox essay shell beyond MLU into the next article-shaped technical families.",
-      "Shared smoke coverage now checks hero-before-chapter ordering, generated navigation behavior, and desktop non-overlap before exercising the original interactive scenes."
+      "Stored-theme and geometry gates compare shared shell state while preserving declared shell-only intrinsic output.",
+      "Setosa strict experience and Route smoke coverage validate generated navigation, narrow viewport containment, network cleanliness, runtime geometry, and the original interactive scenes."
     ]
   },
   {
@@ -88,6 +88,22 @@
     "evidence": [
       "Public-surface auditing blocks creator names, EV branding, share widgets, newsletter embeds, analytics, and comments from shipping pages.",
       "The local page keeps a single shared-footer reference link to the live original."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../principal-component-analysis/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

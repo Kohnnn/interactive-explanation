@@ -1,0 +1,162 @@
+body[data-story-route="ableton-learning-music-play-with-beats"] {
+  --story-accent: #b85c38;
+  --story-steel: #285e68;
+}
+
+body[data-story-route="ableton-learning-music-play-with-beats"] .story-hero {
+  padding-bottom: 2.2rem;
+}
+
+body[data-story-route="ableton-learning-music-play-with-beats"] .story-practice-main {
+  position: relative;
+  border-top: 1px solid var(--story-border);
+}
+
+body[data-story-route="ableton-learning-music-play-with-beats"] .story-practice-main::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 7rem;
+  height: 3px;
+  background: var(--story-accent);
+  content: "";
+}
+
+body[data-story-route="ableton-learning-music-play-with-beats"] .story-callout {
+  box-shadow: 0 16px 34px rgba(18, 32, 42, 0.1);
+}
+
+body[data-story-family="ableton-synths"] {
+  --ie-synth-field-guide-accent: #b85c38;
+  background: var(--paper);
+}
+
+:root[saved-theme="dark"] body[data-story-family="ableton-synths"] {
+  --ie-synth-field-guide-accent: #e6a17f;
+}
+
+:root[saved-theme="light"] body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] {
+  --color-background: #ffffff;
+  --color-foreground: rgb(0, 0, 76);
+  --color-gray-1: #f3f3f6;
+  --color-gray-1-5: #ebebef;
+  --color-gray-2: #e2e2e9;
+  --color-gray-2-5: #c9c9d4;
+  --color-gray-3: #b5b5bf;
+  --color-gray-4: #797986;
+  --color-gray-5: hsl(240, 7%, 32%);
+  --color-purple-shade: rgb(240, 240, 254);
+  --color-blue-shade: rgb(233, 247, 254);
+  --color-green-shade: rgb(233, 251, 244);
+  --color-yellow-shade: rgb(255, 248, 236);
+  --color-red-shade: rgb(252, 238, 239);
+  --color-magenta-shade: rgb(251, 232, 241);
+  --color-peach-shade: rgb(255, 240, 242);
+  --color-mauve-shade: rgb(243, 230, 253);
+}
+
+:root[saved-theme="dark"] body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] {
+  --color-background: #1b1b1d;
+  --color-foreground: #b3b3b3;
+  --color-gray-1: hsl(240, 4%, 5%);
+  --color-gray-1-5: hsl(240, 3%, 7%);
+  --color-gray-2: #39393c;
+  --color-gray-2-5: hsl(240, 4%, 30%);
+  --color-gray-3: hsl(240, 3%, 40%);
+  --color-gray-4: hsl(240, 3%, 50%);
+  --color-gray-5: hsl(240, 3%, 60%);
+  --color-purple-shade: #242233;
+  --color-blue-shade: #1c2a33;
+  --color-green-shade: #182e29;
+  --color-yellow-shade: #322b1f;
+  --color-red-shade: #2f2023;
+  --color-magenta-shade: #2e1a26;
+  --color-peach-shade: #322226;
+  --color-mauve-shade: #2a2333;
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] {
+  --color-shade: var(--color-gray-2);
+  --color-navbar: var(--color-background);
+  --color-foreground-quiet: var(--color-gray-4);
+  --color-caption: var(--color-gray-4);
+  --theme-a-shade: var(--color-purple-shade);
+  --theme-b-shade: var(--color-blue-shade);
+  --theme-c-shade: var(--color-green-shade);
+  --theme-d-shade: var(--color-yellow-shade);
+  --theme-e-shade: var(--color-red-shade);
+  --theme-f-shade: var(--color-magenta-shade);
+  --theme-g-shade: var(--color-peach-shade);
+  --theme-h-shade: var(--color-mauve-shade);
+  --theme-mono: var(--color-foreground);
+  --theme-mono-shade: var(--color-shade);
+  --color-modulation-shade: var(--color-red-shade);
+  --color-macro: var(--color-foreground);
+  --color-macro-shade: var(--color-shade);
+  --color-macro-zombie: var(--color-foreground);
+  --color-record-shade: var(--color-red-shade);
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson="ableton-learning-synths-get-started"] {
+  --current-theme-color: var(--theme-g);
+  --current-theme-color-shade: var(--theme-g-shade);
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson="ableton-learning-synths-how-synths-make-sound"] {
+  --current-theme-color: var(--theme-d);
+  --current-theme-color-shade: var(--theme-d-shade);
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson="ableton-learning-synths-filter-resonance"] {
+  --current-theme-color: var(--theme-f);
+  --current-theme-color-shade: var(--theme-f-shade);
+}
+
+body[data-story-family="ableton-synths"] #app:is(
+  [data-ableton-synth-lesson="ableton-learning-synths-modulating-amplitude-with-envelopes"],
+  [data-ableton-synth-lesson="ableton-learning-synths-matching-envelopes"]
+) {
+  --current-theme-color: var(--theme-b);
+  --current-theme-color-shade: var(--theme-b-shade);
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson="ableton-learning-synths-recipes"] {
+  --current-theme-color: var(--theme-mono);
+  --current-theme-color-shade: var(--theme-mono-shade);
+}
+
+body[data-story-family="ableton-synths"] .top-bar {
+  line-height: 1.2;
+}
+
+body[data-story-family="ableton-synths"] .top-bar__inner {
+  min-height: calc(var(--topbar-height) - 1px);
+  padding-block: 0;
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] {
+  position: relative;
+  border-top: 3px solid var(--ie-synth-field-guide-accent);
+  border-bottom: 1px solid var(--line);
+  background: var(--color-background);
+  color: var(--color-foreground);
+  box-shadow: 0 20px 44px rgba(15, 20, 30, 0.14);
+}
+
+body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] .components_lesson-viewer__toc-toggle:focus-visible {
+  outline: 3px solid var(--color-foreground);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] {
+    border-top-width: 2px;
+    box-shadow: 0 12px 28px rgba(15, 20, 30, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-story-route="ableton-learning-music-play-with-beats"] .story-callout {
+    box-shadow: none;
+  }
+}

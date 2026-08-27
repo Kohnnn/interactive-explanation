@@ -4,17 +4,20 @@
     "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
     "localStatus": "The local route now adds the Engineering Sandbox lab shell in a compact bridge mode, with local fonts, a tighter hero, and guided action framing while keeping the page editorial rather than turning it into a full interactive lab.",
     "sourceFiles": [
-      "index.html",
-      "../shared/engineering-sandbox.css",
-      "../shared/engineering-sandbox.js"
+      "../../blockchain-101-combined-flow/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
+      "../../shared/engineering-sandbox.js"
     ],
     "notes": [
       "The shell runs in no-nav mode so the page keeps its compact roadmap structure without an essay rail or mobile chapter bar.",
-      "The updated framing is intentionally lighter than the hands-on labs because this page exists to sequence the family, not to replace it."
+      "The updated framing is intentionally lighter than the hands-on labs because this page exists to sequence the family, not to replace it.",
+      "Ticket 15 retains data-story-nav=\"none\" and themes only authored bridge surfaces; linked lab runtimes remain autonomous."
     ],
     "evidence": [
       "The Anders rollout adds a first-class Engineering Sandbox lab variant with compact briefing, try-this-first actions, and no essay rail.",
-      "Shared smoke coverage now checks that Anders lab routes avoid the essay rail, keep the hero ahead of the first control cluster, and preserve footer width inside the actual route container."
+      "Shared smoke coverage now checks that Anders lab routes avoid the essay rail, keep the hero ahead of the first control cluster, and preserve footer width inside the actual route container.",
+      "Complete-experience coverage verifies the no-nav lab shell, light/dark authored bridge surfaces, three-step local Progress and sharing controls, local chapter handoffs, and preserved chapter-card geometry."
     ]
   },
   {
@@ -70,6 +73,22 @@
     "evidence": [
       "Implementation planning treated local-only navigation and footer-only provenance as the core public-surface requirement for this custom route.",
       "Shared smoke coverage checks the responsive shell and the local chapter handoff for the proof section."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../blockchain-101-combined-flow/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

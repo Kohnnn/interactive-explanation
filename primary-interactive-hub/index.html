@@ -11,9 +11,15 @@
   <meta property="og:description" content="Curated local hub for the already-shipped social sims, story games, and sandbox explainers in the primary interactive collection.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/primary-interactive-hub/">
+  <meta name="color-scheme" content="light dark">
+  <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="../shared/site.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
+    .site-page :is(h1, h2) {
+      color: var(--ink);
+    }
+
     .cluster {
       margin-top: 24px;
     }
@@ -27,19 +33,26 @@
       align-items: center;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(31, 108, 99, 0.12);
-      color: var(--accent-deep);
+      background: var(--accent-soft);
+      color: var(--accent);
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
   </style>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
+  <script defer src="../shared/engineering-sandbox.js"></script>
 </head>
 <body
   data-reference-url="https://github.com/ncase?tab=repositories"
   data-reference-text="Primary interactive repository scope"
   data-footer-label="Original page"
+  data-story-shell="engineering-sandbox"
+  data-story-route="primary-interactive-hub"
+  data-story-family="local-hub"
+  data-story-variant="essay"
+  data-story-nav="generated"
 >
   <main class="site-page">
     <a class="back-link" href="../">Back to replicas</a>

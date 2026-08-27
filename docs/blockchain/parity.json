@@ -91,5 +91,39 @@
       "The public-surface audit blocks hardcoded upstream promo or share surfaces outside approved footer configuration.",
       "Implementation planning called for patching only shell and URL behavior while keeping the legacy runtime intact."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../blockchain/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "complete-anders-lab-experience",
+    "originalBehavior": "The Bootstrap workbench, form controls, and hash-validity wells used fixed light surfaces while the jQuery mining flow owned all chain state.",
+    "localStatus": "The completed Anders family route themes the declared .story-lab-main root and semantic validity classes in both saved themes while preserving the native navigation and original hash, nonce, mining, and downstream invalidation behavior.",
+    "sourceFiles": [
+      "../../blockchain/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The adapter is rooted at the existing direct-child workbench seam and does not rewrite Bootstrap structure or jQuery handlers.",
+      "Success and error class names, control dimensions, scrollable chain geometry, and distributed peer mounts remain Route-owned."
+    ],
+    "evidence": [
+      "Focused strict coverage validates stored and system themes, authored-root contrast, native route links, persisted geometry, local-only networking, live hash propagation, invalidation classes, and nonce mining."
+    ]
   }
 ]

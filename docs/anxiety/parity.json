@@ -160,5 +160,56 @@
       "Focused browser coverage verifies dialog dismissal, focus restoration, choice controls, and the loaded main landmark.",
       "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../anxiety/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "pre-start-navigation-and-narrow-stage-fit",
+    "originalBehavior": "The story waits behind a full-stage loading control before creating dialogue choices in its fixed 360 by 600 game runtime.",
+    "localStatus": "The manifest treats the route as having no always-visible route navigation, declares the loading overlay as the pre-start primary control, and scales the fixed stage only below 360 CSS pixels.",
+    "sourceFiles": [
+      "../../anxiety/index.html",
+      "../../anxiety/styles/game.css",
+      "../../routes.manifest.json",
+      "../../tools/experience-baselines.json"
+    ],
+    "notes": [
+      "Dialogue choices remain native buttons and continue to be verified after the loading control starts the story.",
+      "The narrow transform preserves the 720 by 1200 canvas backing dimensions and the runtime's internal 360 by 600 coordinate system."
+    ],
+    "evidence": [
+      "Focused strict smoke covers stored and system light and dark states at 1400, 390, and 320 CSS pixel widths without horizontal page pan.",
+      "The approved narrow geometry records a 320 by 533.33 CSS pixel presentation while retaining the original canvas backing dimensions."
+    ]
+  },
+  {
+    "moduleId": "complete-route-experience-ticket-24",
+    "originalBehavior": "The fixed narrative runtime owns choices, chapter persistence, pacing, audio, dialogs, replay, sharing, and intrinsic canvas output.",
+    "localStatus": "Stored and system themes affect only shared shell chrome; the game stage, internal coordinates, state machine, and approved geometry remain unchanged.",
+    "sourceFiles": [
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs",
+      "../../tools/experience-baselines.json"
+    ],
+    "notes": [
+      "The Route remains fixed-runtime with no generated navigation and local-only networking."
+    ],
+    "evidence": [
+      "Focused smoke verifies start and replay flows, seeded chapter persistence, native dialogs and focus return, text pacing, automatic advance, volume state, sharing, and exact canvas geometry."
+    ]
   }
 ]

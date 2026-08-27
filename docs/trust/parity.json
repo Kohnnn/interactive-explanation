@@ -149,5 +149,37 @@
       "Focused browser coverage verifies successful preload and the visible failure path.",
       "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../trust/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "complete-route-experience-ticket-24",
+    "originalBehavior": "The fixed slideshow runtime owns chapter state, native slide controls, timing, audio, and intrinsic artwork.",
+    "localStatus": "Stored and system themes affect only shared shell chrome; the opaque slideshow and its approved geometry remain unchanged.",
+    "sourceFiles": [
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs",
+      "../../tools/experience-baselines.json"
+    ],
+    "notes": [
+      "The Route remains fixed-runtime with native navigation and local-only networking."
+    ],
+    "evidence": [
+      "Focused smoke starts the slideshow, reveals native chapter controls, toggles authored audio mute state, verifies failure fallback, and enforces all approved viewport geometry and continuation contracts."
+    ]
   }
 ]

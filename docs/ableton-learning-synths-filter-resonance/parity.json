@@ -2,18 +2,20 @@
   {
     "moduleId": "lesson-shell-and-filter-runtime",
     "originalBehavior": "The published filter lesson boots the Learning Synths shell and uses an XY control to reshape the filter response in real time.",
-    "localStatus": "The local route keeps that filter lesson shell and XY runtime from shared scripts with route-local lesson assets while moving provenance to the shared footer.",
+    "localStatus": "The local route keeps that filter lesson shell and XY runtime from shared scripts with route-local lesson assets while adding a family-scoped field-guide boundary and shared Atlas chrome.",
     "sourceFiles": [
       "../../ableton-learning-synths-filter-resonance/index.html",
+      "../../shared/prototype-visual.css",
       "../../shared/ableton-learning-synths-musiclab.js",
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
       "The archive preserves the published filter scene rather than rebuilding it in a custom control layer.",
-      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable."
+      "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable.",
+      "The additive family treatment changes only the outer lesson boundary and shared chrome; the archived filter controls remain runtime-owned."
     ],
     "evidence": [
-      "Music smoke coverage verifies local script loading and the filter-scene update path on the shipped route.",
+      "Music smoke coverage verifies local script loading, family metadata, chrome alignment, and the filter-scene update path on the shipped route.",
       "The public route keeps footer-only provenance and strips upstream lesson chrome from the body."
     ]
   },
@@ -67,6 +69,40 @@
       "Focused browser coverage verifies successful mount, unsupported-browser messaging, and initialization failure handling.",
       "Phase 10 source and browser contracts require one meaningful runtime main."
     ]
+  },
+  {
+    "moduleId": "complete-theme-native-navigation-and-runtime-state",
+    "originalBehavior": "The published lesson follows the operating-system color scheme, preserves Ableton typography and runtime tokens, and opens localized chapter navigation from its native table-of-contents control.",
+    "localStatus": "The declared `#app[data-ableton-synth-lesson]` runtime hook maps stored light and dark themes onto the archived token set, preserves the React/RNBO filter scene and dimensions, and keeps the native lesson drawer keyboard-operated.",
+    "sourceFiles": [
+      "../../shared/prototype-visual.css",
+      "../../shared/engineering-sandbox.css",
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The adapter maps only existing custom-property hooks; intrinsic SVG, canvas, model, and audio output remain runtime-owned.",
+      "The visible native TOC toggle owns navigation; opening exposes localized lesson links, while Escape closes the drawer and restores focus."
+    ],
+    "evidence": [
+      "Strict experience gates verify stored and system themes, runtime-root contrast, local-only networking, and unchanged approved runtime geometry.",
+      "Family smoke verifies filter-curve, macro, and note state, local asset inventories, native TOC focus behavior, localized links, responsive layout, and footer-only provenance."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]
-

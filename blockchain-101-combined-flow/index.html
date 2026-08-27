@@ -11,10 +11,15 @@
   <meta property="og:description" content="Local teaching flow that links the shipped blockchain, signing, and zero-knowledge routes into one end-to-end sequence.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/blockchain-101-combined-flow/">
+  <meta name="color-scheme" content="light dark">
+  <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="../shared/site.css">
-  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
   <style>
+    .site-page :is(h1, h2) {
+      color: var(--ink);
+    }
+
     .chapter-grid {
       display: grid;
       gap: 18px;
@@ -26,7 +31,7 @@
       padding: 22px;
       border: 1px solid var(--line);
       border-radius: 24px;
-      background: rgba(255, 250, 241, 0.9);
+      background: var(--surface-card);
       box-shadow: var(--shadow);
     }
 
@@ -38,7 +43,7 @@
       height: 2rem;
       border-radius: 999px;
       background: var(--accent);
-      color: #fffaf4;
+      color: var(--on-accent);
       font-weight: 700;
       text-decoration: none;
     }
@@ -59,7 +64,7 @@
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 20px;
-      background: rgba(255, 250, 241, 0.82);
+      background: var(--surface-stat);
     }
 
     .stat-card strong {
@@ -67,19 +72,20 @@
       font-size: 1.6rem;
     }
   </style>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
 </head>
 <body
   data-reference-url="https://andersbrownworth.com/"
   data-reference-text="Anders Brownworth demos"
   data-footer-label="Original page"
-  data-story-shell="engineering-sandbox"
-  data-story-variant="lab"
-  data-story-family="anders-lab"
-  data-story-nav="none"
-  data-story-route="blockchain-101-combined-flow"
   data-learning-progress-slug="blockchain-101-combined-flow"
   data-learning-step-count="3"
   style="--story-shell-max: 1100px;"
+  data-story-shell="engineering-sandbox"
+  data-story-route="blockchain-101-combined-flow"
+  data-story-family="anders-lab"
+  data-story-variant="lab"
+  data-story-nav="none"
 >
   <main class="site-page">
     <a class="back-link" href="../">Back to replicas</a>

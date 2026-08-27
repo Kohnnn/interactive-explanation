@@ -187,7 +187,7 @@
     "moduleId": "weather-sandbox",
     "originalBehavior": "Weather sandbox with cloud cover, seeing, and light-pollution sliders feeding the state store to drive atmospheric effects (star dimming, twinkle, horizon brightness), with no live weather API.",
     "localStatus": "Implemented and connected to rendering. The three sliders (cloud, seeing, lightpollution) drive star dimming and the visible magnitude limit; cloud cover visibly dims the field, and light pollution reduces the visible star count. Defaults: cloud=0.18, seeing=0.74, lightPollution=0.32.",
-"sourceFiles": [
+    "sourceFiles": [
       "../../stargazing-dashboard/index.html",
       "../../stargazing-dashboard/js/hud.js",
       "../../stargazing-dashboard/js/main.js",
@@ -241,6 +241,22 @@
     "evidence": [
       "catalog loaders resolve 2863 stars and 88/739 constellation names/lines firsthand.",
       "smoke-bundle and the QA probe load the route with no network failures."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

@@ -12,14 +12,30 @@
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/precision-recall/">
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/precision-recall/">
   <link rel="icon" type="image/png" href="./assets/mlu_robot.png">
+  <meta name="color-scheme" content="light dark">
+  <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="./assets/styles/normalize.css">
   <link rel="stylesheet" href="./assets/styles/font.css">
   <link rel="stylesheet" href="./assets/styles/katex.css">
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
-  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <script defer src="../shared/engineering-sandbox.js"></script>
+  <script>
+    (() => {
+      const selector = 'iframe[aria-hidden="true"][tabindex="-1"]';
+      const titleFrames = () => {
+        document.querySelectorAll(selector).forEach((frame, index) => {
+          frame.title = `Precision and Recall hidden resize listener ${index + 1}`;
+        });
+      };
+      const observer = new MutationObserver(titleFrames);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      titleFrames();
+      window.addEventListener("pagehide", () => observer.disconnect(), { once: true });
+    })();
+  </script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
 </head>
@@ -28,9 +44,10 @@
   data-reference-text="Precision &amp; Recall"
   data-footer-label="Original page"
   data-story-shell="engineering-sandbox"
-  data-story-family="mlu-pilot"
-  data-story-nav="generated"
   data-story-route="precision-recall"
+  data-story-family="mlu-pilot"
+  data-story-variant="essay"
+  data-story-nav="generated"
 >
   <main data-runtime-main aria-label="Precision and Recall interactive lesson" aria-busy="true">
   <section class="story-hero story-hero--tight">

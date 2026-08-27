@@ -116,5 +116,37 @@
       "Focused browser coverage verifies the named main and successful asset-load completion.",
       "Phase 10 source and browser contracts require one meaningful runtime main."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../coming-out-simulator-2014/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "complete-route-experience-ticket-24",
+    "originalBehavior": "The fixed conversation runtime owns queue timing, audio dispatch, branching state, consequences, credits, and replay.",
+    "localStatus": "Stored and system themes affect only shared shell chrome; authored scene timing, state queues, assets, and approved runtime geometry remain unchanged.",
+    "sourceFiles": [
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs",
+      "../../tools/experience-baselines.json"
+    ],
+    "notes": [
+      "The Route remains fixed-runtime with no generated navigation and local-only networking."
+    ],
+    "evidence": [
+      "Focused smoke verifies the authored dialogue-duration formula, registered audio queue dispatch, opening branch consequences, outro state, credits, restart behavior, and approved geometry."
+    ]
   }
 ]

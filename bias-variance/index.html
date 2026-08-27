@@ -18,11 +18,88 @@
   <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/bias-variance/">
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/bias-variance/">
   <link rel="icon" href="./mlu_robot.5a492771.png">
+  <meta name="color-scheme" content="light dark">
+  <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="./katex.min.3c2484b0.css">
   <link rel="stylesheet" href="./styles.565b223c.css">
-  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
-  <script defer src="./js.63b32ab2.js"></script>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
+  <script defer id="bias-variance-runtime" src="./js.63b32ab2.js"></script>
+  <script>
+    (() => {
+      const runtime = document.getElementById("bias-variance-runtime");
+      if (!runtime) {
+        return;
+      }
+
+      runtime.addEventListener("load", () => {
+        try {
+          const findBundledClass = (name) => {
+            let loader = window.parcelRequire;
+            while (loader) {
+              for (const module of Object.values(loader.cache || {})) {
+                if (typeof module.exports?.[name] === "function") {
+                  return module.exports[name];
+                }
+              }
+              loader = loader.parent;
+            }
+            throw new Error(`Bias-Variance ${name} class unavailable`);
+          };
+
+          const Scatter = findBundledClass("Scatter");
+          const ErrorBar = findBundledClass("ErrorBar");
+          const drawBarsTestOverfit = Scatter.prototype.drawBarsTestOverfit;
+          Scatter.prototype.drawBarsTestOverfit = function () {
+            this.regressionLine = this.scatterPlot.select("#regression-line-1");
+            if (this.regressionLine.empty()) {
+              this.regressionLine = this.scatterPlot.append("path").attr("id", "regression-line-1");
+            }
+            const path = this.regressionLine.node();
+            if (!path.getAttribute("d")) {
+              path.setAttribute("d", this.lineGenOF(this.trainData));
+            }
+            if (!this.overfitError) {
+              this.overfitError = [{ name: "Train", error: 0.001 }];
+            }
+            return drawBarsTestOverfit.call(this);
+          };
+
+          const plotTestBar = Scatter.prototype.plotTestBar;
+          Scatter.prototype.plotTestBar = function () {
+            if (!this.overfitError) {
+              this.overfitError = [];
+            }
+            return plotTestBar.call(this);
+          };
+
+          const positionErrorBarsAsLabels = ErrorBar.prototype.positionErrorBarsAsLabels;
+          ErrorBar.prototype.positionErrorBarsAsLabels = function () {
+            if (!this.decompGs || !this.textBox) {
+              return;
+            }
+            return positionErrorBarsAsLabels.call(this);
+          };
+
+          ["plotErrorLines", "repositionSvgNew", "upPositionSvg"].forEach((methodName) => {
+            const method = ErrorBar.prototype[methodName];
+            ErrorBar.prototype[methodName] = function (...args) {
+              if (!this.xScaleError || !this.yScaleError) {
+                this.drawErrorBase();
+              }
+              return method.apply(this, args);
+            };
+          });
+        } catch {
+          const fallback = document.createElement("p");
+          fallback.className = "story-callout story-inline-note";
+          fallback.setAttribute("role", "status");
+          fallback.textContent = "Some interactive charts are unavailable. The article remains readable.";
+          document.querySelector("main")?.prepend(fallback);
+        }
+      }, { once: true });
+    })();
+  </script>
   <script defer src="./katexCalls.eb206bfb.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
@@ -32,7 +109,9 @@
   data-reference-text="Bias-Variance Tradeoff"
   data-footer-label="Original page"
   data-story-shell="engineering-sandbox"
+  data-story-route="bias-variance"
   data-story-family="mlu-pilot"
+  data-story-variant="essay"
   data-story-nav="generated"
 >
   <main>
@@ -71,7 +150,7 @@
       <h2 class="logo">Interactive Explanation</h2>
     </div>
 
-    <section id="intro" data-story-chapter="Meet the tradeoff">
+    <section id="intro">
       <h1 id="intro__hed">
         The <span id="bias">Bias</span> <span id="variance">Variance</span> Tradeoff
       </h1>
@@ -84,7 +163,7 @@
       </p>
     </section>
 
-    <section id="scrolly" data-story-chapter="From underfit to overfit">
+    <section id="scrolly">
       <figure id="scroll-figure">
         <div id="scroll-viz"></div>
         <div id="svg2"></div>
@@ -313,7 +392,7 @@
       <br>
     </div>
 
-    <section class="models" id="loess-section" data-story-chapter="Tune LOESS smoothing">
+    <section class="models" id="loess-section">
       <hr>
       <div class="model-text-wrapper">
         <h1 class="model-header">LOESS Regression</h1>
@@ -348,7 +427,7 @@
       <hr>
     </section>
 
-    <section class="models" id="knn-section" data-story-chapter="Tune K-nearest neighbors">
+    <section class="models" id="knn-section">
       <div class="model-text-wrapper">
         <h1 class="model-header">K-Nearest Neighbors</h1>
         <p class="model-text">
@@ -388,7 +467,7 @@
 
     <hr>
 
-    <section class="section-offset" id="double-descent-section" data-story-chapter="See the double-descent echo">
+    <section class="section-offset" id="double-descent-section">
       <div style="text-align:center">
         <h1 class="model-header">Related Concept: Double Descent</h1>
         <p class="model-text">
@@ -412,7 +491,7 @@
 
     <hr>
 
-    <section data-story-chapter="Wrap up the lesson">
+    <section>
       <div style="text-align:center">
         <h1 class="model-header">Wrapping Up</h1>
         <p class="model-text">
@@ -427,7 +506,7 @@
 
     <hr>
 
-    <section id="outro" data-story-chapter="References">
+    <section id="outro">
       <br><br>
       <h1 class="model-header">References</h1>
       <p class="model-text">

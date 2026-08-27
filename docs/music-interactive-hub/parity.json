@@ -53,15 +53,34 @@
       "../../music-interactive-hub/index.html",
       "../../shared/site.css",
       "../../shared/public-footer.css",
-      "../../shared/public-footer.js"
+      "../../shared/public-footer.js",
+      "../../shared/engineering-sandbox.css"
     ],
     "notes": [
       "The page follows the reusable design principles without reusing the separate naming vocabulary from DESIGN.md.",
-      "No external shell, promo, or provenance links are exposed in the hub body."
+      "No external shell, promo, or provenance links are exposed in the hub body.",
+      "The Ticket 15 adapter themes only authored hub surfaces and generated Route chrome."
     ],
     "evidence": [
       "The route uses shared site.css tokens plus route-local styling for the music-specific hero and clusters.",
-      "The public-surface audit keeps footer-only provenance intact for the hub route."
+      "The public-surface audit keeps footer-only provenance intact for the hub route.",
+      "Complete-experience coverage verifies the manifest-owned generated chapter navigation, light/dark authored shell, five-step local Progress and sharing controls, and local-only card links."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../music-interactive-hub/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

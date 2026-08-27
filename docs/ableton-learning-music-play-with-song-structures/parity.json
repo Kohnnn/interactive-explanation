@@ -70,5 +70,39 @@
       "The public-surface audit keeps footer-only provenance intact for the route.",
       "Music smoke coverage verifies the route shell stays usable on narrow viewports."
     ]
+  },
+  {
+    "moduleId": "complete-theme-and-primer-state",
+    "originalBehavior": "The song-structures lesson presents a read-only arrangement primer without mounting sequencer widgets, while retaining the archived Learning Music media and runtime stack.",
+    "localStatus": "The authored arrangement primer now follows the stored light or dark theme through `.story-practice-surface`, while archived media, audio APIs, and the absence of invented widget behavior remain Route-owned.",
+    "sourceFiles": [
+      "../../shared/engineering-sandbox.css",
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The adapter uses stable family and practice-root selectors without editing vendored widget, Tone, media, or image assets.",
+      "The route deliberately remains a read-only primer and does not receive controls that the archived lesson does not ship."
+    ],
+    "evidence": [
+      "Strict experience gates verify stored and system light and dark themes, authored-root contrast, unchanged runtime geometry, local-only networking, and no generated navigation.",
+      "Music smoke verifies the arrangement content, zero mounted widgets, 31 local audio files, 9 local font files, no remote playable media, and usable desktop, mobile, and narrow layouts."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-song-structures/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

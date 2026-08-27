@@ -1,43 +1,27 @@
 (function () {
-  const routeChapterConfigs = {
-    "rigid-body-collisions": [
-      { selector: "#before-we-start", title: "Set the frame" },
-      { selector: "#what-are-we-trying-to-do", title: "Define the motion problem" },
-      { selector: "#what-is-a-collision", title: "Formalize collision" },
-      { selector: "#conclusion", title: "Wrap the intuition" },
-    ],
-    "linear-regression": [
-      { selector: "#intro", title: "Meet linear regression" },
-      { selector: "#scrolly", title: "Fit the line" },
-      { selector: "#mse-container", title: "Read model fit", closest: "section", id: "model-evaluation" },
-      { selector: "#gd-container", title: "Watch gradient descent", closest: "div", id: "gradient-descent" },
-      { selector: "#tab-container", title: "Interpret the coefficients", closest: "div", id: "interpretation" },
-      { selector: "#resources", title: "References" },
-    ],
-    "logistic-regression": [
-      { selector: "#intro", title: "Meet logistic regression" },
-      { selector: "#tempSlider", title: "Move the boundary", closest: "section", id: "boundary-scene" },
-      { selector: "#ll-container", title: "Evaluate the model", closest: "section", id: "model-evaluation" },
-      { selector: "#gd-container", title: "Estimate coefficients", closest: "section", id: "estimating-coefficients" },
-      { selector: "#tab-container", title: "Interpret the model", closest: "div", id: "interpreting-the-model" },
-      { selector: "#resources", title: "References" },
-    ],
-    "precision-recall": [
-      { selector: "#intro", title: "Meet precision and recall" },
-      { selector: "#heatmap-container", title: "Read the confusion matrix", closest: "div", id: "confusion-matrix" },
-      { selector: "#f1-container", title: "Balance the metrics", closest: "div", id: "f1-balance" },
-      { selector: "#error-chart", title: "Move the threshold", closest: "div", id: "threshold-tradeoff" },
-      { selector: "#resources", title: "References" },
-    ],
-    "roc-auc": [
-      { selector: "#intro", title: "Meet ROC and AUC" },
-      { selector: "#roc-scatter-chart", title: "Move the threshold", closest: "section", id: "first-threshold" },
-      { selector: "#roc-section", title: "Read the ROC curve" },
-      { selector: "#auc-chart", title: "Interpret AUC", closest: "section", id: "auc-section" },
-      { selector: "#conclusion", title: "Considerations" },
-      { selector: "#resources", title: "References" },
-    ],
-  };
+  const engineeringSandboxUrl = document.currentScript?.src || "";
+  const manifestPromise = engineeringSandboxUrl
+    ? fetch(new URL("../pages.json", engineeringSandboxUrl), { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Could not load route metadata");
+        }
+        return response.json();
+      })
+      .then((manifest) => {
+        if (!Array.isArray(manifest)) {
+          throw new Error("Route metadata must be an array");
+        }
+        return { manifest, error: null };
+      })
+      .catch((error) => {
+        console.error("Engineering Sandbox route metadata unavailable", error);
+        return { manifest: [], error };
+      })
+    : Promise.resolve({
+      manifest: [],
+      error: new Error("Engineering Sandbox script URL unavailable"),
+    });
 
   const routeChapterNavLabels = {
     "mechanical-watch": {
@@ -895,7 +879,7 @@
   }
 
   function prepareLongformEngineeringArticle(body) {
-    if (body.dataset.storyFamily !== "engineering-longform") {
+    if (body.dataset.storyNav !== "generated") {
       return;
     }
 
@@ -937,9 +921,13 @@
     });
   }
 
-  async function applyRouteChapterConfig(slug) {
-    const entries = routeChapterConfigs[slug];
-    if (!entries || !entries.length) {
+  async function applyManifestChapters(slug) {
+    const { manifest, error } = await manifestPromise;
+    if (document.body) {
+      document.body.dataset.storyManifest = error ? "error" : "ready";
+    }
+    const entries = manifest.find((route) => route.slug === slug)?.shell?.chapters;
+    if (!Array.isArray(entries) || !entries.length) {
       return;
     }
 
@@ -948,6 +936,11 @@
     while (Date.now() < deadline) {
       const targets = entries.map((entry) => resolveConfigTarget(entry));
       if (targets.every(Boolean)) {
+        if (document.body?.dataset.storyFamily === "engineering-longform") {
+          document.querySelectorAll("[data-story-chapter]").forEach((section) => {
+            delete section.dataset.storyChapter;
+          });
+        }
         targets.forEach((target, index) => {
           ensureSectionId(target, index, entries[index].id);
           target.dataset.storyChapter = entries[index].title;
@@ -968,7 +961,7 @@
     const navMode = body.dataset.storyNav || "generated";
     const slug = getSlug();
     prepareLongformEngineeringArticle(body);
-    await applyRouteChapterConfig(slug);
+    await applyManifestChapters(slug);
 
     const sections = Array.from(document.querySelectorAll("[data-story-chapter]"));
     applyRouteChapterNavLabels(slug, sections);

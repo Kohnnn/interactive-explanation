@@ -5,15 +5,19 @@
     "localStatus": "The local route creates one curated hub page that surfaces the already-shipped replicas through grouped local cards and local docs links.",
     "sourceFiles": [
       "../../primary-interactive-hub/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
       "../../shared/public-footer.js"
     ],
     "notes": [
       "The route is intentionally a local curation page rather than a replica of one repository listing view.",
-      "The public body links only to local routes and local docs pages."
+      "The public body links only to local routes and local docs pages.",
+      "Ticket 15 keeps this guided-path hub editorial and unnumbered: it has no data-learning-progress-slug, Start/Resume controls, numbered steps, or Progress write."
     ],
     "evidence": [
       "The route exposes grouped cards for systems, stories, and playgrounds.",
-      "Shared smoke coverage checks the local card count, local route hrefs, and responsive shell."
+      "Shared smoke coverage checks the local card count, local route hrefs, and responsive shell.",
+      "Complete-experience coverage verifies the three manifest-owned generated chapters, light/dark authored shell, local card links, and absence of the Progress contract."
     ]
   },
   {
@@ -53,6 +57,22 @@
     "evidence": [
       "The route includes dedicated cards for LOOPY and the simulator launcher path.",
       "Implementation planning treated local-only navigation and responsive shell behavior as the core validation requirements for this hub."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../primary-interactive-hub/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

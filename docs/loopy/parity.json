@@ -127,5 +127,37 @@
       "Focused browser coverage verifies modal iframe titles and the editor workspace landmark.",
       "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../loopy/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "complete-route-experience-ticket-24",
+    "originalBehavior": "The fixed editor runtime owns pointer coordinates, model state, simulation controls, examples, sharing, embedding, import, and export.",
+    "localStatus": "Stored and system themes affect only shared shell chrome; editor canvases, controls, model geometry, and approved runtime dimensions remain unchanged.",
+    "sourceFiles": [
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs",
+      "../../tools/experience-baselines.json"
+    ],
+    "notes": [
+      "The Route remains fixed-runtime with no generated navigation and local-only networking."
+    ],
+    "evidence": [
+      "Focused smoke draws through real pointer events, verifies exact saved coordinates, enters simulation mode, resets node state, round-trips import/export data, restores normalized model topology from the shared URL, checks generated iframe titles, and enforces approved viewport geometry."
+    ]
   }
 ]

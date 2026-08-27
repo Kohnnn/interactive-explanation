@@ -4,6 +4,10 @@ body.has-top-bar {
   padding-top: var(--topbar-height);
 }
 
+body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
+  top: calc(var(--topbar-height) + 2.25rem);
+}
+
 .top-bar {
   position: fixed;
   top: 0;
@@ -11,24 +15,42 @@ body.has-top-bar {
   width: 100%;
   box-sizing: border-box;
   z-index: 1200;
-  background: var(--topbar-bg);
+  background: color-mix(in srgb, var(--topbar-bg) 88%, transparent);
   color: var(--topbar-ink);
   border-bottom: 1px solid var(--topbar-line);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(12px) saturate(1.08);
+}
+
+.top-bar--overlay {
+  top: 0.5rem;
+  left: 50%;
+  width: min(34rem, calc(100vw - 1rem));
+  border: 1px solid var(--topbar-line);
+  border-radius: 999px;
+  box-shadow: 0 12px 34px rgba(15, 20, 30, 0.18);
+  transform: translateX(-50%);
 }
 
 .top-bar__inner {
-  width: min(1100px, 100%);
+  width: min(1180px, 100%);
   max-width: calc(100vw - 32px);
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 8px 16px;
+  padding: 9px 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.top-bar__back,
+.top-bar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 .top-bar__docs {
   color: inherit;
   font-weight: 700;
@@ -49,8 +71,22 @@ body.has-top-bar {
   margin-right: auto;
   overflow: hidden;
   color: inherit;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.top-bar__docs {
+  color: inherit;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.18s ease;
 }
 
 .top-bar__theme {
@@ -72,6 +108,72 @@ body.has-top-bar {
   color: var(--topbar-hover);
 }
 
+.route-continuation {
+  box-sizing: border-box;
+  width: min(1100px, calc(100% - 32px));
+  margin: 32px auto 0;
+  padding: 20px 16px;
+  border-block: 1px solid var(--footer-line);
+  background: color-mix(in srgb, var(--footer-bg) 92%, transparent);
+  color: var(--footer-ink);
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.route-continuation__heading {
+  margin: 0;
+  color: var(--footer-label);
+  font: 700 0.78rem/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.route-continuation__status {
+  margin: 8px 0 0;
+  color: var(--footer-note);
+  line-height: 1.5;
+}
+
+.route-continuation__link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 8px;
+  color: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.route-continuation__link:hover,
+.route-continuation__link:focus,
+.route-continuation__link:focus-visible {
+  color: var(--footer-hover);
+}
+
+.route-continuation__link:focus,
+.route-continuation__link:focus-visible {
+  outline: 2px solid var(--footer-hover);
+  outline-offset: 3px;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-variant="lab"] .route-continuation {
+  width: min(var(--story-shell-max), calc(100% - 2rem));
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] .route-continuation {
+  width: min(var(--story-practice-max), calc(100vw - 2rem));
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .route-continuation {
+  width: min(64rem, calc(100vw - 2rem));
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .route-continuation {
+  width: min(var(--story-shell-max), calc(100% - 2rem));
+}
+
 .public-footer {
   display: block !important;
   visibility: visible !important;
@@ -79,9 +181,9 @@ body.has-top-bar {
   width: 100%;
   margin-top: 32px;
   border-top: 1px solid var(--footer-line);
-  background: var(--footer-bg);
+  background: color-mix(in srgb, var(--footer-bg) 92%, transparent);
   color: var(--footer-ink);
-  font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
 .public-footer__inner {
@@ -141,6 +243,11 @@ body.has-top-bar {
 }
 
 @media (max-width: 720px) {
+  .top-bar--overlay {
+    top: max(0.35rem, env(safe-area-inset-top));
+    width: calc(100vw - 0.7rem);
+  }
+
   .top-bar__inner {
     max-width: calc(100vw - 20px);
     padding: 8px 10px;

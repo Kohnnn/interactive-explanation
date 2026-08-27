@@ -89,5 +89,39 @@
       "The public-surface audit blocks hardcoded upstream promo or share surfaces outside approved footer configuration.",
       "Implementation planning called for keeping each demo's asset tree self-contained on the first pass rather than deduping libraries."
     ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../public-private-keys/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
+  },
+  {
+    "moduleId": "complete-anders-lab-experience",
+    "originalBehavior": "The Bootstrap key, signature, transaction, and signed-chain scenes used fixed light panels while the crypto runtime owned keypair and verification state.",
+    "localStatus": "The completed Anders family route themes the declared .story-lab-main root and semantic verification classes in both saved themes while preserving native navigation, cookies, key derivation, signing, verification, and transaction state.",
+    "sourceFiles": [
+      "../../public-private-keys/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The root-scoped adapter leaves direct-child Bootstrap structure and vendored cryptography libraries unchanged.",
+      "Success and failure classes, field dimensions, tab behavior, and nested scene geometry remain Route-owned."
+    ],
+    "evidence": [
+      "Focused strict coverage validates stored and system themes, authored-root contrast, native route links, persisted geometry, local-only networking, key regeneration, signature success, tamper failure, and nested transaction and blockchain mounts."
+    ]
   }
 ]

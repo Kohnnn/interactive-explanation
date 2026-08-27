@@ -89,5 +89,39 @@
       "The public-surface audit is extended for the Sam Rose family so creator, share, and newsletter links are caught outside the shared footer and docs.",
       "Shared smoke coverage verifies the route remains runtime-clean and responsive after the provenance cleanup."
     ]
+  },
+  {
+    "moduleId": "complete-systems-family-experience",
+    "originalBehavior": "The article used its native light and dark hook, authored algorithm sequence, Pixi simulations, Plotly charts, and a stateful final playground without a manifest-owned chapter contract.",
+    "localStatus": "The completed systems-family route maps the pre-paint saved theme into the existing data-theme hook, themes the declared main#content root, and renders eight exact manifest-owned chapters while preserving Pixi, Plotly, and playground state.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../routes.manifest.json",
+      "../../shared/engineering-sandbox.css",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The native runtime hook follows the canonical html[saved-theme] state before the Route is ready.",
+      "Pixi canvases, Plotly SVG output, simulation controls, backing dimensions, transforms, and algorithm state remain runtime-owned."
+    ],
+    "evidence": [
+      "Focused strict systems-family coverage validates stored and system themes, authored-root contrast, exact generated chapter titles and order, persisted intrinsic geometry, local renderer assets, and deterministic algorithm, server-count, and RPS control updates."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../load-balancing/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

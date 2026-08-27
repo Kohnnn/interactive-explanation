@@ -76,6 +76,15 @@
   function start() {
     label(document);
     syncPressed();
+    document.addEventListener("keydown", function (event) {
+      var target = event.target;
+      if (!target || target.id !== "pp_tellMe" || target.disabled || event.repeat) return;
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      setTimeout(function () {
+        if (document.contains(target) && !target.disabled) target.click();
+      }, 0);
+    });
     if (typeof MutationObserver !== "function" || !document.body) return;
 
     var scheduled = false;

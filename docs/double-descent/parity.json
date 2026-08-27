@@ -2,19 +2,19 @@
   {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly into the static double-descent essay without a separate editorial hero, chapter rail, or play-first framing layer.",
-    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original scrollytelling and slider runtime intact.",
+    "localStatus": "The local route adds token-driven light and dark styling for shared chrome and authored prose plus manifest-owned chapter navigation while leaving the slider, compiled charts, and animated media intrinsic.",
     "sourceFiles": [
       "index.html",
       "../shared/engineering-sandbox.css",
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The shell is additive and scoped through body data attributes rather than a rewritten chart layout system.",
-      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and step containers."
+      "The mlu-pilot adapter themes only authored HTML; the injected slider, SVG scenes, GIF, dimensions, and transforms remain intrinsic.",
+      "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs."
     ],
     "evidence": [
-      "The hardening plan expands the Engineering Sandbox shell from the first four pilots to the next static ML essays, starting with double-descent.",
-      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original scrolly and slider scenes."
+      "Stored light and dark probes confirm that authored surfaces change without altering intrinsic scene geometry or interaction ownership.",
+      "Strict MLU experience and Route smoke coverage validate generated navigation before exercising the original scrolly and slider scenes."
     ]
   },
   {
@@ -87,6 +87,22 @@
     "evidence": [
       "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
       "The route now exposes only the shared-footer reference link back to the original page."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../double-descent/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

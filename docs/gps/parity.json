@@ -73,5 +73,38 @@
       "The hardened longform-family audit now flags ordinary in-body upstream article links while allowing footer-only provenance.",
       "Shared smoke coverage verifies the route stays responsive and runtime-clean without upstream asset dependencies."
     ]
+  },
+  {
+    "moduleId": "engineering-longform-complete-experience",
+    "originalBehavior": "The authored longform presents prose and controls around intrinsic canvas, image, and SVG figures.",
+    "localStatus": "The local Route applies exact-route light and dark authored-surface theming and manifest-owned generated chapters while preserving intrinsic figures and interaction geometry.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../shared/engineering-sandbox.css",
+      "../../routes.manifest.json"
+    ],
+    "notes": [
+      "Ticket 18 scopes the engineering-longform adapter to shared chrome, authored prose, equations, links, HTML controls, and companion-card surfaces; canvas, image, SVG, audio, companion behavior and geometry, dimensions, and transforms remain intrinsic.",
+      "Generated chapter links target existing authored heading IDs and keep the article order unchanged."
+    ],
+    "evidence": [
+      "Focused strict engineering-longform experience coverage validates light and dark authored surfaces, exact generated chapters, interactions, and persisted runtime geometry."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../gps/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

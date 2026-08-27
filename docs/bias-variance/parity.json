@@ -2,19 +2,22 @@
   {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly into the bias-variance story shell without a separate editorial hero, chapter rail, or play-first framing layer.",
-    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original scroll, LOESS, KNN, and double-descent runtime intact.",
+    "localStatus": "The local route adds token-driven light and dark styling for shared chrome, authored prose, and verified controls plus manifest-owned chapter navigation and a Route-owned cold-jump compatibility adapter while leaving compiled charts, KaTeX, and intrinsic media unchanged.",
     "sourceFiles": [
       "index.html",
       "../shared/engineering-sandbox.css",
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
-      "Chapter links are generated from data-story-chapter markers so the route keeps its original section order and DOM IDs."
+      "The mlu-pilot adapter themes only authored HTML and verified controls; runtime mounts, injected sliders, SVG, KaTeX, dimensions, and transforms remain intrinsic.",
+      "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs.",
+      "The inline load adapter initializes only missing Scatter and ErrorBar prerequisites when a cold continuation jump bypasses earlier scroll state; the compiled bundle remains untouched and no HTTP resource is added.",
+      "If the expected bundled exports are unavailable, the adapter leaves the article running and exposes one accessible non-blocking status message."
     ],
     "evidence": [
-      "The pilot plan requires a shared Engineering Sandbox layer with local Be Vietnam Pro and IBM Plex Mono assets, a hero, play-first prompt, and chapter jump rail.",
-      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original decomposition and sandbox scenes."
+      "Stored light and dark probes confirm that authored surfaces change without altering intrinsic scene geometry or interaction ownership.",
+      "Strict MLU experience and Route smoke coverage validate generated navigation before exercising the original decomposition, LOESS, and KNN scenes.",
+      "Continuation-focus probes at desktop, mobile, and narrow viewports render the regression path, Model Complexity, and Test Error without page errors while preserving the approved 28-resource ceiling."
     ]
   },
   {
@@ -87,6 +90,22 @@
     "evidence": [
       "The public-surface audit blocks creator names, MLU branding, upstream domains, analytics, and promo links in shipped route code.",
       "The route now exposes only the shared-footer link back to the live original page."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../bias-variance/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

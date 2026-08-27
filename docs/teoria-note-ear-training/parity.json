@@ -88,5 +88,40 @@
       "The Teoria family audit rules catch upstream shell links and Teoria promo surfaces if they reappear in public route HTML.",
       "The music-family audit rules also catch remote playable media and embeds if they reappear in a shipped route."
     ]
+  },
+  {
+    "moduleId": "complete-theme-and-practice-state",
+    "originalBehavior": "The exercise keeps its generated Bootstrap controls, notation canvases, local piano preload, answer feedback, and score state inside five stable runtime mounts.",
+    "localStatus": "The authored practice frame and verified generated exercise DOM now follow the stored light or dark theme through `.story-practice-surface`, while audio, notation pixels, vendored runtime internals, and mount geometry remain Route-owned.",
+    "sourceFiles": [
+      "../../shared/engineering-sandbox.css",
+      "../../shared/teoria-a11y-labels.js",
+      "../../routes.manifest.json",
+      "../../tools/smoke-bundle.mjs"
+    ],
+    "notes": [
+      "The adapter uses stable family and practice-root selectors without editing vendored Bootstrap, Teoria, exercise, or audio assets.",
+      "Canvas and image pixels are intrinsic exclusions; only surrounding and generated HTML controls receive theme colors."
+    ],
+    "evidence": [
+      "Strict experience gates verify both stored themes, system-theme fallback, authored-root contrast, unchanged runtime geometry, local-only networking, and no generated navigation.",
+      "Family smoke verifies all 63 local piano samples, exact mount identity, generated score and message state, visible focus on the generated reveal control, matching pointer and keyboard reveal states, answer progression, and unchanged notation dimensions across redraw."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../teoria-note-ear-training/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
+    ]
   }
 ]

@@ -1,5 +1,39 @@
 (function () {
   var SELF = document.currentScript;
+  var routeManifestPromise;
+
+  function loadRouteManifest() {
+    if (!routeManifestPromise) {
+      routeManifestPromise = fetch(new URL("routes.manifest.json", atlasHref()).href, { cache: "no-store" })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Route manifest unavailable");
+          }
+          return response.json();
+        })
+        .then(function (pages) {
+          const slugs = new Set();
+          const valid = Array.isArray(pages) && pages.length > 0 && pages.every(function (page) {
+            if (!page ||
+              typeof page.slug !== "string" || !page.slug ||
+              typeof page.title !== "string" || !page.title ||
+              typeof page.suggestedNextSlug !== "string" || !page.suggestedNextSlug ||
+              slugs.has(page.slug)) {
+              return false;
+            }
+            slugs.add(page.slug);
+            return true;
+          });
+          if (!valid || pages.some(function (page) {
+            return page.suggestedNextSlug === page.slug || !slugs.has(page.suggestedNextSlug);
+          })) {
+            throw new Error("Route manifest is invalid");
+          }
+          return pages;
+        });
+    }
+    return routeManifestPromise;
+  }
 
   function applyStoredTheme() {
     try {
@@ -295,6 +329,87 @@
     }
   }
 
+  function createRouteContinuationSection() {
+    const section = document.createElement("section");
+    section.className = "route-continuation";
+    section.dataset.routeContinuation = "";
+    section.setAttribute("aria-labelledby", "route-continuation-heading");
+
+    const heading = document.createElement("h2");
+    heading.id = "route-continuation-heading";
+    heading.className = "route-continuation__heading";
+    heading.dataset.routeContinuationHeading = "";
+    heading.textContent = "Suggested Next Route";
+    section.appendChild(heading);
+    return section;
+  }
+
+  function insertRouteContinuation(section) {
+    const footer = document.querySelector("#reference-footer");
+    if (!footer) {
+      throw new Error("Reference footer unavailable");
+    }
+    footer.before(section);
+  }
+
+  function mountRouteContinuation(pages) {
+    const body = document.body;
+    const slug = body?.dataset.storyRoute;
+    const main = document.querySelector("main");
+    if (!slug || document.querySelector("[data-route-continuation]")) {
+      return;
+    }
+    if (!main) {
+      throw new Error("Route main unavailable");
+    }
+
+    const current = pages.find(function (page) {
+      return page.slug === slug;
+    });
+    const target = pages.find(function (page) {
+      return page.slug === current?.suggestedNextSlug;
+    });
+    if (!target?.title) {
+      throw new Error("Suggested Next Route unavailable");
+    }
+
+    const section = createRouteContinuationSection();
+    const link = document.createElement("a");
+    link.className = "route-continuation__link";
+    link.dataset.routeContinuationLink = "";
+    link.href = new URL(target.slug + "/", atlasHref()).href;
+    link.textContent = target.title;
+    section.appendChild(link);
+    insertRouteContinuation(section);
+  }
+
+  function mountRouteContinuationFallback() {
+    if (document.querySelector("[data-route-continuation]")) {
+      return;
+    }
+    const section = createRouteContinuationSection();
+    section.dataset.routeContinuationStatus = "unavailable";
+    const status = document.createElement("p");
+    status.className = "route-continuation__status";
+    status.textContent = "Suggestion unavailable. Return to the Atlas to choose another Route.";
+    section.appendChild(status);
+    insertRouteContinuation(section);
+  }
+
+  function initRouteContinuation() {
+    if (!document.body?.dataset.storyRoute) {
+      return;
+    }
+    loadRouteManifest().then(mountRouteContinuation).catch(function (error) {
+      console.error("Suggested Next Route unavailable.", error);
+      try {
+        mountRouteContinuationFallback();
+      } catch (fallbackError) {
+        console.error("Suggested Next Route fallback unavailable.", fallbackError);
+      }
+    });
+  }
+
   function parseReferenceLinks(serializedLinks) {
     if (!serializedLinks) {
       return [];
@@ -335,10 +450,7 @@
     }
 
     if (body.dataset.pageType === "home") {
-      return fetch("./pages.json", { cache: "no-store" })
-        .then(function (response) {
-          return response.json();
-        })
+      return loadRouteManifest()
         .then(function (pages) {
           return {
             label: "References",
@@ -426,19 +538,7 @@
 
   function topBarDisabled() {
     var body = document.body;
-    if (!body) {
-      return true;
-    }
-    if (body.dataset.topBar === "off") {
-      return true;
-    }
-    if (body.dataset.pageType === "home") {
-      return true;
-    }
-    if (body.dataset.storyShell === "engineering-sandbox") {
-      return true;
-    }
-    return false;
+    return !body || body.dataset.pageType === "home";
   }
 
   function formatSlug(slug) {
@@ -511,6 +611,9 @@
       var bar = document.createElement("div");
       bar.id = "top-bar";
       bar.className = "top-bar";
+      if (document.body.dataset.topBar === "off") {
+        bar.classList.add("top-bar--overlay");
+      }
       bar.setAttribute("role", "navigation");
       bar.setAttribute("aria-label", "Site");
 
@@ -540,8 +643,12 @@
       inner.appendChild(theme);
 
       bar.appendChild(inner);
-      document.body.appendChild(bar);
-      document.body.classList.add("has-top-bar");
+      document.body.prepend(bar);
+      if (document.body.dataset.topBar === "off") {
+        document.body.classList.add("has-top-bar-overlay");
+      } else {
+        document.body.classList.add("has-top-bar");
+      }
 
       wireThemeButton(theme);
     } catch (error) {
@@ -562,6 +669,7 @@
 
   function boot() {
     initFooter();
+    initRouteContinuation();
     initTopBar();
     initHomeThemeToggle();
     initLearningProgress();

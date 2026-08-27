@@ -711,6 +711,10 @@ body[data-story-shell="engineering-sandbox"][data-story-variant="lab"][data-stor
   padding-top: 4.25rem;
 }
 
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-synths"][data-story-nav="native"] {
+  padding-top: var(--topbar-height);
+}
+
 body[data-story-shell="engineering-sandbox"][data-story-variant="lab"] .story-rail,
 body[data-story-shell="engineering-sandbox"][data-story-variant="lab"] .story-mobile-bar {
   display: none !important;
@@ -1128,27 +1132,217 @@ body[data-story-shell="engineering-sandbox"][data-story-variant="practice"] #ref
   margin-right: auto;
 }
 
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] {
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--muted);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .story-practice-checklist strong,
+  .story-practice-focus__label strong,
+  .story-practice-hint strong
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] :is(
+  .story-hero__summary,
+  .story-practice-panel p,
+  .page-header p,
+  .story-practice-hint
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] :is(
+  .story-chip,
+  .story-callout,
+  .story-practice-hint,
+  .story-practice-focus
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] :is(
+  .story-practice-callout,
+  .story-callout[data-story-callout="play"]
+) {
+  background: var(--surface-hero);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-checklist__step {
+  border-color: var(--line);
+  background: var(--surface-pill);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-focus::before {
+  border-top-color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-focus__label {
+  border-bottom-color: var(--line);
+  background: var(--surface-toolbar);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-button {
+  border-color: var(--focus-border);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-button--secondary,
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-button--secondary:hover,
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-button--secondary:focus-visible {
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface {
+  background: var(--paper-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  .well,
+  .panel,
+  .thumbnail,
+  .modal-content
+) {
+  border-color: var(--line);
+  background: var(--surface-panel);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  .panel-heading,
+  .panel-footer,
+  .modal-header,
+  .modal-footer
+) {
+  border-color: var(--line);
+  background: var(--surface-toolbar);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  input,
+  select,
+  textarea,
+  .form-control
+) {
+  border-color: var(--focus-border);
+  background: var(--surface-input);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  .btn-default,
+  .btn-primary,
+  .btn-info
+) {
+  border-color: var(--focus-border);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface .btn-success {
+  border-color: color-mix(in srgb, #4f8b5b 55%, var(--line));
+  background: color-mix(in srgb, #4f8b5b 24%, var(--surface-card-strong));
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  .btn-danger,
+  .alert-danger
+) {
+  border-color: color-mix(in srgb, #b14c4c 55%, var(--line));
+  background: color-mix(in srgb, #b14c4c 24%, var(--surface-card-strong));
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  .control-label,
+  .help-block,
+  .text-muted,
+  #tsp_mess,
+  #tsp_score
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="teoria-practice"] .story-practice-surface :is(
+  a[href],
+  button,
+  input,
+  select,
+  textarea,
+  [role="button"]
+):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] {
   --story-practice-max: 76rem;
-  --story-shadow: 0 18px 38px rgba(2, 8, 18, 0.22);
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--muted);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
   background:
-    radial-gradient(circle at top left, rgba(71, 123, 205, 0.16), transparent 26%),
-    radial-gradient(circle at 84% 0%, rgba(255, 161, 94, 0.14), transparent 24%),
-    linear-gradient(180deg, #10151e 0%, #171d28 38%, #121822 100%);
-  color: #ebeff6;
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h1,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h2,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h3,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h4,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h5,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] h6 {
-  color: #f7f8fb;
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-hero__title,
+  .story-practice-checklist strong,
+  .story-practice-focus__label strong,
+  .story-practice-hint strong,
+  .page-header h2
+) {
+  color: var(--ink);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] a {
-  color: #8cc7ff;
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-hero__eyebrow,
+  .story-practice-kicker,
+  .story-callout__label
+) {
+  color: var(--accent);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-hero {
@@ -1157,96 +1351,162 @@ body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-hero::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-hero__eyebrow,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-kicker,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-callout__label {
-  color: #8cc7ff;
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-hero__summary,
+  .story-practice-panel p,
+  .page-header p,
+  .story-practice-hint
+) {
+  color: var(--muted);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-hero__summary,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-panel p,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .page-header p,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-hint {
-  color: #c7d3e4;
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-chip,
+  .story-callout,
+  .story-practice-hint,
+  .story-practice-focus
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-chip {
-  border-color: rgba(140, 199, 255, 0.2);
-  background: rgba(13, 19, 29, 0.76);
-  color: #eff5ff;
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-callout,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus {
-  border-color: rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(18, 24, 34, 0.96), rgba(14, 20, 31, 0.94));
-  color: #edf2f9;
-  box-shadow: 0 18px 36px rgba(2, 8, 18, 0.28);
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-callout {
-  background: linear-gradient(180deg, rgba(20, 26, 38, 0.96), rgba(14, 20, 30, 0.96));
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-callout,
+  .story-callout[data-story-callout="play"]
+) {
+  background: var(--surface-hero);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button {
-  border-color: rgba(140, 199, 255, 0.18);
-  background: linear-gradient(180deg, #ffa45f, #dd6f2b);
-  color: #16100d;
+  border-color: var(--focus-border);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 700;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button:hover,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button:focus-visible {
-  background: linear-gradient(180deg, #ffb06f, #e17b36);
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button--secondary {
-  background: rgba(255, 255, 255, 0.06);
-  color: #f4f7fb;
-  border-color: rgba(255, 255, 255, 0.14);
-}
-
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button--secondary,
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button--secondary:hover,
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-button--secondary:focus-visible {
-  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--focus-border);
+  background: var(--surface-card-strong);
+  color: var(--accent);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-checklist__step {
-  border-color: rgba(140, 199, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
-  color: #f7f9fc;
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-checklist strong,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label strong,
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-hint strong {
-  color: #fff7ef;
+  border-color: var(--line);
+  background: var(--surface-pill);
+  color: var(--ink);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-strip {
   gap: 0.75rem;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-hint {
-  border-color: rgba(140, 199, 255, 0.18);
-  background: rgba(15, 23, 35, 0.86);
-}
-
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus::before {
-  border-top-color: rgba(255, 161, 94, 0.9);
+  border-top-color: var(--accent-deep);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  color: #d8e2f1;
+  gap: 1rem;
+  align-items: flex-start;
+  border-bottom-color: var(--line);
+  background: var(--surface-toolbar);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label strong {
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface {
   padding: 1rem 1rem 1.25rem;
+  background: var(--paper-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .playground-route-shell {
+  background: var(--paper-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) :is(
+  .body-text,
+  .widget,
+  .widget-drumpad,
+  .widget-tooltip
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) :is(
+  .widget__controls,
+  .widget__menu,
+  .widget-drumpad__header,
+  .widget-pianoroll__root-chooser,
+  .widget-pianoroll__scale-chooser,
+  .widget-tooltip
+) {
+  border-color: var(--line);
+  background: var(--surface-toolbar);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) :is(
+  .widget__transport-btn,
+  .widget__choice,
+  .widget__keyboard-button
+) {
+  border-color: var(--focus-border);
+  background: var(--surface-input);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) :is(
+  .widget__choice--selected,
+  .widget__keyboard-button--on
+) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) .widget__transport-btn.widget-button--recording {
+  border-color: color-mix(in srgb, #b14c4c 70%, var(--line));
+  background: color-mix(in srgb, #b14c4c 30%, var(--paper-strong));
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] :is(
+  .story-practice-surface,
+  .playground-route-shell
+) :is(
+  a[href],
+  button,
+  input,
+  [role="button"]
+):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus .widget,
@@ -1262,16 +1522,10 @@ body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice
   margin-right: 0;
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus .body-text.text-container {
-  color: #dbe3ef;
-}
-
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] #reference-footer {
   width: min(64rem, calc(100vw - 2rem));
 }
 
-/* Family-wide practice polish: consistent widget spacing, clearer focus label,
-   and steadier headings across every Ableton Learning Music route. */
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget,
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget-drumpad,
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface .widget-pianoroll {
@@ -1281,17 +1535,6 @@ body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-surface > .body-text + .body-text {
   margin-top: 1.25rem;
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label {
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .story-practice-focus__label strong {
-  font-size: 0.86rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ableton-practice"] .page-header h2 {
@@ -1313,6 +1556,70 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
   box-sizing: border-box;
 }
 
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) {
+  --ie-engineering-paper: #f6f0e7;
+  --ie-engineering-surface: #fffdf8;
+  --ie-engineering-surface-soft: #eee5d8;
+  --ie-engineering-ink: #263742;
+  --ie-engineering-muted: #53636d;
+  --ie-engineering-line: rgba(38, 55, 66, 0.18);
+  --ie-engineering-accent: #255f78;
+  --ie-engineering-on-accent: #f8fbfc;
+  background:
+    radial-gradient(circle at top left, rgba(52, 126, 149, 0.11), transparent 28%),
+    radial-gradient(circle at 82% 10%, rgba(211, 133, 47, 0.11), transparent 22%),
+    linear-gradient(180deg, #fcf8f2 0%, var(--ie-engineering-paper) 18%, #f2e8da 100%);
+  color: var(--ie-engineering-ink);
+}
+
+:root[saved-theme="dark"] body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) {
+  --ie-engineering-paper: #101721;
+  --ie-engineering-surface: #18222e;
+  --ie-engineering-surface-soft: #222e3a;
+  --ie-engineering-ink: #e5edf2;
+  --ie-engineering-muted: #adbbc4;
+  --ie-engineering-line: rgba(213, 227, 236, 0.18);
+  --ie-engineering-accent: #83c9e5;
+  --ie-engineering-on-accent: #0d2029;
+  --story-paper: var(--ie-engineering-paper);
+  --story-paper-deep: #0b1119;
+  --story-paper-strong: var(--ie-engineering-surface);
+  --story-ink: var(--ie-engineering-ink);
+  --story-ink-soft: var(--ie-engineering-muted);
+  --story-border: var(--ie-engineering-line);
+  --story-border-strong: rgba(213, 227, 236, 0.28);
+  --story-steel: var(--ie-engineering-accent);
+  --story-steel-bright: #a6dcf0;
+  background:
+    radial-gradient(circle at top left, rgba(49, 110, 137, 0.24), transparent 28%),
+    radial-gradient(circle at 82% 10%, rgba(178, 111, 42, 0.18), transparent 22%),
+    linear-gradient(180deg, #111a25 0%, var(--ie-engineering-paper) 18%, #0b1119 100%);
+}
+
 body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .story-hero {
   max-width: min(var(--story-shell-max), calc(100vw - 2rem));
   margin-bottom: 1rem;
@@ -1332,6 +1639,24 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
 body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #main_container {
   max-width: min(var(--story-shell-max), calc(100vw - 2rem));
   margin: 0 auto;
+}
+
+@media (max-width: 390px) {
+  body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+    [data-story-route="alpha-compositing"],
+    [data-story-route="color-spaces"],
+    [data-story-route="sound"],
+    [data-story-route="cameras-and-lenses"],
+    [data-story-route="lights-and-shadows"],
+    [data-story-route="tesseract"],
+    [data-story-route="gears"],
+    [data-story-route="gps"],
+    [data-story-route="earth-and-sun"],
+    [data-story-route="curves-and-surfaces"],
+    [data-story-route="naval-architecture"]
+  ) #main_container {
+    overflow-x: clip;
+  }
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] #content {
@@ -1362,6 +1687,227 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
   letter-spacing: 0;
 }
 
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) :is(
+  .story-chip,
+  .story-callout[data-story-callout],
+  .story-companion-card,
+  .story-rail__panel,
+  .story-mobile-bar,
+  .story-mobile-sheet__panel
+) {
+  border-color: var(--ie-engineering-line);
+  background: var(--ie-engineering-surface);
+  color: var(--ie-engineering-ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) :is(
+  .story-hero__title,
+  .story-companion-card__link,
+  .story-mobile-bar__current,
+  .story-mobile-sheet__title,
+  #main_container h1,
+  #main_container h2,
+  #main_container h3,
+  #main_container h4,
+  #main_container h5,
+  #main_container h6
+) {
+  color: var(--ie-engineering-ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) :is(
+  .story-hero__summary,
+  .story-shell-caption,
+  .story-companion-card p,
+  .story-rail__count,
+  .story-rail__position,
+  .story-mobile-bar__position,
+  .story-mobile-sheet__position,
+  .story-progress__value,
+  .story-rail__current,
+  .story-mobile-sheet__current
+) {
+  color: var(--ie-engineering-muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) :is(
+  .story-hero__eyebrow,
+  .story-callout__label,
+  .story-rail__label,
+  .story-mobile-bar__eyebrow,
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+) {
+  color: var(--ie-engineering-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) :is(
+  .story-mobile-bar__toggle,
+  .story-mobile-sheet__close
+) {
+  border-color: var(--ie-engineering-line);
+  background: var(--ie-engineering-surface);
+  color: var(--ie-engineering-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) #main_container {
+  background: var(--ie-engineering-paper);
+  color: var(--ie-engineering-ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) #main_container .article a {
+  color: var(--ie-engineering-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) #main_container :is(
+  code,
+  .equation,
+  .color_matrix,
+  .ts_space_list
+) {
+  border-color: var(--ie-engineering-line);
+  background-color: var(--ie-engineering-surface-soft);
+  color: var(--ie-engineering-ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) #main_container :is(
+  .segmented_control_on,
+  .segmented_control_off,
+  .play_pause_button,
+  .restart_button,
+  .undo_button
+) {
+  border-color: var(--ie-engineering-line);
+  background-color: var(--ie-engineering-surface);
+  color: var(--ie-engineering-ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"]:is(
+  [data-story-route="alpha-compositing"],
+  [data-story-route="color-spaces"],
+  [data-story-route="sound"],
+  [data-story-route="cameras-and-lenses"],
+  [data-story-route="lights-and-shadows"],
+  [data-story-route="tesseract"],
+  [data-story-route="gears"],
+  [data-story-route="gps"],
+  [data-story-route="earth-and-sun"],
+  [data-story-route="curves-and-surfaces"],
+  [data-story-route="naval-architecture"]
+) #main_container .segmented_control_on {
+  background-color: var(--ie-engineering-accent);
+  color: var(--ie-engineering-on-accent);
+}
+
 body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .article > .post_date,
 body[data-story-shell="engineering-sandbox"][data-story-family="engineering-longform"] .article > .post_title {
   display: none;
@@ -1390,29 +1936,302 @@ body[data-story-shell="engineering-sandbox"] #introduction.story-intro-compact #
   margin-bottom: 0.25rem;
 }
 
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) {
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--muted);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent-deep);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) :is(
+  .story-chip,
+  .story-callout[data-story-callout],
+  .story-rail__panel,
+  .story-mobile-bar,
+  .story-mobile-sheet__panel
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) .story-callout.story-hero__panel {
+  background: var(--paper-strong);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) :is(
+  .story-hero__title,
+  .story-mobile-bar__current,
+  .story-mobile-sheet__title
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) :is(
+  .story-hero__summary,
+  .story-shell-caption,
+  .story-rail__count,
+  .story-rail__position,
+  .story-mobile-bar__position,
+  .story-mobile-sheet__position,
+  .story-progress__value,
+  .story-rail__current,
+  .story-mobile-sheet__current
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) :is(
+  .story-hero__eyebrow,
+  .story-callout__label,
+  .story-rail__label,
+  .story-mobile-bar__eyebrow,
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+) {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) :is(
+  .story-mobile-bar__toggle,
+  .story-mobile-sheet__close
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) .story-button {
+  border-color: var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"]:is(
+  [data-story-family="samwho-essay"],
+  [data-story-family="systems-essay"]
+) .story-button--secondary {
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="samwho-essay"] main#content {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="samwho-essay"] main#content :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="samwho-essay"] main#content a:not(.anchor) {
+  color: var(--link-color);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="systems-essay"][data-story-route="hysteresis-slack"] main.container {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="systems-essay"][data-story-route="hysteresis-slack"] main.container :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="systems-essay"][data-story-route="hysteresis-slack"] main.container a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="systems-essay"][data-story-route="rigid-body-collisions"] :is(
+  .story-rail,
+  .story-mobile-bar
+) {
+  z-index: 30;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="systems-essay"][data-story-route="rigid-body-collisions"] .story-mobile-sheet {
+  z-index: 31;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] {
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--muted);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent-deep);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
+  color: var(--ink);
+}
+
 body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-hero {
   margin-bottom: 2.4rem;
   padding: clamp(1.75rem, 3vw, 2.5rem);
-  background:
-    radial-gradient(circle at top right, rgba(203, 226, 228, 0.45), transparent 36%),
-    linear-gradient(180deg, rgba(255, 252, 246, 0.97), rgba(247, 241, 232, 0.94));
+  background: var(--surface-hero);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-hero__eyebrow {
-  color: #5e6f7a;
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-chip,
+  .story-callout[data-story-callout],
+  .story-rail__panel,
+  .story-mobile-bar,
+  .story-mobile-sheet__panel
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-hero::before {
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-hero__title,
+  .story-companion-panel__title,
+  .story-mobile-bar__current,
+  .story-mobile-sheet__title
+),
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] main > section[data-story-chapter] :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-hero__summary,
+  .story-shell-caption,
+  .story-inline-note p,
+  .story-rail__count,
+  .story-rail__position,
+  .story-mobile-bar__position,
+  .story-mobile-sheet__position,
+  .story-progress__value,
+  .story-rail__current,
+  .story-mobile-sheet__current,
+  .by-line,
+  .local-note
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-hero__eyebrow,
+  .story-callout__label,
+  .story-rail__label,
+  .story-mobile-bar__eyebrow
+) {
+  color: var(--accent);
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-hero__title {
   font-size: clamp(2.2rem, 5vw, 4rem);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-chip {
-  background: rgba(32, 71, 88, 0.08);
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-button {
+  border-color: var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
-body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-rail__panel,
-body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-mobile-bar {
-  background: rgba(248, 243, 235, 0.97);
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-button:is(:hover, :focus-visible) {
+  background: var(--accent-deep);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-button--secondary,
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] .story-button--secondary:is(:hover, :focus-visible) {
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-mobile-bar__toggle,
+  .story-mobile-sheet__close
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+):is(:hover, :focus-visible, .is-active) {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"][data-story-route="exponentiation"] section.title > .title-region > .title {
+  letter-spacing: -0.04em;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"][data-story-route="eigenvectors-and-eigenvalues"] main > section[data-story-chapter],
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"][data-story-route="ordinary-least-squares-regression"] main {
+  overflow-x: auto;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] main > section[data-story-chapter] :is(button, select, input[type="number"]) {
+  border-color: var(--focus-border);
+  background-color: var(--surface-input);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="ev-essay"] main > section[data-story-chapter] input[type="range"] {
+  accent-color: var(--accent);
 }
 
 body[data-story-shell="engineering-sandbox"][data-reference-text="Double Descent"] #doubledescent-container,
@@ -1431,6 +2250,7 @@ body[data-story-shell="engineering-sandbox"][data-reference-text="Double Descent
 
 @media (min-width: 1380px) {
   body[data-story-shell="engineering-sandbox"][data-story-nav="generated"] {
+    box-sizing: border-box;
     padding-left: var(--story-rail-offset);
     padding-bottom: 0;
   }
@@ -1549,6 +2369,811 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {
     padding-left: 0.8rem;
     padding-right: 0.8rem;
   }
+}
+
+body[data-story-route="music-interactive-hub"],
+body[data-story-route="primary-interactive-hub"],
+body[data-story-route="blockchain-101-combined-flow"] {
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--ink);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
+  color: var(--ink);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) :is(.story-chip, .story-callout, .story-rail__panel, .story-mobile-sheet__panel) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-hero::before {
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button {
+  border-color: var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button:hover,
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button:focus-visible {
+  background: var(--accent-deep);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button--secondary,
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button--secondary:hover,
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"],
+  [data-story-route="blockchain-101-combined-flow"]
+) .story-button--secondary:focus-visible {
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) .story-mobile-bar {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  box-shadow: 0 -10px 22px color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-mobile-bar__toggle, .story-mobile-sheet__close) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) .story-progress {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) .story-progress__bar {
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-rail__link, .story-mobile-bar__link, .story-mobile-sheet__link)::before {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-rail__link, .story-mobile-bar__link, .story-mobile-sheet__link):is(:hover, :focus-visible, .is-active) {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-rail__link, .story-mobile-bar__link, .story-mobile-sheet__link).is-complete {
+  color: var(--accent);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-rail__link, .story-mobile-bar__link, .story-mobile-sheet__link).is-active::before {
+  border-color: var(--accent-deep);
+  background: var(--accent-deep);
+}
+
+body:is(
+  [data-story-route="music-interactive-hub"],
+  [data-story-route="primary-interactive-hub"]
+) :is(.story-rail__link, .story-mobile-bar__link, .story-mobile-sheet__link).is-complete::before {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+body[data-story-route="primary-interactive-hub"] :is(
+  .story-rail__meta,
+  .story-mobile-bar__status,
+  .story-mobile-sheet__status,
+  .story-progress,
+  .story-progress__value
+) {
+  display: none;
+}
+
+body[data-story-route="blockchain-101-combined-flow"] .story-callout[data-story-callout="play"] {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] {
+  --story-paper: var(--paper);
+  --story-paper-deep: var(--body-grad-to);
+  --story-paper-strong: var(--paper-strong);
+  --story-ink: var(--ink);
+  --story-ink-soft: var(--muted);
+  --story-border: var(--line);
+  --story-border-strong: var(--focus-border);
+  --story-steel: var(--accent);
+  --story-steel-bright: var(--accent-deep);
+  --story-accent: var(--accent-deep);
+  --story-mint: var(--accent-soft);
+  --story-shadow: var(--shadow);
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 22%),
+    radial-gradient(circle at 88% 14%, var(--body-grad-2), transparent 18%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--body-grad-to) 100%);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] :is(
+  .story-chip,
+  .story-callout[data-story-callout],
+  .story-lab-panel
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] :is(
+  .story-hero__title,
+  .story-checklist,
+  .story-lab-main label,
+  .story-lab-main legend
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] :is(
+  .story-hero__summary,
+  .story-shell-caption,
+  .text-muted
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .well:not(.well-success):not(.well-error),
+  .card:not(.card-success):not(.card-error):not(.sig-success),
+  .card-body
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .card-header,
+  .card-footer
+) {
+  border-color: var(--line);
+  background: var(--surface-toolbar);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .form-control,
+  input,
+  textarea
+) {
+  border-color: var(--focus-border);
+  background: var(--surface-input);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .btn-secondary,
+  .btn-default
+) {
+  border-color: var(--focus-border);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main .btn-outline-secondary {
+  border-color: var(--accent);
+  background: transparent;
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .well-success,
+  .card-success,
+  .sig-success,
+  .alert-success
+) {
+  border-color: color-mix(in srgb, #4f8b5b 48%, var(--line));
+  background: color-mix(in srgb, #4f8b5b 22%, var(--surface-card-strong));
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main :is(
+  .well-error,
+  .card-error,
+  .alert-danger
+) {
+  border-color: color-mix(in srgb, #b14c4c 52%, var(--line));
+  background: color-mix(in srgb, #b14c4c 22%, var(--surface-card-strong));
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"] .story-lab-main #map {
+  color-scheme: light;
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"][data-story-nav="native"] :is(
+  .navbar-toggle,
+  .navbar-toggler
+):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"][data-story-nav="native"] .navbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"][data-story-nav="native"] .navbar-collapse {
+    padding-inline: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"][data-story-nav="native"] .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    margin-block: 0;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="anders-lab"][data-story-nav="native"] .navbar-nav > li {
+    float: none;
+  }
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] {
+  --ie-mlu-inverse-surface: color-mix(in srgb, var(--body-grad-to) 18%, #10202b);
+  --ie-mlu-on-inverse: #f7f2e6;
+  background:
+    radial-gradient(circle at top left, var(--body-grad-1), transparent 28%),
+    radial-gradient(circle at 82% 10%, var(--body-grad-2), transparent 22%),
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--paper) 18%, var(--body-grad-to) 100%);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-chip,
+  .story-callout[data-story-callout],
+  .story-rail__panel,
+  .story-mobile-sheet__panel
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-hero::before {
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-hero__title,
+  .story-companion-panel__title,
+  .story-mobile-bar__current,
+  .story-mobile-sheet__title
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-hero__summary,
+  .story-shell-caption,
+  .story-inline-note p,
+  .story-rail__count,
+  .story-rail__position,
+  .story-mobile-bar__position,
+  .story-mobile-sheet__position,
+  .story-progress__value,
+  .story-rail__current,
+  .story-mobile-sheet__current
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-hero__eyebrow,
+  .story-callout__label,
+  .story-rail__label,
+  .story-mobile-bar__eyebrow
+) {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button {
+  border-color: var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button:hover,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button:focus-visible {
+  background: var(--accent-deep);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button--secondary,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button--secondary:hover,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-button--secondary:focus-visible {
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-mobile-bar {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  box-shadow: 0 -10px 22px color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-mobile-bar__toggle,
+  .story-mobile-sheet__close
+) {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-progress {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] .story-progress__bar {
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+) {
+  color: var(--muted);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+)::before {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+):is(:hover, :focus-visible, .is-active) {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+).is-complete {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+).is-active::before {
+  border-color: var(--accent-deep);
+  background: var(--accent-deep);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"] :is(
+  .story-rail__link,
+  .story-mobile-bar__link,
+  .story-mobile-sheet__link
+).is-complete::before {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+@media (max-width: 390px) {
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="linear-regression"] #equation-math,
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="logistic-regression"] #app {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 750px) {
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] header {
+    position: fixed;
+    inset: 0 0 auto;
+    display: block;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .cardSpan {
+    display: none;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] #toc {
+    flex-wrap: wrap;
+  }
+
+  body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] #toc a {
+    display: block;
+    min-height: 24px;
+    padding: 0.2rem 0.35rem;
+  }
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-nav="native"] header {
+  border-color: var(--line);
+  background: var(--surface-card-strong);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-nav="native"] #toc {
+  border-color: var(--line);
+  background: var(--surface-pill);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-nav="native"] #toc a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-nav="native"] #toc a.is-active,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-nav="native"] #toc a[aria-current="true"] {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] :is(
+  #intro-text,
+  #splits,
+  #informationgain,
+  #anotherlook,
+  #pertubations,
+  #limitations,
+  #final
+) {
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] #scrolly > article > section > :is(h2, p) {
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] :is(
+  #intro-text > p,
+  #splits > p.center-text,
+  #informationgain > p.center-text,
+  #informationgain #ig-text > p,
+  #anotherlook > p.center-text,
+  #pertubations > p.center-text,
+  #limitations > p.center-text,
+  #final > p
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] :is(
+  #splits > h2,
+  #splits > .boxed > h3,
+  #informationgain > h3,
+  #anotherlook > h3,
+  #pertubations > h3,
+  #limitations > h3,
+  #final > h3
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] :is(
+  #splits > .boxed,
+  #informationgain > .boxed
+) {
+  border-color: var(--line);
+  background: var(--surface-panel);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="decision-tree"] :is(
+  #splits,
+  #informationgain,
+  #anotherlook,
+  #pertubations,
+  #limitations,
+  #final
+) > p a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #introduction,
+  #resources
+) {
+  background-color: var(--ie-mlu-inverse-surface);
+  color: var(--ie-mlu-on-inverse);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #introduction > #subtitle,
+  #resources > p
+) {
+  color: var(--ie-mlu-on-inverse);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #article-condurcet,
+  #article-rf,
+  #ensemble,
+  #barcode,
+  #cantor-section,
+  #conclusion
+) {
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #article-condurcet,
+  #article-rf
+) > section > :is(h2, h3, p) {
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #ensemble,
+  #random-forest,
+  #barcode,
+  #cantor-section,
+  #conclusion
+) > h2,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #ensemble,
+  #barcode,
+  #cantor-section,
+  #conclusion
+) > p {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] :is(
+  #article-condurcet,
+  #article-rf,
+  #ensemble,
+  #barcode,
+  #cantor-section,
+  #conclusion
+) a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] #resources > p > a {
+  color: var(--ie-mlu-on-inverse);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] #chart-wrapper-condurcet .sliderText {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] #chart-wrapper-condurcet input.slider {
+  background-color: var(--surface-input);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] #chart-wrapper-condurcet input.slider::-webkit-slider-thumb {
+  background-color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="random-forest"] #chart-wrapper-condurcet input.slider::-moz-range-thumb {
+  background-color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="bias-variance"] :is(
+  #intro,
+  .step,
+  .model-text-wrapper,
+  #outro
+) {
+  background-color: var(--surface-card-strong);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="bias-variance"] :is(
+  #intro-icon .logo,
+  #intro__hed,
+  #intro__date,
+  #intro__dek,
+  .step > p,
+  .model-header,
+  .model-text,
+  #outro li
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="bias-variance"] :is(
+  #intro__dek,
+  .step > p,
+  .model-text,
+  #outro li
+) a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="bias-variance"] .data-button {
+  border-color: var(--line);
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="bias-variance"] .data-button:is(:hover, :focus-visible) {
+  border-color: var(--focus-border);
+  background-color: var(--accent-deep);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] #scrolly > article > section > :is(h2, p),
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] :is(
+  #intro-mobile,
+  #summary-mobile
+) > :is(h2, h4, p) {
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .item-text,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .button-container > p {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .button-container .button {
+  border-color: var(--line);
+  background-color: var(--surface-card-strong);
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .button-container .button:is(:hover, :focus-visible) {
+  border-color: var(--focus-border);
+  background-color: var(--accent-soft);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"] .button-container .button.active {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] #intro,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] :is(.step, .step-side),
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] #scrolly .step > p,
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] #scrolly-side .step-side > p {
+  background-color: var(--surface-card-strong);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] :is(
+  #intro-icon .logo,
+  #intro-hed,
+  .intro-sub,
+  #intro__date,
+  .model-header,
+  #top-note,
+  .model-text,
+  .step > p,
+  .step-side > p,
+  .body-text,
+  #conclusion li
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent"] :is(
+  .model-text,
+  .step > p,
+  .step-side > p,
+  .body-text,
+  #conclusion li
+) a {
+  color: var(--accent);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent2"] :is(
+  #intro-icon .logo,
+  #intro-hed,
+  .intro-sub,
+  #intro__date,
+  .subtitle,
+  .model-header,
+  #top-note,
+  .body-text,
+  .model-text,
+  .block-text,
+  .list-text,
+  #intro li
+) {
+  color: var(--ink);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent2"] .block-text {
+  border-color: var(--line);
+  background-color: var(--surface-card-strong);
+}
+
+body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="double-descent2"] :is(
+  .body-text,
+  .model-text,
+  .block-text,
+  .list-text,
+  #intro li
+) a {
+  color: var(--accent);
 }
 
 body[data-story-family="engineering-longform"] .segmented_control_on,

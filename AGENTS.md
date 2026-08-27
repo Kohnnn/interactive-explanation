@@ -14,6 +14,8 @@
 - Public-surface audit: `node tools/check-public-surface.mjs .`
 - Full Playwright smoke suite: `node tools/smoke-bundle.mjs .`
 - Focus smoke by route or inferred group: `node tools/smoke-bundle.mjs . --route <slug>` or `node tools/smoke-bundle.mjs . --group <group>`
+- Strict complete-experience gates for migrated Routes: add `--experience` to a focused route/group command.
+- Record approved performance and geometry evidence only with an explicit filter: add `--record-baseline --route <slug>` or `--record-baseline --group <group>`; use `--baseline <path>` for a non-default baseline file.
 - Smoke port and verbosity: `SMOKE_PORT=4173` and `SMOKE_VERBOSE=1` or `--verbose`.
 
 ## Route Metadata Contract

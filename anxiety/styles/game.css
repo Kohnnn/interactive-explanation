@@ -1086,6 +1086,12 @@ button:focus-visible, input:focus-visible, a:focus-visible {
 		display: none;
 	}
 }
+@media screen and (max-width: 359px) {
+	#game_container {
+		transform: scale(calc(100vw / 360px));
+		transform-origin: left center;
+	}
+}
 
 .hide-if-cuss-free{
 	display: none;

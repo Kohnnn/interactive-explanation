@@ -8,7 +8,8 @@
     "sync": "node tools/sync-route-metadata.mjs .",
     "audit": "node tools/check-public-surface.mjs .",
     "smoke": "node tools/smoke-bundle.mjs .",
-    "check": "node --check shared/site.js && node --check shared/route-families.js && node --check shared/engineering-sandbox.js && node --check shared/public-footer.js && node --check shared/theme-init.js && node --check tools/check-public-surface.mjs && node --check tools/sync-route-metadata.mjs && node --check tools/smoke-bundle.mjs && node --check tools/smoke/server.mjs",
+    "record-baseline": "node tools/smoke-bundle.mjs . --record-baseline --group all",
+    "check": "node --check shared/site.js && node --check shared/route-families.js && node --check shared/engineering-sandbox.js && node --check shared/public-footer.js && node --check shared/theme-init.js && node --check tools/check-public-surface.mjs && node --check tools/experience-baseline.mjs && node --check tools/sync-route-metadata.mjs && node --check tools/smoke-bundle.mjs && node --check tools/smoke/server.mjs",
     "unit": "node --test \"tools/tests/*.test.mjs\"",
     "test": "npm run sync && npm run audit && npm run check && npm run unit"
   },

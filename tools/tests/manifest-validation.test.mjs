@@ -11,7 +11,18 @@ const syncTool = path.resolve(here, "..", "sync-route-metadata.mjs");
 
 function makeRootWithManifest(manifest) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "manifest-test-"));
-  fs.writeFileSync(path.join(root, "routes.manifest.json"), JSON.stringify(manifest, null, 2));
+  const completeManifest = manifest.some((route) => route.slug === nextRoute.slug)
+    ? manifest
+    : [...manifest, nextRoute];
+  fs.writeFileSync(path.join(root, "routes.manifest.json"), JSON.stringify(completeManifest, null, 2));
+  completeManifest.forEach((route) => {
+    const routeDir = path.join(root, route.slug);
+    fs.mkdirSync(routeDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(routeDir, "index.html"),
+      "<!doctype html><html><head><title>Fixture</title></head><body><main>Fixture</main></body></html>",
+    );
+  });
   return root;
 }
 
@@ -26,14 +37,36 @@ const validRoute = {
   referenceUrl: "https://example.com/demo",
   intent: "explainer",
   docsUrl: "./docs/demo-route/",
+  shell: {
+    family: "demo-family",
+    variant: "essay",
+    navigation: "none",
+  },
+  suggestedNextSlug: "next-route",
+  experience: {
+    themeOwnership: "shell-only",
+    primarySurface: "main",
+    runtimeSurface: "main",
+    interactionProbe: "read-only",
+    networkPolicy: { mode: "local-only" },
+  },
+};
+
+const nextRoute = {
+  ...validRoute,
+  slug: "next-route",
+  title: "Next Route",
+  referenceUrl: "https://example.com/next",
+  docsUrl: "./docs/next-route/",
+  suggestedNextSlug: "demo-route",
 };
 
 test("valid manifest syncs and writes pages.json", () => {
-  const root = makeRootWithManifest([validRoute]);
+  const root = makeRootWithManifest([validRoute, nextRoute]);
   const result = runSync(root);
   assert.equal(result.status, 0, result.stderr);
   const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
-  assert.equal(pages.length, 1);
+  assert.equal(pages.length, 2);
   assert.equal(pages[0].slug, "demo-route");
 });
 
@@ -55,7 +88,21 @@ test("docs scaffolding emits the release metadata and theme contract", () => {
 
 test("neutral route without referenceUrl is valid", () => {
   const root = makeRootWithManifest([
-    { slug: "local-x", title: "Local X", summary: "Curated.", intent: "guided-path", referenceMode: "neutral", docsUrl: "./docs/local-x/" },
+    {
+      ...validRoute,
+      slug: "local-x",
+      title: "Local X",
+      summary: "Curated.",
+      intent: "guided-path",
+      referenceMode: "neutral",
+      docsUrl: "./docs/local-x/",
+      suggestedNextSlug: "next-route",
+      referenceUrl: undefined,
+    },
+    {
+      ...nextRoute,
+      suggestedNextSlug: "local-x",
+    },
   ]);
   const result = runSync(root);
   assert.equal(result.status, 0, result.stderr);
@@ -169,6 +216,27 @@ test("duplicate slug fails validation", () => {
   assert.match(result.stderr, /duplicate slug/i);
 });
 
+test("route slugs cannot escape the synchronization root", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "manifest-test-"));
+  const escapedSlug = `../${path.basename(root)}-outside`;
+  const escapedPath = path.resolve(root, escapedSlug);
+  const manifest = [
+    {
+      ...validRoute,
+      slug: escapedSlug,
+      docsUrl: `./docs/${escapedSlug}/`,
+    },
+    nextRoute,
+  ];
+  fs.writeFileSync(path.join(root, "routes.manifest.json"), JSON.stringify(manifest, null, 2));
+  assert.equal(fs.existsSync(escapedPath), false);
+  const result = runSync(root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /kebab-case slug/i);
+  assert.equal(fs.existsSync(escapedPath), false);
+  assert.equal(fs.existsSync(path.join(root, "pages.json")), false);
+});
+
 test("missing title fails validation", () => {
   const bad = { ...validRoute };
   delete bad.title;
@@ -199,4 +267,178 @@ test("non-absolute referenceUrl fails validation", () => {
   const result = runSync(root);
   assert.equal(result.status, 1);
   assert.match(result.stderr, /referenceUrl/i);
+});
+
+test("experience contracts are preserved in pages.json", () => {
+  const chapters = [{ selector: "#intro", title: "Introduction" }];
+  const route = {
+    ...validRoute,
+    shell: { ...validRoute.shell, navigation: "generated", chapters },
+  };
+  const root = makeRootWithManifest([route]);
+  const result = runSync(root);
+  assert.equal(result.status, 0, result.stderr);
+  const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
+  assert.deepEqual(pages[0].shell.chapters, chapters);
+});
+
+test("missing shell or experience contract fails validation", () => {
+  const missingShell = { ...validRoute };
+  delete missingShell.shell;
+  const missingExperience = { ...validRoute };
+  delete missingExperience.experience;
+  assert.match(runSync(makeRootWithManifest([missingShell])).stderr, /shell.*object/i);
+  assert.match(runSync(makeRootWithManifest([missingExperience])).stderr, /experience.*object/i);
+});
+
+test("navigation contracts enforce chapters and native controls", () => {
+  const generatedWithoutChapters = {
+    ...validRoute,
+    slug: "rigid-body-collisions",
+    referenceUrl: "https://example.com/rigid-body-collisions",
+    docsUrl: "./docs/rigid-body-collisions/",
+    shell: { ...validRoute.shell, navigation: "generated" },
+  };
+  const noneWithChapters = {
+    ...validRoute,
+    shell: { ...validRoute.shell, chapters: [{ selector: "#intro", title: "Intro" }] },
+  };
+  const nativeWithoutControl = { ...validRoute, shell: { ...validRoute.shell, navigation: "native" } };
+  const generatedWithNativeControl = {
+    ...validRoute,
+    shell: {
+      ...validRoute.shell,
+      navigation: "generated",
+      chapters: [{ selector: "#intro", title: "Intro" }],
+      nativeControl: { selector: "nav a", minimum: 1, kind: "link", fragmentOnly: false },
+    },
+  };
+  assert.match(runSync(makeRootWithManifest([generatedWithoutChapters])).stderr, /chapters/i);
+  assert.match(runSync(makeRootWithManifest([noneWithChapters])).stderr, /generated/i);
+  assert.match(runSync(makeRootWithManifest([nativeWithoutControl])).stderr, /nativeControl/i);
+  assert.match(runSync(makeRootWithManifest([generatedWithNativeControl])).stderr, /nativeControl/i);
+});
+
+test("chapters, continuation, theme roots, and deferred actions are validated", () => {
+  const duplicateChapters = {
+    ...validRoute,
+    shell: {
+      ...validRoute.shell,
+      navigation: "generated",
+      chapters: [
+        { selector: "#intro", title: "Intro", id: "intro" },
+        { selector: "#intro", title: "Again", id: "intro" },
+      ],
+    },
+  };
+  const unknownNext = { ...validRoute, suggestedNextSlug: "missing-route" };
+  const selfNext = { ...validRoute, suggestedNextSlug: validRoute.slug };
+  const hookWithoutRoot = {
+    ...validRoute,
+    experience: { ...validRoute.experience, themeOwnership: "runtime-hook" },
+  };
+  const invalidDeferred = {
+    ...validRoute,
+    experience: { ...validRoute.experience, networkPolicy: { mode: "deferred-remote", actions: [] } },
+  };
+  assert.match(runSync(makeRootWithManifest([duplicateChapters])).stderr, /duplicate chapter/i);
+  assert.match(runSync(makeRootWithManifest([unknownNext])).stderr, /unknown suggested/i);
+  assert.match(runSync(makeRootWithManifest([selfNext])).stderr, /cannot suggest itself/i);
+  assert.match(runSync(makeRootWithManifest([hookWithoutRoot])).stderr, /themeRoot/i);
+  assert.match(runSync(makeRootWithManifest([invalidDeferred])).stderr, /actions/i);
+});
+
+test("unknown contract keys fail validation", () => {
+  const cases = [
+    { ...validRoute, typo: true },
+    { ...validRoute, learning: { typo: true } },
+    { ...validRoute, shell: { ...validRoute.shell, typo: true } },
+    {
+      ...validRoute,
+      shell: {
+        ...validRoute.shell,
+        navigation: "generated",
+        chapters: [{ selector: "#intro", title: "Intro", typo: true }],
+      },
+    },
+    {
+      ...validRoute,
+      shell: {
+        ...validRoute.shell,
+        navigation: "native",
+        nativeControl: { selector: "nav a", minimum: 1, kind: "link", typo: true },
+      },
+    },
+    { ...validRoute, experience: { ...validRoute.experience, typo: true } },
+    {
+      ...validRoute,
+      experience: {
+        ...validRoute.experience,
+        networkPolicy: { mode: "local-only", typo: true },
+      },
+    },
+  ];
+  cases.forEach((route) => {
+    assert.match(runSync(makeRootWithManifest([route])).stderr, /unknown key/i);
+  });
+});
+
+test("native control kind invariants fail validation", () => {
+  const nativeRoute = (nativeControl) => ({
+    ...validRoute,
+    shell: { ...validRoute.shell, navigation: "native", nativeControl },
+  });
+  const cases = [
+    nativeRoute({ selector: "nav a", minimum: 1, kind: "link", childSelector: "span" }),
+    nativeRoute({ selector: "nav a", minimum: 1, kind: "link", peerSelectors: ["button"] }),
+    nativeRoute({ selector: "button", minimum: 1, kind: "state", fragmentOnly: true }),
+    nativeRoute({ selector: "button", minimum: 1, kind: "state", peerSelectors: ["button"] }),
+    nativeRoute({ selector: "button", minimum: 1, kind: "state", peerSelectors: ["[data-next]", "[data-next]"] }),
+    nativeRoute({ selector: "button", minimum: 1, kind: "state", activationSelector: "#start" }),
+    nativeRoute({ selector: "button", minimum: 1, kind: "state", readySelector: "#ready" }),
+  ];
+  cases.forEach((route) => {
+    assert.notEqual(runSync(makeRootWithManifest([route])).status, 0);
+  });
+});
+
+test("trimmed selectors, known probes, URLs, and policy hosts are required", () => {
+  const selectorWhitespace = {
+    ...validRoute,
+    experience: { ...validRoute.experience, primarySurface: " main" },
+  };
+  const unknownProbe = {
+    ...validRoute,
+    experience: { ...validRoute.experience, interactionProbe: "read-onyl" },
+  };
+  const malformedUrl = { ...validRoute, referenceUrl: "https://-bad.example/demo" };
+  const malformedHost = {
+    ...validRoute,
+    slug: "musicmap",
+    referenceUrl: "https://example.com/musicmap",
+    docsUrl: "./docs/musicmap/",
+    experience: {
+      ...validRoute.experience,
+      networkPolicy: {
+        mode: "deferred-remote",
+        actions: [
+          { selector: "#youtube-playlist-link", hosts: ["youtube.com", "a..b"] },
+        ],
+      },
+    },
+  };
+  assert.match(runSync(makeRootWithManifest([selectorWhitespace])).stderr, /trimmed/i);
+  assert.match(runSync(makeRootWithManifest([unknownProbe])).stderr, /invalid interactionProbe/i);
+  assert.match(runSync(makeRootWithManifest([malformedUrl])).stderr, /referenceUrl/i);
+  assert.match(runSync(makeRootWithManifest([malformedHost])).stderr, /invalid host/i);
+});
+
+test("chapter declarations are manifest-owned and load failures are observable", () => {
+  const source = fs.readFileSync(path.resolve(here, "..", "..", "shared", "engineering-sandbox.js"), "utf8");
+  assert.doesNotMatch(source, /routeChapterConfigs/);
+  assert.doesNotMatch(source, /\.catch\(\(\) => \[\]\)/);
+  assert.match(source, /pages\.json/);
+  assert.match(source, /cache:\s*["']no-store["']/);
+  assert.match(source, /console\.error\("Engineering Sandbox route metadata unavailable"/);
+  assert.match(source, /dataset\.storyManifest\s*=\s*error\s*\?\s*"error"\s*:\s*"ready"/);
 });

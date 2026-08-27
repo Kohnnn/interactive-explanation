@@ -45,9 +45,22 @@ a {
 }
 
 .site-page {
+  position: relative;
   width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
   padding: 56px 0;
+}
+
+.site-page::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 28rem;
+  background:
+    radial-gradient(circle at 12% 18%, var(--body-grad-1), transparent 32%),
+    radial-gradient(circle at 88% 12%, var(--body-grad-2), transparent 28%);
+  content: "";
+  pointer-events: none;
 }
 
 .hero,
@@ -59,18 +72,40 @@ a {
 }
 
 .hero {
-  padding: 30px 0 38px;
+  position: relative;
+  padding: 38px 0 44px;
+}
+
+.hero::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent 68%);
+  content: "";
+  opacity: 0.55;
 }
 
 .hero-compact {
   margin-bottom: 26px;
 }
 
-.hero--atlas {
-  min-height: 340px;
-  display: grid;
-  align-content: center;
-  justify-items: start;
+body[data-page-type="home"] {
+  background:
+    linear-gradient(180deg, var(--body-grad-from) 0%, var(--body-grad-to) 58%, var(--paper) 100%);
+}
+
+body[data-page-type="home"] .hero--atlas {
+  min-height: min(56vh, 520px);
+}
+
+body[data-page-type="home"] .hero--atlas .lead {
+  max-width: 38rem;
+}
+
+body[data-page-type="home"] .inventory-section {
+  padding-top: 42px;
 }
 
 .inventory-section {
@@ -351,6 +386,28 @@ a {
   padding-top: 18px;
 }
 
+.page-card__continuation {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--accent-deep);
+  font: 600 0.82rem/1.45 var(--font-mono);
+  text-underline-offset: 0.18em;
+}
+
+.page-card__continuation:hover,
+.page-card__continuation:focus,
+.page-card__continuation:focus-visible {
+  color: var(--accent);
+}
+
+.page-card__continuation:focus,
+.page-card__continuation:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .note-section,
 .module-card {
   padding: 22px 0;
@@ -374,6 +431,10 @@ a {
 
 .plain-list li + li {
   margin-top: 8px;
+}
+
+.docs-page :is(code, .chip, .plain-list li) {
+  overflow-wrap: anywhere;
 }
 
 .back-link {

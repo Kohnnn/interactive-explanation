@@ -2,19 +2,20 @@
   {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly into the compiled linear-regression app without a separate editorial hero, chapter rail, or play-first framing layer.",
-    "localStatus": "The local route now adds the shared Engineering Sandbox shell with a local font stack, stronger editorial hero, chapter jump navigation, and play-first prompts while leaving the original compiled charts and controls intact.",
+    "localStatus": "The local route adds token-driven light and dark shared chrome plus manifest-owned chapter navigation while leaving the compiled #app charts, controls, and scenes intrinsic.",
     "sourceFiles": [
       "index.html",
       "../shared/engineering-sandbox.css",
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The shell is additive and scoped through body data attributes rather than a rewritten app layout system.",
-      "Chapter links are attached after mount to stable top-level sections so the compiled runtime keeps control of its own internals."
+      "The mlu-pilot adapter stops at the authored shell and never selects descendants of the compiled #app runtime.",
+      "Chapter links are attached after mount from manifest-owned stable top-level selectors so the compiled runtime keeps control of its own internals.",
+      "A Route-local observer titles only hidden resize-listener iframes inserted by the compiled runtime without editing the bundle."
     ],
     "evidence": [
-      "The hardening plan extends the Engineering Sandbox shell from static pilots to harder JS-rendered ML routes once the shared layout and navigation contract stabilizes.",
-      "Shared smoke coverage now checks that the route exposes the Engineering Sandbox shell before exercising the original fit, loss, and gradient-descent scenes."
+      "Stored light and dark probes confirm that shared chrome changes while compiled runtime geometry and interaction ownership remain unchanged.",
+      "Strict MLU experience and Route smoke coverage validate generated navigation, helper-frame titles, and the original fit, loss, and gradient-descent scenes."
     ]
   },
   {
@@ -104,6 +105,22 @@
     "evidence": [
       "Focused browser coverage verifies the mounted lesson clears its loading state before fit and loss interactions.",
       "Phase 10 source and browser contracts enforce exactly one meaningful main landmark."
+    ]
+  },
+  {
+    "moduleId": "universal-route-html-seams",
+    "originalBehavior": "The Route keeps its authored top-level document, runtime roots, and script order.",
+    "localStatus": "Manifest synchronization owns the body Engineering Sandbox metadata and shared head seams while preserving Route runtime placement.",
+    "sourceFiles": [
+      "../../linear-regression/index.html",
+      "../../routes.manifest.json",
+      "../../tools/sync-route-metadata.mjs"
+    ],
+    "notes": [
+      "Ticket 12 synchronizes the manifest-owned Engineering Sandbox body contract and shared head seams without moving existing Route runtimes or scripts."
+    ],
+    "evidence": [
+      "Route HTML declares canonical data-story metadata plus one color-scheme meta, synchronous theme init before Route styles, Sandbox CSS after Route styles, and one deferred Sandbox runtime whose existing position is preserved."
     ]
   }
 ]

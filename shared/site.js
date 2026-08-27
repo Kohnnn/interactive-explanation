@@ -154,7 +154,7 @@ function applyFilters(pages, state) {
   });
 }
 
-function createPageCard(page, maxAddedDate, promoted) {
+function createPageCard(page, maxAddedDate, promoted, pagesBySlug) {
   const card = createElement("article", "page-card");
   card.dataset.intent = page.intent;
   card.dataset.family = page.familyKey;
@@ -176,6 +176,7 @@ function createPageCard(page, maxAddedDate, promoted) {
     card.appendChild(tags);
   }
   const actions = createElement("div", "action-row action-row--compact");
+  actions.dataset.pageCardActions = "";
   const routeLink = createElement("a", "action-link", promoted ? "Start path" : "Open route");
   routeLink.href = "./" + page.slug + "/";
   actions.appendChild(routeLink);
@@ -183,6 +184,13 @@ function createPageCard(page, maxAddedDate, promoted) {
   docsLink.href = page.docsUrl;
   actions.appendChild(docsLink);
   card.appendChild(actions);
+  const suggestedNext = pagesBySlug.get(page.suggestedNextSlug);
+  if (suggestedNext) {
+    const continuation = createElement("a", "page-card__continuation", "Suggested next: " + suggestedNext.title);
+    continuation.dataset.pageCardContinuation = "";
+    continuation.href = "./" + suggestedNext.slug + "/";
+    card.appendChild(continuation);
+  }
   return card;
 }
 
@@ -246,6 +254,9 @@ async function initHome() {
       throw new Error("Manifest unavailable");
     }
     const pages = (await response.json()).map(enrichPage);
+    const pagesBySlug = new Map(pages.map(function (page) {
+      return [page.slug, page];
+    }));
     const maxAddedDate = getMaxAddedDate(pages);
     const topics = new Set(pages.flatMap(function (page) {
       return page.topics;
@@ -265,7 +276,7 @@ async function initHome() {
     }).sort(function (left, right) {
       return left.index - right.index;
     }).forEach(function (page) {
-      guidedPathMount.appendChild(createPageCard(page, maxAddedDate, true));
+      guidedPathMount.appendChild(createPageCard(page, maxAddedDate, true, pagesBySlug));
     });
 
     function render(mode) {
@@ -296,7 +307,7 @@ async function initHome() {
         return;
       }
       filtered.forEach(function (page) {
-        mount.appendChild(createPageCard(page, maxAddedDate, false));
+        mount.appendChild(createPageCard(page, maxAddedDate, false, pagesBySlug));
       });
     }
 
