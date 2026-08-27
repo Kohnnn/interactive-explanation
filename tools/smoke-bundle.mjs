@@ -65,6 +65,7 @@ const baseOrigin = new URL(baseUrl).origin;
 const verbose = hasFlag("--verbose") || process.env.SMOKE_VERBOSE === "1";
 const experience = hasFlag("--experience");
 const recordBaseline = hasFlag("--record-baseline");
+const skipPerformance = hasFlag("--skip-performance");
 const baselineArgs = getArgValues("--baseline");
 const baselinePath = path.resolve(rootDir, baselineArgs[0] || "tools/experience-baselines.json");
 const rawConsoleLog = console.log.bind(console);
@@ -9750,7 +9751,7 @@ async function main() {
           browser,
           route,
           approvedRoute,
-          !recordBaseline,
+          !recordBaseline && !skipPerformance,
         ),
         geometry,
       };

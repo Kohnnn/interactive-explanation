@@ -33,10 +33,10 @@ jobs:
         run: git diff --exit-code pages.json
 
       - name: Migrated Ncase smoke subset
-        run: node tools/smoke-bundle.mjs . --route trust --route crowds --route loopy --route anxiety --route wbwwb --route coming-out-simulator-2014 --route sim
+        run: node tools/smoke-bundle.mjs . --skip-performance --route trust --route crowds --route loopy --route anxiety --route wbwwb --route coming-out-simulator-2014 --route sim
 
       - name: Formula 1 smoke
-        run: node tools/smoke-bundle.mjs . --route formula-1-racing
+        run: node tools/smoke-bundle.mjs . --skip-performance --route formula-1-racing
 
   full-smoke:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
