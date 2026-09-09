@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import vm from "node:vm";
+import { fileURLToPath } from "node:url";
 import { readPerformanceEvidence } from "../smoke-bundle.mjs";
 import { parseOptions, planCells, statistics, geometryChanges, openJournal, summarizeCell, capture, verifySourceFixture } from "../diagnose-baseline.mjs";
 
@@ -56,8 +57,9 @@ test("Sim typography guards missing main and publishes resize without invoking i
 
 test("source fixture requires Git blob bytes, mode and exact paths before capture", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "baseline-source-"));
-  const repository = new URL("../../../", import.meta.url).pathname;
-  const prefix = "interactive-explanation/docs/sim";
+  const site = fileURLToPath(new URL("../../", import.meta.url));
+  const repository = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: site, encoding: "utf8" }).stdout.trim();
+  const prefix = path.relative(repository, path.join(site, "docs/sim")).split(path.sep).join("/");
   try {
     const tree = spawnSync("git", ["ls-tree", "-r", "HEAD", "--", prefix], { cwd: repository, encoding: "utf8" });
     assert.equal(tree.status, 0);
