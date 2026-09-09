@@ -145,6 +145,9 @@
 		publish("ui/resize");
 		main.setAttribute("aria-busy", "false");
 	}
+	subscribe("ui/resize", () => queueMicrotask(() => {
+		if (Model.data.states && document.querySelector("main[data-runtime-main]")) publish("/grid/updateAgents");
+	}));
 	subscribe("/model/init", settleEditorTypography);
 	if (Model.data.states) settleEditorTypography();
 </script>

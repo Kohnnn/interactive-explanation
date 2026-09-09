@@ -55,6 +55,56 @@ test("Sim typography guards missing main and publishes resize without invoking i
   assert.deepEqual(attributes, [["aria-busy", "true"], ["aria-busy", "false"]]);
 });
 
+test("Sim resize redraws after native listeners without advancing or resetting state", async () => {
+  const html = fs.readFileSync(new URL("../../sim/index.html", import.meta.url), "utf8");
+  const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match => match[1]).find(value => value.includes("settleEditorTypography"));
+  for (const initialized of [false, true]) {
+    let present = true;
+    let resolveFonts;
+    const order = [];
+    const model = { data: initialized ? { states: [{ id: 0, icon: "X" }] } : {}, isPlaying: false };
+    const context = vm.createContext({
+      Model: model, queueMicrotask,
+      document: {
+        querySelector: () => present ? { setAttribute: () => {} } : null,
+        fonts: { ready: new Promise(resolve => { resolveFonts = resolve; }) },
+      },
+      requestAnimationFrame: resolve => resolve(),
+    });
+    context.window = context;
+    vm.runInContext(fs.readFileSync(new URL("../../sim/scripts/libraries/minpubsub.js", import.meta.url), "utf8"), context);
+    context.subscribe("ui/resize", () => order.push("native clear"));
+    context.subscribe("/grid/updateAgents", () => order.push("render"));
+    vm.runInContext(script, context);
+    context.publish("ui/resize");
+    assert.deepEqual(order, ["native clear"]);
+    await Promise.resolve();
+    assert.deepEqual(order, initialized ? ["native clear", "render"] : ["native clear"]);
+    model.data.states = [{ id: 0, icon: "X" }];
+    const before = JSON.stringify(model);
+    context.subscribe("ui/resize", () => order.push("later native clear"));
+    order.length = 0;
+    context.publish("ui/resize");
+    assert.deepEqual(order, ["later native clear", "native clear"]);
+    await Promise.resolve();
+    assert.deepEqual(order, ["later native clear", "native clear", "render"]);
+    order.length = 0;
+    const settling = context.settleEditorTypography();
+    resolveFonts();
+    await settling;
+    await Promise.resolve();
+    assert.equal(order.at(-1), "render");
+    assert.equal(JSON.stringify(model), before);
+    present = false;
+    order.length = 0;
+    await context.settleEditorTypography();
+    assert.deepEqual(order, []);
+    context.publish("ui/resize");
+    await Promise.resolve();
+    assert.deepEqual(order, ["later native clear", "native clear"]);
+  }
+});
+
 test("source fixture requires Git blob bytes, mode and exact paths before capture", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "baseline-source-"));
   const site = fileURLToPath(new URL("../../", import.meta.url));
