@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "slug": "rigid-body-collisions",
+  "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
+  "referenceSha": "63a8bddc982ab8cb5d641386d0186027fe0b57b1",
+  "sources": {
+    "rigid-body-collisions/index.html": "b869183d1d87c4bdcd81653176e9c2bbaffbbcd8",
+    "rigid-body-collisions/lesson.css": "ff947bff944726a899fb1b989e2651c71068a812",
+    "rigid-body-collisions/lesson.js": "42fa63a969f4a7899ce2a46cd471406bfdf80401",
+    "rigid-body-collisions/physics.js": "5b9046748618644107b518114fba46ad3130a4f0",
+    "rigid-body-collisions": "b49bcf3e5e123deb8bb43e4136181889e7da8a92",
+    "shared": "b6c520c2f235bf78afe9b1c3caf4fd90fcea1516",
+    "favicon.png": "88bd46c4db5ee898ff7e34334efd570ed3682def",
+    "pages.json": "64610decd8fa827b882ffeac41e6bfd42aab7c3a",
+    "routes.manifest.json": "64610decd8fa827b882ffeac41e6bfd42aab7c3a"
+  }
+}

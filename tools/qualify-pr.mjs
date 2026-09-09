@@ -4,11 +4,13 @@ import os from "node:os";
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import { execFileSync } from "node:child_process";
 import { chromium } from "playwright";
 import { capture, planCells, openJournal, statistics, geometryChanges, sourceIdentity, verifySourceFixture } from "./diagnose-baseline.mjs";
 import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEvidence } from "./experience-baseline.mjs";
 import { createSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
+import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 
 const require = createRequire(import.meta.url);
 const timings = ["domContentLoadedMs", "loadMs"];
@@ -83,11 +85,38 @@ export async function collectCellPair(options, baseCell, headCell, collect, jour
   return { control, before, after };
 }
 
+export const rigidAdmission = JSON.parse(fs.readFileSync(new URL("./rigid-original-admission.json", import.meta.url), "utf8"));
+
+export function verifyRigidAdmission(contract, options, resolveSource) {
+  assert.deepEqual(contract, rigidAdmission, "Unknown or modified original admission contract");
+  assert.equal(contract.version, 1, "Unknown admission version");
+  assert.equal(contract.slug, "rigid-body-collisions", "Unauthorized original route");
+  assert.equal(options["base-sha"], contract.baseSha, "Original admission base differs");
+  assert(options.reference, "Original reference checkout required");
+  for (const side of ["reference", "head"]) {
+    for (const [file, hash] of Object.entries(contract.sources)) {
+      assert.equal(resolveSource(options[side], file), hash, `Original admission source differs: ${side}/${file}`);
+    }
+  }
+  return contract;
+}
+
+export async function collectRigidAdmission(options, referenceCell, headCell, collect, journal, legacy) {
+  assert.equal(headCell.route.slug, rigidAdmission.slug, "Unauthorized original route");
+  assert.equal(referenceCell.route.slug, rigidAdmission.slug, "Unauthorized original reference");
+  journal.append({ type: "legacy-original-evidence", cell: `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`, performance: compareCell(legacy.control, legacy.before, legacy.after), geometry: compareGeometry(legacy.control, legacy.before, legacy.after), equivalence: "not claimed; archived engine is not the original admission reference" });
+  const control = await collect(options.reference, referenceCell, "original-control");
+  const before = await collect(options.reference, referenceCell, "original-reference");
+  journal.append({ type: "original-calibration", result: compareCell(control, before, before) });
+  const after = await collect(options.head, headCell, "original-head");
+  return { control, before, after };
+}
+
 export function parseOptions(args) {
   const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = args[index];
-    assert(["--base", "--head", "--base-sha", "--head-sha", "--output"].includes(key), `Unknown option: ${key}`);
+    assert(["--base", "--head", "--base-sha", "--head-sha", "--output", "--reference"].includes(key), `Unknown option: ${key}`);
     assert(!Object.hasOwn(options, key.slice(2)), `Duplicate option: ${key}`);
     const value = args[index + 1];
     assert(value && !value.startsWith("--"), `Missing value: ${key}`);
@@ -96,8 +125,13 @@ export function parseOptions(args) {
   for (const key of ["base", "head", "base-sha", "head-sha", "output"]) assert(options[key], `Required: --${key}`);
   for (const key of ["base-sha", "head-sha"]) assert(/^[a-f0-9]{40}$/.test(options[key]), `Invalid SHA: ${key}`);
   for (const key of ["base", "head"]) options[key] = fs.realpathSync(options[key]);
+  if (options.reference) {
+    options.reference = fs.realpathSync(options.reference);
+    options["reference-sha"] = rigidAdmission.referenceSha;
+    assert(![options.base, options.head].includes(options.reference), "Separate original reference required");
+  }
   options.output = path.join(fs.realpathSync(path.dirname(path.resolve(options.output))), path.basename(options.output));
-  for (const root of [options.base, options.head]) {
+  for (const root of [options.base, options.head, options.reference].filter(Boolean)) {
     const relative = path.relative(root, options.output);
     assert(relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative), "Evidence must be outside measured sources");
   }
@@ -115,12 +149,19 @@ export async function main(args = process.argv.slice(2)) {
   const totals = { performance: {}, geometry: {} };
   const manifest = root => JSON.parse(fs.readFileSync(path.join(root, "routes.manifest.json"), "utf8"));
   try {
-    for (const side of ["base", "head"]) {
+    for (const side of ["base", "head", ...(options.reference ? ["reference"] : [])]) {
       identities[side] = sourceIdentity(options[side]);
       assertIdentity(identities[side], options[`${side}-sha`]);
       const verified = verifySourceFixture(options[side], options[side], options[`${side}-sha`], "");
       journal.append({ type: "source", side, identity: identities[side], verified });
     }
+    if (options.reference) {
+      verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
+      journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
+      const science = execFileSync(process.execPath, ["--test", "tools/tests/rigid-body-collisions.test.mjs"], { cwd: options.head, encoding: "utf8" });
+      journal.append({ type: "original-science", status: "passed", output: science });
+    }
+    const referenceCells = options.reference ? planCells(manifest(options.reference), [rigidAdmission.slug]) : [];
     const cells = planCells(manifest(options.head), []);
     const baseCells = planCells(manifest(options.base), []);
     const key = cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`;
@@ -145,8 +186,13 @@ export async function main(args = process.argv.slice(2)) {
       }
       return samples;
     }
+    if (options.reference) journal.append({ type: "original-functional", status: "passed", evidence: await verifyRigidBrowser(options.head, browser) });
     for (let index = 0; index < cells.length; index++) {
-      const { control, before, after } = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
+      let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
+      if (options.reference && cells[index].route.slug === rigidAdmission.slug) {
+        pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
+      }
+      const { control, before, after } = pair;
       const performance = compareCell(control, before, after);
       const geometry = compareGeometry(control, before, after);
       journal.append({ type: "cell", cell: key(cells[index]), performance, geometry });
@@ -159,7 +205,7 @@ export async function main(args = process.argv.slice(2)) {
     journal.append({ type: "fatal", message: error.stack || error.message });
   } finally {
     try { await browser?.close(); } catch (error) { failed = true; journal.append({ type: "cleanup-error", message: error.message }); }
-    for (const side of ["base", "head"]) {
+    for (const side of ["base", "head", ...(options.reference ? ["reference"] : [])]) {
       try {
         const actual = sourceIdentity(options[side]);
         assertIdentity(actual, options[`${side}-sha`], identities[side]);

@@ -4,10 +4,9 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { createSmokeServer } from "./smoke/server.mjs";
 
-const rootDir = fileURLToPath(new URL("../", import.meta.url));
+export async function verifyRigidBrowser(rootDir, browser) {
 const server = await createSmokeServer({ rootDir: path.resolve(rootDir), host: "127.0.0.1", port: 0, mountPath: "/interactive-explanation/" }).start();
 const url = `http://127.0.0.1:${server.address().port}/interactive-explanation/rigid-body-collisions/`;
-const browser = await chromium.launch({ headless: true });
 const samples = [];
 try {
   for (const width of [1400, 390, 320]) for (const theme of ["light", "dark"]) for (let repeat = 0; repeat < 3; repeat++) {
@@ -15,6 +14,9 @@ try {
     await context.addInitScript((value) => localStorage.setItem("theme", value), theme);
     const page = await context.newPage();
     const errors = [];
+    page.on("request", (request) => {
+      if (new URL(request.url()).origin !== new URL(url).origin || request.url().includes("/_nuxt/")) errors.push(`Forbidden original request: ${request.url()}`);
+    });
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
     page.on("requestfailed", (request) => errors.push(request.url()));
@@ -98,8 +100,18 @@ try {
     assert.equal(await page.locator("#b-after").textContent(), "2.000");
     await context.close();
   }
-  console.log(JSON.stringify({ browser: browser.version(), reference: "original replacement, not legacy geometry", cells: 6, freshContexts: 18, fallbackContexts: 4, samples }, null, 2));
+  return { browser: browser.version(), reference: "original replacement, not legacy geometry", cells: 6, freshContexts: 18, fallbackContexts: 4, samples };
 } finally {
-  await browser.close();
+  server.closeAllConnections();
   await new Promise((resolve) => server.close(resolve));
+}
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    console.log(JSON.stringify(await verifyRigidBrowser(fileURLToPath(new URL("../", import.meta.url)), browser), null, 2));
+  } finally {
+    await browser.close();
+  }
 }
