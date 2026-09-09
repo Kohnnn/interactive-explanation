@@ -11,6 +11,7 @@ import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEv
 import { createSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
+import { geometryReview, geometrySourceBinding, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
 
 const require = createRequire(import.meta.url);
 const timings = ["domContentLoadedMs", "loadMs"];
@@ -67,12 +68,18 @@ export function compareCell(control, before, after) {
   return result;
 }
 
-export function compareGeometry(control, before, after) {
+export function compareGeometry(control, before, after, review, cell) {
   for (const samples of [control, before, after]) {
     if (samples.length !== 3 || samples.some(sample => sample.status !== "measured" || !sample.geometry || JSON.stringify(sample.geometry) !== JSON.stringify(samples[0].geometry))) return { status: "blocked", reason: "Missing or unstable geometry" };
   }
   if (geometryChanges(control[0].geometry, before[0].geometry).length) return { status: "blocked", reason: "Same-source A/A geometry changed" };
   const changes = geometryChanges(before[0].geometry, after[0].geometry);
+  if (review) {
+    try {
+      for (const sample of [...control, ...before, ...after]) assert(sample.ready && Array.isArray(sample.errors) && sample.errors.length === 0, "Missing or failed reviewed sample");
+      return admitGeometryReview(review, cell, before[0].geometry, after[0].geometry, changes);
+    } catch (error) { return { status: "blocked", changes, reason: error.message }; }
+  }
   return { status: changes.length ? "blocked" : "passed", changes, reason: changes.length ? "Same-environment source changes require specific review; replacement routes need independent acceptance" : "Same-environment geometry unchanged; not approval of legacy baseline provenance" };
 }
 
@@ -155,6 +162,8 @@ export async function main(args = process.argv.slice(2)) {
       const verified = verifySourceFixture(options[side], options[side], options[`${side}-sha`], "");
       journal.append({ type: "source", side, identity: identities[side], verified });
     }
+    const reviewedGeometry = verifyGeometryReview(geometryReview, Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side])])));
+    journal.append({ type: "geometry-review-contract", reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, cells: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
     if (options.reference) {
       verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
       journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
@@ -194,10 +203,10 @@ export async function main(args = process.argv.slice(2)) {
       }
       const { control, before, after } = pair;
       const performance = compareCell(control, before, after);
-      const geometry = compareGeometry(control, before, after);
+      const geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
       journal.append({ type: "cell", cell: key(cells[index]), performance, geometry });
       for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
-      if (performance.status !== "passed" || geometry.status !== "passed") failed = true;
+      if (performance.status !== "passed" || !["passed", "passed-reviewed"].includes(geometry.status)) failed = true;
       completed++;
     }
   } catch (error) {
