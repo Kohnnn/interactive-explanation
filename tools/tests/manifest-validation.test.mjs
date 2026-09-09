@@ -294,9 +294,9 @@ test("missing shell or experience contract fails validation", () => {
 test("navigation contracts enforce chapters and native controls", () => {
   const generatedWithoutChapters = {
     ...validRoute,
-    slug: "rigid-body-collisions",
-    referenceUrl: "https://example.com/rigid-body-collisions",
-    docsUrl: "./docs/rigid-body-collisions/",
+    slug: "decision-tree",
+    referenceUrl: "https://example.com/decision-tree",
+    docsUrl: "./docs/decision-tree/",
     shell: { ...validRoute.shell, navigation: "generated" },
   };
   const noneWithChapters = {

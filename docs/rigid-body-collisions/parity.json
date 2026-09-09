@@ -1,91 +1,41 @@
 [
   {
-    "moduleId": "engineering-sandbox-story-shell",
-    "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
-    "localStatus": "The local route now adds the shared Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original interactive runtime intact.",
+    "moduleId": "original-one-dimensional-collision-model",
+    "originalBehavior": "The approved new reference is one analytical encounter between two translating carts, not the retired archived article or its geometry.",
+    "localStatus": "Independently authored from momentum balance and the coefficient-of-restitution constraint; the public route contains no archived engine, fonts, prose or scenes.",
     "sourceFiles": [
-      "index.html",
-      "../shared/engineering-sandbox.css",
-      "../shared/engineering-sandbox.js"
+      "../../rigid-body-collisions/physics.js",
+      "../../rigid-body-collisions/lesson.js",
+      "../../rigid-body-collisions/index.html"
     ],
     "notes": [
-      "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
-      "Runtime chapter links are resolved through the explicit data-story-route contract so the page does not depend only on pathname parsing."
+      "A starts left of B; only uA > uB receives an impulse. e is bounded to [0,1].",
+      "Mass bounds are 0.1–10 kg; starting velocity bounds are −10–10 m/s. Nonfinite and nonnumeric inputs are rejected.",
+      "Only central 1D translation is modeled. No angular or 2D collision claim, animation, persistence, external media or new dependency."
     ],
     "evidence": [
-      "The hardened rollout expands the Engineering Sandbox essay shell beyond MLU into the next article-shaped technical families.",
-      "Shared smoke coverage now checks hero-before-chapter ordering, generated navigation behavior, and desktop non-overlap before exercising the original interactive scenes."
+      "tools/tests/rigid-body-collisions.test.mjs contains exact equal/unequal-mass and zero-restitution cases plus 2,000 conservation/energy-accounting grid cases and invalid-input checks."
     ]
   },
   {
-    "moduleId": "article-shell-and-local-nuxt-runtime-handoff",
-    "originalBehavior": "The published article loads through a Nuxt shell with a large vendored chunk graph, route-local fonts, many interactive mounts, and a longform markdown body rendered into one page.",
-    "localStatus": "The local route keeps the published article structure, Nuxt runtime, and chunk graph while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook.",
+    "moduleId": "original-lab-shell-and-controls",
+    "originalBehavior": "The new reference uses five labeled native sliders, an immediate before/after table, textual direction descriptions, and input-only reset.",
+    "localStatus": "Lab variant with navigation none, neutral reference mode, existing shared theme/footer and manifest-owned Bicycle continuation. Four documented section anchors map to the new lesson.",
     "sourceFiles": [
-      "../../rigid-body-collisions/index.html",
-      "../../rigid-body-collisions/_nuxt/D4VqJVMa.js",
-      "../../rigid-body-collisions/_nuxt/_id_.pb_gld3k.css"
-    ],
-    "notes": [
-      "The public body no longer exposes the upstream RSS, Twitter, e-mail, or Fathom provenance surfaces.",
-      "The route keeps the original article structure instead of condensing the collision walkthrough into a custom rewrite."
-    ],
-    "evidence": [
-      "Implementation planning treated the flattened route root, full local chunk graph, and local font handoff as parity-critical.",
-      "W0 correction: Chromium 148 reproduces Nuxt Page not found and hydration errors in all 18 controlled samples. Visible lesson controls do not establish runtime cleanliness. Changing the existing app.baseURL to the served absolute directory removes Page not found but hydrates the compiled home route and removes lesson sliders; that experiment was reverted. No bundled code or runtime config change is retained. Supported route remapping/rebuild is a separate blocked seam. See .scratch/complete-route-experience/research/37-prerequisite-report.md at the repository root."
-    ]
-  },
-  {
-    "moduleId": "opening-collision-canvas-and-time-controls",
-    "originalBehavior": "The published article opens with a large collision canvas and early time or velocity controls that introduce the basic scene and frame-by-frame collision intuition.",
-    "localStatus": "The local route keeps the opening collision canvas and early control surfaces under the original published runtime.",
-    "sourceFiles": [
-      "../../rigid-body-collisions/index.html",
-      "../../rigid-body-collisions/_nuxt/D4VqJVMa.js"
-    ],
-    "notes": [
-      "The opening canvas remains mounted on first load at the local route root.",
-      "The route still exposes the published button and range-control surfaces instead of replacing them with static screenshots."
-    ],
-    "evidence": [
-      "The route-specific smoke contract includes the opening canvas, local essay fonts, and early control presence as explicit route checks.",
-      "Shared smoke coverage verifies the article boots on the flattened root without the vendored not-found card surfacing in the public body."
-    ]
-  },
-  {
-    "moduleId": "later-vector-normal-and-dot-product-sections",
-    "originalBehavior": "The published article continues with vector, normal, and dot-product sections that combine canvas scenes, inline formulas, and later control paths across the longform page.",
-    "localStatus": "The local route keeps the later interactive sections, inline formulas, and article-long runtime mounted under the original vendored assets.",
-    "sourceFiles": [
-      "../../rigid-body-collisions/index.html",
-      "../../rigid-body-collisions/_nuxt/",
-      "../../rigid-body-collisions/fonts/Essays1743.woff"
-    ],
-    "notes": [
-      "The article’s later interactive and formula sections remain in the same order and typography as the published page.",
-      "The local route keeps the custom essay fonts local so the longform styling and section headings remain intact under subpath hosting."
-    ],
-    "evidence": [
-      "Implementation planning treated the later collision-normal and dot-product article flow as parity-sensitive route behavior.",
-      "Shared smoke coverage verifies the route stays responsive, keeps local script and font handoff intact, and remains free of upstream runtime requests."
-    ]
-  },
-  {
-    "moduleId": "complete-systems-family-experience",
-    "originalBehavior": "The Nuxt article kept its compiled prose and controls, global WebGL canvas, delayed scene mounts, and authored z-20 content stack without a complete shared-shell ownership record.",
-    "localStatus": "The completed systems-family route themes only shared shell surfaces, renders four exact manifest-owned chapters, and lifts generated navigation above the authored z-20 prose stack while leaving Nuxt, KaTeX, controls, and WebGL output unchanged.",
-    "sourceFiles": [
-      "../../rigid-body-collisions/index.html",
+      "../../rigid-body-collisions/lesson.css",
       "../../routes.manifest.json",
-      "../../shared/engineering-sandbox.css",
       "../../tools/smoke-bundle.mjs"
     ],
     "notes": [
-      "The shell-only adapter does not recolor Nuxt-emitted prose, KaTeX, controls, or canvas output.",
-      "The exact-route navigation stacking rule restores mobile tray pointer ownership without changing Nuxt lifecycle, canvas backing dimensions, transforms, scissor behavior, or control geometry."
+      "The original lesson is the approved replacement reference; legacy Nuxt geometry is deliberately not compared or overwritten.",
+      "No quiz score or playback state exists. Loading fallback remains readable if the module cannot load; invalid calculations hide stale results and name reset recovery."
     ],
     "evidence": [
-      "Focused strict systems-family coverage validates stored and system shell themes, exact generated chapter titles and order, mobile tray pointer access after primary-surface scrolling, persisted Nuxt and WebGL geometry, local chunks, and a deterministic range-control update."
+      "Route-specific smoke replaces Nuxt asset/canvas presence checks with exact result assertions after all five controls, keyboard restitution, reset and archived-resource absence.",
+      "Chromium 148.0.7778.96: six stored-theme/viewport cells, three fresh contexts each passed five-input numerical assertions, keyboard restitution, touch reset, theme preservation, local-only resources and no overflow; four additional contexts passed system fallback with and without storage. Reproduce with node tools/rigid-body-browser.mjs.",
+      "Prototype iteration corrected reset-event timing, inherited action contrast, narrow footer overflow and the neutral footer default wording. Agent visual review inspected 1400px light and 320px dark screenshots; independent review of all six cells remains a parent acceptance obligation.",
+      "Syntax and public-surface audit passed. Full unit run: 377/378 passed; the pre-existing root-path Git fixture failure in diagnose-baseline.test.mjs remains CI-owned. The exported smokeRigidBodyCollisions scenario passed directly; the ordinary smoke CLI stops at incompatible historical Nuxt geometry before interactions. No baseline was overwritten or failure allowance added.",
+      "Raw replacement samples and six screenshots were captured under /tmp/opencode/rigid-final-browser.json and /tmp/opencode/rigid-<width>-<theme>.png outside public distribution. These establish a new reference only, not before/after performance acceptance. Full-site, cross-browser, real-device, screen-reader and learner-outcome qualification remain outside focused route evidence."
     ]
   },
   {

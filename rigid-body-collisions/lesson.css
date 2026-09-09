@@ -1,0 +1,84 @@
+#collision-page[data-story-shell] {
+  --story-paper: #f5f7fa;
+  --story-paper-strong: #ffffff;
+  --story-ink: #17202d;
+  --story-ink-soft: #526174;
+  --story-border: #748297;
+  --story-accent: #a33d00;
+  --story-steel: #185abd;
+  --cart-on-action: #ffffff;
+  --font-sans: system-ui, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --ink: var(--story-ink);
+  --muted: var(--story-ink-soft);
+  --accent: var(--story-accent);
+  --line: var(--story-border);
+  --surface-panel: var(--story-paper-strong);
+  --surface-card: var(--story-paper-strong);
+  --footer-bg: var(--story-paper-strong);
+  --footer-ink: var(--story-ink);
+  --footer-label: var(--story-ink-soft);
+  --footer-note: var(--story-ink-soft);
+  --topbar-bg: var(--story-paper-strong);
+  --topbar-ink: var(--story-ink);
+  --topbar-hover: var(--story-accent);
+  margin: 0;
+  background: var(--story-paper);
+  color: var(--story-ink);
+  font: 16px/1.65 system-ui, "Segoe UI", sans-serif;
+}
+html[saved-theme="dark"] #collision-page[data-story-shell] {
+  --story-paper: #0b1018;
+  --story-paper-strong: #141d2a;
+  --story-ink: #eef3f8;
+  --story-ink-soft: #b2bfd0;
+  --story-border: #718299;
+  --story-accent: #ff9b55;
+  --story-steel: #81b6ff;
+  --cart-on-action: #0b1018;
+}
+#collision-page .public-footer__inner { box-sizing: border-box; max-width: 100%; }
+#collision-lesson { max-width: 1200px; margin: auto; padding: 16px; }
+#collision-lesson .story-hero { padding: 24px 0; margin: 0; max-width: none; }
+#collision-lesson .story-hero::before { display: none; }
+#collision-lesson .story-button { background: var(--story-accent); color: var(--cart-on-action); border-radius: 4px; min-height: 44px; box-sizing: border-box; font-family: inherit; box-shadow: none; }
+#collision-lesson [data-story-callout="play"] { padding: 0; background: none; border: 0; }
+#collision-page .route-continuation__heading { color: var(--story-ink); }
+#collision-page .route-continuation__link { color: var(--story-accent); }
+#collision-page :is(.top-bar a, .top-bar button, .route-continuation a) { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
+#collision-page :is(.top-bar, .route-continuation) :focus-visible { outline: 3px solid var(--story-steel); outline-offset: 4px; }
+#collision-lesson h1 { font: clamp(2.25rem, 4.5vw, 4.6rem)/1.08 "Iowan Old Style", "Palatino Linotype", Georgia, serif; max-width: 18ch; color: var(--story-ink); }
+#collision-lesson h2 { font: 1.75rem/1.25 Georgia, serif; color: var(--story-ink); }
+#collision-lesson p { max-width: 75ch; }
+#collision-lesson .story-hero__summary { color: var(--story-ink); font-size: 1.1rem; }
+#collision-lesson .story-hero__eyebrow { color: var(--story-ink-soft); font: .8rem/1.6 ui-monospace, Consolas, monospace; }
+#collision-lesson section { border-top: 1px solid var(--story-border); padding: 20px 0; scroll-margin-top: 24px; }
+#collision-lesson form { background: var(--story-paper-strong); border: 1px solid var(--story-border); border-radius: 4px; padding: 16px; }
+#collision-lesson .cart-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+#collision-lesson fieldset { min-width: 0; border: 0; padding: 0; margin: 0 0 16px; }
+#collision-lesson legend { font-weight: 700; padding: 0; margin-bottom: 12px; }
+#collision-lesson label { display: block; }
+#collision-lesson output { display: inline-block; margin-left: 8px; color: var(--story-steel); font-variant-numeric: tabular-nums; }
+#collision-lesson input { display: block; width: 100%; min-height: 44px; margin: 0; accent-color: var(--story-accent); cursor: pointer; }
+#collision-lesson button { min-height: 44px; min-width: 44px; padding: 8px 16px; border: 1px solid var(--story-accent); border-radius: 4px; background: var(--story-accent); color: var(--cart-on-action); font: inherit; cursor: pointer; }
+#collision-lesson button:hover { text-decoration: underline; }
+#collision-lesson button:active { border-color: var(--story-ink); }
+#collision-lesson :focus-visible { outline: 3px solid var(--story-steel); outline-offset: 4px; }
+#collision-lesson a { display: inline-block; padding-block: 10px; color: var(--story-accent); text-decoration: underline; }
+#collision-lesson figure { margin: 24px 0; }
+#collision-lesson .track { display: flex; align-items: center; justify-content: space-between; gap: 8px; max-width: 560px; border-bottom: 2px solid var(--story-ink); padding-bottom: 8px; }
+#collision-lesson .cart { border: 2px solid var(--story-steel); padding: 8px 20px; color: var(--story-ink); font-weight: 700; }
+#collision-lesson .velocity-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+#collision-lesson figcaption, #collision-lesson caption { color: var(--story-ink-soft); text-align: left; }
+#collision-lesson table { border-collapse: collapse; width: 100%; max-width: 760px; table-layout: fixed; font-variant-numeric: tabular-nums; }
+#collision-lesson th, #collision-lesson td { text-align: right; padding: 12px 8px; border-bottom: 1px solid var(--story-border); overflow-wrap: anywhere; }
+#collision-lesson th:first-child { text-align: left; width: 44%; }
+#collision-lesson .equation { font-family: ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+#collision-status { font-weight: 600; }
+@media (max-width: 799px) {
+  #collision-lesson .cart-controls, #collision-lesson .velocity-pair { grid-template-columns: 1fr; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #collision-lesson { scroll-behavior: auto; }
+  #collision-lesson * { animation: none; transition: none; }
+}

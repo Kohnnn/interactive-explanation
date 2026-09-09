@@ -1,1 +1,0 @@
-import{_ as e}from"./DlAUqK2U.js";import{o as t,c as o}from"./D4VqJVMa.js";const c={},r={class:"text-center text-3xl after:content-['❧'] py-4 sm:py-8 drop-shadow"};function s(n,a){return t(),o("p",r)}const f=e(c,[["render",s]]);export{f as default};

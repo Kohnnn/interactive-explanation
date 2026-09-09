@@ -90,7 +90,7 @@ const expectedContractBySlug = new Map([
   ["memory-allocation", ["samwho-essay", "essay", "generated", "runtime-hook", "load-balancing"]],
   ["load-balancing", ["samwho-essay", "essay", "generated", "runtime-hook", "primary-interactive-hub"]],
   ["hysteresis-slack", ["systems-essay", "essay", "generated", "shell-only", "rigid-body-collisions"]],
-  ["rigid-body-collisions", ["systems-essay", "essay", "generated", "shell-only", "bicycle"]],
+  ["rigid-body-collisions", ["systems-essay", "lab", "none", "shell-only", "bicycle"]],
   ["blockchain-101-combined-flow", ["anders-lab", "lab", "none", "shell-only", "primary-interactive-hub"]],
   ["primary-interactive-hub", ["local-hub", "essay", "generated", "shell-only", "trust"]],
   ["stargazing-dashboard", ["runtime", "lab", "none", "fixed-runtime", "primary-interactive-hub"]],
@@ -131,7 +131,6 @@ const expectedChaptersBySlug = new Map([
   ["memory-allocation", [{ selector: "#malloc-and-free", title: "Meet malloc and free" }, { selector: "#what-is-memory", title: "See memory as bytes" }, { selector: "#the-simplest-malloc", title: "Start with the simplest allocator" }, { selector: "#the-simplest-general-purpose-malloc", title: "Generalize the allocator" }, { selector: "#fragmentation", title: "Feel fragmentation happen" }, { selector: "#a-quick-malloc-puzzle", title: "Test yourself with the puzzle" }, { selector: "#inline-bookkeeping", title: "Track bookkeeping overhead" }, { selector: "#playground", title: "Experiment in the playground" }, { selector: "#conclusion", title: "Take the allocator mental model with you" }]],
   ["load-balancing", [{ selector: "#visualising-the-problem", title: "Visualize the problem" }, { selector: "#when-round-robin-doesn-t-cut-it", title: "See round robin break" }, { selector: "#improving-on-round-robin", title: "Improve the baseline" }, { selector: "#moving-away-from-round-robin", title: "Move beyond round robin" }, { selector: "#optimizing-for-latency", title: "Optimize for latency" }, { selector: "#one-last-algorithm", title: "Add one last algorithm" }, { selector: "#conclusion", title: "Take the tradeoffs with you" }, { selector: "#playground", title: "Experiment in the playground" }]],
   ["hysteresis-slack", [{ selector: "#intro", title: "Meet hysteresis through slack" }, { selector: "#two-machines", title: "Control two machines" }, { selector: "#trajectory", title: "Set a trajectory and inspect the future" }]],
-  ["rigid-body-collisions", [{ selector: "#before-we-start", title: "Set the frame" }, { selector: "#what-are-we-trying-to-do", title: "Define the motion problem" }, { selector: "#what-is-a-collision", title: "Formalize collision" }, { selector: "#conclusion", title: "Wrap the intuition" }]],
   ["primary-interactive-hub", [{ selector: "#systems-cluster", title: "Systems and society" }, { selector: "#stories-cluster", title: "Stories and games" }, { selector: "#playgrounds-cluster", title: "Editable playgrounds" }]],
 ]);
 

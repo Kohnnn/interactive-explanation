@@ -1,1 +1,0 @@
-let t;function o(r,i){Object.defineProperty(r,"setActive",{value:i}),t||(t=new IntersectionObserver(s=>{s.forEach(e=>{"setActive"in e.target&&e.target.setActive(e.isIntersecting)})},{rootMargin:"200px"})),t.observe(r)}export{o as u};

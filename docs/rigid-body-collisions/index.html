@@ -3,97 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rigid Body Collisions Replica Docs</title>
-  <meta name="description" content="Provenance, parity notes, and implementation references for the local rigid body collisions replica.">
+  <title>1D Cart Collisions — Model and Implementation Notes</title>
+  <meta name="description" content="Independent authorship, first-principles derivation, limits and verification for the original one-dimensional cart collision lab.">
   <meta name="robots" content="noindex,follow">
-  <meta property="og:title" content="Rigid Body Collisions Replica Docs">
-  <meta property="og:description" content="Provenance, parity notes, and implementation references for the local rigid body collisions replica.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/docs/rigid-body-collisions/">
   <link rel="canonical" href="https://kohnnn.github.io/interactive-explanation/docs/rigid-body-collisions/">
-  <link rel="icon" type="image/png" href="../../favicon.png">
+  <meta property="og:url" content="https://kohnnn.github.io/interactive-explanation/docs/rigid-body-collisions/">
+  <meta property="og:title" content="1D Cart Collisions — Model and Implementation Notes">
+  <meta property="og:description" content="Independent authorship, first-principles derivation, limits and verification for the original one-dimensional cart collision lab.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="../../favicon.png">
   <script src="../../shared/theme-init.js"></script>
   <link rel="stylesheet" href="../../shared/site.css">
 </head>
 <body data-page-type="docs" data-parity-url="./parity.json">
   <main class="site-page docs-page">
     <a class="back-link" href="../../">Back to Atlas</a>
-
     <header class="hero hero-compact">
-      <p class="eyebrow">Replica documentation</p>
-      <h1>Rigid Body Collisions</h1>
-      <p class="lead">
-        Local route <code>/interactive-explanation/rigid-body-collisions/</code> now layers the shared Engineering Sandbox hero, play-first framing, and generated chapter navigation onto the published article while keeping the original runtime and public provenance limited to the shared footer.
-      </p>
-      <div class="action-row">
-        <a class="action-link" href="../../rigid-body-collisions/">Open replica</a>
-        <a class="action-link secondary" href="https://www.sassnow.ski/rigid-body-collisions/1" target="_blank" rel="noreferrer">Open original</a>
-      </div>
-      <p class="meta-line">
-        Upstream snapshot: <code>published site capture verified 2026-03-21</code><br>
-        Source family: <code>sassnow.ski</code>
-      </p>
+      <p class="eyebrow">Original lesson documentation</p>
+      <h1>1D Cart Collisions</h1>
+      <p class="lead">An independently written analytical lab for a narrow subset of rigid-body mechanics: one isolated, central, one-dimensional collision of two translating carts.</p>
+      <a class="action-link" href="../../rigid-body-collisions/">Open the cart lab</a>
     </header>
-
-    <section class="note-grid">
-      <article class="note-section">
-        <h2>Source snapshot</h2>
-        <p>
-          The local route vendors the published Nuxt HTML shell, the full route-local
-          <code>_nuxt/</code> chunk tree, the Essays1743 essay fonts, and the article runtime,
-          then patches only the subpath-hosting shell and provenance surfaces needed for the
-          public replica.
-        </p>
-        <ul class="plain-list">
-          <li>Live original verified against <code>https://www.sassnow.ski/rigid-body-collisions/1</code> on 2026-03-21.</li>
-          <li>The local copy removes the body-level RSS, Twitter, e-mail, and Fathom provenance surfaces from the public body.</li>
-          <li>The opening collision scenes, later vector examples, and article-long interactive runtime remain driven by the vendored published assets.</li>
-                  <li>The route now also loads the shared Engineering Sandbox shell, with chapter navigation resolved through an explicit <code>data-story-route</code> contract instead of depending only on pathname parsing.</li>
-        </ul>
-      </article>
-
-      <article class="note-section">
-        <h2>Asset handoff</h2>
-        <ul class="plain-list">
-          <li><code>rigid-body-collisions/index.html</code> owns the local metadata shell, shared footer hook, font rewrites, and the final route-cleanup hook for the local root.</li>
-          <li><code>rigid-body-collisions/_nuxt/</code> contains the full vendored Nuxt chunk graph, route CSS, and runtime dependencies required by the article.</li>
-          <li><code>rigid-body-collisions/fonts/</code> keeps the Essays1743 essay fonts local so the typography and route CSS no longer depend on the upstream root.</li>
-          <li><code>rigid-body-collisions/_nuxt/D4VqJVMa.js</code> retains the published app runtime while localizing lazy asset references and disabling the dormant analytics CDN handoff.</li>
-                  <li><code>../../shared/engineering-sandbox.css</code> and <code>../../shared/engineering-sandbox.js</code> provide the local font stack, generated chapter rail, and mobile jump bar layered around the vendored runtime.</li>
-        </ul>
-      </article>
-
-      <article class="note-section">
-        <h2>Known deviations</h2>
-        <ul class="plain-list">
-          <li>The public route now uses local canonical and <code>og:url</code> metadata for subpath hosting.</li>
-          <li>A tiny local cleanup hook removes the vendored document-driven not-found card that appears when the published Nuxt route is flattened to the top-level local slug.</li>
-          <li>The shared footer is the only public original-page reference surface.</li>
-                  <li>The opening framing and section transitions were lightly rewritten for the Engineering Sandbox rollout, but the vendored Nuxt runtime and controls remain intact.</li>
-        </ul>
-      </article>
-
-      <article class="note-section">
-        <h2>Validation guidance</h2>
-        <ul class="plain-list">
-          <li>Keep the published article structure intact; future edits should patch the shell and vendored chunks rather than rewriting the article into a new runtime family.</li>
-          <li>Extend the shared smoke bundle instead of creating a one-off harness so later Nuxt-backed replicas can reuse the same route checks.</li>
-          <li>Run both <code>node interactive-explanation/tools/check-public-surface.mjs</code> and <code>node interactive-explanation/tools/smoke-bundle.mjs</code> after touching shell cleanup, font paths, or the vendored chunk tree.</li>
-        </ul>
-      </article>
-    </section>
-
     <section class="note-section">
-      <div class="section-heading">
-        <h2>Parity checklist</h2>
-        <span data-module-count class="meta-pill">Loading...</span>
-      </div>
-      <div class="parity-list" data-parity-list>
-        <div class="empty-state">Loading parity contract...</div>
-      </div>
+      <h2>Authorship and replacement boundary</h2>
+      <p>The user authorized an original replacement at the existing route URL. No archived prose, compiled collision engine, illustrations, fonts or scene implementation is reused in this lesson. The former route-local compiled assets are removed from active distribution; historical Git retains the base. This is not a replica or a claim of parity with the former multidimensional article.</p>
+      <p>The four section IDs recorded by the former manifest remain usable: <code>#before-we-start</code> introduces assumptions, <code>#what-are-we-trying-to-do</code> opens the lab, <code>#what-is-a-collision</code> gives the derivation, and <code>#conclusion</code> provides the takeaway. Undocumented compiled scene anchors are not claimed preserved.</p>
+    </section>
+    <section class="note-section">
+      <h2>Mathematical basis, independently derived</h2>
+      <p>Momentum balance gives mA(vA − uA) = −mB(vB − uB). Define J as the impulse delivered to B, so vA = uA − J/mA and vB = uB + J/mB. Substitution into the restitution constraint vB − vA = e(uA − uB) yields J = (1 + e)(uA − uB)/(1/mA + 1/mB). These are standard conservation and restitution relations, not an algorithm taken from the retired runtime.</p>
+      <p>Expanding K = ½mA vA² + ½mB vB² gives the translational energy loss ½μ(1 − e²)(uA − uB)², where μ = mA mB/(mA + mB). This is nonnegative for 0 ≤ e ≤ 1. Elastic impacts conserve kinetic energy; perfectly inelastic impacts equalize velocity without necessarily stopping either cart. No external text is reproduced and no unverified bibliography URL is supplied.</p>
+      <p>A starts left of B. If uA ≤ uB, no future contact occurs from a positive gap, and the module returns unchanged velocities. Masses are restricted to 0.1–10 kg, starting velocities to −10–10 m/s, and restitution to 0–1. The pure module rejects nonnumeric, nonfinite and out-of-range inputs. There is no time integration, friction, angular momentum, oblique impact, contact duration or detailed energy-dissipation mechanism.</p>
+    </section>
+    <section class="note-section">
+      <h2>Interface contract</h2>
+      <p>Five native range inputs update the signed velocity table, schematic direction descriptions, momentum comparison and kinetic-energy comparison immediately. Reset affects only these inputs. Optional prediction is not scored. The diagram does not encode mass or elapsed time. No animation, autoplay, audio, external media, network service, framework or new dependency is used. Lesson state is transient; the existing shared theme preference remains untouched.</p>
+      <p>The manifest retains the systems family and Bicycle continuation, but declares a lab with no generated navigation and neutral reference mode. Shared theme initialization, shell and footer remain in use. A route-scoped stylesheet implements the approved editorial light/dark tokens; the numerical engine is not remounted on theme changes.</p>
+    </section>
+    <section class="note-section">
+      <h2>Reproducible checks</h2>
+      <p><code>node --test tools/tests/rigid-body-collisions.test.mjs</code> checks known solutions, no-approach states, 2,000 bounded combinations, conservation, restitution, energy loss and invalid inputs. <code>node tools/smoke-bundle.mjs . --route rigid-body-collisions</code> exercises all five inputs, keyboard restitution and reset with exact expected results. Historical geometry of the retired engine is not an acceptance reference for this approved replacement.</p>
+      <p><code>node tools/rigid-body-browser.mjs</code> runs the replacement’s direct browser matrix without invoking legacy geometry. Chromium 148.0.7778.96 passed 18 fresh stored-theme contexts and four system/storage-failure contexts. It checks exact input consequences, reset, invalid-input recovery, theme preservation, focus outlines, 44px controls, local resources and overflow. The ordinary smoke CLI still blocks on the retired geometry; its exported route scenario was run separately and passed. This baseline-policy integration remains CI-owned.</p>
+      <p>The independent replacement requires its own six viewport/theme cells and three fresh contexts per cell. Full-site acceptance, real-device behavior, cross-browser behavior, assistive-technology qualification and learner outcomes are separate obligations, not implied by a focused Chromium check.</p>
+    </section>
+    <section class="note-section">
+      <div class="section-heading"><h2>Implementation and verification record</h2><span data-module-count class="meta-pill">Loading...</span></div>
+      <div class="parity-list" data-parity-list><div class="empty-state">Loading implementation record...</div></div>
     </section>
   </main>
-
   <script src="../../shared/site.js"></script>
 </body>
 </html>

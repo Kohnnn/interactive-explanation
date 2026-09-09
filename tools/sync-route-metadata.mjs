@@ -50,7 +50,6 @@ const ALLOWED_EXPERIENCE_KEYS = new Set([
 const ALLOWED_NETWORK_POLICY_KEYS = new Set(["mode", "actions"]);
 const ALLOWED_NETWORK_ACTION_KEYS = new Set(["selector", "hosts"]);
 const CHAPTER_ROUTE_SLUGS = new Set([
-  "rigid-body-collisions",
   "decision-tree",
   "random-forest",
   "linear-regression",

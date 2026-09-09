@@ -3313,9 +3313,9 @@
   },
   {
     "slug": "rigid-body-collisions",
-    "title": "Rigid Body Collisions",
-    "summary": "Interactive article about rigid-body collision basics, velocity vectors, surface normals, dot products, and collision intuition.",
-    "referenceUrl": "https://www.sassnow.ski/rigid-body-collisions/1",
+    "title": "1D Cart Collisions — An Ideal Rigid-Body Model",
+    "summary": "Original two-cart lab: change mass, velocity and restitution to compare momentum and kinetic energy across one ideal one-dimensional collision.",
+    "referenceMode": "neutral",
     "topicTags": [
       "physics",
       "simulation",
@@ -3326,26 +3326,8 @@
     "docsUrl": "./docs/rigid-body-collisions/",
     "shell": {
       "family": "systems-essay",
-      "variant": "essay",
-      "navigation": "generated",
-      "chapters": [
-        {
-          "selector": "#before-we-start",
-          "title": "Set the frame"
-        },
-        {
-          "selector": "#what-are-we-trying-to-do",
-          "title": "Define the motion problem"
-        },
-        {
-          "selector": "#what-is-a-collision",
-          "title": "Formalize collision"
-        },
-        {
-          "selector": "#conclusion",
-          "title": "Wrap the intuition"
-        }
-      ]
+      "variant": "lab",
+      "navigation": "none"
     },
     "suggestedNextSlug": "bicycle",
     "experience": {

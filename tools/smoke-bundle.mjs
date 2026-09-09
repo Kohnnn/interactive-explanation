@@ -147,7 +147,7 @@ const themedEngineeringLongformSlugs = new Set([
 const authoredThemeRootBySlug = new Map([
   ...Array.from(themedEngineeringLongformSlugs, (slug) => [slug, "#main_container"]),
   ["hysteresis-slack", "main.container"],
-  ["rigid-body-collisions", ".story-hero__panel"],
+  ["rigid-body-collisions", "#collision-controls"],
 ]);
 
 const samwhoRuntimeThemeSlugs = new Set([
@@ -8576,67 +8576,44 @@ async function smokeHysteresisSlack(context) {
   await page.close();
 }
 
-async function smokeRigidBodyCollisions(context) {
+export async function smokeRigidBodyCollisions(context) {
   const page = await context.newPage();
   const assertPageRuntimeClean = createRuntimeMonitor(page);
-  await assertRoute(page, "rigid-body-collisions/", "#reference-footer");
+  await assertRoute(page, "rigid-body-collisions/", "#collision-controls[data-ready='true']");
   await assertEngineeringSandboxShell(page, "rigid-body-collisions route", {
-    minimumChapters: 4,
-    navMode: "generated",
+    minimumChapters: 0,
+    navMode: "none",
+    expectedVariant: "lab",
     expectedFamily: "systems-essay",
     expectedRoute: "rigid-body-collisions",
   });
-  await assertLocalScriptSources(page, ["./_nuxt/D4VqJVMa.js"], "rigid-body-collisions route");
-  await page.waitForFunction(() => {
-    return document.querySelector("canvas#c") &&
-      document.querySelectorAll("input[type='range']").length >= 4 &&
-      document.querySelectorAll("button").length >= 4 &&
-      Array.from(document.querySelectorAll("h1")).every((node) => (node.textContent || "").trim() !== "404") &&
-      !/404 - Page not found:/i.test(document.title);
-  }, null, { timeout: 30000 });
-
-  const assetState = await page.evaluate(() => {
-    return performance.getEntriesByType("resource").map((entry) => entry.name);
-  });
-  assert(
-    assetState.some((entry) => /\/rigid-body-collisions\/_nuxt\/[^/]+\.css(?:$|\?)/.test(entry)),
-    "rigid-body-collisions did not load any local Nuxt CSS asset",
-  );
-  console.log("OK rigid-body-collisions local assets");
-
-  const firstRange = page.locator("input[type='range']").first();
-  const rangeBefore = await firstRange.inputValue();
-  await firstRange.evaluate((element, value) => {
-    element.value = String(value);
-    element.dispatchEvent(new Event("input", { bubbles: true }));
-    element.dispatchEvent(new Event("change", { bubbles: true }));
-  }, 10);
-  await page.waitForFunction((previous) => {
-    const firstRange = document.querySelector("input[type='range']");
-    return firstRange &&
-      firstRange.value !== previous &&
-      document.querySelector("canvas#c") &&
-      Array.from(document.querySelectorAll("h1")).every((node) => (node.textContent || "").trim() !== "404");
-  }, rangeBefore, { timeout: 5000 });
-  console.log("OK rigid-body-collisions control surface");
-
+  await assertLocalScriptSources(page, ["./lesson.js"], "rigid-body-collisions route");
+  assert(await page.locator("#a-after").textContent() === "0.000", "equal-mass A must stop");
+  assert(await page.locator("#b-after").textContent() === "2.000", "equal-mass B must receive A velocity");
+  await page.locator("#mB").fill("3");
+  assert(await page.locator("#a-after").textContent() === "-1.000", "heavier B must reverse A");
+  assert(await page.locator("#b-after").textContent() === "1.000", "unequal-mass B velocity");
+  await page.locator("#e").focus();
+  await page.keyboard.press("Home");
+  assert(await page.locator("#a-after").textContent() === "0.500", "zero restitution common velocity");
+  assert(await page.locator("#b-after").textContent() === "0.500", "zero restitution common velocity B");
+  assert(await page.locator("#energy-after").textContent() === "0.500", "inelastic energy");
+  await page.locator("#uA").fill("-2");
+  await page.locator("#uB").fill("2");
+  assert((await page.locator("#collision-status").textContent()).includes("No approach"), "separating carts must not collide");
+  await page.locator("#mA").fill("10");
+  assert(await page.locator("#momentum-after").textContent() === "-14.000", "mass A changes momentum");
+  await page.getByRole("button", { name: "Reset inputs", exact: true }).click();
+  assert(await page.locator("#a-after").textContent() === "0.000", "reset restores calculation");
+  for (const id of ["before-we-start", "what-are-we-trying-to-do", "what-is-a-collision", "conclusion"]) {
+    assert(await page.locator(`#${id}`).count() === 1, `missing retained anchor ${id}`);
+  }
+  const assets = await page.evaluate(() => performance.getEntriesByType("resource").map((entry) => entry.name));
+  assert(!assets.some((url) => url.includes("/_nuxt/")), "original lab must not load archived engine");
   await assertViewportUsable(page, "rigid-body-collisions route");
-  await assertRouteViewportUsable(
-    context,
-    "rigid-body-collisions/",
-    "#reference-footer",
-    "canvas#c",
-    "rigid-body-collisions route",
-    390,
-    844,
-  );
-  await page.waitForTimeout(250);
+  await assertRouteViewportUsable(context, "rigid-body-collisions/", "#collision-controls[data-ready='true']", "#collision-controls", "rigid-body-collisions route", 390, 844);
   assertPageRuntimeClean("rigid-body-collisions route");
-  await assertEngineeringSandboxLayout(context, "rigid-body-collisions/", "rigid-body-collisions route", {
-    navMode: "generated",
-    readySelector: ".story-hero",
-  });
-  console.log("OK rigid-body-collisions responsive shell");
+  console.log("OK rigid-body-collisions original physics, five inputs, keyboard restitution, reset and local assets");
   await page.close();
 }
 
