@@ -13,6 +13,7 @@ import {
   validateExperienceBaseline,
 } from "./experience-baseline.mjs";
 import { createSmokeServer } from "./smoke/server.mjs";
+import { captureNetwork, resourceUrl } from "./network-handoff.mjs";
 
 const RouteFamilies = globalThis.RouteFamilies;
 
@@ -822,6 +823,7 @@ function createRuntimeMonitor(page, options = {}) {
   }
   const rejectInitialOffOriginRequests = rejectOffOriginRequests || Boolean(networkPolicy);
   const issues = [];
+  const network = captureNetwork(page, baseUrl, options.events);
 
   page.on("pageerror", (error) => {
     issues.push(`pageerror: ${error.message}`);
@@ -831,20 +833,8 @@ function createRuntimeMonitor(page, options = {}) {
     const requestUrl = request.url();
     const isLocalBlob = requestUrl.startsWith(`blob:${baseOrigin}/`);
     if (rejectInitialOffOriginRequests && !requestUrl.startsWith(baseUrl) && !isLocalBlob) {
-      issues.push(`off-origin request: ${requestUrl}`);
+      issues.push(`off-origin request: ${resourceUrl(requestUrl)}`);
     }
-  });
-
-  page.on("requestfailed", (request) => {
-    if (!request.url().startsWith(baseUrl)) {
-      return;
-    }
-
-    const failure = request.failure();
-    if (failure?.errorText === "net::ERR_ABORTED" && request.resourceType() === "document") {
-      return;
-    }
-    issues.push(`requestfailed: ${request.url()} ${failure?.errorText || ""}`.trim());
   });
 
   page.on("response", (response) => {
@@ -852,12 +842,18 @@ function createRuntimeMonitor(page, options = {}) {
       return;
     }
 
-    issues.push(`response ${response.status()}: ${response.url()}`);
+    issues.push(`response ${response.status()}: ${resourceUrl(response.url())}`);
   });
 
-  return function assertRuntimeClean(label) {
-    assert(issues.length === 0, `${label} had runtime issues:\n${issues.join("\n")}`);
+  const assertRuntimeClean = async function (label) {
+    await network.ready();
+    const failures = network.classify().filter((entry) => entry.classification === "unknown-failure");
+    const allIssues = [...issues, ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} unknown-failure`)];
+    assert(allIssues.length === 0, `${label} had runtime issues:\n${allIssues.join("\n")}`);
   };
+  assertRuntimeClean.ready = network.ready;
+  assertRuntimeClean.classify = network.classify;
+  return assertRuntimeClean;
 }
 
 async function assertManifestRouteCompatibility(context, route, options = {}) {
@@ -890,7 +886,7 @@ async function assertManifestRouteCompatibility(context, route, options = {}) {
       if (enforceViewportFit) {
         await assertViewportUsable(page, `${route.slug} ${viewport.name} baseline`);
       }
-      assertRuntimeClean(`${route.slug} ${viewport.name} baseline`);
+      await assertRuntimeClean(`${route.slug} ${viewport.name} baseline`);
       console.log(`OK ${route.slug} ${viewport.name} baseline`);
     } finally {
       await page.close();
@@ -1197,7 +1193,7 @@ async function measureRouteGeometry(browser, route, approvedGeometry, enforceGeo
         if (enforceGeometry) {
           assertRuntimeGeometry(measured[viewport.name], approvedGeometry[viewport.name], label);
         }
-        assertRuntimeClean(label);
+        await assertRuntimeClean(label);
       } finally {
         await page.close();
       }
@@ -1601,7 +1597,7 @@ async function runStoredThemeGate(browser, route, theme, approvedGeometry) {
         await page.waitForLoadState("networkidle", { timeout: 30000 });
         await assertDocumentTheme(page, theme, label);
         await assertRouteExperienceState(page, route, viewport, label, approvedGeometry[viewport.name]);
-        assertRuntimeClean(label);
+        await assertRuntimeClean(label);
         routeTokens ||= await readThemeTokens(page, label, route.slug, theme);
         intrinsicPaint ||= await readAbletonGridPaint(page, route);
         console.log(`OK ${label}`);
@@ -1618,7 +1614,7 @@ async function runStoredThemeGate(browser, route, theme, approvedGeometry) {
         await assertDocumentTheme(docsPage, theme, docsLabel);
         await assertFrameTitles(docsPage, docsLabel);
         await assertViewportUsable(docsPage, docsLabel);
-        assertDocsRuntimeClean(docsLabel);
+        await assertDocsRuntimeClean(docsLabel);
         docsTokens ||= await readThemeTokens(docsPage, docsLabel);
       } finally {
         await docsPage.close();
@@ -1647,7 +1643,7 @@ async function runSystemThemeGate(browser, route, theme, approvedGeometry, expec
         await assertRouteExperienceState(page, route, viewport, label, approvedGeometry[viewport.name]);
         const tokens = await readThemeTokens(page, label, route.slug, theme);
         assert(JSON.stringify(tokens) === JSON.stringify(expectedTokens.routeTokens), `${label} did not match the ${theme} stored shell state`);
-        assertRuntimeClean(label);
+        await assertRuntimeClean(label);
       } finally {
         await page.close();
       }
@@ -1663,7 +1659,7 @@ async function runSystemThemeGate(browser, route, theme, approvedGeometry, expec
         const tokens = await readThemeTokens(docsPage, docsLabel);
         assert(JSON.stringify(tokens) === JSON.stringify(expectedTokens.docsTokens), `${docsLabel} did not match the ${theme} stored shell state`);
         await assertViewportUsable(docsPage, docsLabel);
-        assertDocsRuntimeClean(docsLabel);
+        await assertDocsRuntimeClean(docsLabel);
       } finally {
         await docsPage.close();
       }
@@ -1688,7 +1684,7 @@ async function collectPerformanceRun(browser, route, theme, runNumber) {
     await waitForManifestRouteReady(page, route);
     await page.waitForLoadState("networkidle", { timeout: 30000 });
     const evidence = await readPerformanceEvidence(page);
-    assertRuntimeClean(label);
+    await assertRuntimeClean(label);
     return evidence;
   } finally {
     await page.close();
@@ -1825,7 +1821,7 @@ async function smokeCrowdsReadOnly(context) {
     assert(!initial.navigationVisible && initial.chapterControlCount === 9, "crowds read-only probe did not preserve its initial native navigation state");
     assert(initial.canvasCount >= 1, "crowds read-only probe did not expose its intrinsic canvas runtime");
     assert(JSON.stringify(settled) === JSON.stringify(initial), "crowds read-only probe changed semantic state without an action");
-    assertRuntimeClean("crowds read-only probe");
+    await assertRuntimeClean("crowds read-only probe");
     console.log("OK crowds explicit read-only probe");
   } finally {
     await page.close();
@@ -3451,6 +3447,8 @@ async function smokeMarkovChains(context) {
       Math.abs(scope.transitionMatrix[0][1] - 0.2) < 0.02;
   }, null, { timeout: 5000 });
 
+  await page.waitForLoadState("networkidle");
+  await assertPageRuntimeClean.ready();
   await page.locator("a").filter({ hasText: "ex1" }).click();
   await page.waitForFunction((previousSrc) => {
     const currentSrc = document.querySelector("iframe.playground")?.getAttribute("src") || "";
@@ -3460,7 +3458,9 @@ async function smokeMarkovChains(context) {
   const fullscreenHref = await page.locator('a[href="./playground/"]').getAttribute("href");
   assert(fullscreenHref === "./playground/", "markov-chains fullscreen handoff did not localize");
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("markov-chains article");
+  await page.waitForLoadState("networkidle");
+  await assertPageRuntimeClean.ready();
+  await assertPageRuntimeClean("markov-chains article");
   await assertViewportUsable(page, "markov-chains route");
   await assertEngineeringSandboxLayout(context, "markov-chains/", "markov-chains route", { navMode: "generated" });
   console.log("OK markov-chains article handoff");
@@ -3476,7 +3476,7 @@ async function smokeMarkovChains(context) {
     return scope.validTransitionMatrix === true && Array.isArray(scope.states) && scope.states.length === 3;
   }, null, { timeout: 5000 });
   await directoryPlaygroundPage.waitForTimeout(250);
-  assertDirectoryRuntimeClean("markov-chains directory playground");
+  await assertDirectoryRuntimeClean("markov-chains directory playground");
   console.log("OK markov-chains directory playground editor");
   await directoryPlaygroundPage.close();
 
@@ -3485,7 +3485,7 @@ async function smokeMarkovChains(context) {
   await assertRoute(playgroundPage, "markov-chains/playground/playground.html", "#reference-footer");
   await playgroundPage.waitForSelector(".matrixInput textarea", { timeout: 15000 });
   await playgroundPage.waitForTimeout(250);
-  assertDirectRuntimeClean("markov-chains direct playground");
+  await assertDirectRuntimeClean("markov-chains direct playground");
   console.log("OK markov-chains direct playground route");
   await playgroundPage.close();
 }
@@ -3599,7 +3599,7 @@ async function smokePrincipalComponentAnalysis(context) {
   assert(datasetState.text.includes("pc1"), "principal-component-analysis DEFRA plots are missing the pc1 label");
   assert(datasetState.text.includes("pc2"), "principal-component-analysis DEFRA plots are missing the pc2 label");
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("principal-component-analysis route");
+  await assertPageRuntimeClean("principal-component-analysis route");
   await assertViewportUsable(page, "principal-component-analysis route");
   await assertEngineeringSandboxLayout(context, "principal-component-analysis/", "principal-component-analysis route", {
     navMode: "generated",
@@ -3710,7 +3710,7 @@ async function smokeExponentiation(context) {
       document.querySelectorAll("virus-demo .values line").length >= 2;
   }, null, { timeout: 10000 });
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("exponentiation route");
+  await assertPageRuntimeClean("exponentiation route");
   await assertViewportUsable(page, "exponentiation route");
   await assertEngineeringSandboxLayout(context, "exponentiation/", "exponentiation route", { navMode: "generated" });
   console.log("OK exponentiation virus demo");
@@ -3760,7 +3760,7 @@ async function smokePi(context) {
   });
   assert(Number(circumDashOpacity) < 1, "pi wrap control did not reduce the circumference guide opacity");
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("pi route");
+  await assertPageRuntimeClean("pi route");
   await assertViewportUsable(page, "pi route");
   await assertEngineeringSandboxLayout(context, "pi/", "pi route", { navMode: "generated" });
   console.log("OK pi geometry and wrap controls");
@@ -3842,7 +3842,7 @@ async function smokeSineAndCosine(context) {
     return (path?.getAttribute("d") || "").length > 20;
   }, null, { timeout: 18000 });
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("sine-and-cosine route");
+  await assertPageRuntimeClean("sine-and-cosine route");
   await assertViewportUsable(page, "sine-and-cosine route");
   await assertEngineeringSandboxLayout(context, "sine-and-cosine/", "sine-and-cosine route", {
     navMode: "generated",
@@ -3980,7 +3980,7 @@ async function smokeEigenvectorsAndEigenvalues(context) {
       document.querySelectorAll("four-quad-plot .points g").length === 18;
   }, spiralBefore, { timeout: 5000 });
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("eigenvectors-and-eigenvalues route");
+  await assertPageRuntimeClean("eigenvectors-and-eigenvalues route");
   await assertViewportUsable(page, "eigenvectors-and-eigenvalues route");
   await assertEngineeringSandboxLayout(context, "eigenvectors-and-eigenvalues/", "eigenvectors-and-eigenvalues route", {
     navMode: "generated",
@@ -4084,7 +4084,7 @@ async function smokeImageKernels(context) {
   });
   assert(hasBoundaryPlaceholder, "image-kernels edge handling did not expose missing-neighbor placeholders");
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("image-kernels route");
+  await assertPageRuntimeClean("image-kernels route");
   await assertViewportUsable(page, "image-kernels route");
   await assertEngineeringSandboxLayout(context, "image-kernels/", "image-kernels route", { navMode: "generated" });
   console.log("OK image-kernels boundary handling");
@@ -4177,7 +4177,7 @@ async function smokeOrdinaryLeastSquaresRegression(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("ordinary-least-squares-regression route");
+  await assertPageRuntimeClean("ordinary-least-squares-regression route");
   await assertEngineeringSandboxLayout(context, "ordinary-least-squares-regression/", "ordinary-least-squares-regression route", {
     navMode: "generated",
   });
@@ -4294,7 +4294,7 @@ async function smokeBlockchain(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("blockchain route");
+  await assertPageRuntimeClean("blockchain route");
   console.log("OK blockchain distributed scene");
   await page.close();
   await assertAndersNativeToggle(context, "blockchain/", "blockchain route", ".navbar-toggle", "#navbar", 6);
@@ -4395,7 +4395,7 @@ async function smokePublicPrivateKeys(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("public-private-keys route");
+  await assertPageRuntimeClean("public-private-keys route");
   console.log("OK public-private-keys blockchain scene");
   await page.close();
   await assertAndersNativeToggle(context, "public-private-keys/", "public-private-keys route", ".navbar-toggler", "#collapsingNavbar", 4);
@@ -4495,7 +4495,7 @@ async function smokeZeroKnowledgeProofDemo(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("zero-knowledge-proof-demo route");
+  await assertPageRuntimeClean("zero-knowledge-proof-demo route");
   console.log("OK zero-knowledge-proof-demo responsive shell");
   await page.close();
 }
@@ -4586,7 +4586,7 @@ async function smokeAlphaCompositing(context) {
         },
       );
       await page.waitForTimeout(250);
-      assertPageRuntimeClean("alpha-compositing route");
+      await assertPageRuntimeClean("alpha-compositing route");
       console.log("OK alpha-compositing responsive shell");
       await page.close();
       return;
@@ -4685,7 +4685,7 @@ async function smokeColorSpaces(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("color-spaces route");
+  await assertPageRuntimeClean("color-spaces route");
   console.log("OK color-spaces responsive shell");
   await page.close();
 }
@@ -4832,7 +4832,7 @@ async function smokeSound(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("sound route");
+  await assertPageRuntimeClean("sound route");
   console.log("OK sound responsive shell");
   await page.close();
 }
@@ -5014,7 +5014,7 @@ async function smokeCamerasAndLenses(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("cameras-and-lenses route");
+  await assertPageRuntimeClean("cameras-and-lenses route");
   console.log("OK cameras-and-lenses responsive shell");
   await page.close();
 }
@@ -5154,7 +5154,7 @@ async function smokeLightsAndShadows(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("lights-and-shadows route");
+  await assertPageRuntimeClean("lights-and-shadows route");
   console.log("OK lights-and-shadows responsive shell");
   await page.close();
 }
@@ -5295,7 +5295,7 @@ async function smokeTesseract(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("tesseract route");
+  await assertPageRuntimeClean("tesseract route");
   console.log("OK tesseract responsive shell");
   await page.close();
 }
@@ -5379,7 +5379,7 @@ async function smokeGears(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("gears route");
+  await assertPageRuntimeClean("gears route");
   console.log("OK gears responsive shell");
   await page.close();
 }
@@ -5506,7 +5506,7 @@ async function smokeStargazingDashboard(context) {
   }, null, { timeout: 5000 });
 
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("stargazing-dashboard route");
+  await assertPageRuntimeClean("stargazing-dashboard route");
   await page.close();
 }
 
@@ -5573,7 +5573,7 @@ async function smokeGps(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("gps route");
+  await assertPageRuntimeClean("gps route");
   console.log("OK gps responsive shell");
   await page.close();
 }
@@ -5653,7 +5653,7 @@ async function smokeEarthAndSun(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("earth-and-sun route");
+  await assertPageRuntimeClean("earth-and-sun route");
   console.log("OK earth-and-sun responsive shell");
   await page.close();
 }
@@ -5752,7 +5752,7 @@ async function smokeBicycle(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("bicycle route");
+  await assertPageRuntimeClean("bicycle route");
   console.log("OK bicycle responsive shell");
   await page.close();
 }
@@ -5836,7 +5836,7 @@ async function smokeAirfoil(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("airfoil route");
+  await assertPageRuntimeClean("airfoil route");
   console.log("OK airfoil responsive shell");
   await page.close();
 }
@@ -5934,7 +5934,7 @@ async function smokeCurvesAndSurfaces(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("curves-and-surfaces route");
+  await assertPageRuntimeClean("curves-and-surfaces route");
   console.log("OK curves-and-surfaces responsive shell");
   await page.close();
 }
@@ -6020,7 +6020,7 @@ async function smokeInternalCombustionEngine(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("internal-combustion-engine route");
+  await assertPageRuntimeClean("internal-combustion-engine route");
   console.log("OK internal-combustion-engine responsive shell");
   await page.close();
 }
@@ -6115,7 +6115,7 @@ async function smokeMechanicalWatch(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("mechanical-watch route");
+  await assertPageRuntimeClean("mechanical-watch route");
   console.log("OK mechanical-watch responsive shell");
   await page.close();
 }
@@ -6540,7 +6540,7 @@ async function smokeInteractiveMechanicalWatch(context) {
   console.log("OK interactive-mechanical-watch narrow layout");
 
   await page.waitForTimeout(250);
-  assertPageRuntimeClean(label);
+  await assertPageRuntimeClean(label);
   await assertViewportUsable(page, label);
   console.log("OK interactive-mechanical-watch exploded view");
   await page.close();
@@ -6638,7 +6638,7 @@ async function smokeNavalArchitecture(context) {
     },
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("naval-architecture route");
+  await assertPageRuntimeClean("naval-architecture route");
   console.log("OK naval-architecture responsive shell");
   await page.close();
 }
@@ -6709,7 +6709,7 @@ async function smokeReadingQrCodesWithoutAComputer(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("reading-qr-codes-without-a-computer route");
+  await assertPageRuntimeClean("reading-qr-codes-without-a-computer route");
   console.log("OK reading-qr-codes-without-a-computer responsive shell");
   await page.close();
 }
@@ -6924,7 +6924,7 @@ async function smokeTeoriaExercise(context, config) {
   await assertViewportUsable(mobilePage, `${config.slug} route`);
   await mobilePage.close();
   await page.waitForTimeout(250);
-  assertPageRuntimeClean(`${config.slug} route`);
+  await assertPageRuntimeClean(`${config.slug} route`);
   console.log(`OK ${config.slug} responsive shell`);
   await page.close();
 }
@@ -7268,7 +7268,7 @@ async function smokeAbletonLearningMusicPlayground(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("ableton-learning-music-playground route");
+  await assertPageRuntimeClean("ableton-learning-music-playground route");
   console.log("OK ableton-learning-music-playground responsive shell");
   await page.close();
 }
@@ -7394,7 +7394,7 @@ async function smokeAbletonLearningMusicLesson(context, config) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean(label);
+  await assertPageRuntimeClean(label);
   console.log(`OK ${label} responsive shell`);
   await page.close();
 }
@@ -7507,7 +7507,7 @@ async function smokeAbletonLearningMusicPlayWithSongStructures(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("ableton-learning-music-play-with-song-structures route");
+  await assertPageRuntimeClean("ableton-learning-music-play-with-song-structures route");
   console.log("OK ableton-learning-music-play-with-song-structures responsive shell");
   await page.close();
 }
@@ -7799,7 +7799,7 @@ async function smokeAbletonLearningSynthLesson(context, config) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean(label);
+  await assertPageRuntimeClean(label);
   console.log(`OK ${label} responsive shell`);
   await page.close();
 }
@@ -7939,7 +7939,7 @@ async function smokeChromeMusicLabSongMaker(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("chrome-music-lab-song-maker route");
+  await assertPageRuntimeClean("chrome-music-lab-song-maker route");
   console.log("OK chrome-music-lab-song-maker responsive shell");
   await page.close();
 }
@@ -8092,7 +8092,7 @@ async function smokeMusicmap(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("musicmap route");
+  await assertPageRuntimeClean("musicmap route");
   console.log("OK musicmap responsive shell");
   await page.close();
 }
@@ -8350,7 +8350,7 @@ async function smokeMusicInteractiveHub(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("music-interactive-hub route");
+  await assertPageRuntimeClean("music-interactive-hub route");
   console.log("OK music-interactive-hub responsive shell");
   await page.close();
 }
@@ -8438,7 +8438,7 @@ async function smokeMemoryAllocation(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("memory-allocation route");
+  await assertPageRuntimeClean("memory-allocation route");
   await assertEngineeringSandboxLayout(context, "memory-allocation/", "memory-allocation route", { navMode: "generated" });
   console.log("OK memory-allocation responsive shell");
   await page.close();
@@ -8514,7 +8514,7 @@ async function smokeLoadBalancing(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("load-balancing route");
+  await assertPageRuntimeClean("load-balancing route");
   await assertEngineeringSandboxLayout(context, "load-balancing/", "load-balancing route", { navMode: "generated" });
   console.log("OK load-balancing responsive shell");
   await page.close();
@@ -8570,7 +8570,7 @@ async function smokeHysteresisSlack(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("hysteresis-slack route");
+  await assertPageRuntimeClean("hysteresis-slack route");
   await assertEngineeringSandboxLayout(context, "hysteresis-slack/", "hysteresis-slack route", { navMode: "generated" });
   console.log("OK hysteresis-slack responsive shell");
   await page.close();
@@ -8612,7 +8612,7 @@ export async function smokeRigidBodyCollisions(context) {
   assert(!assets.some((url) => url.includes("/_nuxt/")), "original lab must not load archived engine");
   await assertViewportUsable(page, "rigid-body-collisions route");
   await assertRouteViewportUsable(context, "rigid-body-collisions/", "#collision-controls[data-ready='true']", "#collision-controls", "rigid-body-collisions route", 390, 844);
-  assertPageRuntimeClean("rigid-body-collisions route");
+  await assertPageRuntimeClean("rigid-body-collisions route");
   console.log("OK rigid-body-collisions original physics, five inputs, keyboard restitution, reset and local assets");
   await page.close();
 }
@@ -8684,7 +8684,7 @@ async function smokeBlockchain101CombinedFlow(context) {
     390,
     844,
   );
-  assertPageRuntimeClean("blockchain-101-combined-flow route");
+  await assertPageRuntimeClean("blockchain-101-combined-flow route");
   console.log("OK blockchain-101-combined-flow responsive shell");
   await page.close();
 }
@@ -8772,7 +8772,7 @@ async function smokePrimaryInteractiveHub(context) {
     390,
     844,
   );
-  assertPageRuntimeClean("primary-interactive-hub route");
+  await assertPageRuntimeClean("primary-interactive-hub route");
   console.log("OK primary-interactive-hub responsive shell");
   await page.close();
 }
@@ -8852,7 +8852,7 @@ async function smokeLinearRegression(context) {
   assert(/0\.801/.test(gdAfter.text), "linear-regression 25-step run did not update the displayed error");
   await page.waitForTimeout(250);
   await assertEngineeringSandboxLayout(context, "linear-regression/", "linear-regression route", { navMode: "generated" });
-  assertPageRuntimeClean("linear-regression route");
+  await assertPageRuntimeClean("linear-regression route");
   console.log("OK linear-regression gradient descent");
   await page.close();
 }
@@ -8944,7 +8944,7 @@ async function smokeLogisticRegression(context) {
   }, gdBefore, { timeout: 10000 });
   await page.waitForTimeout(250);
   await assertEngineeringSandboxLayout(context, "logistic-regression/", "logistic-regression route", { navMode: "generated" });
-  assertPageRuntimeClean("logistic-regression route");
+  await assertPageRuntimeClean("logistic-regression route");
   console.log("OK logistic-regression gradient descent");
   await page.close();
 }
@@ -9019,7 +9019,7 @@ async function smokePrecisionRecall(context) {
   }, null, { timeout: 5000 });
   await page.waitForTimeout(250);
   await assertEngineeringSandboxLayout(context, "precision-recall/", "precision-recall route", { navMode: "generated" });
-  assertPageRuntimeClean("precision-recall route");
+  await assertPageRuntimeClean("precision-recall route");
   console.log("OK precision-recall threshold tradeoff");
   await page.close();
 }
@@ -9069,7 +9069,7 @@ async function smokeRocAuc(context) {
   }, null, { timeout: 10000 });
   await page.waitForTimeout(250);
   await assertEngineeringSandboxLayout(context, "roc-auc/", "roc-auc route", { navMode: "generated" });
-  assertPageRuntimeClean("roc-auc route");
+  await assertPageRuntimeClean("roc-auc route");
   console.log("OK roc-auc auc scene");
   await page.close();
 }
@@ -9161,7 +9161,7 @@ async function smokeBiasVariance(context) {
   await page.waitForTimeout(250);
   await assertViewportUsable(page, "bias-variance route");
   await assertEngineeringSandboxLayout(context, "bias-variance/", "bias-variance route", { navMode: "generated" });
-  assertPageRuntimeClean("bias-variance route");
+  await assertPageRuntimeClean("bias-variance route");
   console.log("OK bias-variance double descent scene");
   await page.close();
 }
@@ -9230,7 +9230,7 @@ async function smokeTrainTestValidation(context) {
   await page.waitForTimeout(250);
   await assertViewportUsable(page, "train-test-validation route");
   await assertEngineeringSandboxLayout(context, "train-test-validation/", "train-test-validation route", { navMode: "native" });
-  assertPageRuntimeClean("train-test-validation route");
+  await assertPageRuntimeClean("train-test-validation route");
   console.log("OK train-test-validation test table");
   await page.close();
 }
@@ -9330,7 +9330,7 @@ async function smokeDoubleDescent(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("double-descent route");
+  await assertPageRuntimeClean("double-descent route");
   console.log("OK double-descent responsive shell");
   await page.close();
 }
@@ -9395,7 +9395,7 @@ async function smokeDoubleDescent2(context) {
     844,
   );
   await page.waitForTimeout(250);
-  assertPageRuntimeClean("double-descent2 route");
+  await assertPageRuntimeClean("double-descent2 route");
   console.log("OK double-descent2 responsive shell");
   await page.close();
 }
@@ -9604,7 +9604,7 @@ async function smokeFormula1Racing(context) {
   assert(await lapPlan.getAttribute("aria-checked") === "false", "Formula 1 lap-plan keyboard selection did not update aria state");
 
   await assertViewportUsable(page, "formula-1-racing desktop");
-  assertPageRuntimeClean("formula-1-racing desktop");
+  await assertPageRuntimeClean("formula-1-racing desktop");
   await page.close();
 
   const mobilePage = await context.newPage();
@@ -9613,7 +9613,7 @@ async function smokeFormula1Racing(context) {
   await assertRoute(mobilePage, "formula-1-racing/", "#reference-footer");
   await mobilePage.waitForSelector("#f1_lap_caption", { timeout: 30000 });
   await assertViewportUsable(mobilePage, "formula-1-racing mobile");
-  assertMobileRuntimeClean("formula-1-racing mobile");
+  await assertMobileRuntimeClean("formula-1-racing mobile");
   await mobilePage.close();
 }
 
@@ -9717,7 +9717,7 @@ async function smokeWatchMeshExplorer(context) {
   assert(await page.locator("[data-stage-count]").textContent() === "06 / 06", "Watch workbench did not reach the Hands stage");
 
   await assertViewportUsable(page, "watch-mesh-explorer desktop interactions");
-  assertRuntimeClean("watch-mesh-explorer interactions");
+  await assertRuntimeClean("watch-mesh-explorer interactions");
   await page.close();
 }
 
