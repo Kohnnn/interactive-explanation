@@ -10,6 +10,7 @@ import { chromium } from "playwright";
 import * as smoke from "./smoke-bundle.mjs";
 import { createSmokeServer } from "./smoke/server.mjs";
 import { validateExperienceBaseline } from "./experience-baseline.mjs";
+import { resourceUrl } from "./network-handoff.mjs";
 
 const require = createRequire(import.meta.url);
 const hash = (value) => createHash("sha256").update(value).digest("hex");
@@ -158,14 +159,7 @@ export async function capture(browser, cell) {
     const page = await context.newPage();
     page.setDefaultTimeout(30000);
     page.setDefaultNavigationTimeout(30000);
-    const clean = smoke.createRuntimeMonitor(page, { networkPolicy: route.experience.networkPolicy });
-    const url = (value) => { const parsed = new URL(value); parsed.username = ""; parsed.password = ""; parsed.search = ""; parsed.hash = ""; return parsed.href; };
-    const event = (type, data) => result.events.push({ type, at: Date.now(), ...data });
-    page.on("request", (request) => event("request", { url: url(request.url()), resourceType: request.resourceType(), method: request.method() }));
-    page.on("response", (response) => event("response", { url: url(response.url()), status: response.status() }));
-    page.on("requestfailed", (request) => event("requestfailed", { url: url(request.url()), error: request.failure()?.errorText }));
-    page.on("pageerror", (error) => event("pageerror", { message: error.message }));
-    page.on("console", (message) => { if (["error", "warning"].includes(message.type())) event(`console-${message.type()}`, { message: message.text() }); });
+    const clean = smoke.createRuntimeMonitor(page, { networkPolicy: route.experience.networkPolicy, events: result.events });
     await attempt("navigation", async () => {
       const response = await page.goto(`${smoke.baseUrl}${route.slug === "atlas" ? "" : `${route.slug}/`}`, { waitUntil: "domcontentloaded" });
       assert(response?.ok(), `Navigation HTTP ${response?.status()}`);
@@ -190,9 +184,15 @@ export async function capture(browser, cell) {
       documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth,
       frames: [...document.querySelectorAll("iframe")].map((frame) => ({ title: frame.title, src: frame.getAttribute("src") })),
     })));
+    if (result.raw) {
+      for (const entry of [...result.raw.navigation, ...result.raw.resources]) entry.name = resourceUrl(entry.name);
+      for (const frame of result.raw.frames) frame.src = resourceUrl(new URL(frame.src, page.url()).href);
+    }
+    await clean.ready();
+    result.networkClassifications = clean.classify();
     await attempt("runtime", () => clean(route.slug));
     if (result.events.some((entry) => entry.type === "console-error")) result.errors.push({ phase: "console", message: "Console errors retained in events" });
-    if (result.events.some((entry) => entry.type === "requestfailed")) result.errors.push({ phase: "network", message: "Failed requests require classification; cancellation evidence retained" });
+    if (result.networkClassifications.some((entry) => entry.classification === "unknown-failure")) result.errors.push({ phase: "network", message: "Unclassified failed requests; original events retained" });
     if (!result.performance?.loadMs || !result.performance?.domContentLoadedMs || result.performance?.sameOriginTransfer.status !== "supported") result.errors.push({ phase: "performance", message: "Incomplete timing or unsupported transfer" });
   } catch (error) { result.errors.push({ phase: "context", message: error.message }); }
   finally { if (context) await attempt("cleanup", () => context.close()); }
