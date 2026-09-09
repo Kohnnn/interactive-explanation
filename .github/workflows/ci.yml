@@ -64,6 +64,14 @@ jobs:
           path: base
           persist-credentials: false
 
+      - name: Checkout reviewed original collision reference
+        uses: actions/checkout@v4
+        with:
+          repository: Kohnnn/interactive-explanation
+          ref: 63a8bddc982ab8cb5d641386d0186027fe0b57b1
+          path: original-reference
+          persist-credentials: false
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -84,7 +92,7 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: npm run qualify -- --base ../base --head . --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl"
+        run: npm run qualify -- --base ../base --head . --reference ../original-reference --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl"
 
       - name: Retain raw qualification evidence even on failure
         if: always()
