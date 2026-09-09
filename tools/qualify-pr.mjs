@@ -74,6 +74,15 @@ export function compareGeometry(control, before, after) {
   return { status: changes.length ? "blocked" : "passed", changes, reason: changes.length ? "Same-environment source changes require specific review; replacement routes need independent acceptance" : "Same-environment geometry unchanged; not approval of legacy baseline provenance" };
 }
 
+export async function collectCellPair(options, baseCell, headCell, collect, journal) {
+  const control = await collect(options.base, baseCell, "base-control");
+  const before = await collect(options.base, baseCell, "base");
+  const calibration = compareCell(control, before, before);
+  journal.append({ type: "calibration", cell: `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`, result: calibration });
+  const after = await collect(options.head, headCell, "head");
+  return { control, before, after };
+}
+
 export function parseOptions(args) {
   const options = {};
   for (let index = 0; index < args.length; index += 2) {
@@ -137,11 +146,7 @@ export async function main(args = process.argv.slice(2)) {
       return samples;
     }
     for (let index = 0; index < cells.length; index++) {
-      const control = await collect(options.base, cells[index], "base-control");
-      const before = await collect(options.base, cells[index], "base");
-      const calibration = compareCell(control, before, before);
-      journal.append({ type: "calibration", cell: key(cells[index]), result: calibration });
-      const after = await collect(options.head, cells[index], "head");
+      const { control, before, after } = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
       const performance = compareCell(control, before, after);
       const geometry = compareGeometry(control, before, after);
       journal.append({ type: "cell", cell: key(cells[index]), performance, geometry });

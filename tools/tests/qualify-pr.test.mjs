@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifySamples, compareCell, compareGeometry, assertIdentity, parseOptions } from "../qualify-pr.mjs";
+import { classifySamples, compareCell, compareGeometry, collectCellPair, assertIdentity, parseOptions } from "../qualify-pr.mjs";
 import { planCells } from "../diagnose-baseline.mjs";
 
 const sample = (overrides = {}) => ({
@@ -9,6 +9,34 @@ const sample = (overrides = {}) => ({
   performance: { domContentLoadedMs: 1000, loadMs: 1000, resourceCount: 10, resourceCountDelta: 0, sameOriginTransfer: { status: "supported", bytes: 1000 }, longestLocalResource: null, ...overrides },
 });
 const runs = (overrides) => Array.from({ length: 3 }, () => sample(overrides));
+
+test("paired capture uses each source's selectors and network policy for the same cell key", async () => {
+  const route = { slug: "rigid-body-collisions", experience: { primarySurface: "#old-primary", runtimeSurface: "#old-runtime", networkPolicy: { mode: "deferred-remote", hosts: ["example.org"] } } };
+  const replacement = { ...route, experience: { primarySurface: "#new-primary", runtimeSurface: "#new-runtime", networkPolicy: { mode: "local-only" } } };
+  const baseCell = planCells([route], [route.slug])[0];
+  const headCell = planCells([replacement], [route.slug])[0];
+  const calls = [];
+  const journal = [];
+  const failed = runs().map(value => ({ ...value, status: "failed", ready: false, geometry: null, performance: null, errors: [{ phase: "readiness", message: "Old runtime unavailable" }] }));
+  const collect = async (root, cell, group) => {
+    calls.push({ root, cell, group });
+    if (group === "head") assert.equal(journal[0].type, "calibration");
+    return group === "head" ? runs() : failed;
+  };
+  const result = await collectCellPair({ base: "/base", head: "/head" }, baseCell, headCell, collect, { append: value => journal.push(value) });
+  assert.deepEqual(calls.map(({ root, group }) => ({ root, group })), [
+    { root: "/base", group: "base-control" }, { root: "/base", group: "base" }, { root: "/head", group: "head" },
+  ]);
+  assert.equal(calls[0].cell, baseCell);
+  assert.equal(calls[1].cell, baseCell);
+  assert.equal(calls[2].cell, headCell);
+  assert.equal(calls[0].cell.route.experience.networkPolicy, route.experience.networkPolicy);
+  assert.equal(calls[2].cell.route.experience.networkPolicy, replacement.experience.networkPolicy);
+  assert.equal(journal[0].result.status, "inconclusive");
+  assert.equal(classifySamples(result.after).status, "admissible");
+  assert.equal(compareCell(result.control, result.before, result.after).status, "inconclusive");
+  assert.equal(compareGeometry(result.control, result.before, result.after).status, "blocked");
+});
 
 test("paired qualification admits stable three-run groups and preserves raw ranges", () => {
   const result = compareCell(runs(), runs(), runs({ loadMs: 1250 }));
