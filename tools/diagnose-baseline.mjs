@@ -85,11 +85,11 @@ export function verifySourceFixture(root, repository, revision, prefix = "intera
   const git = (args, options = {}) => execFileSync("git", args, { cwd: repository, maxBuffer: 256 * 1024 * 1024, ...options });
   const head = git(["rev-parse", "--verify", `${revision}^{commit}`]).toString().trim();
   const excluded = [".git", "node_modules"];
-  const entries = git(["ls-tree", "--full-tree", "-rz", head, "--", prefix]).toString().split("\0").filter(Boolean).map(record => {
+  const entries = git(["ls-tree", "--full-tree", "-rz", head, ...(prefix ? ["--", prefix] : [])]).toString().split("\0").filter(Boolean).map(record => {
     const [header, name] = record.split("\t");
     const [mode, type, blob] = header.split(" ");
-    assert(name.startsWith(`${prefix}/`), `Unexpected Git path: ${name}`);
-    return { path: name.slice(prefix.length + 1), mode, type, blob };
+    assert(!prefix || name.startsWith(`${prefix}/`), `Unexpected Git path: ${name}`);
+    return { path: prefix ? name.slice(prefix.length + 1) : name, mode, type, blob };
   }).filter(entry => !entry.path.split("/").some(part => excluded.includes(part)));
   assert(entries.length, "Empty source fixture");
   const actual = [];

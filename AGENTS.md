@@ -1,13 +1,13 @@
 # AGENTS.md
 
 ## Repo Shape
-- This is a self-contained static site of interactive-explanation replicas; there is no root `package.json`, build step, lint config, or CI workflow in this directory.
+- This is a self-contained static site. Root `package.json` declares verification commands and locks Playwright; `.github/workflows/ci.yml` defines CI. There is no build or TypeScript step.
 - Each shipped route lives at `<slug>/index.html` with route-local assets; matching provenance/parity docs live at `docs/<slug>/`.
 - `index.html` is the atlas page and reads `pages.json`; edit route inventory in `routes.manifest.json` and sync `pages.json` instead of hand-editing both.
 - `shared/` owns cross-route shell assets: `site.*`, `public-footer.*`, `engineering-sandbox.*`, fonts, and a few archived runtimes.
 
 ## Commands
-- From this repo root, pass `.` to the Node tools; their default path is `process.cwd()/interactive-explanation`, which is wrong inside this repo.
+- Run npm commands from this repo root. Pass `.` explicitly to smoke/audit tools.
 - Sync route metadata: `node tools/sync-route-metadata.mjs .`
 - Scaffold docs/parity for one manifest entry: `node tools/sync-route-metadata.mjs . --scaffold <slug>`
 - Scaffold missing docs/parity for all manifest entries: `node tools/sync-route-metadata.mjs . --scaffold-all`
@@ -40,4 +40,13 @@
 - After manifest/docs/provenance changes, run `node tools/sync-route-metadata.mjs .` and `node tools/check-public-surface.mjs .`.
 - After route runtime, shell, layout, or link changes, run `node tools/smoke-bundle.mjs . --route <slug>` at minimum; run the full smoke suite for shared assets.
 - `tools/smoke-bundle.mjs` serves the repo at `/interactive-explanation/` and checks desktop/mobile overflow, footer presence, route-specific selectors, and runtime console/network failures.
-- Playwright is imported by the smoke tool but not declared locally; if `node tools/smoke-bundle.mjs .` cannot resolve it, use the environment's existing Playwright install rather than adding a manifest casually.
+- Install locked dependencies with `npm ci`; CI installs the matching Chromium headless shell. Run `npm test` for sync, audit, syntax and unit checks.
+
+## CI Qualification
+- PR checks `verify`, `full-smoke`, and `paired-performance` are independent outcomes. Configure all three as required branch-protection checks before treating CI as a merge gate; workflow code alone cannot configure repository rules.
+- `npm run qualify -- --base <clean-base-checkout> --head <clean-head-checkout> --base-sha <40-character-SHA> --head-sha <40-character-SHA> --output <outside-sources.jsonl>` measures both immutable sources on one host, with one browser and sequential fresh contexts. Source files are verified against Git blobs before capture and hashed again after capture. The head harness/server/fixtures are used for both sources.
+- Every one of 504 cells (83 routes plus Atlas, three viewports, both themes) receives three base-control, three base and three head samples: 4,536 contexts. Each cell completes its A/A control before head evaluation. Expect roughly 90–150 minutes on a healthy GitHub runner; 180 minutes is the job ceiling, not a completion guarantee. There is no browser concurrency, retry, outlier deletion or accepted noisy baseline.
+- Admissibility method: each timing group's raw max-minus-min and the A/A median drift must be at most half of the existing timing allowance, `max(20%, 250ms) / 2`. Resource counts and transfer bytes must be identical within each group and across A/A controls. This is an additional rejection criterion, not a budget relaxation or proof that host noise is absent. Failed readiness, missing samples, unsupported transfer and unstable controls are inconclusive and fail the job.
+- Only admissible medians reach the existing budgets: timing `max(20%, 250ms)`, bytes `max(20%, 250KiB)`, resource-count increase zero. Raw samples, events, medians, ranges, exact source hashes, browser and host identity are retained with `always()` artifacts, including partial failure evidence. A timed-out journal without a qualified completion record is incomplete.
+- Geometry is compared across stable same-source controls and same-environment base/head captures without masks. Any changed geometry is blocked for specific review. This does not approve historical baseline provenance. Full functional smoke retains its explicit legacy geometry baseline and may remain blocked until the reviewed `007` reconstruction and same-source CI environment comparison are available; do not refresh the baseline wholesale.
+- An original replacement such as rigid-body-collisions cannot inherit a pass from a failed old engine. Missing before evidence remains blocked in paired qualification. Independent original-route functional/geometry acceptance and any comparison waiver require the parent specification's explicit contract; this runner supplies no blanket waiver.

@@ -7,12 +7,18 @@ on:
   schedule:
     - cron: "0 8 * * 1"
 
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -38,12 +44,65 @@ jobs:
       - name: Formula 1 smoke
         run: node tools/smoke-bundle.mjs . --skip-performance --route formula-1-racing
 
+  paired-performance:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout immutable PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: head
+          persist-credentials: false
+
+      - name: Checkout immutable trusted repository base
+        uses: actions/checkout@v4
+        with:
+          repository: Kohnnn/interactive-explanation
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: head/package-lock.json
+
+      - name: Install locked qualification dependencies
+        working-directory: head
+        run: npm ci
+
+      - name: Install matching Playwright headless shell
+        working-directory: head
+        run: npx playwright install --only-shell --with-deps chromium
+
+      - name: Calibrate and qualify all paired cells
+        working-directory: head
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npm run qualify -- --base ../base --head . --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl"
+
+      - name: Retain raw qualification evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paired-qualification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/qualification.jsonl
+          if-no-files-found: error
+
   full-smoke:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -57,5 +116,16 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium
 
-      - name: Full smoke
-        run: node tools/smoke-bundle.mjs .
+      - name: Full functional smoke with retained legacy geometry gate
+        shell: pwsh
+        run: |
+          node tools/smoke-bundle.mjs . --skip-performance --baseline tools/experience-baselines.json 2>&1 | Tee-Object -FilePath "$env:RUNNER_TEMP/functional-smoke.log"
+          exit $LASTEXITCODE
+
+      - name: Retain functional evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: functional-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/functional-smoke.log
+          if-no-files-found: error
