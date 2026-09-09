@@ -99,7 +99,7 @@ test("qualification has exact full matrix and rejects CLI injection or filter by
 
 test("CI uses read-only PR sandbox, immutable paired checkouts and independent functional job", () => {
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
-  assert.match(workflow, /permissions:\n  contents: read/);
+  assert.match(workflow, /permissions:\r?\n  contents: read/);
   assert.doesNotMatch(workflow, /pull_request_target|secrets\.|continue-on-error|skip-geometry/);
   assert.match(workflow, /paired-performance:[\s\S]*timeout-minutes: 180/);
   assert.match(workflow, /repository: Kohnnn\/interactive-explanation/);

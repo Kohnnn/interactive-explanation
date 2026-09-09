@@ -77,7 +77,9 @@ test("source fixture requires Git blob bytes, mode and exact paths before captur
     assert.throws(() => verifySourceFixture(directory, repository, "HEAD", prefix), /Git blob bytes differ/);
     fs.writeFileSync(file, bytes);
     fs.chmodSync(file, 0o755);
-    assert.throws(() => verifySourceFixture(directory, repository, "HEAD", prefix), /mode differs/);
+    if (process.platform !== "win32" || (fs.statSync(file).mode & 0o111) !== 0) {
+      assert.throws(() => verifySourceFixture(directory, repository, "HEAD", prefix), /mode differs/);
+    }
     fs.chmodSync(file, 0o644);
     fs.writeFileSync(path.join(directory, "extra.html"), "extra");
     assert.throws(() => verifySourceFixture(directory, repository, "HEAD", prefix), /paths differ/);
@@ -148,7 +150,7 @@ test("smoke import preserves console and does not launch; CLI still validates fi
   const imported = spawnSync(process.execPath, ["--input-type=module", "-e", `const log = console.log; const m = await import(${JSON.stringify(smoke.href)}); if (console.log !== log || typeof m.measureRuntimeSurface !== "function") process.exit(2);`], { encoding: "utf8", timeout: 15000 });
   assert.equal(imported.status, 0, imported.stderr);
   assert.equal(imported.stdout, "");
-  const cli = spawnSync(process.execPath, [smoke.pathname, "--route", "not-a-manifest-route"], { encoding: "utf8", timeout: 15000 });
+  const cli = spawnSync(process.execPath, [fileURLToPath(smoke), "--route", "not-a-manifest-route"], { encoding: "utf8", timeout: 15000 });
   assert.equal(cli.status, 1);
   assert.match(cli.stderr, /Unknown --route slug/);
 });
