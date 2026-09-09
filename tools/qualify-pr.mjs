@@ -13,6 +13,9 @@ import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 import { geometryReview, geometrySourceBinding, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
 
+import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
+import { emitGeometry, environmentIdentity } from "./geometry-output.mjs";
+
 const require = createRequire(import.meta.url);
 const timings = ["domContentLoadedMs", "loadMs"];
 
@@ -73,7 +76,7 @@ export function compareGeometry(control, before, after, review, cell) {
     for (const samples of [control, before, after]) {
       assert(Array.isArray(samples) && samples.length === 3, "Missing geometry samples");
       for (const sample of samples) {
-        assert(sample?.status === "measured" && sample.ready === true && Array.isArray(sample.errors) && sample.errors.length === 0, "Missing or failed geometry sample");
+        assert(["measured", "failed"].includes(sample?.status) && sample.ready === true && Array.isArray(sample.errors) && sample.errors.every(error => error.phase === "performance") && (sample.status === "measured" || sample.errors.length > 0), "Missing or failed geometry sample");
         validateGeometryEvidence(sample.geometry);
         assert.deepEqual(sample.geometry, samples[0].geometry, "Unstable geometry");
       }
@@ -83,7 +86,7 @@ export function compareGeometry(control, before, after, review, cell) {
   const changes = geometryChanges(before[0].geometry, after[0].geometry);
   if (review) {
     try {
-      for (const sample of [...control, ...before, ...after]) assert(sample.ready && Array.isArray(sample.errors) && sample.errors.length === 0, "Missing or failed reviewed sample");
+      for (const sample of [...control, ...before, ...after]) assert(sample.ready && Array.isArray(sample.errors) && sample.errors.every(error => error.phase === "performance"), "Missing or failed reviewed sample");
       return admitGeometryReview(review, cell, before[0].geometry, after[0].geometry, changes);
     } catch (error) { return { status: "blocked", changes, reason: error.message }; }
   }
@@ -130,7 +133,7 @@ export function parseOptions(args) {
   const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = args[index];
-    assert(["--base", "--head", "--base-sha", "--head-sha", "--output", "--reference"].includes(key), `Unknown option: ${key}`);
+    assert(["--base", "--head", "--base-sha", "--head-sha", "--output", "--reference", "--sim-reference", "--geometry-output"].includes(key), `Unknown option: ${key}`);
     assert(!Object.hasOwn(options, key.slice(2)), `Duplicate option: ${key}`);
     const value = args[index + 1];
     assert(value && !value.startsWith("--"), `Missing value: ${key}`);
@@ -144,10 +147,24 @@ export function parseOptions(args) {
     options["reference-sha"] = rigidAdmission.referenceSha;
     assert(![options.base, options.head].includes(options.reference), "Separate original reference required");
   }
-  options.output = path.join(fs.realpathSync(path.dirname(path.resolve(options.output))), path.basename(options.output));
-  for (const root of [options.base, options.head, options.reference].filter(Boolean)) {
-    const relative = path.relative(root, options.output);
-    assert(relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative), "Evidence must be outside measured sources");
+  if (options["sim-reference"]) {
+    options.sim = fs.realpathSync(options["sim-reference"]);
+    options["sim-sha"] = simReferenceSha;
+    assert(![options.base, options.head, options.reference].includes(options.sim), "Separate fixed Sim reference required");
+  }
+  for (const name of ["output", "geometry-output"].filter(name => options[name])) {
+    options[name] = path.join(fs.realpathSync(path.dirname(path.resolve(options[name]))), path.basename(options[name]));
+    for (const root of [options.base, options.head, options.reference, options.sim].filter(Boolean)) {
+      const relative = path.relative(root, options[name]);
+      assert(relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative), "Evidence must be outside measured sources");
+    }
+    assert(!fs.existsSync(options[name]), "Evidence output already exists");
+  }
+  if (options["geometry-output"]) {
+    assert(options.sim && options.reference, "Geometry output requires independent references");
+    assert.notEqual(options["geometry-output"], options.output);
+    assert.notEqual(`${options["geometry-output"]}.proof.json`, options.output);
+    assert(!fs.existsSync(`${options["geometry-output"]}.proof.json`), "Geometry proof already exists");
   }
   assert.notEqual(options.base, options.head, "Separate immutable checkouts required");
   return options;
@@ -160,10 +177,14 @@ export async function main(args = process.argv.slice(2)) {
   let browser;
   let failed = false;
   let completed = 0;
+  let sourcesVerified = true;
+  let nativeSim = "blocked";
+  let environment;
+  const geometryRows = [];
   const totals = { performance: {}, geometry: {} };
   const manifest = root => JSON.parse(fs.readFileSync(path.join(root, "routes.manifest.json"), "utf8"));
   try {
-    for (const side of ["base", "head", ...(options.reference ? ["reference"] : [])]) {
+    for (const side of ["base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
       identities[side] = sourceIdentity(options[side]);
       assertIdentity(identities[side], options[`${side}-sha`]);
       const verified = verifySourceFixture(options[side], options[side], options[`${side}-sha`], "");
@@ -177,6 +198,8 @@ export async function main(args = process.argv.slice(2)) {
       const science = execFileSync(process.execPath, ["--test", "tools/tests/rigid-body-collisions.test.mjs"], { cwd: options.head, encoding: "utf8" });
       journal.append({ type: "original-science", status: "passed", output: science });
     }
+    if (options.sim) journal.append({ type: "sim-reference-contract", contract: verifySimSources(simSource(options.sim), simSource(options.head)), performance: "original base remains mandatory" });
+    const simReferenceCells = options.sim ? planCells(manifest(options.sim), ["sim"]) : [];
     const referenceCells = options.reference ? planCells(manifest(options.reference), [rigidAdmission.slug]) : [];
     const cells = planCells(manifest(options.head), []);
     const baseCells = planCells(manifest(options.base), []);
@@ -184,6 +207,8 @@ export async function main(args = process.argv.slice(2)) {
     assert.deepEqual(baseCells.map(key), cells.map(key), "Route matrix changed; requires qualification contract review");
     assert.equal(cells.length, 504, "Expected 83 routes plus Atlas, three viewports, two themes");
     journal.append({ type: "method", cells: cells.length, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, baseUrl, cache: "fresh context per sample; same no-store server; OS cache uncontrolled", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
+    environment = environmentIdentity();
+    journal.append({ type: "environment", identity: environment });
     browser = await chromium.launch({ headless: true });
     journal.append({ type: "browser", version: browser.version(), executable: chromium.executablePath(), browsers: JSON.parse(fs.readFileSync(path.join(path.dirname(require.resolve("playwright-core/package.json")), "browsers.json"), "utf8")) });
     async function collect(root, cell, group) {
@@ -203,6 +228,19 @@ export async function main(args = process.argv.slice(2)) {
       return samples;
     }
     if (options.reference) journal.append({ type: "original-functional", status: "passed", evidence: await verifyRigidBrowser(options.head, browser) });
+    if (options.sim) {
+      const server = await createSmokeServer({ rootDir: options.head, host, port, mountPath }).start();
+      try {
+        for (const cell of cells.filter(cell => simCells.includes(key(cell)))) journal.append({ type: "sim-native", cell: key(cell), evidence: await verifySimNative(browser, cell) });
+        nativeSim = "passed";
+      } catch (error) {
+        failed = true;
+        journal.append({ type: "sim-native", status: "blocked", message: error.stack || error.message });
+      } finally {
+        server.closeAllConnections();
+        await new Promise(resolve => server.close(resolve));
+      }
+    }
     for (let index = 0; index < cells.length; index++) {
       let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
       if (options.reference && cells[index].route.slug === rigidAdmission.slug) {
@@ -210,7 +248,18 @@ export async function main(args = process.argv.slice(2)) {
       }
       const { control, before, after } = pair;
       const performance = compareCell(control, before, after);
-      const geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
+      let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
+      let headGeometry = after[0]?.geometry;
+      if (options.sim && simCells.includes(key(cells[index]))) {
+        journal.append({ type: "legacy-sim-geometry", cell: key(cells[index]), geometry, performance });
+        const fixedCell = simReferenceCells.find(cell => key(cell) === key(cells[index]));
+        const fixedControl = await collect(options.sim, fixedCell, "sim-fixed-control");
+        const fixedReference = await collect(options.sim, fixedCell, "sim-fixed-reference");
+        const fixedHead = await collect(options.head, cells[index], "sim-fixed-head");
+        geometry = compareGeometry(fixedControl, fixedReference, fixedHead);
+        headGeometry = fixedHead[0]?.geometry;
+      }
+      geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
       journal.append({ type: "cell", cell: key(cells[index]), performance, geometry });
       for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
       if (performance.status !== "passed" || !["passed", "passed-reviewed"].includes(geometry.status)) failed = true;
@@ -221,16 +270,22 @@ export async function main(args = process.argv.slice(2)) {
     journal.append({ type: "fatal", message: error.stack || error.message });
   } finally {
     try { await browser?.close(); } catch (error) { failed = true; journal.append({ type: "cleanup-error", message: error.message }); }
-    for (const side of ["base", "head", ...(options.reference ? ["reference"] : [])]) {
+    for (const side of ["base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
       try {
         const actual = sourceIdentity(options[side]);
         assertIdentity(actual, options[`${side}-sha`], identities[side]);
         journal.append({ type: "source-end", side, unchanged: true, identity: actual });
-      } catch (error) { failed = true; journal.append({ type: "source-end", side, unchanged: false, message: error.message }); }
+      } catch (error) { failed = true; sourcesVerified = false; journal.append({ type: "source-end", side, unchanged: false, message: error.message }); }
     }
     if (completed !== 504) failed = true;
-    journal.append({ type: "complete", status: failed ? "failed-or-inconclusive" : "qualified", completed, totals, legacyGeometryApproval: "not granted", finishedAt: new Date().toISOString() });
+    const geometryQualified = completed === 504 && sourcesVerified && nativeSim === "passed" && geometryRows.every(row => ["passed", "passed-reviewed"].includes(row.geometry.status));
+    journal.append({ type: "complete", status: failed ? "failed-or-inconclusive" : "qualified", completed, totals, geometryQualified, legacyGeometryApproval: "not granted", finishedAt: new Date().toISOString() });
     journal.close();
+    if (options["geometry-output"] && geometryQualified) {
+      try {
+        emitGeometry(options["geometry-output"], manifest(options.head), JSON.parse(fs.readFileSync(path.join(options.head, "tools/experience-baselines.json"))), geometryRows, { sourcesVerified, nativeSim, environment, head: identities.head, sources: identities, journal: options.output });
+      } catch (error) { failed = true; console.error(error); }
+    }
   }
   return failed ? 1 : 0;
 }

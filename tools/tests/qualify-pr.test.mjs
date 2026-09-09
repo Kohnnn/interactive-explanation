@@ -97,7 +97,7 @@ test("qualification has exact full matrix and rejects CLI injection or filter by
   for (const args of [[], ["--route", "atlas"], ["--base-sha", "main;id"], ["--head", ".", "--head", "."], ["--skip-performance"], ["--output"]]) assert.throws(() => parseOptions(args));
 });
 
-test("CI uses read-only PR sandbox, immutable paired checkouts and independent functional job", () => {
+test("CI uses read-only PR sandbox and same-host independent functional obligations", () => {
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert.match(workflow, /permissions:\r?\n  contents: read/);
   assert.doesNotMatch(workflow, /pull_request_target|secrets\.|continue-on-error|skip-geometry/);
@@ -106,6 +106,8 @@ test("CI uses read-only PR sandbox, immutable paired checkouts and independent f
   assert.match(workflow, /ref: \$\{\{ github.event.pull_request.base.sha \}\}/);
   assert.match(workflow, /ref: \$\{\{ github.event.pull_request.head.sha \}\}/);
   assert.match(workflow, /--only-shell --with-deps chromium/);
-  assert.match(workflow, /full-smoke:[\s\S]*--skip-performance --baseline tools\/experience-baselines.json/);
+  assert.match(workflow, /--geometry-output "\$RUNNER_TEMP\/geometry.json"/);
+  assert.match(workflow, /functional gates[\s\S]*if: always\(\)[\s\S]*working-directory: head[\s\S]*node tools\/functional-qualified.mjs/);
+  assert.doesNotMatch(workflow, /full-smoke:|--skip-performance/);
   assert.match(workflow, /if: always\(\)/);
 });

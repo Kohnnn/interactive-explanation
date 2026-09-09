@@ -61,11 +61,12 @@ test("original acceptance rejects noisy, failed and geometrically changed refere
   assert.equal(compareGeometry(runs(), runs(), runs().map(sample => ({ ...sample, geometry: { rect: { width: 101 } } }))).status, "blocked");
 });
 
-test("CI provisions a literal immutable original reference and retains independent legacy smoke", () => {
+test("CI provisions a literal immutable original reference and retains independent same-host functional smoke", () => {
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert.ok(workflow.includes(`ref: ${rigidAdmission.referenceSha}`));
   assert.match(workflow, /--reference \.\.\/original-reference/);
-  assert.match(workflow, /--skip-performance --baseline tools\/experience-baselines.json/);
+  assert.match(workflow, /node tools\/functional-qualified.mjs/);
+  assert.doesNotMatch(workflow, /continue-on-error/);
   const runner = fs.readFileSync(new URL("../qualify-pr.mjs", import.meta.url), "utf8");
   assert.match(runner, /await verifyRigidBrowser\(options.head, browser\)/);
   assert.match(runner, /"--test", "tools\/tests\/rigid-body-collisions.test.mjs"/);

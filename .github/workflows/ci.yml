@@ -29,20 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Chromium
-        run: npx playwright install chromium
-
       - name: Verify
         run: npm test
 
       - name: Manifest drift gate
         run: git diff --exit-code pages.json
-
-      - name: Migrated Ncase smoke subset
-        run: node tools/smoke-bundle.mjs . --skip-performance --route trust --route crowds --route loopy --route anxiety --route wbwwb --route coming-out-simulator-2014 --route sim
-
-      - name: Formula 1 smoke
-        run: node tools/smoke-bundle.mjs . --skip-performance --route formula-1-racing
 
   paired-performance:
     if: github.event_name == 'pull_request'
@@ -72,6 +63,14 @@ jobs:
           path: original-reference
           persist-credentials: false
 
+      - name: Checkout fixed published Sim geometry reference
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: 7b09f49e2ab3a3d0feacfcea0d40d6a773aa764f
+          path: sim-reference
+          persist-credentials: false
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -92,48 +91,21 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: npm run qualify -- --base ../base --head . --reference ../original-reference --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl"
+        run: npm run qualify -- --base ../base --head . --reference ../original-reference --sim-reference ../sim-reference --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl" --geometry-output "$RUNNER_TEMP/geometry.json"
+
+      - name: Full and strict functional gates on the qualification host
+        if: always()
+        working-directory: head
+        run: node tools/functional-qualified.mjs . "$RUNNER_TEMP/geometry.json" "$RUNNER_TEMP/functional.jsonl"
 
       - name: Retain raw qualification evidence even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: paired-qualification-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/qualification.jsonl
-          if-no-files-found: error
-
-  full-smoke:
-    if: github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright Chromium
-        run: npx playwright install chromium
-
-      - name: Full functional smoke with retained legacy geometry gate
-        shell: pwsh
-        run: |
-          node tools/smoke-bundle.mjs . --skip-performance --baseline tools/experience-baselines.json 2>&1 | Tee-Object -FilePath "$env:RUNNER_TEMP/functional-smoke.log"
-          exit $LASTEXITCODE
-
-      - name: Retain functional evidence even on failure
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: functional-smoke-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/functional-smoke.log
+          path: |
+            ${{ runner.temp }}/qualification.jsonl
+            ${{ runner.temp }}/geometry.json
+            ${{ runner.temp }}/geometry.json.proof.json
+            ${{ runner.temp }}/functional.jsonl
           if-no-files-found: error

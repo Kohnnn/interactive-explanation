@@ -89,10 +89,12 @@ test("product binding includes Atlas, metadata, shared dependencies and exact in
   assert.equal(binding([...files, ["tools/geometry-review.json", "x"]]), binding(files));
   assert.throws(() => binding([...files, files[0]]));
 });
-test("geometry approval cannot override independent performance failure or legacy gate", () => {
+test("geometry approval cannot override independent performance failure or functional geometry gate", () => {
   assert.equal(result(fixture()).status, "passed-reviewed");
   assert.equal(compareCell(...fixture()).status, "inconclusive");
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert(!workflow.includes("--skip-geometry"));
-  assert(workflow.includes("experience-baselines.json"));
+  assert(workflow.includes("functional-qualified.mjs"));
+  assert(workflow.includes("--geometry-output"));
+  assert(!workflow.includes("continue-on-error"));
 });
