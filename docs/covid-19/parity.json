@@ -12,7 +12,7 @@
     ],
     "notes": [
       "The local shell still uses the original article markup and iframe stage layout instead of rebuilding the narrative in a different framework.",
-      "Footer-only provenance is handled by the shared footer hook, while the old public sidebars and closing credits block are omitted."
+      "The original-page footer hook is retained and a visible authored Credits and licenses link reaches the local notices; historical translation/share sidebars remain omitted."
     ],
     "evidence": [
       "Local verification on 2026-03-10 confirmed the article route loads with the shared footer and the expected stage iframes.",
@@ -97,7 +97,7 @@
   {
     "moduleId": "sandbox-and-subpath-hosting",
     "originalBehavior": "The article closes with a full sandbox that exposes more knobs at once and relies on the same relative asset structure as the rest of the site.",
-    "localStatus": "The sandbox remains vendored as the original <code>SB</code> stage and is served unchanged aside from subpath-safe hosting and footer-only provenance on the article shell.",
+    "localStatus": "The original SB stage is retained with historical accessibility adaptations in sim/index.html, sim/css/sim.css, sim/js/Controls.js and sim/js/Model.js. Native controls, labels and graph-summary output are local adaptations; stage presets and numerical equations are preserved. Source packaging is verified separately from the outstanding geometry and child-interaction gates.",
     "sourceFiles": [
       "sim/index.html",
       "sim/js/Stages.js",

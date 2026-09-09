@@ -52,6 +52,10 @@ virus-demo .values {
   -webkit-overflow-scrolling: touch;
 }
 
+body[data-story-route="exponentiation"] h2.title {
+  overflow-wrap: anywhere;
+}
+
 .local-note {
   margin: 2rem 0 0;
   color: rgba(0, 0, 0, 0.55);

@@ -4,6 +4,10 @@
   var SELECTOR = "button.button";
 
   function sync() {
+    var controls = document.querySelector(".button-container");
+    if (controls) {
+      controls.inert = controls.style.opacity !== "1";
+    }
     var buttons = document.querySelectorAll(SELECTOR);
     for (var i = 0; i < buttons.length; i++) {
       var btn = buttons[i];
@@ -32,13 +36,16 @@
             setTimeout(run, 100);
           };
 
-    new MutationObserver(function () {
+    new MutationObserver(function (records) {
+      if (!records.some(function (record) {
+        return record.attributeName !== "style" || record.target.matches(".button-container");
+      })) return;
       if (scheduled) return;
       scheduled = true;
       schedule();
     }).observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["class"],
+      attributeFilter: ["class", "style"],
       childList: true,
       subtree: true,
     });

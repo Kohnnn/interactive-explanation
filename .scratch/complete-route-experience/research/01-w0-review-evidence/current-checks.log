@@ -1,0 +1,12 @@
+Command: SMOKE_PORT=4199 timeout 120s node interactive-explanation/tools/smoke-bundle.mjs interactive-explanation --route decision-tree --experience --verbose
+Error: decision-tree desktop geometry baseline runtime bottom shifted by more than 1 CSS px
+Exit: 1
+
+Command: node .scratch/complete-route-experience/research/01-w0-review-evidence/prototype33-pure-check.mjs
+PASS: 2 inline scripts compile; intact DOM, each of 27 missing IDs, and absent-ID DOM execute without exceptions; intact sample feedback preserved. No browser/layout certification.
+Exit: 0
+
+Command: npm --prefix interactive-explanation run check
+> interactive-explanation@1.0.0 check
+> node --check shared/site.js && node --check shared/route-families.js && node --check shared/engineering-sandbox.js && node --check shared/public-footer.js && node --check shared/theme-init.js && node --check tools/check-public-surface.mjs && node --check tools/experience-baseline.mjs && node --check tools/sync-route-metadata.mjs && node --check tools/smoke-bundle.mjs && node --check tools/smoke/server.mjs
+Exit: 0

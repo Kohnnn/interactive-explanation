@@ -1,0 +1,6836 @@
+{
+  "artifacts": [
+    {
+      "file": "/tmp/opencode/39-owned-before.jsonl",
+      "bytes": 6304451,
+      "sha256": "372bd84bacb4a57cc62cadc36a1d7f74d4d5a15059c808debd23ff78c4f74e18"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-after.jsonl",
+      "bytes": 6309659,
+      "sha256": "5d3afe9222294ec51275d414f87cf239dba8a42c708565e6c4311c5cc50d3ba2"
+    }
+  ],
+  "identities": [
+    {
+      "type": "identity",
+      "root": "/tmp/opencode/w0-owned-reflow/interactive-explanation",
+      "baselineSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/w0-owned-reflow/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "interactive-explanation",
+        "--output",
+        "/tmp/opencode/39-owned-before.jsonl",
+        "--route",
+        "exponentiation",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "linear-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4221/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 42,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "source": {
+        "head": "a5aa4a9fb13fd2bc2f6fbde6e766ab2384f77af6",
+        "status": "?? interactive-explanation/node_modules",
+        "digest": "f370d6d498f104d51bd2452754f2e77c01b6aaf39816cef71c45ae1f76ce664c"
+      }
+    },
+    {
+      "type": "identity",
+      "root": "/tmp/opencode/w0-owned-reflow/interactive-explanation",
+      "baselineSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/w0-owned-reflow/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "interactive-explanation",
+        "--output",
+        "/tmp/opencode/39-owned-after.jsonl",
+        "--route",
+        "exponentiation",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "linear-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4221/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 42,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "source": {
+        "head": "a5aa4a9fb13fd2bc2f6fbde6e766ab2384f77af6",
+        "status": "M interactive-explanation/blockchain-101-combined-flow/index.html\n M interactive-explanation/exponentiation/index.html\n M interactive-explanation/exponentiation/style.css\n M interactive-explanation/linear-regression/index.html\n M interactive-explanation/memory-allocation/index.html\n M interactive-explanation/precision-recall/index.html\n M interactive-explanation/public-private-keys/index.html\n M interactive-explanation/train-test-validation/index.html\n?? .scratch/complete-route-experience/research/39-owned-reflow-probe.mjs\n?? .scratch/complete-route-experience/research/39-owned-reflow.md\n?? interactive-explanation/node_modules",
+        "digest": "c8b8bf3ccadb5556928fa2407c8dc42bd6bb215a77461881646e6c4729c2165a"
+      }
+    }
+  ],
+  "unchanged": [
+    true,
+    true
+  ],
+  "cells": [
+    {
+      "key": "exponentiation/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 236,
+            "min": 225.9000000357628,
+            "max": 418.2000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 280.39999997615814,
+            "min": 242.5,
+            "max": 374.5
+          },
+          "delta": 44.39999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 274.5,
+            "min": 265.7000000476837,
+            "max": 481.2000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 317.5,
+            "min": 301.60000002384186,
+            "max": 440.0999999642372
+          },
+          "delta": 43,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 183.30000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 182.39999997615814,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 181.29999995231628,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 168.30000001192093,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 108.60000002384186,
+          "transferSize": 36232
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "exponentiation/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 192.30000001192093,
+            "min": 158,
+            "max": 205.80000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 387.7000000476837,
+            "min": 242.19999998807907,
+            "max": 439.60000002384186
+          },
+          "delta": 195.4000000357628,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 226,
+            "min": 188.20000004768372,
+            "max": 246.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 473.5,
+            "min": 312.5,
+            "max": 504.69999998807907
+          },
+          "delta": 247.5,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 149.19999998807907,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 146.5999999642372,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 144,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 143.89999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 56.89999997615814,
+          "transferSize": 36232
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "exponentiation/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 158,
+            "min": 135.20000004768372,
+            "max": 161.79999995231628
+          },
+          "after": {
+            "count": 3,
+            "median": 331,
+            "min": 321.30000001192093,
+            "max": 332.7000000476837
+          },
+          "delta": 173,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 189.0999999642372,
+            "min": 160.60000002384186,
+            "max": 211.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 415.30000001192093,
+            "min": 368.5999999642372,
+            "max": 432.2999999523163
+          },
+          "delta": 226.20000004768372,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4235.921875,
+          "after": 4322.109375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4235.734375,
+          "after": 4321.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4235.73px",
+          "after": "4321.92px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.08829637717780639,
+          "after": 0.08653557625911505,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/top",
+          "before": 1833.78125,
+          "after": 1919.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/bottom",
+          "before": 2033.78125,
+          "after": 2119.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2347.734375,
+          "after": 2433.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 2647.734375,
+          "after": 2733.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 3022.875,
+          "after": 3109.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3322.875,
+          "after": 3409.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 3640.234375,
+          "after": 3726.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 4140.234375,
+          "after": 4226.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 3640.234375,
+          "after": 3726.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 4140.234375,
+          "after": 4226.421875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 74.90000003576279,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 74.59999996423721,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 69.39999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 68.19999998807907,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 65.89999997615814,
+          "transferSize": 36232
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "exponentiation/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 161.5999999642372,
+            "min": 159.89999997615814,
+            "max": 215.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 370,
+            "min": 206.5999999642372,
+            "max": 377.69999998807907
+          },
+          "delta": 208.4000000357628,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 193.80000001192093,
+            "min": 188.39999997615814,
+            "max": 258.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 426.5,
+            "min": 251.0999999642372,
+            "max": 455.19999998807907
+          },
+          "delta": 232.69999998807907,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4235.921875,
+          "after": 4322.109375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4235.734375,
+          "after": 4321.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4235.73px",
+          "after": "4321.92px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.08829637717780639,
+          "after": 0.08653557625911505,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/top",
+          "before": 1833.78125,
+          "after": 1919.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/bottom",
+          "before": 2033.78125,
+          "after": 2119.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2347.734375,
+          "after": 2433.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 2647.734375,
+          "after": 2733.921875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 3022.875,
+          "after": 3109.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3322.875,
+          "after": 3409.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 3640.234375,
+          "after": 3726.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 4140.234375,
+          "after": 4226.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 3640.234375,
+          "after": 3726.421875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 4140.234375,
+          "after": 4226.421875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 107.19999998807907,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 107,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 101.89999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 94.79999995231628,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 70.80000001192093,
+          "transferSize": 36232
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "exponentiation/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        353,
+        353,
+        353
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 190.0999999642372,
+            "min": 185.10000002384186,
+            "max": 211
+          },
+          "after": {
+            "count": 3,
+            "median": 252.80000001192093,
+            "min": 225.10000002384186,
+            "max": 292.80000001192093
+          },
+          "delta": 62.700000047683716,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 227,
+            "min": 220.39999997615814,
+            "max": 259.39999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 326.9000000357628,
+            "min": 284,
+            "max": 366.2000000476837
+          },
+          "delta": 99.90000003576279,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4795.171875,
+          "after": 4876.765625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4794.984375,
+          "after": 4876.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4794.98px",
+          "after": "4876.58px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.0633995809423258,
+          "after": 0.06233879417239932,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/top",
+          "before": 2165.296875,
+          "after": 2246.890625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/bottom",
+          "before": 2365.296875,
+          "after": 2446.890625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2737.03125,
+          "after": 2818.625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 3037.03125,
+          "after": 3118.625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 3524.34375,
+          "after": 3605.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3824.34375,
+          "after": 3905.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 4199.484375,
+          "after": 4281.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 4699.484375,
+          "after": 4781.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 4199.484375,
+          "after": 4281.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 4699.484375,
+          "after": 4781.078125,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 65.29999995231628,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 63.39999997615814,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 63,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 57.10000002384186,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 54.69999998807907,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "exponentiation/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        353,
+        353,
+        353
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 165.20000004768372,
+            "min": 151.10000002384186,
+            "max": 170.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 298.2000000476837,
+            "min": 211.9000000357628,
+            "max": 334.7999999523163
+          },
+          "delta": 133,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 195.60000002384186,
+            "min": 177.39999997615814,
+            "max": 209.80000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 367.4000000357628,
+            "min": 267.69999998807907,
+            "max": 422.0999999642372
+          },
+          "delta": 171.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "after": {
+            "count": 3,
+            "median": 19,
+            "min": 19,
+            "max": 19
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2301971,
+            "min": 2301971,
+            "max": 2301971
+          },
+          "after": {
+            "count": 3,
+            "median": 2302298,
+            "min": 2302298,
+            "max": 2302298
+          },
+          "delta": 327,
+          "budget": 460394.2,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4795.171875,
+          "after": 4876.765625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4794.984375,
+          "after": 4876.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4794.98px",
+          "after": "4876.58px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.0633995809423258,
+          "after": 0.06233879417239932,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/top",
+          "before": 2165.296875,
+          "after": 2246.890625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/bottom",
+          "before": 2365.296875,
+          "after": 2446.890625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2737.03125,
+          "after": 2818.625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 3037.03125,
+          "after": 3118.625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 3524.34375,
+          "after": 3605.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3824.34375,
+          "after": 3905.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 4199.484375,
+          "after": 4281.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 4699.484375,
+          "after": 4781.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 4199.484375,
+          "after": 4281.078125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 4699.484375,
+          "after": 4781.078125,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 81.19999998807907,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/ev/scripts/angular.js",
+          "duration": 58.09999996423721,
+          "transferSize": 775184
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 57.60000002384186,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 56.60000002384186,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 56.19999998807907,
+          "transferSize": 126528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 163.4000000357628,
+            "min": 137.9000000357628,
+            "max": 200.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 215.4000000357628,
+            "min": 142.19999998807907,
+            "max": 329.10000002384186
+          },
+          "delta": 52,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 207.5,
+            "min": 188.60000002384186,
+            "max": 240.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 261,
+            "min": 185.80000001192093,
+            "max": 426.10000002384186
+          },
+          "delta": 53.5,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 82.10000002384186,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 72.90000003576279,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/public-private-keys/javascripts/lib/sha256.js",
+          "duration": 67.80000001192093,
+          "transferSize": 4908
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/public-private-keys/javascripts/blockchain.js",
+          "duration": 67.69999998807907,
+          "transferSize": 2473
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/public-private-keys/javascripts/lib/ladda.min.js",
+          "duration": 64.80000001192093,
+          "transferSize": 3494
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 125.39999997615814,
+            "min": 88.90000003576279,
+            "max": 150.10000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 393.80000001192093,
+            "min": 365.30000001192093,
+            "max": 418
+          },
+          "delta": 268.4000000357628,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 157.79999995231628,
+            "min": 157.60000002384186,
+            "max": 228.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 471.80000001192093,
+            "min": 398.80000001192093,
+            "max": 543.3999999761581
+          },
+          "delta": 314.00000005960464,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 128.80000001192093,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 122.59999996423721,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-500.ttf",
+          "duration": 119.30000001192093,
+          "transferSize": 122944
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 119.09999996423721,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 119,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 165.19999998807907,
+            "min": 129.69999998807907,
+            "max": 204.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 254.80000001192093,
+            "min": 221.10000002384186,
+            "max": 391.5
+          },
+          "delta": 89.60000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 188.5,
+            "min": 163.9000000357628,
+            "max": 296.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 300.80000001192093,
+            "min": 263.7000000476837,
+            "max": 507.7999999523163
+          },
+          "delta": 112.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 3228.21875,
+          "after": 2412.390625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 3228.03125,
+          "after": 2412.203125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "3228.03px",
+          "after": "2412.2px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.12081667424997822,
+          "after": 0.16167792668786962,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 83.20000004768372,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 83.09999996423721,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 83,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 83,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 83,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 140.39999997615814,
+            "min": 106.30000001192093,
+            "max": 164.9000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 358.69999998807907,
+            "min": 346.5,
+            "max": 371.0999999642372
+          },
+          "delta": 218.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 188.20000004768372,
+            "min": 148.60000002384186,
+            "max": 197.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 433.69999998807907,
+            "min": 418.5999999642372,
+            "max": 441.19999998807907
+          },
+          "delta": 245.49999994039536,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 3228.21875,
+          "after": 2412.390625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 3228.03125,
+          "after": 2412.203125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "3228.03px",
+          "after": "2412.2px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.12081667424997822,
+          "after": 0.16167792668786962,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 150.80000001192093,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 150.69999998807907,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/public-private-keys/javascripts/lib/elliptic.js",
+          "duration": 102.60000002384186,
+          "transferSize": 238140
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 99.09999996423721,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 98.90000003576279,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 125.20000004768372,
+            "min": 119.69999998807907,
+            "max": 144.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 288.69999998807907,
+            "min": 247.39999997615814,
+            "max": 387.19999998807907
+          },
+          "delta": 163.49999994039536,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 169.30000001192093,
+            "min": 169,
+            "max": 170.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 350.5999999642372,
+            "min": 311.19999998807907,
+            "max": 514.8000000119209
+          },
+          "delta": 181.29999995231628,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 3401.734375,
+          "after": 2766.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 3401.546875,
+          "after": 2765.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "3401.55px",
+          "after": "2765.94px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.09407484646231723,
+          "after": 0.1156931420178511,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 81.09999996423721,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 81,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 77.5,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 77.30000001192093,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 77.09999996423721,
+          "transferSize": 129112
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "public-private-keys/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 144.30000001192093,
+            "min": 108.40000003576279,
+            "max": 144.5
+          },
+          "after": {
+            "count": 3,
+            "median": 325.30000001192093,
+            "min": 170.60000002384186,
+            "max": 337.10000002384186
+          },
+          "delta": 181,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 171.30000001192093,
+            "min": 148.69999998807907,
+            "max": 192.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 358.30000001192093,
+            "min": 248.80000001192093,
+            "max": 431.10000002384186
+          },
+          "delta": 187,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1885768,
+            "min": 1885768,
+            "max": 1885768
+          },
+          "after": {
+            "count": 3,
+            "median": 1886110,
+            "min": 1886110,
+            "max": 1886110
+          },
+          "delta": 342,
+          "budget": 377153.60000000003,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 3401.734375,
+          "after": 2766.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 3401.546875,
+          "after": 2765.9375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "3401.55px",
+          "after": "2765.94px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.09407484646231723,
+          "after": 0.1156931420178511,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 103.29999995231628,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 95.19999998807907,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 94.90000003576279,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 94.80000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 94.70000004768372,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 453.89999997615814,
+            "min": 426.19999998807907,
+            "max": 525.4000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 644.7000000476837,
+            "min": 566.6999999880791,
+            "max": 663.2000000476837
+          },
+          "delta": 190.80000007152557,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 511.69999998807907,
+            "min": 467.60000002384186,
+            "max": 581.3000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 696.8000000119209,
+            "min": 604.8000000119209,
+            "max": 720.8000000119209
+          },
+          "delta": 185.10000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 16628.78125,
+          "after": 16791.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 16628.78125,
+          "after": 16791.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "16628.8px",
+          "after": "16792px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.06903692957053001,
+          "after": 0.06836601574785565,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2756.390625,
+          "after": 2919.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 3178.390625,
+          "after": 3341.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 2756.390625,
+          "after": 2919.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3148.390625,
+          "after": 3311.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 8906.0625,
+          "after": 9069.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 9313.0625,
+          "after": 9476.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 8906.0625,
+          "after": 9069.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 9298.0625,
+          "after": 9461.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 10822.3125,
+          "after": 10985.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 11131.3125,
+          "after": 11294.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 10822.3125,
+          "after": 10985.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 11116.3125,
+          "after": 11279.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/top",
+          "before": 11122.3125,
+          "after": 11285.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/bottom",
+          "before": 11348.3125,
+          "after": 11511.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/top",
+          "before": 11122.3125,
+          "after": 11285.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/bottom",
+          "before": 11318.3125,
+          "after": 11481.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/top",
+          "before": 12124.875,
+          "after": 12288.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/bottom",
+          "before": 12667.875,
+          "after": 12831.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/top",
+          "before": 12124.875,
+          "after": 12288.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/bottom",
+          "before": 12614.875,
+          "after": 12778.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/top",
+          "before": 13712.5,
+          "after": 13875.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/bottom",
+          "before": 14050.5,
+          "after": 14213.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/top",
+          "before": 13712.5,
+          "after": 13875.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/bottom",
+          "before": 14012.5,
+          "after": 14175.6875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 277.5999999642372,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 277.4000000357628,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 276.80000001192093,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 276.7999999523163,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 276.7000000476837,
+          "transferSize": 126528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 461.80000001192093,
+            "min": 423.30000001192093,
+            "max": 506.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 640,
+            "min": 597.8000000119209,
+            "max": 703.8999999761581
+          },
+          "delta": 178.19999998807907,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 518.8000000119209,
+            "min": 459.80000001192093,
+            "max": 545
+          },
+          "after": {
+            "count": 3,
+            "median": 691.6000000238419,
+            "min": 624.3000000119209,
+            "max": 763.3000000119209
+          },
+          "delta": 172.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 16628.78125,
+          "after": 16791.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 16628.78125,
+          "after": 16791.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "16628.8px",
+          "after": "16792px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.06903692957053001,
+          "after": 0.06836601574785565,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 2756.390625,
+          "after": 2919.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 3178.390625,
+          "after": 3341.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 2756.390625,
+          "after": 2919.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 3148.390625,
+          "after": 3311.578125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 8906.0625,
+          "after": 9069.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 9313.0625,
+          "after": 9476.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 8906.0625,
+          "after": 9069.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 9298.0625,
+          "after": 9461.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 10822.3125,
+          "after": 10985.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 11131.3125,
+          "after": 11294.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 10822.3125,
+          "after": 10985.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 11116.3125,
+          "after": 11279.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/top",
+          "before": 11122.3125,
+          "after": 11285.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/bottom",
+          "before": 11348.3125,
+          "after": 11511.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/top",
+          "before": 11122.3125,
+          "after": 11285.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/bottom",
+          "before": 11318.3125,
+          "after": 11481.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/top",
+          "before": 12124.875,
+          "after": 12288.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/bottom",
+          "before": 12667.875,
+          "after": 12831.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/top",
+          "before": 12124.875,
+          "after": 12288.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/bottom",
+          "before": 12614.875,
+          "after": 12778.0625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/top",
+          "before": 13712.5,
+          "after": 13875.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/bottom",
+          "before": 14050.5,
+          "after": 14213.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/top",
+          "before": 13712.5,
+          "after": 13875.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/bottom",
+          "before": 14012.5,
+          "after": 14175.6875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 330.30000001192093,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 325.80000001192093,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 325.7999999523163,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 325.60000002384186,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 315.19999998807907,
+          "transferSize": 129112
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 443.89999997615814,
+            "min": 409.30000001192093,
+            "max": 552
+          },
+          "after": {
+            "count": 3,
+            "median": 620.1999999880791,
+            "min": 522.5,
+            "max": 658
+          },
+          "delta": 176.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 486.10000002384186,
+            "min": 445.2000000476837,
+            "max": 599
+          },
+          "after": {
+            "count": 3,
+            "median": 665.5,
+            "min": 577.8999999761581,
+            "max": 755.8000000119209
+          },
+          "delta": 179.39999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 272.69999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 272.19999998807907,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 269.5999999642372,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 268.80000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 268.30000001192093,
+          "transferSize": 129112
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 401.7000000476837,
+            "min": 398.80000001192093,
+            "max": 424.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 480.2999999523163,
+            "min": 412.10000002384186,
+            "max": 648.6999999880791
+          },
+          "delta": 78.59999990463257,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 439.60000002384186,
+            "min": 438,
+            "max": 478.2999999523163
+          },
+          "after": {
+            "count": 3,
+            "median": 558.6999999880791,
+            "min": 455.10000002384186,
+            "max": 701.3999999761581
+          },
+          "delta": 119.09999996423721,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 319.19999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 318.7000000476837,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 312.10000002384186,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 312.10000002384186,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 312,
+          "transferSize": 129112
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        339,
+        339,
+        339
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 474.69999998807907,
+            "min": 364.5,
+            "max": 479
+          },
+          "after": {
+            "count": 3,
+            "median": 662,
+            "min": 527.8999999761581,
+            "max": 982.3999999761581
+          },
+          "delta": 187.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 547,
+            "min": 429.60000002384186,
+            "max": 567.6000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 733.8000000119209,
+            "min": 562.1999999880791,
+            "max": 1084.5
+          },
+          "delta": 186.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 24146.265625,
+          "after": 24230.5625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 24146.265625,
+          "after": 24230.5625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "24146.3px",
+          "after": "24230.6px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.013252566875959727,
+          "after": 0.013206461880527948,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 4174.6875,
+          "after": 4258.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 4535.6875,
+          "after": 4619.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 4174.6875,
+          "after": 4258.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 4505.515625,
+          "after": 4589.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 12342.953125,
+          "after": 12427.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 12749.953125,
+          "after": 12834.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 12342.953125,
+          "after": 12427.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 12734.953125,
+          "after": 12819.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 15790.671875,
+          "after": 15874.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 16099.671875,
+          "after": 16183.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 15790.671875,
+          "after": 15874.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 16084.671875,
+          "after": 16168.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/top",
+          "before": 16090.671875,
+          "after": 16174.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/bottom",
+          "before": 16316.671875,
+          "after": 16400.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/top",
+          "before": 16090.671875,
+          "after": 16174.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/bottom",
+          "before": 16286.671875,
+          "after": 16370.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/top",
+          "before": 17496.84375,
+          "after": 17581.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/bottom",
+          "before": 17963.84375,
+          "after": 18048.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/top",
+          "before": 17496.84375,
+          "after": 17581.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/bottom",
+          "before": 17910.390625,
+          "after": 17994.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/top",
+          "before": 19669.859375,
+          "after": 19754.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/bottom",
+          "before": 19960.859375,
+          "after": 20045.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/top",
+          "before": 19669.859375,
+          "after": 19754.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/bottom",
+          "before": 19923.046875,
+          "after": 20007.34375,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 223.60000002384186,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 223.30000001192093,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 223,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 222,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 218.4000000357628,
+          "transferSize": 31520
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "linear-regression/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        339,
+        339,
+        339
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 316.80000001192093,
+            "min": 292.89999997615814,
+            "max": 400.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 486.9000000357628,
+            "min": 455,
+            "max": 641.6000000238419
+          },
+          "delta": 170.10000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 375.5,
+            "min": 365,
+            "max": 465.39999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 538.5,
+            "min": 505.2000000476837,
+            "max": 692.9000000357628
+          },
+          "delta": 163,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "after": {
+            "count": 3,
+            "median": 28,
+            "min": 28,
+            "max": 28
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 3210146,
+            "min": 3210146,
+            "max": 3210146
+          },
+          "after": {
+            "count": 3,
+            "median": 3210878,
+            "min": 3210878,
+            "max": 3210878
+          },
+          "delta": 732,
+          "budget": 642029.2000000001,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 24146.265625,
+          "after": 24230.5625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 24146.265625,
+          "after": 24230.5625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "24146.3px",
+          "after": "24230.6px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.013252566875959727,
+          "after": 0.013206461880527948,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 4174.6875,
+          "after": 4258.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 4535.6875,
+          "after": 4619.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/top",
+          "before": 4174.6875,
+          "after": 4258.984375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/2/rect/bottom",
+          "before": 4505.515625,
+          "after": 4589.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/top",
+          "before": 12342.953125,
+          "after": 12427.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/3/rect/bottom",
+          "before": 12749.953125,
+          "after": 12834.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/top",
+          "before": 12342.953125,
+          "after": 12427.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/rect/bottom",
+          "before": 12734.953125,
+          "after": 12819.25,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 15790.671875,
+          "after": 15874.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 16099.671875,
+          "after": 16183.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 15790.671875,
+          "after": 15874.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 16084.671875,
+          "after": 16168.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/top",
+          "before": 16090.671875,
+          "after": 16174.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/7/rect/bottom",
+          "before": 16316.671875,
+          "after": 16400.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/top",
+          "before": 16090.671875,
+          "after": 16174.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/rect/bottom",
+          "before": 16286.671875,
+          "after": 16370.96875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/top",
+          "before": 17496.84375,
+          "after": 17581.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/bottom",
+          "before": 17963.84375,
+          "after": 18048.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/top",
+          "before": 17496.84375,
+          "after": 17581.140625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/bottom",
+          "before": 17910.390625,
+          "after": 17994.6875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/top",
+          "before": 19669.859375,
+          "after": 19754.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/11/rect/bottom",
+          "before": 19960.859375,
+          "after": 20045.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/top",
+          "before": 19669.859375,
+          "after": 19754.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/rect/bottom",
+          "before": 19923.046875,
+          "after": 20007.34375,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 311.89999997615814,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 310.39999997615814,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 305,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 303.60000002384186,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 303.4000000357628,
+          "transferSize": 20732
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "precision-recall/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 307.7000000476837,
+            "min": 302.10000002384186,
+            "max": 328.10000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 341.69999998807907,
+            "min": 332.80000001192093,
+            "max": 448.19999998807907
+          },
+          "delta": 33.999999940395355,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 322,
+            "min": 318.7000000476837,
+            "max": 336.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 360.39999997615814,
+            "min": 352.10000002384186,
+            "max": 457.19999998807907
+          },
+          "delta": 38.39999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 167.70000004768372,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 167.69999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 166.30000001192093,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 166.19999998807907,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 35.40000003576279,
+          "transferSize": 133744
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "precision-recall/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 412.69999998807907,
+            "min": 339.19999998807907,
+            "max": 425.7000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 705,
+            "min": 651.2000000476837,
+            "max": 1018.6999999880791
+          },
+          "delta": 292.30000001192093,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 435.5,
+            "min": 362.60000002384186,
+            "max": 438.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 765.8999999761581,
+            "min": 702.9000000357628,
+            "max": 1049.300000011921
+          },
+          "delta": 330.39999997615814,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 405.19999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 403.19999998807907,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 389.19999998807907,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 388.89999997615814,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 107.29999995231628,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "precision-recall/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 397.69999998807907,
+            "min": 364.89999997615814,
+            "max": 399.4000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 593.3000000119209,
+            "min": 309,
+            "max": 789.5999999642372
+          },
+          "delta": 195.60000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 410.69999998807907,
+            "min": 384.30000001192093,
+            "max": 415.5
+          },
+          "after": {
+            "count": 3,
+            "median": 626.6000000238419,
+            "min": 334.0999999642372,
+            "max": 818.0999999642372
+          },
+          "delta": 215.9000000357628,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 14596.234375,
+          "after": 15122.75,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/right",
+          "before": 385.875,
+          "after": 84.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 15137.234375,
+          "after": 16425.75,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/left",
+          "before": 316.875,
+          "after": 15.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/height",
+          "before": 541,
+          "after": 1303,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 14596.234375,
+          "after": 15122.75,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/right",
+          "before": 346.125,
+          "after": 44.84375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 15077.296875,
+          "after": 16368.375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/left",
+          "before": 316.875,
+          "after": 15.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/height",
+          "before": 481.0625,
+          "after": 1245.625,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 125.69999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 125.60000002384186,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 120.19999998807907,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 120.10000002384186,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 31.100000023841858,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": false
+    },
+    {
+      "key": "precision-recall/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 280.5,
+            "min": 243.10000002384186,
+            "max": 389
+          },
+          "after": {
+            "count": 3,
+            "median": 589.3000000119209,
+            "min": 377.30000001192093,
+            "max": 655.1000000238419
+          },
+          "delta": 308.80000001192093,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 286.0999999642372,
+            "min": 251,
+            "max": 401.80000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 616.4000000357628,
+            "min": 400.39999997615814,
+            "max": 693.6000000238419
+          },
+          "delta": 330.3000000715256,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 14596.234375,
+          "after": 15122.375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/right",
+          "before": 385.875,
+          "after": 84.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 15137.234375,
+          "after": 16410.375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/left",
+          "before": 316.875,
+          "after": 15.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/height",
+          "before": 541,
+          "after": 1288,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 14596.234375,
+          "after": 15122.375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/right",
+          "before": 346.125,
+          "after": 44.84375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 15077.296875,
+          "after": 16353.75,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/left",
+          "before": 316.875,
+          "after": 15.59375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/height",
+          "before": 481.0625,
+          "after": 1231.375,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 172,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 171.19999998807907,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 165.60000002384186,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 165.19999998807907,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/precision-recall/build/bundle.js",
+          "duration": 92.80000001192093,
+          "transferSize": 419551
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": false
+    },
+    {
+      "key": "precision-recall/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        324,
+        324,
+        324
+      ],
+      "afterWidth": [
+        321,
+        321,
+        321
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 401,
+            "min": 290.9000000357628,
+            "max": 468
+          },
+          "after": {
+            "count": 3,
+            "median": 427.39999997615814,
+            "min": 421.39999997615814,
+            "max": 520.2000000476837
+          },
+          "delta": 26.399999976158142,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 436.80000001192093,
+            "min": 305.10000002384186,
+            "max": 521.6999999880791
+          },
+          "after": {
+            "count": 3,
+            "median": 469.60000002384186,
+            "min": 440.7999999523163,
+            "max": 541.5
+          },
+          "delta": 32.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 15925.921875,
+          "after": 16448.765625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/right",
+          "before": 324,
+          "after": 76.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 16466.921875,
+          "after": 17604.765625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/left",
+          "before": 260,
+          "after": 12.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/height",
+          "before": 541,
+          "after": 1156,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 15925.921875,
+          "after": 16448.765625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/right",
+          "before": 284,
+          "after": 36.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 16406.984375,
+          "after": 17554.734375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/left",
+          "before": 260,
+          "after": 12.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/height",
+          "before": 481.0625,
+          "after": 1105.96875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 184.80000001192093,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 178.10000002384186,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 178,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 173.80000001192093,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 56.80000001192093,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": false
+    },
+    {
+      "key": "precision-recall/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        324,
+        324,
+        324
+      ],
+      "afterWidth": [
+        321,
+        321,
+        321
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 428,
+            "min": 382.7000000476837,
+            "max": 537.1000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 501.30000001192093,
+            "min": 500,
+            "max": 584.8000000119209
+          },
+          "delta": 73.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 471.9000000357628,
+            "min": 429.2000000476837,
+            "max": 622.1000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 624.6999999880791,
+            "min": 530.8000000119209,
+            "max": 641.6999999880791
+          },
+          "delta": 152.79999995231628,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "after": {
+            "count": 3,
+            "median": 27,
+            "min": 27,
+            "max": 27
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 2389929,
+            "min": 2389929,
+            "max": 2389929
+          },
+          "after": {
+            "count": 3,
+            "median": 2390339,
+            "min": 2390339,
+            "max": 2390339
+          },
+          "delta": 410,
+          "budget": 477985.80000000005,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/5/rect/top",
+          "before": 15925.921875,
+          "after": 16449.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/right",
+          "before": 324,
+          "after": 76.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/bottom",
+          "before": 16466.921875,
+          "after": 17615.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/left",
+          "before": 260,
+          "after": 12.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/5/rect/height",
+          "before": 541,
+          "after": 1166,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/top",
+          "before": 15925.921875,
+          "after": 16449.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/right",
+          "before": 284,
+          "after": 36.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/bottom",
+          "before": 16406.984375,
+          "after": 17564.484375,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/left",
+          "before": 260,
+          "after": 12.796875,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/rect/height",
+          "before": 481.0625,
+          "after": 1115.46875,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmber_Rg.917bc755.otf",
+          "duration": 197.4000000357628,
+          "transferSize": 315888
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 197.29999995231628,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Main-Regular.742ae9d8.woff2",
+          "duration": 195.5,
+          "transferSize": 31520
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/decision-tree/KaTeX_Math-Italic.6a496cb7.woff2",
+          "duration": 195.4000000357628,
+          "transferSize": 20732
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 55.60000002384186,
+          "transferSize": 126528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": false
+    },
+    {
+      "key": "train-test-validation/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 294.39999997615814,
+            "min": 229.69999998807907,
+            "max": 309.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 360.30000001192093,
+            "min": 335.0999999642372,
+            "max": 373.60000002384186
+          },
+          "delta": 65.90000003576279,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 353.60000002384186,
+            "min": 272.89999997615814,
+            "max": 358.0999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 467.9000000357628,
+            "min": 394.5,
+            "max": 533.8999999761581
+          },
+          "delta": 114.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/9/rect/right",
+          "before": 262.5,
+          "after": 258.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/left",
+          "before": 238.5,
+          "after": 234.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/right",
+          "before": 357.5,
+          "after": 353.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/left",
+          "before": 333.5,
+          "after": 329.5,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 54.700000047683716,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 51.40000003576279,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 47.40000003576279,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 45.39999997615814,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 39.80000001192093,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "train-test-validation/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 394.0999999642372,
+            "min": 365.89999997615814,
+            "max": 398.80000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 480,
+            "min": 454.7999999523163,
+            "max": 581.3000000119209
+          },
+          "delta": 85.90000003576279,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 441.89999997615814,
+            "min": 405.5999999642372,
+            "max": 453.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 610.1999999880791,
+            "min": 561.6999999880791,
+            "max": 680.1000000238419
+          },
+          "delta": 168.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/intrinsic/9/rect/right",
+          "before": 262.5,
+          "after": 258.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/9/rect/left",
+          "before": 238.5,
+          "after": 234.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/right",
+          "before": 357.5,
+          "after": 353.5,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/rect/left",
+          "before": 333.5,
+          "after": 329.5,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 63.799999952316284,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 57.30000001192093,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 57.299999952316284,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 57.19999998807907,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 57.10000002384186,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "train-test-validation/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        392,
+        392,
+        392
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 330.4000000357628,
+            "min": 313.30000001192093,
+            "max": 460.7000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 532.6000000238419,
+            "min": 409.69999998807907,
+            "max": 663
+          },
+          "delta": 202.19999998807907,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 546,
+            "min": 543.6999999880791,
+            "max": 698.3000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 594.9000000357628,
+            "min": 481.80000001192093,
+            "max": 744
+          },
+          "delta": 48.90000003576279,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 52.5,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 52.39999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 52.30000001192093,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 52.30000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 52.10000002384186,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "train-test-validation/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        392,
+        392,
+        392
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 317.69999998807907,
+            "min": 276.9000000357628,
+            "max": 340.5
+          },
+          "after": {
+            "count": 3,
+            "median": 661.3000000119209,
+            "min": 648.3999999761581,
+            "max": 708.5999999642372
+          },
+          "delta": 343.60000002384186,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 546.8999999761581,
+            "min": 402.60000002384186,
+            "max": 577.1000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 737.8000000119209,
+            "min": 716.1999999880791,
+            "max": 796.0999999642372
+          },
+          "delta": 190.9000000357628,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 144.9000000357628,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 141.69999998807907,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 136.79999995231628,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 136.30000001192093,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 135.80000001192093,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "train-test-validation/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 342.60000002384186,
+            "min": 316.5,
+            "max": 356.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 592.5,
+            "min": 520.6000000238419,
+            "max": 702.3000000119209
+          },
+          "delta": 249.89999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 562.8000000119209,
+            "min": 472.0999999642372,
+            "max": 583.1999999880791
+          },
+          "after": {
+            "count": 3,
+            "median": 700.9000000357628,
+            "min": 610.3999999761581,
+            "max": 809
+          },
+          "delta": 138.10000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "duration": 336.60000002384186,
+          "transferSize": 271804
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 336,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 332.19999998807907,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 332,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 320.69999998807907,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "train-test-validation/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 403.10000002384186,
+            "min": 402.9000000357628,
+            "max": 535
+          },
+          "after": {
+            "count": 3,
+            "median": 590.8000000119209,
+            "min": 570.6000000238419,
+            "max": 624.5
+          },
+          "delta": 187.69999998807907,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 690.2000000476837,
+            "min": 670.5,
+            "max": 810.8999999761581
+          },
+          "after": {
+            "count": 3,
+            "median": 681.3000000119209,
+            "min": 672.3000000119209,
+            "max": 735.4000000357628
+          },
+          "delta": -8.900000035762787,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1825075,
+            "min": 1825075,
+            "max": 1825075
+          },
+          "after": {
+            "count": 3,
+            "median": 1825265,
+            "min": 1825265,
+            "max": 1825265
+          },
+          "delta": 190,
+          "budget": 365015,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "duration": 70,
+          "transferSize": 350530
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 69.29999995231628,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 69.19999998807907,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/empty-svg-hidden.js",
+          "duration": 67.70000004768372,
+          "transferSize": 4387
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/train-test-validation/a11y-state.js",
+          "duration": 62.69999998807907,
+          "transferSize": 1530
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 376.5999999642372,
+            "min": 307.69999998807907,
+            "max": 386.39999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 649.4000000357628,
+            "min": 497.5,
+            "max": 666.8999999761581
+          },
+          "delta": 272.8000000715256,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 376.5999999642372,
+            "min": 309.69999998807907,
+            "max": 387.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 655.9000000357628,
+            "min": 497.7000000476837,
+            "max": 667
+          },
+          "delta": 279.3000000715256,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/images/haskie-triumphant-200px.png",
+          "duration": 74.80000001192093,
+          "transferSize": 13910
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 72.5,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 72.39999997615814,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/js/allocators/freelist.js",
+          "duration": 67,
+          "transferSize": 3235
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/js/allocators/freelist.js",
+          "duration": 66.5,
+          "transferSize": 3235
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 297,
+            "min": 232.30000001192093,
+            "max": 311.2000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 606,
+            "min": 603.3999999761581,
+            "max": 624.3999999761581
+          },
+          "delta": 309,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 297,
+            "min": 238.5999999642372,
+            "max": 313.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 616.8000000119209,
+            "min": 611.8999999761581,
+            "max": 627.0999999642372
+          },
+          "delta": 319.80000001192093,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 60.30000001192093,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 60.19999998807907,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/images/haskie-triumphant-200px.png",
+          "duration": 57.19999998807907,
+          "transferSize": 13910
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 47.30000001192093,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 47.200000047683716,
+          "transferSize": 120528
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 267.69999998807907,
+            "min": 224.5999999642372,
+            "max": 373
+          },
+          "after": {
+            "count": 3,
+            "median": 641,
+            "min": 488.9000000357628,
+            "max": 761.6000000238419
+          },
+          "delta": 373.30000001192093,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 269.69999998807907,
+            "min": 229.19999998807907,
+            "max": 375.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 641,
+            "min": 491.4000000357628,
+            "max": 767.7000000476837
+          },
+          "delta": 371.30000001192093,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 63.10000002384186,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 62.59999996423721,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 62.5,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 62.299999952316284,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 49.89999997615814,
+          "transferSize": 20731
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 284.2000000476837,
+            "min": 265.69999998807907,
+            "max": 449.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 674.6000000238419,
+            "min": 497.39999997615814,
+            "max": 833
+          },
+          "delta": 390.39999997615814,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 291,
+            "min": 269,
+            "max": 449.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 676.5,
+            "min": 541.6999999880791,
+            "max": 846
+          },
+          "delta": 385.5,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 86.19999998807907,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 86.09999996423721,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/images/haskie-triumphant-200px.png",
+          "duration": 86,
+          "transferSize": 13910
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 62.69999998807907,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 61.5,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        328,
+        328,
+        328
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 379.0999999642372,
+            "min": 364.2000000476837,
+            "max": 380.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 593.6000000238419,
+            "min": 389.2000000476837,
+            "max": 656.3999999761581
+          },
+          "delta": 214.50000005960464,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 379.0999999642372,
+            "min": 364.2000000476837,
+            "max": 382.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 704.5,
+            "min": 389.2000000476837,
+            "max": 716.3000000119209
+          },
+          "delta": 325.4000000357628,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 248.5,
+          "transferSize": 123364
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "duration": 248.30000001192093,
+          "transferSize": 129112
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/images/haskie-triumphant-200px.png",
+          "duration": 136.60000002384186,
+          "transferSize": 13910
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 118.80000001192093,
+          "transferSize": 20731
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 117.5,
+          "transferSize": 130216
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "memory-allocation/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        328,
+        328,
+        328
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 300,
+            "min": 290.2000000476837,
+            "max": 382.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 831.3000000119209,
+            "min": 812.3000000119209,
+            "max": 1212.300000011921
+          },
+          "delta": 531.3000000119209,
+          "budget": 250,
+          "pass": false
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 300,
+            "min": 290.2000000476837,
+            "max": 382.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 838.1999999880791,
+            "min": 812.3000000119209,
+            "max": 1219.300000011921
+          },
+          "delta": 538.1999999880791,
+          "budget": 250,
+          "pass": false
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "after": {
+            "count": 3,
+            "median": 38,
+            "min": 38,
+            "max": 38
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1936360,
+            "min": 1936360,
+            "max": 1936360
+          },
+          "after": {
+            "count": 3,
+            "median": 1936465,
+            "min": 1936465,
+            "max": 1936465
+          },
+          "delta": 105,
+          "budget": 387272,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 179.79999995231628,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 179.69999998807907,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 179.5,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 179.39999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/memory-allocation/images/haskie-triumphant-200px.png",
+          "duration": 176.30000001192093,
+          "transferSize": 13910
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/desktop/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 62.39999997615814,
+            "min": 38.30000001192093,
+            "max": 149.10000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 216.5,
+            "min": 94.09999996423721,
+            "max": 226.29999995231628
+          },
+          "delta": 154.10000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 114.29999995231628,
+            "min": 103.59999996423721,
+            "max": 236.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 320.5999999642372,
+            "min": 223.5999999642372,
+            "max": 351
+          },
+          "delta": 206.30000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 202.89999997615814,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 200.10000002384186,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 200,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 199.9000000357628,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 71.69999998807907,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/desktop/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "afterWidth": [
+        1400,
+        1400,
+        1400
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 49.30000001192093,
+            "min": 37.200000047683716,
+            "max": 60
+          },
+          "after": {
+            "count": 3,
+            "median": 193.29999995231628,
+            "min": 153.39999997615814,
+            "max": 254.5
+          },
+          "delta": 143.99999994039536,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 111.40000003576279,
+            "min": 103.30000001192093,
+            "max": 127.20000004768372
+          },
+          "after": {
+            "count": 3,
+            "median": 297.0999999642372,
+            "min": 283.89999997615814,
+            "max": 308.5999999642372
+          },
+          "delta": 185.69999992847443,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 85.5,
+          "transferSize": 36232
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 75.60000002384186,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 75.60000002384186,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 75.39999997615814,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/public-footer.js",
+          "duration": 67.39999997615814,
+          "transferSize": 20731
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/mobile/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 71.5,
+            "min": 37.5,
+            "max": 83.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 117.30000001192093,
+            "min": 99.60000002384186,
+            "max": 183.30000001192093
+          },
+          "delta": 45.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 111.89999997615814,
+            "min": 91,
+            "max": 116.89999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 248.69999998807907,
+            "min": 185.80000001192093,
+            "max": 282.39999997615814
+          },
+          "delta": 136.80000001192093,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4580.234375,
+          "after": 4144.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4580.234375,
+          "after": 4144.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4580.23px",
+          "after": "4144.81px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.0807818923021816,
+          "after": 0.08926821177073752,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 136.5,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 136.30000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 136.19999998807907,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 135.69999998807907,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 134.29999995231628,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/mobile/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        390,
+        390,
+        390
+      ],
+      "afterWidth": [
+        390,
+        390,
+        390
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 34.19999998807907,
+            "min": 26.69999998807907,
+            "max": 105.10000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 178.5999999642372,
+            "min": 109.89999997615814,
+            "max": 269.69999998807907
+          },
+          "delta": 144.39999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 107.59999996423721,
+            "min": 96.59999996423721,
+            "max": 142.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 313.69999998807907,
+            "min": 270.0999999642372,
+            "max": 357.30000001192093
+          },
+          "delta": 206.10000002384186,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 4580.234375,
+          "after": 4144.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 4580.234375,
+          "after": 4144.8125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "4580.23px",
+          "after": "4144.81px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.0807818923021816,
+          "after": 0.08926821177073752,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 156.60000002384186,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 156.5999999642372,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 156.5,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 156.5,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 64.80000001192093,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/narrow/light",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 108.20000004768372,
+            "min": 45.09999996423721,
+            "max": 127.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 163.10000002384186,
+            "min": 59,
+            "max": 168.39999997615814
+          },
+          "delta": 54.89999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 162.80000001192093,
+            "min": 159.70000004768372,
+            "max": 179.60000002384186
+          },
+          "after": {
+            "count": 3,
+            "median": 216.69999998807907,
+            "min": 198.80000001192093,
+            "max": 221.39999997615814
+          },
+          "delta": 53.89999997615814,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 5010.765625,
+          "after": 4819.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 5010.765625,
+          "after": 4819.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "5010.77px",
+          "after": "4819.02px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.05987109005921625,
+          "after": 0.06225337773209648,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 66.69999998807907,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 66.19999998807907,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 63.10000002384186,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 61,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/engineering-sandbox.js",
+          "duration": 49.90000003576279,
+          "transferSize": 36232
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    },
+    {
+      "key": "blockchain-101-combined-flow/narrow/dark",
+      "beforeErrors": [
+        [],
+        [],
+        []
+      ],
+      "afterErrors": [
+        [],
+        [],
+        []
+      ],
+      "beforeWidth": [
+        322,
+        322,
+        322
+      ],
+      "afterWidth": [
+        320,
+        320,
+        320
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 93.69999998807907,
+            "min": 47.69999998807907,
+            "max": 134.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 68,
+            "min": 61.69999998807907,
+            "max": 184
+          },
+          "delta": -25.69999998807907,
+          "budget": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 173.89999997615814,
+            "min": 148.5,
+            "max": 176.80000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 268.39999997615814,
+            "min": 186,
+            "max": 315.9000000357628
+          },
+          "delta": 94.5,
+          "budget": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "after": {
+            "count": 3,
+            "median": 15,
+            "min": 15,
+            "max": 15
+          },
+          "delta": 0,
+          "budget": 0,
+          "pass": true
+        },
+        "transferBytes": {
+          "before": {
+            "count": 3,
+            "median": 1166952,
+            "min": 1166952,
+            "max": 1166952
+          },
+          "after": {
+            "count": 3,
+            "median": 1167191,
+            "min": 1167191,
+            "max": 1167191
+          },
+          "delta": 239,
+          "budget": 256000,
+          "pass": true
+        }
+      },
+      "protectedChanges": [],
+      "differences": [
+        {
+          "path": "/rect/bottom",
+          "before": 5010.765625,
+          "after": 4819.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 5010.765625,
+          "after": 4819.015625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "5010.77px",
+          "after": "4819.02px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.05987109005921625,
+          "after": 0.06225337773209648,
+          "review": "unreviewed"
+        }
+      ],
+      "topResources": [
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "duration": 160.10000002384186,
+          "transferSize": 133744
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "duration": 159.69999998807907,
+          "transferSize": 130216
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "duration": 154.89999997615814,
+          "transferSize": 120528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "duration": 154.80000001192093,
+          "transferSize": 126528
+        },
+        {
+          "name": "http://127.0.0.1:4221/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "duration": 152.5,
+          "transferSize": 123364
+        }
+      ],
+      "stableBefore": true,
+      "stableAfter": true
+    }
+  ]
+}

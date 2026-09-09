@@ -1,0 +1,10 @@
+START=2026-09-08T14:39:38Z
+
+> interactive-explanation@1.0.0 audit
+> node tools/check-public-surface.mjs .
+
+Public-surface audit passed for ableton-learning-music-play-with-basslines, ableton-learning-music-play-with-beats, ableton-learning-music-play-with-chords, ableton-learning-music-play-with-melodies, ableton-learning-music-play-with-notes-and-scales, ableton-learning-music-play-with-song-structures, ableton-learning-music-playground, ableton-learning-synths-filter-resonance, ableton-learning-synths-get-started, ableton-learning-synths-how-synths-make-sound, ableton-learning-synths-matching-envelopes, ableton-learning-synths-modulating-amplitude-with-envelopes, ableton-learning-synths-recipes, airfoil, alpha-compositing, anxiety, ballot, bias-variance, bicycle, blockchain, blockchain-101-combined-flow, cameras-and-lenses, chrome-music-lab-song-maker, color-spaces, coming-out-simulator-2014, conditional-probability, covid-19, crowds, curves-and-surfaces, decision-tree, double-descent, double-descent2, earth-and-sun, eigenvectors-and-eigenvalues, ev, exponentiation, formula-1-racing, gears, gps, hysteresis-slack, image-kernels, interactive-mechanical-watch, internal-combustion-engine, lights-and-shadows, linear-regression, load-balancing, logistic-regression, loopy, markov-chains, mechanical-watch, memory-allocation, music-interactive-hub, musicmap, naval-architecture, neurons, ordinary-least-squares-regression, pi, polygons, precision-recall, primary-interactive-hub, principal-component-analysis, public-private-keys, random-forest, reading-qr-codes-without-a-computer, remember, rigid-body-collisions, roc-auc, sim, simulating, sine-and-cosine, sound, stargazing-dashboard, teoria-interval-ear-training, teoria-interval-identification-and-inversion, teoria-key-and-note-ear-training, teoria-note-ear-training, teoria-random-key-and-note-ear-training, teoria-scale-construction, tesseract, train-test-validation, trust, watch-mesh-explorer, wbwwb, zero-knowledge-proof-demo
+END=2026-09-08T14:39:41Z
+EXIT=0
+ELAPSED_SECONDS=3
+TIMEOUT_SECONDS=120

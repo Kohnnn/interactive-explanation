@@ -10,7 +10,7 @@ function Scene_Credits() {
   Game.stage.addChild(cont);
 
   var title = new PIXI.Text("Thanks for playing.", {
-    font: "60px Cairo",
+    font: "60px sans-serif",
     fill: "#FFFFFF",
     align: "center"
   });
@@ -21,7 +21,7 @@ function Scene_Credits() {
   cont.addChild(title);
 
   var subtitle = new PIXI.Text("Now the cameras are gone.", {
-    font: "34px Cairo",
+    font: "34px sans-serif",
     fill: "#BBBBBB",
     align: "center"
   });

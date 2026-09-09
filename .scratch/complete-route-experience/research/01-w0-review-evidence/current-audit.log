@@ -1,0 +1,13 @@
+Public-surface audit failed:
+- wbwwb/js/lib/pixi.min.js:18 [source map directive] //# sourceMappingURL=pixi.min.js.map
+- coming-out-simulator-2014/index.html:1 [canonical metadata count] <!doctype html>
+- coming-out-simulator-2014/index.html:1 [og:url metadata count] <!doctype html>
+- coming-out-simulator-2014/index.html:33 [creator name] by <a href="http://ncase.me" target="_blank">Nicky Case</a> | <a href="http://twitter.com/ncasenmare" target="_blank">@ncasenmare</a>
+- coming-out-simulator-2014/index.html:33 [creator self-link] by <a href="http://ncase.me" target="_blank">Nicky Case</a> | <a href="http://twitter.com/ncasenmare" target="_blank">@ncasenmare</a>
+- coming-out-simulator-2014/js/game/menu.js:148 [creator name] N("Because you skipped the Credits, my (not-yet-legal) name is Nicky Case. Just so you know.");
+- wbwwb/index.html:1 [canonical metadata count] <html>
+- wbwwb/index.html:1 [og:url metadata count] <html>
+- wbwwb/js/scenes/Scene_Credits.js:5 [supporter branding] credits0003: "sprites/credits/credits0003.png", // patreon
+- wbwwb/js/scenes/Scene_Credits.js:3 [creator name] credits0001: "sprites/credits/credits0001.png", // nicky case
+- wbwwb/js/textStrings.js:73 [supporter branding] "patreonSupporters": "and to my patreon supporters:",
+- wbwwb/js/textStrings.js:67 [creator name] "NickyCase": "Nicky Case",

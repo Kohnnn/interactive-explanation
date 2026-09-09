@@ -1,0 +1,22 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+const file = "/tmp/opencode/46-final-gates.jsonl";
+const raw = fs.readFileSync(file);
+const rows = raw.toString().trim().split("\n").map(JSON.parse);
+assert.equal(rows.at(-1).sourceUnchanged, true);
+const results = rows.filter(row => row.type === "result");
+assert.equal(results.length, 144);
+const groups = Object.fromEntries(["normal", "strict"].map(group => {
+  const selected = results.filter(row => row.name.startsWith(`${group}/`));
+  assert.equal(selected.length, group === "normal" ? 83 : 59);
+  assert.equal(new Set(selected.map(row => row.name)).size, selected.length);
+  return [group, { attempted: selected.length, passed: selected.filter(row => row.exit === 0).length, failures: selected.filter(row => row.exit !== 0).map(row => ({ route: row.name.split("/")[1], classification: row.stderr.includes("performance regressed") ? "timing budget exceeded; later task gates unexecuted" : "rigid-body geometry and known initialization blocker", firstFailure: row.stderr.split("\n").slice(0,4) })) }];
+}));
+for (const slug of ["sim", "train-test-validation", "interactive-mechanical-watch"]) assert.equal(results.find(row => row.name === `normal/${slug}`).exit, 0);
+assert.equal(results.find(row => row.name === "strict/train-test-validation").exit, 0);
+const report = { source: { ...rows[0].source, files: undefined, fileCount: rows[0].source.files.length }, sourceUnchanged: true, baseline: rows[0].baseline, baselineSha256: rows[0].baselineSha256, artifact: { file, bytes: raw.length, sha256: createHash("sha256").update(raw).digest("hex") }, groups, combined: results.filter(row => !row.name.includes("/")), interruption: rows.filter(row => row.type === "resume"), results, verdict: "Not82/83 or W0 complete. Current006 sweep62/83 normal and48/59 strict.20 normal and10 strict timing-only failures on routes outside bounded review; rigid-body additionally fails both geometry gates. Full normal stops crowds dark load444>131+250; combined strict stops sine-and-cosine dark load689>321+250, not rigid-body. No claim these failures are caused by contention: source unchanged and host scheduler/cache uncontrolled. Earlier43 passes are historical, not substituted. No extra baseline expansion or retry-until-pass.", resolvedScoped: "Sim restored DOM grid passes native normal tasks and budget against independently reviewed BEFORE reference; TTV passes normal/strict; watch corrected visibility test completes normal tasks.18 paired cells retain all3 samples and pass unchanged median budgets, including outliers. Broad performance acceptance remains unresolved." };
+const destination = new URL("46-final-results.json", import.meta.url);
+if (process.argv.includes("--write")) fs.writeFileSync(destination, JSON.stringify(report,null,2)+"\n", {flag:"wx"});
+else assert.deepEqual(JSON.parse(fs.readFileSync(destination)), JSON.parse(JSON.stringify(report)));
+console.log(JSON.stringify(groups,null,2));

@@ -9,7 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
-      "The mlu-pilot adapter stops at the authored shell and never selects descendants of the compiled #app runtime.",
+      "Research39 bounds the existing F1 chart-and-legend container with named keyboard scrolling, preserving chart, legend, and resize-listener dimensions. Rejected stacked-layout captures are retained separately. Final paired six-cell captures are stable and 18 keyboard contexts pass; successor003 focused gates stop at narrow authored geometry.",
       "Chapter links are attached after mount from manifest-owned stable top-level selectors so the compiled runtime keeps control of its own internals."
     ],
     "evidence": [

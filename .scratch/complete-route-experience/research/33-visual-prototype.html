@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" class="vp-root">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas editorial structure — disposable prototype 33</title>
+<script>
+const vpSystem = matchMedia("(prefers-color-scheme: dark)");
+document.documentElement.setAttribute("saved-theme", vpSystem.matches ? "dark" : "light");
+</script>
+<style>
+.vp-root { --vp-bg: #f5f7fa; --vp-surface: #ffffff; --vp-text: #17202d; --vp-muted: #526174; --vp-rule: #748297; --vp-action: #a33d00; --vp-on-action: #ffffff; --vp-data: #185abd; color-scheme: light; }
+.vp-root[saved-theme="dark"] { --vp-bg: #0b1018; --vp-surface: #141d2a; --vp-text: #eef3f8; --vp-muted: #b2bfd0; --vp-rule: #718299; --vp-action: #ff9b55; --vp-on-action: #0b1018; --vp-data: #81b6ff; color-scheme: dark; }
+.vp-body { margin: 0; background: var(--vp-bg); color: var(--vp-text); font: 16px/1.65 system-ui, "Segoe UI", sans-serif; }
+.vp-body * { box-sizing: border-box; min-width: 0; }
+.vp-body :is(button, input, select, summary, a) { min-height: 44px; }
+.vp-body :is(button, input, select) { font: inherit; max-width: 100%; }
+.vp-body :is(button, select) { padding: 8px 12px; border: 1px solid var(--vp-rule); border-radius: 4px; background: var(--vp-surface); color: var(--vp-text); }
+.vp-body button { cursor: pointer; }
+.vp-body :disabled { cursor: not-allowed; color: var(--vp-muted); opacity: 1; }
+.vp-body :focus-visible { outline: 3px solid var(--vp-data); outline-offset: 4px; }
+.vp-body a { display: inline-flex; align-items: center; color: var(--vp-action); text-underline-offset: 4px; }
+.vp-body :is(h1, h2, h3, p) { margin: 0 0 16px; overflow-wrap: anywhere; }
+.vp-body h1 { font: 500 clamp(2.25rem, 4.5vw, 4.6rem)/1.08 "Iowan Old Style", "Palatino Linotype", Georgia, serif; max-width: 18ch; letter-spacing: -.025em; }
+.vp-body h2 { font: 500 clamp(1.65rem, 2.5vw, 2.3rem)/1.2 "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+.vp-body h3 { font-size: 1.08rem; }
+.vp-body .vp-meta { font:  .8rem/1.6 ui-monospace, Consolas, monospace; letter-spacing: .05em; text-transform: uppercase; color: var(--vp-muted); }
+.vp-body .vp-data { color: var(--vp-data); font-family: ui-monospace, Consolas, monospace; }
+.vp-body .vp-muted { color: var(--vp-muted); }
+.vp-body .vp-notice { padding: 12px max(16px, calc((100vw - 1200px) / 2)); border-bottom: 1px solid var(--vp-rule); background: var(--vp-surface); font-size: .875rem; }
+.vp-body .vp-shell { width: min(1200px, calc(100% - 32px)); margin: auto; padding-bottom: 160px; }
+.vp-body .vp-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 24px 0; border-bottom: 1px solid var(--vp-rule); }
+.vp-body .vp-brand { font-weight: 700; letter-spacing: .12em; }
+.vp-body .vp-hero { padding: 48px 0 32px; }
+.vp-body .vp-lead { max-width: 62ch; font-size: 1.15rem; }
+.vp-body .vp-action { background: var(--vp-action); color: var(--vp-on-action); border-color: var(--vp-action); }
+.vp-body .vp-layout { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(240px, 1fr); gap: 48px; }
+.vp-body .vp-strip { border-top: 1px solid var(--vp-rule); padding: 24px 0; scroll-margin-top: 24px; }
+.vp-body .vp-strip > p { max-width: 68ch; }
+.vp-body .vp-discovery ol { list-style: none; padding: 0; margin: 0; }
+.vp-body .vp-discovery li { border-top: 1px solid var(--vp-rule); padding: 16px 0; }
+.vp-body .vp-discovery li p { margin-bottom: 0; }
+.vp-body .vp-runtime { display: grid; place-content: center; min-height: 210px; padding: 24px; border: 1px dashed var(--vp-rule); background: var(--vp-surface); }
+.vp-body .vp-controls { background: var(--vp-surface); border: 1px solid var(--vp-rule); padding: 20px; margin: 20px 0; }
+.vp-body .vp-controls label { display: block; font-weight: 600; }
+.vp-body input[type="range"] { display: block; width: 100%; margin: 8px 0; accent-color: var(--vp-action); }
+.vp-body .vp-feedback { border-left: 3px solid var(--vp-data); padding-left: 16px; }
+.vp-body details { border-top: 1px solid var(--vp-rule); margin-top: 20px; padding-top: 8px; }
+.vp-body summary { cursor: pointer; padding: 8px 0; }
+.vp-body .vp-state-samples { border-top: 1px solid var(--vp-rule); margin-top: 24px; padding-top: 24px; }
+.vp-body .vp-state-samples p { font-size: .9rem; }
+.vp-body .vp-switcher { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); width: min(440px, calc(100% - 24px)); display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 8px; padding: 8px; border: 2px solid var(--vp-rule); border-radius: 8px; background: var(--vp-surface); box-shadow: 0 8px 24px #0003; z-index: 2; }
+.vp-body .vp-switcher button { padding: 0; width: 44px; }
+.vp-body .vp-switcher output { text-align: center; font-size: .875rem; line-height: 1.4; }
+.vp-body[data-variant="B"] .vp-hero { padding: 24px 0; }
+.vp-body[data-variant="B"] h1 { font-size: clamp(2rem, 3vw, 3rem); max-width: 30ch; }
+.vp-body[data-variant="B"] .vp-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; }
+.vp-body[data-variant="B"] .vp-main { background: var(--vp-surface); padding: 20px; }
+.vp-body[data-variant="C"] .vp-shell { max-width: 760px; }
+.vp-body[data-variant="C"] .vp-layout { display: block; }
+.vp-body[data-variant="C"] .vp-hero { padding-top: 64px; }
+.vp-body[data-variant="C"] .vp-strip { padding: 40px 0; }
+@media (max-width: 800px) {
+  .vp-body .vp-layout, .vp-body[data-variant="B"] .vp-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .vp-body .vp-hero, .vp-body[data-variant="C"] .vp-hero { padding-top: 32px; }
+  .vp-body[data-variant="B"] .vp-main { padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vp-body *, .vp-body *::before, .vp-body *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body class="vp-body" data-variant="A">
+<div class="vp-notice"><strong>Throwaway design prototype · 33.</strong> Three original Atlas structures, not production. Agent-selected direction; NOT human approved. Isolated planning artifact because production edits are forbidden.</div>
+<div class="vp-shell">
+<header class="vp-header"><span class="vp-brand">ATLAS / QUESTION NOTES</span><button id="vp-theme" type="button">Switch theme</button></header>
+<main id="vp-main">
+<section class="vp-hero" aria-labelledby="vp-question"><p class="vp-meta" id="vp-mode">Editorial brief</p><h1 id="vp-question">When does a pattern deserve your trust?</h1><p class="vp-lead">A small sample can make chance look like a rule. Read the idea, change one assumption, then explain what the result cannot tell you.</p><button type="button" class="vp-action" id="vp-start">Explore the sample</button><p class="vp-muted">Original illustrative lesson · no scores, saved work, or Progress.</p></section>
+<div class="vp-layout"><div class="vp-main" id="vp-primary"></div><aside id="vp-rail" aria-label="Supporting material"></aside></div>
+</main>
+<footer class="vp-strip"><h2>Prototype limits</h2><p>This tests authored hierarchy and control layout only. It does not load a Route, engine, iframe, audio, canvas, or renderer. It does not test runtime geometry, browser runtime integration, numerical models, saved preference integration, or learning outcomes.</p><p class="vp-muted">Theme and control state live in memory. The saved-theme attribute previews the shell contract; no browser storage is read or written. Reload follows your system theme. Suggested Next Route and Guided Path Progress are not implemented here.</p></footer>
+</div>
+<section id="vp-essay" class="vp-strip" aria-labelledby="vp-essay-title"><p class="vp-meta">Essay / notice the uncertainty</p><h2 id="vp-essay-title">A tidy result is not a settled result.</h2><p>Imagine drawing a handful of counters from a bag. Seeing mostly blue counters tells you what you drew, not exactly what remains inside. Another handful could tell a different story.</p><p>The useful question is not “Does this picture look convincing?” It is “What would change my mind?” Name the missing information before treating a pattern as a rule.</p><details><summary>What this analogy leaves out</summary><p>Real observations may depend on each other or come from a biased selection. A larger sample alone does not remove those problems. The control below is a layout demonstration, not a statistical calculation.</p></details></section>
+<section id="vp-lab" class="vp-strip" aria-labelledby="vp-lab-title"><p class="vp-meta">Lab / change one assumption</p><h2 id="vp-lab-title">Make room for another look.</h2><div class="vp-controls"><label for="vp-range">Illustrative sample size</label><input id="vp-range" type="range" min="10" max="100" step="10" value="30" aria-describedby="vp-range-note"><output id="vp-value" for="vp-range" class="vp-data">30 counters</output><p id="vp-range-note">Native range demo. Arrow keys change this control, not the variant.</p><p id="vp-feedback" class="vp-feedback" aria-live="polite">30 counters selected. This changes the preview label only; no inference is calculated.</p></div><div class="vp-runtime" role="region" aria-label="Opaque runtime boundary"><p class="vp-meta">Opaque runtime boundary / not an engine</p><h3>Reserved intrinsic output</h3><p>Only this authored frame is styled. No runtime descendants, data, dimensions, or pointer mapping are adapted. A real integration needs separate compatibility evidence.</p></div></section>
+<section id="vp-practice" class="vp-strip" aria-labelledby="vp-practice-title"><p class="vp-meta">Practice / explain the limit</p><h2 id="vp-practice-title">What can the handful establish?</h2><label for="vp-answer">Choose an interpretation</label><select id="vp-answer"><option value="">Choose a response</option><option value="sample">It describes the counters drawn</option><option value="bag">It proves the whole bag's exact mix</option></select><p id="vp-answer-feedback" class="vp-feedback" aria-live="polite">Feedback is local to this preview. Nothing is graded or saved.</p></section>
+<section id="vp-discovery" class="vp-strip vp-discovery" aria-labelledby="vp-discovery-title"><p class="vp-meta">Atlas / choose a question</p><h2 id="vp-discovery-title">Three ways in</h2><p>Authored sample discovery list. These links navigate this document, not published Routes.</p><ol><li><a href="#vp-essay">Why can a small sample mislead?</a><p>Essay · separate observation from conclusion.</p></li><li><a href="#vp-lab">What changes when we look again?</a><p>Lab · vary a sample-size label; no model attached.</p></li><li><a href="#vp-practice">How would you state the limit?</a><p>Practice · compare two interpretations.</p></li></ol></section>
+<section id="vp-states" class="vp-state-samples" aria-labelledby="vp-states-title"><p class="vp-meta">State specimens / not live activity</p><h2 id="vp-states-title">Honest boundaries</h2><p><strong>Loading sample.</strong> “Preparing the lesson.” Static copy specimen; no request is running.</p><p><strong>Error sample.</strong> “The lesson could not be loaded. The explanation is still available.” No real failure is being simulated.</p><button type="button" disabled aria-describedby="vp-disabled-note">Retry unavailable</button><p id="vp-disabled-note">Disabled because this preview has no lesson loader. There is no enabled retry pretending to work.</p></section>
+<nav class="vp-switcher" aria-label="Throwaway variant switcher"><button id="vp-prev" type="button" aria-label="Previous variant">←</button><output id="vp-state" aria-live="polite"></output><button id="vp-next" type="button" aria-label="Next variant">→</button></nav>
+<script>
+const vpNames = { A: "Editorial brief", B: "Workbench", C: "Reading room" };
+const vpParams = new URL(location.href);
+let vpVariant = Object.hasOwn(vpNames, vpParams.searchParams.get("variant")) ? vpParams.searchParams.get("variant") : "A";
+let vpThemeOverride = false;
+const vpSections = Object.fromEntries(["essay", "lab", "practice", "discovery", "states"].map(name => [name, document.getElementById(`vp-${name}`)]));
+function vpReadout() {
+  const theme = document.documentElement.getAttribute("saved-theme");
+  const state = document.getElementById("vp-state");
+  const toggle = document.getElementById("vp-theme");
+  if (state) state.textContent = `${vpVariant} · ${vpNames[vpVariant]} / ${theme} · ${vpThemeOverride ? "memory" : "system"}`;
+  if (toggle) toggle.textContent = `Switch to ${theme === "dark" ? "light" : "dark"} theme`;
+}
+function vpRender() {
+  document.body.dataset.variant = vpVariant;
+  const mode = document.getElementById("vp-mode");
+  if (mode) mode.textContent = `${vpNames[vpVariant]} / original sample`;
+  const primary = document.getElementById("vp-primary");
+  const rail = document.getElementById("vp-rail");
+  if (!primary || !rail || Object.values(vpSections).some(section => !section)) return;
+  const order = vpVariant === "A" ? [["essay", "lab", "practice"], ["discovery", "states"]] : vpVariant === "B" ? [["lab", "practice"], ["essay", "discovery", "states"]] : [["discovery", "essay", "lab", "practice", "states"], []];
+  order[0].forEach(name => primary.append(vpSections[name]));
+  order[1].forEach(name => rail.append(vpSections[name]));
+  rail.hidden = vpVariant === "C";
+  const url = new URL(location.href);
+  url.searchParams.set("variant", vpVariant);
+  history.replaceState(null, "", url);
+  vpReadout();
+}
+function vpCycle(delta) {
+  const keys = Object.keys(vpNames);
+  vpVariant = keys[(keys.indexOf(vpVariant) + delta + keys.length) % keys.length];
+  vpRender();
+}
+document.getElementById("vp-prev")?.addEventListener("click", () => vpCycle(-1));
+document.getElementById("vp-next")?.addEventListener("click", () => vpCycle(1));
+document.addEventListener("keydown", event => {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.target.closest("input, select, textarea, [contenteditable]")) return;
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    event.preventDefault();
+    vpCycle(event.key === "ArrowLeft" ? -1 : 1);
+  }
+});
+document.getElementById("vp-theme")?.addEventListener("click", () => {
+  vpThemeOverride = true;
+  const root = document.documentElement;
+  root.setAttribute("saved-theme", root.getAttribute("saved-theme") === "dark" ? "light" : "dark");
+  vpReadout();
+});
+vpSystem.addEventListener("change", event => {
+  if (!vpThemeOverride) {
+    document.documentElement.setAttribute("saved-theme", event.matches ? "dark" : "light");
+    vpReadout();
+  }
+});
+document.getElementById("vp-start")?.addEventListener("click", () => {
+  const target = document.getElementById("vp-range");
+  if (!target) return;
+  target.scrollIntoView({ block: "center" });
+  target.focus({ preventScroll: true });
+});
+document.getElementById("vp-range")?.addEventListener("input", event => {
+  const value = document.getElementById("vp-value");
+  const feedback = document.getElementById("vp-feedback");
+  if (value) value.textContent = `${event.target.value} counters`;
+  if (feedback) feedback.textContent = `${event.target.value} counters selected. This changes the preview label only; no inference is calculated.`;
+});
+document.getElementById("vp-answer")?.addEventListener("change", event => {
+  const feedback = document.getElementById("vp-answer-feedback");
+  if (feedback) feedback.textContent = event.target.value === "sample" ? "Yes: the observation describes this draw. The bag's exact mix remains unknown." : event.target.value === "bag" ? "Not established: one draw does not reveal the bag's exact mix. Consider what was not sampled." : "Feedback is local to this preview. Nothing is graded or saved.";
+});
+vpRender();
+</script>
+</body>
+</html>

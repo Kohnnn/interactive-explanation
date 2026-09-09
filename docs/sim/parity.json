@@ -11,6 +11,7 @@
     ],
     "notes": [
       "The local shell still mounts the upstream editor runtime without wrapping the controls in a different app framework.",
+      "Research 41 verified font-ready textarea sizing but retained a zero-size grid. Research 44 corrects the authored container sizing contract without engine or lifecycle changes: 18 fresh-context pointer draw, rendered-cell, play, pause, and resize checks pass with 1320 DOM cells. Paired autoplay captures have zero document overflow. Research 47 withdraws research 46 timing approval: successor007 inherits every timing from005 and corrects only stable Sim geometry and the proven resource aggregate. Performance remains BLOCKED/inconclusive. The font-ready adapter now publishes the existing ui/resize event instead of calling input handlers; the native Editor autosizer and Grid layout subscriber do not assign model text. Current draw/edit/play/resize verification is recorded separately from historical research44 outcomes.",
       "Public provenance is limited to the shared footer reference link to the live route."
     ],
     "evidence": [

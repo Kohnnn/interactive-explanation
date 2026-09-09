@@ -15,7 +15,7 @@ function Scene_Post_Post_Credits() {
   Game.stage.addChild(cont);
 
   var title = new PIXI.Text("Take a breath.\nThen replay the spiral.", {
-    font: "54px Cairo",
+    font: "54px sans-serif",
     fill: "#FFFFFF",
     align: "center"
   });
@@ -26,7 +26,7 @@ function Scene_Post_Post_Credits() {
   cont.addChild(title);
 
   var subtitle = new PIXI.Text("The ending is part of the loop, too.", {
-    font: "28px Cairo",
+    font: "28px sans-serif",
     fill: "#BBBBBB",
     align: "center"
   });

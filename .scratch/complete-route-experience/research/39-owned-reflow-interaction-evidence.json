@@ -1,0 +1,2542 @@
+{
+  "artifacts": [
+    {
+      "file": "/tmp/opencode/39-owned-before.jsonl",
+      "bytes": 6304451,
+      "sha256": "372bd84bacb4a57cc62cadc36a1d7f74d4d5a15059c808debd23ff78c4f74e18"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-after.jsonl",
+      "bytes": 6309659,
+      "sha256": "5d3afe9222294ec51275d414f87cf239dba8a42c708565e6c4311c5cc50d3ba2"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-repeat-before.jsonl",
+      "bytes": 5435092,
+      "sha256": "0751fca23cfa22713a377a9723970dd671a8e42c344df74aed92e2c063d86638"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-repeat-after.jsonl",
+      "bytes": 5436734,
+      "sha256": "38fc649aba5977e6252f07ee443d523a44590c9dd2d1cd0f37a13283d8146188"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-final-before.jsonl",
+      "bytes": 5437184,
+      "sha256": "572f0d7ec11ed52906f13e67c582e7eafdb4f67a762104e57c32bcf7b283209c"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-final-after.jsonl",
+      "bytes": 5440810,
+      "sha256": "a30e15617aef70689b8b0ca2be77387bb83cbf7eef2f7794c5801b624e05085c"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-interactions-before.jsonl",
+      "bytes": 38867,
+      "sha256": "ba823ed895b46d7ff73fc04c7cc5d6fb9a66021e29457917db885aa4896445c6"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-interactions-after.jsonl",
+      "bytes": 47750,
+      "sha256": "f4155efa7f7b7bfb26b66e16560b70d76ef46460ad0949cb438da35fee42b420"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-final-interactions-after.jsonl",
+      "bytes": 80117,
+      "sha256": "b5f8921d9adfa1ae0cc9c40ccfe597d93bf05b39ad2afc480b644696689cbc8f"
+    },
+    {
+      "file": "/tmp/opencode/39-owned-final-repro.json",
+      "bytes": 98290,
+      "sha256": "b6ea663b3246b3bac7de2a37a2a8ce553bad8d15493ff12418b65b069cb84b1e"
+    }
+  ],
+  "summary": [
+    {
+      "key": "exponentiation/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 194.1377120000002,
+        "min": 149.79581099999996,
+        "max": 198.79893599999969
+      },
+      "after": {
+        "count": 3,
+        "median": 129.3217370000002,
+        "min": 113.83746699999983,
+        "max": 171.27635099999998
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 4,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 5,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 10,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 11,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "exponentiation/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 193.32845699999962,
+        "min": 114.28695500000049,
+        "max": 203.7749300000005
+      },
+      "after": {
+        "count": 3,
+        "median": 98.7162929999995,
+        "min": 72.53014600000006,
+        "max": 137.2384830000001
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 6,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 6,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 6,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 748,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 5,
+            "end": {
+              "left": 212,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "exponentiation/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 136.5729790000005,
+        "min": 112.08096699999987,
+        "max": 215.58480400000008
+      },
+      "after": {
+        "count": 3,
+        "median": 83.179392,
+        "min": 78.33766899999864,
+        "max": 114.8340449999996
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 5,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "exponentiation/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 120.71963599999981,
+        "min": 117.7739930000007,
+        "max": 130.34343199999967
+      },
+      "after": {
+        "count": 3,
+        "median": 78.41829200000029,
+        "min": 76.28993799999989,
+        "max": 108.28405500000008
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 5,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 350,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 610,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "exponentiation/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 138.00044799999887,
+        "min": 115.06963200000064,
+        "max": 157.26946999999927
+      },
+      "after": {
+        "count": 3,
+        "median": 92.1200659999995,
+        "min": 80.95553300000029,
+        "max": 99.93289100000038
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 3,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "exponentiation/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 140.2230610000006,
+        "min": 118.30009500000233,
+        "max": 244.44528699999864
+      },
+      "after": {
+        "count": 3,
+        "median": 82.68794899999921,
+        "min": 81.82012899999972,
+        "max": 109.67417700000078
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 280,
+            "scrollWidth": 960,
+            "name": "Growth visualization; scroll horizontally",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 680,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 55.64925899999798,
+        "min": 53.20636900000318,
+        "max": 58.0893479999977
+      },
+      "after": {
+        "count": 3,
+        "median": 33.382604000002175,
+        "min": 28.94950400000016,
+        "max": 37.34182200000214
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 55.987702999998874,
+        "min": 48.745272000000114,
+        "max": 67.09452999999849
+      },
+      "after": {
+        "count": 3,
+        "median": 34.81283199999962,
+        "min": 31.31049300000086,
+        "max": 36.446255999999266
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 51.31108400000085,
+        "min": 34.89842199999839,
+        "max": 77.91118600000118
+      },
+      "after": {
+        "count": 3,
+        "median": 40.632856000000174,
+        "min": 37.25843299999906,
+        "max": 43.46860799999922
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 53.831215999998676,
+        "min": 52.75592300000062,
+        "max": 61.998539000000164
+      },
+      "after": {
+        "count": 3,
+        "median": 36.08271700000114,
+        "min": 31.499017999998614,
+        "max": 39.68535200000042
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 72.39697499999966,
+        "min": 54.852890000001935,
+        "max": 84.82007800000065
+      },
+      "after": {
+        "count": 3,
+        "median": 36.121377999996184,
+        "min": 35.088236999999936,
+        "max": 36.22781600000235
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "public-private-keys/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 58.23031700000138,
+        "min": 44.19650200000251,
+        "max": 97.23721599999408
+      },
+      "after": {
+        "count": 3,
+        "median": 33.399837999997544,
+        "min": 30.86841000000277,
+        "max": 40.991440999998304
+      },
+      "afterActions": [
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained",
+        "keyboard Random updates public key; generated private values not retained"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 141.0734949999969,
+        "min": 130.26304600000003,
+        "max": 148.51526699999522
+      },
+      "after": {
+        "count": 3,
+        "median": 93.29235500000505,
+        "min": 69.21953999999823,
+        "max": 108.32920000000013
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 129.20113599999604,
+        "min": 90.81392599999526,
+        "max": 156.32153100000141
+      },
+      "after": {
+        "count": 3,
+        "median": 66.87017899999773,
+        "min": 63.448210999995354,
+        "max": 89.9111980000016
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 98.05270900000323,
+        "min": 93.98511500000313,
+        "max": 120.74801199999638
+      },
+      "after": {
+        "count": 3,
+        "median": 62.62550299999566,
+        "min": 58.92475299999933,
+        "max": 71.91469399999914
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 138.93047500000102,
+        "min": 81.26627600000211,
+        "max": 138.95352200000343
+      },
+      "after": {
+        "count": 3,
+        "median": 64.28141399999731,
+        "min": 52.99400699999387,
+        "max": 102.72181299999647
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 113.64689799999906,
+        "min": 89.301360999998,
+        "max": 116.98255300000164
+      },
+      "after": {
+        "count": 3,
+        "median": 60.829791999996814,
+        "min": 57.655164000003424,
+        "max": 62.47471800000494
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "linear-regression/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop",
+        "Overflow region lacks accessible name/tab stop"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 141.0659749999977,
+        "min": 120.09613700000045,
+        "max": 299.8528230000011
+      },
+      "after": {
+        "count": 3,
+        "median": 69.63000800000009,
+        "min": 68.41240399999515,
+        "max": 70.9311680000028
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 288,
+            "scrollWidth": 309,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 21,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 320,
+            "scrollWidth": 364,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 2,
+            "end": {
+              "left": 44,
+              "remaining": 0
+            }
+          },
+          {
+            "width": 290,
+            "scrollWidth": 315,
+            "name": "Equation; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 25,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 161.4046229999949,
+        "min": 128.87204799999745,
+        "max": 235.79835000000458
+      },
+      "after": {
+        "count": 3,
+        "median": 51.456263000000035,
+        "min": 45.65458899999794,
+        "max": 63.271882000000915
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 166.12057600000117,
+        "min": 112.52303199999733,
+        "max": 281.0350810000018
+      },
+      "after": {
+        "count": 3,
+        "median": 65.13940799999546,
+        "min": 58.52140099999815,
+        "max": 76.87203299999965
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 84.83860299999651,
+        "min": 83.1432710000081,
+        "max": 153.57190099998843
+      },
+      "after": {
+        "count": 3,
+        "median": 61.73642299999483,
+        "min": 56.182458999996015,
+        "max": 68.8305210000035
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 97.98390599999402,
+        "min": 78.89619299999322,
+        "max": 100.98361799999839
+      },
+      "after": {
+        "count": 3,
+        "median": 56.537100000001374,
+        "min": 56.49553500000911,
+        "max": 59.27760600000329
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 4px",
+        "Overflow 4px",
+        "Overflow 4px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 87.80437600000005,
+        "min": 84.94342799999868,
+        "max": 88.31375800000387
+      },
+      "after": {
+        "count": 3,
+        "median": 46.88206299999729,
+        "min": 43.25278500000422,
+        "max": 53.20900600000459
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "precision-recall/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 4px",
+        "Overflow 4px",
+        "Overflow 4px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 99.58856899999955,
+        "min": 94.2967009999993,
+        "max": 130.53823200000625
+      },
+      "after": {
+        "count": 3,
+        "median": 68.05510500000673,
+        "min": 67.60310000000754,
+        "max": 85.4873579999985
+      },
+      "afterActions": [
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout",
+        "keyboard slider changes value and lesson readout"
+      ],
+      "scroll": [
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ],
+        [
+          {
+            "width": 320,
+            "scrollWidth": 324,
+            "name": "F1 chart and legend; scroll horizontally when needed",
+            "tabIndex": 0,
+            "keyboardLeft": 1,
+            "end": {
+              "left": 4,
+              "remaining": 0
+            }
+          }
+        ]
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "train-test-validation/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 190.20226099999854,
+        "min": 146.98978800000623,
+        "max": 212.7954510000127
+      },
+      "after": {
+        "count": 3,
+        "median": 143.13942099999986,
+        "min": 141.3637660000095,
+        "max": 187.57473999999638
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "train-test-validation/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 182.74195399999735,
+        "min": 168.696821000005,
+        "max": 198.36242400000629
+      },
+      "after": {
+        "count": 3,
+        "median": 163.36770000000251,
+        "min": 119.2259950000007,
+        "max": 168.60471499999403
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "train-test-validation/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 205.3815609999874,
+        "min": 187.6692999999941,
+        "max": 209.9820699999982
+      },
+      "after": {
+        "count": 3,
+        "median": 203.00322300000698,
+        "min": 167.46220199999516,
+        "max": 210.95528000000922
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "train-test-validation/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 141.8599610000092,
+        "min": 127.63885100001062,
+        "max": 199.57639900001232
+      },
+      "after": {
+        "count": 3,
+        "median": 233.22200500000326,
+        "min": 152.25639500000398,
+        "max": 245.4114530000079
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "train-test-validation/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n3 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 158.3336180000042,
+        "min": 128.57403299999714,
+        "max": 178.05532300000777
+      },
+      "after": {
+        "count": 3,
+        "median": 199.07444700000633,
+        "min": 187.04719700000715,
+        "max": 240.93927400000393
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "train-test-validation/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n",
+        "Runtime/network events\n\n2 !== 0\n"
+      ],
+      "before": {
+        "count": 3,
+        "median": 163.51503900000534,
+        "min": 160.03557400000864,
+        "max": 195.71882899999036
+      },
+      "after": {
+        "count": 3,
+        "median": 178.99454099999275,
+        "min": 153.51836499999627,
+        "max": 295.3003860000026
+      },
+      "afterActions": [
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness",
+        "keyboard feature switch to Fluffiness"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ],
+        [
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)",
+          "TypeError: Cannot read properties of undefined (reading 'includes')\n    at SVGGElement.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21936)\n    at F.n [as filter] (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:24:376)\n    at Object.<anonymous> (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:729:21894)\n    at e.call (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:108:1446)\n    at d (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:447:481)\n    at w (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:597)\n    at h (http://127.0.0.1:4222/interactive-explanation/train-test-validation/js.6c47f979.js:112:663)"
+        ]
+      ]
+    },
+    {
+      "key": "memory-allocation/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 75.29547399999865,
+        "min": 70.93784599998617,
+        "max": 113.2234380000009
+      },
+      "after": {
+        "count": 3,
+        "median": 91.5642050000024,
+        "min": 80.88148399999773,
+        "max": 129.4434600000095
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "memory-allocation/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 74.64479700000084,
+        "min": 69.27325700000802,
+        "max": 134.34900400000333
+      },
+      "after": {
+        "count": 3,
+        "median": 99.44090900001174,
+        "min": 93.75621599999431,
+        "max": 148.85531199999969
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "memory-allocation/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 82.52942400000757,
+        "min": 79.90282599999045,
+        "max": 91.01240300000063
+      },
+      "after": {
+        "count": 3,
+        "median": 86.1808960000053,
+        "min": 86.13594600000943,
+        "max": 97.36883000000671
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "memory-allocation/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 78.24974199999997,
+        "min": 72.6002060000028,
+        "max": 96.67793399999209
+      },
+      "after": {
+        "count": 3,
+        "median": 78.95968200000061,
+        "min": 75.22881299999426,
+        "max": 102.16950000000361
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "memory-allocation/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 8px",
+        "Overflow 8px",
+        "Overflow 8px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 105.74847900000168,
+        "min": 85.92340699999477,
+        "max": 108.94672900000296
+      },
+      "after": {
+        "count": 3,
+        "median": 97.51638400000229,
+        "min": 72.090366000004,
+        "max": 181.17739099999017
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "memory-allocation/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 8px",
+        "Overflow 8px",
+        "Overflow 8px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 94.50205899999128,
+        "min": 86.21370300000126,
+        "max": 110.83707900000445
+      },
+      "after": {
+        "count": 3,
+        "median": 102.36274599999888,
+        "min": 69.91953600000124,
+        "max": 111.04203299999062
+      },
+      "afterActions": [
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step",
+        "keyboard slider and next allocation step"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/desktop/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 38.84299600000668,
+        "min": 23.273976000011317,
+        "max": 60.339282999993884
+      },
+      "after": {
+        "count": 3,
+        "median": 28.36689999999362,
+        "min": 27.88625700000557,
+        "max": 51.88526300000376
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/desktop/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 31.723906999992323,
+        "min": 26.275362000000314,
+        "max": 47.57461000001058
+      },
+      "after": {
+        "count": 3,
+        "median": 50.49229500000365,
+        "min": 39.946784999992815,
+        "max": 59.316980999996304
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/mobile/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 28.758214000001317,
+        "min": 27.405772000012803,
+        "max": 34.03497499998775
+      },
+      "after": {
+        "count": 3,
+        "median": 39.7314619999961,
+        "min": 32.15480000000389,
+        "max": 42.63497300000745
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/mobile/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 30.91967599999043,
+        "min": 24.35279500001343,
+        "max": 33.331147999997484
+      },
+      "after": {
+        "count": 3,
+        "median": 33.82396799999697,
+        "min": 24.99942700000247,
+        "max": 85.34121699999378
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/narrow/light",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 24.60762400001113,
+        "min": 22.042086999994353,
+        "max": 36.295865000007325
+      },
+      "after": {
+        "count": 3,
+        "median": 52.24124400000437,
+        "min": 36.870364000002155,
+        "max": 76.51415499999712
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "key": "blockchain-101-combined-flow/narrow/dark",
+      "beforeCount": 3,
+      "afterCount": 3,
+      "beforeFailures": [
+        "Overflow 2px",
+        "Overflow 2px",
+        "Overflow 2px"
+      ],
+      "afterFailures": [],
+      "before": {
+        "count": 3,
+        "median": 35.49786600001971,
+        "min": 25.774399999994785,
+        "max": 35.9140219999972
+      },
+      "after": {
+        "count": 3,
+        "median": 42.04161600000225,
+        "min": 28.709210999993957,
+        "max": 49.774479999992764
+      },
+      "afterActions": [
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation",
+        "keyboard first walkthrough navigation"
+      ],
+      "scroll": [
+        [],
+        [],
+        []
+      ],
+      "events": [
+        [],
+        [],
+        []
+      ]
+    }
+  ]
+}

@@ -32,7 +32,7 @@
     ],
     "evidence": [
       "Implementation planning treated the flattened route root, full local chunk graph, and local font handoff as parity-critical.",
-      "Shared smoke coverage verifies the Nuxt runtime loads locally, the article mounts on the local root, and the route stays runtime-clean without upstream asset dependencies."
+      "W0 correction: Chromium 148 reproduces Nuxt Page not found and hydration errors in all 18 controlled samples. Visible lesson controls do not establish runtime cleanliness. Changing the existing app.baseURL to the served absolute directory removes Page not found but hydrates the compiled home route and removes lesson sliders; that experiment was reverted. No bundled code or runtime config change is retained. Supported route remapping/rebuild is a separate blocked seam. See .scratch/complete-route-experience/research/37-prerequisite-report.md at the repository root."
     ]
   },
   {

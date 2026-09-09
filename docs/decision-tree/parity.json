@@ -10,7 +10,8 @@
     ],
     "notes": [
       "The mlu-pilot adapter themes only authored HTML and verified controls; compiled scenes, SVG, canvas, images, KaTeX, dimensions, and transforms remain intrinsic.",
-      "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs."
+      "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs.",
+      "W0 prerequisite: the existing 50x46 home image/link moves from the collapsed legacy title to the visible authored hero. Three fresh Chromium 148 contexts in each of six viewport/theme cells verify containment and keyboard navigation. Compiled charts are unchanged; vertical flow changes require separate geometry review. See .scratch/complete-route-experience/research/37-prerequisite-report.md at the repository root."
     ],
     "evidence": [
       "Stored light and dark probes confirm that authored surfaces change without altering intrinsic scene geometry or interaction ownership.",

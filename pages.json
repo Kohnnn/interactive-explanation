@@ -238,14 +238,7 @@
     "shell": {
       "family": "ncase",
       "variant": "essay",
-      "navigation": "native",
-      "nativeControl": {
-        "selector": "#game_choices > button",
-        "minimum": 1,
-        "kind": "state",
-        "activationSelector": "#loading",
-        "readySelector": "#game_choices > button:not(.hidden)"
-      }
+      "navigation": "none"
     },
     "suggestedNextSlug": "remember",
     "experience": {

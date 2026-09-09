@@ -1,0 +1,10 @@
+Historical strict-smoke.log raw failure excerpt; selection and expanded command retained in ../01-w0-execution-evidence.md. Local worktree prefix redacted; no assertion or error text changed.
+START=2026-09-08T18:57:27.877Z
+OK route decision-tree/
+Error: decision-tree desktop geometry baseline runtime bottom shifted by more than 1 CSS px
+    at assert (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:258:11)
+    at assertRuntimeGeometry (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:1157:5)
+    at measureRouteGeometry (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:1194:11)
+    at async main (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:9730:24)
+END=2026-09-08T18:57:29.616Z
+EXIT=1

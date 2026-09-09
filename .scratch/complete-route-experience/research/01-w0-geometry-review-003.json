@@ -1,0 +1,385 @@
+{
+  "source": "f51e601",
+  "sourceFix": "83ae687",
+  "browser": "148.0.7778.96",
+  "predecessorSha256": "d40b79af49e028d1832b68c258cb3fc48f8f0c327704688ded94afa0c6a06481",
+  "evidenceSha256": "69c57857d4deffba1be48fde4cafe136a0815d7a5d5ff8672b5d2a6f604a9954",
+  "performance": "All inherited values unchanged",
+  "scope": "11 exact cells, 44 paths; no historical mismatch normalization, no Markov or rigid-body replacement; W0 release blocked",
+  "approved": [
+    {
+      "slug": "decision-tree",
+      "viewport": "desktop",
+      "samplesPerSide": 6,
+      "classification": "Existing 50x46 home image relocated into authored hero; desktop image position only",
+      "changes": [
+        {
+          "path": "/routes/decision-tree/geometry/desktop/intrinsic/0/rect/top",
+          "before": 1244.609375,
+          "after": 64,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/desktop/intrinsic/0/rect/right",
+          "before": 220.5,
+          "after": 851,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/desktop/intrinsic/0/rect/bottom",
+          "before": 1290.609375,
+          "after": 110,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/desktop/intrinsic/0/rect/left",
+          "before": 170.5,
+          "after": 801,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/mobile/rect/bottom",
+          "before": 2351.09375,
+          "after": 2306.90625,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/mobile/rect/height",
+          "before": 2350.90625,
+          "after": 2306.71875,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/mobile/css/height",
+          "before": "2350.91px",
+          "after": "2306.72px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/mobile/aspectRatio",
+          "before": 0.1658934719323665,
+          "after": 0.1690713269660638,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/mobile/rect/bottom",
+          "before": 1934.125,
+          "after": 1889.9375,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/mobile/rect/height",
+          "before": 1933.9375,
+          "after": 1889.75,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/mobile/css/height",
+          "before": "1933.94px",
+          "after": "1889.75px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/mobile/aspectRatio",
+          "before": 0.20166111883139967,
+          "after": 0.20637650482868103,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "narrow",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/narrow/rect/bottom",
+          "before": 2186.09375,
+          "after": 2164,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/narrow/rect/height",
+          "before": 2185.90625,
+          "after": 2163.8125,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/narrow/css/height",
+          "before": "2185.91px",
+          "after": "2163.81px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-how-synths-make-sound/geometry/narrow/aspectRatio",
+          "before": 0.14639237158501195,
+          "after": 0.1478871205337801,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/mobile/rect/bottom",
+          "before": 1507.5625,
+          "after": 1463.375,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/mobile/rect/height",
+          "before": 1507.375,
+          "after": 1463.1875,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/mobile/css/height",
+          "before": "1507.38px",
+          "after": "1463.19px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/mobile/aspectRatio",
+          "before": 0.25872792105481385,
+          "after": 0.2665413694417154,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "narrow",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/narrow/rect/bottom",
+          "before": 1589,
+          "after": 1566.90625,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/narrow/rect/height",
+          "before": 1588.8125,
+          "after": 1566.71875,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/narrow/css/height",
+          "before": "1588.81px",
+          "after": "1566.72px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-filter-resonance/geometry/narrow/aspectRatio",
+          "before": 0.20140828448920184,
+          "after": 0.2042485289717762,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/mobile/rect/bottom",
+          "before": 1787.65625,
+          "after": 1743.46875,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/mobile/rect/height",
+          "before": 1787.46875,
+          "after": 1743.28125,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/mobile/css/height",
+          "before": "1787.47px",
+          "after": "1743.28px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/mobile/aspectRatio",
+          "before": 0.21818563261595483,
+          "after": 0.22371605270233935,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "narrow",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/narrow/rect/bottom",
+          "before": 1910.03125,
+          "after": 1887.9375,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/narrow/rect/height",
+          "before": 1909.84375,
+          "after": 1887.75,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/narrow/css/height",
+          "before": "1909.84px",
+          "after": "1887.75px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-modulating-amplitude-with-envelopes/geometry/narrow/aspectRatio",
+          "before": 0.1675529739016608,
+          "after": 0.16951397165938287,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/mobile/rect/bottom",
+          "before": 3305.4375,
+          "after": 3261.25,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/mobile/rect/height",
+          "before": 3305.25,
+          "after": 3261.0625,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/mobile/css/height",
+          "before": "3305.25px",
+          "after": "3261.06px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/mobile/aspectRatio",
+          "before": 0.11799410029498525,
+          "after": 0.11959292408532494,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "mobile",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/mobile/rect/bottom",
+          "before": 2902.625,
+          "after": 2858.4375,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/mobile/rect/height",
+          "before": 2902.4375,
+          "after": 2858.25,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/mobile/css/height",
+          "before": "2902.44px",
+          "after": "2858.25px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/mobile/aspectRatio",
+          "before": 0.1343698184715433,
+          "after": 0.13644712673838888,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "narrow",
+      "samplesPerSide": 6,
+      "classification": "Authored footer whole-label wrapping; runtime height and derived aspect ratio only; intrinsic surfaces unchanged",
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/narrow/rect/bottom",
+          "before": 3074.5,
+          "after": 3052.40625,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/narrow/rect/height",
+          "before": 3074.3125,
+          "after": 3052.21875,
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/narrow/css/height",
+          "before": "3074.31px",
+          "after": "3052.22px",
+          "review": "approved authored delta only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-recipes/geometry/narrow/aspectRatio",
+          "before": 0.10408831242757527,
+          "after": 0.10484176469985973,
+          "review": "approved authored delta only; not route acceptance"
+        }
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "slug": "decision-tree",
+      "viewport": "mobile",
+      "reason": "Inherited geometry differs from paired BEFORE; authored delta alone cannot certify replacement"
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "narrow",
+      "reason": "Inherited geometry differs from paired BEFORE; authored delta alone cannot certify replacement"
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "narrow",
+      "reason": "Inherited geometry differs from paired BEFORE; authored delta alone cannot certify replacement"
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "narrow",
+      "reason": "Inherited geometry differs from paired BEFORE; authored delta alone cannot certify replacement"
+    }
+  ]
+}

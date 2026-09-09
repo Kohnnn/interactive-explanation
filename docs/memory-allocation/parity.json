@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "Research39 wraps the generated three-label timeline row using its step-text identity, preserving label minimum widths, canvas/backing dimensions, and pointer ownership. Final paired six-cell captures are stable and 18 keyboard contexts pass. Successor003 focused gates stop at narrow runtime top geometry; full acceptance remains pending.",
       "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
       "Chapter links are generated from data-story-chapter markers so the route can keep its original section structure."
     ],

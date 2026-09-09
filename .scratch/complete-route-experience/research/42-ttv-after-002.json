@@ -1,0 +1,620 @@
+[
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      }
+    ],
+    "errors": [],
+    "status": "failed",
+    "failure": "locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[value=\"weight\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"button\" value=\"weight\" aria-pressed=\"false\">Weight</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"top-bar__inner\">…</div> from <div id=\"top-bar\" class=\"top-bar\" role=\"navigation\" aria-label=\"Site\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+  }
+]

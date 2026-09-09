@@ -1,0 +1,1285 @@
+[
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "intro",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "intro",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "split",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "split",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "light",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "split",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 1,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "split",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 2,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "intro",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "split",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "sample": 3,
+    "stages": [
+      {
+        "stage": "startup",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "validation",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "test",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "summary",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      },
+      {
+        "stage": "train",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "split",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "intro",
+        "opacity": "0",
+        "inert": true
+      },
+      {
+        "stage": "model",
+        "opacity": "1",
+        "inert": false
+      }
+    ],
+    "pointerBlocks": [
+      "model",
+      "validation",
+      "test",
+      "summary",
+      "model",
+      "model"
+    ],
+    "errors": [],
+    "status": "passed"
+  }
+]

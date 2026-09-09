@@ -1,0 +1,6277 @@
+{
+  "samples": 1512,
+  "failed": [
+    {
+      "cell": "markov-chains/desktop/light/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/desktop/light/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/desktop/light/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/desktop/dark/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/desktop/dark/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/desktop/dark/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/light/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/light/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/light/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/dark/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/dark/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/mobile/dark/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/light/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/light/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/light/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/dark/1",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/dark/2",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "markov-chains/narrow/dark/3",
+      "errors": [
+        {
+          "phase": "network",
+          "message": "Failed requests require classification; cancellation evidence retained"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/1",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/2",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/3",
+      "errors": [
+        {
+          "phase": "console",
+          "message": "Console errors retained in events"
+        }
+      ]
+    }
+  ],
+  "mismatches": [
+    "polygons/mobile/light/1",
+    "polygons/mobile/light/2",
+    "polygons/mobile/light/3",
+    "polygons/mobile/dark/1",
+    "polygons/mobile/dark/2",
+    "polygons/mobile/dark/3",
+    "polygons/narrow/light/1",
+    "polygons/narrow/light/2",
+    "polygons/narrow/light/3",
+    "polygons/narrow/dark/1",
+    "polygons/narrow/dark/2",
+    "polygons/narrow/dark/3",
+    "ballot/desktop/light/1",
+    "ballot/desktop/light/2",
+    "ballot/desktop/light/3",
+    "ballot/desktop/dark/1",
+    "ballot/desktop/dark/2",
+    "ballot/desktop/dark/3",
+    "ballot/mobile/light/1",
+    "ballot/mobile/light/2",
+    "ballot/mobile/light/3",
+    "ballot/mobile/dark/1",
+    "ballot/mobile/dark/2",
+    "ballot/mobile/dark/3",
+    "ballot/narrow/light/1",
+    "ballot/narrow/light/2",
+    "ballot/narrow/light/3",
+    "ballot/narrow/dark/1",
+    "ballot/narrow/dark/2",
+    "ballot/narrow/dark/3",
+    "remember/desktop/light/1",
+    "remember/desktop/light/2",
+    "remember/desktop/light/3",
+    "remember/desktop/dark/1",
+    "remember/desktop/dark/2",
+    "remember/desktop/dark/3",
+    "remember/narrow/light/1",
+    "remember/narrow/light/2",
+    "remember/narrow/light/3",
+    "remember/narrow/dark/1",
+    "remember/narrow/dark/2",
+    "remember/narrow/dark/3",
+    "covid-19/desktop/light/1",
+    "covid-19/desktop/light/2",
+    "covid-19/desktop/light/3",
+    "covid-19/desktop/dark/1",
+    "covid-19/desktop/dark/2",
+    "covid-19/desktop/dark/3",
+    "covid-19/mobile/light/1",
+    "covid-19/mobile/light/2",
+    "covid-19/mobile/light/3",
+    "covid-19/mobile/dark/1",
+    "covid-19/mobile/dark/2",
+    "covid-19/mobile/dark/3",
+    "covid-19/narrow/light/1",
+    "covid-19/narrow/light/2",
+    "covid-19/narrow/light/3",
+    "covid-19/narrow/dark/1",
+    "covid-19/narrow/dark/2",
+    "covid-19/narrow/dark/3",
+    "simulating/desktop/light/1",
+    "simulating/desktop/light/2",
+    "simulating/desktop/light/3",
+    "simulating/desktop/dark/1",
+    "simulating/desktop/dark/2",
+    "simulating/desktop/dark/3",
+    "sim/mobile/light/1",
+    "sim/mobile/light/2",
+    "sim/mobile/light/3",
+    "sim/mobile/dark/1",
+    "sim/mobile/dark/2",
+    "sim/mobile/dark/3",
+    "sim/narrow/light/1",
+    "sim/narrow/light/2",
+    "sim/narrow/light/3",
+    "sim/narrow/dark/1",
+    "sim/narrow/dark/2",
+    "sim/narrow/dark/3",
+    "decision-tree/desktop/light/1",
+    "decision-tree/desktop/light/2",
+    "decision-tree/desktop/light/3",
+    "decision-tree/desktop/dark/1",
+    "decision-tree/desktop/dark/2",
+    "decision-tree/desktop/dark/3",
+    "decision-tree/mobile/light/1",
+    "decision-tree/mobile/light/2",
+    "decision-tree/mobile/light/3",
+    "decision-tree/mobile/dark/1",
+    "decision-tree/mobile/dark/2",
+    "decision-tree/mobile/dark/3",
+    "decision-tree/narrow/light/1",
+    "decision-tree/narrow/light/2",
+    "decision-tree/narrow/light/3",
+    "decision-tree/narrow/dark/1",
+    "decision-tree/narrow/dark/2",
+    "decision-tree/narrow/dark/3",
+    "random-forest/desktop/light/1",
+    "random-forest/desktop/light/2",
+    "random-forest/desktop/light/3",
+    "random-forest/desktop/dark/1",
+    "random-forest/desktop/dark/2",
+    "random-forest/desktop/dark/3",
+    "random-forest/mobile/light/1",
+    "random-forest/mobile/light/2",
+    "random-forest/mobile/light/3",
+    "random-forest/mobile/dark/1",
+    "random-forest/mobile/dark/2",
+    "random-forest/mobile/dark/3",
+    "random-forest/narrow/light/1",
+    "random-forest/narrow/light/2",
+    "random-forest/narrow/light/3",
+    "random-forest/narrow/dark/1",
+    "random-forest/narrow/dark/2",
+    "random-forest/narrow/dark/3",
+    "conditional-probability/mobile/light/1",
+    "conditional-probability/mobile/light/2",
+    "conditional-probability/mobile/light/3",
+    "conditional-probability/mobile/dark/1",
+    "conditional-probability/mobile/dark/2",
+    "conditional-probability/mobile/dark/3",
+    "conditional-probability/narrow/light/1",
+    "conditional-probability/narrow/light/2",
+    "conditional-probability/narrow/light/3",
+    "conditional-probability/narrow/dark/1",
+    "conditional-probability/narrow/dark/2",
+    "conditional-probability/narrow/dark/3",
+    "markov-chains/mobile/light/1",
+    "markov-chains/mobile/light/2",
+    "markov-chains/mobile/light/3",
+    "markov-chains/mobile/dark/1",
+    "markov-chains/mobile/dark/2",
+    "markov-chains/mobile/dark/3",
+    "markov-chains/narrow/light/1",
+    "markov-chains/narrow/light/2",
+    "markov-chains/narrow/light/3",
+    "markov-chains/narrow/dark/1",
+    "markov-chains/narrow/dark/2",
+    "markov-chains/narrow/dark/3",
+    "principal-component-analysis/desktop/light/1",
+    "principal-component-analysis/desktop/light/2",
+    "principal-component-analysis/desktop/light/3",
+    "principal-component-analysis/desktop/dark/1",
+    "principal-component-analysis/desktop/dark/2",
+    "principal-component-analysis/desktop/dark/3",
+    "principal-component-analysis/mobile/light/1",
+    "principal-component-analysis/mobile/light/2",
+    "principal-component-analysis/mobile/light/3",
+    "principal-component-analysis/mobile/dark/1",
+    "principal-component-analysis/mobile/dark/2",
+    "principal-component-analysis/mobile/dark/3",
+    "principal-component-analysis/narrow/light/1",
+    "principal-component-analysis/narrow/light/2",
+    "principal-component-analysis/narrow/light/3",
+    "principal-component-analysis/narrow/dark/1",
+    "principal-component-analysis/narrow/dark/2",
+    "principal-component-analysis/narrow/dark/3",
+    "exponentiation/desktop/light/1",
+    "exponentiation/desktop/light/2",
+    "exponentiation/desktop/light/3",
+    "exponentiation/desktop/dark/1",
+    "exponentiation/desktop/dark/2",
+    "exponentiation/desktop/dark/3",
+    "exponentiation/mobile/light/1",
+    "exponentiation/mobile/light/2",
+    "exponentiation/mobile/light/3",
+    "exponentiation/mobile/dark/1",
+    "exponentiation/mobile/dark/2",
+    "exponentiation/mobile/dark/3",
+    "exponentiation/narrow/light/1",
+    "exponentiation/narrow/light/2",
+    "exponentiation/narrow/light/3",
+    "exponentiation/narrow/dark/1",
+    "exponentiation/narrow/dark/2",
+    "exponentiation/narrow/dark/3",
+    "pi/mobile/light/1",
+    "pi/mobile/light/2",
+    "pi/mobile/light/3",
+    "pi/mobile/dark/1",
+    "pi/mobile/dark/2",
+    "pi/mobile/dark/3",
+    "sine-and-cosine/desktop/light/1",
+    "sine-and-cosine/desktop/light/2",
+    "sine-and-cosine/desktop/light/3",
+    "sine-and-cosine/desktop/dark/1",
+    "sine-and-cosine/desktop/dark/2",
+    "sine-and-cosine/desktop/dark/3",
+    "sine-and-cosine/narrow/light/1",
+    "sine-and-cosine/narrow/light/2",
+    "sine-and-cosine/narrow/light/3",
+    "sine-and-cosine/narrow/dark/1",
+    "sine-and-cosine/narrow/dark/2",
+    "sine-and-cosine/narrow/dark/3",
+    "eigenvectors-and-eigenvalues/desktop/light/1",
+    "eigenvectors-and-eigenvalues/desktop/light/2",
+    "eigenvectors-and-eigenvalues/desktop/light/3",
+    "eigenvectors-and-eigenvalues/desktop/dark/1",
+    "eigenvectors-and-eigenvalues/desktop/dark/2",
+    "eigenvectors-and-eigenvalues/desktop/dark/3",
+    "eigenvectors-and-eigenvalues/mobile/light/1",
+    "eigenvectors-and-eigenvalues/mobile/light/2",
+    "eigenvectors-and-eigenvalues/mobile/light/3",
+    "eigenvectors-and-eigenvalues/mobile/dark/1",
+    "eigenvectors-and-eigenvalues/mobile/dark/2",
+    "eigenvectors-and-eigenvalues/mobile/dark/3",
+    "eigenvectors-and-eigenvalues/narrow/light/1",
+    "eigenvectors-and-eigenvalues/narrow/light/2",
+    "eigenvectors-and-eigenvalues/narrow/light/3",
+    "eigenvectors-and-eigenvalues/narrow/dark/1",
+    "eigenvectors-and-eigenvalues/narrow/dark/2",
+    "eigenvectors-and-eigenvalues/narrow/dark/3",
+    "image-kernels/desktop/light/1",
+    "image-kernels/desktop/light/2",
+    "image-kernels/desktop/light/3",
+    "image-kernels/desktop/dark/1",
+    "image-kernels/desktop/dark/2",
+    "image-kernels/desktop/dark/3",
+    "image-kernels/mobile/light/1",
+    "image-kernels/mobile/light/2",
+    "image-kernels/mobile/light/3",
+    "image-kernels/mobile/dark/1",
+    "image-kernels/mobile/dark/2",
+    "image-kernels/mobile/dark/3",
+    "image-kernels/narrow/light/1",
+    "image-kernels/narrow/light/2",
+    "image-kernels/narrow/light/3",
+    "image-kernels/narrow/dark/1",
+    "image-kernels/narrow/dark/2",
+    "image-kernels/narrow/dark/3",
+    "ordinary-least-squares-regression/desktop/light/1",
+    "ordinary-least-squares-regression/desktop/light/2",
+    "ordinary-least-squares-regression/desktop/light/3",
+    "ordinary-least-squares-regression/desktop/dark/1",
+    "ordinary-least-squares-regression/desktop/dark/2",
+    "ordinary-least-squares-regression/desktop/dark/3",
+    "ordinary-least-squares-regression/mobile/light/1",
+    "ordinary-least-squares-regression/mobile/light/2",
+    "ordinary-least-squares-regression/mobile/light/3",
+    "ordinary-least-squares-regression/mobile/dark/1",
+    "ordinary-least-squares-regression/mobile/dark/2",
+    "ordinary-least-squares-regression/mobile/dark/3",
+    "ordinary-least-squares-regression/narrow/light/1",
+    "ordinary-least-squares-regression/narrow/light/2",
+    "ordinary-least-squares-regression/narrow/light/3",
+    "ordinary-least-squares-regression/narrow/dark/1",
+    "ordinary-least-squares-regression/narrow/dark/2",
+    "ordinary-least-squares-regression/narrow/dark/3",
+    "blockchain/narrow/light/1",
+    "blockchain/narrow/light/2",
+    "blockchain/narrow/light/3",
+    "blockchain/narrow/dark/1",
+    "blockchain/narrow/dark/2",
+    "blockchain/narrow/dark/3",
+    "public-private-keys/narrow/light/1",
+    "public-private-keys/narrow/light/2",
+    "public-private-keys/narrow/light/3",
+    "public-private-keys/narrow/dark/1",
+    "public-private-keys/narrow/dark/2",
+    "public-private-keys/narrow/dark/3",
+    "alpha-compositing/desktop/light/1",
+    "alpha-compositing/desktop/light/2",
+    "alpha-compositing/desktop/light/3",
+    "alpha-compositing/desktop/dark/1",
+    "alpha-compositing/desktop/dark/2",
+    "alpha-compositing/desktop/dark/3",
+    "alpha-compositing/mobile/light/1",
+    "alpha-compositing/mobile/light/2",
+    "alpha-compositing/mobile/light/3",
+    "alpha-compositing/mobile/dark/1",
+    "alpha-compositing/mobile/dark/2",
+    "alpha-compositing/mobile/dark/3",
+    "alpha-compositing/narrow/light/1",
+    "alpha-compositing/narrow/light/2",
+    "alpha-compositing/narrow/light/3",
+    "alpha-compositing/narrow/dark/1",
+    "alpha-compositing/narrow/dark/2",
+    "alpha-compositing/narrow/dark/3",
+    "color-spaces/desktop/light/1",
+    "color-spaces/desktop/light/2",
+    "color-spaces/desktop/light/3",
+    "color-spaces/desktop/dark/1",
+    "color-spaces/desktop/dark/2",
+    "color-spaces/desktop/dark/3",
+    "color-spaces/mobile/light/1",
+    "color-spaces/mobile/light/2",
+    "color-spaces/mobile/light/3",
+    "color-spaces/mobile/dark/1",
+    "color-spaces/mobile/dark/2",
+    "color-spaces/mobile/dark/3",
+    "color-spaces/narrow/light/1",
+    "color-spaces/narrow/light/2",
+    "color-spaces/narrow/light/3",
+    "color-spaces/narrow/dark/1",
+    "color-spaces/narrow/dark/2",
+    "color-spaces/narrow/dark/3",
+    "sound/desktop/light/1",
+    "sound/desktop/light/2",
+    "sound/desktop/light/3",
+    "sound/desktop/dark/1",
+    "sound/desktop/dark/2",
+    "sound/desktop/dark/3",
+    "sound/mobile/light/1",
+    "sound/mobile/light/2",
+    "sound/mobile/light/3",
+    "sound/mobile/dark/1",
+    "sound/mobile/dark/2",
+    "sound/mobile/dark/3",
+    "sound/narrow/light/1",
+    "sound/narrow/light/2",
+    "sound/narrow/light/3",
+    "sound/narrow/dark/1",
+    "sound/narrow/dark/2",
+    "sound/narrow/dark/3",
+    "cameras-and-lenses/desktop/light/1",
+    "cameras-and-lenses/desktop/light/2",
+    "cameras-and-lenses/desktop/light/3",
+    "cameras-and-lenses/desktop/dark/1",
+    "cameras-and-lenses/desktop/dark/2",
+    "cameras-and-lenses/desktop/dark/3",
+    "cameras-and-lenses/mobile/light/1",
+    "cameras-and-lenses/mobile/light/2",
+    "cameras-and-lenses/mobile/light/3",
+    "cameras-and-lenses/mobile/dark/1",
+    "cameras-and-lenses/mobile/dark/2",
+    "cameras-and-lenses/mobile/dark/3",
+    "cameras-and-lenses/narrow/light/1",
+    "cameras-and-lenses/narrow/light/2",
+    "cameras-and-lenses/narrow/light/3",
+    "cameras-and-lenses/narrow/dark/1",
+    "cameras-and-lenses/narrow/dark/2",
+    "cameras-and-lenses/narrow/dark/3",
+    "lights-and-shadows/desktop/light/1",
+    "lights-and-shadows/desktop/light/2",
+    "lights-and-shadows/desktop/light/3",
+    "lights-and-shadows/desktop/dark/1",
+    "lights-and-shadows/desktop/dark/2",
+    "lights-and-shadows/desktop/dark/3",
+    "lights-and-shadows/mobile/light/1",
+    "lights-and-shadows/mobile/light/2",
+    "lights-and-shadows/mobile/light/3",
+    "lights-and-shadows/mobile/dark/1",
+    "lights-and-shadows/mobile/dark/2",
+    "lights-and-shadows/mobile/dark/3",
+    "lights-and-shadows/narrow/light/1",
+    "lights-and-shadows/narrow/light/2",
+    "lights-and-shadows/narrow/light/3",
+    "lights-and-shadows/narrow/dark/1",
+    "lights-and-shadows/narrow/dark/2",
+    "lights-and-shadows/narrow/dark/3",
+    "tesseract/desktop/light/1",
+    "tesseract/desktop/light/2",
+    "tesseract/desktop/light/3",
+    "tesseract/desktop/dark/1",
+    "tesseract/desktop/dark/2",
+    "tesseract/desktop/dark/3",
+    "tesseract/mobile/light/1",
+    "tesseract/mobile/light/2",
+    "tesseract/mobile/light/3",
+    "tesseract/mobile/dark/1",
+    "tesseract/mobile/dark/2",
+    "tesseract/mobile/dark/3",
+    "tesseract/narrow/light/1",
+    "tesseract/narrow/light/2",
+    "tesseract/narrow/light/3",
+    "tesseract/narrow/dark/1",
+    "tesseract/narrow/dark/2",
+    "tesseract/narrow/dark/3",
+    "gears/desktop/light/1",
+    "gears/desktop/light/2",
+    "gears/desktop/light/3",
+    "gears/desktop/dark/1",
+    "gears/desktop/dark/2",
+    "gears/desktop/dark/3",
+    "gears/mobile/light/1",
+    "gears/mobile/light/2",
+    "gears/mobile/light/3",
+    "gears/mobile/dark/1",
+    "gears/mobile/dark/2",
+    "gears/mobile/dark/3",
+    "gears/narrow/light/1",
+    "gears/narrow/light/2",
+    "gears/narrow/light/3",
+    "gears/narrow/dark/1",
+    "gears/narrow/dark/2",
+    "gears/narrow/dark/3",
+    "gps/desktop/light/1",
+    "gps/desktop/light/2",
+    "gps/desktop/light/3",
+    "gps/desktop/dark/1",
+    "gps/desktop/dark/2",
+    "gps/desktop/dark/3",
+    "gps/mobile/light/1",
+    "gps/mobile/light/2",
+    "gps/mobile/light/3",
+    "gps/mobile/dark/1",
+    "gps/mobile/dark/2",
+    "gps/mobile/dark/3",
+    "gps/narrow/light/1",
+    "gps/narrow/light/2",
+    "gps/narrow/light/3",
+    "gps/narrow/dark/1",
+    "gps/narrow/dark/2",
+    "gps/narrow/dark/3",
+    "earth-and-sun/desktop/light/1",
+    "earth-and-sun/desktop/light/2",
+    "earth-and-sun/desktop/light/3",
+    "earth-and-sun/desktop/dark/1",
+    "earth-and-sun/desktop/dark/2",
+    "earth-and-sun/desktop/dark/3",
+    "earth-and-sun/mobile/light/1",
+    "earth-and-sun/mobile/light/2",
+    "earth-and-sun/mobile/light/3",
+    "earth-and-sun/mobile/dark/1",
+    "earth-and-sun/mobile/dark/2",
+    "earth-and-sun/mobile/dark/3",
+    "earth-and-sun/narrow/light/1",
+    "earth-and-sun/narrow/light/2",
+    "earth-and-sun/narrow/light/3",
+    "earth-and-sun/narrow/dark/1",
+    "earth-and-sun/narrow/dark/2",
+    "earth-and-sun/narrow/dark/3",
+    "bicycle/desktop/light/1",
+    "bicycle/desktop/light/2",
+    "bicycle/desktop/light/3",
+    "bicycle/desktop/dark/1",
+    "bicycle/desktop/dark/2",
+    "bicycle/desktop/dark/3",
+    "bicycle/mobile/light/1",
+    "bicycle/mobile/light/2",
+    "bicycle/mobile/light/3",
+    "bicycle/mobile/dark/1",
+    "bicycle/mobile/dark/2",
+    "bicycle/mobile/dark/3",
+    "bicycle/narrow/light/1",
+    "bicycle/narrow/light/2",
+    "bicycle/narrow/light/3",
+    "bicycle/narrow/dark/1",
+    "bicycle/narrow/dark/2",
+    "bicycle/narrow/dark/3",
+    "airfoil/desktop/light/1",
+    "airfoil/desktop/light/2",
+    "airfoil/desktop/light/3",
+    "airfoil/desktop/dark/1",
+    "airfoil/desktop/dark/2",
+    "airfoil/desktop/dark/3",
+    "airfoil/mobile/light/1",
+    "airfoil/mobile/light/2",
+    "airfoil/mobile/light/3",
+    "airfoil/mobile/dark/1",
+    "airfoil/mobile/dark/2",
+    "airfoil/mobile/dark/3",
+    "airfoil/narrow/light/1",
+    "airfoil/narrow/light/2",
+    "airfoil/narrow/light/3",
+    "airfoil/narrow/dark/1",
+    "airfoil/narrow/dark/2",
+    "airfoil/narrow/dark/3",
+    "curves-and-surfaces/desktop/light/1",
+    "curves-and-surfaces/desktop/light/2",
+    "curves-and-surfaces/desktop/light/3",
+    "curves-and-surfaces/desktop/dark/1",
+    "curves-and-surfaces/desktop/dark/2",
+    "curves-and-surfaces/desktop/dark/3",
+    "curves-and-surfaces/mobile/light/1",
+    "curves-and-surfaces/mobile/light/2",
+    "curves-and-surfaces/mobile/light/3",
+    "curves-and-surfaces/mobile/dark/1",
+    "curves-and-surfaces/mobile/dark/2",
+    "curves-and-surfaces/mobile/dark/3",
+    "curves-and-surfaces/narrow/light/1",
+    "curves-and-surfaces/narrow/light/2",
+    "curves-and-surfaces/narrow/light/3",
+    "curves-and-surfaces/narrow/dark/1",
+    "curves-and-surfaces/narrow/dark/2",
+    "curves-and-surfaces/narrow/dark/3",
+    "internal-combustion-engine/desktop/light/1",
+    "internal-combustion-engine/desktop/light/2",
+    "internal-combustion-engine/desktop/light/3",
+    "internal-combustion-engine/desktop/dark/1",
+    "internal-combustion-engine/desktop/dark/2",
+    "internal-combustion-engine/desktop/dark/3",
+    "internal-combustion-engine/mobile/light/1",
+    "internal-combustion-engine/mobile/light/2",
+    "internal-combustion-engine/mobile/light/3",
+    "internal-combustion-engine/mobile/dark/1",
+    "internal-combustion-engine/mobile/dark/2",
+    "internal-combustion-engine/mobile/dark/3",
+    "internal-combustion-engine/narrow/light/1",
+    "internal-combustion-engine/narrow/light/2",
+    "internal-combustion-engine/narrow/light/3",
+    "internal-combustion-engine/narrow/dark/1",
+    "internal-combustion-engine/narrow/dark/2",
+    "internal-combustion-engine/narrow/dark/3",
+    "mechanical-watch/desktop/light/1",
+    "mechanical-watch/desktop/light/2",
+    "mechanical-watch/desktop/light/3",
+    "mechanical-watch/desktop/dark/1",
+    "mechanical-watch/desktop/dark/2",
+    "mechanical-watch/desktop/dark/3",
+    "mechanical-watch/mobile/light/1",
+    "mechanical-watch/mobile/light/2",
+    "mechanical-watch/mobile/light/3",
+    "mechanical-watch/mobile/dark/1",
+    "mechanical-watch/mobile/dark/2",
+    "mechanical-watch/mobile/dark/3",
+    "mechanical-watch/narrow/light/1",
+    "mechanical-watch/narrow/light/2",
+    "mechanical-watch/narrow/light/3",
+    "mechanical-watch/narrow/dark/1",
+    "mechanical-watch/narrow/dark/2",
+    "mechanical-watch/narrow/dark/3",
+    "naval-architecture/desktop/light/1",
+    "naval-architecture/desktop/light/2",
+    "naval-architecture/desktop/light/3",
+    "naval-architecture/desktop/dark/1",
+    "naval-architecture/desktop/dark/2",
+    "naval-architecture/desktop/dark/3",
+    "naval-architecture/mobile/light/1",
+    "naval-architecture/mobile/light/2",
+    "naval-architecture/mobile/light/3",
+    "naval-architecture/mobile/dark/1",
+    "naval-architecture/mobile/dark/2",
+    "naval-architecture/mobile/dark/3",
+    "naval-architecture/narrow/light/1",
+    "naval-architecture/narrow/light/2",
+    "naval-architecture/narrow/light/3",
+    "naval-architecture/narrow/dark/1",
+    "naval-architecture/narrow/dark/2",
+    "naval-architecture/narrow/dark/3",
+    "formula-1-racing/desktop/light/1",
+    "formula-1-racing/desktop/light/2",
+    "formula-1-racing/desktop/light/3",
+    "formula-1-racing/desktop/dark/1",
+    "formula-1-racing/desktop/dark/2",
+    "formula-1-racing/desktop/dark/3",
+    "formula-1-racing/mobile/light/1",
+    "formula-1-racing/mobile/light/2",
+    "formula-1-racing/mobile/light/3",
+    "formula-1-racing/mobile/dark/1",
+    "formula-1-racing/mobile/dark/2",
+    "formula-1-racing/mobile/dark/3",
+    "formula-1-racing/narrow/light/1",
+    "formula-1-racing/narrow/light/2",
+    "formula-1-racing/narrow/light/3",
+    "formula-1-racing/narrow/dark/1",
+    "formula-1-racing/narrow/dark/2",
+    "formula-1-racing/narrow/dark/3",
+    "interactive-mechanical-watch/desktop/light/1",
+    "interactive-mechanical-watch/desktop/light/2",
+    "interactive-mechanical-watch/desktop/light/3",
+    "interactive-mechanical-watch/desktop/dark/1",
+    "interactive-mechanical-watch/desktop/dark/2",
+    "interactive-mechanical-watch/desktop/dark/3",
+    "interactive-mechanical-watch/mobile/light/1",
+    "interactive-mechanical-watch/mobile/light/2",
+    "interactive-mechanical-watch/mobile/light/3",
+    "interactive-mechanical-watch/mobile/dark/1",
+    "interactive-mechanical-watch/mobile/dark/2",
+    "interactive-mechanical-watch/mobile/dark/3",
+    "interactive-mechanical-watch/narrow/light/1",
+    "interactive-mechanical-watch/narrow/light/2",
+    "interactive-mechanical-watch/narrow/light/3",
+    "interactive-mechanical-watch/narrow/dark/1",
+    "interactive-mechanical-watch/narrow/dark/2",
+    "interactive-mechanical-watch/narrow/dark/3",
+    "reading-qr-codes-without-a-computer/desktop/light/1",
+    "reading-qr-codes-without-a-computer/desktop/light/2",
+    "reading-qr-codes-without-a-computer/desktop/light/3",
+    "reading-qr-codes-without-a-computer/desktop/dark/1",
+    "reading-qr-codes-without-a-computer/desktop/dark/2",
+    "reading-qr-codes-without-a-computer/desktop/dark/3",
+    "reading-qr-codes-without-a-computer/mobile/light/1",
+    "reading-qr-codes-without-a-computer/mobile/light/2",
+    "reading-qr-codes-without-a-computer/mobile/light/3",
+    "reading-qr-codes-without-a-computer/mobile/dark/1",
+    "reading-qr-codes-without-a-computer/mobile/dark/2",
+    "reading-qr-codes-without-a-computer/mobile/dark/3",
+    "reading-qr-codes-without-a-computer/narrow/light/1",
+    "reading-qr-codes-without-a-computer/narrow/light/2",
+    "reading-qr-codes-without-a-computer/narrow/light/3",
+    "reading-qr-codes-without-a-computer/narrow/dark/1",
+    "reading-qr-codes-without-a-computer/narrow/dark/2",
+    "reading-qr-codes-without-a-computer/narrow/dark/3",
+    "teoria-interval-ear-training/desktop/light/1",
+    "teoria-interval-ear-training/desktop/light/2",
+    "teoria-interval-ear-training/desktop/light/3",
+    "teoria-interval-ear-training/desktop/dark/1",
+    "teoria-interval-ear-training/desktop/dark/2",
+    "teoria-interval-ear-training/desktop/dark/3",
+    "teoria-interval-ear-training/mobile/light/1",
+    "teoria-interval-ear-training/mobile/light/2",
+    "teoria-interval-ear-training/mobile/light/3",
+    "teoria-interval-ear-training/mobile/dark/1",
+    "teoria-interval-ear-training/mobile/dark/2",
+    "teoria-interval-ear-training/mobile/dark/3",
+    "teoria-interval-ear-training/narrow/light/1",
+    "teoria-interval-ear-training/narrow/light/2",
+    "teoria-interval-ear-training/narrow/light/3",
+    "teoria-interval-ear-training/narrow/dark/1",
+    "teoria-interval-ear-training/narrow/dark/2",
+    "teoria-interval-ear-training/narrow/dark/3",
+    "teoria-note-ear-training/desktop/light/1",
+    "teoria-note-ear-training/desktop/light/2",
+    "teoria-note-ear-training/desktop/light/3",
+    "teoria-note-ear-training/desktop/dark/1",
+    "teoria-note-ear-training/desktop/dark/2",
+    "teoria-note-ear-training/desktop/dark/3",
+    "teoria-note-ear-training/mobile/light/1",
+    "teoria-note-ear-training/mobile/light/2",
+    "teoria-note-ear-training/mobile/light/3",
+    "teoria-note-ear-training/mobile/dark/1",
+    "teoria-note-ear-training/mobile/dark/2",
+    "teoria-note-ear-training/mobile/dark/3",
+    "teoria-note-ear-training/narrow/light/1",
+    "teoria-note-ear-training/narrow/light/2",
+    "teoria-note-ear-training/narrow/light/3",
+    "teoria-note-ear-training/narrow/dark/1",
+    "teoria-note-ear-training/narrow/dark/2",
+    "teoria-note-ear-training/narrow/dark/3",
+    "teoria-key-and-note-ear-training/desktop/light/1",
+    "teoria-key-and-note-ear-training/desktop/light/2",
+    "teoria-key-and-note-ear-training/desktop/light/3",
+    "teoria-key-and-note-ear-training/desktop/dark/1",
+    "teoria-key-and-note-ear-training/desktop/dark/2",
+    "teoria-key-and-note-ear-training/desktop/dark/3",
+    "teoria-key-and-note-ear-training/mobile/light/1",
+    "teoria-key-and-note-ear-training/mobile/light/2",
+    "teoria-key-and-note-ear-training/mobile/light/3",
+    "teoria-key-and-note-ear-training/mobile/dark/1",
+    "teoria-key-and-note-ear-training/mobile/dark/2",
+    "teoria-key-and-note-ear-training/mobile/dark/3",
+    "teoria-key-and-note-ear-training/narrow/light/1",
+    "teoria-key-and-note-ear-training/narrow/light/2",
+    "teoria-key-and-note-ear-training/narrow/light/3",
+    "teoria-key-and-note-ear-training/narrow/dark/1",
+    "teoria-key-and-note-ear-training/narrow/dark/2",
+    "teoria-key-and-note-ear-training/narrow/dark/3",
+    "teoria-random-key-and-note-ear-training/desktop/light/1",
+    "teoria-random-key-and-note-ear-training/desktop/light/2",
+    "teoria-random-key-and-note-ear-training/desktop/light/3",
+    "teoria-random-key-and-note-ear-training/desktop/dark/1",
+    "teoria-random-key-and-note-ear-training/desktop/dark/2",
+    "teoria-random-key-and-note-ear-training/desktop/dark/3",
+    "teoria-random-key-and-note-ear-training/mobile/light/1",
+    "teoria-random-key-and-note-ear-training/mobile/light/2",
+    "teoria-random-key-and-note-ear-training/mobile/light/3",
+    "teoria-random-key-and-note-ear-training/mobile/dark/1",
+    "teoria-random-key-and-note-ear-training/mobile/dark/2",
+    "teoria-random-key-and-note-ear-training/mobile/dark/3",
+    "teoria-random-key-and-note-ear-training/narrow/light/1",
+    "teoria-random-key-and-note-ear-training/narrow/light/2",
+    "teoria-random-key-and-note-ear-training/narrow/light/3",
+    "teoria-random-key-and-note-ear-training/narrow/dark/1",
+    "teoria-random-key-and-note-ear-training/narrow/dark/2",
+    "teoria-random-key-and-note-ear-training/narrow/dark/3",
+    "teoria-scale-construction/desktop/light/1",
+    "teoria-scale-construction/desktop/light/2",
+    "teoria-scale-construction/desktop/light/3",
+    "teoria-scale-construction/desktop/dark/1",
+    "teoria-scale-construction/desktop/dark/2",
+    "teoria-scale-construction/desktop/dark/3",
+    "teoria-interval-identification-and-inversion/narrow/light/1",
+    "teoria-interval-identification-and-inversion/narrow/light/2",
+    "teoria-interval-identification-and-inversion/narrow/light/3",
+    "teoria-interval-identification-and-inversion/narrow/dark/1",
+    "teoria-interval-identification-and-inversion/narrow/dark/2",
+    "teoria-interval-identification-and-inversion/narrow/dark/3",
+    "ableton-learning-music-playground/mobile/light/1",
+    "ableton-learning-music-playground/mobile/light/2",
+    "ableton-learning-music-playground/mobile/light/3",
+    "ableton-learning-music-playground/mobile/dark/1",
+    "ableton-learning-music-playground/mobile/dark/2",
+    "ableton-learning-music-playground/mobile/dark/3",
+    "ableton-learning-music-play-with-beats/mobile/light/1",
+    "ableton-learning-music-play-with-beats/mobile/light/2",
+    "ableton-learning-music-play-with-beats/mobile/light/3",
+    "ableton-learning-music-play-with-beats/mobile/dark/1",
+    "ableton-learning-music-play-with-beats/mobile/dark/2",
+    "ableton-learning-music-play-with-beats/mobile/dark/3",
+    "ableton-learning-music-play-with-beats/narrow/light/1",
+    "ableton-learning-music-play-with-beats/narrow/light/2",
+    "ableton-learning-music-play-with-beats/narrow/light/3",
+    "ableton-learning-music-play-with-beats/narrow/dark/1",
+    "ableton-learning-music-play-with-beats/narrow/dark/2",
+    "ableton-learning-music-play-with-beats/narrow/dark/3",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/light/1",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/light/2",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/light/3",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/dark/1",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/dark/2",
+    "ableton-learning-music-play-with-notes-and-scales/mobile/dark/3",
+    "ableton-learning-music-play-with-basslines/mobile/light/1",
+    "ableton-learning-music-play-with-basslines/mobile/light/2",
+    "ableton-learning-music-play-with-basslines/mobile/light/3",
+    "ableton-learning-music-play-with-basslines/mobile/dark/1",
+    "ableton-learning-music-play-with-basslines/mobile/dark/2",
+    "ableton-learning-music-play-with-basslines/mobile/dark/3",
+    "ableton-learning-music-play-with-basslines/narrow/light/1",
+    "ableton-learning-music-play-with-basslines/narrow/light/2",
+    "ableton-learning-music-play-with-basslines/narrow/light/3",
+    "ableton-learning-music-play-with-basslines/narrow/dark/1",
+    "ableton-learning-music-play-with-basslines/narrow/dark/2",
+    "ableton-learning-music-play-with-basslines/narrow/dark/3",
+    "ableton-learning-music-play-with-melodies/desktop/light/1",
+    "ableton-learning-music-play-with-melodies/desktop/light/2",
+    "ableton-learning-music-play-with-melodies/desktop/light/3",
+    "ableton-learning-music-play-with-melodies/desktop/dark/1",
+    "ableton-learning-music-play-with-melodies/desktop/dark/2",
+    "ableton-learning-music-play-with-melodies/desktop/dark/3",
+    "ableton-learning-music-play-with-song-structures/mobile/light/1",
+    "ableton-learning-music-play-with-song-structures/mobile/light/2",
+    "ableton-learning-music-play-with-song-structures/mobile/light/3",
+    "ableton-learning-music-play-with-song-structures/mobile/dark/1",
+    "ableton-learning-music-play-with-song-structures/mobile/dark/2",
+    "ableton-learning-music-play-with-song-structures/mobile/dark/3",
+    "ableton-learning-synths-get-started/mobile/light/1",
+    "ableton-learning-synths-get-started/mobile/light/2",
+    "ableton-learning-synths-get-started/mobile/light/3",
+    "ableton-learning-synths-get-started/mobile/dark/1",
+    "ableton-learning-synths-get-started/mobile/dark/2",
+    "ableton-learning-synths-get-started/mobile/dark/3",
+    "ableton-learning-synths-get-started/narrow/light/1",
+    "ableton-learning-synths-get-started/narrow/light/2",
+    "ableton-learning-synths-get-started/narrow/light/3",
+    "ableton-learning-synths-get-started/narrow/dark/1",
+    "ableton-learning-synths-get-started/narrow/dark/2",
+    "ableton-learning-synths-get-started/narrow/dark/3",
+    "ableton-learning-synths-filter-resonance/desktop/light/1",
+    "ableton-learning-synths-filter-resonance/desktop/light/2",
+    "ableton-learning-synths-filter-resonance/desktop/light/3",
+    "ableton-learning-synths-filter-resonance/desktop/dark/1",
+    "ableton-learning-synths-filter-resonance/desktop/dark/2",
+    "ableton-learning-synths-filter-resonance/desktop/dark/3",
+    "ableton-learning-synths-matching-envelopes/narrow/light/1",
+    "ableton-learning-synths-matching-envelopes/narrow/light/2",
+    "ableton-learning-synths-matching-envelopes/narrow/light/3",
+    "ableton-learning-synths-matching-envelopes/narrow/dark/1",
+    "ableton-learning-synths-matching-envelopes/narrow/dark/2",
+    "ableton-learning-synths-matching-envelopes/narrow/dark/3",
+    "musicmap/desktop/light/1",
+    "musicmap/desktop/light/2",
+    "musicmap/desktop/light/3",
+    "musicmap/desktop/dark/1",
+    "musicmap/desktop/dark/2",
+    "musicmap/desktop/dark/3",
+    "musicmap/mobile/light/1",
+    "musicmap/mobile/light/2",
+    "musicmap/mobile/light/3",
+    "musicmap/mobile/dark/1",
+    "musicmap/mobile/dark/2",
+    "musicmap/mobile/dark/3",
+    "musicmap/narrow/light/1",
+    "musicmap/narrow/light/2",
+    "musicmap/narrow/light/3",
+    "musicmap/narrow/dark/1",
+    "musicmap/narrow/dark/2",
+    "musicmap/narrow/dark/3",
+    "music-interactive-hub/desktop/light/1",
+    "music-interactive-hub/desktop/light/2",
+    "music-interactive-hub/desktop/light/3",
+    "music-interactive-hub/desktop/dark/1",
+    "music-interactive-hub/desktop/dark/2",
+    "music-interactive-hub/desktop/dark/3",
+    "music-interactive-hub/mobile/light/1",
+    "music-interactive-hub/mobile/light/2",
+    "music-interactive-hub/mobile/light/3",
+    "music-interactive-hub/mobile/dark/1",
+    "music-interactive-hub/mobile/dark/2",
+    "music-interactive-hub/mobile/dark/3",
+    "music-interactive-hub/narrow/light/1",
+    "music-interactive-hub/narrow/light/2",
+    "music-interactive-hub/narrow/light/3",
+    "music-interactive-hub/narrow/dark/1",
+    "music-interactive-hub/narrow/dark/2",
+    "music-interactive-hub/narrow/dark/3",
+    "linear-regression/desktop/light/1",
+    "linear-regression/desktop/light/2",
+    "linear-regression/desktop/light/3",
+    "linear-regression/desktop/dark/1",
+    "linear-regression/desktop/dark/2",
+    "linear-regression/desktop/dark/3",
+    "linear-regression/mobile/light/1",
+    "linear-regression/mobile/light/2",
+    "linear-regression/mobile/light/3",
+    "linear-regression/mobile/dark/1",
+    "linear-regression/mobile/dark/2",
+    "linear-regression/mobile/dark/3",
+    "linear-regression/narrow/light/1",
+    "linear-regression/narrow/light/2",
+    "linear-regression/narrow/light/3",
+    "linear-regression/narrow/dark/1",
+    "linear-regression/narrow/dark/2",
+    "linear-regression/narrow/dark/3",
+    "logistic-regression/desktop/light/1",
+    "logistic-regression/desktop/light/2",
+    "logistic-regression/desktop/light/3",
+    "logistic-regression/desktop/dark/1",
+    "logistic-regression/desktop/dark/2",
+    "logistic-regression/desktop/dark/3",
+    "logistic-regression/mobile/light/1",
+    "logistic-regression/mobile/light/2",
+    "logistic-regression/mobile/light/3",
+    "logistic-regression/mobile/dark/1",
+    "logistic-regression/mobile/dark/2",
+    "logistic-regression/mobile/dark/3",
+    "logistic-regression/narrow/light/1",
+    "logistic-regression/narrow/light/2",
+    "logistic-regression/narrow/light/3",
+    "logistic-regression/narrow/dark/1",
+    "logistic-regression/narrow/dark/2",
+    "logistic-regression/narrow/dark/3",
+    "precision-recall/desktop/light/1",
+    "precision-recall/desktop/light/2",
+    "precision-recall/desktop/light/3",
+    "precision-recall/desktop/dark/1",
+    "precision-recall/desktop/dark/2",
+    "precision-recall/desktop/dark/3",
+    "precision-recall/mobile/light/1",
+    "precision-recall/mobile/light/2",
+    "precision-recall/mobile/light/3",
+    "precision-recall/mobile/dark/1",
+    "precision-recall/mobile/dark/2",
+    "precision-recall/mobile/dark/3",
+    "precision-recall/narrow/light/1",
+    "precision-recall/narrow/light/2",
+    "precision-recall/narrow/light/3",
+    "precision-recall/narrow/dark/1",
+    "precision-recall/narrow/dark/2",
+    "precision-recall/narrow/dark/3",
+    "roc-auc/desktop/light/1",
+    "roc-auc/desktop/light/2",
+    "roc-auc/desktop/light/3",
+    "roc-auc/desktop/dark/1",
+    "roc-auc/desktop/dark/2",
+    "roc-auc/desktop/dark/3",
+    "roc-auc/mobile/light/1",
+    "roc-auc/mobile/light/2",
+    "roc-auc/mobile/light/3",
+    "roc-auc/mobile/dark/1",
+    "roc-auc/mobile/dark/2",
+    "roc-auc/mobile/dark/3",
+    "roc-auc/narrow/light/1",
+    "roc-auc/narrow/light/2",
+    "roc-auc/narrow/light/3",
+    "roc-auc/narrow/dark/1",
+    "roc-auc/narrow/dark/2",
+    "roc-auc/narrow/dark/3",
+    "bias-variance/desktop/light/1",
+    "bias-variance/desktop/light/2",
+    "bias-variance/desktop/light/3",
+    "bias-variance/desktop/dark/1",
+    "bias-variance/desktop/dark/2",
+    "bias-variance/desktop/dark/3",
+    "bias-variance/mobile/light/1",
+    "bias-variance/mobile/light/2",
+    "bias-variance/mobile/light/3",
+    "bias-variance/mobile/dark/1",
+    "bias-variance/mobile/dark/2",
+    "bias-variance/mobile/dark/3",
+    "bias-variance/narrow/light/1",
+    "bias-variance/narrow/light/2",
+    "bias-variance/narrow/light/3",
+    "bias-variance/narrow/dark/1",
+    "bias-variance/narrow/dark/2",
+    "bias-variance/narrow/dark/3",
+    "train-test-validation/desktop/light/1",
+    "train-test-validation/desktop/light/2",
+    "train-test-validation/desktop/light/3",
+    "train-test-validation/desktop/dark/1",
+    "train-test-validation/desktop/dark/2",
+    "train-test-validation/desktop/dark/3",
+    "train-test-validation/mobile/light/1",
+    "train-test-validation/mobile/light/2",
+    "train-test-validation/mobile/light/3",
+    "train-test-validation/mobile/dark/1",
+    "train-test-validation/mobile/dark/2",
+    "train-test-validation/mobile/dark/3",
+    "train-test-validation/narrow/light/1",
+    "train-test-validation/narrow/light/2",
+    "train-test-validation/narrow/light/3",
+    "train-test-validation/narrow/dark/1",
+    "train-test-validation/narrow/dark/2",
+    "train-test-validation/narrow/dark/3",
+    "double-descent/desktop/light/1",
+    "double-descent/desktop/light/2",
+    "double-descent/desktop/light/3",
+    "double-descent/desktop/dark/1",
+    "double-descent/desktop/dark/2",
+    "double-descent/desktop/dark/3",
+    "double-descent/mobile/light/1",
+    "double-descent/mobile/light/2",
+    "double-descent/mobile/light/3",
+    "double-descent/mobile/dark/1",
+    "double-descent/mobile/dark/2",
+    "double-descent/mobile/dark/3",
+    "double-descent/narrow/light/1",
+    "double-descent/narrow/light/2",
+    "double-descent/narrow/light/3",
+    "double-descent/narrow/dark/1",
+    "double-descent/narrow/dark/2",
+    "double-descent/narrow/dark/3",
+    "double-descent2/desktop/light/1",
+    "double-descent2/desktop/light/2",
+    "double-descent2/desktop/light/3",
+    "double-descent2/desktop/dark/1",
+    "double-descent2/desktop/dark/2",
+    "double-descent2/desktop/dark/3",
+    "double-descent2/mobile/light/1",
+    "double-descent2/mobile/light/2",
+    "double-descent2/mobile/light/3",
+    "double-descent2/mobile/dark/1",
+    "double-descent2/mobile/dark/2",
+    "double-descent2/mobile/dark/3",
+    "double-descent2/narrow/light/1",
+    "double-descent2/narrow/light/2",
+    "double-descent2/narrow/light/3",
+    "double-descent2/narrow/dark/1",
+    "double-descent2/narrow/dark/2",
+    "double-descent2/narrow/dark/3",
+    "memory-allocation/desktop/light/1",
+    "memory-allocation/desktop/light/2",
+    "memory-allocation/desktop/light/3",
+    "memory-allocation/desktop/dark/1",
+    "memory-allocation/desktop/dark/2",
+    "memory-allocation/desktop/dark/3",
+    "memory-allocation/mobile/light/1",
+    "memory-allocation/mobile/light/2",
+    "memory-allocation/mobile/light/3",
+    "memory-allocation/mobile/dark/1",
+    "memory-allocation/mobile/dark/2",
+    "memory-allocation/mobile/dark/3",
+    "memory-allocation/narrow/light/1",
+    "memory-allocation/narrow/light/2",
+    "memory-allocation/narrow/light/3",
+    "memory-allocation/narrow/dark/1",
+    "memory-allocation/narrow/dark/2",
+    "memory-allocation/narrow/dark/3",
+    "load-balancing/desktop/light/1",
+    "load-balancing/desktop/light/2",
+    "load-balancing/desktop/light/3",
+    "load-balancing/desktop/dark/1",
+    "load-balancing/desktop/dark/2",
+    "load-balancing/desktop/dark/3",
+    "load-balancing/mobile/light/1",
+    "load-balancing/mobile/light/2",
+    "load-balancing/mobile/light/3",
+    "load-balancing/mobile/dark/1",
+    "load-balancing/mobile/dark/2",
+    "load-balancing/mobile/dark/3",
+    "load-balancing/narrow/light/1",
+    "load-balancing/narrow/light/2",
+    "load-balancing/narrow/light/3",
+    "load-balancing/narrow/dark/1",
+    "load-balancing/narrow/dark/2",
+    "load-balancing/narrow/dark/3",
+    "hysteresis-slack/desktop/light/1",
+    "hysteresis-slack/desktop/light/2",
+    "hysteresis-slack/desktop/light/3",
+    "hysteresis-slack/desktop/dark/1",
+    "hysteresis-slack/desktop/dark/2",
+    "hysteresis-slack/desktop/dark/3",
+    "hysteresis-slack/mobile/light/1",
+    "hysteresis-slack/mobile/light/2",
+    "hysteresis-slack/mobile/light/3",
+    "hysteresis-slack/mobile/dark/1",
+    "hysteresis-slack/mobile/dark/2",
+    "hysteresis-slack/mobile/dark/3",
+    "hysteresis-slack/narrow/light/1",
+    "hysteresis-slack/narrow/light/2",
+    "hysteresis-slack/narrow/light/3",
+    "hysteresis-slack/narrow/dark/1",
+    "hysteresis-slack/narrow/dark/2",
+    "hysteresis-slack/narrow/dark/3",
+    "rigid-body-collisions/desktop/light/1",
+    "rigid-body-collisions/desktop/light/2",
+    "rigid-body-collisions/desktop/light/3",
+    "rigid-body-collisions/desktop/dark/1",
+    "rigid-body-collisions/desktop/dark/2",
+    "rigid-body-collisions/desktop/dark/3",
+    "rigid-body-collisions/mobile/light/1",
+    "rigid-body-collisions/mobile/light/2",
+    "rigid-body-collisions/mobile/light/3",
+    "rigid-body-collisions/mobile/dark/1",
+    "rigid-body-collisions/mobile/dark/2",
+    "rigid-body-collisions/mobile/dark/3",
+    "rigid-body-collisions/narrow/light/1",
+    "rigid-body-collisions/narrow/light/2",
+    "rigid-body-collisions/narrow/light/3",
+    "rigid-body-collisions/narrow/dark/1",
+    "rigid-body-collisions/narrow/dark/2",
+    "rigid-body-collisions/narrow/dark/3",
+    "blockchain-101-combined-flow/desktop/light/1",
+    "blockchain-101-combined-flow/desktop/light/2",
+    "blockchain-101-combined-flow/desktop/light/3",
+    "blockchain-101-combined-flow/desktop/dark/1",
+    "blockchain-101-combined-flow/desktop/dark/2",
+    "blockchain-101-combined-flow/desktop/dark/3",
+    "blockchain-101-combined-flow/mobile/light/1",
+    "blockchain-101-combined-flow/mobile/light/2",
+    "blockchain-101-combined-flow/mobile/light/3",
+    "blockchain-101-combined-flow/mobile/dark/1",
+    "blockchain-101-combined-flow/mobile/dark/2",
+    "blockchain-101-combined-flow/mobile/dark/3",
+    "blockchain-101-combined-flow/narrow/light/1",
+    "blockchain-101-combined-flow/narrow/light/2",
+    "blockchain-101-combined-flow/narrow/light/3",
+    "blockchain-101-combined-flow/narrow/dark/1",
+    "blockchain-101-combined-flow/narrow/dark/2",
+    "blockchain-101-combined-flow/narrow/dark/3",
+    "primary-interactive-hub/desktop/light/1",
+    "primary-interactive-hub/desktop/light/2",
+    "primary-interactive-hub/desktop/light/3",
+    "primary-interactive-hub/desktop/dark/1",
+    "primary-interactive-hub/desktop/dark/2",
+    "primary-interactive-hub/desktop/dark/3",
+    "primary-interactive-hub/mobile/light/1",
+    "primary-interactive-hub/mobile/light/2",
+    "primary-interactive-hub/mobile/light/3",
+    "primary-interactive-hub/mobile/dark/1",
+    "primary-interactive-hub/mobile/dark/2",
+    "primary-interactive-hub/mobile/dark/3",
+    "primary-interactive-hub/narrow/light/1",
+    "primary-interactive-hub/narrow/light/2",
+    "primary-interactive-hub/narrow/light/3",
+    "primary-interactive-hub/narrow/dark/1",
+    "primary-interactive-hub/narrow/dark/2",
+    "primary-interactive-hub/narrow/dark/3",
+    "stargazing-dashboard/desktop/light/1",
+    "stargazing-dashboard/desktop/light/2",
+    "stargazing-dashboard/desktop/light/3",
+    "stargazing-dashboard/desktop/dark/1",
+    "stargazing-dashboard/desktop/dark/2",
+    "stargazing-dashboard/desktop/dark/3",
+    "stargazing-dashboard/mobile/light/1",
+    "stargazing-dashboard/mobile/light/2",
+    "stargazing-dashboard/mobile/light/3",
+    "stargazing-dashboard/mobile/dark/1",
+    "stargazing-dashboard/mobile/dark/2",
+    "stargazing-dashboard/mobile/dark/3",
+    "stargazing-dashboard/narrow/light/1",
+    "stargazing-dashboard/narrow/light/2",
+    "stargazing-dashboard/narrow/light/3",
+    "stargazing-dashboard/narrow/dark/1",
+    "stargazing-dashboard/narrow/dark/2",
+    "stargazing-dashboard/narrow/dark/3",
+    "watch-mesh-explorer/desktop/light/1",
+    "watch-mesh-explorer/desktop/light/2",
+    "watch-mesh-explorer/desktop/light/3",
+    "watch-mesh-explorer/desktop/dark/1",
+    "watch-mesh-explorer/desktop/dark/2",
+    "watch-mesh-explorer/desktop/dark/3",
+    "watch-mesh-explorer/mobile/light/1",
+    "watch-mesh-explorer/mobile/light/2",
+    "watch-mesh-explorer/mobile/light/3",
+    "watch-mesh-explorer/mobile/dark/1",
+    "watch-mesh-explorer/mobile/dark/2",
+    "watch-mesh-explorer/mobile/dark/3"
+  ],
+  "cells": [
+    {
+      "slug": "atlas",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "atlas",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "atlas",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "atlas",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "atlas",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "atlas",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "trust",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "polygons",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "polygons",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "polygons",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 30
+    },
+    {
+      "slug": "polygons",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "polygons",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "polygons",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ballot",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 170
+    },
+    {
+      "slug": "ballot",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ballot",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 186
+    },
+    {
+      "slug": "ballot",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ballot",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 180
+    },
+    {
+      "slug": "ballot",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "crowds",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "loopy",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "neurons",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "remember",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 38
+    },
+    {
+      "slug": "remember",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "remember",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "remember",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "remember",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "remember",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 18
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 98
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 80
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "simulating",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "simulating",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "simulating",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "simulating",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "simulating",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "simulating",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 43
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 54
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 50
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 8
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 390
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 384
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 24
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 22
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 24
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 8
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "pi",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "pi",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "pi",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 8
+    },
+    {
+      "slug": "pi",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "pi",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "pi",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 16
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 28
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 28
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 16
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 16
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 16
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 36
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 36
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 32
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 212
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 212
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 210
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 146
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 146
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 138
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sound",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 128
+    },
+    {
+      "slug": "sound",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sound",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 128
+    },
+    {
+      "slug": "sound",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "sound",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 128
+    },
+    {
+      "slug": "sound",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 144
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 144
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 144
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 148
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 148
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 148
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 100
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 100
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 100
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gears",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 104
+    },
+    {
+      "slug": "gears",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gears",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 104
+    },
+    {
+      "slug": "gears",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gears",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 104
+    },
+    {
+      "slug": "gears",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gps",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 188
+    },
+    {
+      "slug": "gps",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gps",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 188
+    },
+    {
+      "slug": "gps",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "gps",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 188
+    },
+    {
+      "slug": "gps",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 90
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 90
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 90
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 288
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 288
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 288
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 210
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 210
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 210
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 234
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 234
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 234
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 174
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 174
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 174
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 242
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 242
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 242
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 138
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 138
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 138
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 34
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 34
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 34
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 254
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 258
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 256
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 88
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 86
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 104
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 65
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 40
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 45
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 45
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 84
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 68
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 55
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 38
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 50
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 8
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 48
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 8
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 48
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 51
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 257
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 254
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 29
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 29
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 97
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 94
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 94
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 94
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 99
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 99
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 99
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 96
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 96
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 5
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 2
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 36
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 28
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 28
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 28
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 20
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 26
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 30
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 30
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 35
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 71
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 71
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 32
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 26
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 12
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 14
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 83
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 85
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 83
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 58
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 61
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 61
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 75
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 75
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 75
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 6
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 24
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 0,
+      "stable": false,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 7
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "desktop",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "desktop",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "mobile",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 4
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "mobile",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "narrow",
+      "theme": "light",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "narrow",
+      "theme": "dark",
+      "measured": 3,
+      "stable": true,
+      "changes": 0
+    }
+  ],
+  "overflow": [
+    {
+      "cell": "remember/narrow/light/1",
+      "px": 26
+    },
+    {
+      "cell": "remember/narrow/light/2",
+      "px": 26
+    },
+    {
+      "cell": "remember/narrow/light/3",
+      "px": 26
+    },
+    {
+      "cell": "remember/narrow/dark/1",
+      "px": 26
+    },
+    {
+      "cell": "remember/narrow/dark/2",
+      "px": 26
+    },
+    {
+      "cell": "remember/narrow/dark/3",
+      "px": 26
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/light/1",
+      "px": 40
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/light/2",
+      "px": 40
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/light/3",
+      "px": 40
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/dark/1",
+      "px": 40
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/dark/2",
+      "px": 40
+    },
+    {
+      "cell": "coming-out-simulator-2014/narrow/dark/3",
+      "px": 40
+    },
+    {
+      "cell": "covid-19/desktop/light/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/desktop/light/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/desktop/light/3",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/desktop/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/desktop/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/desktop/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/light/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/light/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/light/3",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/mobile/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/light/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/light/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/light/3",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "covid-19/narrow/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "exponentiation/narrow/light/1",
+      "px": 33
+    },
+    {
+      "cell": "exponentiation/narrow/light/2",
+      "px": 33
+    },
+    {
+      "cell": "exponentiation/narrow/light/3",
+      "px": 33
+    },
+    {
+      "cell": "exponentiation/narrow/dark/1",
+      "px": 33
+    },
+    {
+      "cell": "exponentiation/narrow/dark/2",
+      "px": 33
+    },
+    {
+      "cell": "exponentiation/narrow/dark/3",
+      "px": 33
+    },
+    {
+      "cell": "public-private-keys/narrow/light/1",
+      "px": 2
+    },
+    {
+      "cell": "public-private-keys/narrow/light/2",
+      "px": 2
+    },
+    {
+      "cell": "public-private-keys/narrow/light/3",
+      "px": 2
+    },
+    {
+      "cell": "public-private-keys/narrow/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "public-private-keys/narrow/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "public-private-keys/narrow/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/light/1",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/light/2",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/light/3",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "zero-knowledge-proof-demo/narrow/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/light/1",
+      "px": 35
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/light/2",
+      "px": 35
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/light/3",
+      "px": 35
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/dark/1",
+      "px": 35
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/dark/2",
+      "px": 35
+    },
+    {
+      "cell": "reading-qr-codes-without-a-computer/narrow/dark/3",
+      "px": 35
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-get-started/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-how-synths-make-sound/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-filter-resonance/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-modulating-amplitude-with-envelopes/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-matching-envelopes/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/light/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/light/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/light/3",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/dark/1",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/dark/2",
+      "px": 64
+    },
+    {
+      "cell": "ableton-learning-synths-recipes/narrow/dark/3",
+      "px": 64
+    },
+    {
+      "cell": "linear-regression/narrow/light/1",
+      "px": 19
+    },
+    {
+      "cell": "linear-regression/narrow/light/2",
+      "px": 19
+    },
+    {
+      "cell": "linear-regression/narrow/light/3",
+      "px": 19
+    },
+    {
+      "cell": "linear-regression/narrow/dark/1",
+      "px": 19
+    },
+    {
+      "cell": "linear-regression/narrow/dark/2",
+      "px": 19
+    },
+    {
+      "cell": "linear-regression/narrow/dark/3",
+      "px": 19
+    },
+    {
+      "cell": "precision-recall/narrow/light/1",
+      "px": 4
+    },
+    {
+      "cell": "precision-recall/narrow/light/2",
+      "px": 4
+    },
+    {
+      "cell": "precision-recall/narrow/light/3",
+      "px": 4
+    },
+    {
+      "cell": "precision-recall/narrow/dark/1",
+      "px": 4
+    },
+    {
+      "cell": "precision-recall/narrow/dark/2",
+      "px": 4
+    },
+    {
+      "cell": "precision-recall/narrow/dark/3",
+      "px": 4
+    },
+    {
+      "cell": "train-test-validation/mobile/light/1",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/mobile/light/2",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/mobile/light/3",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/mobile/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/mobile/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/mobile/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/light/1",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/light/2",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/light/3",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "train-test-validation/narrow/dark/3",
+      "px": 2
+    },
+    {
+      "cell": "memory-allocation/narrow/light/1",
+      "px": 8
+    },
+    {
+      "cell": "memory-allocation/narrow/light/2",
+      "px": 8
+    },
+    {
+      "cell": "memory-allocation/narrow/light/3",
+      "px": 8
+    },
+    {
+      "cell": "memory-allocation/narrow/dark/1",
+      "px": 8
+    },
+    {
+      "cell": "memory-allocation/narrow/dark/2",
+      "px": 8
+    },
+    {
+      "cell": "memory-allocation/narrow/dark/3",
+      "px": 8
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/light/1",
+      "px": 2
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/light/2",
+      "px": 2
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/light/3",
+      "px": 2
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/dark/1",
+      "px": 2
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/dark/2",
+      "px": 2
+    },
+    {
+      "cell": "blockchain-101-combined-flow/narrow/dark/3",
+      "px": 2
+    }
+  ],
+  "events": [
+    {
+      "cell": "markov-chains/desktop/light/1",
+      "type": "requestfailed",
+      "at": 1788927369279,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/desktop/light/2",
+      "type": "requestfailed",
+      "at": 1788927370171,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/desktop/light/3",
+      "type": "requestfailed",
+      "at": 1788927371081,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/desktop/dark/1",
+      "type": "requestfailed",
+      "at": 1788927371982,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/desktop/dark/2",
+      "type": "requestfailed",
+      "at": 1788927372895,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/desktop/dark/3",
+      "type": "requestfailed",
+      "at": 1788927373803,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/light/1",
+      "type": "requestfailed",
+      "at": 1788927374751,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/light/2",
+      "type": "requestfailed",
+      "at": 1788927375679,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/light/3",
+      "type": "requestfailed",
+      "at": 1788927376665,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/dark/1",
+      "type": "requestfailed",
+      "at": 1788927377582,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/dark/2",
+      "type": "requestfailed",
+      "at": 1788927378493,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/mobile/dark/3",
+      "type": "requestfailed",
+      "at": 1788927379391,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/light/1",
+      "type": "requestfailed",
+      "at": 1788927380295,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/light/2",
+      "type": "requestfailed",
+      "at": 1788927381203,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/light/3",
+      "type": "requestfailed",
+      "at": 1788927382098,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/dark/1",
+      "type": "requestfailed",
+      "at": 1788927383063,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/dark/2",
+      "type": "requestfailed",
+      "at": 1788927383976,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "markov-chains/narrow/dark/3",
+      "type": "requestfailed",
+      "at": 1788927384872,
+      "url": "http://127.0.0.1:4199/interactive-explanation/markov-chains/playground/",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/1",
+      "type": "console-error",
+      "at": 1788928595040,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/1",
+      "type": "console-error",
+      "at": 1788928595132,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/2",
+      "type": "console-error",
+      "at": 1788928596048,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/2",
+      "type": "console-error",
+      "at": 1788928596125,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/3",
+      "type": "console-error",
+      "at": 1788928597055,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/light/3",
+      "type": "console-error",
+      "at": 1788928597131,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/1",
+      "type": "console-error",
+      "at": 1788928598011,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/1",
+      "type": "console-error",
+      "at": 1788928598099,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/2",
+      "type": "console-error",
+      "at": 1788928599019,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/2",
+      "type": "console-error",
+      "at": 1788928599131,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/3",
+      "type": "console-error",
+      "at": 1788928600080,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/desktop/dark/3",
+      "type": "console-error",
+      "at": 1788928600158,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/1",
+      "type": "console-error",
+      "at": 1788928601079,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/1",
+      "type": "console-error",
+      "at": 1788928601156,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/2",
+      "type": "console-error",
+      "at": 1788928602060,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/2",
+      "type": "console-error",
+      "at": 1788928602137,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/3",
+      "type": "console-error",
+      "at": 1788928603027,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/light/3",
+      "type": "console-error",
+      "at": 1788928603120,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/1",
+      "type": "console-error",
+      "at": 1788928603977,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/1",
+      "type": "console-error",
+      "at": 1788928604066,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/2",
+      "type": "console-error",
+      "at": 1788928604935,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/2",
+      "type": "console-error",
+      "at": 1788928605029,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/3",
+      "type": "console-error",
+      "at": 1788928605933,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/mobile/dark/3",
+      "type": "console-error",
+      "at": 1788928606004,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/1",
+      "type": "console-error",
+      "at": 1788928606928,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/1",
+      "type": "console-error",
+      "at": 1788928607002,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/2",
+      "type": "console-error",
+      "at": 1788928607904,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/2",
+      "type": "console-error",
+      "at": 1788928607981,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/3",
+      "type": "console-error",
+      "at": 1788928608873,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/light/3",
+      "type": "console-error",
+      "at": 1788928608948,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/1",
+      "type": "console-error",
+      "at": 1788928609879,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/1",
+      "type": "console-error",
+      "at": 1788928609955,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/2",
+      "type": "console-error",
+      "at": 1788928610867,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/2",
+      "type": "console-error",
+      "at": 1788928610941,
+      "message": "Hydration completed but contains mismatches."
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/3",
+      "type": "console-error",
+      "at": 1788928611852,
+      "message": "[nuxt] error caught during app initialization xr: Page not found: /interactive-explanation/rigid-body-collisions/\n    at Mr (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:30554)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29219\n    at o (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28140)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:14:17672)\n    at mi (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:28177)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26213\n    at rl.run (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:10:267)\n    at Object.runWithContext (http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:18:26205)\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:29197\n    at http://127.0.0.1:4199/interactive-explanation/rigid-body-collisions/_nuxt/D4VqJVMa.js:22:20672"
+    },
+    {
+      "cell": "rigid-body-collisions/narrow/dark/3",
+      "type": "console-error",
+      "at": 1788928611926,
+      "message": "Hydration completed but contains mismatches."
+    }
+  ],
+  "unchanged": true,
+  "complete": {
+    "type": "complete",
+    "status": "failed-or-inconclusive",
+    "finishedAt": "2026-09-09T04:40:23.470Z"
+  }
+}

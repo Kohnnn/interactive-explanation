@@ -1,0 +1,6172 @@
+{
+  "source": {
+    "head": "d144411d8535cbf5b966bcdc38698bb0a2c40ea1",
+    "status": "?? .scratch/complete-route-experience/research/46-paired.mjs",
+    "digest": "d478060253b54c0a66f1ab62558a956841990770c4058dda806759086f3565ad",
+    "fileCount": 6089
+  },
+  "sourceChanges": [
+    [
+      "docs/sim/parity.json",
+      "6db64bdbd0b649da0bbbb1c9abf71f18be2b3c7defaa125bb017c7ae5aacd0f1"
+    ],
+    [
+      "sim/index.html",
+      "0c85fda8880bfe0e7eba5ba49daedd8b5c3ed1cff109fecfb936ae35654bd844"
+    ],
+    [
+      "tools/smoke-bundle.mjs",
+      "17fe1650cfcb9635350a4ed630848220a0e0584689128fddfe2230ac025f5187"
+    ],
+    [
+      "train-test-validation/index.html",
+      "9e272540c7014312d9e5cad0342d79543234389b75fd807773ac2aaab6098a7a"
+    ]
+  ],
+  "artifacts": [
+    {
+      "file": "/tmp/opencode/46-paired-before.jsonl",
+      "bytes": 3409242,
+      "sha256": "6b0ec49794d86fefcaa4d20e848bc37e9c60f05e2185bf627784418a669b3211"
+    },
+    {
+      "file": "/tmp/opencode/46-paired-after.jsonl",
+      "bytes": 3408852,
+      "sha256": "e85a4b2e3d0d739c1c58be8fe00aba05b36517a8408de3aeb3b682df6ede3d1a"
+    }
+  ],
+  "predecessorSha256": "0be0ce56a78e5c818b4cd42d4e79301484396779529550feb2f75598dbc2fbd3",
+  "successorSha256": "04a84df807e004c635bc344574fb68931f58c1c198db502c35f5405c628aa51d",
+  "changes": [
+    {
+      "path": "/routes/interactive-mechanical-watch/light/domContentLoadedMs",
+      "before": 616,
+      "after": 878,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/interactive-mechanical-watch/light/loadMs",
+      "before": 661,
+      "after": 950,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/interactive-mechanical-watch/dark/domContentLoadedMs",
+      "before": 602,
+      "after": 891,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/interactive-mechanical-watch/dark/loadMs",
+      "before": 663,
+      "after": 1031,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/light/domContentLoadedMs",
+      "before": 40,
+      "after": 418,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/light/loadMs",
+      "before": 40,
+      "after": 469,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/light/resourceCount",
+      "before": 33,
+      "after": 34,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/light/sameOriginTransfer/bytes",
+      "before": 1085315,
+      "after": 1705532,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/dark/domContentLoadedMs",
+      "before": 150,
+      "after": 451,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/dark/loadMs",
+      "before": 170,
+      "after": 545,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/dark/resourceCount",
+      "before": 33,
+      "after": 34,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/dark/sameOriginTransfer/bytes",
+      "before": 1085315,
+      "after": 1705532,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/mobile/rect/top",
+      "before": -1021,
+      "after": -0.125,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/mobile/rect/bottom",
+      "before": 1864.15625,
+      "after": 2847.03125,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/mobile/rect/height",
+      "before": 2885.15625,
+      "after": 2847.15625,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/mobile/css/height",
+      "before": "2885.16px",
+      "after": "2847.16px",
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/mobile/aspectRatio",
+      "before": 0.13517465475223395,
+      "after": 0.13697878365474322,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/narrow/rect/top",
+      "before": -1073,
+      "after": -0.125,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/narrow/rect/bottom",
+      "before": 1917.15625,
+      "after": 2973.03125,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/narrow/rect/height",
+      "before": 2990.15625,
+      "after": 2973.15625,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/narrow/css/height",
+      "before": "2990.16px",
+      "after": "2973.16px",
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/sim/geometry/narrow/aspectRatio",
+      "before": 0.10701781888488268,
+      "after": 0.10762972850821412,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/train-test-validation/light/domContentLoadedMs",
+      "before": 265,
+      "after": 496,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/train-test-validation/light/loadMs",
+      "before": 297,
+      "after": 613,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/train-test-validation/dark/domContentLoadedMs",
+      "before": 264,
+      "after": 609,
+      "review": "unreviewed"
+    },
+    {
+      "path": "/routes/train-test-validation/dark/loadMs",
+      "before": 296,
+      "after": 717,
+      "review": "unreviewed"
+    }
+  ],
+  "cells": [
+    {
+      "slug": "sim",
+      "viewport": "desktop",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 418.19999998807907,
+            "min": 108.30000001192093,
+            "max": 510
+          },
+          "after": {
+            "count": 3,
+            "median": 344.89999997615814,
+            "min": 57.60000002384186,
+            "max": 518.6000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 468.80000001192093,
+            "min": 108.60000002384186,
+            "max": 678.1000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 370.30000001192093,
+            "min": 58.10000002384186,
+            "max": 567.1000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 165.0999999642372,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 164.19999998807907,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 164.10000002384186,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 158.5,
+            "transferSize": 1800
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 155.4000000357628,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+            "duration": 65.89999997615814,
+            "transferSize": 532916
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 59.19999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 59.09999996423721,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 58.700000047683716,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 58.69999998807907,
+            "transferSize": 126528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 133.20000004768372,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 132.60000002384186,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 71,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 70,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 68.30000001192093,
+            "transferSize": 37326
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 518.6000000238419ms exceeded 40ms + 250ms",
+          "load 567.1000000238419ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "DOMContentLoaded 344.89999997615814ms exceeded 40ms + 250ms",
+          "load 370.30000001192093ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "desktop",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 450.5,
+            "min": 134.5999999642372,
+            "max": 557
+          },
+          "after": {
+            "count": 3,
+            "median": 450,
+            "min": 435.9000000357628,
+            "max": 458.30000001192093
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 544.8000000119209,
+            "min": 135,
+            "max": 619.8000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 510.39999997615814,
+            "min": 501.4000000357628,
+            "max": 563.5
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 98.19999998807907,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 85.80000001192093,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 85.79999995231628,
+            "transferSize": 37326
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 85.40000003576279,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 84.80000001192093,
+            "transferSize": 1800
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 144.30000001192093,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 139.4000000357628,
+            "transferSize": 37326
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 139.20000004768372,
+            "transferSize": 1800
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+            "duration": 138.10000002384186,
+            "transferSize": 2592
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 122.80000001192093,
+            "transferSize": 20731
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 155.20000004768372,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 148.69999998807907,
+            "transferSize": 37326
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 144.69999998807907,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 142.5999999642372,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 135.60000002384186,
+            "transferSize": 1800
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 458.30000001192093ms exceeded 150ms + 250ms",
+          "load 563.5ms exceeded 170ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "DOMContentLoaded 435.9000000357628ms exceeded 150ms + 250ms",
+          "load 501.4000000357628ms exceeded 170ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "DOMContentLoaded 450ms exceeded 150ms + 250ms",
+          "load 510.39999997615814ms exceeded 170ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 179.69999998807907,
+            "min": 70.79999995231628,
+            "max": 265.39999997615814
+          },
+          "after": {
+            "count": 3,
+            "median": 288.2999999523163,
+            "min": 213.70000004768372,
+            "max": 424.69999998807907
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 235.89999997615814,
+            "min": 220.79999995231628,
+            "max": 385.30000001192093
+          },
+          "after": {
+            "count": 3,
+            "median": 411.7000000476837,
+            "min": 353.2999999523163,
+            "max": 484.69999998807907
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [
+        {
+          "path": "/routes/sim/geometry/mobile/rect/top",
+          "before": -1021,
+          "after": -0.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/rect/bottom",
+          "before": 1864.15625,
+          "after": 2847.03125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/rect/height",
+          "before": 2885.15625,
+          "after": 2847.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/css/height",
+          "before": "2885.16px",
+          "after": "2847.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/aspectRatio",
+          "before": 0.13517465475223395,
+          "after": 0.13697878365474322,
+          "review": "unreviewed"
+        }
+      ],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 129.69999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 128.9000000357628,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 70.59999996423721,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 65.89999997615814,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 65.69999998807907,
+            "transferSize": 20731
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 73.69999998807907,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 72.60000002384186,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 68.30000001192093,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 63.09999996423721,
+            "transferSize": 37326
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 62.80000001192093,
+            "transferSize": 1800
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+            "duration": 124.89999997615814,
+            "transferSize": 532916
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 122.5,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 108.80000001192093,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 108.5,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+            "duration": 107.5,
+            "transferSize": 8680
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 424.69999998807907ms exceeded 40ms + 250ms",
+          "load 484.69999998807907ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "load 353.2999999523163ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "load 411.7000000476837ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 209.5,
+            "min": 153.4000000357628,
+            "max": 213.0999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 197.5,
+            "min": 192,
+            "max": 353.0999999642372
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 253.80000001192093,
+            "min": 218.5,
+            "max": 266.0999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 270.60000002384186,
+            "min": 234.5999999642372,
+            "max": 382.7999999523163
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [
+        {
+          "path": "/routes/sim/geometry/mobile/rect/top",
+          "before": -1021,
+          "after": -0.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/rect/bottom",
+          "before": 1864.15625,
+          "after": 2847.03125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/rect/height",
+          "before": 2885.15625,
+          "after": 2847.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/css/height",
+          "before": "2885.16px",
+          "after": "2847.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/mobile/aspectRatio",
+          "before": 0.13517465475223395,
+          "after": 0.13697878365474322,
+          "review": "unreviewed"
+        }
+      ],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 87.79999995231628,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 87.70000004768372,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 81.40000003576279,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 71.60000002384186,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 71.39999997615814,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 50.90000003576279,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 49.30000001192093,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 49.10000002384186,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 49,
+            "transferSize": 1800
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 48.80000001192093,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 59.5,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 58.10000002384186,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 53.30000001192093,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 53.19999998807907,
+            "transferSize": 1800
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 52.39999997615814,
+            "transferSize": 126528
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 229.19999998807907,
+            "min": 201.69999998807907,
+            "max": 307.19999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 254.10000002384186,
+            "min": 238,
+            "max": 268.60000002384186
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 289.10000002384186,
+            "min": 232.10000002384186,
+            "max": 354.0999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 307.80000001192093,
+            "min": 291.4000000357628,
+            "max": 333.4000000357628
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [
+        {
+          "path": "/routes/sim/geometry/narrow/rect/top",
+          "before": -1073,
+          "after": -0.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/rect/bottom",
+          "before": 1917.15625,
+          "after": 2973.03125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/rect/height",
+          "before": 2990.15625,
+          "after": 2973.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/css/height",
+          "before": "2990.16px",
+          "after": "2973.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/aspectRatio",
+          "before": 0.10701781888488268,
+          "after": 0.10762972850821412,
+          "review": "unreviewed"
+        }
+      ],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 64.69999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 64.5,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 43.80000001192093,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 41.89999997615814,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 41.69999998807907,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 92.5,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 88.69999998807907,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 88.5,
+            "transferSize": 627
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+            "duration": 87.70000004768372,
+            "transferSize": 1800
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 85.30000001192093,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 63.30000001192093,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 63.19999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 50.39999997615814,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 49.19999998807907,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+            "duration": 49.09999996423721,
+            "transferSize": 627
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "load 291.4000000357628ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "load 333.4000000357628ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "load 307.80000001192093ms exceeded 40ms + 250ms",
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 120.89999997615814,
+            "min": 65.80000001192093,
+            "max": 141.5
+          },
+          "after": {
+            "count": 3,
+            "median": 172,
+            "min": 155.89999997615814,
+            "max": 332.0999999642372
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 166.5,
+            "min": 166.20000004768372,
+            "max": 232.69999998807907
+          },
+          "after": {
+            "count": 3,
+            "median": 196.80000001192093,
+            "min": 181.80000001192093,
+            "max": 387.89999997615814
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "after": {
+            "count": 3,
+            "median": 34,
+            "min": 34,
+            "max": 34
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1705532,
+            "min": 1705532,
+            "max": 1705532
+          },
+          "after": {
+            "count": 3,
+            "median": 1706168,
+            "min": 1706168,
+            "max": 1706168
+          },
+          "allowance": 341106.4,
+          "pass": true
+        }
+      },
+      "geometryChanges": [
+        {
+          "path": "/routes/sim/geometry/narrow/rect/top",
+          "before": -1073,
+          "after": -0.125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/rect/bottom",
+          "before": 1917.15625,
+          "after": 2973.03125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/rect/height",
+          "before": 2990.15625,
+          "after": 2973.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/css/height",
+          "before": "2990.16px",
+          "after": "2973.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/routes/sim/geometry/narrow/aspectRatio",
+          "before": 0.10701781888488268,
+          "after": 0.10762972850821412,
+          "review": "unreviewed"
+        }
+      ],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/models/forest.json",
+          "bytes": 1884,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+          "bytes": 1800,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+          "bytes": 37326,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Actions.js",
+          "bytes": 4851,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Agent.js",
+          "bytes": 1133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Editor.js",
+          "bytes": 21172,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Grid.js",
+          "bytes": 8541,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+          "bytes": 2592,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Model.js",
+          "bytes": 3931,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Save.js",
+          "bytes": 786,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/Scroll.js",
+          "bytes": 458,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/engine/UI.js",
+          "bytes": 8680,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+          "bytes": 627,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+          "bytes": 5019,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+          "bytes": 3384,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+          "bytes": 25082,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/rAF.js",
+          "bytes": 1556,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+          "bytes": 10080,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/model.css",
+          "bytes": 7797,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+          "bytes": 4133,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+          "bytes": 532916,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 77.69999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 77,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 51.39999997615814,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 50.09999996423721,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 49.5,
+            "transferSize": 37326
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 50.40000003576279,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 50,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 41.09999996423721,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/emoji/platform.js",
+            "duration": 38.69999998807907,
+            "transferSize": 37326
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 38.60000002384186,
+            "transferSize": 20731
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 50.30000001192093,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 49.69999998807907,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 32.39999997615814,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/sim/scripts/engine/Load.js",
+            "duration": 30.900000035762787,
+            "transferSize": 2592
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 30.400000035762787,
+            "transferSize": 20731
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ],
+        [
+          "same-origin transfer 1706168 bytes exceeded 1085315 bytes + 256000 bytes",
+          "resource count 34 exceeded 33 + 0"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "desktop",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 495.60000002384186,
+            "min": 396.7000000476837,
+            "max": 572.7999999523163
+          },
+          "after": {
+            "count": 3,
+            "median": 521.1000000238419,
+            "min": 424.5999999642372,
+            "max": 585.1999999880791
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 612.6000000238419,
+            "min": 524.8000000119209,
+            "max": 640
+          },
+          "after": {
+            "count": 3,
+            "median": 677.1999999880791,
+            "min": 480.0999999642372,
+            "max": 714.5
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 50.80000001192093,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 47.59999996423721,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 46.90000003576279,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 46.69999998807907,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 46,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+            "duration": 84.30000001192093,
+            "transferSize": 350530
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 81.10000002384186,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 81,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+            "duration": 80.89999997615814,
+            "transferSize": 4387
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+            "duration": 66.5,
+            "transferSize": 15115
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+            "duration": 98.39999997615814,
+            "transferSize": 350530
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 98.39999997615814,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 97.90000003576279,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+            "duration": 97.80000001192093,
+            "transferSize": 4387
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+            "duration": 97.40000003576279,
+            "transferSize": 1848
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [],
+        [
+          "DOMContentLoaded 521.1000000238419ms exceeded 265ms + 250ms",
+          "load 677.1999999880791ms exceeded 297ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 585.1999999880791ms exceeded 265ms + 250ms",
+          "load 714.5ms exceeded 297ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "desktop",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 608.6000000238419,
+            "min": 592.5,
+            "max": 629.3999999761581
+          },
+          "after": {
+            "count": 3,
+            "median": 684.6999999880791,
+            "min": 505.7000000476837,
+            "max": 818.4000000357628
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 716.6000000238419,
+            "min": 687.5,
+            "max": 719.1999999880791
+          },
+          "after": {
+            "count": 3,
+            "median": 807.5,
+            "min": 585.4000000357628,
+            "max": 918.1000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 102.5,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 102.09999996423721,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 102,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 101.90000003576279,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 101.79999995231628,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 126.80000001192093,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 126.40000003576279,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 126.30000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 126.30000001192093,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 126.10000002384186,
+            "transferSize": 133744
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+            "duration": 60.09999996423721,
+            "transferSize": 4387
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+            "duration": 57.10000002384186,
+            "transferSize": 350530
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 56.5,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+            "duration": 56.40000003576279,
+            "transferSize": 15115
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 56.39999997615814,
+            "transferSize": 36232
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "load 585.4000000357628ms exceeded 296ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 818.4000000357628ms exceeded 264ms + 250ms",
+          "load 918.1000000238419ms exceeded 296ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 684.6999999880791ms exceeded 264ms + 250ms",
+          "load 807.5ms exceeded 296ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 537.7000000476837,
+            "min": 500.0999999642372,
+            "max": 742.3999999761581
+          },
+          "after": {
+            "count": 3,
+            "median": 497.5999999642372,
+            "min": 457.89999997615814,
+            "max": 1038.699999988079
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 669.2000000476837,
+            "min": 562.5999999642372,
+            "max": 848.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 569.7999999523163,
+            "min": 557.6999999880791,
+            "max": 1160.6000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 71.69999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 71.19999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 70.60000002384186,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 70.29999995231628,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 69.80000001192093,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 110.80000001192093,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 108.10000002384186,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 107.70000004768372,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 96.09999996423721,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 95.09999996423721,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 249.39999997615814,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 242.69999998807907,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 242.60000002384186,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 242.30000001192093,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 242.10000002384186,
+            "transferSize": 129112
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "load 557.6999999880791ms exceeded 297ms + 250ms"
+        ],
+        [
+          "load 569.7999999523163ms exceeded 297ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 1038.699999988079ms exceeded 265ms + 250ms",
+          "load 1160.6000000238419ms exceeded 297ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 670.9000000357628,
+            "min": 545.7000000476837,
+            "max": 684.6000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 595.6999999880791,
+            "min": 543.8000000119209,
+            "max": 617.9000000357628
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 723.1000000238419,
+            "min": 649.3000000119209,
+            "max": 770.6000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 683.8999999761581,
+            "min": 632.3000000119209,
+            "max": 735.5
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 73.30000001192093,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 73,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 73,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 72.80000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 72.69999998807907,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 98.70000004768372,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 98.5,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 98.39999997615814,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 98.30000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 98.19999998807907,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+            "duration": 96,
+            "transferSize": 350530
+          },
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 96,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+            "duration": 95.69999998807907,
+            "transferSize": 4387
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+            "duration": 95.30000001192093,
+            "transferSize": 1848
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 78.19999998807907,
+            "transferSize": 36232
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 543.8000000119209ms exceeded 264ms + 250ms",
+          "load 632.3000000119209ms exceeded 296ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 595.6999999880791ms exceeded 264ms + 250ms",
+          "load 683.8999999761581ms exceeded 296ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 617.9000000357628ms exceeded 264ms + 250ms",
+          "load 735.5ms exceeded 296ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 548.8000000119209,
+            "min": 434.10000002384186,
+            "max": 599.8000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 597.3999999761581,
+            "min": 529.6000000238419,
+            "max": 630.7999999523163
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 646.8000000119209,
+            "min": 509.4000000357628,
+            "max": 672.9000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 674.1999999880791,
+            "min": 588.8999999761581,
+            "max": 715.8999999761581
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 330.80000001192093,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 330.39999997615814,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 329.4000000357628,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 323.9000000357628,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 323.19999998807907,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/public-footer.js",
+            "duration": 58.299999952316284,
+            "transferSize": 20731
+          },
+          {
+            "path": "/interactive-explanation/shared/engineering-sandbox.js",
+            "duration": 58.299999952316284,
+            "transferSize": 36232
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+            "duration": 58.19999998807907,
+            "transferSize": 15115
+          },
+          {
+            "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+            "duration": 58,
+            "transferSize": 4387
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 54.89999997615814,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 132.70000004768372,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 130.30000001192093,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 106.80000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 106,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 105.20000004768372,
+            "transferSize": 120528
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 529.6000000238419ms exceeded 265ms + 250ms",
+          "load 588.8999999761581ms exceeded 297ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 597.3999999761581ms exceeded 265ms + 250ms",
+          "load 674.1999999880791ms exceeded 297ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 630.7999999523163ms exceeded 265ms + 250ms",
+          "load 715.8999999761581ms exceeded 297ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 545.1000000238419,
+            "min": 405.5,
+            "max": 567.1999999880791
+          },
+          "after": {
+            "count": 3,
+            "median": 499.69999998807907,
+            "min": 458.80000001192093,
+            "max": 619.1999999880791
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 666.3000000119209,
+            "min": 469.60000002384186,
+            "max": 710.3000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 551.2999999523163,
+            "min": 521,
+            "max": 681.1999999880791
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "after": {
+            "count": 3,
+            "median": 23,
+            "min": 23,
+            "max": 23
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 1825589,
+            "min": 1825589,
+            "max": 1825589
+          },
+          "after": {
+            "count": 3,
+            "median": 1826328,
+            "min": 1826328,
+            "max": 1826328
+          },
+          "allowance": 365117.80000000005,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/empty-svg-hidden.js",
+          "bytes": 4387,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/a11y-state.js",
+          "bytes": 1848,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+          "bytes": 271804,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/js.6c47f979.js",
+          "bytes": 350530,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/main.67dee0d6.css",
+          "bytes": 9819,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Cat_18061.575745a8.svg",
+          "bytes": 3185,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/noun_Dog_79225.bf4c88d0.svg",
+          "bytes": 1570,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/robot.cb528be1.svg",
+          "bytes": 2093,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/train-test-validation/roughAnnotations.51d9685b.js",
+          "bytes": 15115,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 79.60000002384186,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 78.89999997615814,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 77.60000002384186,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 77.10000002384186,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 75.39999997615814,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 176.4000000357628,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 171.4000000357628,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 158,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 153.30000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 152.5999999642372,
+            "transferSize": 120528
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/train-test-validation/AmazonEmberDisplay_He.5fe08b02.otf",
+            "duration": 80.39999997615814,
+            "transferSize": 271804
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 79.09999996423721,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 77.19999998807907,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 75.60000002384186,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 75.5,
+            "transferSize": 120528
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "load 551.2999999523163ms exceeded 296ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 619.1999999880791ms exceeded 264ms + 250ms",
+          "load 681.1999999880791ms exceeded 296ms + 250ms"
+        ],
+        []
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "desktop",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 877.6000000238419,
+            "min": 562.9000000357628,
+            "max": 1114.2000000476837
+          },
+          "after": {
+            "count": 3,
+            "median": 938.8999999761581,
+            "min": 828.4000000357628,
+            "max": 2713.699999988079
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 950.1999999880791,
+            "min": 635,
+            "max": 1214.5
+          },
+          "after": {
+            "count": 3,
+            "median": 981.1999999880791,
+            "min": 922.9000000357628,
+            "max": 2853.199999988079
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 199.60000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 120.09999996423721,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 82.19999998807907,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 74.30000001192093,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 74.20000004768372,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 282.60000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 138,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 96.60000002384186,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 74.60000002384186,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 74.59999996423721,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 256.19999998807907,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 173.20000004768372,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 161.9000000357628,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 97.70000004768372,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+            "duration": 97.19999998807907,
+            "transferSize": 123364
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 938.8999999761581ms exceeded 616ms + 250ms",
+          "load 981.1999999880791ms exceeded 661ms + 250ms"
+        ],
+        [
+          "load 922.9000000357628ms exceeded 661ms + 250ms"
+        ],
+        [
+          "DOMContentLoaded 2713.699999988079ms exceeded 616ms + 250ms",
+          "load 2853.199999988079ms exceeded 661ms + 250ms"
+        ]
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "desktop",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 891.2000000476837,
+            "min": 821.1999999880791,
+            "max": 2122.699999988079
+          },
+          "after": {
+            "count": 3,
+            "median": 794.5,
+            "min": 712,
+            "max": 878.9000000357628
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 1030.800000011921,
+            "min": 893.1000000238419,
+            "max": 2281
+          },
+          "after": {
+            "count": 3,
+            "median": 853,
+            "min": 774.2000000476837,
+            "max": 963.1000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 198.4000000357628,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 100,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 65.10000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 62.19999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 62,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 251.30000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 102.19999998807907,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 85.39999997615814,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 54,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 53.89999997615814,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 222,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 112.5,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 112.5,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 112.39999997615814,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+            "duration": 112.30000001192093,
+            "transferSize": 123364
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [],
+        [
+          "DOMContentLoaded 878.9000000357628ms exceeded 602ms + 250ms",
+          "load 963.1000000238419ms exceeded 663ms + 250ms"
+        ],
+        []
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "mobile",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 809.5,
+            "min": 712.3000000119209,
+            "max": 879.4000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 728,
+            "min": 726.8999999761581,
+            "max": 753.1000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 864.0999999642372,
+            "min": 769.1999999880791,
+            "max": 930.4000000357628
+          },
+          "after": {
+            "count": 3,
+            "median": 799.3000000119209,
+            "min": 779.2999999523163,
+            "max": 802.9000000357628
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 166,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 87.5,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 85.10000002384186,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 67.30000001192093,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 67.19999998807907,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 167.10000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 86.89999997615814,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 76.69999998807907,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 76.10000002384186,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 76,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 170.10000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 135.30000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 84.79999995231628,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 62.5,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 61.10000002384186,
+            "transferSize": 129112
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "mobile",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 821.3999999761581,
+            "min": 713.5,
+            "max": 928.5
+          },
+          "after": {
+            "count": 3,
+            "median": 789.7999999523163,
+            "min": 782.1000000238419,
+            "max": 1412.6000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 881.5999999642372,
+            "min": 787.6999999880791,
+            "max": 1008.8000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 850,
+            "min": 830.1000000238419,
+            "max": 1487.6000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 224.60000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 149.89999997615814,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 116.39999997615814,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 73.69999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 73.5,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 215,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 125,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 93.19999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 93.10000002384186,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 92.90000003576279,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 209.30000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 105.5,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+            "duration": 102.80000001192093,
+            "transferSize": 123364
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 102.19999998807907,
+            "transferSize": 120528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 102.19999998807907,
+            "transferSize": 133744
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [],
+        [
+          "DOMContentLoaded 1412.6000000238419ms exceeded 602ms + 250ms",
+          "load 1487.6000000238419ms exceeded 663ms + 250ms"
+        ],
+        []
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "narrow",
+      "theme": "light",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 746.1999999880791,
+            "min": 677.6999999880791,
+            "max": 775.3000000119209
+          },
+          "after": {
+            "count": 3,
+            "median": 776.3000000119209,
+            "min": 721,
+            "max": 1287.199999988079
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 818.8999999761581,
+            "min": 719.3999999761581,
+            "max": 820.1000000238419
+          },
+          "after": {
+            "count": 3,
+            "median": 837,
+            "min": 766.1000000238419,
+            "max": 1371.5
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 218.4000000357628,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 129.80000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 113.60000002384186,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 68.80000001192093,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 68.80000001192093,
+            "transferSize": 129112
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 173.20000004768372,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 120.60000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 96.69999998807907,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 62.59999996423721,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 62.5,
+            "transferSize": 133744
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 189.5999999642372,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 118.10000002384186,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 117.90000003576279,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 117.19999998807907,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+            "duration": 116.5,
+            "transferSize": 120528
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [
+          "DOMContentLoaded 1287.199999988079ms exceeded 616ms + 250ms",
+          "load 1371.5ms exceeded 661ms + 250ms"
+        ],
+        [],
+        []
+      ]
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "narrow",
+      "theme": "dark",
+      "samples": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "domContentLoadedMs": {
+          "before": {
+            "count": 3,
+            "median": 858.1000000238419,
+            "min": 713.2000000476837,
+            "max": 870.5999999642372
+          },
+          "after": {
+            "count": 3,
+            "median": 796.1999999880791,
+            "min": 669.9000000357628,
+            "max": 873.1000000238419
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "loadMs": {
+          "before": {
+            "count": 3,
+            "median": 920.6999999880791,
+            "min": 761.7000000476837,
+            "max": 937
+          },
+          "after": {
+            "count": 3,
+            "median": 868.2999999523163,
+            "min": 768.8000000119209,
+            "max": 933.3999999761581
+          },
+          "allowance": 250,
+          "pass": true
+        },
+        "resourceCount": {
+          "before": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "after": {
+            "count": 3,
+            "median": 33,
+            "min": 33,
+            "max": 33
+          },
+          "allowance": 0,
+          "pass": true
+        },
+        "bytes": {
+          "before": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "after": {
+            "count": 3,
+            "median": 16859198,
+            "min": 16859198,
+            "max": 16859198
+          },
+          "allowance": 3371839.6,
+          "pass": true
+        }
+      },
+      "geometryChanges": [],
+      "resources": [
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/css/editorial-shell.css",
+          "bytes": 45974,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+          "bytes": 2167208,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view-three.js",
+          "bytes": 27475,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/exploded-view.js",
+          "bytes": 12090,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/legacy-watch-accessibility.js",
+          "bytes": 9606,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/js/watch-parts.js",
+          "bytes": 31247,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/OrbitControls.js",
+          "bytes": 40820,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.core.min.js",
+          "bytes": 385686,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/interactive-mechanical-watch/vendor/three/three.module.min.js",
+          "bytes": 365852,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/pages.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/routes.manifest.json",
+          "bytes": 104120,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.css",
+          "bytes": 105097,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/engineering-sandbox.js",
+          "bytes": 36232,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+          "bytes": 120528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+          "bytes": 123364,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+          "bytes": 126528,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+          "bytes": 129112,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+          "bytes": 130216,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+          "bytes": 133744,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/base.css",
+          "bytes": 15483,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/css/watch.css",
+          "bytes": 3414,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/anchor.png",
+          "bytes": 828,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/images/play_pause.png",
+          "bytes": 3482,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/base.js",
+          "bytes": 34709,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/js/watch.js",
+          "bytes": 327536,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_indices.dat",
+          "bytes": 1513500,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+          "bytes": 4549692,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.css",
+          "bytes": 6125,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/public-footer.js",
+          "bytes": 20731,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/theme-init.js",
+          "bytes": 1121,
+          "status": 200
+        },
+        {
+          "path": "/interactive-explanation/shared/tokens.css",
+          "bytes": 6000,
+          "status": 200
+        }
+      ],
+      "topDuration": [
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 214.80000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 106.19999998807907,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 87.10000002384186,
+            "transferSize": 133744
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+            "duration": 87.10000002384186,
+            "transferSize": 129112
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 87.09999996423721,
+            "transferSize": 130216
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 198.80000001192093,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 189.10000002384186,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 100.5,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-500.ttf",
+            "duration": 85.89999997615814,
+            "transferSize": 130216
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+            "duration": 83.69999998807907,
+            "transferSize": 133744
+          }
+        ],
+        [
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 214.79999995231628,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+            "duration": 118.39999997615814,
+            "transferSize": 126528
+          },
+          {
+            "path": "/interactive-explanation/interactive-mechanical-watch/images/generated/components/exploded-sheet.png",
+            "duration": 86.29999995231628,
+            "transferSize": 2167208
+          },
+          {
+            "path": "/interactive-explanation/shared/mechanical-watch/models/watch_vertices.dat",
+            "duration": 84,
+            "transferSize": 4549692
+          },
+          {
+            "path": "/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+            "duration": 73.80000001192093,
+            "transferSize": 123364
+          }
+        ]
+      ],
+      "historicalFailures": [
+        [],
+        [
+          "DOMContentLoaded 873.1000000238419ms exceeded 602ms + 250ms",
+          "load 933.3999999761581ms exceeded 663ms + 250ms"
+        ],
+        []
+      ]
+    }
+  ],
+  "authorization": "Agent-reviewed bounded006: Sim supported native DOM grid restoration40x33 and1320cells; no canvas/backing fabrication. Geometry only two Sim cells. Desktop timing references for Sim/TTV/watch come from ALL THREE paired BEFORE samples, never AFTER maxima; only Sim transfer/count replaces unqualified33-request aggregate with reproducible BEFORE34/1705532. No threshold/resourceCountDelta relaxation; no AFTER payload excess hidden.",
+  "limitations": [
+    "Old Sim aggregate33/1085315 does not have sufficient per-resource provenance to prove cache omission. Historical09505db full capture already measured34/1704975 including532916-byte OpenSansEmoji. Current paired inventories are exactly equal; +636 Sim/+739 TTV is navigation HTML only; watch assets unchanged.",
+    "Paired BEFORE Sim is defective zero-grid; it qualifies resource/time reference, not functional acceptance. Research44 provides18 actual positive-grid paint/evolution/resize passes and native21/9/7px tiles; lifecycle fix deliberately restores invalid0 rather than preserving it.",
+    "Research43/44/45 historical timing/task failures retained. Current paired outliers retained in ranges and original raw; no stochastic pass guarantee. New full/focused gates must independently run.",
+    "TTV and watch passive geometry unchanged including all intrinsic/order fields. Unrelated routes/performance untouched. Rigid-body unchanged and W0 incomplete."
+  ]
+}

@@ -10,6 +10,7 @@
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
+      "W0: scoped authored footer sizing and whole-language-label wrapping remove the measured 64px overflow at 320px. Six viewport/theme cells, three contexts each, retain intrinsic geometry and keyboard chapter open/Escape close. See repository research/37-prerequisite-report.md under .scratch/complete-route-experience/; no engine change or baseline approval.",
       "The archive preserves the published envelope scenes instead of rebuilding them in a custom synth teaching page.",
       "Local chapter links are rewritten after mount so the shipped synth family stays internally navigable.",
       "The additive family treatment changes only the outer lesson boundary and shared chrome; the archived ADSR controls remain runtime-owned."

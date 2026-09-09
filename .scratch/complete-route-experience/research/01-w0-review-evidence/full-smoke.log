@@ -1,0 +1,28 @@
+START=2026-09-08T18:55:59Z
+Starting smoke run
+OK route trust/
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust desktop baseline
+OK route trust/
+OK trust mobile baseline
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust light performance median (149ms DOMContentLoaded, 212ms load, 104 resources, 6134714 bytes)
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust dark performance median (117ms DOMContentLoaded, 188ms load, 104 resources, 6134714 bytes)
+OK route polygons/
+OK route polygons/
+Error: polygons mobile geometry baseline runtime bottom shifted by more than 1 CSS px
+    at assert (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:258:11)
+    at assertRuntimeGeometry (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:1157:5)
+    at measureRouteGeometry (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:1194:11)
+    at async main (file://<WORKTREE>/interactive-explanation/tools/smoke-bundle.mjs:9730:24)
+END=2026-09-08T18:56:29Z
+EXIT=1
+ELAPSED_SECONDS=30
+TIMEOUT_SECONDS=1800

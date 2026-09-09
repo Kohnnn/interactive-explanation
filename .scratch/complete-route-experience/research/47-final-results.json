@@ -1,0 +1,360 @@
+{
+  "source": {
+    "head": "7525c429218d689df1aad96843ab17ef9f4887f3",
+    "status": "M .scratch/complete-route-experience/research/44-sim-operational.mjs\n M .scratch/complete-route-experience/research/46-paired.mjs\n M interactive-explanation/docs/sim/parity.json\n M interactive-explanation/sim/index.html\n M interactive-explanation/tools/diagnose-baseline.mjs\n M interactive-explanation/tools/tests/diagnose-baseline.test.mjs\n?? .scratch/complete-route-experience/research/47-gates.jsonl\n?? .scratch/complete-route-experience/research/47-gates.mjs\n?? .scratch/complete-route-experience/research/47-review-007.json\n?? .scratch/complete-route-experience/research/47-successor-007.json\n?? .scratch/complete-route-experience/research/47-successor-007.mjs\n?? interactive-explanation/node_modules",
+    "digest": "08db0c5f94e770e33f8dffe4fa2ed7e9efee2e80f7e25c460b86dd5619733a6b",
+    "fileCount": 6089
+  },
+  "baselineSha256": "0b6442f037734552f01b0951ae244925ba10b2bda295c7b05821672d73bba6c0",
+  "artifacts": [
+    {
+      "file": "/tmp/opencode/47-sim-actual.jsonl",
+      "bytes": 681,
+      "sha256": "24b872a1afa2094c601b13af3c371c68366a340bcce7310d6816eeb7a453ec91"
+    },
+    {
+      "file": "/tmp/opencode/47-sim-actual-002.jsonl",
+      "bytes": 103595,
+      "sha256": "6d848d8df8085be3d6a215a4f2103aa678a1d562737e2d6e115996c9c06685f0"
+    },
+    {
+      "file": "/tmp/opencode/47-sim-geometry.jsonl",
+      "bytes": 2355083,
+      "sha256": "d828f0dd4b850e87ca478201de906c0aa8bb4fc81e3ab7b4acbb62fa54c53885"
+    },
+    {
+      "file": "/tmp/opencode/w0-review-corrections/.scratch/complete-route-experience/research/47-gates.jsonl",
+      "bytes": 863714,
+      "sha256": "d76f4d6a125ebd607cff7c35f3f52df16a8c38f9dd3f5e7d62a487445158b930"
+    },
+    {
+      "file": "/tmp/opencode/w0-review-corrections/.scratch/complete-route-experience/research/47-gates-002.jsonl",
+      "bytes": 776112,
+      "sha256": "2c84435ad6532c0b455e655de311d6a4813243a9cf390b54f79e92201d313188"
+    }
+  ],
+  "static": [
+    {
+      "name": "check",
+      "exit": 0
+    },
+    {
+      "name": "unit",
+      "exit": 0
+    },
+    {
+      "name": "audit",
+      "exit": 0
+    },
+    {
+      "name": "negative37",
+      "exit": 0
+    },
+    {
+      "name": "negative40",
+      "exit": 0
+    }
+  ],
+  "unit": "373/373 (all371 existing plus2 new regression tests); no separate lint/typecheck configured",
+  "actualSim": {
+    "passed": 18,
+    "attempted": 18,
+    "scope": "draw exact cell; editor input/restore; model evolution and rendered play/pause; native resize; typography event preserves model and renders all1320 cells;3 contexts per viewport/theme",
+    "tiles": [
+      {
+        "width": 1400,
+        "theme": "light",
+        "sample": 1,
+        "tile": 21
+      },
+      {
+        "width": 1400,
+        "theme": "light",
+        "sample": 2,
+        "tile": 21
+      },
+      {
+        "width": 1400,
+        "theme": "light",
+        "sample": 3,
+        "tile": 21
+      },
+      {
+        "width": 1400,
+        "theme": "dark",
+        "sample": 1,
+        "tile": 21
+      },
+      {
+        "width": 1400,
+        "theme": "dark",
+        "sample": 2,
+        "tile": 21
+      },
+      {
+        "width": 1400,
+        "theme": "dark",
+        "sample": 3,
+        "tile": 21
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "sample": 1,
+        "tile": 9
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "sample": 2,
+        "tile": 9
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "sample": 3,
+        "tile": 9
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "sample": 1,
+        "tile": 9
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "sample": 2,
+        "tile": 9
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "sample": 3,
+        "tile": 9
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "sample": 1,
+        "tile": 7
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "sample": 2,
+        "tile": 7
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "sample": 3,
+        "tile": 7
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "sample": 1,
+        "tile": 7
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "sample": 2,
+        "tile": 7
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "sample": 3,
+        "tile": 7
+      }
+    ]
+  },
+  "geometrySim": {
+    "measured": 18,
+    "matched007": 18,
+    "unchangedSource": true,
+    "diagnosticExit": 1,
+    "reason": "diagnostic compares the original repository baseline, not007; original geometry failures retained; every current sample exactly matches007",
+    "timings": "not used to approve timing references or supersede noisy research46"
+  },
+  "currentGates": [
+    {
+      "name": "successor007",
+      "exit": 0,
+      "args": [
+        ".scratch/complete-route-experience/research/47-successor-007.mjs"
+      ],
+      "firstFailure": [
+        ""
+      ]
+    },
+    {
+      "name": "sim-normal",
+      "exit": 0,
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--route",
+        "sim",
+        "--baseline",
+        "/tmp/opencode/w0-review-corrections/.scratch/complete-route-experience/research/47-successor-007.json"
+      ],
+      "firstFailure": [
+        ""
+      ]
+    },
+    {
+      "name": "full-normal",
+      "exit": 1,
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/w0-review-corrections/.scratch/complete-route-experience/research/47-successor-007.json"
+      ],
+      "firstFailure": [
+        "Error: load-balancing light performance regressed:",
+        "load 1376ms exceeded 1087ms + 250ms",
+        "    at assert (file:///tmp/opencode/w0-review-corrections/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+      ]
+    },
+    {
+      "name": "combined-strict59",
+      "exit": 1,
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/w0-review-corrections/.scratch/complete-route-experience/research/47-successor-007.json",
+        "--experience",
+        "--route",
+        "decision-tree",
+        "--route",
+        "random-forest",
+        "--route",
+        "conditional-probability",
+        "--route",
+        "markov-chains",
+        "--route",
+        "principal-component-analysis",
+        "--route",
+        "exponentiation",
+        "--route",
+        "pi",
+        "--route",
+        "sine-and-cosine",
+        "--route",
+        "eigenvectors-and-eigenvalues",
+        "--route",
+        "image-kernels",
+        "--route",
+        "ordinary-least-squares-regression",
+        "--route",
+        "blockchain",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "zero-knowledge-proof-demo",
+        "--route",
+        "alpha-compositing",
+        "--route",
+        "color-spaces",
+        "--route",
+        "sound",
+        "--route",
+        "cameras-and-lenses",
+        "--route",
+        "lights-and-shadows",
+        "--route",
+        "tesseract",
+        "--route",
+        "gears",
+        "--route",
+        "gps",
+        "--route",
+        "earth-and-sun",
+        "--route",
+        "curves-and-surfaces",
+        "--route",
+        "naval-architecture",
+        "--route",
+        "teoria-interval-ear-training",
+        "--route",
+        "teoria-note-ear-training",
+        "--route",
+        "teoria-key-and-note-ear-training",
+        "--route",
+        "teoria-random-key-and-note-ear-training",
+        "--route",
+        "teoria-scale-construction",
+        "--route",
+        "teoria-interval-identification-and-inversion",
+        "--route",
+        "ableton-learning-music-playground",
+        "--route",
+        "ableton-learning-music-play-with-beats",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales",
+        "--route",
+        "ableton-learning-music-play-with-chords",
+        "--route",
+        "ableton-learning-music-play-with-basslines",
+        "--route",
+        "ableton-learning-music-play-with-melodies",
+        "--route",
+        "ableton-learning-music-play-with-song-structures",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "music-interactive-hub",
+        "--route",
+        "linear-regression",
+        "--route",
+        "logistic-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "roc-auc",
+        "--route",
+        "bias-variance",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "double-descent",
+        "--route",
+        "double-descent2",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "load-balancing",
+        "--route",
+        "hysteresis-slack",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "blockchain-101-combined-flow",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "firstFailure": [
+        "Error: load-balancing light performance regressed:",
+        "load 1380ms exceeded 1087ms + 250ms",
+        "    at assert (file:///tmp/opencode/w0-review-corrections/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+      ]
+    }
+  ],
+  "retainedFailures": "47-sim-actual first relative-root403/timeout partial attempt;47-gates first relative-baseline launch failures and report undefined-key comparison failure retained. Corrected launches are fixture repairs, not browser retry-until-pass.006 report/raw/gates remain unchanged historical failed-experiment evidence; no142 sweep rerun.",
+  "verdict": "W0 BLOCKED. Current full normal and exact59 strict both fail load-balancing light load budget; later stages unexecuted, not passes. Focused Sim pass does not qualify noisy performance or whole-experience accessibility. No W1, merge, push or deployment."
+}

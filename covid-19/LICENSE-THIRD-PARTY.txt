@@ -1,0 +1,74 @@
+COVID-19 third-party software notices
+
+littlefoot 3.2.4
+Copyright (c) 2016 Chris Sauvé and Luís Rodrigues.
+Source: https://unpkg.com/littlefoot@3.2.4/LICENSE
+The retained js/littlefoot.js matches the published dist/littlefoot.js after
+stripping terminal whitespace. Published SHA-256:
+0dbaef97840ce32faa807d0685a1733baac699359b4d896361e1cf5c1021982c
+
+SimpleBar 5.1.0
+Copyright (c) 2015 Jonathan Nicol.
+Made by Adrien Denat from a fork by Jonathan Nicol (retained bundle notice).
+Source: https://unpkg.com/simplebar@5.1.0/LICENSE
+
+@pacote helpers used by littlefoot
+Copyright (c) 2019 Luís Rodrigues (pixels and get-style).
+Copyright (c) 2020 Luís Rodrigues (throttle).
+Sources: https://unpkg.com/@pacote/pixels@1.0.0/LICENSE
+https://unpkg.com/@pacote/get-style@1.0.0/LICENSE
+https://unpkg.com/@pacote/throttle@1.0.0/LICENSE
+
+can-use-dom (SimpleBar dependency)
+Copyright (c) 2015 Kiran Abburi.
+Source: https://unpkg.com/can-use-dom@0.1.0/LICENSE
+
+delegated-events (littlefoot dependency)
+Copyright (c) 2015-2019 David Graham.
+Source: https://unpkg.com/delegated-events@1.1.0/LICENSE
+
+core-js (SimpleBar dependency)
+Copyright (c) 2014-2020 Denis Pushkarev.
+Source: https://unpkg.com/core-js@3.6.4/LICENSE
+
+resize-observer-polyfill (SimpleBar dependency)
+Copyright (c) 2016 Denis Rul.
+Source: https://unpkg.com/resize-observer-polyfill@1.5.1/LICENSE
+
+lodash helpers (SimpleBar dependencies)
+Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+Based on Underscore.js, copyright Jeremy Ashkenas,
+DocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/>
+This software consists of voluntary contributions made by many individuals.
+For exact contribution history, see https://github.com/lodash/lodash
+Source: https://unpkg.com/lodash@4.17.15/LICENSE
+Copyright and related rights for sample code displayed in documentation prose
+are waived via CC0: http://creativecommons.org/publicdomain/zero/1.0/
+Externally maintained vendor dependencies retain their own licenses.
+
+MIT License (applies separately to the above components)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+tslib 1.11.1 build helpers in littlefoot: Copyright (c) Microsoft Corporation.
+All rights reserved. Apache License 2.0; full terms in LICENSE-TSLIB.txt.
+Source: https://unpkg.com/tslib@1.11.1/CopyrightNotice.txt
+
+The article's CC0 dedication is retained separately in COPYING.txt and does
+not supersede these third-party software licenses. Bundles remain unchanged.

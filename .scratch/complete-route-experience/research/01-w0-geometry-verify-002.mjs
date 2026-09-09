@@ -1,0 +1,30 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { geometryChanges } from "../../../interactive-explanation/tools/diagnose-baseline.mjs";
+import { validateExperienceBaseline } from "../../../interactive-explanation/tools/experience-baseline.mjs";
+const read = name => JSON.parse(fs.readFileSync(new URL(name, import.meta.url)));
+const bytes = fs.readFileSync(new URL("../../../interactive-explanation/tools/experience-baselines.json", import.meta.url));
+const before = JSON.parse(bytes);
+const after = read("./01-w0-geometry-successor-002.json");
+const review = read("./01-w0-geometry-review-002.json");
+assert.equal(createHash("sha256").update(bytes).digest("hex"), review.originalSha256);
+validateExperienceBaseline(after, Object.keys(before.routes));
+const ordered = changes => changes.map(({review, ...change})=>change).sort((a,b)=>a.path.localeCompare(b.path));
+const changes = geometryChanges(before, after);
+assert.equal(changes.length,13805);
+assert.equal(review.approved.length,163);
+assert.deepEqual(ordered(changes),ordered(review.approved.flatMap(cell=>cell.changes)));
+for(const slug of Object.keys(before.routes))for(const theme of ["light","dark"])assert.deepEqual(before.routes[slug][theme],after.routes[slug][theme]);
+for(const cell of review.deferred)assert.deepEqual(before.routes[cell.slug].geometry[cell.viewport],after.routes[cell.slug].geometry[cell.viewport]);
+for(const cell of review.approved){
+ const old=before.routes[cell.slug].geometry[cell.viewport],now=after.routes[cell.slug].geometry[cell.viewport];
+ assert.equal(old.intrinsic.length,now.intrinsic.length);
+ old.intrinsic.forEach((surface,index)=>{for(const key of ["key","tag","width","height","viewBox","title"])assert.deepEqual(surface[key],now.intrinsic[index][key]);});
+}
+const gates=read("./01-w0-geometry-gate-summary-002.json");
+assert.equal(gates["route-"].attempted,83);
+assert.equal(gates["route-"].passed.length,67);
+assert.equal(gates["strict-"].attempted,59);
+assert.equal(gates["strict-"].passed.length,47);
+console.log("163 exact geometry cells; 13805 reviewed paths; deferred cells and all performance unchanged; 83+59 gate outcomes retained");

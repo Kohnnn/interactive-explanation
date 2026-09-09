@@ -4,6 +4,12 @@
   var NAME = "Text to encode in the QR code";
 
   function label() {
+    var reference = document.querySelector("#app #container");
+    if (reference) {
+      reference.tabIndex = 0;
+      reference.setAttribute("role", "region");
+      reference.setAttribute("aria-label", "ASCII reference table; use left and right arrow keys to scroll");
+    }
     var inputs = document.querySelectorAll("input[type='text']");
     for (var i = 0; i < inputs.length; i++) {
       var input = inputs[i];

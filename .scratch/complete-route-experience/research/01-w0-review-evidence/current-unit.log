@@ -1,0 +1,28 @@
+Source: npm --prefix interactive-explanation run unit -- --test-reporter=dot
+Capture: raw failure and totals excerpts from CLI output; successful per-test lines and repetitive Node runner stack frames omitted, not a complete stdout copy.
+Exit: 1
+ℹ tests 363
+ℹ suites 0
+ℹ pass 358
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2357.328991
+
+✖ all route HTML files carry canonical Engineering Sandbox seams (7.601661ms)
+  AssertionError [ERR_ASSERTION]: wbwwb must declare data-story-shell once
+
+  0 !== 1
+
+✖ route "wbwwb" satisfies the UI/UX baseline (0.863049ms)
+  AssertionError [ERR_ASSERTION]: wbwwb/index.html is missing the shared public-footer script: include <script src="../shared/public-footer.js"></script>
+
+✖ route "coming-out-simulator-2014" satisfies the UI/UX baseline (0.276499ms)
+  AssertionError [ERR_ASSERTION]: coming-out-simulator-2014/index.html is missing the shared public-footer script: include <script src="../shared/public-footer.js"></script>
+
+✖ route "covid-19" has an index.html (0.132556ms)
+  AssertionError [ERR_ASSERTION]: missing covid-19/index.html
+
+✖ route "covid-19" satisfies the UI/UX baseline (0.090212ms)
+  Error: ENOENT: no such file or directory, open '<WORKTREE>/interactive-explanation/covid-19/index.html'

@@ -1,0 +1,486 @@
+{
+  "classification": "Original recording unqualified; unchanged source reproducible in compatible environment. Not proof of a browser bug.",
+  "source": "09505db333598ac50553973b638872f039c4e7d4",
+  "historical": "7c71c992be944895438ec2467d20f18a7ccd4a63",
+  "browser": "148.0.7778.96",
+  "originalSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+  "samplesPerCellAcrossSourcesAndThemes": 18,
+  "performance": "all unchanged",
+  "excluded": "decision-tree mobile/narrow retained pending offscreen content review; covid and all other routes unchanged",
+  "changes": [
+    {
+      "path": "/routes/polygons/geometry/mobile/rect/bottom",
+      "before": 16276.390625,
+      "after": 16239,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/rect/height",
+      "before": 16276.390625,
+      "after": 16239,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/css/height",
+      "before": "16276.4px",
+      "after": "16239px",
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/aspectRatio",
+      "before": 0.02396108627431028,
+      "after": 0.024016257158692038,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/7/rect/top",
+      "before": 4386.171875,
+      "after": 4348.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/7/rect/bottom",
+      "before": 4626.171875,
+      "after": 4588.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/8/rect/top",
+      "before": 5017.125,
+      "after": 4979.734375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/8/rect/bottom",
+      "before": 5617.125,
+      "after": 5579.734375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/9/rect/top",
+      "before": 5901.078125,
+      "after": 5863.6875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/9/rect/bottom",
+      "before": 6141.078125,
+      "after": 6103.6875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/10/rect/top",
+      "before": 6740.984375,
+      "after": 6703.59375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/10/rect/bottom",
+      "before": 7340.984375,
+      "after": 7303.59375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/11/rect/top",
+      "before": 7737.109375,
+      "after": 7699.71875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/11/rect/bottom",
+      "before": 8177.109375,
+      "after": 8139.71875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/12/rect/top",
+      "before": 8188.5,
+      "after": 8151.109375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/12/rect/bottom",
+      "before": 8628.5,
+      "after": 8591.109375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/13/rect/top",
+      "before": 9110.734375,
+      "after": 9073.34375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/13/rect/bottom",
+      "before": 9710.734375,
+      "after": 9673.34375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/14/rect/top",
+      "before": 10106.859375,
+      "after": 10069.46875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/14/rect/bottom",
+      "before": 10546.859375,
+      "after": 10509.46875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/15/rect/top",
+      "before": 11134.984375,
+      "after": 11097.59375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/15/rect/bottom",
+      "before": 11734.984375,
+      "after": 11697.59375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/16/rect/top",
+      "before": 12302.671875,
+      "after": 12265.28125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/16/rect/bottom",
+      "before": 12592.671875,
+      "after": 12555.28125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/17/rect/top",
+      "before": 12946.234375,
+      "after": 12908.84375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/17/rect/bottom",
+      "before": 13546.234375,
+      "after": 13508.84375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/18/rect/top",
+      "before": 14744,
+      "after": 14706.609375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/18/rect/bottom",
+      "before": 14824,
+      "after": 14786.609375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/19/rect/top",
+      "before": 15726.390625,
+      "after": 15689,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/mobile/intrinsic/19/rect/bottom",
+      "before": 16276.390625,
+      "after": 16239,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/rect/bottom",
+      "before": 17933.78125,
+      "after": 17915.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/rect/height",
+      "before": 17933.78125,
+      "after": 17915.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/css/height",
+      "before": "17933.8px",
+      "after": "17915.8px",
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/aspectRatio",
+      "before": 0.01784342050006883,
+      "after": 0.017861347799164495,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/intrinsic/19/rect/top",
+      "before": 17383.78125,
+      "after": 17365.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/polygons/geometry/narrow/intrinsic/19/rect/bottom",
+      "before": 17933.78125,
+      "after": 17915.78125,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/rect/bottom",
+      "before": 22571.28125,
+      "after": 22520.640625,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/rect/height",
+      "before": 22571.28125,
+      "after": 22520.640625,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/css/height",
+      "before": "22571.3px",
+      "after": "22520.6px",
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/aspectRatio",
+      "before": 0.050861091458864346,
+      "after": 0.05097545931822266,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/5/rect/bottom",
+      "before": 13145.453125,
+      "after": 13141.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/5/rect/height",
+      "before": 488.6875,
+      "after": 485.09375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/6/rect/top",
+      "before": 13268.765625,
+      "after": 13263.765625,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/6/rect/bottom",
+      "before": 13757.453125,
+      "after": 13748.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/6/rect/height",
+      "before": 488.6875,
+      "after": 485.09375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/7/rect/top",
+      "before": 15461.46875,
+      "after": 15451.46875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/7/rect/bottom",
+      "before": 17196.46875,
+      "after": 17186.46875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/8/rect/top",
+      "before": 18341.859375,
+      "after": 18331.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/8/rect/bottom",
+      "before": 18581.046875,
+      "after": 18571.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/9/rect/top",
+      "before": 18341.859375,
+      "after": 18331.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/9/rect/bottom",
+      "before": 18583.859375,
+      "after": 18573.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/10/rect/top",
+      "before": 18341.859375,
+      "after": 18331.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/10/rect/bottom",
+      "before": 18581.046875,
+      "after": 18571.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/11/rect/top",
+      "before": 18341.859375,
+      "after": 18331.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/11/rect/bottom",
+      "before": 18583.859375,
+      "after": 18573.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/12/rect/top",
+      "before": 18585.859375,
+      "after": 18575.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/12/rect/bottom",
+      "before": 18825.046875,
+      "after": 18815.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/13/rect/top",
+      "before": 18585.859375,
+      "after": 18575.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/13/rect/bottom",
+      "before": 18827.859375,
+      "after": 18817.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/14/rect/top",
+      "before": 18585.859375,
+      "after": 18575.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/14/rect/bottom",
+      "before": 18825.046875,
+      "after": 18815.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/15/rect/top",
+      "before": 18585.859375,
+      "after": 18575.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/15/rect/bottom",
+      "before": 18827.859375,
+      "after": 18817.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/16/rect/top",
+      "before": 18829.859375,
+      "after": 18819.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/16/rect/bottom",
+      "before": 19069.046875,
+      "after": 19059.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/17/rect/top",
+      "before": 18829.859375,
+      "after": 18819.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/17/rect/bottom",
+      "before": 19071.859375,
+      "after": 19061.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/18/rect/top",
+      "before": 18829.859375,
+      "after": 18819.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/18/rect/bottom",
+      "before": 19069.046875,
+      "after": 19059.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/19/rect/top",
+      "before": 18829.859375,
+      "after": 18819.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/19/rect/bottom",
+      "before": 19071.859375,
+      "after": 19061.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/20/rect/top",
+      "before": 19073.859375,
+      "after": 19063.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/20/rect/bottom",
+      "before": 19313.046875,
+      "after": 19303.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/21/rect/top",
+      "before": 19073.859375,
+      "after": 19063.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/21/rect/bottom",
+      "before": 19315.859375,
+      "after": 19305.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/22/rect/top",
+      "before": 19073.859375,
+      "after": 19063.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/22/rect/bottom",
+      "before": 19313.046875,
+      "after": 19303.046875,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/23/rect/top",
+      "before": 19073.859375,
+      "after": 19063.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    },
+    {
+      "path": "/routes/decision-tree/geometry/desktop/intrinsic/23/rect/bottom",
+      "before": 19315.859375,
+      "after": 19305.859375,
+      "review": "agent-approved reference reconstruction; not route acceptance"
+    }
+  ]
+}

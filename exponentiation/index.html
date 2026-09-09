@@ -99,7 +99,7 @@
         <select aria-label="Linear growth rate, amount added each step" ng-model="opts.rate" ng-options="num as '+' + num for num in [1,2,3,4,5]"></select>
         <input type="range" aria-label="Number of steps, linear growth" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
         <input type="range" aria-label="Animation speed, linear growth" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
-        <div class="viz-scroll">
+        <div class="viz-scroll" tabindex="0" role="region" aria-label="Growth visualization; scroll horizontally">
           <growth-demo growth-type="linear"></growth-demo>
         </div>
       </div>
@@ -113,7 +113,7 @@
         <select aria-label="Exponential growth rate multiplier" ng-model="opts.rate" ng-options="num as 'x' + num for num in [2,3,4]"></select>
         <input type="range" aria-label="Number of steps, exponential growth" ng-model="opts.steps" min="5" max="20"><span>steps: {{opts.steps}}</span>
         <input type="range" aria-label="Animation speed, exponential growth" ng-model="opts.speed" min="1" step="1" max="20"><span>speed: {{opts.speed}}</span>
-        <div class="viz-scroll">
+        <div class="viz-scroll" tabindex="0" role="region" aria-label="Growth visualization; scroll horizontally">
           <growth-demo growth-type="exponential"></growth-demo>
         </div>
       </div>
@@ -124,7 +124,7 @@
       <div ng-controller="ViralDemoCtrl">
         <button ng-click="$emit('restart')" class="btn btn-primary">restart</button>
         <input type="range" aria-label="Animation speed, virus model" ng-model="opts.speed" min="1" step="1" max="10"><span>speed: {{opts.speed}}</span>
-        <div class="viz-scroll">
+        <div class="viz-scroll" tabindex="0" role="region" aria-label="Growth visualization; scroll horizontally">
           <virus-demo></virus-demo>
         </div>
       </div>

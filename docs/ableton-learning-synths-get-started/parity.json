@@ -10,6 +10,7 @@
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
+      "W0: scoped authored footer sizing and whole-language-label wrapping remove the measured 64px overflow at 320px. Six viewport/theme cells, three contexts each, retain intrinsic geometry and keyboard chapter open/Escape close. See repository research/37-prerequisite-report.md under .scratch/complete-route-experience/; no engine change or baseline approval.",
       "The archive preserves the published runtime rather than rebuilding the synth pad in a custom stack.",
       "The route forces the stable low-quality audio mode at boot so the archived lesson can mount consistently from local assets.",
       "The additive family treatment changes only the outer lesson boundary and shared chrome; the archived synth controls remain runtime-owned."

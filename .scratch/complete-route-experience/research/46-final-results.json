@@ -1,0 +1,3426 @@
+{
+  "source": {
+    "head": "d144411d8535cbf5b966bcdc38698bb0a2c40ea1",
+    "status": "?? .scratch/complete-route-experience/research/46-final-gates.mjs\n?? .scratch/complete-route-experience/research/46-paired.mjs\n?? .scratch/complete-route-experience/research/46-review-006.json\n?? .scratch/complete-route-experience/research/46-successor-006.mjs",
+    "digest": "d478060253b54c0a66f1ab62558a956841990770c4058dda806759086f3565ad",
+    "fileCount": 6089
+  },
+  "sourceUnchanged": true,
+  "baseline": "/tmp/opencode/46-geometry-successor-006.json",
+  "baselineSha256": "04a84df807e004c635bc344574fb68931f58c1c198db502c35f5405c628aa51d",
+  "artifact": {
+    "file": "/tmp/opencode/46-final-gates.jsonl",
+    "bytes": 865127,
+    "sha256": "52874f91c01728d1f738016896c832b57a111173b60aac149c6153d9b2ad8ea7"
+  },
+  "groups": {
+    "normal": {
+      "attempted": 83,
+      "passed": 62,
+      "failures": [
+        {
+          "route": "polygons",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: polygons light performance regressed:",
+            "DOMContentLoaded 365ms exceeded 105ms + 250ms",
+            "load 852ms exceeded 317ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "ballot",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: ballot light performance regressed:",
+            "load 814ms exceeded 399ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "crowds",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: crowds light performance regressed:",
+            "DOMContentLoaded 343ms exceeded 91ms + 250ms",
+            "load 498ms exceeded 145ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "loopy",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: loopy dark performance regressed:",
+            "load 395ms exceeded 122ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "neurons",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: neurons light performance regressed:",
+            "load 712ms exceeded 177ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "remember",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: remember light performance regressed:",
+            "DOMContentLoaded 469ms exceeded 163ms + 250ms",
+            "load 1158ms exceeded 400ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "anxiety",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: anxiety light performance regressed:",
+            "DOMContentLoaded 413ms exceeded 124ms + 250ms",
+            "load 473ms exceeded 184ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "wbwwb",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: wbwwb light performance regressed:",
+            "load 434ms exceeded 148ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "coming-out-simulator-2014",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: coming-out-simulator-2014 light performance regressed:",
+            "load 628ms exceeded 171ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "decision-tree",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: decision-tree light performance regressed:",
+            "DOMContentLoaded 756ms exceeded 331ms + 250ms",
+            "load 820ms exceeded 367ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "random-forest",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: random-forest light performance regressed:",
+            "load 555ms exceeded 290ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "conditional-probability",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: conditional-probability dark performance regressed:",
+            "load 406ms exceeded 121ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "markov-chains",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: markov-chains light performance regressed:",
+            "load 586ms exceeded 268ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "image-kernels",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: image-kernels dark performance regressed:",
+            "DOMContentLoaded 414ms exceeded 111ms + 250ms",
+            "load 647ms exceeded 201ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "chrome-music-lab-song-maker",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: chrome-music-lab-song-maker light performance regressed:",
+            "DOMContentLoaded 565ms exceeded 274ms + 250ms",
+            "load 660ms exceeded 296ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "musicmap",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: musicmap dark performance regressed:",
+            "load 527ms exceeded 224ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "linear-regression",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: linear-regression light performance regressed:",
+            "DOMContentLoaded 656ms exceeded 292ms + 250ms",
+            "load 746ms exceeded 338ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "double-descent2",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: double-descent2 light performance regressed:",
+            "load 703ms exceeded 344ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "memory-allocation",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: memory-allocation dark performance regressed:",
+            "DOMContentLoaded 525ms exceeded 233ms + 250ms",
+            "load 525ms exceeded 233ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "load-balancing",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: load-balancing light performance regressed:",
+            "load 1679ms exceeded 1087ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "rigid-body-collisions",
+          "classification": "rigid-body geometry and known initialization blocker",
+          "firstFailure": [
+            "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)",
+            "    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)"
+          ]
+        }
+      ]
+    },
+    "strict": {
+      "attempted": 59,
+      "passed": 48,
+      "failures": [
+        {
+          "route": "random-forest",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: random-forest light performance regressed:",
+            "DOMContentLoaded 591ms exceeded 282ms + 250ms",
+            "load 620ms exceeded 290ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "principal-component-analysis",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: principal-component-analysis light performance regressed:",
+            "load 596ms exceeded 325ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "alpha-compositing",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: alpha-compositing light performance regressed:",
+            "DOMContentLoaded 613ms exceeded 232ms + 250ms",
+            "load 754ms exceeded 298ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "color-spaces",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: color-spaces light performance regressed:",
+            "DOMContentLoaded 472ms exceeded 166ms + 250ms",
+            "load 559ms exceeded 238ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "sound",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: sound light performance regressed:",
+            "DOMContentLoaded 487ms exceeded 145ms + 250ms",
+            "load 672ms exceeded 179ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "cameras-and-lenses",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: cameras-and-lenses light performance regressed:",
+            "load 1092ms exceeded 769ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)"
+          ]
+        },
+        {
+          "route": "linear-regression",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: linear-regression light performance regressed:",
+            "DOMContentLoaded 586ms exceeded 292ms + 250ms",
+            "load 655ms exceeded 338ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "double-descent2",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: double-descent2 light performance regressed:",
+            "DOMContentLoaded 707ms exceeded 309ms + 250ms",
+            "load 801ms exceeded 344ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "memory-allocation",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: memory-allocation light performance regressed:",
+            "DOMContentLoaded 499ms exceeded 234ms + 250ms",
+            "load 508ms exceeded 234ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "load-balancing",
+          "classification": "timing budget exceeded; later task gates unexecuted",
+          "firstFailure": [
+            "Error: load-balancing light performance regressed:",
+            "DOMContentLoaded 2517ms exceeded 993ms + 250ms",
+            "load 2983ms exceeded 1087ms + 250ms",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)"
+          ]
+        },
+        {
+          "route": "rigid-body-collisions",
+          "classification": "rigid-body geometry and known initialization blocker",
+          "firstFailure": [
+            "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px",
+            "    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)",
+            "    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)",
+            "    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)"
+          ]
+        }
+      ]
+    }
+  },
+  "combined": [
+    {
+      "type": "result",
+      "name": "full-normal",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json"
+      ],
+      "startedAt": "2026-09-09T13:34:27.904Z",
+      "finishedAt": "2026-09-09T13:35:26.879Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run\n",
+      "stderr": "Error: crowds dark performance regressed:\nload 444ms exceeded 131ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "combined-strict59",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "decision-tree",
+        "--route",
+        "random-forest",
+        "--route",
+        "conditional-probability",
+        "--route",
+        "markov-chains",
+        "--route",
+        "principal-component-analysis",
+        "--route",
+        "exponentiation",
+        "--route",
+        "pi",
+        "--route",
+        "sine-and-cosine",
+        "--route",
+        "eigenvectors-and-eigenvalues",
+        "--route",
+        "image-kernels",
+        "--route",
+        "ordinary-least-squares-regression",
+        "--route",
+        "blockchain",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "zero-knowledge-proof-demo",
+        "--route",
+        "alpha-compositing",
+        "--route",
+        "color-spaces",
+        "--route",
+        "sound",
+        "--route",
+        "cameras-and-lenses",
+        "--route",
+        "lights-and-shadows",
+        "--route",
+        "tesseract",
+        "--route",
+        "gears",
+        "--route",
+        "gps",
+        "--route",
+        "earth-and-sun",
+        "--route",
+        "curves-and-surfaces",
+        "--route",
+        "naval-architecture",
+        "--route",
+        "teoria-interval-ear-training",
+        "--route",
+        "teoria-note-ear-training",
+        "--route",
+        "teoria-key-and-note-ear-training",
+        "--route",
+        "teoria-random-key-and-note-ear-training",
+        "--route",
+        "teoria-scale-construction",
+        "--route",
+        "teoria-interval-identification-and-inversion",
+        "--route",
+        "ableton-learning-music-playground",
+        "--route",
+        "ableton-learning-music-play-with-beats",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales",
+        "--route",
+        "ableton-learning-music-play-with-chords",
+        "--route",
+        "ableton-learning-music-play-with-basslines",
+        "--route",
+        "ableton-learning-music-play-with-melodies",
+        "--route",
+        "ableton-learning-music-play-with-song-structures",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "music-interactive-hub",
+        "--route",
+        "linear-regression",
+        "--route",
+        "logistic-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "roc-auc",
+        "--route",
+        "bias-variance",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "double-descent",
+        "--route",
+        "double-descent2",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "load-balancing",
+        "--route",
+        "hysteresis-slack",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "blockchain-101-combined-flow",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T14:08:54.607Z",
+      "finishedAt": "2026-09-09T14:12:10.909Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree, random-forest, conditional-probability, markov-chains, principal-component-analysis, exponentiation, pi, sine-and-cosine, eigenvectors-and-eigenvalues, image-kernels, ordinary-least-squares-regression, blockchain, public-private-keys, zero-knowledge-proof-demo, alpha-compositing, color-spaces, sound, cameras-and-lenses, lights-and-shadows, tesseract, gears, gps, earth-and-sun, curves-and-surfaces, naval-architecture, teoria-interval-ear-training, teoria-note-ear-training, teoria-key-and-note-ear-training, teoria-random-key-and-note-ear-training, teoria-scale-construction, teoria-interval-identification-and-inversion, ableton-learning-music-playground, ableton-learning-music-play-with-beats, ableton-learning-music-play-with-notes-and-scales, ableton-learning-music-play-with-chords, ableton-learning-music-play-with-basslines, ableton-learning-music-play-with-melodies, ableton-learning-music-play-with-song-structures, ableton-learning-synths-get-started, ableton-learning-synths-how-synths-make-sound, ableton-learning-synths-filter-resonance, ableton-learning-synths-modulating-amplitude-with-envelopes, ableton-learning-synths-matching-envelopes, ableton-learning-synths-recipes, music-interactive-hub, linear-regression, logistic-regression, precision-recall, roc-auc, bias-variance, train-test-validation, double-descent, double-descent2, memory-allocation, load-balancing, hysteresis-slack, rigid-body-collisions, blockchain-101-combined-flow, primary-interactive-hub] [experience gates]\n",
+      "stderr": "Error: sine-and-cosine dark performance regressed:\nload 689ms exceeded 321ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    }
+  ],
+  "interruption": [
+    {
+      "type": "resume",
+      "reason": "Launcher shell timeout interrupted combined strict before result; incomplete attempt not counted or passed",
+      "at": "2026-09-09T14:08:54.599Z"
+    }
+  ],
+  "results": [
+    {
+      "type": "result",
+      "name": "full-normal",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json"
+      ],
+      "startedAt": "2026-09-09T13:34:27.904Z",
+      "finishedAt": "2026-09-09T13:35:26.879Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run\n",
+      "stderr": "Error: crowds dark performance regressed:\nload 444ms exceeded 131ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "combined-strict59",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "decision-tree",
+        "--route",
+        "random-forest",
+        "--route",
+        "conditional-probability",
+        "--route",
+        "markov-chains",
+        "--route",
+        "principal-component-analysis",
+        "--route",
+        "exponentiation",
+        "--route",
+        "pi",
+        "--route",
+        "sine-and-cosine",
+        "--route",
+        "eigenvectors-and-eigenvalues",
+        "--route",
+        "image-kernels",
+        "--route",
+        "ordinary-least-squares-regression",
+        "--route",
+        "blockchain",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "zero-knowledge-proof-demo",
+        "--route",
+        "alpha-compositing",
+        "--route",
+        "color-spaces",
+        "--route",
+        "sound",
+        "--route",
+        "cameras-and-lenses",
+        "--route",
+        "lights-and-shadows",
+        "--route",
+        "tesseract",
+        "--route",
+        "gears",
+        "--route",
+        "gps",
+        "--route",
+        "earth-and-sun",
+        "--route",
+        "curves-and-surfaces",
+        "--route",
+        "naval-architecture",
+        "--route",
+        "teoria-interval-ear-training",
+        "--route",
+        "teoria-note-ear-training",
+        "--route",
+        "teoria-key-and-note-ear-training",
+        "--route",
+        "teoria-random-key-and-note-ear-training",
+        "--route",
+        "teoria-scale-construction",
+        "--route",
+        "teoria-interval-identification-and-inversion",
+        "--route",
+        "ableton-learning-music-playground",
+        "--route",
+        "ableton-learning-music-play-with-beats",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales",
+        "--route",
+        "ableton-learning-music-play-with-chords",
+        "--route",
+        "ableton-learning-music-play-with-basslines",
+        "--route",
+        "ableton-learning-music-play-with-melodies",
+        "--route",
+        "ableton-learning-music-play-with-song-structures",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "music-interactive-hub",
+        "--route",
+        "linear-regression",
+        "--route",
+        "logistic-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "roc-auc",
+        "--route",
+        "bias-variance",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "double-descent",
+        "--route",
+        "double-descent2",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "load-balancing",
+        "--route",
+        "hysteresis-slack",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "blockchain-101-combined-flow",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T14:08:54.607Z",
+      "finishedAt": "2026-09-09T14:12:10.909Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree, random-forest, conditional-probability, markov-chains, principal-component-analysis, exponentiation, pi, sine-and-cosine, eigenvectors-and-eigenvalues, image-kernels, ordinary-least-squares-regression, blockchain, public-private-keys, zero-knowledge-proof-demo, alpha-compositing, color-spaces, sound, cameras-and-lenses, lights-and-shadows, tesseract, gears, gps, earth-and-sun, curves-and-surfaces, naval-architecture, teoria-interval-ear-training, teoria-note-ear-training, teoria-key-and-note-ear-training, teoria-random-key-and-note-ear-training, teoria-scale-construction, teoria-interval-identification-and-inversion, ableton-learning-music-playground, ableton-learning-music-play-with-beats, ableton-learning-music-play-with-notes-and-scales, ableton-learning-music-play-with-chords, ableton-learning-music-play-with-basslines, ableton-learning-music-play-with-melodies, ableton-learning-music-play-with-song-structures, ableton-learning-synths-get-started, ableton-learning-synths-how-synths-make-sound, ableton-learning-synths-filter-resonance, ableton-learning-synths-modulating-amplitude-with-envelopes, ableton-learning-synths-matching-envelopes, ableton-learning-synths-recipes, music-interactive-hub, linear-regression, logistic-regression, precision-recall, roc-auc, bias-variance, train-test-validation, double-descent, double-descent2, memory-allocation, load-balancing, hysteresis-slack, rigid-body-collisions, blockchain-101-combined-flow, primary-interactive-hub] [experience gates]\n",
+      "stderr": "Error: sine-and-cosine dark performance regressed:\nload 689ms exceeded 321ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/trust",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "trust"
+      ],
+      "startedAt": "2026-09-09T14:12:10.912Z",
+      "finishedAt": "2026-09-09T14:12:51.513Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: trust]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/polygons",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "polygons"
+      ],
+      "startedAt": "2026-09-09T14:12:51.523Z",
+      "finishedAt": "2026-09-09T14:13:05.154Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: polygons]\n",
+      "stderr": "Error: polygons light performance regressed:\nDOMContentLoaded 365ms exceeded 105ms + 250ms\nload 852ms exceeded 317ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/ballot",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ballot"
+      ],
+      "startedAt": "2026-09-09T14:13:05.164Z",
+      "finishedAt": "2026-09-09T14:13:17.176Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ballot]\n",
+      "stderr": "Error: ballot light performance regressed:\nload 814ms exceeded 399ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/crowds",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "crowds"
+      ],
+      "startedAt": "2026-09-09T14:13:17.188Z",
+      "finishedAt": "2026-09-09T14:13:34.491Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: crowds]\n",
+      "stderr": "Error: crowds light performance regressed:\nDOMContentLoaded 343ms exceeded 91ms + 250ms\nload 498ms exceeded 145ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/loopy",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "loopy"
+      ],
+      "startedAt": "2026-09-09T14:13:34.493Z",
+      "finishedAt": "2026-09-09T14:13:48.897Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: loopy]\n",
+      "stderr": "Error: loopy dark performance regressed:\nload 395ms exceeded 122ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/neurons",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "neurons"
+      ],
+      "startedAt": "2026-09-09T14:13:48.901Z",
+      "finishedAt": "2026-09-09T14:14:02.803Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: neurons]\n",
+      "stderr": "Error: neurons light performance regressed:\nload 712ms exceeded 177ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/remember",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "remember"
+      ],
+      "startedAt": "2026-09-09T14:14:02.806Z",
+      "finishedAt": "2026-09-09T14:14:24.865Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: remember]\n",
+      "stderr": "Error: remember light performance regressed:\nDOMContentLoaded 469ms exceeded 163ms + 250ms\nload 1158ms exceeded 400ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/anxiety",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "anxiety"
+      ],
+      "startedAt": "2026-09-09T14:14:24.868Z",
+      "finishedAt": "2026-09-09T14:15:02.665Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: anxiety]\n",
+      "stderr": "Error: anxiety light performance regressed:\nDOMContentLoaded 413ms exceeded 124ms + 250ms\nload 473ms exceeded 184ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/wbwwb",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "wbwwb"
+      ],
+      "startedAt": "2026-09-09T14:15:02.667Z",
+      "finishedAt": "2026-09-09T14:15:31.087Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: wbwwb]\n",
+      "stderr": "Error: wbwwb light performance regressed:\nload 434ms exceeded 148ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/coming-out-simulator-2014",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "coming-out-simulator-2014"
+      ],
+      "startedAt": "2026-09-09T14:15:31.098Z",
+      "finishedAt": "2026-09-09T14:15:53.185Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: coming-out-simulator-2014]\n",
+      "stderr": "Error: coming-out-simulator-2014 light performance regressed:\nload 628ms exceeded 171ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/covid-19",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "covid-19"
+      ],
+      "startedAt": "2026-09-09T14:15:53.188Z",
+      "finishedAt": "2026-09-09T14:16:13.929Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: covid-19]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/simulating",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "simulating"
+      ],
+      "startedAt": "2026-09-09T14:16:13.931Z",
+      "finishedAt": "2026-09-09T14:16:28.406Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: simulating]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sim",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "sim"
+      ],
+      "startedAt": "2026-09-09T14:16:28.409Z",
+      "finishedAt": "2026-09-09T14:16:52.004Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sim]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/decision-tree",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "decision-tree"
+      ],
+      "startedAt": "2026-09-09T14:16:52.009Z",
+      "finishedAt": "2026-09-09T14:17:06.965Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree]\n",
+      "stderr": "Error: decision-tree light performance regressed:\nDOMContentLoaded 756ms exceeded 331ms + 250ms\nload 820ms exceeded 367ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/random-forest",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "random-forest"
+      ],
+      "startedAt": "2026-09-09T14:17:06.969Z",
+      "finishedAt": "2026-09-09T14:17:18.813Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: random-forest]\n",
+      "stderr": "Error: random-forest light performance regressed:\nload 555ms exceeded 290ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/conditional-probability",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "conditional-probability"
+      ],
+      "startedAt": "2026-09-09T14:17:18.824Z",
+      "finishedAt": "2026-09-09T14:17:31.618Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: conditional-probability]\n",
+      "stderr": "Error: conditional-probability dark performance regressed:\nload 406ms exceeded 121ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/markov-chains",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "markov-chains"
+      ],
+      "startedAt": "2026-09-09T14:17:31.627Z",
+      "finishedAt": "2026-09-09T14:17:42.140Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: markov-chains]\n",
+      "stderr": "Error: markov-chains light performance regressed:\nload 586ms exceeded 268ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/principal-component-analysis",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "principal-component-analysis"
+      ],
+      "startedAt": "2026-09-09T14:17:42.151Z",
+      "finishedAt": "2026-09-09T14:18:12.534Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: principal-component-analysis]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/exponentiation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "exponentiation"
+      ],
+      "startedAt": "2026-09-09T14:18:12.542Z",
+      "finishedAt": "2026-09-09T14:18:32.698Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: exponentiation]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/pi",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "pi"
+      ],
+      "startedAt": "2026-09-09T14:18:32.700Z",
+      "finishedAt": "2026-09-09T14:18:45.248Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: pi]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sine-and-cosine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "sine-and-cosine"
+      ],
+      "startedAt": "2026-09-09T14:18:45.250Z",
+      "finishedAt": "2026-09-09T14:19:27.078Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sine-and-cosine]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/eigenvectors-and-eigenvalues",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "eigenvectors-and-eigenvalues"
+      ],
+      "startedAt": "2026-09-09T14:19:27.087Z",
+      "finishedAt": "2026-09-09T14:19:51.326Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: eigenvectors-and-eigenvalues]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/image-kernels",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "image-kernels"
+      ],
+      "startedAt": "2026-09-09T14:19:51.336Z",
+      "finishedAt": "2026-09-09T14:20:02.193Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: image-kernels]\n",
+      "stderr": "Error: image-kernels dark performance regressed:\nDOMContentLoaded 414ms exceeded 111ms + 250ms\nload 647ms exceeded 201ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/ordinary-least-squares-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ordinary-least-squares-regression"
+      ],
+      "startedAt": "2026-09-09T14:20:02.195Z",
+      "finishedAt": "2026-09-09T14:20:27.842Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ordinary-least-squares-regression]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/blockchain",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "blockchain"
+      ],
+      "startedAt": "2026-09-09T14:20:27.845Z",
+      "finishedAt": "2026-09-09T14:20:44.528Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/public-private-keys",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "public-private-keys"
+      ],
+      "startedAt": "2026-09-09T14:20:44.530Z",
+      "finishedAt": "2026-09-09T14:20:57.807Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: public-private-keys]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/zero-knowledge-proof-demo",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "zero-knowledge-proof-demo"
+      ],
+      "startedAt": "2026-09-09T14:20:57.817Z",
+      "finishedAt": "2026-09-09T14:21:09.478Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: zero-knowledge-proof-demo]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/alpha-compositing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "alpha-compositing"
+      ],
+      "startedAt": "2026-09-09T14:21:09.488Z",
+      "finishedAt": "2026-09-09T14:21:27.822Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: alpha-compositing]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/color-spaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "color-spaces"
+      ],
+      "startedAt": "2026-09-09T14:21:27.824Z",
+      "finishedAt": "2026-09-09T14:21:42.661Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: color-spaces]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "sound"
+      ],
+      "startedAt": "2026-09-09T14:21:42.674Z",
+      "finishedAt": "2026-09-09T14:21:59.617Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sound]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/cameras-and-lenses",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "cameras-and-lenses"
+      ],
+      "startedAt": "2026-09-09T14:21:59.627Z",
+      "finishedAt": "2026-09-09T14:22:29.773Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: cameras-and-lenses]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/lights-and-shadows",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "lights-and-shadows"
+      ],
+      "startedAt": "2026-09-09T14:22:29.778Z",
+      "finishedAt": "2026-09-09T14:22:57.269Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: lights-and-shadows]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/tesseract",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "tesseract"
+      ],
+      "startedAt": "2026-09-09T14:22:57.272Z",
+      "finishedAt": "2026-09-09T14:23:14.691Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: tesseract]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/gears",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "gears"
+      ],
+      "startedAt": "2026-09-09T14:23:14.693Z",
+      "finishedAt": "2026-09-09T14:23:32.245Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gears]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/gps",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "gps"
+      ],
+      "startedAt": "2026-09-09T14:23:32.254Z",
+      "finishedAt": "2026-09-09T14:23:51.246Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gps]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/earth-and-sun",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "earth-and-sun"
+      ],
+      "startedAt": "2026-09-09T14:23:51.249Z",
+      "finishedAt": "2026-09-09T14:24:18.525Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: earth-and-sun]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/bicycle",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "bicycle"
+      ],
+      "startedAt": "2026-09-09T14:24:18.528Z",
+      "finishedAt": "2026-09-09T14:25:04.226Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bicycle]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/airfoil",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "airfoil"
+      ],
+      "startedAt": "2026-09-09T14:25:04.228Z",
+      "finishedAt": "2026-09-09T14:26:16.915Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: airfoil]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/curves-and-surfaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "curves-and-surfaces"
+      ],
+      "startedAt": "2026-09-09T14:26:16.925Z",
+      "finishedAt": "2026-09-09T14:26:40.597Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: curves-and-surfaces]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/internal-combustion-engine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "internal-combustion-engine"
+      ],
+      "startedAt": "2026-09-09T14:26:40.599Z",
+      "finishedAt": "2026-09-09T14:27:22.915Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: internal-combustion-engine]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/mechanical-watch",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T14:27:22.917Z",
+      "finishedAt": "2026-09-09T14:28:00.644Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: mechanical-watch]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/naval-architecture",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "naval-architecture"
+      ],
+      "startedAt": "2026-09-09T14:28:00.653Z",
+      "finishedAt": "2026-09-09T14:28:34.583Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: naval-architecture]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/formula-1-racing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "formula-1-racing"
+      ],
+      "startedAt": "2026-09-09T14:28:34.585Z",
+      "finishedAt": "2026-09-09T14:28:44.754Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: formula-1-racing]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/interactive-mechanical-watch",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "interactive-mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T14:28:44.763Z",
+      "finishedAt": "2026-09-09T14:31:56.550Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: interactive-mechanical-watch]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/reading-qr-codes-without-a-computer",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "reading-qr-codes-without-a-computer"
+      ],
+      "startedAt": "2026-09-09T14:31:56.552Z",
+      "finishedAt": "2026-09-09T14:32:11.641Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: reading-qr-codes-without-a-computer]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-interval-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-interval-ear-training"
+      ],
+      "startedAt": "2026-09-09T14:32:11.643Z",
+      "finishedAt": "2026-09-09T14:32:28.853Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T14:32:28.856Z",
+      "finishedAt": "2026-09-09T14:32:45.910Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T14:32:45.916Z",
+      "finishedAt": "2026-09-09T14:33:02.628Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-key-and-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-random-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-random-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T14:33:02.630Z",
+      "finishedAt": "2026-09-09T14:33:18.861Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-random-key-and-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-scale-construction",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-scale-construction"
+      ],
+      "startedAt": "2026-09-09T14:33:18.865Z",
+      "finishedAt": "2026-09-09T14:33:35.586Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-scale-construction]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-interval-identification-and-inversion",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "teoria-interval-identification-and-inversion"
+      ],
+      "startedAt": "2026-09-09T14:33:35.588Z",
+      "finishedAt": "2026-09-09T14:33:52.036Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-identification-and-inversion]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-playground",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-playground"
+      ],
+      "startedAt": "2026-09-09T14:33:52.046Z",
+      "finishedAt": "2026-09-09T14:34:10.769Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-playground]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-beats",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-beats"
+      ],
+      "startedAt": "2026-09-09T14:34:10.779Z",
+      "finishedAt": "2026-09-09T14:34:23.985Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-beats]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-notes-and-scales",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales"
+      ],
+      "startedAt": "2026-09-09T14:34:23.997Z",
+      "finishedAt": "2026-09-09T14:34:41.821Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-notes-and-scales]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-chords",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-chords"
+      ],
+      "startedAt": "2026-09-09T14:34:41.823Z",
+      "finishedAt": "2026-09-09T14:34:59.340Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-chords]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-basslines",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-basslines"
+      ],
+      "startedAt": "2026-09-09T14:34:59.343Z",
+      "finishedAt": "2026-09-09T14:35:14.521Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-basslines]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-melodies",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-melodies"
+      ],
+      "startedAt": "2026-09-09T14:35:14.524Z",
+      "finishedAt": "2026-09-09T14:35:32.374Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-melodies]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-song-structures",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-music-play-with-song-structures"
+      ],
+      "startedAt": "2026-09-09T14:35:32.376Z",
+      "finishedAt": "2026-09-09T14:35:45.019Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-song-structures]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-get-started",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-get-started"
+      ],
+      "startedAt": "2026-09-09T14:35:45.028Z",
+      "finishedAt": "2026-09-09T14:35:58.773Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-get-started]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-how-synths-make-sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound"
+      ],
+      "startedAt": "2026-09-09T14:35:58.785Z",
+      "finishedAt": "2026-09-09T14:36:13.088Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-how-synths-make-sound]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-filter-resonance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-filter-resonance"
+      ],
+      "startedAt": "2026-09-09T14:36:13.099Z",
+      "finishedAt": "2026-09-09T14:36:26.794Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-filter-resonance]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes"
+      ],
+      "startedAt": "2026-09-09T14:36:26.804Z",
+      "finishedAt": "2026-09-09T14:36:40.665Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-modulating-amplitude-with-envelopes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-matching-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-matching-envelopes"
+      ],
+      "startedAt": "2026-09-09T14:36:40.667Z",
+      "finishedAt": "2026-09-09T14:36:55.215Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-matching-envelopes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-recipes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "ableton-learning-synths-recipes"
+      ],
+      "startedAt": "2026-09-09T14:36:55.225Z",
+      "finishedAt": "2026-09-09T14:37:11.365Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-recipes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/chrome-music-lab-song-maker",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "chrome-music-lab-song-maker"
+      ],
+      "startedAt": "2026-09-09T14:37:11.368Z",
+      "finishedAt": "2026-09-09T14:37:25.415Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: chrome-music-lab-song-maker]\n",
+      "stderr": "Error: chrome-music-lab-song-maker light performance regressed:\nDOMContentLoaded 565ms exceeded 274ms + 250ms\nload 660ms exceeded 296ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/musicmap",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "musicmap"
+      ],
+      "startedAt": "2026-09-09T14:37:25.424Z",
+      "finishedAt": "2026-09-09T14:37:39.055Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: musicmap]\n",
+      "stderr": "Error: musicmap dark performance regressed:\nload 527ms exceeded 224ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/music-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "music-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T14:37:39.059Z",
+      "finishedAt": "2026-09-09T14:37:57.301Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: music-interactive-hub]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/linear-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "linear-regression"
+      ],
+      "startedAt": "2026-09-09T14:37:57.304Z",
+      "finishedAt": "2026-09-09T14:38:09.578Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: linear-regression]\n",
+      "stderr": "Error: linear-regression light performance regressed:\nDOMContentLoaded 656ms exceeded 292ms + 250ms\nload 746ms exceeded 338ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/logistic-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "logistic-regression"
+      ],
+      "startedAt": "2026-09-09T14:38:09.590Z",
+      "finishedAt": "2026-09-09T14:38:23.894Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: logistic-regression]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/precision-recall",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "precision-recall"
+      ],
+      "startedAt": "2026-09-09T14:38:23.904Z",
+      "finishedAt": "2026-09-09T14:38:38.519Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: precision-recall]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/roc-auc",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "roc-auc"
+      ],
+      "startedAt": "2026-09-09T14:38:38.530Z",
+      "finishedAt": "2026-09-09T14:38:53.353Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: roc-auc]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/bias-variance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "bias-variance"
+      ],
+      "startedAt": "2026-09-09T14:38:53.375Z",
+      "finishedAt": "2026-09-09T14:39:08.716Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bias-variance]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/train-test-validation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "train-test-validation"
+      ],
+      "startedAt": "2026-09-09T14:39:08.719Z",
+      "finishedAt": "2026-09-09T14:39:25.038Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: train-test-validation]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/double-descent",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "double-descent"
+      ],
+      "startedAt": "2026-09-09T14:39:25.041Z",
+      "finishedAt": "2026-09-09T14:39:51.055Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/double-descent2",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "double-descent2"
+      ],
+      "startedAt": "2026-09-09T14:39:51.059Z",
+      "finishedAt": "2026-09-09T14:40:03.164Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent2]\n",
+      "stderr": "Error: double-descent2 light performance regressed:\nload 703ms exceeded 344ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/memory-allocation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "memory-allocation"
+      ],
+      "startedAt": "2026-09-09T14:40:03.168Z",
+      "finishedAt": "2026-09-09T14:40:17.737Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: memory-allocation]\n",
+      "stderr": "Error: memory-allocation dark performance regressed:\nDOMContentLoaded 525ms exceeded 233ms + 250ms\nload 525ms exceeded 233ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/load-balancing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "load-balancing"
+      ],
+      "startedAt": "2026-09-09T14:40:17.742Z",
+      "finishedAt": "2026-09-09T14:40:35.520Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: load-balancing]\n",
+      "stderr": "Error: load-balancing light performance regressed:\nload 1679ms exceeded 1087ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/hysteresis-slack",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "hysteresis-slack"
+      ],
+      "startedAt": "2026-09-09T14:40:35.524Z",
+      "finishedAt": "2026-09-09T14:40:49.870Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: hysteresis-slack]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/rigid-body-collisions",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "rigid-body-collisions"
+      ],
+      "startedAt": "2026-09-09T14:40:49.873Z",
+      "finishedAt": "2026-09-09T14:40:51.737Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: rigid-body-collisions]\n",
+      "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9758:24)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/blockchain-101-combined-flow",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "startedAt": "2026-09-09T14:40:51.738Z",
+      "finishedAt": "2026-09-09T14:41:04.862Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain-101-combined-flow]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/primary-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T14:41:04.864Z",
+      "finishedAt": "2026-09-09T14:41:16.153Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: primary-interactive-hub]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/stargazing-dashboard",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "stargazing-dashboard"
+      ],
+      "startedAt": "2026-09-09T14:41:16.163Z",
+      "finishedAt": "2026-09-09T14:41:32.218Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: stargazing-dashboard]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/watch-mesh-explorer",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--route",
+        "watch-mesh-explorer"
+      ],
+      "startedAt": "2026-09-09T14:41:32.228Z",
+      "finishedAt": "2026-09-09T14:44:37.096Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: watch-mesh-explorer]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/decision-tree",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "decision-tree"
+      ],
+      "startedAt": "2026-09-09T14:44:37.099Z",
+      "finishedAt": "2026-09-09T14:45:14.274Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/random-forest",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "random-forest"
+      ],
+      "startedAt": "2026-09-09T14:45:14.277Z",
+      "finishedAt": "2026-09-09T14:45:49.471Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: random-forest] [experience gates]\n",
+      "stderr": "Error: random-forest light performance regressed:\nDOMContentLoaded 591ms exceeded 282ms + 250ms\nload 620ms exceeded 290ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/conditional-probability",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "conditional-probability"
+      ],
+      "startedAt": "2026-09-09T14:45:49.477Z",
+      "finishedAt": "2026-09-09T14:46:34.627Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: conditional-probability] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/markov-chains",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "markov-chains"
+      ],
+      "startedAt": "2026-09-09T14:46:34.629Z",
+      "finishedAt": "2026-09-09T14:47:15.129Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: markov-chains] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/principal-component-analysis",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "principal-component-analysis"
+      ],
+      "startedAt": "2026-09-09T14:47:15.131Z",
+      "finishedAt": "2026-09-09T14:47:45.385Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: principal-component-analysis] [experience gates]\n",
+      "stderr": "Error: principal-component-analysis light performance regressed:\nload 596ms exceeded 325ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/exponentiation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "exponentiation"
+      ],
+      "startedAt": "2026-09-09T14:47:45.396Z",
+      "finishedAt": "2026-09-09T14:48:19.807Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: exponentiation] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/pi",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "pi"
+      ],
+      "startedAt": "2026-09-09T14:48:19.809Z",
+      "finishedAt": "2026-09-09T14:48:45.616Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: pi] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/sine-and-cosine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "sine-and-cosine"
+      ],
+      "startedAt": "2026-09-09T14:48:45.626Z",
+      "finishedAt": "2026-09-09T14:49:41.435Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sine-and-cosine] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/eigenvectors-and-eigenvalues",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "eigenvectors-and-eigenvalues"
+      ],
+      "startedAt": "2026-09-09T14:49:41.445Z",
+      "finishedAt": "2026-09-09T14:50:23.453Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: eigenvectors-and-eigenvalues] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/image-kernels",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "image-kernels"
+      ],
+      "startedAt": "2026-09-09T14:50:23.463Z",
+      "finishedAt": "2026-09-09T14:50:51.477Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: image-kernels] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ordinary-least-squares-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ordinary-least-squares-regression"
+      ],
+      "startedAt": "2026-09-09T14:50:51.480Z",
+      "finishedAt": "2026-09-09T14:51:44.592Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ordinary-least-squares-regression] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/blockchain",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "blockchain"
+      ],
+      "startedAt": "2026-09-09T14:51:44.602Z",
+      "finishedAt": "2026-09-09T14:52:13.219Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/public-private-keys",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "public-private-keys"
+      ],
+      "startedAt": "2026-09-09T14:52:13.222Z",
+      "finishedAt": "2026-09-09T14:52:41.600Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: public-private-keys] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/zero-knowledge-proof-demo",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "zero-knowledge-proof-demo"
+      ],
+      "startedAt": "2026-09-09T14:52:41.606Z",
+      "finishedAt": "2026-09-09T14:53:18.580Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: zero-knowledge-proof-demo] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/alpha-compositing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "alpha-compositing"
+      ],
+      "startedAt": "2026-09-09T14:53:18.584Z",
+      "finishedAt": "2026-09-09T14:53:53.331Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: alpha-compositing] [experience gates]\n",
+      "stderr": "Error: alpha-compositing light performance regressed:\nDOMContentLoaded 613ms exceeded 232ms + 250ms\nload 754ms exceeded 298ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/color-spaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "color-spaces"
+      ],
+      "startedAt": "2026-09-09T14:53:53.336Z",
+      "finishedAt": "2026-09-09T14:54:26.313Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: color-spaces] [experience gates]\n",
+      "stderr": "Error: color-spaces light performance regressed:\nDOMContentLoaded 472ms exceeded 166ms + 250ms\nload 559ms exceeded 238ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "sound"
+      ],
+      "startedAt": "2026-09-09T14:54:26.317Z",
+      "finishedAt": "2026-09-09T14:54:59.776Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sound] [experience gates]\n",
+      "stderr": "Error: sound light performance regressed:\nDOMContentLoaded 487ms exceeded 145ms + 250ms\nload 672ms exceeded 179ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/cameras-and-lenses",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "cameras-and-lenses"
+      ],
+      "startedAt": "2026-09-09T14:54:59.778Z",
+      "finishedAt": "2026-09-09T14:55:49.542Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: cameras-and-lenses] [experience gates]\n",
+      "stderr": "Error: cameras-and-lenses light performance regressed:\nload 1092ms exceeded 769ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/lights-and-shadows",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "lights-and-shadows"
+      ],
+      "startedAt": "2026-09-09T14:55:49.555Z",
+      "finishedAt": "2026-09-09T14:56:35.597Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: lights-and-shadows] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/tesseract",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "tesseract"
+      ],
+      "startedAt": "2026-09-09T14:56:35.599Z",
+      "finishedAt": "2026-09-09T14:57:08.342Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: tesseract] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/gears",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "gears"
+      ],
+      "startedAt": "2026-09-09T14:57:08.344Z",
+      "finishedAt": "2026-09-09T14:57:42.001Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gears] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/gps",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "gps"
+      ],
+      "startedAt": "2026-09-09T14:57:42.004Z",
+      "finishedAt": "2026-09-09T14:58:21.393Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gps] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/earth-and-sun",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "earth-and-sun"
+      ],
+      "startedAt": "2026-09-09T14:58:21.395Z",
+      "finishedAt": "2026-09-09T14:59:05.370Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: earth-and-sun] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/curves-and-surfaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "curves-and-surfaces"
+      ],
+      "startedAt": "2026-09-09T14:59:05.372Z",
+      "finishedAt": "2026-09-09T14:59:41.486Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: curves-and-surfaces] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/naval-architecture",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "naval-architecture"
+      ],
+      "startedAt": "2026-09-09T14:59:41.487Z",
+      "finishedAt": "2026-09-09T15:00:32.976Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: naval-architecture] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-interval-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-interval-ear-training"
+      ],
+      "startedAt": "2026-09-09T15:00:32.986Z",
+      "finishedAt": "2026-09-09T15:01:04.680Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T15:01:04.682Z",
+      "finishedAt": "2026-09-09T15:01:35.468Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T15:01:35.470Z",
+      "finishedAt": "2026-09-09T15:02:09.340Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-key-and-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-random-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-random-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T15:02:09.342Z",
+      "finishedAt": "2026-09-09T15:02:40.758Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-random-key-and-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-scale-construction",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-scale-construction"
+      ],
+      "startedAt": "2026-09-09T15:02:40.773Z",
+      "finishedAt": "2026-09-09T15:03:12.580Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-scale-construction] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-interval-identification-and-inversion",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "teoria-interval-identification-and-inversion"
+      ],
+      "startedAt": "2026-09-09T15:03:12.583Z",
+      "finishedAt": "2026-09-09T15:03:43.899Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-identification-and-inversion] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-playground",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-playground"
+      ],
+      "startedAt": "2026-09-09T15:03:43.910Z",
+      "finishedAt": "2026-09-09T15:04:19.061Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-playground] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-beats",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-beats"
+      ],
+      "startedAt": "2026-09-09T15:04:19.071Z",
+      "finishedAt": "2026-09-09T15:04:45.084Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-beats] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-notes-and-scales",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales"
+      ],
+      "startedAt": "2026-09-09T15:04:45.086Z",
+      "finishedAt": "2026-09-09T15:05:19.685Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-notes-and-scales] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-chords",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-chords"
+      ],
+      "startedAt": "2026-09-09T15:05:19.687Z",
+      "finishedAt": "2026-09-09T15:05:55.149Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-chords] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-basslines",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-basslines"
+      ],
+      "startedAt": "2026-09-09T15:05:55.152Z",
+      "finishedAt": "2026-09-09T15:06:21.447Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-basslines] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-melodies",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-melodies"
+      ],
+      "startedAt": "2026-09-09T15:06:21.456Z",
+      "finishedAt": "2026-09-09T15:06:53.709Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-melodies] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-song-structures",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-song-structures"
+      ],
+      "startedAt": "2026-09-09T15:06:53.718Z",
+      "finishedAt": "2026-09-09T15:07:22.799Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-song-structures] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-get-started",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-get-started"
+      ],
+      "startedAt": "2026-09-09T15:07:22.809Z",
+      "finishedAt": "2026-09-09T15:07:50.940Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-get-started] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-how-synths-make-sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound"
+      ],
+      "startedAt": "2026-09-09T15:07:50.942Z",
+      "finishedAt": "2026-09-09T15:08:19.242Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-how-synths-make-sound] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-filter-resonance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-filter-resonance"
+      ],
+      "startedAt": "2026-09-09T15:08:19.243Z",
+      "finishedAt": "2026-09-09T15:08:46.056Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-filter-resonance] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes"
+      ],
+      "startedAt": "2026-09-09T15:08:46.058Z",
+      "finishedAt": "2026-09-09T15:09:13.222Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-modulating-amplitude-with-envelopes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-matching-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-matching-envelopes"
+      ],
+      "startedAt": "2026-09-09T15:09:13.231Z",
+      "finishedAt": "2026-09-09T15:09:42.398Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-matching-envelopes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-recipes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-recipes"
+      ],
+      "startedAt": "2026-09-09T15:09:42.408Z",
+      "finishedAt": "2026-09-09T15:10:09.714Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-recipes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/music-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "music-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T15:10:09.716Z",
+      "finishedAt": "2026-09-09T15:10:32.639Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: music-interactive-hub] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/linear-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "linear-regression"
+      ],
+      "startedAt": "2026-09-09T15:10:32.649Z",
+      "finishedAt": "2026-09-09T15:10:58.101Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: linear-regression] [experience gates]\n",
+      "stderr": "Error: linear-regression light performance regressed:\nDOMContentLoaded 586ms exceeded 292ms + 250ms\nload 655ms exceeded 338ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/logistic-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "logistic-regression"
+      ],
+      "startedAt": "2026-09-09T15:10:58.105Z",
+      "finishedAt": "2026-09-09T15:11:35.305Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: logistic-regression] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/precision-recall",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "precision-recall"
+      ],
+      "startedAt": "2026-09-09T15:11:35.330Z",
+      "finishedAt": "2026-09-09T15:12:07.327Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: precision-recall] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/roc-auc",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "roc-auc"
+      ],
+      "startedAt": "2026-09-09T15:12:07.337Z",
+      "finishedAt": "2026-09-09T15:12:34.570Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: roc-auc] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/bias-variance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "bias-variance"
+      ],
+      "startedAt": "2026-09-09T15:12:34.573Z",
+      "finishedAt": "2026-09-09T15:13:07.955Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bias-variance] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/train-test-validation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "train-test-validation"
+      ],
+      "startedAt": "2026-09-09T15:13:07.957Z",
+      "finishedAt": "2026-09-09T15:13:38.158Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: train-test-validation] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/double-descent",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "double-descent"
+      ],
+      "startedAt": "2026-09-09T15:13:38.161Z",
+      "finishedAt": "2026-09-09T15:14:20.094Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/double-descent2",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "double-descent2"
+      ],
+      "startedAt": "2026-09-09T15:14:20.097Z",
+      "finishedAt": "2026-09-09T15:14:49.558Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent2] [experience gates]\n",
+      "stderr": "Error: double-descent2 light performance regressed:\nDOMContentLoaded 707ms exceeded 309ms + 250ms\nload 801ms exceeded 344ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/memory-allocation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "memory-allocation"
+      ],
+      "startedAt": "2026-09-09T15:14:49.572Z",
+      "finishedAt": "2026-09-09T15:15:24.772Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: memory-allocation] [experience gates]\n",
+      "stderr": "Error: memory-allocation light performance regressed:\nDOMContentLoaded 499ms exceeded 234ms + 250ms\nload 508ms exceeded 234ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/load-balancing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "load-balancing"
+      ],
+      "startedAt": "2026-09-09T15:15:24.786Z",
+      "finishedAt": "2026-09-09T15:16:40.799Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: load-balancing] [experience gates]\n",
+      "stderr": "Error: load-balancing light performance regressed:\nDOMContentLoaded 2517ms exceeded 993ms + 250ms\nload 2983ms exceeded 1087ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9772:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/hysteresis-slack",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "hysteresis-slack"
+      ],
+      "startedAt": "2026-09-09T15:16:40.801Z",
+      "finishedAt": "2026-09-09T15:17:19.808Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: hysteresis-slack] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/rigid-body-collisions",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "rigid-body-collisions"
+      ],
+      "startedAt": "2026-09-09T15:17:19.815Z",
+      "finishedAt": "2026-09-09T15:17:21.902Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: rigid-body-collisions] [experience gates]\n",
+      "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9758:24)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/blockchain-101-combined-flow",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "startedAt": "2026-09-09T15:17:21.905Z",
+      "finishedAt": "2026-09-09T15:17:47.178Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain-101-combined-flow] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/primary-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/46-geometry-successor-006.json",
+        "--experience",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T15:17:47.181Z",
+      "finishedAt": "2026-09-09T15:18:10.257Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: primary-interactive-hub] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    }
+  ],
+  "verdict": "Not82/83 or W0 complete. Current006 sweep62/83 normal and48/59 strict.20 normal and10 strict timing-only failures on routes outside bounded review; rigid-body additionally fails both geometry gates. Full normal stops crowds dark load444>131+250; combined strict stops sine-and-cosine dark load689>321+250, not rigid-body. No claim these failures are caused by contention: source unchanged and host scheduler/cache uncontrolled. Earlier43 passes are historical, not substituted. No extra baseline expansion or retry-until-pass.",
+  "resolvedScoped": "Sim restored DOM grid passes native normal tasks and budget against independently reviewed BEFORE reference; TTV passes normal/strict; watch corrected visibility test completes normal tasks.18 paired cells retain all3 samples and pass unchanged median budgets, including outliers. Broad performance acceptance remains unresolved."
+}

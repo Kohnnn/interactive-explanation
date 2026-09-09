@@ -1,0 +1,16 @@
+START=2026-09-08T14:40:26Z
+Starting smoke run [groups: mlu] [experience gates]
+browserType.launch: Executable doesn't exist at /home/compute_01/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     npx playwright install                                 ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+    at main (/media/compute_01/New Volume/PersonalWebsite/interactive-note/interactive-explanation/tools/smoke-bundle.mjs:9724:34)
+END=2026-09-08T14:40:26Z
+EXIT=1
+ELAPSED_SECONDS=0
+TIMEOUT_SECONDS=120

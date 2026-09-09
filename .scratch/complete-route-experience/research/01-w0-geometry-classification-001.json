@@ -1,0 +1,3344 @@
+{
+  "historicalSamples": 1512,
+  "historicalComplete": {
+    "type": "complete",
+    "status": "failed-or-inconclusive",
+    "finishedAt": "2026-09-09T05:47:14.833Z"
+  },
+  "historicalUnchanged": true,
+  "rows": [
+    {
+      "slug": "trust",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "trust",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "trust",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "polygons",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "polygons",
+      "viewport": "mobile",
+      "changes": 30,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "polygons",
+      "viewport": "narrow",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ballot",
+      "viewport": "desktop",
+      "changes": 170,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ballot",
+      "viewport": "mobile",
+      "changes": 186,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ballot",
+      "viewport": "narrow",
+      "changes": 180,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "crowds",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "crowds",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "crowds",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "loopy",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "loopy",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "loopy",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "neurons",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "neurons",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "neurons",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "remember",
+      "viewport": "desktop",
+      "changes": 38,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "remember",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "remember",
+      "viewport": "narrow",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 26,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "anxiety",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/rect/top",
+          "before": 122,
+          "after": 155.33334350585938,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/right",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/bottom",
+          "before": 722,
+          "after": 688.6665954589844,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/width",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 600,
+          "after": 533.333251953125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/transform",
+          "before": "none",
+          "after": "matrix(0.888889, 0, 0, 0.888889, 0, 0)",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.6,
+          "after": 0.6000000915527484,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/top",
+          "before": 122,
+          "after": 155.33334350585938,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/right",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/bottom",
+          "before": 722,
+          "after": 688.6665954589844,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/width",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/0/rect/height",
+          "before": 600,
+          "after": 533.333251953125,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/top",
+          "before": 22,
+          "after": 66.44445037841797,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/right",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/bottom",
+          "before": 122,
+          "after": 155.33334350585938,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/width",
+          "before": 360,
+          "after": 320,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/1/rect/height",
+          "before": 100,
+          "after": 88.8888931274414,
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: wbwwb applied no theme instead of light",
+        "scroll: wbwwb did not expose one primary surface for main",
+        "geometry: wbwwb expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: wbwwb had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/wbwwb/",
+        "console: Console errors retained in events",
+        "theme: wbwwb applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: wbwwb applied no theme instead of light",
+        "scroll: wbwwb did not expose one primary surface for main",
+        "geometry: wbwwb expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: wbwwb had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/wbwwb/",
+        "console: Console errors retained in events",
+        "theme: wbwwb applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "wbwwb",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: wbwwb applied no theme instead of light",
+        "scroll: wbwwb did not expose one primary surface for main",
+        "geometry: wbwwb expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: wbwwb had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/wbwwb/",
+        "console: Console errors retained in events",
+        "theme: wbwwb applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: coming-out-simulator-2014 applied no theme instead of light",
+        "scroll: coming-out-simulator-2014 did not expose one primary surface for main",
+        "geometry: coming-out-simulator-2014 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: coming-out-simulator-2014 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/coming-out-simulator-2014/",
+        "console: Console errors retained in events",
+        "theme: coming-out-simulator-2014 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: coming-out-simulator-2014 applied no theme instead of light",
+        "scroll: coming-out-simulator-2014 did not expose one primary surface for main",
+        "geometry: coming-out-simulator-2014 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: coming-out-simulator-2014 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/coming-out-simulator-2014/",
+        "console: Console errors retained in events",
+        "theme: coming-out-simulator-2014 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "coming-out-simulator-2014",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 40,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: coming-out-simulator-2014 applied no theme instead of light",
+        "scroll: coming-out-simulator-2014 did not expose one primary surface for main",
+        "geometry: coming-out-simulator-2014 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: coming-out-simulator-2014 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/coming-out-simulator-2014/",
+        "console: Console errors retained in events",
+        "theme: coming-out-simulator-2014 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "desktop",
+      "changes": 18,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: covid-19 applied no theme instead of light",
+        "scroll: covid-19 did not expose one primary surface for main",
+        "geometry: covid-19 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: covid-19 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/covid-19/",
+        "console: Console errors retained in events",
+        "theme: covid-19 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "mobile",
+      "changes": 98,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: covid-19 applied no theme instead of light",
+        "scroll: covid-19 did not expose one primary surface for main",
+        "geometry: covid-19 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: covid-19 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/covid-19/",
+        "console: Console errors retained in events",
+        "theme: covid-19 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "narrow",
+      "changes": 80,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "navigation: Navigation HTTP 404",
+        "readiness: page.waitForFunction: Timeout 30000ms exceeded.",
+        "theme: covid-19 applied no theme instead of light",
+        "scroll: covid-19 did not expose one primary surface for main",
+        "geometry: covid-19 expected one runtime surface for [data-runtime-main], main, found 0",
+        "runtime: covid-19 had runtime issues:\nresponse 404: http://127.0.0.1:4207/interactive-explanation/covid-19/",
+        "console: Console errors retained in events",
+        "theme: covid-19 applied no theme instead of dark"
+      ],
+      "historicalDelta": null
+    },
+    {
+      "slug": "simulating",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "simulating",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "simulating",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sim",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "changes": 5,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/rect/top",
+          "before": -1022,
+          "after": -1021,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/bottom",
+          "before": 1865.15625,
+          "after": 1864.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 2887.15625,
+          "after": 2885.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "2887.16px",
+          "after": "2885.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.13508101613828485,
+          "after": 0.13517465475223395,
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "changes": 5,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/rect/top",
+          "before": -1064,
+          "after": -1065,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/bottom",
+          "before": 1907.15625,
+          "after": 1909.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/rect/height",
+          "before": 2971.15625,
+          "after": 2974.15625,
+          "review": "unreviewed"
+        },
+        {
+          "path": "/css/height",
+          "before": "2971.16px",
+          "after": "2974.16px",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/aspectRatio",
+          "before": 0.10770217823448362,
+          "after": 0.10759354018471626,
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "desktop",
+      "changes": 43,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "mobile",
+      "changes": 54,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "narrow",
+      "changes": 50,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "desktop",
+      "changes": 8,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "mobile",
+      "changes": 390,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "random-forest",
+      "viewport": "narrow",
+      "changes": 384,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "mobile",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "conditional-probability",
+      "viewport": "narrow",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "network: Failed requests require classification; cancellation evidence retained"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "mobile",
+      "changes": 12,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "network: Failed requests require classification; cancellation evidence retained"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "narrow",
+      "changes": 12,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "network: Failed requests require classification; cancellation evidence retained"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "desktop",
+      "changes": 24,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "mobile",
+      "changes": 22,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "principal-component-analysis",
+      "viewport": "narrow",
+      "changes": 24,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "desktop",
+      "changes": 8,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "mobile",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "narrow",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 33,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "pi",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "pi",
+      "viewport": "mobile",
+      "changes": 8,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "pi",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "desktop",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sine-and-cosine",
+      "viewport": "narrow",
+      "changes": 16,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "desktop",
+      "changes": 28,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "mobile",
+      "changes": 28,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "eigenvectors-and-eigenvalues",
+      "viewport": "narrow",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "desktop",
+      "changes": 16,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "mobile",
+      "changes": 16,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "image-kernels",
+      "viewport": "narrow",
+      "changes": 16,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "desktop",
+      "changes": 36,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "mobile",
+      "changes": 36,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ordinary-least-squares-regression",
+      "viewport": "narrow",
+      "changes": 32,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "zero-knowledge-proof-demo",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "desktop",
+      "changes": 212,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "mobile",
+      "changes": 212,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "alpha-compositing",
+      "viewport": "narrow",
+      "changes": 210,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "desktop",
+      "changes": 146,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "mobile",
+      "changes": 146,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "color-spaces",
+      "viewport": "narrow",
+      "changes": 138,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sound",
+      "viewport": "desktop",
+      "changes": 128,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sound",
+      "viewport": "mobile",
+      "changes": 128,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "sound",
+      "viewport": "narrow",
+      "changes": 128,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "desktop",
+      "changes": 144,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "mobile",
+      "changes": 144,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "cameras-and-lenses",
+      "viewport": "narrow",
+      "changes": 144,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "desktop",
+      "changes": 148,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "mobile",
+      "changes": 148,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "lights-and-shadows",
+      "viewport": "narrow",
+      "changes": 148,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "desktop",
+      "changes": 100,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "mobile",
+      "changes": 100,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "tesseract",
+      "viewport": "narrow",
+      "changes": 100,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gears",
+      "viewport": "desktop",
+      "changes": 104,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gears",
+      "viewport": "mobile",
+      "changes": 104,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gears",
+      "viewport": "narrow",
+      "changes": 104,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gps",
+      "viewport": "desktop",
+      "changes": 188,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gps",
+      "viewport": "mobile",
+      "changes": 188,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "gps",
+      "viewport": "narrow",
+      "changes": 188,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "desktop",
+      "changes": 90,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "mobile",
+      "changes": 90,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "earth-and-sun",
+      "viewport": "narrow",
+      "changes": 90,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "desktop",
+      "changes": 288,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "mobile",
+      "changes": 288,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "bicycle",
+      "viewport": "narrow",
+      "changes": 288,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "desktop",
+      "changes": 210,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "mobile",
+      "changes": 210,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "airfoil",
+      "viewport": "narrow",
+      "changes": 210,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "desktop",
+      "changes": 234,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "mobile",
+      "changes": 234,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "curves-and-surfaces",
+      "viewport": "narrow",
+      "changes": 234,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "desktop",
+      "changes": 174,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "mobile",
+      "changes": 174,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "internal-combustion-engine",
+      "viewport": "narrow",
+      "changes": 174,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "desktop",
+      "changes": 242,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "mobile",
+      "changes": 242,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "mechanical-watch",
+      "viewport": "narrow",
+      "changes": 242,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "desktop",
+      "changes": 138,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "mobile",
+      "changes": 138,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "naval-architecture",
+      "viewport": "narrow",
+      "changes": 138,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "desktop",
+      "changes": 34,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "mobile",
+      "changes": 34,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "formula-1-racing",
+      "viewport": "narrow",
+      "changes": 34,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "desktop",
+      "changes": 254,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "mobile",
+      "changes": 258,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "interactive-mechanical-watch",
+      "viewport": "narrow",
+      "changes": 256,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "desktop",
+      "changes": 88,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "mobile",
+      "changes": 86,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "narrow",
+      "changes": 104,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 35,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "desktop",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "mobile",
+      "changes": 65,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-ear-training",
+      "viewport": "narrow",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "desktop",
+      "changes": 40,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "mobile",
+      "changes": 45,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-note-ear-training",
+      "viewport": "narrow",
+      "changes": 45,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "desktop",
+      "changes": 84,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "mobile",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-key-and-note-ear-training",
+      "viewport": "narrow",
+      "changes": 68,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "desktop",
+      "changes": 55,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "mobile",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-random-key-and-note-ear-training",
+      "viewport": "narrow",
+      "changes": 38,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "desktop",
+      "changes": 50,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "mobile",
+      "changes": 8,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-scale-construction",
+      "viewport": "narrow",
+      "changes": 48,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "desktop",
+      "changes": 8,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "mobile",
+      "changes": 48,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "teoria-interval-identification-and-inversion",
+      "viewport": "narrow",
+      "changes": 51,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "mobile",
+      "changes": 257,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-playground",
+      "viewport": "narrow",
+      "changes": 254,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "mobile",
+      "changes": 29,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-beats",
+      "viewport": "narrow",
+      "changes": 29,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "mobile",
+      "changes": 97,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-notes-and-scales",
+      "viewport": "narrow",
+      "changes": 94,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "mobile",
+      "changes": 94,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-chords",
+      "viewport": "narrow",
+      "changes": 94,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "mobile",
+      "changes": 99,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-basslines",
+      "viewport": "narrow",
+      "changes": 99,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "desktop",
+      "changes": 99,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "mobile",
+      "changes": 96,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-melodies",
+      "viewport": "narrow",
+      "changes": 96,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "mobile",
+      "changes": 5,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-music-play-with-song-structures",
+      "viewport": "narrow",
+      "changes": 2,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-how-synths-make-sound",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-filter-resonance",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "narrow",
+      "changes": 36,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "ableton-learning-synths-recipes",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 64,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "desktop",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "mobile",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "chrome-music-lab-song-maker",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "desktop",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "musicmap",
+      "viewport": "narrow",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "music-interactive-hub",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "desktop",
+      "changes": 28,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 4",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 5",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 6",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "mobile",
+      "changes": 28,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 4",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 5",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 6",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "narrow",
+      "changes": 28,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 19,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 4",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 5",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "Linear Regression hidden resize listener 6",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "desktop",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "mobile",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "logistic-regression",
+      "viewport": "narrow",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Logistic Regression hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "desktop",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "mobile",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "narrow",
+      "changes": 20,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 4,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/2/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/4/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "Precision and Recall hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "desktop",
+      "changes": 26,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "mobile",
+      "changes": 30,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "roc-auc",
+      "viewport": "narrow",
+      "changes": 30,
+      "currentStable": true,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": [
+        {
+          "path": "/intrinsic/6/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 1",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/8/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 2",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/10/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 3",
+          "review": "unreviewed"
+        },
+        {
+          "path": "/intrinsic/12/title",
+          "before": null,
+          "after": "ROC and AUC hidden resize listener 4",
+          "review": "unreviewed"
+        }
+      ]
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "desktop",
+      "changes": 35,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "mobile",
+      "changes": 71,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "bias-variance",
+      "viewport": "narrow",
+      "changes": 71,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "desktop",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "changes": 32,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "changes": 26,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "desktop",
+      "changes": 12,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "mobile",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent",
+      "viewport": "narrow",
+      "changes": 14,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "desktop",
+      "changes": 83,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "mobile",
+      "changes": 85,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "double-descent2",
+      "viewport": "narrow",
+      "changes": 83,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "desktop",
+      "changes": 58,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "mobile",
+      "changes": 61,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "narrow",
+      "changes": 61,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 8,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "desktop",
+      "changes": 75,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "mobile",
+      "changes": 75,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "load-balancing",
+      "viewport": "narrow",
+      "changes": 75,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "desktop",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "mobile",
+      "changes": 6,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "hysteresis-slack",
+      "viewport": "narrow",
+      "changes": 24,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "desktop",
+      "changes": 84,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "console: Console errors retained in events"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "mobile",
+      "changes": 99,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "console: Console errors retained in events"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "narrow",
+      "changes": 119,
+      "currentStable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [
+        "console: Console errors retained in events"
+      ],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "primary-interactive-hub",
+      "viewport": "narrow",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "stargazing-dashboard",
+      "viewport": "narrow",
+      "changes": 7,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "desktop",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "mobile",
+      "changes": 4,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    },
+    {
+      "slug": "watch-mesh-explorer",
+      "viewport": "narrow",
+      "changes": 0,
+      "currentStable": true,
+      "historicalEqual": true,
+      "overflow": 0,
+      "protectedChanges": [],
+      "historicalErrors": [],
+      "historicalDelta": []
+    }
+  ]
+}

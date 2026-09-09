@@ -1,0 +1,3316 @@
+{
+  "source": "a5aa4a9fb13fd2bc2f6fbde6e766ab2384f77af6",
+  "sourceFix": "83ae687",
+  "scope": "Evidence-only agent-authorized geometry review, not route or release acceptance; no browser run; inherited performance unchanged",
+  "predecessorSha256": "1a743f5ca7cbe68929b745be3f1532003616d8c3dc084406b6e704347bbdeea5",
+  "successorSha256": "745446769a2b38b68e4e9750f13bab5b4c5ced6941143084d913a311f32a4173",
+  "pairedEvidenceSha256": "69c57857d4deffba1be48fde4cafe136a0815d7a5d5ff8672b5d2a6f604a9954",
+  "artifacts": [
+    {
+      "name": "full-001.jsonl",
+      "bytes": 102196875,
+      "sha256": "eee376e0ec39a5fcf91b8662e6ac838df846b3fef239c65816da1f67148673cc",
+      "path": "/tmp/opencode/w0-baseline-09505db-evidence/full-001.jsonl"
+    },
+    {
+      "name": "historical-all-001.jsonl",
+      "bytes": 94810744,
+      "sha256": "32902b969cbc8bc20e1925d8839fe4d5b46904259cebe9ee154e28dedfb05e8e",
+      "path": "/tmp/opencode/w0-geometry-9782bff-evidence/historical-all-001.jsonl"
+    },
+    {
+      "name": "historical-mlu-001.jsonl",
+      "bytes": 4286983,
+      "sha256": "e52d77f77c9bff12eaca6c7064d7a0430bb87b2c7108e6c9b2e7d7dc00144cf8",
+      "path": "/tmp/opencode/w0-geometry-9782bff-evidence/historical-mlu-001.jsonl"
+    },
+    {
+      "path": "/tmp/opencode/w0-prereq-before.jsonl",
+      "bytes": 12013779,
+      "sha256": "4b827eb118c74f4fa15933b00a1b6a64ec1689cba6bec9403d26bdde88fb7c16"
+    },
+    {
+      "path": "/tmp/opencode/w0-prereq-after.jsonl",
+      "bytes": 12035235,
+      "sha256": "b8e78fe5d25ff64a1d6adfa02ea244ba0281388b4875c50e34269087e97e5cba"
+    },
+    {
+      "path": "/tmp/opencode/w0-prereq-interactions-before.jsonl",
+      "bytes": 82903,
+      "sha256": "a8eb005028eefca97d043e91a37299248cc7aff9a15538e7156cf0196ea0f0d9"
+    },
+    {
+      "path": "/tmp/opencode/w0-prereq-interactions-after-003.jsonl",
+      "bytes": 87927,
+      "sha256": "3280f2db9f0bf63f373ee66b86bc239cfb087907314b5746d0cd1181a0604ce1"
+    },
+    {
+      "path": "/tmp/opencode/w0-prereq-interactions-after-002.jsonl",
+      "bytes": 81384,
+      "sha256": "2c5f53a0e31bda8bf505f2b4d087d06f697967efb087e8a0db35110ba206d0f8"
+    }
+  ],
+  "identities": [
+    {
+      "artifact": "/tmp/opencode/w0-baseline-09505db-evidence/full-001.jsonl",
+      "type": "identity",
+      "root": "/tmp/opencode/complete-route-integration/interactive-explanation",
+      "source": {
+        "head": "09505db333598ac50553973b638872f039c4e7d4",
+        "status": "?? interactive-explanation/node_modules",
+        "digest": "c9ceecbd59f2a0df056035807e00fd4e3be69baea64060cde4436b2c1e64e9c4",
+        "fileCount": 6089
+      },
+      "baselineSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/complete-route-integration/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "/tmp/opencode/complete-route-integration/interactive-explanation",
+        "--output",
+        "/tmp/opencode/w0-baseline-09505db-evidence/full-001.jsonl"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4199/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 504,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "completion": {
+        "type": "complete",
+        "status": "failed-or-inconclusive",
+        "finishedAt": "2026-09-09T04:40:23.470Z"
+      }
+    },
+    {
+      "artifact": "/tmp/opencode/w0-geometry-9782bff-evidence/historical-all-001.jsonl",
+      "type": "identity",
+      "root": "/tmp/opencode/w0-baseline-historical-7c71c99/interactive-explanation",
+      "source": {
+        "head": "7c71c992be944895438ec2467d20f18a7ccd4a63",
+        "status": "",
+        "digest": "9d7439d50dde323cb8378b0965822396d11f4ff0d7fdfe3e9da93b20ea7c80c4",
+        "fileCount": 5684
+      },
+      "baselineSha256": "e768f3f173a354379abc776e429ee33ae70a3ad680ac3dfa94bb83017b43f901",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/complete-route-geometry/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "/tmp/opencode/w0-baseline-historical-7c71c99/interactive-explanation",
+        "--output",
+        "/tmp/opencode/w0-geometry-9782bff-evidence/historical-all-001.jsonl"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4207/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 504,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "completion": {
+        "type": "complete",
+        "status": "failed-or-inconclusive",
+        "finishedAt": "2026-09-09T05:47:14.833Z"
+      }
+    },
+    {
+      "artifact": "/tmp/opencode/w0-geometry-9782bff-evidence/historical-mlu-001.jsonl",
+      "type": "identity",
+      "root": "/tmp/opencode/w0-geometry-historical-34c9883/interactive-explanation",
+      "source": {
+        "head": "34c9883349913aaa604a52c506a7192bdd54799e",
+        "status": "",
+        "digest": "f8db765d245e363921a95640f178243191bf75f57829e68bbb9a560f644c173f",
+        "fileCount": 5684
+      },
+      "baselineSha256": "3f9d9c68c61fddb67d7a6325fca07c60f5d3399d3fe0f974088b315c421d636a",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/complete-route-geometry/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "/tmp/opencode/w0-geometry-historical-34c9883/interactive-explanation",
+        "--output",
+        "/tmp/opencode/w0-geometry-9782bff-evidence/historical-mlu-001.jsonl",
+        "--route",
+        "linear-regression",
+        "--route",
+        "logistic-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "roc-auc"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4207/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 24,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "completion": {
+        "type": "complete",
+        "status": "failed-or-inconclusive",
+        "finishedAt": "2026-09-09T05:49:41.274Z"
+      }
+    },
+    {
+      "artifact": "/tmp/opencode/w0-prereq-before.jsonl",
+      "type": "identity",
+      "root": "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation",
+      "source": {
+        "head": "9782bff540ece5b73527f9f5b23fa18a1e639d60",
+        "status": "?? interactive-explanation/node_modules",
+        "digest": "c9ceecbd59f2a0df056035807e00fd4e3be69baea64060cde4436b2c1e64e9c4",
+        "fileCount": 6089
+      },
+      "baselineSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation",
+        "--output",
+        "/tmp/opencode/w0-prereq-before.jsonl",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "decision-tree",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "markov-chains"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4211/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 54,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "completion": {
+        "type": "complete",
+        "status": "failed-or-inconclusive",
+        "finishedAt": "2026-09-09T06:49:14.103Z"
+      }
+    },
+    {
+      "artifact": "/tmp/opencode/w0-prereq-after.jsonl",
+      "type": "identity",
+      "root": "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation",
+      "source": {
+        "head": "9782bff540ece5b73527f9f5b23fa18a1e639d60",
+        "status": "M interactive-explanation/decision-tree/index.html\n M interactive-explanation/shared/prototype-visual.css\n?? .scratch/complete-route-experience/research/37-prerequisite-interactions.mjs\n?? interactive-explanation/node_modules",
+        "digest": "6b6cfe4379678d429bce4cb76e418b84ef4a4c51fc01ceaebaa604ad2492a684",
+        "fileCount": 6089
+      },
+      "baselineSha256": "414eb31e4edc67841c45e3847649dbdde61571304f00915d77777cb439e24109",
+      "command": [
+        "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+        "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "/tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation",
+        "--output",
+        "/tmp/opencode/w0-prereq-after.jsonl",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "decision-tree",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "markov-chains"
+      ],
+      "toolSha256": "cd86ced859e1d5af894c3fea960cc2c83c3f558f15fda0a0762d3de4b410ce69",
+      "smokeSha256": "ad33c3e7cade9c47f32de006508dbc4db798fcac3001621ab3a902e693db6386",
+      "node": "v24.20.0",
+      "os": {
+        "platform": "linux",
+        "release": "7.1.5-76070105-generic",
+        "arch": "x64"
+      },
+      "playwright": "1.60.0",
+      "baseUrl": "http://127.0.0.1:4211/interactive-explanation/",
+      "concurrency": 1,
+      "samplesPerCell": 3,
+      "cells": 54,
+      "cache": "fresh contexts; no-store server; OS cache uncontrolled",
+      "network": "existing smoke monitor; no interception",
+      "limitations": "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied",
+      "completion": {
+        "type": "complete",
+        "status": "failed-or-inconclusive",
+        "finishedAt": "2026-09-09T07:25:15.484Z"
+      }
+    }
+  ],
+  "sourceChanges": [
+    [
+      "decision-tree/index.html",
+      "63fbbf796f4e76fa33c48e4465725e6559aace9b832692c9f3edfbd05175cd5f"
+    ],
+    [
+      "shared/prototype-visual.css",
+      "6511565689d59e2c35dae0d6c9979402cc5e9d33ff30fd823ae95f1480c096d5"
+    ]
+  ],
+  "approved": [
+    {
+      "slug": "decision-tree",
+      "viewport": "mobile",
+      "samplesPerStage": 6,
+      "classification": "Two-stage original reference reconstruction then independently reviewed authored access fix",
+      "reconstruction": [
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/bottom",
+          "before": 27657.6875,
+          "after": 27295.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/height",
+          "before": 27657.6875,
+          "after": 27295.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/css/height",
+          "before": "27657.7px",
+          "after": "27295.3px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/aspectRatio",
+          "before": 0.014100961983896883,
+          "after": 0.014288192148707107,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/top",
+          "before": 1479.40625,
+          "after": 1458.75,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/right",
+          "before": -7.421875,
+          "after": -8.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/bottom",
+          "before": 1525.40625,
+          "after": 1504.75,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/left",
+          "before": -57.421875,
+          "after": -58.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/top",
+          "before": 1411.046875,
+          "after": 1390.390625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/bottom",
+          "before": 1761.046875,
+          "after": 1740.390625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/top",
+          "before": 2770.859375,
+          "after": 2776.109375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/bottom",
+          "before": 3178.578125,
+          "after": 3183.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/top",
+          "before": 3197.421875,
+          "after": 3202.671875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/bottom",
+          "before": 3491.859375,
+          "after": 3497.109375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/top",
+          "before": 10586.0625,
+          "after": 10452.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/bottom",
+          "before": 10965.859375,
+          "after": 10831.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/top",
+          "before": 14076.484375,
+          "after": 13909.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/bottom",
+          "before": 14369.46875,
+          "after": 14202.890625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/top",
+          "before": 14402.03125,
+          "after": 14235.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/bottom",
+          "before": 14695.015625,
+          "after": 14528.4375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/top",
+          "before": 18143.375,
+          "after": 17878.875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/bottom",
+          "before": 19994.484375,
+          "after": 19729.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/top",
+          "before": 21543.875,
+          "after": 21279.375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/bottom",
+          "before": 21764.609375,
+          "after": 21500.109375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/top",
+          "before": 21543.875,
+          "after": 21279.375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/bottom",
+          "before": 21768.1875,
+          "after": 21503.6875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/top",
+          "before": 21768.234375,
+          "after": 21503.734375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/bottom",
+          "before": 21988.96875,
+          "after": 21724.46875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/top",
+          "before": 21768.234375,
+          "after": 21503.734375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/bottom",
+          "before": 21992.546875,
+          "after": 21728.046875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/top",
+          "before": 21992.59375,
+          "after": 21728.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/bottom",
+          "before": 22213.328125,
+          "after": 21948.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/top",
+          "before": 21992.59375,
+          "after": 21728.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/bottom",
+          "before": 22216.90625,
+          "after": 21952.40625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/top",
+          "before": 22216.953125,
+          "after": 21952.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/bottom",
+          "before": 22437.6875,
+          "after": 22173.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/top",
+          "before": 22216.953125,
+          "after": 21952.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/bottom",
+          "before": 22441.265625,
+          "after": 22176.765625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/top",
+          "before": 22441.3125,
+          "after": 22176.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/bottom",
+          "before": 22662.046875,
+          "after": 22397.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/top",
+          "before": 22441.3125,
+          "after": 22176.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/bottom",
+          "before": 22665.625,
+          "after": 22401.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/top",
+          "before": 22665.671875,
+          "after": 22401.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/bottom",
+          "before": 22886.40625,
+          "after": 22621.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/top",
+          "before": 22665.671875,
+          "after": 22401.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/bottom",
+          "before": 22889.984375,
+          "after": 22625.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/top",
+          "before": 22890.03125,
+          "after": 22625.53125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/bottom",
+          "before": 23110.765625,
+          "after": 22846.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/top",
+          "before": 22890.03125,
+          "after": 22625.53125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/bottom",
+          "before": 23114.34375,
+          "after": 22849.84375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/top",
+          "before": 23114.390625,
+          "after": 22849.890625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/bottom",
+          "before": 23335.125,
+          "after": 23070.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/top",
+          "before": 23114.390625,
+          "after": 22849.890625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/bottom",
+          "before": 23338.703125,
+          "after": 23074.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/bottom",
+          "before": 27295.265625,
+          "after": 27291.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/height",
+          "before": 27295.265625,
+          "after": 27291.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/css/height",
+          "before": "27295.3px",
+          "after": "27291.3px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/aspectRatio",
+          "before": 0.014288192148707107,
+          "after": 0.014290261782023125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/top",
+          "before": 1458.75,
+          "after": 41.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/right",
+          "before": -8.8125,
+          "after": 220,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/bottom",
+          "before": 1504.75,
+          "after": 87.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/left",
+          "before": -58.8125,
+          "after": 170,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/top",
+          "before": 1390.390625,
+          "after": 1386.4375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/bottom",
+          "before": 1740.390625,
+          "after": 1736.4375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/top",
+          "before": 2776.109375,
+          "after": 2772.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/bottom",
+          "before": 3183.828125,
+          "after": 3179.875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/top",
+          "before": 3202.671875,
+          "after": 3198.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/bottom",
+          "before": 3497.109375,
+          "after": 3493.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/top",
+          "before": 10452.125,
+          "after": 10448.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/bottom",
+          "before": 10831.921875,
+          "after": 10827.96875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/top",
+          "before": 13909.90625,
+          "after": 13905.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/bottom",
+          "before": 14202.890625,
+          "after": 14198.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/top",
+          "before": 14235.453125,
+          "after": 14231.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/bottom",
+          "before": 14528.4375,
+          "after": 14524.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/top",
+          "before": 17878.875,
+          "after": 17874.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/bottom",
+          "before": 19729.984375,
+          "after": 19726.03125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/top",
+          "before": 21279.375,
+          "after": 21275.421875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/bottom",
+          "before": 21500.109375,
+          "after": 21496.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/top",
+          "before": 21279.375,
+          "after": 21275.421875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/bottom",
+          "before": 21503.6875,
+          "after": 21499.734375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/top",
+          "before": 21503.734375,
+          "after": 21499.78125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/bottom",
+          "before": 21724.46875,
+          "after": 21720.515625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/top",
+          "before": 21503.734375,
+          "after": 21499.78125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/bottom",
+          "before": 21728.046875,
+          "after": 21724.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/top",
+          "before": 21728.09375,
+          "after": 21724.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/bottom",
+          "before": 21948.828125,
+          "after": 21944.875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/top",
+          "before": 21728.09375,
+          "after": 21724.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/bottom",
+          "before": 21952.40625,
+          "after": 21948.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/top",
+          "before": 21952.453125,
+          "after": 21948.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/bottom",
+          "before": 22173.1875,
+          "after": 22169.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/top",
+          "before": 21952.453125,
+          "after": 21948.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/bottom",
+          "before": 22176.765625,
+          "after": 22172.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/top",
+          "before": 22176.8125,
+          "after": 22172.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/bottom",
+          "before": 22397.546875,
+          "after": 22393.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/top",
+          "before": 22176.8125,
+          "after": 22172.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/bottom",
+          "before": 22401.125,
+          "after": 22397.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/top",
+          "before": 22401.171875,
+          "after": 22397.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/bottom",
+          "before": 22621.90625,
+          "after": 22617.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/top",
+          "before": 22401.171875,
+          "after": 22397.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/bottom",
+          "before": 22625.484375,
+          "after": 22621.53125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/top",
+          "before": 22625.53125,
+          "after": 22621.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/bottom",
+          "before": 22846.265625,
+          "after": 22842.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/top",
+          "before": 22625.53125,
+          "after": 22621.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/bottom",
+          "before": 22849.84375,
+          "after": 22845.890625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/top",
+          "before": 22849.890625,
+          "after": 22845.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/bottom",
+          "before": 23070.625,
+          "after": 23066.671875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/top",
+          "before": 22849.890625,
+          "after": 22845.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/bottom",
+          "before": 23074.203125,
+          "after": 23070.25,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "changes": [
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/bottom",
+          "before": 27657.6875,
+          "after": 27291.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/rect/height",
+          "before": 27657.6875,
+          "after": 27291.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/css/height",
+          "before": "27657.7px",
+          "after": "27291.3px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/aspectRatio",
+          "before": 0.014100961983896883,
+          "after": 0.014290261782023125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/top",
+          "before": 1479.40625,
+          "after": 41.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/right",
+          "before": -7.421875,
+          "after": 220,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/bottom",
+          "before": 1525.40625,
+          "after": 87.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/0/rect/left",
+          "before": -57.421875,
+          "after": 170,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/top",
+          "before": 1411.046875,
+          "after": 1386.4375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/1/rect/bottom",
+          "before": 1761.046875,
+          "after": 1736.4375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/top",
+          "before": 2770.859375,
+          "after": 2772.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/2/rect/bottom",
+          "before": 3178.578125,
+          "after": 3179.875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/top",
+          "before": 3197.421875,
+          "after": 3198.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/3/rect/bottom",
+          "before": 3491.859375,
+          "after": 3493.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/top",
+          "before": 10586.0625,
+          "after": 10448.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/4/rect/bottom",
+          "before": 10965.859375,
+          "after": 10827.96875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/top",
+          "before": 14076.484375,
+          "after": 13905.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/5/rect/bottom",
+          "before": 14369.46875,
+          "after": 14198.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/top",
+          "before": 14402.03125,
+          "after": 14231.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/6/rect/bottom",
+          "before": 14695.015625,
+          "after": 14524.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/top",
+          "before": 18143.375,
+          "after": 17874.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/7/rect/bottom",
+          "before": 19994.484375,
+          "after": 19726.03125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/top",
+          "before": 21543.875,
+          "after": 21275.421875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/8/rect/bottom",
+          "before": 21764.609375,
+          "after": 21496.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/top",
+          "before": 21543.875,
+          "after": 21275.421875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/9/rect/bottom",
+          "before": 21768.1875,
+          "after": 21499.734375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/top",
+          "before": 21768.234375,
+          "after": 21499.78125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/10/rect/bottom",
+          "before": 21988.96875,
+          "after": 21720.515625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/top",
+          "before": 21768.234375,
+          "after": 21499.78125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/11/rect/bottom",
+          "before": 21992.546875,
+          "after": 21724.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/top",
+          "before": 21992.59375,
+          "after": 21724.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/12/rect/bottom",
+          "before": 22213.328125,
+          "after": 21944.875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/top",
+          "before": 21992.59375,
+          "after": 21724.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/13/rect/bottom",
+          "before": 22216.90625,
+          "after": 21948.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/top",
+          "before": 22216.953125,
+          "after": 21948.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/14/rect/bottom",
+          "before": 22437.6875,
+          "after": 22169.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/top",
+          "before": 22216.953125,
+          "after": 21948.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/15/rect/bottom",
+          "before": 22441.265625,
+          "after": 22172.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/top",
+          "before": 22441.3125,
+          "after": 22172.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/16/rect/bottom",
+          "before": 22662.046875,
+          "after": 22393.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/top",
+          "before": 22441.3125,
+          "after": 22172.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/17/rect/bottom",
+          "before": 22665.625,
+          "after": 22397.171875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/top",
+          "before": 22665.671875,
+          "after": 22397.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/18/rect/bottom",
+          "before": 22886.40625,
+          "after": 22617.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/top",
+          "before": 22665.671875,
+          "after": 22397.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/19/rect/bottom",
+          "before": 22889.984375,
+          "after": 22621.53125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/top",
+          "before": 22890.03125,
+          "after": 22621.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/20/rect/bottom",
+          "before": 23110.765625,
+          "after": 22842.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/top",
+          "before": 22890.03125,
+          "after": 22621.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/21/rect/bottom",
+          "before": 23114.34375,
+          "after": 22845.890625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/top",
+          "before": 23114.390625,
+          "after": 22845.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/22/rect/bottom",
+          "before": 23335.125,
+          "after": 23066.671875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/top",
+          "before": 23114.390625,
+          "after": 22845.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/mobile/intrinsic/23/rect/bottom",
+          "before": 23338.703125,
+          "after": 23070.25,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "decision-tree",
+      "viewport": "narrow",
+      "samplesPerStage": 6,
+      "classification": "Two-stage original reference reconstruction then independently reviewed authored access fix",
+      "reconstruction": [
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/bottom",
+          "before": 31430.375,
+          "after": 30984.296875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/height",
+          "before": 31430.375,
+          "after": 30984.296875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/css/height",
+          "before": "31430.4px",
+          "after": "30984.3px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/aspectRatio",
+          "before": 0.010181233917826306,
+          "after": 0.010327812223429711,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/right",
+          "before": -7.421875,
+          "after": -8.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/left",
+          "before": -57.421875,
+          "after": -58.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/top",
+          "before": 3054.875,
+          "after": 3110.6875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/bottom",
+          "before": 3462.59375,
+          "after": 3518.40625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/top",
+          "before": 3481.4375,
+          "after": 3537.25,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/bottom",
+          "before": 3775.875,
+          "after": 3831.6875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/top",
+          "before": 11704.140625,
+          "after": 11638.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/bottom",
+          "before": 12083.9375,
+          "after": 12018.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/top",
+          "before": 15961.484375,
+          "after": 15798.28125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/bottom",
+          "before": 16254.46875,
+          "after": 16091.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/top",
+          "before": 16287.03125,
+          "after": 16123.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/bottom",
+          "before": 16580.015625,
+          "after": 16416.8125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/top",
+          "before": 20838.921875,
+          "after": 20523.40625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/bottom",
+          "before": 22690.03125,
+          "after": 22374.515625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/top",
+          "before": 24533.1875,
+          "after": 24185.03125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/bottom",
+          "before": 24753.921875,
+          "after": 24405.765625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/top",
+          "before": 24533.1875,
+          "after": 24185.03125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/bottom",
+          "before": 24757.5,
+          "after": 24409.34375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/top",
+          "before": 24757.546875,
+          "after": 24409.390625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/bottom",
+          "before": 24978.28125,
+          "after": 24630.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/top",
+          "before": 24757.546875,
+          "after": 24409.390625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/bottom",
+          "before": 24981.859375,
+          "after": 24633.703125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/top",
+          "before": 24981.90625,
+          "after": 24633.75,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/bottom",
+          "before": 25202.640625,
+          "after": 24854.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/top",
+          "before": 24981.90625,
+          "after": 24633.75,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/bottom",
+          "before": 25206.21875,
+          "after": 24858.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/top",
+          "before": 25206.265625,
+          "after": 24858.109375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/bottom",
+          "before": 25427,
+          "after": 25078.84375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/top",
+          "before": 25206.265625,
+          "after": 24858.109375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/bottom",
+          "before": 25430.578125,
+          "after": 25082.421875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/top",
+          "before": 25430.625,
+          "after": 25082.46875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/bottom",
+          "before": 25651.359375,
+          "after": 25303.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/top",
+          "before": 25430.625,
+          "after": 25082.46875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/bottom",
+          "before": 25654.9375,
+          "after": 25306.78125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/top",
+          "before": 25654.984375,
+          "after": 25306.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/bottom",
+          "before": 25875.71875,
+          "after": 25527.5625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/top",
+          "before": 25654.984375,
+          "after": 25306.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/bottom",
+          "before": 25879.296875,
+          "after": 25531.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/top",
+          "before": 25879.34375,
+          "after": 25531.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/bottom",
+          "before": 26100.078125,
+          "after": 25751.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/top",
+          "before": 25879.34375,
+          "after": 25531.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/bottom",
+          "before": 26103.65625,
+          "after": 25755.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/top",
+          "before": 26103.703125,
+          "after": 25755.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/bottom",
+          "before": 26324.4375,
+          "after": 25976.28125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/top",
+          "before": 26103.703125,
+          "after": 25755.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/bottom",
+          "before": 26328.015625,
+          "after": 25979.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/bottom",
+          "before": 30984.296875,
+          "after": 31042.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/height",
+          "before": 30984.296875,
+          "after": 31042.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/css/height",
+          "before": "30984.3px",
+          "after": "31042.1px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/aspectRatio",
+          "before": 0.010327812223429711,
+          "after": 0.010308583002717076,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/top",
+          "before": 1673.703125,
+          "after": 41.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/right",
+          "before": -8.8125,
+          "after": 185,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/bottom",
+          "before": 1719.703125,
+          "after": 87.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/left",
+          "before": -58.8125,
+          "after": 135,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/1/rect/top",
+          "before": 1605.34375,
+          "after": 1663.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/1/rect/bottom",
+          "before": 1955.34375,
+          "after": 2013.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/top",
+          "before": 3110.6875,
+          "after": 3168.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/bottom",
+          "before": 3518.40625,
+          "after": 3576.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/top",
+          "before": 3537.25,
+          "after": 3595.046875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/bottom",
+          "before": 3831.6875,
+          "after": 3889.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/top",
+          "before": 11638.859375,
+          "after": 11696.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/bottom",
+          "before": 12018.65625,
+          "after": 12076.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/top",
+          "before": 15798.28125,
+          "after": 15856.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/bottom",
+          "before": 16091.265625,
+          "after": 16149.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/top",
+          "before": 16123.828125,
+          "after": 16181.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/bottom",
+          "before": 16416.8125,
+          "after": 16474.609375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/top",
+          "before": 20523.40625,
+          "after": 20581.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/bottom",
+          "before": 22374.515625,
+          "after": 22432.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/top",
+          "before": 24185.03125,
+          "after": 24242.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/bottom",
+          "before": 24405.765625,
+          "after": 24463.5625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/top",
+          "before": 24185.03125,
+          "after": 24242.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/bottom",
+          "before": 24409.34375,
+          "after": 24467.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/top",
+          "before": 24409.390625,
+          "after": 24467.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/bottom",
+          "before": 24630.125,
+          "after": 24687.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/top",
+          "before": 24409.390625,
+          "after": 24467.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/bottom",
+          "before": 24633.703125,
+          "after": 24691.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/top",
+          "before": 24633.75,
+          "after": 24691.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/bottom",
+          "before": 24854.484375,
+          "after": 24912.28125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/top",
+          "before": 24633.75,
+          "after": 24691.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/bottom",
+          "before": 24858.0625,
+          "after": 24915.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/top",
+          "before": 24858.109375,
+          "after": 24915.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/bottom",
+          "before": 25078.84375,
+          "after": 25136.640625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/top",
+          "before": 24858.109375,
+          "after": 24915.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/bottom",
+          "before": 25082.421875,
+          "after": 25140.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/top",
+          "before": 25082.46875,
+          "after": 25140.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/bottom",
+          "before": 25303.203125,
+          "after": 25361,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/top",
+          "before": 25082.46875,
+          "after": 25140.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/bottom",
+          "before": 25306.78125,
+          "after": 25364.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/top",
+          "before": 25306.828125,
+          "after": 25364.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/bottom",
+          "before": 25527.5625,
+          "after": 25585.359375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/top",
+          "before": 25306.828125,
+          "after": 25364.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/bottom",
+          "before": 25531.140625,
+          "after": 25588.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/top",
+          "before": 25531.1875,
+          "after": 25588.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/bottom",
+          "before": 25751.921875,
+          "after": 25809.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/top",
+          "before": 25531.1875,
+          "after": 25588.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/bottom",
+          "before": 25755.5,
+          "after": 25813.296875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/top",
+          "before": 25755.546875,
+          "after": 25813.34375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/bottom",
+          "before": 25976.28125,
+          "after": 26034.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/top",
+          "before": 25755.546875,
+          "after": 25813.34375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/bottom",
+          "before": 25979.859375,
+          "after": 26037.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "changes": [
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/bottom",
+          "before": 31430.375,
+          "after": 31042.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/rect/height",
+          "before": 31430.375,
+          "after": 31042.09375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/css/height",
+          "before": "31430.4px",
+          "after": "31042.1px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/aspectRatio",
+          "before": 0.010181233917826306,
+          "after": 0.010308583002717076,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/top",
+          "before": 1673.703125,
+          "after": 41.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/right",
+          "before": -7.421875,
+          "after": 185,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/bottom",
+          "before": 1719.703125,
+          "after": 87.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/0/rect/left",
+          "before": -57.421875,
+          "after": 135,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/1/rect/top",
+          "before": 1605.34375,
+          "after": 1663.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/1/rect/bottom",
+          "before": 1955.34375,
+          "after": 2013.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/top",
+          "before": 3054.875,
+          "after": 3168.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/2/rect/bottom",
+          "before": 3462.59375,
+          "after": 3576.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/top",
+          "before": 3481.4375,
+          "after": 3595.046875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/3/rect/bottom",
+          "before": 3775.875,
+          "after": 3889.484375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/top",
+          "before": 11704.140625,
+          "after": 11696.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/4/rect/bottom",
+          "before": 12083.9375,
+          "after": 12076.453125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/top",
+          "before": 15961.484375,
+          "after": 15856.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/5/rect/bottom",
+          "before": 16254.46875,
+          "after": 16149.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/top",
+          "before": 16287.03125,
+          "after": 16181.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/6/rect/bottom",
+          "before": 16580.015625,
+          "after": 16474.609375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/top",
+          "before": 20838.921875,
+          "after": 20581.203125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/7/rect/bottom",
+          "before": 22690.03125,
+          "after": 22432.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/top",
+          "before": 24533.1875,
+          "after": 24242.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/8/rect/bottom",
+          "before": 24753.921875,
+          "after": 24463.5625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/top",
+          "before": 24533.1875,
+          "after": 24242.828125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/9/rect/bottom",
+          "before": 24757.5,
+          "after": 24467.140625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/top",
+          "before": 24757.546875,
+          "after": 24467.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/10/rect/bottom",
+          "before": 24978.28125,
+          "after": 24687.921875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/top",
+          "before": 24757.546875,
+          "after": 24467.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/11/rect/bottom",
+          "before": 24981.859375,
+          "after": 24691.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/top",
+          "before": 24981.90625,
+          "after": 24691.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/12/rect/bottom",
+          "before": 25202.640625,
+          "after": 24912.28125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/top",
+          "before": 24981.90625,
+          "after": 24691.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/13/rect/bottom",
+          "before": 25206.21875,
+          "after": 24915.859375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/top",
+          "before": 25206.265625,
+          "after": 24915.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/14/rect/bottom",
+          "before": 25427,
+          "after": 25136.640625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/top",
+          "before": 25206.265625,
+          "after": 24915.90625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/15/rect/bottom",
+          "before": 25430.578125,
+          "after": 25140.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/top",
+          "before": 25430.625,
+          "after": 25140.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/16/rect/bottom",
+          "before": 25651.359375,
+          "after": 25361,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/top",
+          "before": 25430.625,
+          "after": 25140.265625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/17/rect/bottom",
+          "before": 25654.9375,
+          "after": 25364.578125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/top",
+          "before": 25654.984375,
+          "after": 25364.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/18/rect/bottom",
+          "before": 25875.71875,
+          "after": 25585.359375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/top",
+          "before": 25654.984375,
+          "after": 25364.625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/19/rect/bottom",
+          "before": 25879.296875,
+          "after": 25588.9375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/top",
+          "before": 25879.34375,
+          "after": 25588.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/20/rect/bottom",
+          "before": 26100.078125,
+          "after": 25809.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/top",
+          "before": 25879.34375,
+          "after": 25588.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/21/rect/bottom",
+          "before": 26103.65625,
+          "after": 25813.296875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/top",
+          "before": 26103.703125,
+          "after": 25813.34375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/22/rect/bottom",
+          "before": 26324.4375,
+          "after": 26034.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/top",
+          "before": 26103.703125,
+          "after": 25813.34375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/decision-tree/geometry/narrow/intrinsic/23/rect/bottom",
+          "before": 26328.015625,
+          "after": 26037.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-get-started",
+      "viewport": "narrow",
+      "samplesPerStage": 6,
+      "classification": "Two-stage original reference reconstruction then independently reviewed authored access fix",
+      "reconstruction": [
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/bottom",
+          "before": 2489.21875,
+          "after": 2550.40625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/height",
+          "before": 2489.03125,
+          "after": 2550.21875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/css/height",
+          "before": "2489.03px",
+          "after": "2550.22px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/aspectRatio",
+          "before": 0.12856407487852956,
+          "after": 0.12547943191147817,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/bottom",
+          "before": 2550.40625,
+          "after": 2528.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/height",
+          "before": 2550.21875,
+          "after": 2528.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/css/height",
+          "before": "2550.22px",
+          "after": "2528.12px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/aspectRatio",
+          "before": 0.12547943191147817,
+          "after": 0.1265760197775031,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/bottom",
+          "before": 2489.21875,
+          "after": 2528.3125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/rect/height",
+          "before": 2489.03125,
+          "after": 2528.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/css/height",
+          "before": "2489.03px",
+          "after": "2528.12px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-get-started/geometry/narrow/aspectRatio",
+          "before": 0.12856407487852956,
+          "after": 0.1265760197775031,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "ableton-learning-synths-matching-envelopes",
+      "viewport": "narrow",
+      "samplesPerStage": 6,
+      "classification": "Two-stage original reference reconstruction then independently reviewed authored access fix",
+      "reconstruction": [
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/bottom",
+          "before": 3582.15625,
+          "after": 3612.75,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/height",
+          "before": 3581.96875,
+          "after": 3612.5625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/css/height",
+          "before": "3581.97px",
+          "after": "3612.56px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/aspectRatio",
+          "before": 0.08933634610854715,
+          "after": 0.08857978235670663,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/9/rect/top",
+          "before": 1342.53125,
+          "after": 1373.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/9/rect/bottom",
+          "before": 1450.53125,
+          "after": 1481.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/10/rect/top",
+          "before": 1397.53125,
+          "after": 1428.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/10/rect/bottom",
+          "before": 1445.53125,
+          "after": 1476.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/11/rect/top",
+          "before": 1421.53125,
+          "after": 1452.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/11/rect/bottom",
+          "before": 1421.53125,
+          "after": 1452.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/12/rect/top",
+          "before": 1504.53125,
+          "after": 1535.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/12/rect/bottom",
+          "before": 1654.53125,
+          "after": 1685.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/13/rect/top",
+          "before": 1558.53125,
+          "after": 1589.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/13/rect/bottom",
+          "before": 1606.53125,
+          "after": 1637.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/14/rect/top",
+          "before": 1440.53125,
+          "after": 1471.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/14/rect/bottom",
+          "before": 1568.53125,
+          "after": 1599.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/15/rect/top",
+          "before": 1440.53125,
+          "after": 1471.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/15/rect/bottom",
+          "before": 1568.53125,
+          "after": 1599.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/16/rect/top",
+          "before": 1548.53125,
+          "after": 1579.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/16/rect/bottom",
+          "before": 1676.53125,
+          "after": 1707.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/17/rect/top",
+          "before": 2377.46875,
+          "after": 2408.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/17/rect/bottom",
+          "before": 2485.46875,
+          "after": 2516.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/18/rect/top",
+          "before": 2432.46875,
+          "after": 2463.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/18/rect/bottom",
+          "before": 2480.46875,
+          "after": 2511.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/19/rect/top",
+          "before": 2456.46875,
+          "after": 2487.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/19/rect/bottom",
+          "before": 2456.46875,
+          "after": 2487.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/20/rect/top",
+          "before": 2539.46875,
+          "after": 2570.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/20/rect/bottom",
+          "before": 2689.46875,
+          "after": 2720.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/21/rect/top",
+          "before": 2593.46875,
+          "after": 2624.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/21/rect/bottom",
+          "before": 2641.46875,
+          "after": 2672.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/22/rect/top",
+          "before": 2475.46875,
+          "after": 2506.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/22/rect/bottom",
+          "before": 2603.46875,
+          "after": 2634.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/23/rect/top",
+          "before": 2538.46875,
+          "after": 2569.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/23/rect/bottom",
+          "before": 2666.46875,
+          "after": 2697.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/24/rect/top",
+          "before": 2583.46875,
+          "after": 2614.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/24/rect/bottom",
+          "before": 2711.46875,
+          "after": 2742.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/bottom",
+          "before": 3612.75,
+          "after": 3590.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/height",
+          "before": 3612.5625,
+          "after": 3590.46875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/css/height",
+          "before": "3612.56px",
+          "after": "3590.47px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/aspectRatio",
+          "before": 0.08857978235670663,
+          "after": 0.08912485312676792,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "changes": [
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/bottom",
+          "before": 3582.15625,
+          "after": 3590.65625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/rect/height",
+          "before": 3581.96875,
+          "after": 3590.46875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/css/height",
+          "before": "3581.97px",
+          "after": "3590.47px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/aspectRatio",
+          "before": 0.08933634610854715,
+          "after": 0.08912485312676792,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/9/rect/top",
+          "before": 1342.53125,
+          "after": 1373.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/9/rect/bottom",
+          "before": 1450.53125,
+          "after": 1481.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/10/rect/top",
+          "before": 1397.53125,
+          "after": 1428.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/10/rect/bottom",
+          "before": 1445.53125,
+          "after": 1476.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/11/rect/top",
+          "before": 1421.53125,
+          "after": 1452.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/11/rect/bottom",
+          "before": 1421.53125,
+          "after": 1452.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/12/rect/top",
+          "before": 1504.53125,
+          "after": 1535.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/12/rect/bottom",
+          "before": 1654.53125,
+          "after": 1685.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/13/rect/top",
+          "before": 1558.53125,
+          "after": 1589.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/13/rect/bottom",
+          "before": 1606.53125,
+          "after": 1637.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/14/rect/top",
+          "before": 1440.53125,
+          "after": 1471.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/14/rect/bottom",
+          "before": 1568.53125,
+          "after": 1599.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/15/rect/top",
+          "before": 1440.53125,
+          "after": 1471.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/15/rect/bottom",
+          "before": 1568.53125,
+          "after": 1599.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/16/rect/top",
+          "before": 1548.53125,
+          "after": 1579.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/16/rect/bottom",
+          "before": 1676.53125,
+          "after": 1707.125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/17/rect/top",
+          "before": 2377.46875,
+          "after": 2408.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/17/rect/bottom",
+          "before": 2485.46875,
+          "after": 2516.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/18/rect/top",
+          "before": 2432.46875,
+          "after": 2463.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/18/rect/bottom",
+          "before": 2480.46875,
+          "after": 2511.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/19/rect/top",
+          "before": 2456.46875,
+          "after": 2487.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/19/rect/bottom",
+          "before": 2456.46875,
+          "after": 2487.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/20/rect/top",
+          "before": 2539.46875,
+          "after": 2570.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/20/rect/bottom",
+          "before": 2689.46875,
+          "after": 2720.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/21/rect/top",
+          "before": 2593.46875,
+          "after": 2624.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/21/rect/bottom",
+          "before": 2641.46875,
+          "after": 2672.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/22/rect/top",
+          "before": 2475.46875,
+          "after": 2506.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/22/rect/bottom",
+          "before": 2603.46875,
+          "after": 2634.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/23/rect/top",
+          "before": 2538.46875,
+          "after": 2569.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/23/rect/bottom",
+          "before": 2666.46875,
+          "after": 2697.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/24/rect/top",
+          "before": 2583.46875,
+          "after": 2614.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/ableton-learning-synths-matching-envelopes/geometry/narrow/intrinsic/24/rect/bottom",
+          "before": 2711.46875,
+          "after": 2742.0625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "mobile",
+      "samplesPerStage": 6,
+      "classification": "Exact initial child-document cancellation classified; historical/full/paired geometry equal; 18 successful child tasks across three viewports; no network policy change",
+      "reconstruction": [
+        {
+          "path": "/routes/markov-chains/geometry/mobile/rect/bottom",
+          "before": 6411.8125,
+          "after": 6534.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/rect/height",
+          "before": 6411.625,
+          "after": 6534,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/css/height",
+          "before": "6411.62px",
+          "after": "6534px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/aspectRatio",
+          "before": 0.05833154621488312,
+          "after": 0.05723905723905724,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/0/rect/top",
+          "before": 2152.53125,
+          "after": 2213.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/0/rect/bottom",
+          "before": 2382.53125,
+          "after": 2443.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/1/rect/top",
+          "before": 3048.40625,
+          "after": 3109.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/1/rect/bottom",
+          "before": 3268.40625,
+          "after": 3329.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/2/rect/top",
+          "before": 4754.375,
+          "after": 4846.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/2/rect/bottom",
+          "before": 4974.375,
+          "after": 5066.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/3/rect/top",
+          "before": 5265.125,
+          "after": 5387.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/3/rect/bottom",
+          "before": 5765.125,
+          "after": 5887.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [],
+      "changes": [
+        {
+          "path": "/routes/markov-chains/geometry/mobile/rect/bottom",
+          "before": 6411.8125,
+          "after": 6534.1875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/rect/height",
+          "before": 6411.625,
+          "after": 6534,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/css/height",
+          "before": "6411.62px",
+          "after": "6534px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/aspectRatio",
+          "before": 0.05833154621488312,
+          "after": 0.05723905723905724,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/0/rect/top",
+          "before": 2152.53125,
+          "after": 2213.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/0/rect/bottom",
+          "before": 2382.53125,
+          "after": 2443.71875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/1/rect/top",
+          "before": 3048.40625,
+          "after": 3109.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/1/rect/bottom",
+          "before": 3268.40625,
+          "after": 3329.59375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/2/rect/top",
+          "before": 4754.375,
+          "after": 4846.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/2/rect/bottom",
+          "before": 4974.375,
+          "after": 5066.15625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/3/rect/top",
+          "before": 5265.125,
+          "after": 5387.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/mobile/intrinsic/3/rect/bottom",
+          "before": 5765.125,
+          "after": 5887.5,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    },
+    {
+      "slug": "markov-chains",
+      "viewport": "narrow",
+      "samplesPerStage": 6,
+      "classification": "Exact initial child-document cancellation classified; historical/full/paired geometry equal; 18 successful child tasks across three viewports; no network policy change",
+      "reconstruction": [
+        {
+          "path": "/routes/markov-chains/geometry/narrow/rect/bottom",
+          "before": 7446.09375,
+          "after": 7513.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/rect/height",
+          "before": 7445.90625,
+          "after": 7513.765625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/css/height",
+          "before": "7445.91px",
+          "after": "7513.77px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/aspectRatio",
+          "before": 0.0408278038687366,
+          "after": 0.04045907407445917,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/0/rect/top",
+          "before": 2697.3125,
+          "after": 2703.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/0/rect/bottom",
+          "before": 2927.3125,
+          "after": 2933.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/1/rect/top",
+          "before": 3684.96875,
+          "after": 3722.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/1/rect/bottom",
+          "before": 3904.96875,
+          "after": 3942.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/2/rect/top",
+          "before": 5666.28125,
+          "after": 5703.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/2/rect/bottom",
+          "before": 5886.28125,
+          "after": 5923.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/3/rect/top",
+          "before": 6238.21875,
+          "after": 6306.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/3/rect/bottom",
+          "before": 6738.21875,
+          "after": 6806.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ],
+      "authoredDelta": [],
+      "changes": [
+        {
+          "path": "/routes/markov-chains/geometry/narrow/rect/bottom",
+          "before": 7446.09375,
+          "after": 7513.953125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/rect/height",
+          "before": 7445.90625,
+          "after": 7513.765625,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/css/height",
+          "before": "7445.91px",
+          "after": "7513.77px",
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/aspectRatio",
+          "before": 0.0408278038687366,
+          "after": 0.04045907407445917,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/0/rect/top",
+          "before": 2697.3125,
+          "after": 2703.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/0/rect/bottom",
+          "before": 2927.3125,
+          "after": 2933.984375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/1/rect/top",
+          "before": 3684.96875,
+          "after": 3722.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/1/rect/bottom",
+          "before": 3904.96875,
+          "after": 3942.234375,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/2/rect/top",
+          "before": 5666.28125,
+          "after": 5703.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/2/rect/bottom",
+          "before": 5886.28125,
+          "after": 5923.546875,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/3/rect/top",
+          "before": 6238.21875,
+          "after": 6306.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        },
+        {
+          "path": "/routes/markov-chains/geometry/narrow/intrinsic/3/rect/bottom",
+          "before": 6738.21875,
+          "after": 6806.078125,
+          "review": "agent-reviewed exact geometry only; not route acceptance"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    {
+      "slug": "markov-chains",
+      "viewport": "desktop",
+      "samplesPerStage": 6,
+      "classification": "Exact initial child-document cancellation classified; historical/full/paired geometry equal; 18 successful child tasks across three viewports; no network policy change",
+      "reconstruction": [],
+      "authoredDelta": [],
+      "changes": []
+    }
+  ],
+  "deferred": [
+    {
+      "slug": "remember",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 26,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "26px captured overflow without paired fix"
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "desktop",
+      "stable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix; Historical/current equality not established"
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "mobile",
+      "stable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix; Historical/current equality not established"
+    },
+    {
+      "slug": "covid-19",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": false,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix; Historical/current equality not established"
+    },
+    {
+      "slug": "sim",
+      "viewport": "mobile",
+      "stable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "Capture not qualified stable; Historical/current equality not established"
+    },
+    {
+      "slug": "sim",
+      "viewport": "narrow",
+      "stable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "Capture not qualified stable; Historical/current equality not established"
+    },
+    {
+      "slug": "exponentiation",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 33,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "33px captured overflow without paired fix"
+    },
+    {
+      "slug": "public-private-keys",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix"
+    },
+    {
+      "slug": "reading-qr-codes-without-a-computer",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 35,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "35px captured overflow without paired fix"
+    },
+    {
+      "slug": "linear-regression",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 19,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "19px captured overflow without paired fix"
+    },
+    {
+      "slug": "precision-recall",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 4,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "4px captured overflow without paired fix"
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "mobile",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix"
+    },
+    {
+      "slug": "train-test-validation",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix"
+    },
+    {
+      "slug": "memory-allocation",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 8,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "8px captured overflow without paired fix"
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "desktop",
+      "stable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "Retained Page not found/hydration initialization errors; no successful source rebuild"
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "mobile",
+      "stable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "Retained Page not found/hydration initialization errors; no successful source rebuild"
+    },
+    {
+      "slug": "rigid-body-collisions",
+      "viewport": "narrow",
+      "stable": false,
+      "historicalEqual": false,
+      "overflow": 0,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "Retained Page not found/hydration initialization errors; no successful source rebuild"
+    },
+    {
+      "slug": "blockchain-101-combined-flow",
+      "viewport": "narrow",
+      "stable": true,
+      "historicalEqual": true,
+      "overflow": 2,
+      "accessReview": false,
+      "protectedChanges": 0,
+      "reason": "2px captured overflow without paired fix"
+    }
+  ],
+  "limitations": "Raw failed/inconclusive statuses and failed interaction run002 retained, not pooled into success. Historical timing unqualified; no performance updates. 34c9883 MLU capture retained and hashed, not evidence for these seven cells. External raw paths required to rerun; no wildcard cancellation allowance. Existing gate reports remain historical failures; fresh smoke deferred under exclusive browser restriction."
+}

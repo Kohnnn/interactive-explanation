@@ -22,11 +22,44 @@
   <script src="../shared/theme-init.js"></script>
   <link rel="stylesheet" href="./main.67dee0d6.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
-  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <script defer src="./js.6c47f979.js"></script>
   <script defer src="./roughAnnotations.51d9685b.js"></script>
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script defer src="../shared/public-footer.js"></script>
+  <style>
+    body[data-story-route="train-test-validation"] #scrolly > article > section > p {
+      box-sizing: border-box;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+  </style>
+  <style>
+    @media (max-width: 750px) {
+      body[data-story-shell="engineering-sandbox"][data-story-family="mlu-pilot"][data-story-route="train-test-validation"][data-story-nav="native"] header {
+        top: 4.5rem;
+      }
+
+      body[data-story-route="train-test-validation"] #scrolly {
+        isolation: isolate;
+      }
+
+      body[data-story-route="train-test-validation"] #scrolly > article {
+        z-index: 0;
+      }
+
+      body[data-story-route="train-test-validation"] #scrolly > figure {
+        top: 11rem;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      body[data-story-route="train-test-validation"] #main-wrapper {
+        background: #faf5e8;
+        pointer-events: auto;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/train-test-validation/"
@@ -136,7 +169,7 @@
 
     <figure>
       <div id="main-wrapper">
-        <div class="button-container">
+        <div class="button-container" inert>
           <p>Model Features:</p>
           <button class="button" value="neither">None</button>
           <button class="active button" value="weight">Weight</button>

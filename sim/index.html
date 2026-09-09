@@ -26,6 +26,40 @@
 	<link rel="stylesheet" type="text/css" href="styles/model.css">
 	<link rel="stylesheet" type="text/css" href="styles/perfect-scrollbar.min.css">
 	<link rel="stylesheet" href="../shared/public-footer.css">
+	<style>
+		body[data-story-route="sim"] {
+			margin: 0;
+			padding: 0;
+		}
+		main[data-runtime-main] {
+			min-height: 100vh;
+		}
+		#grid_container {
+			width: calc(100% - max(40%, 340px)) !important;
+			height: calc(100vh - 60px) !important;
+		}
+		#editor_container {
+			top: 0;
+		}
+		#editor textarea {
+			box-sizing: border-box;
+		}
+		#grid_bg {
+			border: 0;
+			outline: 1px solid #eee;
+			outline-offset: -1px;
+		}
+		@media (max-width: 520px) {
+			#grid_container {
+				position: relative;
+				width: calc(100% - 2px) !important;
+				height: 52vh !important;
+			}
+			#play_container {
+				width: 100% !important;
+			}
+		}
+	</style>
 	<link rel="stylesheet" href="../shared/engineering-sandbox.css">
 	<script defer src="../shared/engineering-sandbox.js"></script>
 
@@ -101,3 +135,16 @@
 <script src="scripts/emoji/emojiTest.js"></script>
 <script src="scripts/libraries/emojiFallback.js"></script>
 <script src="../shared/public-footer.js"></script>
+<script>
+	async function settleEditorTypography() {
+		const main = document.querySelector("main[data-runtime-main]");
+		if (!main) return;
+		main.setAttribute("aria-busy", "true");
+		await new Promise((resolve) => requestAnimationFrame(resolve));
+		await document.fonts.ready;
+		publish("ui/resize");
+		main.setAttribute("aria-busy", "false");
+	}
+	subscribe("/model/init", settleEditorTypography);
+	if (Model.data.states) settleEditorTypography();
+</script>

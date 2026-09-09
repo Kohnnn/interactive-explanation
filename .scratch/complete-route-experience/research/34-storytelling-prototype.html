@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" class="sp-root">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Question, action, reason — disposable storytelling prototype 34</title>
+<script>
+const systemTheme = matchMedia("(prefers-color-scheme: dark)");
+document.documentElement.setAttribute("saved-theme", systemTheme.matches ? "dark" : "light");
+</script>
+<style>
+.sp-root { --sp-bg: #f5f7fa; --sp-surface: #ffffff; --sp-text: #17202d; --sp-muted: #526174; --sp-rule: #748297; --sp-action: #a33d00; --sp-on-action: #ffffff; --sp-data: #185abd; color-scheme: light; }
+.sp-root[saved-theme="dark"] { --sp-bg: #0b1018; --sp-surface: #141d2a; --sp-text: #eef3f8; --sp-muted: #b2bfd0; --sp-rule: #718299; --sp-action: #ff9b55; --sp-on-action: #0b1018; --sp-data: #81b6ff; color-scheme: dark; }
+body { margin: 0; background: var(--sp-bg); color: var(--sp-text); font: 16px/1.65 system-ui, "Segoe UI", sans-serif; }
+* { box-sizing: border-box; min-width: 0; }
+.shell { width: min(1200px, calc(100% - 32px)); margin: auto; padding-bottom: 48px; }
+header, .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+header { justify-content: space-between; padding: 24px 0; border-bottom: 1px solid var(--sp-rule); }
+h1 { font: 500 clamp(2.25rem, 4.5vw, 4.6rem)/1.08 Georgia, serif; max-width: 18ch; }
+h2 { font: 500 clamp(1.65rem, 2.5vw, 2.3rem)/1.2 Georgia, serif; }
+h3 { font-size: 1.08rem; }
+p, h1, h2, h3, output { overflow-wrap: anywhere; }
+.meta { font: .8rem/1.6 ui-monospace, Consolas, monospace; color: var(--sp-muted); text-transform: uppercase; letter-spacing: .05em; }
+.layout { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(240px, 1fr); gap: 48px; }
+section, aside, footer { border-top: 1px solid var(--sp-rule); padding: 24px 0; }
+button, summary, a { min-height: 44px; min-width: 44px; }
+button { font: inherit; padding: 8px 12px; border: 1px solid var(--sp-rule); border-radius: 4px; background: var(--sp-surface); color: var(--sp-text); cursor: pointer; max-width: 100%; }
+#theme { background: var(--sp-action); color: var(--sp-on-action); border-color: var(--sp-action); }
+a { display: inline-flex; align-items: center; color: var(--sp-action); text-underline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--sp-data); outline-offset: 4px; }
+output { display: block; border-left: 3px solid var(--sp-data); padding: 12px; margin: 16px 0; color: var(--sp-data); }
+.receipt { background: var(--sp-surface); border: 1px solid var(--sp-rule); padding: 12px; margin: 12px 0; }
+summary { cursor: pointer; padding: 8px 0; }
+@media (max-width: 800px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+<header><strong>QUESTION NOTES / 34</strong><button type="button" id="theme">Switch theme</button></header>
+<p class="meta">Editorial brief A · disposable · agent-selected, NOT human approved</p>
+<h1>What did your action actually show?</h1>
+<p>Can a shared voice support an essay, a direct-action lab, and a short practice prompt without making them the same lesson? Try three independent teaching toys. Learning gain is a hypothesis, not a measured result.</p>
+<p>No production engine integration. No saved progress, scoring, audio, or external resources. Theme and answers live only in memory.</p>
+<div class="layout"><main>
+<section id="essay" aria-labelledby="essay-title">
+<p class="meta">Essay / compare before concluding</p><h2 id="essay-title">Can two different mistakes cost the same?</h2>
+<p>At one fixed input, the deterministic target is 10. Treat four predictions as equally weighted repeated fits. Choose a set, then inspect where its squared error comes from.</p>
+<div class="actions"><button type="button" id="stable">Stable but shifted</button><button type="button" id="variable">Centered but variable</button><button type="button" id="essay-reset">Reset essay</button></div>
+<output id="essay-values" aria-live="polite" aria-atomic="true"></output>
+<p>Interpret this result:</p><div class="actions"><button type="button" id="equal">Equal MSE can hide different errors</button><button type="button" id="center">Centered means zero MSE</button></div>
+<output id="essay-feedback" aria-live="polite" aria-atomic="true"></output>
+<details><summary>Hint and scope</summary><p>Mean squared error averages squared distances from 10. Squared bias is the squared distance of the mean from 10; variance averages squared distances from that mean, dividing by 4, not 3. These empirical quantities satisfy MSE = squared bias + variance over the chosen sample. Irreducible noise is absent in this deterministic toy.</p><p>This is not a generalization proof or a population estimate. No complexity control is modeled: increasing complexity does not always lower bias or raise variance.</p></details>
+<p><strong>Optional transfer:</strong> What happens for [10, 10, 10, 10]? Which error components disappear?</p>
+</section>
+<section id="lab" aria-labelledby="lab-title">
+<p class="meta">Lab / act first</p><h2 id="lab-title">Change receipt 1. What needs checking again?</h2>
+<p>Illustrative link state, no mining/hashing. This NON-cryptographic toy marks a changed receipt and every descendant invalid. Repair means acknowledging the new link in order, not proving truth or security.</p>
+<div class="receipt"><h3>Receipt 1 · start</h3><p id="receipt-0"></p><div class="actions"><button type="button" data-change="0">Change receipt 1</button><button type="button" data-repair="0">Repair receipt 1</button></div></div>
+<div class="receipt"><h3>Receipt 2 · follows receipt 1</h3><p id="receipt-1"></p><div class="actions"><button type="button" data-change="1">Change receipt 2</button><button type="button" data-repair="1">Repair receipt 2</button></div></div>
+<div class="receipt"><h3>Receipt 3 · follows receipt 2</h3><p id="receipt-2"></p><div class="actions"><button type="button" data-change="2">Change receipt 3</button><button type="button" data-repair="2">Repair receipt 3</button></div></div>
+<button type="button" id="lab-reset">Reset lab</button><output id="lab-feedback" aria-live="polite" aria-atomic="true"></output>
+<details><summary>Hint: try repairing out of order</summary><p>Change receipt 1, then try repairing receipt 3. A stale predecessor blocks repair. Repair 1, 2, then 3. “Valid” only means this toy's link checks are current; anyone can repair them. No cryptographic protection, mining, distributed consensus, or authenticity is demonstrated.</p></details>
+<p><strong>Optional transfer:</strong> Reset, then change only receipt 3. Why do receipts 1 and 2 stay valid?</p>
+</section>
+<section id="practice" aria-labelledby="practice-title">
+<p class="meta">Practice / answer now</p><h2 id="practice-title">D major: spell the third degree.</h2>
+<div class="actions"><button type="button" id="sharp" aria-label="F sharp">F#</button><button type="button" id="flat" aria-label="G flat">Gb</button><button type="button" id="practice-reset">Reset practice</button></div>
+<output id="practice-feedback" aria-live="polite" aria-atomic="true"></output>
+<details><summary>Hint: keep the letter sequence</summary><p>Use each letter once before repeating the tonic: D E F G A B C D. Major-scale steps are 2–2–1–2–2–2–1 semitones. From E, the next whole step needs an F with a sharp.</p></details>
+<p><strong>Optional transfer:</strong> Why is the seventh degree C# rather than Db? This is spelling practice only; no audio plays.</p>
+</section>
+</main><aside aria-label="Independent lesson choices"><h2>Choose your intent</h2><p>Each section stands alone. Practice needs no long-form chapter sequence.</p><nav aria-label="Prototype sections"><a href="#essay">Essay: compare errors</a><br><a href="#lab">Lab: disturb a link</a><br><a href="#practice">Practice: spell a degree</a></nav><p>Shared voice: concrete question, learner action, observed consequence, concise reason, optional transfer. Order and length follow the intent, not a mandatory script.</p><p>Reset restores that lesson's initial answers and closes its hint. Reload resets all lessons and follows the system theme.</p></aside></div>
+<footer><h2>Authorship boundary</h2><p>Original prompts, explanations, arrays, and receipt toy; no copied engine or source prose. Local provenance and the agent decision are recorded in the companion 34-storytelling-prototype.md report. This is not a licensed-source rewrite claim or validation of real learners, production routes, or opaque runtimes.</p></footer>
+</div>
+<script id="logic">
+function summarize(predictions, target = 10) {
+  if (!Array.isArray(predictions) || !predictions.length || !predictions.every(Number.isFinite) || !Number.isFinite(target)) throw new TypeError("Finite predictions and target required");
+  const mean = predictions.reduce((sum, value) => sum + value, 0) / predictions.length;
+  const squaredBias = (mean - target) ** 2;
+  const variance = predictions.reduce((sum, value) => sum + (value - mean) ** 2, 0) / predictions.length;
+  const mse = predictions.reduce((sum, value) => sum + (value - target) ** 2, 0) / predictions.length;
+  return { mean, squaredBias, variance, mse };
+}
+function initialReceipts() { return [{ revision: 1, valid: true }, { revision: 1, valid: true }, { revision: 1, valid: true }]; }
+function receiptStep(state, action, index) {
+  if (!Array.isArray(state) || state.length !== 3 || !state.every(item => Number.isInteger(item.revision) && item.revision > 0 && typeof item.valid === "boolean") || !["change", "repair"].includes(action) || !Number.isInteger(index) || index < 0 || index > 2) throw new TypeError("Invalid receipt action or state");
+  if (action === "repair" && state.slice(0, index).some(item => !item.valid)) return { state, message: `Blocked: repair earlier invalid receipts before receipt ${index + 1}. No state changed.` };
+  const next = state.map((item, position) => ({ revision: item.revision + (action === "change" && position === index ? 1 : 0), valid: action === "change" && position >= index ? false : action === "repair" && position === index ? true : item.valid }));
+  return { state: next, message: action === "change" ? `Changed receipt ${index + 1}; it and its descendants are invalid because their illustrative link checks are stale.` : `Receipt ${index + 1} is valid in this toy. Descendants still need their own checks if invalid. This is not a security guarantee.` };
+}
+function spellDegree(choice) {
+  if (!["F#", "Gb"].includes(choice)) throw new TypeError("Unknown spelling choice");
+  return choice === "F#" ? "Correct: F# keeps one of each letter before the tonic repeats: D E F# G A B C# D. Steps: 2–2–1–2–2–2–1 semitones." : "Try again: Gb sounds like F# in twelve-tone equal temperament, but repeats G and omits F here. The third degree needs the letter F; choose F# to preserve the major-scale spelling and semitone pattern.";
+}
+</script>
+<script>
+const get = id => document.getElementById(id);
+const listen = (id, handler) => get(id)?.addEventListener("click", handler);
+const show = (id, text) => { const element = get(id); if (element) element.textContent = text; };
+const closeHint = id => { const hint = get(id)?.querySelector("details"); if (hint) hint.open = false; };
+let receipts = initialReceipts();
+let themeOverride = false;
+function renderTheme() {
+  show("theme", `Switch to ${document.documentElement.getAttribute("saved-theme") === "dark" ? "light" : "dark"} theme`);
+}
+listen("theme", () => {
+  themeOverride = true;
+  const root = document.documentElement;
+  root.setAttribute("saved-theme", root.getAttribute("saved-theme") === "dark" ? "light" : "dark");
+  renderTheme();
+});
+systemTheme.addEventListener("change", event => {
+  if (!themeOverride) { document.documentElement.setAttribute("saved-theme", event.matches ? "dark" : "light"); renderTheme(); }
+});
+function choosePredictions(predictions, label) {
+  const result = summarize(predictions);
+  show("essay-values", `${label}: [${predictions.join(", ")}]. Target 10; mean ${result.mean}; squared bias ${result.squaredBias}; variance ${result.variance}; MSE ${result.mse} = ${result.squaredBias} + ${result.variance}.`);
+  show("essay-feedback", "Choose an interpretation. You can change your answer or prediction set at any time.");
+}
+function resetEssay() { choosePredictions([6, 6, 6, 6], "Stable but shifted"); closeHint("essay"); }
+listen("stable", () => choosePredictions([6, 6, 6, 6], "Stable but shifted"));
+listen("variable", () => choosePredictions([6, 6, 14, 14], "Centered but variable"));
+listen("equal", () => show("essay-feedback", "Yes: both sets have MSE 16. The shifted set has squared bias 16 and variance 0; the centered set has squared bias 0 and variance 16. Equal cost need not mean equal behavior."));
+listen("center", () => show("essay-feedback", "Try again: centered means zero squared bias here, not zero MSE. The centered predictions still miss 10 individually; variance contributes 16. Compare the two sets, then choose again."));
+listen("essay-reset", resetEssay);
+function renderReceipts(message) {
+  receipts.forEach((item, index) => show(`receipt-${index}`, `Revision ${item.revision} · ${item.valid ? "valid" : "invalid"} illustrative link state`));
+  show("lab-feedback", `${message} State: ${receipts.map((item, index) => `${index + 1} ${item.valid ? "valid" : "invalid"}`).join(", ")}.`);
+}
+for (const action of ["change", "repair"]) document.querySelectorAll(`[data-${action}]`).forEach(button => button.addEventListener("click", () => {
+  const result = receiptStep(receipts, action, Number(button.dataset[action]));
+  receipts = result.state;
+  renderReceipts(result.message);
+}));
+function resetLab() { receipts = initialReceipts(); renderReceipts("All three receipts start valid. Change any receipt."); closeHint("lab"); }
+listen("lab-reset", resetLab);
+listen("sharp", () => show("practice-feedback", spellDegree("F#")));
+listen("flat", () => show("practice-feedback", spellDegree("Gb")));
+function resetPractice() { show("practice-feedback", "Choose F# or Gb. Feedback stays here; retry freely. No score is saved."); closeHint("practice"); }
+listen("practice-reset", resetPractice);
+renderTheme(); resetEssay(); resetLab(); resetPractice();
+</script>
+</body>
+</html>

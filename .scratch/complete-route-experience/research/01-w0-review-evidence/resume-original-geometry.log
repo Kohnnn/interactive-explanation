@@ -1,0 +1,14 @@
+ORIGINAL_ROUTE=polygons
+Starting smoke run [routes: polygons]
+OK route polygons/
+DIAGNOSTIC={"label":"polygons desktop geometry baseline","actual":{"top":0,"right":1400,"bottom":12038.828125,"left":0,"width":1400,"height":12038.828125},"expected":{"top":0,"right":1400,"bottom":12038.828125,"left":0,"width":1400,"height":12038.828125},"actualCss":{"width":"1400px","height":"12038.8px","transform":"none","touchAction":"auto","pointerEvents":"auto"},"expectedCss":{"width":"1400px","height":"12038.8px","transform":"none","touchAction":"auto","pointerEvents":"auto"}}
+OK route polygons/
+DIAGNOSTIC={"label":"polygons mobile geometry baseline","actual":{"top":0,"right":390,"bottom":16239,"left":0,"width":390,"height":16239},"expected":{"top":0,"right":390,"bottom":16276.390625,"left":0,"width":390,"height":16276.390625},"actualCss":{"width":"390px","height":"16239px","transform":"none","touchAction":"auto","pointerEvents":"auto"},"expectedCss":{"width":"390px","height":"16276.4px","transform":"none","touchAction":"auto","pointerEvents":"auto"}}
+polygons mobile geometry baseline runtime bottom shifted by more than 1 CSS px
+EXIT=1
+ORIGINAL_ROUTE=decision-tree
+Starting smoke run [routes: decision-tree]
+OK route decision-tree/
+DIAGNOSTIC={"label":"decision-tree desktop geometry baseline","actual":{"top":0,"right":1400,"bottom":22520.640625,"left":252,"width":1148,"height":22520.640625},"expected":{"top":0,"right":1400,"bottom":22571.28125,"left":252,"width":1148,"height":22571.28125},"actualCss":{"width":"1148px","height":"22520.6px","transform":"none","touchAction":"auto","pointerEvents":"auto"},"expectedCss":{"width":"1148px","height":"22571.3px","transform":"none","touchAction":"auto","pointerEvents":"auto"}}
+decision-tree desktop geometry baseline runtime bottom shifted by more than 1 CSS px
+EXIT=1

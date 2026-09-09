@@ -1,0 +1,36 @@
+START=2026-09-08T18:59:06Z
+SLUG=polygons RUN=1
+Named export 'chromium' not found. The requested module 'file://<DEPENDENCIES>/playwright/index.js' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from 'file://<DEPENDENCIES>/playwright/index.js';
+const { chromium } = pkg;
+
+EXIT=1
+START=2026-09-08T18:59:06Z
+SLUG=polygons RUN=2
+Named export 'chromium' not found. The requested module 'file://<DEPENDENCIES>/playwright/index.js' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from 'file://<DEPENDENCIES>/playwright/index.js';
+const { chromium } = pkg;
+
+EXIT=1
+START=2026-09-08T18:59:06Z
+SLUG=decision-tree RUN=1
+Named export 'chromium' not found. The requested module 'file://<DEPENDENCIES>/playwright/index.js' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from 'file://<DEPENDENCIES>/playwright/index.js';
+const { chromium } = pkg;
+
+EXIT=1
+START=2026-09-08T18:59:06Z
+SLUG=decision-tree RUN=2
+Named export 'chromium' not found. The requested module 'file://<DEPENDENCIES>/playwright/index.js' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from 'file://<DEPENDENCIES>/playwright/index.js';
+const { chromium } = pkg;
+
+EXIT=1

@@ -1,0 +1,49 @@
+Third-party software notices for We Become What We Behold
+
+PIXI.js 4.x: Copyright (c) 2013-2015 Mathew Groves.
+Source: https://raw.githubusercontent.com/pixijs/pixijs/v4.0.0/LICENSE
+Howler.js 2.0.0: Copyright (c) 2013-2016 James Simpson and GoldFire Studios, Inc.
+Source: https://raw.githubusercontent.com/goldfire/howler.js/v2.0.0/LICENSE.md
+TweenJS 0.6.2: Copyright (c) 2011-2015 gskinner.com, inc. (bundled header); Copyright (c) 2014 gskinner.com, inc. (release license).
+Source: https://raw.githubusercontent.com/CreateJS/TweenJS/0.6.2/LICENSE.txt
+stats.js: Copyright (c) 2009-2016 stats.js authors.
+Source: https://raw.githubusercontent.com/mrdoob/stats.js/master/LICENSE
+
+The MIT License applies separately to each component listed above.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The author's own code/art dedication and third-party audio sources remain in
+README.md. Audio attribution and source/license links are also displayed at
+../docs/wbwwb/#credits. This MIT notice does not license audio or fonts.
+
+FONT RIGHTS UNRESOLVED: css/Cairo-Regular.ttf is NOT the Cairo OFL font.
+Its name table says B Kamran Bold, Version 2.01 - Build 1379,
+(c) 2000 Borna Rayaneh; Parsa 2001 registered trademark - Borna Rayaneh.
+Git blob: 597a1d44468de90615d87ac434790248df2c13bd
+SHA-256: f8d187e12761df982cc8a3b92269212606dfa1deaea9f4c542541286c9e10f8d
+It was added by Ali Fazeli in upstream commit
+4da517c7710f26fc4923b44d203ed6140fd97f03, "Make it Persion".
+Neither the embedded metadata nor that commit supplies redistribution terms.
+Cairo's OFL at https://raw.githubusercontent.com/Gue3bara/Cairo/master/OFL.txt
+covers a different font and is deliberately NOT applied to this binary.
+Excluded from this source distribution under user-authorized rights remediation.
+The font import is removed; CSS and PIXI text use the browser's sans-serif font.
+Expected delta: platform-dependent glyph metrics, not renderer dimensions,
+pointer mapping, simulation mechanics, timing or audio. No font bytes retained.

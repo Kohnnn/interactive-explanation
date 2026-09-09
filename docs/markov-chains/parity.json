@@ -62,7 +62,8 @@
     ],
     "notes": [
       "Example preset links still populate the playground by rewriting its query and hash state.",
-      "The nested playground keeps the editable matrix textarea and live diagram feedback."
+      "The nested playground keeps the editable matrix textarea and live diagram feedback.",
+      "W0 controlled child probes in 18 fresh contexts update the matrix to two states, observe two diagram nodes, change speed by keyboard, reject invalid text and recover. Only the initial local /markov-chains/playground/ document request is canceled with net::ERR_ABORTED before the separately functioning playground.html child; this is superseded navigation, not a blank child. Raw cancellation remains recorded; no wildcard allowance or engine edit was added. See .scratch/complete-route-experience/research/37-prerequisite-report.md at the repository root."
     ],
     "evidence": [
       "The implementation plan treats preset switching and local route handoff as parity-critical.",

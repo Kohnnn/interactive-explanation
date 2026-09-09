@@ -5,9 +5,42 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
+import vm from "node:vm";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const syncTool = path.resolve(here, "..", "sync-route-metadata.mjs");
+
+test("TTV controls follow engine opacity through the existing observer", () => {
+  const root = path.resolve(here, "../..", "train-test-validation");
+  assert.match(fs.readFileSync(path.join(root, "index.html"), "utf8"), /class="button-container" inert/);
+  const controls = { inert: true, style: { opacity: "" }, matches: selector => selector === ".button-container" };
+  let callback;
+  let options;
+  let observers = 0;
+  const context = {
+    document: {
+      readyState: "complete",
+      documentElement: {},
+      querySelector: () => controls,
+      querySelectorAll: () => [],
+    },
+    getComputedStyle: () => ({ opacity: controls.style.opacity || "0" }),
+    requestAnimationFrame: run => run(),
+    MutationObserver: class {
+      constructor(run) { callback = run; observers++; }
+      observe(target, observed) { options = observed; }
+    },
+  };
+  vm.runInNewContext(fs.readFileSync(path.join(root, "a11y-state.js"), "utf8"), context);
+  assert.equal(controls.inert, true);
+  assert.equal(observers, 1);
+  assert(options.attributeFilter.includes("style"));
+  for (const opacity of ["1", "1", "0", "1", "0"]) {
+    controls.style.opacity = opacity;
+    callback([{ type: "attributes", attributeName: "style", target: controls }]);
+    assert.equal(controls.inert, opacity === "0");
+  }
+});
 
 const route = {
   slug: "demo-route",

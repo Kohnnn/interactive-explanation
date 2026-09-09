@@ -1,0 +1,9 @@
+START=2026-09-08T14:39:38Z
+
+> interactive-explanation@1.0.0 check
+> node --check shared/site.js && node --check shared/route-families.js && node --check shared/engineering-sandbox.js && node --check shared/public-footer.js && node --check shared/theme-init.js && node --check tools/check-public-surface.mjs && node --check tools/experience-baseline.mjs && node --check tools/sync-route-metadata.mjs && node --check tools/smoke-bundle.mjs && node --check tools/smoke/server.mjs
+
+END=2026-09-08T14:39:38Z
+EXIT=0
+ELAPSED_SECONDS=0
+TIMEOUT_SECONDS=120

@@ -18,7 +18,8 @@ const RouteFamilies = globalThis.RouteFamilies;
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-const cliArgs = process.argv.slice(2);
+const isMain = Boolean(process.argv[1]) && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const cliArgs = isMain ? process.argv.slice(2) : [];
 
 function hasFlag(flag) {
   return cliArgs.includes(flag);
@@ -70,11 +71,13 @@ const baselineArgs = getArgValues("--baseline");
 const baselinePath = path.resolve(rootDir, baselineArgs[0] || "tools/experience-baselines.json");
 const rawConsoleLog = console.log.bind(console);
 
-console.log = (...args) => {
-  if (verbose) {
-    rawConsoleLog(...args);
-  }
-};
+if (isMain) {
+  console.log = (...args) => {
+    if (verbose) {
+      rawConsoleLog(...args);
+    }
+  };
+}
 
 function phaseLog(message) {
   rawConsoleLog(message);
@@ -1684,7 +1687,17 @@ async function collectPerformanceRun(browser, route, theme, runNumber) {
     await page.waitForLoadState("load");
     await waitForManifestRouteReady(page, route);
     await page.waitForLoadState("networkidle", { timeout: 30000 });
-    const evidence = await page.evaluate((expectedMountPath) => {
+    const evidence = await readPerformanceEvidence(page);
+    assertRuntimeClean(label);
+    return evidence;
+  } finally {
+    await page.close();
+    await context.close();
+  }
+}
+
+async function readPerformanceEvidence(page) {
+  return page.evaluate((expectedMountPath) => {
       const navigation = performance.getEntriesByType("navigation")[0];
       const resources = performance.getEntriesByType("resource");
       const localEntries = [navigation, ...resources].filter((entry) => {
@@ -1724,12 +1737,6 @@ async function collectPerformanceRun(browser, route, theme, runNumber) {
           : null,
       };
     }, mountPath);
-    assertRuntimeClean(label);
-    return evidence;
-  } finally {
-    await page.close();
-    await context.close();
-  }
 }
 
 async function measureRoutePerformance(browser, route, approvedRouteBaseline, enforcePerformance) {
@@ -6442,9 +6449,33 @@ async function smokeInteractiveMechanicalWatch(context) {
   assert(reducedState.runningDrawerCount === 0, `${label} reduced-motion startup left ${reducedState.runningDrawerCount} drawers running`);
   await reducedPage.waitForSelector(canvasSelector, { timeout: 30000 });
   assert(await reducedPage.locator("[data-exploded-play]").getAttribute("aria-pressed") === "false", `${label} reduced motion should pause the exploded mechanism at startup`);
-  await reducedPage.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "false", null, { timeout: 5000 });
+  assert(await reducedPage.locator("[data-exploded-watch]").getAttribute("data-animation-state") === "paused", `${label} reduced motion should expose logical pause before rendering`);
+  await reducedPage.locator(canvasSelector).scrollIntoViewIfNeeded();
+  await reducedPage.waitForFunction(() => {
+    const state = document.querySelector("[data-exploded-canvas] canvas")?.dataset;
+    return state?.playing === "false" && Number(state.renderCount) > 0 && Number.isFinite(Number(state.simulationTime));
+  }, null, { timeout: 5000 });
+  const pausedSimulationTime = await reducedPage.locator(canvasSelector).getAttribute("data-simulation-time");
+  await reducedPage.evaluate(() => new Promise((resolve) => {
+    const start = performance.now();
+    const initialTime = document.querySelector("[data-exploded-canvas] canvas").dataset.simulationTime;
+    const observe = () => {
+      const state = document.querySelector("[data-exploded-canvas] canvas")?.dataset;
+      if (state?.playing !== "false" || state.simulationTime !== initialTime) {
+        resolve(false);
+      } else if (performance.now() - start >= 300) {
+        resolve(true);
+      } else {
+        requestAnimationFrame(observe);
+      }
+    };
+    observe();
+  })).then((stable) => assert(stable, `${label} paused mechanism advanced simulation time`));
   await reducedPage.locator("[data-exploded-play]").click();
-  await reducedPage.waitForFunction(() => document.querySelector("[data-exploded-canvas] canvas")?.dataset.playing === "true", null, { timeout: 5000 });
+  await reducedPage.waitForFunction((previousTime) => {
+    const state = document.querySelector("[data-exploded-canvas] canvas")?.dataset;
+    return state?.playing === "true" && Number(state.simulationTime) > Number(previousTime);
+  }, pausedSimulationTime, { timeout: 5000 });
   const reducedPlay = reducedPage.locator("#hero .play_pause_button").first();
   await reducedPlay.focus();
   await reducedPlay.press("Space");
@@ -10068,7 +10099,16 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error.stack || error.message || String(error));
-  process.exit(1);
-});
+export {
+  baseUrl, port, host, mountPath, experienceViewports, createThemeContext,
+  waitForDocumentLayout, waitForManifestRouteReady, assertDocumentTheme,
+  scrollPrimarySurfaceIntoView, measureRuntimeSurface, readPerformanceEvidence,
+  assertRuntimeGeometry, createRuntimeMonitor,
+};
+
+if (isMain) {
+  main().catch((error) => {
+    console.error(error.stack || error.message || String(error));
+    process.exit(1);
+  });
+}

@@ -10,6 +10,7 @@
       "../../shared/ableton-learning-synths-archive.js"
     ],
     "notes": [
+      "W0: scoped authored footer sizing and whole-language-label wrapping remove the measured 64px overflow at 320px. Six viewport/theme cells, three contexts each, retain intrinsic geometry and keyboard chapter open/Escape close. See repository research/37-prerequisite-report.md under .scratch/complete-route-experience/; no engine change or baseline approval.",
       "The archive stays on the published runtime instead of rebuilding the oscillator examples in a custom synth UI.",
       "Local chapter links are rewritten after mount so the lesson can stay within the shipped synth family.",
       "The additive family treatment changes only the outer lesson boundary and shared chrome; the archived oscillator controls remain runtime-owned."

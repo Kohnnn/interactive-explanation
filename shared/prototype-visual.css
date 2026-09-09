@@ -155,6 +155,17 @@ body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] .compon
   }
 }
 
+@media (max-width: 413px) {
+  body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] .components_brand_footer {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  body[data-story-family="ableton-synths"] #app[data-ableton-synth-lesson] .components_language_chooser__choice {
+    display: inline-block;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body[data-story-route="ableton-learning-music-play-with-beats"] .story-callout {
     box-shadow: none;

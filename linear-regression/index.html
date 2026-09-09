@@ -20,7 +20,6 @@
   <link rel="stylesheet" href="./assets/styles/global.css">
   <link rel="stylesheet" href="./build/bundle.css">
   <link rel="stylesheet" href="../shared/public-footer.css">
-  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
   <script defer src="../shared/engineering-sandbox.js"></script>
   <script>
     (() => {
@@ -28,6 +27,11 @@
       const titleFrames = () => {
         document.querySelectorAll(selector).forEach((frame, index) => {
           frame.title = `Linear Regression hidden resize listener ${index + 1}`;
+        });
+        document.querySelectorAll(".katex-display, .tab-text:has(.katex), #equation-math").forEach((equation) => {
+          equation.tabIndex = 0;
+          equation.setAttribute("role", "region");
+          equation.setAttribute("aria-label", "Equation; scroll horizontally when needed");
         });
       };
       const observer = new MutationObserver(titleFrames);
@@ -38,6 +42,21 @@
   </script>
   <script defer src="./build/bundle.js"></script>
   <script defer src="../shared/public-footer.js"></script>
+  <style>
+    body[data-story-route="linear-regression"] #intro-hed {
+      overflow-wrap: anywhere;
+    }
+    body[data-story-route="linear-regression"] .katex-display,
+    body[data-story-route="linear-regression"] .tab-text:has(.katex) {
+      overflow-x: auto;
+    }
+    @media (max-width: 390px) {
+      body[data-story-route="linear-regression"] .katex-display > .katex {
+        text-align: left;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../shared/engineering-sandbox.css">
 </head>
 <body
   data-reference-url="https://mlu-explain.github.io/linear-regression/"

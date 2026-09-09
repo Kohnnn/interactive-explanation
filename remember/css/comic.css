@@ -334,6 +334,7 @@ a:hover{
 	}
 	.divider > #divider_container > #chapter_name {
 		font-size: 56px;
+		overflow-wrap: anywhere;
 	}
 	.comic {
 		width: 100%;

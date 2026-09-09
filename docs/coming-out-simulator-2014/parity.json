@@ -136,7 +136,7 @@
   {
     "moduleId": "complete-route-experience-ticket-24",
     "originalBehavior": "The fixed conversation runtime owns queue timing, audio dispatch, branching state, consequences, credits, and replay.",
-    "localStatus": "Stored and system themes affect only shared shell chrome; authored scene timing, state queues, assets, and approved runtime geometry remain unchanged.",
+    "localStatus": "Source packaging restored from nested commit 5f7c6ef337e9c8935a43708147d86bdf1d68f4df plus reviewed shell/theme additions and a credits link. Historical upstream-only provisioning failures below are retained, not current source identity. Complete-experience acceptance remains pending.",
     "sourceFiles": [
       "../../routes.manifest.json",
       "../../tools/smoke-bundle.mjs",
@@ -146,7 +146,8 @@
       "The Route remains fixed-runtime with no generated navigation and local-only networking."
     ],
     "evidence": [
-      "Focused smoke verifies the authored dialogue-duration formula, registered audio queue dispatch, opening branch consequences, outro state, credits, restart behavior, and approved geometry."
+      "Historical claim retained from 9049362:interactive-explanation/docs/coming-out-simulator-2014/parity.json, module complete-route-experience-ticket-24: focused smoke covered dialogue duration, audio queues, branches, outro, credits, restart and geometry on historical adapted/dirty source, not the currently provisioned pin.",
+      "Current source: gitlink 69918f33e749117586ebd0fb57d9ec6ab047e7a3; index.html blob 8013ae799f250f1abb200378f52a6840dc3f98fc. Immutable diagnosis: 9049362:.scratch/complete-route-experience/research/01-w0-execution-evidence.md, Exact pins and historical geometry. Current raw evidence: .scratch/complete-route-experience/research/01-w0-review-evidence/current-unit.log and current-audit.log. W0 remains blocked; no current complete Route pass."
     ]
   }
 ]

@@ -1,0 +1,37 @@
+Starting smoke run
+OK route trust/
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust desktop baseline
+OK route trust/
+OK trust mobile baseline
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust light performance median (72ms DOMContentLoaded, 104ms load, 104 resources, 6134714 bytes)
+OK route trust/
+OK route trust/
+OK route trust/
+OK trust dark performance median (82ms DOMContentLoaded, 124ms load, 104 resources, 6134714 bytes)
+OK route polygons/
+OK route polygons/
+OK route polygons/
+OK route polygons/
+OK polygons desktop baseline
+OK route polygons/
+OK polygons mobile baseline
+OK route polygons/
+OK route polygons/
+OK route polygons/
+OK polygons light performance median (54ms DOMContentLoaded, 271ms load, 26 resources, 1038983 bytes)
+OK route polygons/
+OK route polygons/
+OK route polygons/
+OK polygons dark performance median (73ms DOMContentLoaded, 270ms load, 26 resources, 1038983 bytes)
+OK route ballot/
+Error: ballot desktop geometry baseline runtime bottom shifted by more than 1 CSS px
+    at assert (file:///tmp/opencode/complete-route-integration/interactive-explanation/tools/smoke-bundle.mjs:261:11)
+    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-integration/interactive-explanation/tools/smoke-bundle.mjs:1160:5)
+    at measureRouteGeometry (file:///tmp/opencode/complete-route-integration/interactive-explanation/tools/smoke-bundle.mjs:1197:11)
+    at async main (file:///tmp/opencode/complete-route-integration/interactive-explanation/tools/smoke-bundle.mjs:9734:24)

@@ -1,0 +1,785 @@
+{
+  "root": "/tmp/opencode/w0-geometry-9782bff-evidence",
+  "artifacts": [
+    {
+      "name": "build.mjs",
+      "bytes": 3814,
+      "sha256": "3cf13f5daa87007057121d7af63b41948a64cc23cb29712e7d58b13e792ddfb4"
+    },
+    {
+      "name": "classification-001.json",
+      "bytes": 87604,
+      "sha256": "6176e3933343ad7bf00c9671c2787b72581b3c2c9a869d288fcc7b36f4aecf98"
+    },
+    {
+      "name": "classify.mjs",
+      "bytes": 3289,
+      "sha256": "82a9b44d432f5f6c0de66eb7039d4a218d7ff4c758dfe734fa1081bd383cb55a"
+    },
+    {
+      "name": "full-smoke.log",
+      "bytes": 3805,
+      "sha256": "1518dbc9540a8bb2f35273c182edf593a4673a6b5ba5f89a5cca947285901d07"
+    },
+    {
+      "name": "gate-results-002.jsonl",
+      "bytes": 47903,
+      "sha256": "20ea9fd10960d67c9a5dfe8700b48c7655a3d13d0861479945084cc5c12a6bbd"
+    },
+    {
+      "name": "gate-summary-002.json",
+      "bytes": 33156,
+      "sha256": "2f798b85123729f6c6b2d4de2a6e36d49abf7b407c694a2883b829ac6289ec38"
+    },
+    {
+      "name": "gates.mjs",
+      "bytes": 1903,
+      "sha256": "faa1fd34bfe757d1749ffdd8a33fbfd63ee9d6491a9cd7e02ad40603a357d264"
+    },
+    {
+      "name": "historical-all-001.jsonl",
+      "bytes": 94810744,
+      "sha256": "32902b969cbc8bc20e1925d8839fe4d5b46904259cebe9ee154e28dedfb05e8e"
+    },
+    {
+      "name": "historical-mlu-001.jsonl",
+      "bytes": 4286983,
+      "sha256": "e52d77f77c9bff12eaca6c7064d7a0430bb87b2c7108e6c9b2e7d7dc00144cf8"
+    },
+    {
+      "name": "retain.mjs",
+      "bytes": 1209,
+      "sha256": "170a854cad8c6de3f31c80ed550072b9d073d8422e59c8557b1f6b28ae81a56e"
+    },
+    {
+      "name": "review-002.json",
+      "bytes": 2911241,
+      "sha256": "321c4aebec824d6fb7dcfa17f9c1d3adf5f651259cf649de76ea813dd7b04da8"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-basslines.log",
+      "bytes": 2488,
+      "sha256": "7f58b7cc3b535e0aa284cf99ffb7b9394d2d14ea4ee5ca07693c3a96fc082f48"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-beats.log",
+      "bytes": 2368,
+      "sha256": "4e88248dc5c04039f47b20946fd0c8149025b3f092f156ea1600b826caeeb0c8"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-chords.log",
+      "bytes": 2398,
+      "sha256": "bd3e65d2add9476fff947e168d08b03fd902dc520ae8d47fbc821b74b844252c"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-melodies.log",
+      "bytes": 2459,
+      "sha256": "80e5b2decc56fb79064a0075a05e3d4c96f8c02996009ba0415904886f904150"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-notes-and-scales.log",
+      "bytes": 2698,
+      "sha256": "bed04bf274bb227d4620ae448fd792796c93d8231e34151505ab7fa5a55bfb2f"
+    },
+    {
+      "name": "route-ableton-learning-music-play-with-song-structures.log",
+      "bytes": 2511,
+      "sha256": "25f21a57fb20f16f2933227f5c86f4c18cac11afa816039d78ccec5581d9ca8f"
+    },
+    {
+      "name": "route-ableton-learning-music-playground.log",
+      "bytes": 2189,
+      "sha256": "54f29c23d94d98c9f969599e6a0afba22bfddf6190b97288c2de213f1952ba0f"
+    },
+    {
+      "name": "route-ableton-learning-synths-filter-resonance.log",
+      "bytes": 2267,
+      "sha256": "b521fd0de595f224b3877607c615c9a93eae9066d0e9f8bfaf975d74bf837ed4"
+    },
+    {
+      "name": "route-ableton-learning-synths-get-started.log",
+      "bytes": 1469,
+      "sha256": "e2c211c18c0ac5d7bf89dcbf25a3dc8cc9334f477506491021ea4595ef444825"
+    },
+    {
+      "name": "route-ableton-learning-synths-how-synths-make-sound.log",
+      "bytes": 2399,
+      "sha256": "d7f16913b6b5425864f1a72179aa6894905c149ba4da89205df65a5190d2c6ac"
+    },
+    {
+      "name": "route-ableton-learning-synths-matching-envelopes.log",
+      "bytes": 1532,
+      "sha256": "937f83a4b108b1b2fbbf602af5da70e1b2abc808bc44d64bac6c76bd06782a08"
+    },
+    {
+      "name": "route-ableton-learning-synths-modulating-amplitude-with-envelopes.log",
+      "bytes": 2779,
+      "sha256": "756a76b7d765f092d17a01cc329b5707b5700f2a0dd1d8f570c3d0ad7be7dc34"
+    },
+    {
+      "name": "route-ableton-learning-synths-recipes.log",
+      "bytes": 2023,
+      "sha256": "8426810395810c9aab2e0674ea621e4e20678a2bd6771be5f4a4f67ff39fe661"
+    },
+    {
+      "name": "route-airfoil.log",
+      "bytes": 1458,
+      "sha256": "9ea1eda936f9fac468f1d5517d8ae4a48499e4e892f36cb2e1d42ce332b3c507"
+    },
+    {
+      "name": "route-alpha-compositing.log",
+      "bytes": 1826,
+      "sha256": "96ead0dd82600fb7c32fcfcbea8c17005c29931a2f589950c9c2c73eb5868910"
+    },
+    {
+      "name": "route-anxiety.log",
+      "bytes": 1406,
+      "sha256": "50ac248182fa78064f9e3d6aa1cb42706e7b05a0e3a775438a5457629ac39393"
+    },
+    {
+      "name": "route-ballot.log",
+      "bytes": 1212,
+      "sha256": "3ab44c0b5f5b4b5c7225f403d6700a51b3762d2e08c11dfdd396854d0b99e229"
+    },
+    {
+      "name": "route-bias-variance.log",
+      "bytes": 1609,
+      "sha256": "0dcd9c7b3c512dd16f2a8cbf072f34b66621b2d737741c5da341e9f499652a67"
+    },
+    {
+      "name": "route-bicycle.log",
+      "bytes": 1442,
+      "sha256": "adb0184f7981ca00e83d734f707a9b0e3169fb0bf75f43ed0d7ff1ef0f669c70"
+    },
+    {
+      "name": "route-blockchain-101-combined-flow.log",
+      "bytes": 1406,
+      "sha256": "5d6a31bad29614a8c8d7c0c5fb7b9e33450359280886a91f261fe1381da911db"
+    },
+    {
+      "name": "route-blockchain.log",
+      "bytes": 1525,
+      "sha256": "e4bbff4d2fd3a7ab9ede38bbcf9ff7771ae8557d519624a3e2073066923e72a8"
+    },
+    {
+      "name": "route-cameras-and-lenses.log",
+      "bytes": 1883,
+      "sha256": "c6a95469a5bfa47b4a2d47a9340ccc81144b35aacea20584fd583f1f8e131404"
+    },
+    {
+      "name": "route-chrome-music-lab-song-maker.log",
+      "bytes": 1971,
+      "sha256": "10e58ea597f05d34aef95e6a2bb675c62c100bb06a3b93b166597d3d2b0a4e2d"
+    },
+    {
+      "name": "route-color-spaces.log",
+      "bytes": 1614,
+      "sha256": "276950e5df6e212c6a48f0e3bdd62023f09fc3cb76677ad0db239977e07ba31d"
+    },
+    {
+      "name": "route-coming-out-simulator-2014.log",
+      "bytes": 1806,
+      "sha256": "50befa03821cb0f6e35cbedd63b9c7512463ef2aad073aabdc7eaefa314938e9"
+    },
+    {
+      "name": "route-conditional-probability.log",
+      "bytes": 1722,
+      "sha256": "3f9676428879b9f3c1f147797923ea6b5470ed331c2afbb9117769f7a93fb627"
+    },
+    {
+      "name": "route-covid-19.log",
+      "bytes": 1189,
+      "sha256": "156779d50a35b407c702f2601212814adaf206ddc9bd02dca2ce646d37c81c84"
+    },
+    {
+      "name": "route-crowds.log",
+      "bytes": 1264,
+      "sha256": "1dc8eacd290b4acf0b190a28a37d19212e00d21b23e3d5762e94eeac2f3ffa99"
+    },
+    {
+      "name": "route-curves-and-surfaces.log",
+      "bytes": 1849,
+      "sha256": "2f23fa86610a362c3b4cd32c2f4b60664606e8d4fddecaf9f1bff2854b28e0fb"
+    },
+    {
+      "name": "route-decision-tree.log",
+      "bytes": 1247,
+      "sha256": "037ea4d0a8602cd91b7fb990cb4eb6d9657582db5a13a86f557c2fb945a46a72"
+    },
+    {
+      "name": "route-double-descent.log",
+      "bytes": 1656,
+      "sha256": "03d5f78120cdd5969e904c0786bf7d02229f08d33ad8d8bdf22e6faae7d27fae"
+    },
+    {
+      "name": "route-double-descent2.log",
+      "bytes": 1634,
+      "sha256": "4886d51e811caed93a75890c3a463ccf2549286002a8b41e218899934fb455fa"
+    },
+    {
+      "name": "route-earth-and-sun.log",
+      "bytes": 1614,
+      "sha256": "2732acb6810f662fef97a0f5ff0208edde6123447ee600f0b3478b2b650e51b4"
+    },
+    {
+      "name": "route-eigenvectors-and-eigenvalues.log",
+      "bytes": 2013,
+      "sha256": "8f606bea07bae19419de0403739e44906fe5c52bd093797bb632269fc90d7892"
+    },
+    {
+      "name": "route-exponentiation.log",
+      "bytes": 1280,
+      "sha256": "85db0495a5e1b9863d4512df54d210411231c11c37617b3887e44357d792f60d"
+    },
+    {
+      "name": "route-formula-1-racing.log",
+      "bytes": 1484,
+      "sha256": "893c1568bf1f0ae667f678535c469e0035608fd26e1464a2eec3d404a5c356b5"
+    },
+    {
+      "name": "route-gears.log",
+      "bytes": 1399,
+      "sha256": "2bfd2d9b0c3219e7357481b8ee08e94ff4db5eb520e20bb9ba46a981cb74db2c"
+    },
+    {
+      "name": "route-gps.log",
+      "bytes": 1304,
+      "sha256": "1936e838dcc0ebc5076c3079253e2d15d4a61a83e10179704870b50c53e0bb94"
+    },
+    {
+      "name": "route-hysteresis-slack.log",
+      "bytes": 1643,
+      "sha256": "ef34f89118fdfeada65650e82651e57d7ed1cff660ec03890326cc0c90a56a15"
+    },
+    {
+      "name": "route-image-kernels.log",
+      "bytes": 1578,
+      "sha256": "36d1ba46e1d8cbf27e0d905ffe6f4a026ed168c65eff76a72e7fd7e4ce67cd75"
+    },
+    {
+      "name": "route-interactive-mechanical-watch.log",
+      "bytes": 2589,
+      "sha256": "ffe66f233e23259ccce09427ec01920668ae6e06fe8afbcb70d6d12683820151"
+    },
+    {
+      "name": "route-internal-combustion-engine.log",
+      "bytes": 2030,
+      "sha256": "a0275c863e667f617dc047f1503d88ed906beaab7b56488531a042fe80696fd2"
+    },
+    {
+      "name": "route-lights-and-shadows.log",
+      "bytes": 1800,
+      "sha256": "f0e5ef43d46f72b06312dc84fc731344261241bcab938b2051977e708f5f4a00"
+    },
+    {
+      "name": "route-linear-regression.log",
+      "bytes": 1307,
+      "sha256": "428c307a1373cf5aa045eb6a0c075283e3e52c5f25f64eda84d19ffcbc1b2525"
+    },
+    {
+      "name": "route-load-balancing.log",
+      "bytes": 1596,
+      "sha256": "daed32008fa34eb35d18e379cc18f11bdf5a3e1aee3e4ec8e90d2a1eb5deb31f"
+    },
+    {
+      "name": "route-logistic-regression.log",
+      "bytes": 1710,
+      "sha256": "2c1a513bf78001dba33e5dda464d3d7cc06df9479081dec8ff542c1ae6fa36f1"
+    },
+    {
+      "name": "route-loopy.log",
+      "bytes": 1294,
+      "sha256": "1bf29be44346ee0f147065527bc036fb7e6fb2277de91299ba21d3cd1c1fc8f8"
+    },
+    {
+      "name": "route-markov-chains.log",
+      "bytes": 1247,
+      "sha256": "f7f5d7f831905723f1ee508513cd337b14b61df039954b9cb79581c73851e7c2"
+    },
+    {
+      "name": "route-mechanical-watch.log",
+      "bytes": 1735,
+      "sha256": "8869feaaeb3100d0ccbc1aa110245e7357c7dec6046cbd71ef3b6a638c2ff37b"
+    },
+    {
+      "name": "route-memory-allocation.log",
+      "bytes": 1304,
+      "sha256": "a8063d8d5b5850cfaecc964fe29ae561285a53b775e8e6d7e8879ed2a5d593cd"
+    },
+    {
+      "name": "route-music-interactive-hub.log",
+      "bytes": 1827,
+      "sha256": "3b9dad4e702a2f9527c7ca3b241acd1252e59b2f11b4d7f0506bca941c08aad2"
+    },
+    {
+      "name": "route-musicmap.log",
+      "bytes": 1511,
+      "sha256": "dfd5c51148181552187dd0dd108bb79376641e9c6af999e6676adf30ed6c6646"
+    },
+    {
+      "name": "route-naval-architecture.log",
+      "bytes": 1830,
+      "sha256": "538e37aa468b20c21736aacdc7b0fa53ad7fcb65873241bc8a8d958d78afb885"
+    },
+    {
+      "name": "route-neurons.log",
+      "bytes": 1283,
+      "sha256": "76ae818a2f7a48bd7f1cafd9dd7be76858e85e4bfed1fbde34430a98c34b20c3"
+    },
+    {
+      "name": "route-ordinary-least-squares-regression.log",
+      "bytes": 2086,
+      "sha256": "a20062fe4583afc1fbff0d19e12cf10854f095e0f195a88279df989cb321f33e"
+    },
+    {
+      "name": "route-pi.log",
+      "bytes": 1194,
+      "sha256": "37498e3043a7d05314dac002f84b1d0bdc9b8154e387e4433421d753fb017862"
+    },
+    {
+      "name": "route-polygons.log",
+      "bytes": 1275,
+      "sha256": "275d8da5b5b75d57840d4867f74dcd578f7670da2e90586fb721ccba704662f8"
+    },
+    {
+      "name": "route-precision-recall.log",
+      "bytes": 1298,
+      "sha256": "865719899f28944a0c7e16f60113ddbfe4942b14ee096b0a9be5c5f650106961"
+    },
+    {
+      "name": "route-primary-interactive-hub.log",
+      "bytes": 1825,
+      "sha256": "2a2a601759bcb2d90625d910e77f4cbdd7af1926ffd1b464dfaa06117e71e25b"
+    },
+    {
+      "name": "route-principal-component-analysis.log",
+      "bytes": 1950,
+      "sha256": "4a6ec4ec7d425f4762f8e3fa1c4300b354c10f764e316683a697ce6ff42d9ac4"
+    },
+    {
+      "name": "route-public-private-keys.log",
+      "bytes": 1325,
+      "sha256": "bd3f9218ac263808863c95802d075b3198f78752a4cc70c10de175ce658c23d5"
+    },
+    {
+      "name": "route-random-forest.log",
+      "bytes": 1574,
+      "sha256": "f8bba67a5134f260702cba6506136236905a00b2c476ecb356c0c87d1f72fb1f"
+    },
+    {
+      "name": "route-reading-qr-codes-without-a-computer.log",
+      "bytes": 1469,
+      "sha256": "ed2bb0291c40df2d78ebb40bad384bb288062a46bb328aee4f9d2e087cc7531c"
+    },
+    {
+      "name": "route-remember.log",
+      "bytes": 1226,
+      "sha256": "909a6c7b3d90bb5a71bfa3785154b2ba63b4b4bf7fb52c3efe02f47434831796"
+    },
+    {
+      "name": "route-rigid-body-collisions.log",
+      "bytes": 1280,
+      "sha256": "270a2620ca8fc3f2d494b6406cee94eb660ba170b4d9676149da058d183c3899"
+    },
+    {
+      "name": "route-roc-auc.log",
+      "bytes": 1338,
+      "sha256": "329a4c85e30f50145cbabfc93e9370be1b43d215ed300c046fc20ca880e51812"
+    },
+    {
+      "name": "route-sim.log",
+      "bytes": 1164,
+      "sha256": "f56b5662845063f82c443f2eb233e5d817deb89e113b3d0e307e66c81b85b2b1"
+    },
+    {
+      "name": "route-simulating.log",
+      "bytes": 1493,
+      "sha256": "3d8e4b3d71bb2184101fd1e392982d3edb1dade9d349b44667af4960be04d89c"
+    },
+    {
+      "name": "route-sine-and-cosine.log",
+      "bytes": 1599,
+      "sha256": "47a7d18bfc47305728b9cd506c45b21eb49b20ae3591e8ac9fe1a47d94c95ad5"
+    },
+    {
+      "name": "route-sound.log",
+      "bytes": 1464,
+      "sha256": "bc1a76a83f9ec11b7fb7c407df58cce3dbafade4ded7829d0f80a3ae6be945d1"
+    },
+    {
+      "name": "route-stargazing-dashboard.log",
+      "bytes": 1686,
+      "sha256": "eefc5586c457673a928f9ab2408825092555d954d04eb44c5ca1e8237da35cb8"
+    },
+    {
+      "name": "route-teoria-interval-ear-training.log",
+      "bytes": 2054,
+      "sha256": "bfc55ebc82aac1d7dd9620191b115ad8cb6b1369dac0a211bfc3560794a61c95"
+    },
+    {
+      "name": "route-teoria-interval-identification-and-inversion.log",
+      "bytes": 2534,
+      "sha256": "4db8e0be80c5730f1dbf15a9f6dc25f190ecef391354fc57a7fb6ff957baaeb7"
+    },
+    {
+      "name": "route-teoria-key-and-note-ear-training.log",
+      "bytes": 2174,
+      "sha256": "65a61aaeca66d3edc71b8598f3c100853a50531946cccf512744b38357f22e72"
+    },
+    {
+      "name": "route-teoria-note-ear-training.log",
+      "bytes": 1934,
+      "sha256": "75ccf55e6a392498305b982daac3fae0299d53352907292f9739faa411ead6a6"
+    },
+    {
+      "name": "route-teoria-random-key-and-note-ear-training.log",
+      "bytes": 2384,
+      "sha256": "61f82351d3bf95df844a4562461f0f09c6379e3b2715faa51e2703771661144e"
+    },
+    {
+      "name": "route-teoria-scale-construction.log",
+      "bytes": 1964,
+      "sha256": "074f0484e290bec769bb80104901ee28de2420eaa2a30fe618b1c089a3d91dad"
+    },
+    {
+      "name": "route-tesseract.log",
+      "bytes": 1565,
+      "sha256": "d472322cb83eba8564c8fd5dcf52522b58a21fd0c07df1fca90db1928a4146ae"
+    },
+    {
+      "name": "route-train-test-validation.log",
+      "bytes": 1311,
+      "sha256": "047d7ecb72e0f83b2116f578a343e63ac1b1e89d329b6ba8fcae51c29620e815"
+    },
+    {
+      "name": "route-trust.log",
+      "bytes": 1275,
+      "sha256": "c798af3feb0d8523fe4d0d1729dde59f12b8961e5a109f40d3ab98f88902d0c3"
+    },
+    {
+      "name": "route-watch-mesh-explorer.log",
+      "bytes": 1528,
+      "sha256": "f44fdaa85b4366f5025075559f3a621c628ed56ae9068e8e37d0cf25294fd64e"
+    },
+    {
+      "name": "route-wbwwb.log",
+      "bytes": 1279,
+      "sha256": "21f6231ff1dd56d89158529e169a4f9def68f50234311dd2fb02ec4182fca001"
+    },
+    {
+      "name": "route-zero-knowledge-proof-demo.log",
+      "bytes": 1961,
+      "sha256": "1a8a71f0894c6f2868107f8a4d5d7b08dcd3d83606357db3247554df44695662"
+    },
+    {
+      "name": "strict-59.log",
+      "bytes": 7007,
+      "sha256": "58e38d10c689052ee328811ef6ed0cbf1b3bca0d7018aa8f29613fd49cc546fd"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-basslines.log",
+      "bytes": 4035,
+      "sha256": "c3fc4e7f1e478375dea8cbac1670cfb63b529cc0bb2644dd4c0027cfd21efac9"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-beats.log",
+      "bytes": 3810,
+      "sha256": "be640d68048697807cc47638d565e13c5ca9c9f6eddc2d328b5eb33cd3d9a827"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-chords.log",
+      "bytes": 3867,
+      "sha256": "c4a18d2eb7221d833ba3d09c9ea61dd884fb845d8bc941bc07ef4d90f3bac42d"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-melodies.log",
+      "bytes": 3979,
+      "sha256": "07aeca0b82ebd9536e1acb501f9753e4e5fbb157e36e9040e5c05a5c8d506de2"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-notes-and-scales.log",
+      "bytes": 4427,
+      "sha256": "9d9fb476769d10cc43bd927707a9e3ae14a727f8b915f6b5e29c52cde10b0b2d"
+    },
+    {
+      "name": "strict-ableton-learning-music-play-with-song-structures.log",
+      "bytes": 4214,
+      "sha256": "28295064552161ad71f6a2585047abe1e39cf3f3a2961d800fa5a99f9f523a6f"
+    },
+    {
+      "name": "strict-ableton-learning-music-playground.log",
+      "bytes": 3503,
+      "sha256": "8c0793fd55300c2af9c89da87c9aa3485a4ab8cda5efbfa484346f0857f1664e"
+    },
+    {
+      "name": "strict-ableton-learning-synths-filter-resonance.log",
+      "bytes": 3761,
+      "sha256": "80a691d2fc1b2764911f63749e07a7aadb458c103f1db3ad2adc35945b42db35"
+    },
+    {
+      "name": "strict-ableton-learning-synths-get-started.log",
+      "bytes": 1520,
+      "sha256": "eb7d8664ed31ba3c2fe5a4a4b8dd4202e5ea3346695bb12cf04dd042fe26cd57"
+    },
+    {
+      "name": "strict-ableton-learning-synths-how-synths-make-sound.log",
+      "bytes": 4026,
+      "sha256": "77318556c19db3a88ce3c1102e7c87190a819f6fda75b716e14d3e2413c8c74c"
+    },
+    {
+      "name": "strict-ableton-learning-synths-matching-envelopes.log",
+      "bytes": 1583,
+      "sha256": "d3b01735fc301d304db71aea2013f27871abbec0d2f85be9012a21c23ed5bfb9"
+    },
+    {
+      "name": "strict-ableton-learning-synths-modulating-amplitude-with-envelopes.log",
+      "bytes": 4766,
+      "sha256": "d2e9108913c07eb30a6ff8296c49debc746b6c8b5e2fbf0a6da148f96b02c3f4"
+    },
+    {
+      "name": "strict-ableton-learning-synths-recipes.log",
+      "bytes": 3283,
+      "sha256": "c45ad02adef8fa97e9bb2455b713e035edc4a9d315d57bc194d01f17ab10dff0"
+    },
+    {
+      "name": "strict-alpha-compositing.log",
+      "bytes": 2723,
+      "sha256": "60905b892d87f23fa70f28f7670ea3ee8ac744868ef2becd890cdba51796b3a2"
+    },
+    {
+      "name": "strict-bias-variance.log",
+      "bytes": 2402,
+      "sha256": "41f21eaacf67dc74b585d7c72b440988929eb5602eedf17579008f7ffaef906e"
+    },
+    {
+      "name": "strict-blockchain-101-combined-flow.log",
+      "bytes": 1457,
+      "sha256": "d90a63f7636702a0d932bc2ba889a6b0b358cf11778adf1f7d4d9bb69480f2ad"
+    },
+    {
+      "name": "strict-blockchain.log",
+      "bytes": 2240,
+      "sha256": "15486544b70eae4a47ddac5d0f368f5cbe4ea6e873f2e779dae730e31a0b63d0"
+    },
+    {
+      "name": "strict-cameras-and-lenses.log",
+      "bytes": 2807,
+      "sha256": "3a990ad1c75059d889d7d01423c9b71e67907dc84c8e85747a26a51a271f641f"
+    },
+    {
+      "name": "strict-color-spaces.log",
+      "bytes": 2381,
+      "sha256": "46b5b7814a9e09aa0a56d1f356cca1cb0a63d9b85a4017eb0280df4e0d9b0ad2"
+    },
+    {
+      "name": "strict-conditional-probability.log",
+      "bytes": 2775,
+      "sha256": "7d54e23a96e0ec56da5762d2d59b185f317a9a247fc6f2519539bd816955afb4"
+    },
+    {
+      "name": "strict-curves-and-surfaces.log",
+      "bytes": 2798,
+      "sha256": "58ff7c4a01a8eed5824fb4fda500bcd2e42824f0cb3bdacb5355be8221a436ce"
+    },
+    {
+      "name": "strict-decision-tree.log",
+      "bytes": 1298,
+      "sha256": "43b3cf64682c7be25d68f590544906ec75233f8b55342dde18a9148bf028500b"
+    },
+    {
+      "name": "strict-double-descent.log",
+      "bytes": 2475,
+      "sha256": "511feb571b292384c8ff628dbcc7844aea4846dc259f293fb083652f0b254063"
+    },
+    {
+      "name": "strict-double-descent2.log",
+      "bytes": 2479,
+      "sha256": "f59756d3c0d4fd69d2a040c6c18e134024301e88c409f1414ac3772f1a548d19"
+    },
+    {
+      "name": "strict-earth-and-sun.log",
+      "bytes": 2407,
+      "sha256": "172475008df266c161fdd6d6d6499022cbf61a4ba4696a9529d05fc1ca20f738"
+    },
+    {
+      "name": "strict-eigenvectors-and-eigenvalues.log",
+      "bytes": 3196,
+      "sha256": "36c4bab3503168259e8dccd61cde638a6bb75d3b1e342591a9dc9b99ea2f0308"
+    },
+    {
+      "name": "strict-exponentiation.log",
+      "bytes": 1331,
+      "sha256": "7b5fbfaeefedcce0691f414533fc352c078f4f4851dbb5435061f9a44bcc1835"
+    },
+    {
+      "name": "strict-gears.log",
+      "bytes": 1985,
+      "sha256": "07b7507801636237e3878437f89eaaa088dcf573035adcb1faaf5c7c448f46c5"
+    },
+    {
+      "name": "strict-gps.log",
+      "bytes": 1837,
+      "sha256": "b9f5ef5929c890e0d61a0f20a4765d1ecc31ba2e244f85c1cf7afefc43bf4048"
+    },
+    {
+      "name": "strict-hysteresis-slack.log",
+      "bytes": 2513,
+      "sha256": "fba8918397d8ccb1f3744a11a3d9ea03ff22ab65d55006bc5e8c2aa2a026103f"
+    },
+    {
+      "name": "strict-image-kernels.log",
+      "bytes": 2371,
+      "sha256": "d4074d4005dc2c4b17514917620d6288c362edb1d90981eb815473b220f1fcdf"
+    },
+    {
+      "name": "strict-lights-and-shadows.log",
+      "bytes": 2723,
+      "sha256": "82db1eb868711f9c44193ac712026a7fb7bfc8f3aed0d307d70d05b32781c5c2"
+    },
+    {
+      "name": "strict-linear-regression.log",
+      "bytes": 1358,
+      "sha256": "c7f034d7d541d4f02598493b4225df9ceb57b5d8bfb8221ce1f6cb06922d5ce8"
+    },
+    {
+      "name": "strict-load-balancing.log",
+      "bytes": 2415,
+      "sha256": "144ba5b2cbf7c730d24fd73292987dd6434443cde100e2fd6a94e2d4222e5c0e"
+    },
+    {
+      "name": "strict-logistic-regression.log",
+      "bytes": 2659,
+      "sha256": "e42b93d078836bec462053ce5028d5ff978624beb69110bfb439ce499dd4a583"
+    },
+    {
+      "name": "strict-markov-chains.log",
+      "bytes": 1298,
+      "sha256": "acfdf3ffa189e7a59ad4b87f6c6f035bd3e1f24881fcea86ebe11fcaf4c5e207"
+    },
+    {
+      "name": "strict-memory-allocation.log",
+      "bytes": 1355,
+      "sha256": "ad13e20db19a239d439cf723ae52e581f6bfc73621d34f01ab9104c001bf268c"
+    },
+    {
+      "name": "strict-music-interactive-hub.log",
+      "bytes": 2828,
+      "sha256": "edb3dbac6a344c9c646c190357f2ae4ea3f18cadcb0b98b567538acc63901a36"
+    },
+    {
+      "name": "strict-naval-architecture.log",
+      "bytes": 2753,
+      "sha256": "ce8694bfb1dee870e68c683f5487cea635e0062ee8d0f2e4e447c224940b13a3"
+    },
+    {
+      "name": "strict-ordinary-least-squares-regression.log",
+      "bytes": 3399,
+      "sha256": "b9d3ab7a8c2bae930ccd4b4bcffe2685abeeb9c0a0954a4e3a5d382cdb2219d4"
+    },
+    {
+      "name": "strict-pi.log",
+      "bytes": 1701,
+      "sha256": "c8c8542f6e48f6f0fbecebdfffa99a54c18d473b4816a7d42e92166af988c051"
+    },
+    {
+      "name": "strict-precision-recall.log",
+      "bytes": 1349,
+      "sha256": "6ce827f1cdef0486178f2c25438e54fb28962491c7a7988fc0bb0a57a8bbbc7f"
+    },
+    {
+      "name": "strict-primary-interactive-hub.log",
+      "bytes": 2878,
+      "sha256": "6335d319b509542d060fac266aea574f4b77563bd5cd770610266695bb572599"
+    },
+    {
+      "name": "strict-principal-component-analysis.log",
+      "bytes": 3133,
+      "sha256": "ce43938f5c397697ffe1a8f9ba1882b83bb5076ad5344c5e8d276ca4f41cd198"
+    },
+    {
+      "name": "strict-public-private-keys.log",
+      "bytes": 1376,
+      "sha256": "259e8f3e340151a5d743d63fcea6b4a3ae83cde33445a544aa8212a6745fd026"
+    },
+    {
+      "name": "strict-random-forest.log",
+      "bytes": 2367,
+      "sha256": "8453e9da8560f45ba9ab1921252dc746b006101c5a9506f0c4425f88b66eecc7"
+    },
+    {
+      "name": "strict-rigid-body-collisions.log",
+      "bytes": 1331,
+      "sha256": "766e76163fa54e8f17d4abee9420faeadd1fd869649cb61242867f5190c3a2f8"
+    },
+    {
+      "name": "strict-roc-auc.log",
+      "bytes": 1975,
+      "sha256": "d437abcef6ec0ed1ae3fa3eed6bee75c8ff4a932a865887846bbf10aedbd9702"
+    },
+    {
+      "name": "strict-sine-and-cosine.log",
+      "bytes": 2443,
+      "sha256": "d03b671716a1a50efdf3a379c59cd7f8c30e96ca244c2ae8800d26d66f1fe2fa"
+    },
+    {
+      "name": "strict-sound.log",
+      "bytes": 2049,
+      "sha256": "4d1b545e9a2df2ce6a0926b95250d7ba051bd5b055c577ece382496d7966ff9c"
+    },
+    {
+      "name": "strict-teoria-interval-ear-training.log",
+      "bytes": 3237,
+      "sha256": "42d3a72852663d4dae1d2372d295ad704925dca2a2eecda64cb347f5339f7e85"
+    },
+    {
+      "name": "strict-teoria-interval-identification-and-inversion.log",
+      "bytes": 4133,
+      "sha256": "cc33e71c69ef07d4654e7d01739aad97cb19ee0d8f2342a3be958068a45e8317"
+    },
+    {
+      "name": "strict-teoria-key-and-note-ear-training.log",
+      "bytes": 3461,
+      "sha256": "20039359d7958bc816991d24ef7bbc5b0491b78d90fff366428c19702fa3b50b"
+    },
+    {
+      "name": "strict-teoria-note-ear-training.log",
+      "bytes": 3013,
+      "sha256": "471b0af3ec206d35a92d847a0fd9699bed12b1ffc0feb71effe43c7217e5e00a"
+    },
+    {
+      "name": "strict-teoria-random-key-and-note-ear-training.log",
+      "bytes": 3853,
+      "sha256": "b4a9e759af57961b61469ed57531265b9460a42d9a1115980f689907cc02fe9d"
+    },
+    {
+      "name": "strict-teoria-scale-construction.log",
+      "bytes": 3069,
+      "sha256": "b8e0352f11d75855e04d652b819b68d59e9a94f5dc8c5091dada744970d9b38e"
+    },
+    {
+      "name": "strict-tesseract.log",
+      "bytes": 2255,
+      "sha256": "99a2b76ed6ecf410cd5ca1d9feceb58aa41cd33ceb3a0360d984074c85fd88cf"
+    },
+    {
+      "name": "strict-train-test-validation.log",
+      "bytes": 1362,
+      "sha256": "0ee7c364268fb156c0dbb0f228eaa22a7f6737a199d5bfe34418f5cfd8adf4b9"
+    },
+    {
+      "name": "strict-zero-knowledge-proof-demo.log",
+      "bytes": 3066,
+      "sha256": "c7865294c56d0496996035dbf5b660f083f1b1a6a1358358798e7cdee84b69dc"
+    },
+    {
+      "name": "successor-002.json",
+      "bytes": 3673402,
+      "sha256": "d40b79af49e028d1832b68c258cb3fc48f8f0c327704688ded94afa0c6a06481"
+    },
+    {
+      "name": "summarize-gates.mjs",
+      "bytes": 1139,
+      "sha256": "5c192c579c9ac239196e95a1987253d94444f44c173fe1eb81fec49f9c58bec9"
+    }
+  ]
+}

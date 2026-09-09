@@ -1,0 +1,18 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { geometryChanges } from "../../../interactive-explanation/tools/diagnose-baseline.mjs";
+import { validateExperienceBaseline } from "../../../interactive-explanation/tools/experience-baseline.mjs";
+const originalBytes = fs.readFileSync(new URL("../../../interactive-explanation/tools/experience-baselines.json", import.meta.url));
+const before = JSON.parse(originalBytes);
+const after = JSON.parse(fs.readFileSync(new URL("./01-w0-geometry-successor-001.json", import.meta.url)));
+const review = JSON.parse(fs.readFileSync(new URL("./01-w0-geometry-successor-review-001.json", import.meta.url)));
+validateExperienceBaseline(after, Object.keys(before.routes));
+assert.equal(createHash("sha256").update(originalBytes).digest("hex"), review.originalSha256);
+const changes = geometryChanges(before, after);
+assert.equal(changes.length, 79);
+const ordered = (entries) => entries.map(({ review, ...change }) => change).sort((a, b) => a.path.localeCompare(b.path));
+assert.deepEqual(ordered(changes), ordered(review.changes));
+for (const change of changes) assert.match(change.path, /^\/routes\/(polygons\/geometry\/(mobile|narrow)|decision-tree\/geometry\/desktop)\//);
+for (const slug of Object.keys(before.routes)) for (const theme of ["light", "dark"]) assert.deepEqual(after.routes[slug][theme], before.routes[slug][theme]);
+console.log("79 exact reviewed paths; three geometry cells; all inherited performance unchanged");

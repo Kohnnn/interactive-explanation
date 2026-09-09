@@ -15,6 +15,23 @@
         <script src="../shared/theme-init.js"></script>
         <link rel="stylesheet" href="../shared/public-footer.css" />
         <style>
+          #app :is(input, button, #container) {
+            min-width: 24px;
+            min-height: 24px;
+          }
+          #app #container:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: -2px;
+          }
+          @media (max-width: 380px) {
+            #app table:has(.mask-example),
+            #app table:has(.mask-example) > tbody,
+            #app table:has(.mask-example) tr,
+            #app table:has(.mask-example) td {
+              display: block;
+              width: 100%;
+            }
+          }
           #reference-footer .public-footer__inner {
             width: min(40em, calc(100vw - 32px));
           }

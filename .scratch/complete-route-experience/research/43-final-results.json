@@ -1,0 +1,4591 @@
+{
+  "source": {
+    "head": "d949c2364af13316d5781ec42908636daf11bc54",
+    "status": "?? .scratch/complete-route-experience/research/43-final-gates.mjs",
+    "digest": "c6d83436759881772eb1bd797c1a568c4b60e2f96db8e6297231b49086a157f0",
+    "fileCount": 6089
+  },
+  "sourceUnchanged": true,
+  "sourceDiff": "diff --git a/interactive-explanation/docs/train-test-validation/parity.json b/interactive-explanation/docs/train-test-validation/parity.json\nindex c109744..f554e2d 100644\n--- a/interactive-explanation/docs/train-test-validation/parity.json\n+++ b/interactive-explanation/docs/train-test-validation/parity.json\n@@ -9,6 +9,7 @@\n       \"../shared/engineering-sandbox.js\"\n     ],\n     \"notes\": [\n+      \"Research42 adds initial inert and synchronizes feature-control availability with the compiled engine's inline opacity through the existing a11y-state observer. All 18 affected contexts pass keyboard, boundary, and opacity checks without runtime exceptions; mobile/narrow pointer occlusion remains separately recorded. Successor004 strict smoke still stops at desktop img:9 right geometry. No compiled, numerical, CSS, or baseline changes.\",\n       \"Research39 bounds padded scrolly prose without changing chart dimensions. Final paired six-cell captures are stable with no document overflow. Keyboard feature activation reproduces an existing undefined.includes exception in js.6c47f979.js:729:21936 in all 18 AFTER contexts and on immutable BEFORE; runtime acceptance remains blocked. Successor003 focused gates stop at desktop img:9 right geometry.\",\n       \"The mlu-pilot adapter themes only authored HTML, the native TOC, and verified controls; compiled scenes, SVG, canvas, images, dimensions, and transforms remain intrinsic.\",\n       \"The existing #toc anchor navigation remains the sole navigation owner, preserving the route's original section order and DOM IDs.\",\ndiff --git a/interactive-explanation/tools/tests/route-html-sync.test.mjs b/interactive-explanation/tools/tests/route-html-sync.test.mjs\nindex 77fbdb2..47abae8 100644\n--- a/interactive-explanation/tools/tests/route-html-sync.test.mjs\n+++ b/interactive-explanation/tools/tests/route-html-sync.test.mjs\n@@ -5,10 +5,43 @@ import os from \"node:os\";\n import path from \"node:path\";\n import { fileURLToPath } from \"node:url\";\n import { spawnSync } from \"node:child_process\";\n+import vm from \"node:vm\";\n \n const here = path.dirname(fileURLToPath(import.meta.url));\n const syncTool = path.resolve(here, \"..\", \"sync-route-metadata.mjs\");\n \n+test(\"TTV controls follow engine opacity through the existing observer\", () => {\n+  const root = path.resolve(here, \"../..\", \"train-test-validation\");\n+  assert.match(fs.readFileSync(path.join(root, \"index.html\"), \"utf8\"), /class=\"button-container\" inert/);\n+  const controls = { inert: true, style: { opacity: \"\" }, matches: selector => selector === \".button-container\" };\n+  let callback;\n+  let options;\n+  let observers = 0;\n+  const context = {\n+    document: {\n+      readyState: \"complete\",\n+      documentElement: {},\n+      querySelector: () => controls,\n+      querySelectorAll: () => [],\n+    },\n+    getComputedStyle: () => ({ opacity: controls.style.opacity || \"0\" }),\n+    requestAnimationFrame: run => run(),\n+    MutationObserver: class {\n+      constructor(run) { callback = run; observers++; }\n+      observe(target, observed) { options = observed; }\n+    },\n+  };\n+  vm.runInNewContext(fs.readFileSync(path.join(root, \"a11y-state.js\"), \"utf8\"), context);\n+  assert.equal(controls.inert, true);\n+  assert.equal(observers, 1);\n+  assert(options.attributeFilter.includes(\"style\"));\n+  for (const opacity of [\"1\", \"1\", \"0\", \"1\", \"0\"]) {\n+    controls.style.opacity = opacity;\n+    callback([{ type: \"attributes\", attributeName: \"style\", target: controls }]);\n+    assert.equal(controls.inert, opacity === \"0\");\n+  }\n+});\n+\n const route = {\n   slug: \"demo-route\",\n   title: \"Demo route\",\ndiff --git a/interactive-explanation/train-test-validation/a11y-state.js b/interactive-explanation/train-test-validation/a11y-state.js\nindex da8a08d..bb4c348 100644\n--- a/interactive-explanation/train-test-validation/a11y-state.js\n+++ b/interactive-explanation/train-test-validation/a11y-state.js\n@@ -4,6 +4,10 @@\n   var SELECTOR = \"button.button\";\n \n   function sync() {\n+    var controls = document.querySelector(\".button-container\");\n+    if (controls) {\n+      controls.inert = controls.style.opacity !== \"1\";\n+    }\n     var buttons = document.querySelectorAll(SELECTOR);\n     for (var i = 0; i < buttons.length; i++) {\n       var btn = buttons[i];\n@@ -32,13 +36,16 @@\n             setTimeout(run, 100);\n           };\n \n-    new MutationObserver(function () {\n+    new MutationObserver(function (records) {\n+      if (!records.some(function (record) {\n+        return record.attributeName !== \"style\" || record.target.matches(\".button-container\");\n+      })) return;\n       if (scheduled) return;\n       scheduled = true;\n       schedule();\n     }).observe(document.documentElement, {\n       attributes: true,\n-      attributeFilter: [\"class\"],\n+      attributeFilter: [\"class\", \"style\"],\n       childList: true,\n       subtree: true,\n     });\ndiff --git a/interactive-explanation/train-test-validation/index.html b/interactive-explanation/train-test-validation/index.html\nindex 8504b53..1e7fa61 100644\n--- a/interactive-explanation/train-test-validation/index.html\n+++ b/interactive-explanation/train-test-validation/index.html\n@@ -143,7 +143,7 @@\n \n     <figure>\n       <div id=\"main-wrapper\">\n-        <div class=\"button-container\">\n+        <div class=\"button-container\" inert>\n           <p>Model Features:</p>\n           <button class=\"button\" value=\"neither\">None</button>\n           <button class=\"active button\" value=\"weight\">Weight</button>\n",
+  "baseline": {
+    "path": "/tmp/opencode/42-geometry-successor-005.json",
+    "sha256": "0be0ce56a78e5c818b4cd42d4e79301484396779529550feb2f75598dbc2fbd3",
+    "originalSource": "4c4c352",
+    "performanceChanged": false
+  },
+  "artifacts": [
+    {
+      "file": "/tmp/opencode/43-final-gates.jsonl",
+      "bytes": 862838,
+      "sha256": "a62c41a6e4a64a6bf0baab10e8b1d91bd29a1d02aa404fc9c72c94dbbd3616ea"
+    },
+    {
+      "file": "/tmp/opencode/43-ttv-rebind.jsonl",
+      "bytes": 2195830,
+      "sha256": "f510aeb57af132e68884c10a34c81f5117d9a1d758edd6d09bb892d6445e2609"
+    },
+    {
+      "file": "/tmp/opencode/43-tight-probes.json",
+      "bytes": 54562,
+      "sha256": "aa059a326568dd8879d408ba00fd3d85684db20b62416c256da7ded765fe7144"
+    },
+    {
+      "file": "/tmp/opencode/43-watch-repeats.json",
+      "bytes": 2532,
+      "sha256": "68a461cb819c3f1be1eff577f5f429fbae5fd21ed8d46f62ac4aa981b90a9a87"
+    }
+  ],
+  "ttvRebind": {
+    "sourceDigest": "c6d83436759881772eb1bd797c1a568c4b60e2f96db8e6297231b49086a157f0",
+    "samples": 18,
+    "themeCells": 6,
+    "exactGeometryDeltas": 0,
+    "errors": 0,
+    "overflow": 0,
+    "diagnosticExit": 1,
+    "diagnosticClassification": "Retained failed-or-inconclusive exit reflects inherited default comparison, not sample capture errors; exact005 comparison independently asserts all18 samples"
+  },
+  "normal": {
+    "attempted": 83,
+    "passed": 80,
+    "failed": [
+      "normal/sim",
+      "normal/interactive-mechanical-watch",
+      "normal/rigid-body-collisions"
+    ]
+  },
+  "strict": {
+    "attempted": 59,
+    "passed": 58,
+    "failed": [
+      "strict/rigid-body-collisions"
+    ]
+  },
+  "results": [
+    {
+      "type": "result",
+      "name": "ttv-geometry-rebind",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/diagnose-baseline.mjs",
+        "--root",
+        "interactive-explanation",
+        "--route",
+        "train-test-validation",
+        "--output",
+        "/tmp/opencode/43-ttv-rebind.jsonl"
+      ],
+      "startedAt": "2026-09-09T10:53:10.280Z",
+      "finishedAt": "2026-09-09T10:53:29.502Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "full-normal",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json"
+      ],
+      "startedAt": "2026-09-09T10:53:29.503Z",
+      "finishedAt": "2026-09-09T10:55:51.382Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run\n",
+      "stderr": "Error: sim light performance regressed:\nsame-origin transfer 1705532 bytes exceeded 1085315 bytes + 256000 bytes\nresource count 34 exceeded 33 + 0\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9748:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "combined-strict59",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "decision-tree",
+        "--route",
+        "random-forest",
+        "--route",
+        "conditional-probability",
+        "--route",
+        "markov-chains",
+        "--route",
+        "principal-component-analysis",
+        "--route",
+        "exponentiation",
+        "--route",
+        "pi",
+        "--route",
+        "sine-and-cosine",
+        "--route",
+        "eigenvectors-and-eigenvalues",
+        "--route",
+        "image-kernels",
+        "--route",
+        "ordinary-least-squares-regression",
+        "--route",
+        "blockchain",
+        "--route",
+        "public-private-keys",
+        "--route",
+        "zero-knowledge-proof-demo",
+        "--route",
+        "alpha-compositing",
+        "--route",
+        "color-spaces",
+        "--route",
+        "sound",
+        "--route",
+        "cameras-and-lenses",
+        "--route",
+        "lights-and-shadows",
+        "--route",
+        "tesseract",
+        "--route",
+        "gears",
+        "--route",
+        "gps",
+        "--route",
+        "earth-and-sun",
+        "--route",
+        "curves-and-surfaces",
+        "--route",
+        "naval-architecture",
+        "--route",
+        "teoria-interval-ear-training",
+        "--route",
+        "teoria-note-ear-training",
+        "--route",
+        "teoria-key-and-note-ear-training",
+        "--route",
+        "teoria-random-key-and-note-ear-training",
+        "--route",
+        "teoria-scale-construction",
+        "--route",
+        "teoria-interval-identification-and-inversion",
+        "--route",
+        "ableton-learning-music-playground",
+        "--route",
+        "ableton-learning-music-play-with-beats",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales",
+        "--route",
+        "ableton-learning-music-play-with-chords",
+        "--route",
+        "ableton-learning-music-play-with-basslines",
+        "--route",
+        "ableton-learning-music-play-with-melodies",
+        "--route",
+        "ableton-learning-music-play-with-song-structures",
+        "--route",
+        "ableton-learning-synths-get-started",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound",
+        "--route",
+        "ableton-learning-synths-filter-resonance",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes",
+        "--route",
+        "ableton-learning-synths-matching-envelopes",
+        "--route",
+        "ableton-learning-synths-recipes",
+        "--route",
+        "music-interactive-hub",
+        "--route",
+        "linear-regression",
+        "--route",
+        "logistic-regression",
+        "--route",
+        "precision-recall",
+        "--route",
+        "roc-auc",
+        "--route",
+        "bias-variance",
+        "--route",
+        "train-test-validation",
+        "--route",
+        "double-descent",
+        "--route",
+        "double-descent2",
+        "--route",
+        "memory-allocation",
+        "--route",
+        "load-balancing",
+        "--route",
+        "hysteresis-slack",
+        "--route",
+        "rigid-body-collisions",
+        "--route",
+        "blockchain-101-combined-flow",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T10:55:51.384Z",
+      "finishedAt": "2026-09-09T11:16:04.348Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree, random-forest, conditional-probability, markov-chains, principal-component-analysis, exponentiation, pi, sine-and-cosine, eigenvectors-and-eigenvalues, image-kernels, ordinary-least-squares-regression, blockchain, public-private-keys, zero-knowledge-proof-demo, alpha-compositing, color-spaces, sound, cameras-and-lenses, lights-and-shadows, tesseract, gears, gps, earth-and-sun, curves-and-surfaces, naval-architecture, teoria-interval-ear-training, teoria-note-ear-training, teoria-key-and-note-ear-training, teoria-random-key-and-note-ear-training, teoria-scale-construction, teoria-interval-identification-and-inversion, ableton-learning-music-playground, ableton-learning-music-play-with-beats, ableton-learning-music-play-with-notes-and-scales, ableton-learning-music-play-with-chords, ableton-learning-music-play-with-basslines, ableton-learning-music-play-with-melodies, ableton-learning-music-play-with-song-structures, ableton-learning-synths-get-started, ableton-learning-synths-how-synths-make-sound, ableton-learning-synths-filter-resonance, ableton-learning-synths-modulating-amplitude-with-envelopes, ableton-learning-synths-matching-envelopes, ableton-learning-synths-recipes, music-interactive-hub, linear-regression, logistic-regression, precision-recall, roc-auc, bias-variance, train-test-validation, double-descent, double-descent2, memory-allocation, load-balancing, hysteresis-slack, rigid-body-collisions, blockchain-101-combined-flow, primary-interactive-hub] [experience gates]\n",
+      "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/trust",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "trust"
+      ],
+      "startedAt": "2026-09-09T11:16:04.359Z",
+      "finishedAt": "2026-09-09T11:16:27.993Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: trust]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/polygons",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "polygons"
+      ],
+      "startedAt": "2026-09-09T11:16:28.003Z",
+      "finishedAt": "2026-09-09T11:16:39.723Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: polygons]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ballot",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ballot"
+      ],
+      "startedAt": "2026-09-09T11:16:39.737Z",
+      "finishedAt": "2026-09-09T11:16:50.012Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ballot]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/crowds",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "crowds"
+      ],
+      "startedAt": "2026-09-09T11:16:50.014Z",
+      "finishedAt": "2026-09-09T11:17:03.008Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: crowds]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/loopy",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "loopy"
+      ],
+      "startedAt": "2026-09-09T11:17:03.017Z",
+      "finishedAt": "2026-09-09T11:17:13.248Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: loopy]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/neurons",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "neurons"
+      ],
+      "startedAt": "2026-09-09T11:17:13.250Z",
+      "finishedAt": "2026-09-09T11:17:24.303Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: neurons]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/remember",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "remember"
+      ],
+      "startedAt": "2026-09-09T11:17:24.312Z",
+      "finishedAt": "2026-09-09T11:17:41.808Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: remember]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/anxiety",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "anxiety"
+      ],
+      "startedAt": "2026-09-09T11:17:41.812Z",
+      "finishedAt": "2026-09-09T11:18:17.053Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: anxiety]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/wbwwb",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "wbwwb"
+      ],
+      "startedAt": "2026-09-09T11:18:17.062Z",
+      "finishedAt": "2026-09-09T11:18:41.943Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: wbwwb]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/coming-out-simulator-2014",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "coming-out-simulator-2014"
+      ],
+      "startedAt": "2026-09-09T11:18:41.944Z",
+      "finishedAt": "2026-09-09T11:19:21.502Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: coming-out-simulator-2014]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/covid-19",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "covid-19"
+      ],
+      "startedAt": "2026-09-09T11:19:21.511Z",
+      "finishedAt": "2026-09-09T11:19:35.856Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: covid-19]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/simulating",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "simulating"
+      ],
+      "startedAt": "2026-09-09T11:19:35.858Z",
+      "finishedAt": "2026-09-09T11:19:45.231Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: simulating]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sim",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "sim"
+      ],
+      "startedAt": "2026-09-09T11:19:45.240Z",
+      "finishedAt": "2026-09-09T11:19:50.566Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sim]\n",
+      "stderr": "Error: sim light performance regressed:\nsame-origin transfer 1705532 bytes exceeded 1085315 bytes + 256000 bytes\nresource count 34 exceeded 33 + 0\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9748:12)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/decision-tree",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "decision-tree"
+      ],
+      "startedAt": "2026-09-09T11:19:50.576Z",
+      "finishedAt": "2026-09-09T11:20:04.124Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/random-forest",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "random-forest"
+      ],
+      "startedAt": "2026-09-09T11:20:04.129Z",
+      "finishedAt": "2026-09-09T11:20:17.770Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: random-forest]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/conditional-probability",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "conditional-probability"
+      ],
+      "startedAt": "2026-09-09T11:20:17.780Z",
+      "finishedAt": "2026-09-09T11:20:27.577Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: conditional-probability]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/markov-chains",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "markov-chains"
+      ],
+      "startedAt": "2026-09-09T11:20:27.579Z",
+      "finishedAt": "2026-09-09T11:20:39.901Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: markov-chains]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/principal-component-analysis",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "principal-component-analysis"
+      ],
+      "startedAt": "2026-09-09T11:20:39.911Z",
+      "finishedAt": "2026-09-09T11:20:58.025Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: principal-component-analysis]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/exponentiation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "exponentiation"
+      ],
+      "startedAt": "2026-09-09T11:20:58.028Z",
+      "finishedAt": "2026-09-09T11:21:12.739Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: exponentiation]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/pi",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "pi"
+      ],
+      "startedAt": "2026-09-09T11:21:12.759Z",
+      "finishedAt": "2026-09-09T11:21:22.503Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: pi]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sine-and-cosine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "sine-and-cosine"
+      ],
+      "startedAt": "2026-09-09T11:21:22.513Z",
+      "finishedAt": "2026-09-09T11:22:00.461Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sine-and-cosine]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/eigenvectors-and-eigenvalues",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "eigenvectors-and-eigenvalues"
+      ],
+      "startedAt": "2026-09-09T11:22:00.463Z",
+      "finishedAt": "2026-09-09T11:22:21.108Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: eigenvectors-and-eigenvalues]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/image-kernels",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "image-kernels"
+      ],
+      "startedAt": "2026-09-09T11:22:21.119Z",
+      "finishedAt": "2026-09-09T11:22:32.119Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: image-kernels]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ordinary-least-squares-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ordinary-least-squares-regression"
+      ],
+      "startedAt": "2026-09-09T11:22:32.121Z",
+      "finishedAt": "2026-09-09T11:22:51.586Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ordinary-least-squares-regression]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/blockchain",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "blockchain"
+      ],
+      "startedAt": "2026-09-09T11:22:51.588Z",
+      "finishedAt": "2026-09-09T11:23:06.329Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/public-private-keys",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "public-private-keys"
+      ],
+      "startedAt": "2026-09-09T11:23:06.331Z",
+      "finishedAt": "2026-09-09T11:23:18.715Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: public-private-keys]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/zero-knowledge-proof-demo",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "zero-knowledge-proof-demo"
+      ],
+      "startedAt": "2026-09-09T11:23:18.738Z",
+      "finishedAt": "2026-09-09T11:23:29.728Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: zero-knowledge-proof-demo]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/alpha-compositing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "alpha-compositing"
+      ],
+      "startedAt": "2026-09-09T11:23:29.738Z",
+      "finishedAt": "2026-09-09T11:23:45.652Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: alpha-compositing]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/color-spaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "color-spaces"
+      ],
+      "startedAt": "2026-09-09T11:23:45.662Z",
+      "finishedAt": "2026-09-09T11:24:00.201Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: color-spaces]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "sound"
+      ],
+      "startedAt": "2026-09-09T11:24:00.203Z",
+      "finishedAt": "2026-09-09T11:24:16.193Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sound]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/cameras-and-lenses",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "cameras-and-lenses"
+      ],
+      "startedAt": "2026-09-09T11:24:16.195Z",
+      "finishedAt": "2026-09-09T11:24:42.862Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: cameras-and-lenses]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/lights-and-shadows",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "lights-and-shadows"
+      ],
+      "startedAt": "2026-09-09T11:24:42.864Z",
+      "finishedAt": "2026-09-09T11:25:05.627Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: lights-and-shadows]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/tesseract",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "tesseract"
+      ],
+      "startedAt": "2026-09-09T11:25:05.644Z",
+      "finishedAt": "2026-09-09T11:25:21.798Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: tesseract]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/gears",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "gears"
+      ],
+      "startedAt": "2026-09-09T11:25:21.800Z",
+      "finishedAt": "2026-09-09T11:25:37.710Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gears]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/gps",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "gps"
+      ],
+      "startedAt": "2026-09-09T11:25:37.720Z",
+      "finishedAt": "2026-09-09T11:25:54.522Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gps]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/earth-and-sun",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "earth-and-sun"
+      ],
+      "startedAt": "2026-09-09T11:25:54.532Z",
+      "finishedAt": "2026-09-09T11:26:14.829Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: earth-and-sun]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/bicycle",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "bicycle"
+      ],
+      "startedAt": "2026-09-09T11:26:14.838Z",
+      "finishedAt": "2026-09-09T11:26:43.638Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bicycle]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/airfoil",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "airfoil"
+      ],
+      "startedAt": "2026-09-09T11:26:43.647Z",
+      "finishedAt": "2026-09-09T11:27:35.558Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: airfoil]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/curves-and-surfaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "curves-and-surfaces"
+      ],
+      "startedAt": "2026-09-09T11:27:35.567Z",
+      "finishedAt": "2026-09-09T11:27:56.678Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: curves-and-surfaces]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/internal-combustion-engine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "internal-combustion-engine"
+      ],
+      "startedAt": "2026-09-09T11:27:56.694Z",
+      "finishedAt": "2026-09-09T11:28:31.717Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: internal-combustion-engine]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/mechanical-watch",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T11:28:31.719Z",
+      "finishedAt": "2026-09-09T11:29:05.055Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: mechanical-watch]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/naval-architecture",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "naval-architecture"
+      ],
+      "startedAt": "2026-09-09T11:29:05.064Z",
+      "finishedAt": "2026-09-09T11:29:35.328Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: naval-architecture]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/formula-1-racing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "formula-1-racing"
+      ],
+      "startedAt": "2026-09-09T11:29:35.329Z",
+      "finishedAt": "2026-09-09T11:29:44.859Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: formula-1-racing]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/interactive-mechanical-watch",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "interactive-mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T11:29:44.871Z",
+      "finishedAt": "2026-09-09T11:31:15.273Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: interactive-mechanical-watch]\nRoute checks completed\n",
+      "stderr": "page.waitForFunction: Timeout 5000ms exceeded.\n    at smokeInteractiveMechanicalWatch (/tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:6443:21)\n    at async main (/tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9922:7)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/reading-qr-codes-without-a-computer",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "reading-qr-codes-without-a-computer"
+      ],
+      "startedAt": "2026-09-09T11:31:15.275Z",
+      "finishedAt": "2026-09-09T11:31:29.808Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: reading-qr-codes-without-a-computer]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-interval-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-interval-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:31:29.818Z",
+      "finishedAt": "2026-09-09T11:31:44.360Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:31:44.369Z",
+      "finishedAt": "2026-09-09T11:31:58.706Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:31:58.715Z",
+      "finishedAt": "2026-09-09T11:32:13.237Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-key-and-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-random-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-random-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:32:13.246Z",
+      "finishedAt": "2026-09-09T11:32:27.815Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-random-key-and-note-ear-training]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-scale-construction",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-scale-construction"
+      ],
+      "startedAt": "2026-09-09T11:32:27.828Z",
+      "finishedAt": "2026-09-09T11:32:42.108Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-scale-construction]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/teoria-interval-identification-and-inversion",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "teoria-interval-identification-and-inversion"
+      ],
+      "startedAt": "2026-09-09T11:32:42.127Z",
+      "finishedAt": "2026-09-09T11:32:55.300Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-identification-and-inversion]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-playground",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-playground"
+      ],
+      "startedAt": "2026-09-09T11:32:55.309Z",
+      "finishedAt": "2026-09-09T11:33:11.480Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-playground]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-beats",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-beats"
+      ],
+      "startedAt": "2026-09-09T11:33:11.490Z",
+      "finishedAt": "2026-09-09T11:33:23.735Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-beats]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-notes-and-scales",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales"
+      ],
+      "startedAt": "2026-09-09T11:33:23.744Z",
+      "finishedAt": "2026-09-09T11:33:38.745Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-notes-and-scales]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-chords",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-chords"
+      ],
+      "startedAt": "2026-09-09T11:33:38.756Z",
+      "finishedAt": "2026-09-09T11:33:54.359Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-chords]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-basslines",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-basslines"
+      ],
+      "startedAt": "2026-09-09T11:33:54.369Z",
+      "finishedAt": "2026-09-09T11:34:07.707Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-basslines]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-melodies",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-melodies"
+      ],
+      "startedAt": "2026-09-09T11:34:07.716Z",
+      "finishedAt": "2026-09-09T11:34:23.250Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-melodies]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-music-play-with-song-structures",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-music-play-with-song-structures"
+      ],
+      "startedAt": "2026-09-09T11:34:23.251Z",
+      "finishedAt": "2026-09-09T11:34:34.892Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-song-structures]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-get-started",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-get-started"
+      ],
+      "startedAt": "2026-09-09T11:34:34.949Z",
+      "finishedAt": "2026-09-09T11:34:47.712Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-get-started]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-how-synths-make-sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound"
+      ],
+      "startedAt": "2026-09-09T11:34:47.721Z",
+      "finishedAt": "2026-09-09T11:35:01.381Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-how-synths-make-sound]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-filter-resonance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-filter-resonance"
+      ],
+      "startedAt": "2026-09-09T11:35:01.390Z",
+      "finishedAt": "2026-09-09T11:35:14.623Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-filter-resonance]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes"
+      ],
+      "startedAt": "2026-09-09T11:35:14.633Z",
+      "finishedAt": "2026-09-09T11:35:27.117Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-modulating-amplitude-with-envelopes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-matching-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-matching-envelopes"
+      ],
+      "startedAt": "2026-09-09T11:35:27.130Z",
+      "finishedAt": "2026-09-09T11:35:40.379Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-matching-envelopes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/ableton-learning-synths-recipes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "ableton-learning-synths-recipes"
+      ],
+      "startedAt": "2026-09-09T11:35:40.389Z",
+      "finishedAt": "2026-09-09T11:35:53.634Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-recipes]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/chrome-music-lab-song-maker",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "chrome-music-lab-song-maker"
+      ],
+      "startedAt": "2026-09-09T11:35:53.643Z",
+      "finishedAt": "2026-09-09T11:36:14.019Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: chrome-music-lab-song-maker]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/musicmap",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "musicmap"
+      ],
+      "startedAt": "2026-09-09T11:36:14.037Z",
+      "finishedAt": "2026-09-09T11:36:34.381Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: musicmap]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/music-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "music-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T11:36:34.384Z",
+      "finishedAt": "2026-09-09T11:36:44.978Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: music-interactive-hub]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/linear-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "linear-regression"
+      ],
+      "startedAt": "2026-09-09T11:36:44.988Z",
+      "finishedAt": "2026-09-09T11:37:01.036Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: linear-regression]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/logistic-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "logistic-regression"
+      ],
+      "startedAt": "2026-09-09T11:37:01.045Z",
+      "finishedAt": "2026-09-09T11:37:12.707Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: logistic-regression]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/precision-recall",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "precision-recall"
+      ],
+      "startedAt": "2026-09-09T11:37:12.717Z",
+      "finishedAt": "2026-09-09T11:37:24.813Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: precision-recall]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/roc-auc",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "roc-auc"
+      ],
+      "startedAt": "2026-09-09T11:37:24.814Z",
+      "finishedAt": "2026-09-09T11:37:37.099Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: roc-auc]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/bias-variance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "bias-variance"
+      ],
+      "startedAt": "2026-09-09T11:37:37.109Z",
+      "finishedAt": "2026-09-09T11:37:51.121Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bias-variance]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/train-test-validation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "train-test-validation"
+      ],
+      "startedAt": "2026-09-09T11:37:51.131Z",
+      "finishedAt": "2026-09-09T11:38:04.712Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: train-test-validation]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/double-descent",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "double-descent"
+      ],
+      "startedAt": "2026-09-09T11:38:04.722Z",
+      "finishedAt": "2026-09-09T11:38:20.016Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/double-descent2",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "double-descent2"
+      ],
+      "startedAt": "2026-09-09T11:38:20.018Z",
+      "finishedAt": "2026-09-09T11:38:36.265Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent2]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/memory-allocation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "memory-allocation"
+      ],
+      "startedAt": "2026-09-09T11:38:36.274Z",
+      "finishedAt": "2026-09-09T11:38:48.766Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: memory-allocation]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/load-balancing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "load-balancing"
+      ],
+      "startedAt": "2026-09-09T11:38:48.776Z",
+      "finishedAt": "2026-09-09T11:39:15.350Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: load-balancing]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/hysteresis-slack",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "hysteresis-slack"
+      ],
+      "startedAt": "2026-09-09T11:39:15.360Z",
+      "finishedAt": "2026-09-09T11:39:26.598Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: hysteresis-slack]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/rigid-body-collisions",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "rigid-body-collisions"
+      ],
+      "startedAt": "2026-09-09T11:39:26.607Z",
+      "finishedAt": "2026-09-09T11:39:28.109Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: rigid-body-collisions]\n",
+      "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+    },
+    {
+      "type": "result",
+      "name": "normal/blockchain-101-combined-flow",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "startedAt": "2026-09-09T11:39:28.111Z",
+      "finishedAt": "2026-09-09T11:39:38.202Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain-101-combined-flow]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/primary-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T11:39:38.204Z",
+      "finishedAt": "2026-09-09T11:39:48.014Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: primary-interactive-hub]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/stargazing-dashboard",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "stargazing-dashboard"
+      ],
+      "startedAt": "2026-09-09T11:39:48.023Z",
+      "finishedAt": "2026-09-09T11:40:00.930Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: stargazing-dashboard]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "normal/watch-mesh-explorer",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "watch-mesh-explorer"
+      ],
+      "startedAt": "2026-09-09T11:40:00.939Z",
+      "finishedAt": "2026-09-09T11:41:48.249Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: watch-mesh-explorer]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/decision-tree",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "decision-tree"
+      ],
+      "startedAt": "2026-09-09T11:41:48.250Z",
+      "finishedAt": "2026-09-09T11:42:17.770Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: decision-tree] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/random-forest",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "random-forest"
+      ],
+      "startedAt": "2026-09-09T11:42:17.779Z",
+      "finishedAt": "2026-09-09T11:42:45.181Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: random-forest] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/conditional-probability",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "conditional-probability"
+      ],
+      "startedAt": "2026-09-09T11:42:45.183Z",
+      "finishedAt": "2026-09-09T11:43:06.522Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: conditional-probability] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/markov-chains",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "markov-chains"
+      ],
+      "startedAt": "2026-09-09T11:43:06.533Z",
+      "finishedAt": "2026-09-09T11:43:31.169Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: markov-chains] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/principal-component-analysis",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "principal-component-analysis"
+      ],
+      "startedAt": "2026-09-09T11:43:31.179Z",
+      "finishedAt": "2026-09-09T11:44:02.608Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: principal-component-analysis] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/exponentiation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "exponentiation"
+      ],
+      "startedAt": "2026-09-09T11:44:02.609Z",
+      "finishedAt": "2026-09-09T11:44:28.669Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: exponentiation] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/pi",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "pi"
+      ],
+      "startedAt": "2026-09-09T11:44:28.678Z",
+      "finishedAt": "2026-09-09T11:44:49.994Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: pi] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/sine-and-cosine",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "sine-and-cosine"
+      ],
+      "startedAt": "2026-09-09T11:44:50.004Z",
+      "finishedAt": "2026-09-09T11:45:40.939Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sine-and-cosine] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/eigenvectors-and-eigenvalues",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "eigenvectors-and-eigenvalues"
+      ],
+      "startedAt": "2026-09-09T11:45:40.941Z",
+      "finishedAt": "2026-09-09T11:46:17.399Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: eigenvectors-and-eigenvalues] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/image-kernels",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "image-kernels"
+      ],
+      "startedAt": "2026-09-09T11:46:17.408Z",
+      "finishedAt": "2026-09-09T11:46:40.243Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: image-kernels] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ordinary-least-squares-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ordinary-least-squares-regression"
+      ],
+      "startedAt": "2026-09-09T11:46:40.246Z",
+      "finishedAt": "2026-09-09T11:47:16.027Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ordinary-least-squares-regression] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/blockchain",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "blockchain"
+      ],
+      "startedAt": "2026-09-09T11:47:16.030Z",
+      "finishedAt": "2026-09-09T11:47:41.183Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/public-private-keys",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "public-private-keys"
+      ],
+      "startedAt": "2026-09-09T11:47:41.185Z",
+      "finishedAt": "2026-09-09T11:48:03.379Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: public-private-keys] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/zero-knowledge-proof-demo",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "zero-knowledge-proof-demo"
+      ],
+      "startedAt": "2026-09-09T11:48:03.388Z",
+      "finishedAt": "2026-09-09T11:48:23.982Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: zero-knowledge-proof-demo] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/alpha-compositing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "alpha-compositing"
+      ],
+      "startedAt": "2026-09-09T11:48:23.991Z",
+      "finishedAt": "2026-09-09T11:48:52.070Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: alpha-compositing] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/color-spaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "color-spaces"
+      ],
+      "startedAt": "2026-09-09T11:48:52.083Z",
+      "finishedAt": "2026-09-09T11:49:18.287Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: color-spaces] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "sound"
+      ],
+      "startedAt": "2026-09-09T11:49:18.296Z",
+      "finishedAt": "2026-09-09T11:49:45.122Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: sound] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/cameras-and-lenses",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "cameras-and-lenses"
+      ],
+      "startedAt": "2026-09-09T11:49:45.124Z",
+      "finishedAt": "2026-09-09T11:50:27.569Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: cameras-and-lenses] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/lights-and-shadows",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "lights-and-shadows"
+      ],
+      "startedAt": "2026-09-09T11:50:27.580Z",
+      "finishedAt": "2026-09-09T11:51:05.591Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: lights-and-shadows] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/tesseract",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "tesseract"
+      ],
+      "startedAt": "2026-09-09T11:51:05.609Z",
+      "finishedAt": "2026-09-09T11:51:33.027Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: tesseract] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/gears",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "gears"
+      ],
+      "startedAt": "2026-09-09T11:51:33.039Z",
+      "finishedAt": "2026-09-09T11:52:01.295Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gears] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/gps",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "gps"
+      ],
+      "startedAt": "2026-09-09T11:52:01.304Z",
+      "finishedAt": "2026-09-09T11:52:31.424Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: gps] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/earth-and-sun",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "earth-and-sun"
+      ],
+      "startedAt": "2026-09-09T11:52:31.440Z",
+      "finishedAt": "2026-09-09T11:53:07.711Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: earth-and-sun] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/curves-and-surfaces",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "curves-and-surfaces"
+      ],
+      "startedAt": "2026-09-09T11:53:07.720Z",
+      "finishedAt": "2026-09-09T11:53:41.098Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: curves-and-surfaces] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/naval-architecture",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "naval-architecture"
+      ],
+      "startedAt": "2026-09-09T11:53:41.108Z",
+      "finishedAt": "2026-09-09T11:54:27.353Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: naval-architecture] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-interval-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-interval-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:54:27.362Z",
+      "finishedAt": "2026-09-09T11:54:55.721Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:54:55.730Z",
+      "finishedAt": "2026-09-09T11:55:24.383Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:55:24.392Z",
+      "finishedAt": "2026-09-09T11:55:53.398Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-key-and-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-random-key-and-note-ear-training",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-random-key-and-note-ear-training"
+      ],
+      "startedAt": "2026-09-09T11:55:53.400Z",
+      "finishedAt": "2026-09-09T11:56:20.903Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-random-key-and-note-ear-training] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-scale-construction",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-scale-construction"
+      ],
+      "startedAt": "2026-09-09T11:56:20.913Z",
+      "finishedAt": "2026-09-09T11:56:47.989Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-scale-construction] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/teoria-interval-identification-and-inversion",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "teoria-interval-identification-and-inversion"
+      ],
+      "startedAt": "2026-09-09T11:56:47.998Z",
+      "finishedAt": "2026-09-09T11:57:15.452Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: teoria-interval-identification-and-inversion] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-playground",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-playground"
+      ],
+      "startedAt": "2026-09-09T11:57:15.463Z",
+      "finishedAt": "2026-09-09T11:57:45.818Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-playground] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-beats",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-beats"
+      ],
+      "startedAt": "2026-09-09T11:57:45.836Z",
+      "finishedAt": "2026-09-09T11:58:10.563Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-beats] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-notes-and-scales",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-notes-and-scales"
+      ],
+      "startedAt": "2026-09-09T11:58:10.572Z",
+      "finishedAt": "2026-09-09T11:58:40.327Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-notes-and-scales] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-chords",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-chords"
+      ],
+      "startedAt": "2026-09-09T11:58:40.329Z",
+      "finishedAt": "2026-09-09T11:59:08.953Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-chords] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-basslines",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-basslines"
+      ],
+      "startedAt": "2026-09-09T11:59:08.956Z",
+      "finishedAt": "2026-09-09T11:59:33.773Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-basslines] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-melodies",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-melodies"
+      ],
+      "startedAt": "2026-09-09T11:59:33.775Z",
+      "finishedAt": "2026-09-09T12:00:03.438Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-melodies] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-music-play-with-song-structures",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-music-play-with-song-structures"
+      ],
+      "startedAt": "2026-09-09T12:00:03.441Z",
+      "finishedAt": "2026-09-09T12:00:25.915Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-music-play-with-song-structures] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-get-started",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-get-started"
+      ],
+      "startedAt": "2026-09-09T12:00:25.925Z",
+      "finishedAt": "2026-09-09T12:00:51.689Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-get-started] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-how-synths-make-sound",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-how-synths-make-sound"
+      ],
+      "startedAt": "2026-09-09T12:00:51.698Z",
+      "finishedAt": "2026-09-09T12:01:18.898Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-how-synths-make-sound] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-filter-resonance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-filter-resonance"
+      ],
+      "startedAt": "2026-09-09T12:01:18.909Z",
+      "finishedAt": "2026-09-09T12:01:43.969Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-filter-resonance] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-modulating-amplitude-with-envelopes"
+      ],
+      "startedAt": "2026-09-09T12:01:43.971Z",
+      "finishedAt": "2026-09-09T12:02:08.860Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-modulating-amplitude-with-envelopes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-matching-envelopes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-matching-envelopes"
+      ],
+      "startedAt": "2026-09-09T12:02:08.869Z",
+      "finishedAt": "2026-09-09T12:02:34.909Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-matching-envelopes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/ableton-learning-synths-recipes",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "ableton-learning-synths-recipes"
+      ],
+      "startedAt": "2026-09-09T12:02:34.918Z",
+      "finishedAt": "2026-09-09T12:03:00.630Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: ableton-learning-synths-recipes] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/music-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "music-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T12:03:00.632Z",
+      "finishedAt": "2026-09-09T12:03:22.570Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: music-interactive-hub] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/linear-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "linear-regression"
+      ],
+      "startedAt": "2026-09-09T12:03:22.589Z",
+      "finishedAt": "2026-09-09T12:03:52.921Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: linear-regression] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/logistic-regression",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "logistic-regression"
+      ],
+      "startedAt": "2026-09-09T12:03:52.931Z",
+      "finishedAt": "2026-09-09T12:04:17.346Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: logistic-regression] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/precision-recall",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "precision-recall"
+      ],
+      "startedAt": "2026-09-09T12:04:17.356Z",
+      "finishedAt": "2026-09-09T12:04:42.628Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: precision-recall] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/roc-auc",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "roc-auc"
+      ],
+      "startedAt": "2026-09-09T12:04:42.631Z",
+      "finishedAt": "2026-09-09T12:05:11.465Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: roc-auc] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/bias-variance",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "bias-variance"
+      ],
+      "startedAt": "2026-09-09T12:05:11.466Z",
+      "finishedAt": "2026-09-09T12:05:43.173Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: bias-variance] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/train-test-validation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "train-test-validation"
+      ],
+      "startedAt": "2026-09-09T12:05:43.176Z",
+      "finishedAt": "2026-09-09T12:06:14.773Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: train-test-validation] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/double-descent",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "double-descent"
+      ],
+      "startedAt": "2026-09-09T12:06:14.784Z",
+      "finishedAt": "2026-09-09T12:06:46.692Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/double-descent2",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "double-descent2"
+      ],
+      "startedAt": "2026-09-09T12:06:46.702Z",
+      "finishedAt": "2026-09-09T12:07:16.007Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: double-descent2] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/memory-allocation",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "memory-allocation"
+      ],
+      "startedAt": "2026-09-09T12:07:16.020Z",
+      "finishedAt": "2026-09-09T12:07:40.932Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: memory-allocation] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/load-balancing",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "load-balancing"
+      ],
+      "startedAt": "2026-09-09T12:07:40.942Z",
+      "finishedAt": "2026-09-09T12:08:24.942Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: load-balancing] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/hysteresis-slack",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "hysteresis-slack"
+      ],
+      "startedAt": "2026-09-09T12:08:24.951Z",
+      "finishedAt": "2026-09-09T12:08:46.860Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: hysteresis-slack] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/rigid-body-collisions",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "rigid-body-collisions"
+      ],
+      "startedAt": "2026-09-09T12:08:46.869Z",
+      "finishedAt": "2026-09-09T12:08:48.330Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: rigid-body-collisions] [experience gates]\n",
+      "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+    },
+    {
+      "type": "result",
+      "name": "strict/blockchain-101-combined-flow",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "blockchain-101-combined-flow"
+      ],
+      "startedAt": "2026-09-09T12:08:48.337Z",
+      "finishedAt": "2026-09-09T12:09:08.477Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: blockchain-101-combined-flow] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "type": "result",
+      "name": "strict/primary-interactive-hub",
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--experience",
+        "--route",
+        "primary-interactive-hub"
+      ],
+      "startedAt": "2026-09-09T12:09:08.479Z",
+      "finishedAt": "2026-09-09T12:09:29.143Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: primary-interactive-hub] [experience gates]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    }
+  ],
+  "tightProbes": {
+    "browser": "Playwright default Chromium",
+    "results": [
+      {
+        "slug": "sim",
+        "sample": 1,
+        "initial": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46.5,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 29,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 4.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 7.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 20.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 7.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 9.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 12
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 12.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 12.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 12.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 15.799999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 16.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 16.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 18.599999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 18.80000001192093
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 18.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 18.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 19.30000001192093
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 5.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 2.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 1.5999999642372131
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 1.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 101.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 76.59999996423721
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 76.69999998807907
+            }
+          ]
+        },
+        "later": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46.5,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 29,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 4.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 7.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 20.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 7.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 9.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 12
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 12.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 12.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 12.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 15.799999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 16.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 16.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 16
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 18.599999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 18.80000001192093
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 18.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 18.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 19.30000001192093
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 5.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 2.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 1.5999999642372131
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 1.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 101.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 76.59999996423721
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 76.69999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 76.69999998807907
+            }
+          ]
+        },
+        "events": [],
+        "failure": true
+      },
+      {
+        "slug": "sim",
+        "sample": 2,
+        "initial": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 28,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 2.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 4.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 5.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 5.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 5.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 5.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 5.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 14.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 7.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 8.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 8
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 11
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 11.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 11.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 11.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 11.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 12.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 13.399999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 13.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 3.799999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 1.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 29.19999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 29.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 8.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 2.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 2.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 9.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 9.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 9.400000035762787
+            }
+          ]
+        },
+        "later": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 28,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 2.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 4.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 5.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 5.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 5.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 5.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 5.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 14.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 7.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 8.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 8
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 8.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 11
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 11.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 11.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 11.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 11.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 12.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 13.399999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 13.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 3.799999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 1.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 29.19999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 29.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 8.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 2.099999964237213
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 2.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 9.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 9.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 9.400000035762787
+            }
+          ]
+        },
+        "events": [],
+        "failure": true
+      },
+      {
+        "slug": "sim",
+        "sample": 3,
+        "initial": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 28,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 2.899999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 6.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 16.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 9.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 9.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 9.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 13.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 13.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 15.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 15.899999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 14.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 15.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 15.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 6.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 3.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 35.19999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 35.10000002384186
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 11.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 1.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 1.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 7.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 7.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 7.400000035762787
+            }
+          ]
+        },
+        "later": {
+          "grid": {
+            "tag": "DIV",
+            "id": "grid",
+            "className": "",
+            "width": 0,
+            "height": 0,
+            "top": 46,
+            "left": 384,
+            "display": "block",
+            "position": "absolute",
+            "dataset": {}
+          },
+          "canvas": [],
+          "tileSize": 0,
+          "gridParent": {
+            "tag": "DIV",
+            "id": "grid_container",
+            "className": "",
+            "width": 768,
+            "height": 28,
+            "top": 32,
+            "left": 0,
+            "display": "block",
+            "position": "relative",
+            "dataset": {}
+          },
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "resources": [
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/theme-init.js",
+              "transferSize": 1121,
+              "duration": 2.899999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/model.css",
+              "transferSize": 7797,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/styles/perfect-scrollbar.min.css",
+              "transferSize": 4133,
+              "duration": 6.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.css",
+              "transferSize": 6125,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.css",
+              "transferSize": 105097,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/rAF.js",
+              "transferSize": 1556,
+              "duration": 6.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/engineering-sandbox.js",
+              "transferSize": 36232,
+              "duration": 16.5
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/minpubsub.js",
+              "transferSize": 3384,
+              "duration": 6.600000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/reqwest.min.js",
+              "transferSize": 10080,
+              "duration": 9.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/perfect-scrollbar.min.js",
+              "transferSize": 25082,
+              "duration": 9.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Agent.js",
+              "transferSize": 1133,
+              "duration": 9.800000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Actions.js",
+              "transferSize": 4851,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/lz-string.min.js",
+              "transferSize": 5019,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Grid.js",
+              "transferSize": 8541,
+              "duration": 10
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Editor.js",
+              "transferSize": 21172,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Model.js",
+              "transferSize": 3931,
+              "duration": 13
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Scroll.js",
+              "transferSize": 458,
+              "duration": 13.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Save.js",
+              "transferSize": 786,
+              "duration": 13.100000023841858
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/UI.js",
+              "transferSize": 8680,
+              "duration": 13.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/engine/Load.js",
+              "transferSize": 2592,
+              "duration": 15.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/platform.js",
+              "transferSize": 37326,
+              "duration": 15.899999976158142
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/emoji/emojiTest.js",
+              "transferSize": 1800,
+              "duration": 14.900000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/scripts/libraries/emojiFallback.js",
+              "transferSize": 627,
+              "duration": 15.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/public-footer.js",
+              "transferSize": 20731,
+              "duration": 15.699999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/tokens.css",
+              "transferSize": 6000,
+              "duration": 6.199999988079071
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/sim/models/forest.json",
+              "transferSize": 1884,
+              "duration": 3.200000047683716
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-400.ttf",
+              "transferSize": 120528,
+              "duration": 35.19999998807907
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-700.ttf",
+              "transferSize": 126528,
+              "duration": 35.10000002384186
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/simulating/styles/fonts/OpenSansEmoji.otf",
+              "transferSize": 532916,
+              "duration": 11.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/pages.json",
+              "transferSize": 104120,
+              "duration": 1.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/routes.manifest.json",
+              "transferSize": 104120,
+              "duration": 1.300000011920929
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-400.ttf",
+              "transferSize": 129112,
+              "duration": 7.299999952316284
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/be-vietnam-pro-600.ttf",
+              "transferSize": 123364,
+              "duration": 7.400000035762787
+            },
+            {
+              "name": "http://127.0.0.1:4231/interactive-explanation/shared/fonts/ibm-plex-mono-600.ttf",
+              "transferSize": 133744,
+              "duration": 7.400000035762787
+            }
+          ]
+        },
+        "events": [],
+        "failure": true
+      },
+      {
+        "slug": "interactive-mechanical-watch",
+        "sample": 1,
+        "initial": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "later": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "afterScroll": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 178.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "2",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": true,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "events": [],
+        "failure": false
+      },
+      {
+        "slug": "interactive-mechanical-watch",
+        "sample": 2,
+        "initial": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "later": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "afterScroll": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 178.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "2",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": true,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "events": [],
+        "failure": false
+      },
+      {
+        "slug": "interactive-mechanical-watch",
+        "sample": 3,
+        "initial": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "later": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 75280.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "1",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": false,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "afterScroll": {
+          "reduced": "paused",
+          "play": "false",
+          "canvas": {
+            "tag": "CANVAS",
+            "id": "",
+            "className": "exploded-watch__webgl",
+            "width": 319.21875,
+            "height": 544.359375,
+            "top": 178.078125,
+            "left": 315.59375,
+            "display": "block",
+            "position": "static",
+            "dataset": {
+              "engine": "three.js r185",
+              "componentCount": "71",
+              "transformedSourceCount": "16",
+              "sourceRotationOrder": "ZYX",
+              "renderCount": "2",
+              "simulationTime": "0.000",
+              "windingTravel": "0.0000",
+              "speed": "8",
+              "playing": "false",
+              "cameraPosition": "32.0000,-38.0000,34.0000"
+            }
+          },
+          "visible": true,
+          "documentWidth": 1280,
+          "viewportWidth": 1280,
+          "imageSha256": "f2c3b2dcaa4b280ee92544d94aa0ecd60075735f90c088130cc98323feccd720"
+        },
+        "events": [],
+        "failure": false
+      }
+    ]
+  },
+  "watchRepeats": [
+    {
+      "sample": 1,
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "interactive-mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T12:15:35.328Z",
+      "finishedAt": "2026-09-09T12:17:09.342Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: interactive-mechanical-watch]\nRoute checks completed\n",
+      "stderr": "page.waitForFunction: Timeout 5000ms exceeded.\n    at smokeInteractiveMechanicalWatch (/tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:6443:21)\n    at async main (/tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9922:7)\n"
+    },
+    {
+      "sample": 2,
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "interactive-mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T12:17:09.342Z",
+      "finishedAt": "2026-09-09T12:19:37.101Z",
+      "exit": 0,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: interactive-mechanical-watch]\nRoute checks completed\nSmoke checks completed\n",
+      "stderr": ""
+    },
+    {
+      "sample": 3,
+      "command": "/home/compute_01/.nvm/versions/node/v24.20.0/bin/node",
+      "args": [
+        "interactive-explanation/tools/smoke-bundle.mjs",
+        "interactive-explanation",
+        "--baseline",
+        "/tmp/opencode/42-geometry-successor-005.json",
+        "--route",
+        "interactive-mechanical-watch"
+      ],
+      "startedAt": "2026-09-09T12:19:37.101Z",
+      "finishedAt": "2026-09-09T12:19:47.201Z",
+      "exit": 1,
+      "signal": null,
+      "stdout": "Starting smoke run [routes: interactive-mechanical-watch]\n",
+      "stderr": "Error: interactive-mechanical-watch light performance regressed:\nDOMContentLoaded 912ms exceeded 616ms + 250ms\nload 954ms exceeded 661ms + 250ms\n    at assert (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at measureRoutePerformance (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:1747:7)\n    at async main (file:///tmp/opencode/w0-final-baselines/interactive-explanation/tools/smoke-bundle.mjs:9748:12)\n"
+    }
+  ],
+  "findings": [
+    "Normal sweep80/83 and strict58/59; not82 clean normal routes. Full normal stops at Sim performance; combined strict59 stops at rigid-body geometry. Original failures retained.",
+    "Sim transfer1705532 exceeds1085315+256000; resources34 exceeds33. Three fresh reduced-motion desktop probes also reproduce tileSize0 and zero backing canvas without runtime/network errors. Existing research41 already reports all36 initial samples zero-size; no source/performance fix authorized here.",
+    "Watch original normal fails reduced-motion canvas dataset.playing at smoke6443. Three isolated startup probes pass; unchanged focused repetitions fail same task, pass all tasks, then fail timing912/954 versus616+250/661+250. Mixed evidence is not a clean pass. Authored exploded-view-three.js560-578 publishes dataset.playing only inside visible renderFrame; IntersectionObserver600-605 can suppress initial publication offscreen. Candidate race requires parent bounded seam investigation, not engine edit or timeout relaxation.",
+    "TTV normal and strict pass in this sweep and18 passive samples exactly rebind005. Prior research42 still records top-bar pointer occlusion at390/320; gate success is not universal pointer acceptance.",
+    "Rigid-body remains blocked at desktop runtime bottom; initialization/hydration failure remains known. No geometry or engine masking, no W0 completion, no main merge or push."
+  ]
+}

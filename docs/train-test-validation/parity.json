@@ -9,6 +9,8 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "Research42 adds initial inert and synchronizes feature-control availability with the compiled engine's inline opacity through the existing a11y-state observer. All 18 affected contexts pass keyboard, boundary, and opacity checks without runtime exceptions; mobile/narrow pointer occlusion remains separately recorded. Successor004 strict smoke still stops at desktop img:9 right geometry. No compiled, numerical, CSS, or baseline changes.",
+      "Research39 bounds padded scrolly prose without changing chart dimensions. Final paired six-cell captures are stable with no document overflow. Keyboard feature activation reproduces an existing undefined.includes exception in js.6c47f979.js:729:21936 in all 18 AFTER contexts and on immutable BEFORE; runtime acceptance remains blocked. Successor003 focused gates stop at desktop img:9 right geometry.",
       "The mlu-pilot adapter themes only authored HTML, the native TOC, and verified controls; compiled scenes, SVG, canvas, images, dimensions, and transforms remain intrinsic.",
       "The existing #toc anchor navigation remains the sole navigation owner, preserving the route's original section order and DOM IDs.",
       "The Summary anchor keeps data-page=all for compiled scene selection while href resolves to #summary; Route-scoped mobile styles reveal and wrap the same TOC without adding generated navigation or moving runtime geometry."

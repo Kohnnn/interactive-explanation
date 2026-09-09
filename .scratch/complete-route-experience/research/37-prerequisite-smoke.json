@@ -1,0 +1,150 @@
+[
+  {
+    "slug": "decision-tree",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "decision-tree",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: decision-tree]\n",
+    "stderr": "Error: decision-tree desktop geometry baseline img:0 top shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1172:7\n    at Array.forEach (<anonymous>)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1168:20)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "markov-chains",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "markov-chains",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: markov-chains]\n",
+    "stderr": "Error: markov-chains mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-get-started",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-get-started",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-get-started]\n",
+    "stderr": "Error: ableton-learning-synths-get-started mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-how-synths-make-sound",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-how-synths-make-sound",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-how-synths-make-sound]\n",
+    "stderr": "Error: ableton-learning-synths-how-synths-make-sound mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-filter-resonance",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-filter-resonance",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-filter-resonance]\n",
+    "stderr": "Error: ableton-learning-synths-filter-resonance mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-modulating-amplitude-with-envelopes",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-modulating-amplitude-with-envelopes",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-modulating-amplitude-with-envelopes]\n",
+    "stderr": "Error: ableton-learning-synths-modulating-amplitude-with-envelopes mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-matching-envelopes",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-matching-envelopes",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-matching-envelopes]\n",
+    "stderr": "Error: ableton-learning-synths-matching-envelopes mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "ableton-learning-synths-recipes",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "ableton-learning-synths-recipes",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: ableton-learning-synths-recipes]\n",
+    "stderr": "Error: ableton-learning-synths-recipes mobile geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "rigid-body-collisions",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--route",
+      "rigid-body-collisions",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run [routes: rigid-body-collisions]\n",
+    "stderr": "Error: rigid-body-collisions desktop geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  },
+  {
+    "slug": "all",
+    "args": [
+      "interactive-explanation/tools/smoke-bundle.mjs",
+      "interactive-explanation",
+      "--baseline",
+      "/tmp/opencode/complete-route-geometry/.scratch/complete-route-experience/research/01-w0-geometry-successor-002.json"
+    ],
+    "exit": 1,
+    "signal": null,
+    "stdout": "Starting smoke run\n",
+    "stderr": "Error: remember narrow geometry baseline runtime bottom shifted by more than 1 CSS px\n    at assert (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:261:11)\n    at assertRuntimeGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1160:5)\n    at measureRouteGeometry (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:1197:11)\n    at async main (file:///tmp/opencode/complete-route-prerequisites9782bff/interactive-explanation/tools/smoke-bundle.mjs:9734:24)\n"
+  }
+]

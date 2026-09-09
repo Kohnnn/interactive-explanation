@@ -101,7 +101,8 @@ icon[r]{
 
 p > img{
 	width: 100%;
-	border: 1px solid #ddd;
+	outline: 1px solid #ddd;
+	outline-offset: -1px;
 	margin: 0.5em auto;
 }
 sub{

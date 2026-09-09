@@ -1,0 +1,90 @@
+{
+  "root": "/tmp/opencode/w0-baseline-09505db-evidence",
+  "inventory": [
+    {
+      "name": "build-successor.mjs",
+      "bytes": 2805,
+      "sha256": "a877f71767227ab9c86309828e3039099d4da97a589fdaa9e13f7741e890dd64"
+    },
+    {
+      "name": "compact.mjs",
+      "bytes": 618,
+      "sha256": "82870cf38eca0cd27b8c05211db8fe663f68978cd4a80e4dc6872e170f22622a"
+    },
+    {
+      "name": "compare.mjs",
+      "bytes": 1417,
+      "sha256": "6ae55f7948a5792ebb3cfaca2efbc43bcc6499e50a6fdf95b4b2d9ff987cfd02"
+    },
+    {
+      "name": "focused-001.jsonl",
+      "bytes": 4887384,
+      "sha256": "9124bed0b330a17de0fde0a3f48e72206f7e6e68cf0497c8d5209583e90c8d8e"
+    },
+    {
+      "name": "full-001.jsonl",
+      "bytes": 102196875,
+      "sha256": "eee376e0ec39a5fcf91b8662e6ac838df846b3fef239c65816da1f67148673cc"
+    },
+    {
+      "name": "full-smoke-successor-001.log",
+      "bytes": 1523,
+      "sha256": "776d42090f2bb3f56afa946ae94b58beb44340fd8b77d6f6e37ed4ec116fa99f"
+    },
+    {
+      "name": "full-summary-001.json",
+      "bytes": 178064,
+      "sha256": "22122b5753b5d8c94f28c22cda97b63f03b2d2d2278ab648d54601e3fce8a95a"
+    },
+    {
+      "name": "geometry-compare-001.jsonl",
+      "bytes": 72542,
+      "sha256": "b90378c7a6564371959bda31ab3ae177e9e07702c8f125f28bc689a4181ccd7a"
+    },
+    {
+      "name": "geometry-successor-001.json",
+      "bytes": 3674244,
+      "sha256": "c0d331e297c58c57f56382d3053db23828041b0907faee36367f550e2f5a671e"
+    },
+    {
+      "name": "geometry-successor-review-001.json",
+      "bytes": 18423,
+      "sha256": "97edf43bd58d1a78718c9a39ce52a031823d0155193ee01bbf52f68ecf5619e0"
+    },
+    {
+      "name": "historical-focused-001.jsonl",
+      "bytes": 3387458,
+      "sha256": "3bf1c14d1c467fd055a072f55bf0496833ef084dcd7a58d76bbd325ac5b66522"
+    },
+    {
+      "name": "retain.mjs",
+      "bytes": 926,
+      "sha256": "c31e271a85d774f6ed5ebc509614b3d8aebf4eb107aff30bab44705367f104d9"
+    },
+    {
+      "name": "run-strict.mjs",
+      "bytes": 1166,
+      "sha256": "e90f5d4ddea9e2410c7a7467d6dfdb4d616368686bb26acf2a867ce1a13701e1"
+    },
+    {
+      "name": "signals-001.jsonl",
+      "bytes": 30936,
+      "sha256": "0d7dbd9d37f567f70a1f916b912333c490a6f1bb807f3acfd8f35d3af82c4539"
+    },
+    {
+      "name": "signals.mjs",
+      "bytes": 2909,
+      "sha256": "5c49e05aa691a7f6e77caa24fbedc6b3b8a8a54e3de65a5bb38f56606534d6f6"
+    },
+    {
+      "name": "strict-successor-001.log",
+      "bytes": 4632,
+      "sha256": "e26c3bcc3ca52478391503a886851cc0887c36eaf9eb6c24614539b3b7eb6e46"
+    },
+    {
+      "name": "summarize.mjs",
+      "bytes": 1164,
+      "sha256": "76a42303ea0774383bd41827afdf21e92a3aac96b765ca69713d91b4ec5434ee"
+    }
+  ]
+}
