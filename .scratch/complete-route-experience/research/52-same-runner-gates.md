@@ -1,6 +1,6 @@
 # 52 — Same-runner geometry/functional pipeline
 
-Status: implemented tooling; BLOCKED native Sim acceptance and independent parent review; not released
+Status: corrected Sim native acceptance passed 18/18; full paired/functional qualification and independent parent review remain BLOCKED; not released
 
 Starting HEAD: `9168457de28369288b400f2a9a352608a701fefd`. User subsequently authorized committing the pipeline-owned files after self-review despite the correctly failing native gate. No push or merge is authorized. Parent must independently review this record and the implementation before publication. This is implementation self-review, not independent approval.
 
@@ -12,13 +12,13 @@ Optional `--geometry-output` writes outside every immutable source, exclusively,
 
 Full83 and explicit strict59 execute sequentially within the same Linux job using the generated reference, with only performance skipped. Both exit codes survive a full-suite failure. The functional step uses `always()` after qualification; qualification exit 1 remains a failed job, without continue-on-error. Missing/invalid proof blocks functional execution. Windows npm test remains; redundant Windows browser subsets and cross-environment full-smoke are removed. PR qualification is still PR-only; scheduled/manual verification does not claim browser qualification. Repository rules must require verify and paired-performance, replacing the obsolete full-smoke job requirement; no remote rule changes performed.
 
-## Fixed Sim source
+## Original fixed Sim source (superseded below; retained history)
 
 Published full reference `7b09f49e2ab3a3d0feacfcea0d40d6a773aa764f` resolves locally as a commit and is an ancestor of starting HEAD. Git diff confirms identical Sim, shared and lockfile sources; the manifest difference is confined to rigid, not Sim. Complete sorted `git ls-tree -r` records (paths, modes, blob IDs) for sim/shared/package-lock.json hash to `6648feea4a09252cf6a7866bfb63360be4e4bc56addf3ddba0974051f5e60b0f` at both revisions. The exact Sim manifest-entry JSON hashes to `f9e9cd0f06a722887d994c9bf1dd2c3688eb9e886ca3a9d0ed2b09e5e0d8f7df`. CI fetches the full pin from the PR repository and validates clean Git fixtures before/after capture. No current tooling self-hash pin is required.
 
 Only mobile/narrow light/dark use fixed geometry-control/reference/head groups, adding 36 captures. Original Sim base-control/base/head evidence and performance comparisons remain mandatory and unchanged. Four affected cells receive native default-preset checks; existing desktop Sim smoke retains save/export/restore and controls. No canvas requirement or opaque engine edit is introduced.
 
-## Concrete blocker found
+## Historical blocker found (corrected below)
 
 The local native probe passed initial 1,320-model/DOM-tile agreement, description edit/restore, brush, play/evolution/pause, then failed render agreement after resizing while paused. A second diagnostic run using the existing layout-settling helper failed at the same resize check. This is not timing qualification or retry-until-pass. `sim/scripts/engine/Grid.js:167–174` replaces grid children with empty tiles on resize; the paused engine does not restore their rendered icons in the observed probe. The first affected cell (mobile/light) failed; subsequent cells were not claimed tested. No assertion tolerance or engine code was changed to suppress this failure.
 
@@ -41,3 +41,20 @@ Final npm test and standalone unit rerun: 490 tests passed; audit and existing/n
 Commit self-review: checked workflow failure propagation, exact fixed-reference scope, unchanged original Sim performance groups, exclusive evidence paths, source-end gating, baseline timing retention and sequential full/strict exit recording. Found and corrected executable identity binding: CI installs only Chromium headless shell, so proof now hashes the locked Playwright 1.60.0 registry's actual `chromium-headless-shell` binary rather than the uninstalled full Chromium path. This uses the pinned package's internal registry and must be reviewed when upgrading Playwright. Executed environment identity successfully against shell revision 1223. Re-ran all 490 unit tests, audit, configured syntax checks, all four new-tool syntax checks and diff whitespace validation successfully. No application files or baseline history changed. The native failure is an application-source issue and remains a correct blocking result, not a reason to withhold this authorized tooling commit.
 
 Full capture (4,536 plus fixed-reference additions), full83 and strict59 have not been run against a generated reference. Performance remains unqualified/inconclusive, not green. Independent parent review remains required before push.
+
+## Corrected-reference continuation after parent integration
+
+User authorized fast-forward only from `2a2c9e0d558e99b005579d95faaadb9d6efe3e70` to `772415ec61829e6fc98af28a76fea0227e962ff8`. The integrated parent correction is `94bb7ebc9daaf651a59cbbc6a1e9a11220001df1`, the first paused-redraw fix. No application edit was made by this continuation. CI and the Sim-only contract now pin that full commit. Exact Git inventory arrays for Sim/shared/package-lock match between fixed reference and integrated HEAD, SHA-256 `c07300985b64ca156abba61602a1c48eb29c69bcd8445d2831031ffe21c551c8`; the complete Sim manifest entry remains `f9e9cd0f06a722887d994c9bf1dd2c3688eb9e886ca3a9d0ed2b09e5e0d8f7df`. Tests reject the old pin and arbitrary inventory/manifest drift.
+
+### Exact 62-cell registry rebind
+
+The registry hashes ALL product paths, not only the reviewed routes. No path exclusion was added. Restoring only the old `sim/index.html` SHA-256 in the current inventory reproduces the previous product digest exactly: `d4ccaf0869d9d2a71ab030c1e568c278efdb7f206e46145b521608db7eb4590c`. Sim HTML changed from `9435756e3ffb75d27861bbd127f5e7105f752373cfc296e50b770b0ff3acb693` to `5bf474375752a80c460afde00119e6957fdf65345b112a4725266778d9baacff`. New exact product digest: `40d2e69bf997353eda8f00ed8e560a84164fbb7a9132fc0c1968cb0ecdf16de8`. Git diff proved every one of the 15 reviewed route/Atlas roots, complete shared tree, pages/manifest and package-lock unchanged against `2a2c9e0`. Atlas metadata still points to the same Sim URL; it does not embed Sim's document. Future arbitrary Sim changes still invalidate the product binding; the negative inventory test now explicitly includes Sim. No broad exemption or scope redesign.
+
+Actual-source verification also exposed stale pre-research51 harness dependency pins. Reviewed the complete captured-head-to-current diffs: geometry measurement, geometry assertions, timing extraction and budgets are unchanged; the changes are the already-integrated exact Markov child handoff monitor, resource URL redaction and awaited runtime validation. Research51 and the stale-native-handoff negatives cover this bounded behavior. Pin current `tools/diagnose-baseline.mjs` to `92ae297975347c2377cce5cc69a7d7ece577b6400b68095a88c4adba63f7c5b8`, `tools/smoke-bundle.mjs` to `2c8f8debd10fedf24cd792bb1719011885bc9ed80a7237cfce30591065c18a58`, and add their imported `tools/network-handoff.mjs` at `972f20e4a2aca957c1a304864dfde3e593aa7ffaede670630692b0c4daa4d845`. Server and baseline module pins unchanged. Exact 62 cells/1,590 leaves, original review/raw hashes, captured historical SHA and base digest unchanged. This records source compatibility review, not a new geometry capture or timing approval.
+
+### Actual corrected native results
+
+- `node tools/reproduce-sim-resize.mjs /tmp/opencode/research52-sim-resize-corrected94.json`: exit 0, native predicate passes; evolved visible icons survive resize before the diagnostic render event. All 1,320 DOM/model cells agree, with 1,315 empty-state icons and five visible icons in this run; empty icons are valid model states, not lost output. Model and state arrays unchanged. SHA-256 `15003d3e74b1704f0fcf3477a7e275372ad27446926b5908c026699c8ea282c9`.
+- `node /tmp/opencode/research52-native18-corrected.mjs /tmp/opencode/research52-native18-corrected94.jsonl`: 18/18 passed, all six viewport/theme cells with three fresh contexts each, one exclusive sequential browser, zero retries. Invokes the unchanged `verifySimNative` predicate including native edit/restore, brush, play/evolution/pause, positive in-bounds grid, resize/restore and runtime checks. Source identity unchanged during capture. SHA-256 `3215773176c03acb3c9147c976604caf9840350fcaa905193e2154df76207bea`.
+- 491/491 unit tests, policy audit and configured/changed-tool syntax passed. Original failed/unstable base samples and original Sim performance comparison remain untouched. No full paired capture, generated 83-route baseline, full83/strict59 result, or timing qualification is claimed. Parent independent review remains required; no push or remote merge.
+

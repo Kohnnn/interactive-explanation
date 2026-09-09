@@ -7,13 +7,14 @@
   "capturedHeadSha": "542b16ada9dfcac0edb1e6ce9f3f29e2e1122d23",
   "sources": {
     "base": "8a0a3bdb579289e1bba1a62ce12eedd38204da1cf5fa94d4614b41c146cbd299",
-    "head": "d4ccaf0869d9d2a71ab030c1e568c278efdb7f206e46145b521608db7eb4590c"
+    "head": "40d2e69bf997353eda8f00ed8e560a84164fbb7a9132fc0c1968cb0ecdf16de8"
   },
   "dependencies": {
-    "tools/diagnose-baseline.mjs": "4b387489f42602bf653981e8c391fe1e4258132b2bc10168e1387b417178d950",
+    "tools/diagnose-baseline.mjs": "92ae297975347c2377cce5cc69a7d7ece577b6400b68095a88c4adba63f7c5b8",
     "tools/experience-baseline.mjs": "9f8edb47ba512f9ac42028ac2ef8be7da3ad0123e73e0978cc23d259dbced468",
     "tools/smoke/server.mjs": "5ccc906a3ebfe15cef5e86e7eb04805edecd7503815295241aff46feb8c57e16",
-    "tools/smoke-bundle.mjs": "560719ce93ddfc9394c38e74e3d91faa7e091fe0a19c735cb7241e91cb43bb00"
+    "tools/smoke-bundle.mjs": "2c8f8debd10fedf24cd792bb1719011885bc9ed80a7237cfce30591065c18a58",
+    "tools/network-handoff.mjs": "972f20e4a2aca957c1a304864dfde3e593aa7ffaede670630692b0c4daa4d845"
   },
   "cells": {
     "atlas/desktop/light": [

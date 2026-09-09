@@ -84,7 +84,10 @@ test("fixed Sim rejects wrong pin and unpinned source inventory", () => {
 test("same-source fixed Sim fixture admits exact dependency arrays and entry without reference checkout", () => {
   const head = simSource(fileURLToPath(new URL("../../", import.meta.url)));
   const reference = { ...head, revision: simReferenceSha };
+  assert.equal(simReferenceSha, "94bb7ebc9daaf651a59cbbc6a1e9a11220001df1");
+  assert.equal(verifySimSources(reference, head).inventorySha256, "c07300985b64ca156abba61602a1c48eb29c69bcd8445d2831031ffe21c551c8");
   assert.equal(verifySimSources(reference, head).cells.length, 4);
+  assert.throws(() => verifySimSources({ ...reference, revision: "7b09f49e2ab3a3d0feacfcea0d40d6a773aa764f" }, head), /revision/);
   assert.throws(() => verifySimSources(reference, { ...head, inventory: head.inventory + "extra" }));
   assert.throws(() => verifySimSources(reference, { ...head, entry: { ...head.entry, title: "changed" } }));
 });

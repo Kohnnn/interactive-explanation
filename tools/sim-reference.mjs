@@ -4,9 +4,9 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { createThemeContext, createRuntimeMonitor, baseUrl, waitForManifestRouteReady, waitForDocumentLayout, assertDocumentTheme } from "./smoke-bundle.mjs";
 
-export const simReferenceSha = "7b09f49e2ab3a3d0feacfcea0d40d6a773aa764f";
+export const simReferenceSha = "94bb7ebc9daaf651a59cbbc6a1e9a11220001df1";
 export const simCells = ["sim/mobile/light", "sim/mobile/dark", "sim/narrow/light", "sim/narrow/dark"];
-const inventorySha256 = "6648feea4a09252cf6a7866bfb63360be4e4bc56addf3ddba0974051f5e60b0f";
+const inventorySha256 = "c07300985b64ca156abba61602a1c48eb29c69bcd8445d2831031ffe21c551c8";
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 
 export function simSource(root) {

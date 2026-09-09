@@ -67,7 +67,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: 7b09f49e2ab3a3d0feacfcea0d40d6a773aa764f
+          ref: 94bb7ebc9daaf651a59cbbc6a1e9a11220001df1
           path: sim-reference
           persist-credentials: false
 

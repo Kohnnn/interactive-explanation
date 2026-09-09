@@ -76,7 +76,7 @@ test("tooling-only head revision is not a registry self-loop", () => {
   assert(verifyGeometryReview(geometryReview, actual));
 });
 test("product binding includes Atlas, metadata, shared dependencies and exact inventory, excludes registry", () => {
-  const files = ["index.html", "pages.json", "routes.manifest.json", "shared/site.css", "shared/fonts/font.woff", "covid-19/index.html", "package-lock.json"].map(file => [file, "a".repeat(64)]);
+  const files = ["index.html", "pages.json", "routes.manifest.json", "shared/site.css", "shared/fonts/font.woff", "covid-19/index.html", "sim/index.html", "package-lock.json"].map(file => [file, "a".repeat(64)]);
   const binding = rows => geometrySourceBinding({ files: rows, head: "h", status: "" }).product;
   assert.equal(binding(files), createHash("sha256").update(JSON.stringify([...files].sort(([a], [b]) => a < b ? -1 : 1))).digest("hex"));
   for (let index = 0; index < files.length; index++) {
