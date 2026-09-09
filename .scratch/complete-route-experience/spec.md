@@ -1,14 +1,24 @@
 # Complete Route Experience: authored overhaul and bounded rollout
 
-Status: ready-for-agent
-Decision state: finalized by delegated agent selection
-Release: BLOCKED — compatible smoke browser and production qualification outstanding
-Delivery: planning specification, not released UI
-Implementation authorization: none in this delivery
+Status: in-progress
+Decision state: original design retained with the explicit implementation amendments below
+Release: BLOCKED — CI qualification and remaining execution packages outstanding
+Delivery: implementation in progress; not released UI
+Implementation authorization: user-authorized implementation, installation, commits and PR publication; deployment not authorized
 Parent: [Complete Route Experience map](map.md)
 Rollout snapshot: [Exact 83-Route partition](research/35-route-rollout.json)
 
 `ready-for-agent` means ready to implement when the user requests implementation; design decisions are settled, not awaiting another design interview. This specs-only delivery starts no execution. A subsequent implementation request authorizes routine matching code edits without repeated confirmation; installation, commits, and deployment still require their own authorization. Material out-of-scope deviations require a human decision. Routine matching work and baseline successors receive recorded agent review, never falsely attributed human approval.
+
+## User-approved implementation amendments
+
+These amendments supersede conflicting historical planning restrictions only for the scope stated here. Historical measurements and failures below remain historical evidence, not current qualification.
+
+- The user selected **Original replacement** for `rigid-body-collisions`: independently written code and teaching content at the same public URL, with tested physics and explicit limits. The replacement is a one-dimensional two-cart collision lab, not a reproduction of the unavailable multidimensional article. It uses conservation of momentum and restitution, distinguishes non-approaching carts, and discloses omitted rotation, deformation and collision duration. The old compiled application and its assets are removed from the active route. No permission to copy unavailable upstream material is implied. This is the only authorized exception to the no-runtime-replacement restriction.
+- The replacement receives independent mathematical, accessibility, interaction, geometry and resource review. Its output is not compared for equivalence to the broken archived engine. A failed archived initialization is not an acceptable performance baseline. Any replacement-specific admission contract must be explicit and independently reviewed; absent comparable evidence remains unqualified.
+- The user selected **Configure CI qualification**. Timing comparisons run against immutable PR base/head inputs on the same runner and browser, with three fresh samples per side and cell, retained raw samples, same-source calibration and variance checks. Existing regression allowances remain unchanged. Noisy or failed measurements remain blocked/inconclusive. Historical local timing references are not promoted into CI acceptance. Functional, geometry and performance qualification remain separate required obligations, not interchangeable passes.
+- Publication target is **https://github.com/Kohnnn/interactive-explanation**, through a PR for the user's approval. This repository's root is the product root: application commands use `.` rather than the former parent `interactive-explanation/` prefix. Parent-repository commit references and external evidence locations identify historical inputs; they are not assumed available to a fresh CI checkout.
+- W0 still gates packages 02–07. Creating a draft PR or replacing the failed route does not complete W0, authorize deployment, or waive final qualification. The user approves the PR; do not merge it remotely on their behalf.
 
 ## Problem Statement
 
