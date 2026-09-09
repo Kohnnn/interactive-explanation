@@ -5,7 +5,7 @@ import { classifySamples, compareCell, compareGeometry, collectCellPair, assertI
 import { planCells } from "../diagnose-baseline.mjs";
 
 const sample = (overrides = {}) => ({
-  status: "measured", ready: true, errors: [], geometry: { rect: { width: 100 } },
+  status: "measured", ready: true, errors: [], geometry: { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] },
   performance: { domContentLoadedMs: 1000, loadMs: 1000, resourceCount: 10, resourceCountDelta: 0, sameOriginTransfer: { status: "supported", bytes: 1000 }, longestLocalResource: null, ...overrides },
 });
 const runs = (overrides) => Array.from({ length: 3 }, () => sample(overrides));
@@ -70,7 +70,7 @@ test("A/A calibration rejects drift before considering head even when head meets
 
 test("geometry requires complete stable same-source controls and specific change review", () => {
   assert.equal(compareGeometry(runs(), runs(), runs()).status, "passed");
-  const changed = runs().map(value => ({ ...value, geometry: { rect: { width: 101 } } }));
+  const changed = runs().map(value => ({ ...value, geometry: { ...value.geometry, rect: { ...value.geometry.rect, width: 101 } } }));
   assert.equal(compareGeometry(runs(), changed, changed).status, "blocked");
   const result = compareGeometry(runs(), runs(), changed);
   assert.equal(result.status, "blocked");

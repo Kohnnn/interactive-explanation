@@ -848,7 +848,7 @@ function createRuntimeMonitor(page, options = {}) {
   const assertRuntimeClean = async function (label) {
     await network.ready();
     const failures = network.classify().filter((entry) => entry.classification === "unknown-failure");
-    const allIssues = [...issues, ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} unknown-failure`)];
+    const allIssues = [...issues, ...network.nativeFailures(), ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} unknown-failure`)];
     assert(allIssues.length === 0, `${label} had runtime issues:\n${allIssues.join("\n")}`);
   };
   assertRuntimeClean.ready = network.ready;

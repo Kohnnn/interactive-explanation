@@ -7,7 +7,7 @@ import { rigidAdmission, verifyRigidAdmission, collectRigidAdmission, compareCel
 const options = { base: "/base", head: "/head", reference: "/reference", "base-sha": rigidAdmission.baseSha };
 const resolve = (_root, file) => rigidAdmission.sources[file];
 const runs = (loadMs = 1000) => Array.from({ length: 3 }, () => ({
-  status: "measured", ready: true, errors: [], geometry: { rect: { width: 100 } },
+  status: "measured", ready: true, errors: [], geometry: { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] },
   performance: { domContentLoadedMs: 1000, loadMs, resourceCount: 10, resourceCountDelta: 0, sameOriginTransfer: { status: "supported", bytes: 1000 }, longestLocalResource: null },
 }));
 

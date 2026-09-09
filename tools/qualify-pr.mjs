@@ -7,7 +7,7 @@ import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
 import { chromium } from "playwright";
 import { capture, planCells, openJournal, statistics, geometryChanges, sourceIdentity, verifySourceFixture } from "./diagnose-baseline.mjs";
-import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEvidence } from "./experience-baseline.mjs";
+import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEvidence, validateGeometryEvidence } from "./experience-baseline.mjs";
 import { createSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
@@ -69,10 +69,17 @@ export function compareCell(control, before, after) {
 }
 
 export function compareGeometry(control, before, after, review, cell) {
-  for (const samples of [control, before, after]) {
-    if (samples.length !== 3 || samples.some(sample => sample.status !== "measured" || !sample.geometry || JSON.stringify(sample.geometry) !== JSON.stringify(samples[0].geometry))) return { status: "blocked", reason: "Missing or unstable geometry" };
-  }
-  if (geometryChanges(control[0].geometry, before[0].geometry).length) return { status: "blocked", reason: "Same-source A/A geometry changed" };
+  try {
+    for (const samples of [control, before, after]) {
+      assert(Array.isArray(samples) && samples.length === 3, "Missing geometry samples");
+      for (const sample of samples) {
+        assert(sample?.status === "measured" && sample.ready === true && Array.isArray(sample.errors) && sample.errors.length === 0, "Missing or failed geometry sample");
+        validateGeometryEvidence(sample.geometry);
+        assert.deepEqual(sample.geometry, samples[0].geometry, "Unstable geometry");
+      }
+    }
+    assert.deepEqual(control[0].geometry, before[0].geometry, "Same-source A/A geometry changed");
+  } catch (error) { return { status: "blocked", reason: error.message }; }
   const changes = geometryChanges(before[0].geometry, after[0].geometry);
   if (review) {
     try {

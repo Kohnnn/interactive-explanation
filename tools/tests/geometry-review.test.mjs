@@ -9,7 +9,7 @@ const identities = Object.fromEntries(["base", "head"].map(side => [side, { head
 const review = verifyGeometryReview(geometryReview, identities);
 const cell = "atlas/desktop/light";
 function fixture() {
-  const before = { rect: {}, css: { transform: "none", touchAction: "auto", pointerEvents: "auto" }, intrinsic: [] };
+  const before = { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] };
   const after = structuredClone(before);
   for (const [pointer, left, right] of geometryReview.cells[cell]) {
     for (const [geometry, value] of [[before, left], [after, right]]) {
@@ -23,6 +23,11 @@ function fixture() {
   return [samples(before), samples(before), samples(after)];
 }
 const result = groups => compareGeometry(...groups, review, cell);
+for (const group of [0, 1, 2]) test(`full geometry rejects malformed intrinsic in group ${group}`, () => {
+  const groups = fixture();
+  for (const sample of groups[group]) sample.geometry.intrinsic = {};
+  assert.equal(result(groups).status, "blocked");
+});
 test("committed review has exactly 62 cells and 1590 leaves, no rigid or bridge admissions", () => {
   assert.equal(Object.keys(geometryReview.cells).length, 62);
   assert.equal(Object.values(geometryReview.cells).flat().length, 1590);
