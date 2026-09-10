@@ -2,10 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { rigidAdmission, verifyRigidAdmission, collectRigidAdmission, compareCell, compareGeometry, compareUrlContracts } from "../qualify-pr.mjs";
 
 const options = { base: "/base", head: "/head", reference: "/reference", "base-sha": rigidAdmission.baseSha, "head-sha": "b".repeat(40) };
 const resolve = (_root, file) => rigidAdmission.sources[file];
+const readMetadata = (_root, file) => fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8");
 const runs = (loadMs = 1000, url = "http://local/original.js") => Array.from({ length: 3 }, () => ({
   status: "measured", ready: true, errors: [], geometry: { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] },
   performance: { domContentLoadedMs: 1000, loadMs, resourceCount: 10, resourceCountDelta: 0, sameOriginTransfer: { status: "supported", bytes: 1000 }, longestLocalResource: null },
@@ -13,25 +15,50 @@ const runs = (loadMs = 1000, url = "http://local/original.js") => Array.from({ l
 }));
 
 test("original admission is exact, source-bound and only for the authorized base", () => {
-  assert.equal(verifyRigidAdmission(rigidAdmission, options, resolve), rigidAdmission);
-  for (const patch of [{ version: 2 }, { slug: "atlas" }, { sources: {} }, { referenceSha: "a".repeat(40) }]) {
-    assert.throws(() => verifyRigidAdmission({ ...rigidAdmission, ...patch }, options, resolve));
+  assert.equal(verifyRigidAdmission(rigidAdmission, options, resolve, readMetadata), rigidAdmission);
+  for (const patch of [{ version: 1 }, { slug: "atlas" }, { sources: {} }, { projections: {} }, { referenceSha: "a".repeat(40) }]) {
+    assert.throws(() => verifyRigidAdmission({ ...rigidAdmission, ...patch }, options, resolve, readMetadata));
   }
-  assert.throws(() => verifyRigidAdmission(rigidAdmission, { ...options, reference: undefined }, resolve));
-  assert.throws(() => verifyRigidAdmission(rigidAdmission, { ...options, "base-sha": "a".repeat(40) }, resolve));
+  assert.throws(() => verifyRigidAdmission(rigidAdmission, { ...options, reference: undefined }, resolve, readMetadata));
+  assert.throws(() => verifyRigidAdmission(rigidAdmission, { ...options, "base-sha": "a".repeat(40) }, resolve, readMetadata));
   for (const side of ["/head", "/reference"]) for (const file of Object.keys(rigidAdmission.sources)) {
-    assert.throws(() => verifyRigidAdmission(rigidAdmission, options, (root, name) => root === side && name === file ? "0".repeat(40) : resolve(root, name)));
+    assert.throws(() => verifyRigidAdmission(rigidAdmission, options, (root, name) => root === side && name === file ? "0".repeat(40) : resolve(root, name), readMetadata));
   }
-  assert.throws(() => verifyRigidAdmission(rigidAdmission, options, () => { throw new Error("Missing Git source"); }));
+  assert.throws(() => verifyRigidAdmission(rigidAdmission, options, () => { throw new Error("Missing Git source"); }, readMetadata));
 });
 
-test("contract pins all four route files and complete shared dependency tree without a self hash", () => {
-  const root = new URL("../../", import.meta.url);
-  for (const [file, hash] of Object.entries(rigidAdmission.sources)) {
-    assert.equal(execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim(), hash);
-  }
+for (const file of Object.keys(rigidAdmission.projections)) for (const [name, mutation] of [
+  ["changed", routes => routes.map(route => route.slug === rigidAdmission.slug ? { ...route, summary: `${route.summary} changed` } : route)],
+  ["duplicate", routes => [...routes, routes.find(route => route.slug === rigidAdmission.slug)]],
+  ["missing", routes => routes.filter(route => route.slug !== rigidAdmission.slug)],
+]) {
+  test(`original admission rejects ${name} ${file} route metadata`, () => {
+    assert.throws(() => verifyRigidAdmission(rigidAdmission, options, resolve, (root, name) => {
+      const routes = JSON.parse(readMetadata(root, name));
+      return JSON.stringify(root === "/head" && name === file ? mutation(routes) : routes);
+    }));
+  });
+}
+
+test("original admission allows unrelated route metadata changes", () => {
+  assert.equal(verifyRigidAdmission(rigidAdmission, options, resolve, (root, file) => {
+    const routes = JSON.parse(readMetadata(root, file));
+    return JSON.stringify(routes.map(route => route.slug === "musicmap" ? { ...route, summary: `${route.summary} changed` } : route));
+  }), rigidAdmission);
+});
+
+test("contract pins all four route files, route metadata and complete shared dependency tree without a self hash", () => {
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const revision = side => side === "/reference" ? rigidAdmission.referenceSha : "HEAD";
+  assert.equal(verifyRigidAdmission(
+    rigidAdmission,
+    options,
+    (side, file) => execFileSync("git", ["rev-parse", `${revision(side)}:${file}`], { cwd: root, encoding: "utf8" }).trim(),
+    (side, file) => execFileSync("git", ["show", `${revision(side)}:${file}`], { cwd: root, encoding: "utf8" }),
+  ), rigidAdmission);
   assert.equal(Object.keys(rigidAdmission.sources).filter(file => file.startsWith(`${rigidAdmission.slug}/`)).length, 4);
   assert.ok(rigidAdmission.sources.shared);
+  assert.deepEqual(Object.keys(rigidAdmission.projections), ["pages.json", "routes.manifest.json"]);
   assert.ok(!Object.keys(rigidAdmission.sources).some(file => file.startsWith("tools/")));
 });
 

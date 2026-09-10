@@ -2,22 +2,88 @@ import fs from "node:fs";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
+import os from "node:os";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyFunctionHashes, geometrySourceBinding, normalizedRuntimePaths, runtimeRequestsFromJournal, verifyCurrentRuntimeRequests, verifyRuntimeRequestCoverage, verifyRuntimeSourceContract, verifyGeometryReview } from "../geometry-review.mjs";
-import { sourceIdentity } from "../diagnose-baseline.mjs";
 import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
 const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.admittedHeadSha, status: "", sources: geometryReview.sources[side] }]));
 const tools = { admittedHeadSha: geometryReview.admittedHeadSha, runtimeRequests: geometryReview.inventory.runtimeRequestsSha256, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, dependencyFunctions: geometryReview.dependencyFunctions, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
+function parseTreeRow(row) {
+  const separator = row.indexOf("\t");
+  assert.notEqual(separator, -1, "Invalid Git tree row");
+  const [mode, type, blob] = row.slice(0, separator).split(" ");
+  return { file: row.slice(separator + 1), mode, type, blob };
+}
 function committedIdentity(root) {
-  const identity = sourceIdentity(root);
-  const changed = new Set(execFileSync("git", ["diff", "--name-only", "HEAD"], { cwd: root, encoding: "utf8" }).trim().split("\n").filter(Boolean));
-  for (const row of identity.files) if (changed.has(row[0])) row[1] = createHash("sha256").update(execFileSync("git", ["show", `HEAD:${row[0]}`], { cwd: root })).digest("hex");
-  return identity;
+  const git = (args, options = {}) => execFileSync("git", args, { cwd: root, ...options });
+  const head = git(["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+
+  const rows = git(["ls-tree", "-rz", "HEAD"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).split("\0").filter(Boolean).map(row => {
+    const { file, blob } = parseTreeRow(row);
+    return [file, blob];
+  });
+  const files = [];
+  for (let index = 0; index < rows.length; index += 512) {
+    const slice = rows.slice(index, index + 512);
+    const batch = git(["cat-file", "--batch"], { input: `${slice.map(([, blob]) => blob).join("\n")}\n`, maxBuffer: 1024 * 1024 * 1024 });
+    let offset = 0;
+    for (const [file] of slice) {
+      const end = batch.indexOf(10, offset);
+      const [, , sizeText] = batch.subarray(offset, end).toString().split(" ");
+      const size = Number(sizeText);
+      files.push([file, createHash("sha256").update(batch.subarray(end + 1, end + 1 + size)).digest("hex")]);
+      offset = end + size + 2;
+    }
+  }
+  return {
+    head,
+    status: git(["status", "--porcelain=v1", "--untracked-files=all"], { encoding: "utf8" }).trim(),
+    digest: createHash("sha256").update(JSON.stringify(files)).digest("hex"),
+    files,
+  };
 }
 const review = verifyGeometryReview(geometryReview, identities, tools);
 const cell = "atlas/desktop/light";
+function hash(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+function runtimeContractFixture() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "runtime-source-contract-"));
+  const git = (args, options = {}) => execFileSync("git", args, { cwd: root, ...options });
+  git(["init", "--quiet"]);
+  git(["config", "core.autocrlf", "false"]);
+  git(["config", "core.hooksPath", path.join(root, ".git", "no-hooks")]);
+  git(["config", "commit.gpgsign", "false"]);
+  git(["config", "user.email", "fixture@example.invalid"]);
+  git(["config", "user.name", "Runtime Contract Fixture"]);
+  const paths = [...new Set(Object.values(geometryRuntimeRequests.surfaces).flatMap(surface => surface.paths))].sort();
+  for (const file of paths) {
+    const full = path.join(root, file);
+    fs.mkdirSync(path.dirname(full), { recursive: true });
+    fs.writeFileSync(full, `base:${file}`);
+  }
+  git(["add", "."]);
+  git(["commit", "--quiet", "-m", "base"]);
+  const base = git(["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  fs.writeFileSync(path.join(root, paths[0]), `head:${paths[0]}`);
+  git(["add", paths[0]]);
+  git(["commit", "--quiet", "-m", "head"]);
+  const head = git(["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const tree = revision => new Map(git(["ls-tree", "-rz", revision], { encoding: "utf8" }).split("\0").filter(Boolean).map(row => {
+    const { file, mode, blob } = parseTreeRow(row);
+    return [file, { mode, blob }];
+  }));
+  const trees = { base: tree(base), head: tree(head) };
+  const contract = structuredClone(geometryRuntimeRequests);
+  for (const surface of Object.values(contract.surfaces)) {
+    surface.sources = Object.fromEntries(["base", "head"].map(side => [side, Object.fromEntries(surface.paths.map(file => [file, trees[side].get(file)]))]));
+  }
+  const identity = revision => ({ head: revision, files: paths.map(file => [file, "unused"]) });
+  return { root, contract, identities: { base: identity(base), head: identity(head) }, paths, remove: () => fs.rmSync(root, { recursive: true, force: true }) };
+}
 function fixture() {
   const before = { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] };
   const after = structuredClone(before);
@@ -25,6 +91,14 @@ function fixture() {
   const samples = geometry => Array.from({ length: 3 }, () => ({ status: "measured", ready: true, errors: [], geometry: structuredClone(geometry) }));
   return [samples(before), samples(before), samples(after)];
 }
+test("Git tree parsing preserves legal special-character paths", () => {
+  assert.deepEqual(parseTreeRow("100644 blob 0123456789abcdef\tdir/name\twith-tab.txt"), {
+    file: "dir/name\twith-tab.txt",
+    mode: "100644",
+    type: "blob",
+    blob: "0123456789abcdef",
+  });
+});
 test("committed review is withdrawn with zero active admissions", () => {
   assert.equal(geometryReview.status, "withdrawn");
   assert.deepEqual(geometryReview.cells, {});
@@ -139,29 +213,34 @@ test("current runtime requests normalize queries and reject extras or route/grou
   assert.throws(() => verifyCurrentRuntimeRequests("atlas/unknown/light", events, inventories), /route\/group mismatch/);
 });
 test("runtime source contract rejects changed blobs, modes and missing files", () => {
-  const root = fileURLToPath(new URL("../../", import.meta.url));
-  const identity = sourceIdentity(root);
-  assert(verifyRuntimeSourceContract(root, identity, "head"));
-  assert(verifyRuntimeSourceContract(root, { ...identity, files: identity.files.map(([file, digest]) => [file.replaceAll("/", "\\"), digest]) }, "head"));
-  const baseIdentity = { head: geometryReview.baseSha, files: [...new Set(Object.values(geometryRuntimeRequests.surfaces).flatMap(surface => surface.paths))].map(file => [file, "unused"]) };
-  assert(verifyRuntimeSourceContract(root, baseIdentity, "base"));
-  const contract = structuredClone(geometryRuntimeRequests);
-  const slug = "atlas";
-  const file = contract.surfaces[slug].paths[0];
-  delete contract.surfaces["covid-19"];
-  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /surfaces differ/);
-  contract.surfaces["covid-19"] = structuredClone(geometryRuntimeRequests.surfaces["covid-19"]);
-  contract.surfaces[slug].cells.pop();
-  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /inventory differs/);
-  contract.surfaces[slug].cells = structuredClone(geometryRuntimeRequests.surfaces[slug].cells);
-  contract.surfaces[slug].sources.head[file].blob = "0".repeat(40);
-  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /source contract differs/);
-  contract.surfaces[slug].sources.head[file] = structuredClone(geometryRuntimeRequests.surfaces[slug].sources.head[file]);
-  contract.surfaces[slug].sources.head[file].mode = "100755";
-  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /source contract differs/);
-  const missing = structuredClone(identity);
-  missing.files = missing.files.filter(([path]) => path !== file);
-  assert.throws(() => verifyRuntimeSourceContract(root, missing, "head"), /Missing runtime source file/);
+  const fixture = runtimeContractFixture();
+  try {
+    const { root, contract, identities: fixtureIdentities } = fixture;
+    assert(verifyRuntimeSourceContract(root, fixtureIdentities.head, "head", contract));
+    assert(verifyRuntimeSourceContract(root, { ...fixtureIdentities.head, files: fixtureIdentities.head.files.map(([file, digest]) => [file.replaceAll("/", "\\"), digest]) }, "head", contract));
+    assert(verifyRuntimeSourceContract(root, fixtureIdentities.base, "base", contract));
+    const slug = "atlas";
+    const file = contract.surfaces[slug].paths[0];
+    const changed = structuredClone(contract);
+    delete changed.surfaces["covid-19"];
+    assert.throws(() => verifyRuntimeSourceContract(root, fixtureIdentities.head, "head", changed), /surfaces differ/);
+    changed.surfaces["covid-19"] = structuredClone(contract.surfaces["covid-19"]);
+    changed.surfaces[slug].paths.shift();
+    changed.surfaces[slug].count = changed.surfaces[slug].paths.length;
+    changed.surfaces[slug].sha256 = hash(JSON.stringify(changed.surfaces[slug].paths));
+    assert.throws(() => verifyRuntimeSourceContract(root, fixtureIdentities.head, "head", changed), /inventory differs/);
+    changed.surfaces[slug] = structuredClone(contract.surfaces[slug]);
+    changed.surfaces[slug].sources.head[file].blob = "0".repeat(40);
+    assert.throws(() => verifyRuntimeSourceContract(root, fixtureIdentities.head, "head", changed), /source contract differs/);
+    changed.surfaces[slug].sources.head[file] = structuredClone(contract.surfaces[slug].sources.head[file]);
+    changed.surfaces[slug].sources.head[file].mode = "100755";
+    assert.throws(() => verifyRuntimeSourceContract(root, fixtureIdentities.head, "head", changed), /source contract differs/);
+    const missing = structuredClone(fixtureIdentities.head);
+    missing.files = missing.files.filter(([path]) => path !== file);
+    assert.throws(() => verifyRuntimeSourceContract(root, missing, "head", contract), /Missing runtime source file/);
+  } finally {
+    fixture.remove();
+  }
 });
 test("runtime request coverage rejects unbound or omitted artifact paths", () => {
   const paths = { route: ["route/index.html", "route/runtime.bin"] };

@@ -158,15 +158,32 @@ export async function collectCellPair(options, baseCell, headCell, collect, jour
 
 export const rigidAdmission = JSON.parse(fs.readFileSync(new URL("./rigid-original-admission.json", import.meta.url), "utf8"));
 
-export function verifyRigidAdmission(contract, options, resolveSource) {
+function canonicalJson(value) {
+  if (Array.isArray(value)) return value.map(canonicalJson);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonicalJson(value[key])]));
+}
+
+function routeProjection(source, slug) {
+  const routes = JSON.parse(source);
+  assert(Array.isArray(routes), "Original admission metadata must be an array");
+  const matches = routes.filter(route => route.slug === slug);
+  assert.equal(matches.length, 1, `Original admission metadata route count differs: ${slug}`);
+  return createHash("sha256").update(JSON.stringify(canonicalJson(matches[0]))).digest("hex");
+}
+
+export function verifyRigidAdmission(contract, options, resolveSource, readSource) {
   assert.deepEqual(contract, rigidAdmission, "Unknown or modified original admission contract");
-  assert.equal(contract.version, 1, "Unknown admission version");
+  assert.equal(contract.version, 2, "Unknown admission version");
   assert.equal(contract.slug, "rigid-body-collisions", "Unauthorized original route");
   assert.equal(options["base-sha"], contract.baseSha, "Original admission base differs");
   assert(options.reference, "Original reference checkout required");
   for (const side of ["reference", "head"]) {
     for (const [file, hash] of Object.entries(contract.sources)) {
       assert.equal(resolveSource(options[side], file), hash, `Original admission source differs: ${side}/${file}`);
+    }
+    for (const [file, digest] of Object.entries(contract.projections)) {
+      assert.equal(routeProjection(readSource(options[side], file), contract.slug), digest, `Original admission route projection differs: ${side}/${file}`);
     }
   }
   return contract;
@@ -278,7 +295,12 @@ export async function main(args = process.argv.slice(2)) {
     journal.append({ type: "geometry-review-contract", status: geometryReview.status, reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, activeAdmissions: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
     journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {
-      verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
+      verifyRigidAdmission(
+        rigidAdmission,
+        options,
+        (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim(),
+        (root, file) => gitBytes(root, "HEAD", file).toString("utf8"),
+      );
       journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
       const science = execFileSync(process.execPath, ["--test", "tools/tests/rigid-body-collisions.test.mjs"], { cwd: options.head, encoding: "utf8" });
       journal.append({ type: "original-science", status: "passed", output: science });

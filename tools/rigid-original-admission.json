@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "slug": "rigid-body-collisions",
   "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
   "referenceSha": "63a8bddc982ab8cb5d641386d0186027fe0b57b1",
@@ -10,8 +10,10 @@
     "rigid-body-collisions/physics.js": "5b9046748618644107b518114fba46ad3130a4f0",
     "rigid-body-collisions": "b49bcf3e5e123deb8bb43e4136181889e7da8a92",
     "shared": "b6c520c2f235bf78afe9b1c3caf4fd90fcea1516",
-    "favicon.png": "88bd46c4db5ee898ff7e34334efd570ed3682def",
-    "pages.json": "5d8db3c1dba41943266842f0e4543ca4b4ffb960",
-    "routes.manifest.json": "5d8db3c1dba41943266842f0e4543ca4b4ffb960"
+    "favicon.png": "88bd46c4db5ee898ff7e34334efd570ed3682def"
+  },
+  "projections": {
+    "pages.json": "ad003c33eb2b226bfdd0b4052d2531d4829d11a507c3d0512e4ff785e4bb2358",
+    "routes.manifest.json": "ad003c33eb2b226bfdd0b4052d2531d4829d11a507c3d0512e4ff785e4bb2358"
   }
 }
