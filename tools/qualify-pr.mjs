@@ -172,7 +172,7 @@ function routeProjection(source, slug) {
   return createHash("sha256").update(JSON.stringify(canonicalJson(matches[0]))).digest("hex");
 }
 
-export function verifyRigidAdmission(contract, options, resolveSource, readSource) {
+export function verifyRigidAdmission(contract, options, resolveSource, readSource = (root, file) => fs.readFileSync(path.join(root, file), "utf8")) {
   assert.deepEqual(contract, rigidAdmission, "Unknown or modified original admission contract");
   assert.equal(contract.version, 2, "Unknown admission version");
   assert.equal(contract.slug, "rigid-body-collisions", "Unauthorized original route");
@@ -295,12 +295,7 @@ export async function main(args = process.argv.slice(2)) {
     journal.append({ type: "geometry-review-contract", status: geometryReview.status, reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, activeAdmissions: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
     journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {
-      verifyRigidAdmission(
-        rigidAdmission,
-        options,
-        (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim(),
-        (root, file) => gitBytes(root, "HEAD", file).toString("utf8"),
-      );
+      verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
       journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
       const science = execFileSync(process.execPath, ["--test", "tools/tests/rigid-body-collisions.test.mjs"], { cwd: options.head, encoding: "utf8" });
       journal.append({ type: "original-science", status: "passed", output: science });

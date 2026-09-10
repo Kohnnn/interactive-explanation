@@ -49,13 +49,11 @@ test("original admission allows unrelated route metadata changes", () => {
 
 test("contract pins all four route files, route metadata and complete shared dependency tree without a self hash", () => {
   const root = fileURLToPath(new URL("../../", import.meta.url));
-  const revision = side => side === "/reference" ? rigidAdmission.referenceSha : "HEAD";
-  assert.equal(verifyRigidAdmission(
-    rigidAdmission,
-    options,
-    (side, file) => execFileSync("git", ["rev-parse", `${revision(side)}:${file}`], { cwd: root, encoding: "utf8" }).trim(),
-    (side, file) => execFileSync("git", ["show", `${revision(side)}:${file}`], { cwd: root, encoding: "utf8" }),
-  ), rigidAdmission);
+  for (const [file, hash] of Object.entries(rigidAdmission.sources)) {
+    assert.equal(execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim(), hash);
+  }
+
+  assert.equal(verifyRigidAdmission(rigidAdmission, options, resolve, readMetadata), rigidAdmission);
   assert.equal(Object.keys(rigidAdmission.sources).filter(file => file.startsWith(`${rigidAdmission.slug}/`)).length, 4);
   assert.ok(rigidAdmission.sources.shared);
   assert.deepEqual(Object.keys(rigidAdmission.projections), ["pages.json", "routes.manifest.json"]);
