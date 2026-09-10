@@ -168,6 +168,7 @@ export async function capture(browser, cell) {
     await attempt("readiness", async () => {
       if (route.slug === "atlas") await smoke.waitForDocumentLayout(page);
       else await smoke.waitForManifestRouteReady(page, route);
+      result.readyMs = await page.evaluate(() => performance.now());
       await page.waitForLoadState("load");
       await page.waitForLoadState("networkidle", { timeout: 30000 });
       result.ready = true;

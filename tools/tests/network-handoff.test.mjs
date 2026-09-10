@@ -119,7 +119,7 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
   });
 }
 
-test("resource URLs exclude credentials, queries and fragments", () => {
-  assert.equal(resourceUrl("https://user:secret@example.invalid/a?token=secret#secret"), "https://example.invalid/a");
+test("resource URLs exclude credentials and fragments while preserving sorted queries", () => {
+  assert.equal(resourceUrl("https://user:secret@example.invalid/a?z=2&a=1#secret"), "https://example.invalid/a?a=1&z=2");
   assert.equal(resourceUrl("data:text/plain,secret"), "data:[redacted]");
 });

@@ -47,6 +47,14 @@ jobs:
           path: head
           persist-credentials: false
 
+      - name: Checkout immutable trusted repository base control
+        uses: actions/checkout@v4
+        with:
+          repository: Kohnnn/interactive-explanation
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base-control
+          persist-credentials: false
+
       - name: Checkout immutable trusted repository base
         uses: actions/checkout@v4
         with:
@@ -91,7 +99,7 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: npm run qualify -- --base ../base --head . --reference ../original-reference --sim-reference ../sim-reference --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl" --geometry-output "$RUNNER_TEMP/geometry.json"
+        run: npm run qualify -- --base-control ../base-control --base ../base --head . --reference ../original-reference --sim-reference ../sim-reference --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA" --output "$RUNNER_TEMP/qualification.jsonl" --geometry-output "$RUNNER_TEMP/geometry.json"
 
       - name: Full and strict functional gates on the qualification host
         if: always()

@@ -5,10 +5,11 @@ import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { chromium } from "playwright";
 import { capture, planCells, openJournal, statistics, geometryChanges, sourceIdentity, verifySourceFixture } from "./diagnose-baseline.mjs";
 import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEvidence, validateGeometryEvidence } from "./experience-baseline.mjs";
-import { createSmokeServer } from "./smoke/server.mjs";
+import { createSmokeServer, createSwitchableSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 import { geometryReview, geometrySourceBinding, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
@@ -93,13 +94,53 @@ export function compareGeometry(control, before, after, review, cell) {
   return { status: changes.length ? "blocked" : "passed", changes, reason: changes.length ? "Same-environment source changes require specific review; replacement routes need independent acceptance" : "Same-environment geometry unchanged; not approval of legacy baseline provenance" };
 }
 
+export function balancedSchedule(baseSha, headSha, cellKey, groups = ["base-control", "base", "head"]) {
+  assert.equal(groups.length, 3, "Comparison schedule requires a triplet");
+  assert.equal(new Set(groups).size, 3, "Comparison groups must be distinct");
+  const seed = createHash("sha256").update(`${baseSha}:${headSha}:${cellKey}`).digest().readUInt32BE(0);
+  const start = seed % groups.length;
+  const first = groups.map((_, index) => groups[(start + index) % groups.length]);
+  return Array.from({ length: 3 }, (_, round) => first.map((_, ordinal) => first[(ordinal + round) % first.length]));
+}
+
+export function normalizedUrlMultiset(sample) {
+  const names = [...(sample.raw?.navigation || []), ...(sample.raw?.resources || [])].map(entry => entry.name);
+  return Object.fromEntries([...new Set(names)].sort().map(name => [name, names.filter(value => value === name).length]));
+}
+
+export function compareUrlContracts(groups) {
+  const contracts = Object.fromEntries(Object.entries(groups).map(([group, samples]) => [group, samples.map(normalizedUrlMultiset)]));
+  const unstable = Object.fromEntries(Object.entries(contracts).filter(([, values]) => values.some(value => JSON.stringify(value) !== JSON.stringify(values[0]))));
+  const exactBase = contracts["base-control"] && contracts.base && JSON.stringify(contracts["base-control"][0]) === JSON.stringify(contracts.base[0]);
+  const reviewed = contracts.head && contracts.base ? JSON.stringify(contracts.head[0]) === JSON.stringify(contracts.base[0]) : true;
+  return { status: Object.keys(unstable).length || !exactBase || !reviewed ? "review-required" : "stable", contracts, unstable, exactBase, additionsRemovals: reviewed ? [] : geometryChanges(contracts.base[0], contracts.head[0]) };
+}
+
+export async function collectComparison(options, cells, groups, collect, journal) {
+  const cellKey = `${cells[groups[0]].route.slug}/${cells[groups[0]].viewport.name}/${cells[groups[0]].theme}`;
+  const samples = Object.fromEntries(groups.map(group => [group, []]));
+  for (const group of groups) await collect(options[group], cells[group], group, { warmup: true });
+  const schedule = balancedSchedule(options["base-sha"], options["head-sha"], cellKey, groups);
+  for (let round = 0; round < schedule.length; round++) {
+    for (let ordinal = 0; ordinal < schedule[round].length; ordinal++) {
+      const group = schedule[round][ordinal];
+      const [result] = await collect(options[group], cells[group], group, { round: round + 1, ordinal: ordinal + 1 });
+      samples[group].push(result);
+    }
+  }
+  journal.append({ type: "schedule", cell: cellKey, schedule });
+  return samples;
+}
+
 export async function collectCellPair(options, baseCell, headCell, collect, journal) {
-  const control = await collect(options.base, baseCell, "base-control");
-  const before = await collect(options.base, baseCell, "base");
-  const calibration = compareCell(control, before, before);
+  const groups = await collectComparison(
+    { ...options, "base-control": options["base-control"], base: options.base, head: options.head },
+    { "base-control": baseCell, base: baseCell, head: headCell },
+    ["base-control", "base", "head"], collect, journal,
+  );
+  const calibration = compareCell(groups["base-control"], groups.base, groups.base);
   journal.append({ type: "calibration", cell: `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`, result: calibration });
-  const after = await collect(options.head, headCell, "head");
-  return { control, before, after };
+  return { control: groups["base-control"], before: groups.base, after: groups.head };
 }
 
 export const rigidAdmission = JSON.parse(fs.readFileSync(new URL("./rigid-original-admission.json", import.meta.url), "utf8"));
@@ -122,39 +163,43 @@ export async function collectRigidAdmission(options, referenceCell, headCell, co
   assert.equal(headCell.route.slug, rigidAdmission.slug, "Unauthorized original route");
   assert.equal(referenceCell.route.slug, rigidAdmission.slug, "Unauthorized original reference");
   journal.append({ type: "legacy-original-evidence", cell: `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`, performance: compareCell(legacy.control, legacy.before, legacy.after), geometry: compareGeometry(legacy.control, legacy.before, legacy.after), equivalence: "not claimed; archived engine is not the original admission reference" });
-  const control = await collect(options.reference, referenceCell, "original-control");
-  const before = await collect(options.reference, referenceCell, "original-reference");
-  journal.append({ type: "original-calibration", result: compareCell(control, before, before) });
-  const after = await collect(options.head, headCell, "original-head");
-  return { control, before, after };
+  const groups = ["original-control", "original-reference", "original-head"];
+  const samples = await collectComparison(
+    { ...options, "original-control": options.reference, "original-reference": options.reference, "original-head": options.head },
+    { "original-control": referenceCell, "original-reference": referenceCell, "original-head": headCell },
+    groups, collect, journal,
+  );
+  journal.append({ type: "original-calibration", result: compareCell(samples[groups[0]], samples[groups[1]], samples[groups[1]]) });
+  return { control: samples[groups[0]], before: samples[groups[1]], after: samples[groups[2]] };
 }
 
 export function parseOptions(args) {
   const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = args[index];
-    assert(["--base", "--head", "--base-sha", "--head-sha", "--output", "--reference", "--sim-reference", "--geometry-output"].includes(key), `Unknown option: ${key}`);
+    assert(["--base-control", "--base", "--head", "--base-sha", "--head-sha", "--output", "--reference", "--sim-reference", "--geometry-output"].includes(key), `Unknown option: ${key}`);
     assert(!Object.hasOwn(options, key.slice(2)), `Duplicate option: ${key}`);
     const value = args[index + 1];
     assert(value && !value.startsWith("--"), `Missing value: ${key}`);
     options[key.slice(2)] = value;
   }
-  for (const key of ["base", "head", "base-sha", "head-sha", "output"]) assert(options[key], `Required: --${key}`);
+  for (const key of ["base-control", "base", "head", "base-sha", "head-sha", "output"]) assert(options[key], `Required: --${key}`);
   for (const key of ["base-sha", "head-sha"]) assert(/^[a-f0-9]{40}$/.test(options[key]), `Invalid SHA: ${key}`);
-  for (const key of ["base", "head"]) options[key] = fs.realpathSync(options[key]);
+  for (const key of ["base-control", "base", "head"]) options[key] = fs.realpathSync(options[key]);
+  options["base-control-sha"] = options["base-sha"];
   if (options.reference) {
     options.reference = fs.realpathSync(options.reference);
     options["reference-sha"] = rigidAdmission.referenceSha;
-    assert(![options.base, options.head].includes(options.reference), "Separate original reference required");
+    assert(![options["base-control"], options.base, options.head].includes(options.reference), "Separate original reference required");
   }
   if (options["sim-reference"]) {
     options.sim = fs.realpathSync(options["sim-reference"]);
     options["sim-sha"] = simReferenceSha;
-    assert(![options.base, options.head, options.reference].includes(options.sim), "Separate fixed Sim reference required");
+    assert(![options["base-control"], options.base, options.head, options.reference].includes(options.sim), "Separate fixed Sim reference required");
   }
   for (const name of ["output", "geometry-output"].filter(name => options[name])) {
     options[name] = path.join(fs.realpathSync(path.dirname(path.resolve(options[name]))), path.basename(options[name]));
-    for (const root of [options.base, options.head, options.reference, options.sim].filter(Boolean)) {
+    for (const root of [options["base-control"], options.base, options.head, options.reference, options.sim].filter(Boolean)) {
       const relative = path.relative(root, options[name]);
       assert(relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative), "Evidence must be outside measured sources");
     }
@@ -166,7 +211,7 @@ export function parseOptions(args) {
     assert.notEqual(`${options["geometry-output"]}.proof.json`, options.output);
     assert(!fs.existsSync(`${options["geometry-output"]}.proof.json`), "Geometry proof already exists");
   }
-  assert.notEqual(options.base, options.head, "Separate immutable checkouts required");
+  assert.equal(new Set([options["base-control"], options.base, options.head]).size, 3, "Separate immutable base-control, base, and head checkouts required");
   return options;
 }
 
@@ -184,7 +229,7 @@ export async function main(args = process.argv.slice(2)) {
   const totals = { performance: {}, geometry: {} };
   const manifest = root => JSON.parse(fs.readFileSync(path.join(root, "routes.manifest.json"), "utf8"));
   try {
-    for (const side of ["base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
+    for (const side of ["base-control", "base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
       identities[side] = sourceIdentity(options[side]);
       assertIdentity(identities[side], options[`${side}-sha`]);
       const verified = verifySourceFixture(options[side], options[side], options[`${side}-sha`], "");
@@ -206,26 +251,20 @@ export async function main(args = process.argv.slice(2)) {
     const key = cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`;
     assert.deepEqual(baseCells.map(key), cells.map(key), "Route matrix changed; requires qualification contract review");
     assert.equal(cells.length, 504, "Expected 83 routes plus Atlas, three viewports, two themes");
-    journal.append({ type: "method", cells: cells.length, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, baseUrl, cache: "fresh context per sample; same no-store server; OS cache uncontrolled", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
+    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and otherwise preserved; exact stable base-control/base multisets required; head changes require declared source review", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
     environment = environmentIdentity();
     journal.append({ type: "environment", identity: environment });
     browser = await chromium.launch({ headless: true });
     journal.append({ type: "browser", version: browser.version(), executable: chromium.executablePath(), browsers: JSON.parse(fs.readFileSync(path.join(path.dirname(require.resolve("playwright-core/package.json")), "browsers.json"), "utf8")) });
-    async function collect(root, cell, group) {
-      const server = await createSmokeServer({ rootDir: root, host, port, mountPath }).start();
-      const samples = [];
-      try {
-        for (let sample = 1; sample <= 3; sample++) {
-          journal.append({ type: "attempt", cell: key(cell), group, sample });
-          const result = await capture(browser, cell);
-          samples.push(result);
-          journal.append({ type: "sample", cell: key(cell), group, sample, ...result });
-        }
-      } finally {
-        server.closeAllConnections();
-        await new Promise(resolve => server.close(resolve));
-      }
-      return samples;
+    let cellServer;
+    async function collect(root, cell, group, position = {}) {
+      assert(cellServer, "Cell server unavailable");
+      await cellServer.switchRoot(root);
+      const kind = position.warmup ? "warmup" : "attempt";
+      journal.append({ type: kind, cell: key(cell), group, ...position });
+      const result = await capture(browser, cell);
+      journal.append({ type: position.warmup ? "warmup-sample" : "sample", cell: key(cell), group, ...position, ...result });
+      return position.warmup ? [] : [result];
     }
     if (options.reference) journal.append({ type: "original-functional", status: "passed", evidence: await verifyRigidBrowser(options.head, browser) });
     if (options.sim) {
@@ -242,35 +281,56 @@ export async function main(args = process.argv.slice(2)) {
       }
     }
     for (let index = 0; index < cells.length; index++) {
-      let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
-      if (options.reference && cells[index].route.slug === rigidAdmission.slug) {
-        pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
+      cellServer = await createSwitchableSmokeServer({ rootDir: options.base, host, port, mountPath });
+      try {
+        let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
+        const baseUrls = compareUrlContracts({ "base-control": pair.control, base: pair.before, head: pair.after });
+        if (options.reference && cells[index].route.slug === rigidAdmission.slug) {
+          pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
+        }
+        const { control, before, after } = pair;
+        const urls = compareUrlContracts({ "base-control": control, base: before, head: after });
+        if (baseUrls.status !== "stable") {
+          urls.status = "review-required";
+          urls.legacyBase = baseUrls;
+        }
+        const performance = compareCell(control, before, after);
+        if (urls.status !== "stable") {
+          performance.status = "inconclusive";
+          performance.reasons.push("Requested URL multiset changed or was unstable; declared source review required");
+        }
+        let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
+        let headGeometry = after[0]?.geometry;
+        if (options.sim && simCells.includes(key(cells[index]))) {
+          journal.append({ type: "legacy-sim-geometry", cell: key(cells[index]), geometry, performance });
+          const fixedCell = simReferenceCells.find(cell => key(cell) === key(cells[index]));
+          const groups = ["sim-fixed-control", "sim-fixed-reference", "sim-fixed-head"];
+          const fixed = await collectComparison(
+            { ...options, [groups[0]]: options.sim, [groups[1]]: options.sim, [groups[2]]: options.head },
+            { [groups[0]]: fixedCell, [groups[1]]: fixedCell, [groups[2]]: cells[index] }, groups, collect, journal,
+          );
+          const fixedUrls = compareUrlContracts({ "base-control": fixed[groups[0]], base: fixed[groups[1]], head: fixed[groups[2]] });
+          journal.append({ type: "sim-fixed-urls", cell: key(cells[index]), urls: fixedUrls });
+          geometry = compareGeometry(fixed[groups[0]], fixed[groups[1]], fixed[groups[2]]);
+          if (fixedUrls.status !== "stable") geometry = { status: "blocked", reason: "Fixed Sim requested URL multiset changed or was unstable; declared source review required", urls: fixedUrls };
+          headGeometry = fixed[groups[2]][0]?.geometry;
+        }
+        geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
+        journal.append({ type: "cell", cell: key(cells[index]), performance, geometry, urls });
+        for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
+        if (performance.status !== "passed" || !["passed", "passed-reviewed"].includes(geometry.status)) failed = true;
+        completed++;
+      } finally {
+        await cellServer.close();
+        cellServer = undefined;
       }
-      const { control, before, after } = pair;
-      const performance = compareCell(control, before, after);
-      let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
-      let headGeometry = after[0]?.geometry;
-      if (options.sim && simCells.includes(key(cells[index]))) {
-        journal.append({ type: "legacy-sim-geometry", cell: key(cells[index]), geometry, performance });
-        const fixedCell = simReferenceCells.find(cell => key(cell) === key(cells[index]));
-        const fixedControl = await collect(options.sim, fixedCell, "sim-fixed-control");
-        const fixedReference = await collect(options.sim, fixedCell, "sim-fixed-reference");
-        const fixedHead = await collect(options.head, cells[index], "sim-fixed-head");
-        geometry = compareGeometry(fixedControl, fixedReference, fixedHead);
-        headGeometry = fixedHead[0]?.geometry;
-      }
-      geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
-      journal.append({ type: "cell", cell: key(cells[index]), performance, geometry });
-      for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
-      if (performance.status !== "passed" || !["passed", "passed-reviewed"].includes(geometry.status)) failed = true;
-      completed++;
     }
   } catch (error) {
     failed = true;
     journal.append({ type: "fatal", message: error.stack || error.message });
   } finally {
     try { await browser?.close(); } catch (error) { failed = true; journal.append({ type: "cleanup-error", message: error.message }); }
-    for (const side of ["base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
+    for (const side of ["base-control", "base", "head", ...(options.reference ? ["reference"] : []), ...(options.sim ? ["sim"] : [])]) {
       try {
         const actual = sourceIdentity(options[side]);
         assertIdentity(actual, options[`${side}-sha`], identities[side]);
