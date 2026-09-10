@@ -411,6 +411,8 @@ test("Musicmap requires every validated deferred embed host", () => {
     [1, "mosaic.scdn.co"],
     [1, "encore.scdn.co"],
     [1, "o22381.ingest.us.sentry.io"],
+    [1, "apresolve.spotify.com"],
+    [1, "gae2-spclient.spotify.com"],
   ]) {
     const route = structuredClone(musicmap);
     route.experience.networkPolicy.actions[actionIndex].hosts = route.experience.networkPolicy.actions[actionIndex].hosts.filter((entry) => entry !== host);

@@ -1982,30 +1982,37 @@ function createRemoteRequestMonitor(page) {
   });
 
   return {
-    snapshot() {
-      return requests.slice();
+    checkpoint() {
+      return requests.length;
     },
-    diff(fromIndex = 0) {
-      return requests.slice(fromIndex);
+    assertSince(checkpoint, allowedHosts, label, allowedBlobOrigins) {
+      assertOnlyAllowedRemoteRequests(requests.slice(checkpoint), allowedHosts, label, allowedBlobOrigins);
     },
   };
 }
 
-function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label) {
+function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label, allowedBlobOrigins = []) {
   const baseOrigin = new URL(baseUrl).origin;
   const disallowed = requestUrls.filter((requestUrl) => {
     try {
       const url = new URL(requestUrl);
-      if (url.origin === baseOrigin || requestUrl.startsWith(`blob:${baseOrigin}/`)) {
+      if (url.protocol === "blob:") {
+        const blobOrigin = new URL(requestUrl.slice("blob:".length));
+        if (!["http:", "https:"].includes(blobOrigin.protocol) || blobOrigin.origin === "null") {
+          return true;
+        }
+        return !allowedBlobOrigins.includes(blobOrigin.origin);
+      }
+      if (!["http:", "https:"].includes(url.protocol)) {
+        return true;
+      }
+      if (url.origin === baseOrigin) {
         return false;
       }
 
-      const hostname = url.protocol === "blob:"
-        ? new URL(requestUrl.slice("blob:".length)).hostname
-        : url.hostname;
-      return !allowedHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`));
+      return !allowedHosts.some((host) => url.hostname === host || url.hostname.endsWith(`.${host}`));
     } catch {
-      return false;
+      return true;
     }
   });
 
@@ -8002,7 +8009,7 @@ async function smokeMusicmap(context) {
     fs.existsSync(path.join(rootDir, "musicmap", "master-genrelist.json")),
     "musicmap route is missing the vendored master-genrelist.json payload",
   );
-  await assertOnlyAllowedRemoteRequests(remoteRequests.snapshot(), [], "musicmap route before playback");
+  remoteRequests.assertSince(0, [], "musicmap route before playback");
   console.log("OK musicmap local graph shell");
 
   await openMusicmapGenreFromSearch(page, "shoegaze", 1);
@@ -8036,7 +8043,7 @@ async function smokeMusicmap(context) {
   assert((zoomAfter?.k || 1) > (zoomBefore?.k || 1), "musicmap route did not zoom into the selected genre");
   console.log("OK musicmap zoom and pan path");
 
-  const remoteBeforeYouTubeEmbed = remoteRequests.snapshot().length;
+  const remoteBeforeYouTubeEmbed = remoteRequests.checkpoint();
   await page.click(youtubeAction.selector, { force: true });
   await page.waitForFunction(() => {
     return /youtube-nocookie\.com\/embed\/videoseries/.test(
@@ -8052,23 +8059,18 @@ async function smokeMusicmap(context) {
     /^https:\/\/www\.youtube-nocookie\.com\/embed\/videoseries/.test(embedState.iframeSrc),
     `musicmap route created an unexpected embed: ${embedState.iframeSrc || "none"}`,
   );
-  assertOnlyAllowedRemoteRequests(
-    remoteRequests.diff(remoteBeforeYouTubeEmbed),
-    youtubeAction.hosts,
-    "musicmap route after deferred YouTube embed",
-  );
   const youtubeFrame = await (await page.locator("#youtube-player-iframe iframe").elementHandle())?.contentFrame();
   assert(youtubeFrame, "musicmap route did not create its YouTube child frame");
   await youtubeFrame.waitForLoadState("domcontentloaded", { timeout: 10000 });
   assertPageRuntimeClean.validateMusicmapEmbed(youtubeFrame);
-  assertOnlyAllowedRemoteRequests(
-    remoteRequests.diff(remoteBeforeYouTubeEmbed),
-    youtubeAction.hosts,
-    "musicmap route after completed YouTube navigation",
-  );
   await assertPageRuntimeClean("musicmap YouTube route");
   console.log("OK musicmap deferred YouTube playback surface");
   await page.close();
+  remoteRequests.assertSince(
+    remoteBeforeYouTubeEmbed,
+    youtubeAction.hosts,
+    "musicmap route through YouTube page close",
+  );
 
   const spotifyPage = await context.newPage();
   const assertSpotifyRuntimeClean = createRuntimeMonitor(spotifyPage);
@@ -8079,7 +8081,7 @@ async function smokeMusicmap(context) {
       Boolean(document.querySelector("#search-toggle-button"));
   }, null, { timeout: 30000 });
   await openMusicmapGenreFromSearch(spotifyPage, "shoegaze", 1);
-  const remoteBeforeSpotifyEmbed = spotifyRemoteRequests.snapshot().length;
+  const remoteBeforeSpotifyEmbed = spotifyRemoteRequests.checkpoint();
   await spotifyPage.click(spotifyAction.selector, { force: true });
   await spotifyPage.waitForFunction(() => {
     return /open\.spotify\.com\/embed\/playlist/.test(
@@ -8098,11 +8100,6 @@ async function smokeMusicmap(context) {
   const spotifyFrame = await (await spotifyPage.locator("#youtube-player-iframe iframe").elementHandle())?.contentFrame();
   assert(spotifyFrame, "musicmap route did not create its Spotify child frame");
   await spotifyFrame.waitForLoadState("domcontentloaded", { timeout: 10000 });
-  assertOnlyAllowedRemoteRequests(
-    spotifyRemoteRequests.diff(remoteBeforeSpotifyEmbed),
-    spotifyAction.hosts,
-    "musicmap route after completed Spotify navigation",
-  );
   console.log("OK musicmap deferred Spotify playback surface");
 
   await assertViewportUsable(spotifyPage, "musicmap route");
@@ -8119,6 +8116,12 @@ async function smokeMusicmap(context) {
   await assertSpotifyRuntimeClean("musicmap Spotify route");
   console.log("OK musicmap responsive shell");
   await spotifyPage.close();
+  spotifyRemoteRequests.assertSince(
+    remoteBeforeSpotifyEmbed,
+    spotifyAction.hosts,
+    "musicmap route through Spotify page close",
+    ["https://open.spotify.com"],
+  );
 }
 
 async function smokeWayfinding(context) {
@@ -10104,7 +10107,7 @@ export {
   baseUrl, port, host, mountPath, experienceViewports, createThemeContext,
   waitForDocumentLayout, waitForManifestRouteReady, assertDocumentTheme,
   scrollPrimarySurfaceIntoView, measureRuntimeSurface, readPerformanceEvidence,
-  assertRuntimeGeometry, createRuntimeMonitor, assertOnlyAllowedRemoteRequests,
+  assertRuntimeGeometry, createRuntimeMonitor, createRemoteRequestMonitor, assertOnlyAllowedRemoteRequests,
 };
 
 if (isMain) {

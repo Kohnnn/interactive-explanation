@@ -49,9 +49,9 @@ export function classifyNetwork(events, baseUrl) {
     const embed = events.find((event) => event.type === "musicmapembedvalidated" && event.frameId === failure.frameId && event.seq > failure.seq);
     const validatedYouTubeQoe = failure.url === "https://www.youtube-nocookie.com/api/stats/qoe" &&
       failure.error === "net::ERR_ABORTED" && failure.resourceType === "fetch" && !failure.navigation && failure.childFrame &&
-      embed?.url === "https://www.youtube-nocookie.com/embed/videoseries" && embed.childFrame === true && embed.connected === true &&
+      embed?.url === "https://www.youtube-nocookie.com/embed/videoseries" && embed.childFrame === true && embed.connected === true && embed.ready === true &&
       !events.some((event) => event.frameId === failure.frameId && event.seq > embed.seq &&
-        (event.type === "framedetached" || (event.type === "framenavigated" && event.url !== embed.url)));
+        (event.type === "framedetached" || event.type === "framenavigated" || (event.type === "request" && event.navigation)));
     return {
       requestId: failure.requestId,
       frameId: failure.frameId,
@@ -114,6 +114,7 @@ export function captureNetwork(page, baseUrl, events = []) {
       childFrame: Boolean(frame.parentFrame()),
       url: resourceUrl(frame.url()),
       connected: !frame.isDetached(),
+      ready: true,
     });
   };
   const ready = async () => {

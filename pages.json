@@ -2639,7 +2639,9 @@
               "embed-cdn.spotifycdn.com",
               "mosaic.scdn.co",
               "encore.scdn.co",
-              "o22381.ingest.us.sentry.io"
+              "o22381.ingest.us.sentry.io",
+              "apresolve.spotify.com",
+              "gae2-spclient.spotify.com"
             ]
           }
         ]

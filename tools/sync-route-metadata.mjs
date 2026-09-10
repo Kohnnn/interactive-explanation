@@ -76,7 +76,7 @@ const MUSICMAP_DEFERRED_ACTIONS = [
   },
   {
     selector: "#spotify-playlist-link",
-    hosts: ["open.spotify.com", "embed-cdn.spotifycdn.com", "mosaic.scdn.co", "encore.scdn.co", "o22381.ingest.us.sentry.io"],
+    hosts: ["open.spotify.com", "embed-cdn.spotifycdn.com", "mosaic.scdn.co", "encore.scdn.co", "o22381.ingest.us.sentry.io", "apresolve.spotify.com", "gae2-spclient.spotify.com"],
   },
 ];
 

@@ -3,7 +3,7 @@ import test from "node:test";
 import { EventEmitter } from "node:events";
 import vm from "node:vm";
 import { classifyNetwork, resourceUrl } from "../network-handoff.mjs";
-import { assertOnlyAllowedRemoteRequests, createRuntimeMonitor } from "../smoke-bundle.mjs";
+import { assertOnlyAllowedRemoteRequests, createRemoteRequestMonitor, createRuntimeMonitor } from "../smoke-bundle.mjs";
 import { capture } from "../diagnose-baseline.mjs";
 
 const base = "http://127.0.0.1:4173/interactive-explanation/";
@@ -126,7 +126,7 @@ test("resource URLs exclude credentials, queries and fragments", () => {
 
 test("only a live Musicmap YouTube frame validates its exact QoE cancellation", () => {
   const failure = { type: "requestfailed", seq: 1, requestId: "r1", frameId: "f2", childFrame: true, url: "https://www.youtube-nocookie.com/api/stats/qoe", error: "net::ERR_ABORTED", resourceType: "fetch", navigation: false };
-  const validated = { type: "musicmapembedvalidated", seq: 2, frameId: "f2", childFrame: true, url: "https://www.youtube-nocookie.com/embed/videoseries", connected: true };
+  const validated = { type: "musicmapembedvalidated", seq: 2, frameId: "f2", childFrame: true, url: "https://www.youtube-nocookie.com/embed/videoseries", connected: true, ready: true };
   assert.equal(classifyNetwork([failure, validated], base)[0].classification, "validated-youtube-qoe-cancellation");
   for (const mutate of [
     (events) => { events[0].url += "/other"; },
@@ -137,8 +137,11 @@ test("only a live Musicmap YouTube frame validates its exact QoE cancellation", 
     (events) => { events[1].frameId = "f3"; },
     (events) => { events[1].childFrame = false; },
     (events) => { events[1].connected = false; },
+    (events) => { events[1].ready = false; },
     (events) => { events[1].seq = 0; },
     (events) => { events.push({ type: "framedetached", seq: 3, frameId: "f2" }); },
+    (events) => { events.push({ type: "request", seq: 3, requestId: "r2", frameId: "f2", navigation: true, url: events[1].url }); },
+    (events) => { events.push({ type: "framenavigated", seq: 3, frameId: "f2", url: events[1].url }); },
     (events) => { events.push({ type: "framenavigated", seq: 3, frameId: "f2", url: "about:[redacted]" }); },
   ]) {
     const events = structuredClone([failure, validated]);
@@ -147,9 +150,12 @@ test("only a live Musicmap YouTube frame validates its exact QoE cancellation", 
   }
 });
 
-test("remote policy permits only local blobs and failures omit URL secrets", () => {
-  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests([`blob:${new URL(base).origin}/local-id`], [], "probe"));
-  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests(["blob:https://open.spotify.com/id"], ["open.spotify.com"], "probe"));
+test("remote policy permits only verified local blobs and failures omit URL secrets", () => {
+  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests([`blob:${new URL(base).origin}/local-id`], [], "probe", [new URL(base).origin]));
+  assert.throws(() => assertOnlyAllowedRemoteRequests(["blob:https://open.spotify.com/id"], ["open.spotify.com"], "probe"), /blob:\[redacted\]/);
+  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests(["blob:https://open.spotify.com/id"], ["open.spotify.com"], "probe", ["https://open.spotify.com"]));
+  assert.throws(() => assertOnlyAllowedRemoteRequests(["blob:null/id"], [], "probe"), /blob:\[redacted\]/);
+  assert.throws(() => assertOnlyAllowedRemoteRequests(["blob:not a URL"], [], "probe"), /blob:\[redacted\]/);
   assert.throws(() => assertOnlyAllowedRemoteRequests(["blob:https://foreign.invalid/id"], ["open.spotify.com"], "probe"), /blob:\[redacted\]/);
   assert.throws(
     () => assertOnlyAllowedRemoteRequests(["https://user:secret@example.invalid/embed?token=secret#secret"], ["allowed.invalid"], "probe"),
@@ -159,6 +165,17 @@ test("remote policy permits only local blobs and failures omit URL secrets", () 
       return true;
     },
   );
+});
+
+test("remote collector retains late requests through page close", () => {
+  const page = new EventEmitter();
+  const monitor = createRemoteRequestMonitor(page);
+  const checkpoint = monitor.checkpoint();
+  page.emit("request", { url: () => "https://allowed.invalid/first" });
+  assert.doesNotThrow(() => monitor.assertSince(checkpoint, ["allowed.invalid"], "initial"));
+  page.emit("request", { url: () => "https://blocked.invalid/late" });
+  page.emit("close");
+  assert.throws(() => monitor.assertSince(checkpoint, ["allowed.invalid"], "final"), /https:\/\/blocked\.invalid\/late/);
 });
 
 test("unknown failures retain safe request diagnostics and remain fatal", async () => {
