@@ -3,7 +3,7 @@ import test from "node:test";
 import { EventEmitter } from "node:events";
 import vm from "node:vm";
 import { classifyNetwork, resourceUrl } from "../network-handoff.mjs";
-import { createRuntimeMonitor } from "../smoke-bundle.mjs";
+import { assertOnlyAllowedRemoteRequests, createRuntimeMonitor } from "../smoke-bundle.mjs";
 import { capture } from "../diagnose-baseline.mjs";
 
 const base = "http://127.0.0.1:4173/interactive-explanation/";
@@ -122,4 +122,62 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
 test("resource URLs exclude credentials, queries and fragments", () => {
   assert.equal(resourceUrl("https://user:secret@example.invalid/a?token=secret#secret"), "https://example.invalid/a");
   assert.equal(resourceUrl("data:text/plain,secret"), "data:[redacted]");
+});
+
+test("only a live Musicmap YouTube frame validates its exact QoE cancellation", () => {
+  const failure = { type: "requestfailed", seq: 1, requestId: "r1", frameId: "f2", childFrame: true, url: "https://www.youtube-nocookie.com/api/stats/qoe", error: "net::ERR_ABORTED", resourceType: "fetch", navigation: false };
+  const validated = { type: "musicmapembedvalidated", seq: 2, frameId: "f2", childFrame: true, url: "https://www.youtube-nocookie.com/embed/videoseries", connected: true };
+  assert.equal(classifyNetwork([failure, validated], base)[0].classification, "validated-youtube-qoe-cancellation");
+  for (const mutate of [
+    (events) => { events[0].url += "/other"; },
+    (events) => { events[0].error = "net::ERR_FAILED"; },
+    (events) => { events[0].resourceType = "xhr"; },
+    (events) => { events[0].navigation = true; },
+    (events) => { events[0].childFrame = false; },
+    (events) => { events[1].frameId = "f3"; },
+    (events) => { events[1].childFrame = false; },
+    (events) => { events[1].connected = false; },
+    (events) => { events[1].seq = 0; },
+    (events) => { events.push({ type: "framedetached", seq: 3, frameId: "f2" }); },
+    (events) => { events.push({ type: "framenavigated", seq: 3, frameId: "f2", url: "about:[redacted]" }); },
+  ]) {
+    const events = structuredClone([failure, validated]);
+    mutate(events);
+    assert.equal(classifyNetwork(events, base)[0].classification, "unknown-failure");
+  }
+});
+
+test("remote policy permits only local blobs and failures omit URL secrets", () => {
+  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests([`blob:${new URL(base).origin}/local-id`], [], "probe"));
+  assert.doesNotThrow(() => assertOnlyAllowedRemoteRequests(["blob:https://open.spotify.com/id"], ["open.spotify.com"], "probe"));
+  assert.throws(() => assertOnlyAllowedRemoteRequests(["blob:https://foreign.invalid/id"], ["open.spotify.com"], "probe"), /blob:\[redacted\]/);
+  assert.throws(
+    () => assertOnlyAllowedRemoteRequests(["https://user:secret@example.invalid/embed?token=secret#secret"], ["allowed.invalid"], "probe"),
+    (error) => {
+      assert.match(error.message, /https:\/\/example\.invalid\/embed/);
+      assert.doesNotMatch(error.message, /user|secret|token|\?/);
+      return true;
+    },
+  );
+});
+
+test("unknown failures retain safe request diagnostics and remain fatal", async () => {
+  const page = new EventEmitter();
+  const frame = { parentFrame: () => ({}), url: () => "https://example.invalid/embed" };
+  const request = {
+    frame: () => frame,
+    url: () => "https://user:secret@example.invalid/embed?token=secret#secret",
+    resourceType: () => "document",
+    isNavigationRequest: () => true,
+    method: () => "GET",
+    failure: () => ({ errorText: "net::ERR_ABORTED" }),
+  };
+  const clean = createRuntimeMonitor(page);
+  page.emit("request", request);
+  page.emit("requestfailed", request);
+  await assert.rejects(clean("probe"), (error) => {
+    assert.match(error.message, /r1 f1 document navigation=true childFrame=true net::ERR_ABORTED https:\/\/example\.invalid\/embed unknown-failure/);
+    assert.doesNotMatch(error.message, /user|secret|token|\?/);
+    return true;
+  });
 });

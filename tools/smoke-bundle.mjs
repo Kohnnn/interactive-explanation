@@ -848,10 +848,15 @@ function createRuntimeMonitor(page, options = {}) {
   const assertRuntimeClean = async function (label) {
     await network.ready();
     const failures = network.classify().filter((entry) => entry.classification === "unknown-failure");
-    const allIssues = [...issues, ...network.nativeFailures(), ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} unknown-failure`)];
+    const allIssues = [
+      ...issues,
+      ...network.nativeFailures(),
+      ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} ${entry.resourceType} navigation=${entry.navigation} childFrame=${entry.childFrame} ${entry.error} ${entry.url} unknown-failure`),
+    ].filter(Boolean);
     assert(allIssues.length === 0, `${label} had runtime issues:\n${allIssues.join("\n")}`);
   };
   assertRuntimeClean.ready = network.ready;
+  assertRuntimeClean.validateMusicmapEmbed = network.validateMusicmapEmbed;
   assertRuntimeClean.classify = network.classify;
   return assertRuntimeClean;
 }
@@ -1991,11 +1996,14 @@ function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label) {
   const disallowed = requestUrls.filter((requestUrl) => {
     try {
       const url = new URL(requestUrl);
-      if (url.origin === baseOrigin) {
+      if (url.origin === baseOrigin || requestUrl.startsWith(`blob:${baseOrigin}/`)) {
         return false;
       }
 
-      return !allowedHosts.some((host) => url.hostname === host || url.hostname.endsWith(`.${host}`));
+      const hostname = url.protocol === "blob:"
+        ? new URL(requestUrl.slice("blob:".length)).hostname
+        : url.hostname;
+      return !allowedHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`));
     } catch {
       return false;
     }
@@ -2003,7 +2011,7 @@ function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label) {
 
   assert(
     disallowed.length === 0,
-    `${label} made disallowed remote requests:\n${disallowed.join("\n")}`,
+    `${label} made disallowed remote requests:\n${disallowed.map(resourceUrl).join("\n")}`,
   );
 }
 
@@ -8049,39 +8057,55 @@ async function smokeMusicmap(context) {
     youtubeAction.hosts,
     "musicmap route after deferred YouTube embed",
   );
+  const youtubeFrame = await (await page.locator("#youtube-player-iframe iframe").elementHandle())?.contentFrame();
+  assert(youtubeFrame, "musicmap route did not create its YouTube child frame");
+  await youtubeFrame.waitForLoadState("domcontentloaded", { timeout: 10000 });
+  assertPageRuntimeClean.validateMusicmapEmbed(youtubeFrame);
+  assertOnlyAllowedRemoteRequests(
+    remoteRequests.diff(remoteBeforeYouTubeEmbed),
+    youtubeAction.hosts,
+    "musicmap route after completed YouTube navigation",
+  );
+  await assertPageRuntimeClean("musicmap YouTube route");
   console.log("OK musicmap deferred YouTube playback surface");
+  await page.close();
 
-  await page.evaluate(() => {
-    const embedContainer = document.querySelector("#youtube-player-iframe");
-    if (embedContainer) {
-      embedContainer.innerHTML = "";
-    }
-  });
-  await page.waitForTimeout(1000);
-  const remoteBeforeSpotifyEmbed = remoteRequests.snapshot().length;
-  await page.click(spotifyAction.selector, { force: true });
-  await page.waitForFunction(() => {
+  const spotifyPage = await context.newPage();
+  const assertSpotifyRuntimeClean = createRuntimeMonitor(spotifyPage);
+  const spotifyRemoteRequests = createRemoteRequestMonitor(spotifyPage);
+  await assertRoute(spotifyPage, "musicmap/", "#reference-footer");
+  await spotifyPage.waitForFunction(() => {
+    return document.querySelectorAll("#genres text").length > 200 &&
+      Boolean(document.querySelector("#search-toggle-button"));
+  }, null, { timeout: 30000 });
+  await openMusicmapGenreFromSearch(spotifyPage, "shoegaze", 1);
+  const remoteBeforeSpotifyEmbed = spotifyRemoteRequests.snapshot().length;
+  await spotifyPage.click(spotifyAction.selector, { force: true });
+  await spotifyPage.waitForFunction(() => {
     return /open\.spotify\.com\/embed\/playlist/.test(
       document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
     );
   }, null, { timeout: 10000 });
-  const spotifyEmbedState = await page.evaluate(() => ({
+  const spotifyEmbedState = await spotifyPage.evaluate(() => ({
     iframeSrc: document.querySelector("#youtube-player-iframe iframe")?.getAttribute("src") || "",
     iframeCount: document.querySelectorAll("#youtube-player-iframe iframe").length,
   }));
-  assert(spotifyEmbedState.iframeCount === 1, "musicmap route did not replace the embed host with a single Spotify frame");
+  assert(spotifyEmbedState.iframeCount === 1, "musicmap route did not create a single Spotify frame");
   assert(
     /^https:\/\/open\.spotify\.com\/embed\/playlist/.test(spotifyEmbedState.iframeSrc),
     `musicmap route created an unexpected Spotify embed: ${spotifyEmbedState.iframeSrc || "none"}`,
   );
+  const spotifyFrame = await (await spotifyPage.locator("#youtube-player-iframe iframe").elementHandle())?.contentFrame();
+  assert(spotifyFrame, "musicmap route did not create its Spotify child frame");
+  await spotifyFrame.waitForLoadState("domcontentloaded", { timeout: 10000 });
   assertOnlyAllowedRemoteRequests(
-    remoteRequests.diff(remoteBeforeSpotifyEmbed),
+    spotifyRemoteRequests.diff(remoteBeforeSpotifyEmbed),
     spotifyAction.hosts,
-    "musicmap route after deferred Spotify embed",
+    "musicmap route after completed Spotify navigation",
   );
   console.log("OK musicmap deferred Spotify playback surface");
 
-  await assertViewportUsable(page, "musicmap route");
+  await assertViewportUsable(spotifyPage, "musicmap route");
   await assertRouteViewportUsable(
     context,
     "musicmap/",
@@ -8091,10 +8115,10 @@ async function smokeMusicmap(context) {
     390,
     844,
   );
-  await page.waitForTimeout(250);
-  await assertPageRuntimeClean("musicmap route");
+  await spotifyPage.waitForTimeout(250);
+  await assertSpotifyRuntimeClean("musicmap Spotify route");
   console.log("OK musicmap responsive shell");
-  await page.close();
+  await spotifyPage.close();
 }
 
 async function smokeWayfinding(context) {
@@ -10080,7 +10104,7 @@ export {
   baseUrl, port, host, mountPath, experienceViewports, createThemeContext,
   waitForDocumentLayout, waitForManifestRouteReady, assertDocumentTheme,
   scrollPrimarySurfaceIntoView, measureRuntimeSurface, readPerformanceEvidence,
-  assertRuntimeGeometry, createRuntimeMonitor,
+  assertRuntimeGeometry, createRuntimeMonitor, assertOnlyAllowedRemoteRequests,
 };
 
 if (isMain) {

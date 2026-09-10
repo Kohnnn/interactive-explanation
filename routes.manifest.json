@@ -2627,14 +2627,19 @@
               "youtube.com",
               "youtube-nocookie.com",
               "ytimg.com",
-              "googlevideo.com"
+              "googlevideo.com",
+              "fonts.gstatic.com",
+              "www.google.com"
             ]
           },
           {
             "selector": "#spotify-playlist-link",
             "hosts": [
               "open.spotify.com",
-              "embed-cdn.spotifycdn.com"
+              "embed-cdn.spotifycdn.com",
+              "mosaic.scdn.co",
+              "encore.scdn.co",
+              "o22381.ingest.us.sentry.io"
             ]
           }
         ]

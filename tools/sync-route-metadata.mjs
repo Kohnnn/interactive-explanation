@@ -72,11 +72,11 @@ const CHAPTER_ROUTE_SLUGS = new Set([
 const MUSICMAP_DEFERRED_ACTIONS = [
   {
     selector: "#youtube-playlist-link",
-    hosts: ["youtube.com", "youtube-nocookie.com", "ytimg.com", "googlevideo.com"],
+    hosts: ["youtube.com", "youtube-nocookie.com", "ytimg.com", "googlevideo.com", "fonts.gstatic.com", "www.google.com"],
   },
   {
     selector: "#spotify-playlist-link",
-    hosts: ["open.spotify.com", "embed-cdn.spotifycdn.com"],
+    hosts: ["open.spotify.com", "embed-cdn.spotifycdn.com", "mosaic.scdn.co", "encore.scdn.co", "o22381.ingest.us.sentry.io"],
   },
 ];
 

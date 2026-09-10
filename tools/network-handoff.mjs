@@ -46,7 +46,22 @@ export function classifyNetwork(events, baseUrl) {
     const checkpoint = next && events.find(event => event.type === "nativeeditorvalidated" && event.requestId === next.requestId);
     const validated = next && (validatedNativeFinal(events, next, final) || (checkpoint && finalRequest !== next && validatedNativeFinal(events.filter(event => event.seq <= checkpoint.seq), next, final) && validatedNativeFinal(events, finalRequest, final)));
     const known = Boolean(failure.requestId && failure.frameId) && directoryOnly && failure.url === directory && failure.error === "net::ERR_ABORTED" && failure.resourceType === "document" && failure.navigation && failure.childFrame && next?.url === final && next.resourceType === "document" && response && navigation && ready && finalDocument && validated && !nativeError;
-    return { requestId: failure.requestId, frameId: failure.frameId, classification: known ? "validated-markov-child-handoff" : "unknown-failure" };
+    const embed = events.find((event) => event.type === "musicmapembedvalidated" && event.frameId === failure.frameId && event.seq > failure.seq);
+    const validatedYouTubeQoe = failure.url === "https://www.youtube-nocookie.com/api/stats/qoe" &&
+      failure.error === "net::ERR_ABORTED" && failure.resourceType === "fetch" && !failure.navigation && failure.childFrame &&
+      embed?.url === "https://www.youtube-nocookie.com/embed/videoseries" && embed.childFrame === true && embed.connected === true &&
+      !events.some((event) => event.frameId === failure.frameId && event.seq > embed.seq &&
+        (event.type === "framedetached" || (event.type === "framenavigated" && event.url !== embed.url)));
+    return {
+      requestId: failure.requestId,
+      frameId: failure.frameId,
+      classification: known ? "validated-markov-child-handoff" : validatedYouTubeQoe ? "validated-youtube-qoe-cancellation" : "unknown-failure",
+      url: failure.url,
+      error: failure.error || "unknown-error",
+      resourceType: failure.resourceType || "unknown-resource",
+      navigation: Boolean(failure.navigation),
+      childFrame: Boolean(failure.childFrame),
+    };
   });
 }
 
@@ -91,6 +106,16 @@ export function captureNetwork(page, baseUrl, events = []) {
   page.on("console", (message) => {
     if (["error", "warning"].includes(message.type())) emit(`console-${message.type()}`, { message: `Native console ${message.type()}` });
   });
+  const validateMusicmapEmbed = (frame) => {
+    const id = frames.get(frame);
+    if (!id) return;
+    emit("musicmapembedvalidated", {
+      frameId: id,
+      childFrame: Boolean(frame.parentFrame()),
+      url: resourceUrl(frame.url()),
+      connected: !frame.isDetached(),
+    });
+  };
   const ready = async () => {
     await Promise.all([...pending]);
     for (const [frame, id] of frames) {
@@ -101,5 +126,5 @@ export function captureNetwork(page, baseUrl, events = []) {
       emit("nativeeditorvalidated", { ...target, url: resourceUrl(frame.url()), connected: !frame.isDetached(), nativeReady });
     }
   };
-  return { events, ready, classify: () => classifyNetwork(events, baseUrl), nativeFailures: () => nativeValidationFailures(events, baseUrl) };
+  return { events, ready, validateMusicmapEmbed, classify: () => classifyNetwork(events, baseUrl), nativeFailures: () => nativeValidationFailures(events, baseUrl) };
 }

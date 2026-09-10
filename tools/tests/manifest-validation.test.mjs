@@ -402,6 +402,22 @@ test("native control kind invariants fail validation", () => {
   });
 });
 
+test("Musicmap requires every validated deferred embed host", () => {
+  const manifest = JSON.parse(fs.readFileSync(path.resolve(here, "..", "..", "routes.manifest.json"), "utf8"));
+  const musicmap = manifest.find((route) => route.slug === "musicmap");
+  for (const [actionIndex, host] of [
+    [0, "fonts.gstatic.com"],
+    [0, "www.google.com"],
+    [1, "mosaic.scdn.co"],
+    [1, "encore.scdn.co"],
+    [1, "o22381.ingest.us.sentry.io"],
+  ]) {
+    const route = structuredClone(musicmap);
+    route.experience.networkPolicy.actions[actionIndex].hosts = route.experience.networkPolicy.actions[actionIndex].hosts.filter((entry) => entry !== host);
+    assert.match(runSync(makeRootWithManifest([route])).stderr, /approved deferred embed actions/);
+  }
+});
+
 test("trimmed selectors, known probes, URLs, and policy hosts are required", () => {
   const selectorWhitespace = {
     ...validRoute,
