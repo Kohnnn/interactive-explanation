@@ -45,6 +45,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: head
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Checkout immutable trusted repository base control

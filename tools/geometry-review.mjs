@@ -189,7 +189,7 @@ export function runtimeRequestsFromJournal(source) {
 
 export function verifyRuntimeSourceContract(root, identity, side, contract = geometryRuntimeRequests) {
   assert(["base", "head"].includes(side), `Unknown runtime source side: ${side}`);
-  const identityFiles = new Map(identity.files);
+  const identityFiles = new Map(identity.files.map(([file, digest]) => [file.replaceAll("\\", "/"), digest]));
   const tree = new Map(execFileSync("git", ["ls-tree", "-r", identity.head], { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim().split("\n").map(row => {
     const [metadata, file] = row.split("\t");
     const [mode, type, blob] = metadata.split(" ");

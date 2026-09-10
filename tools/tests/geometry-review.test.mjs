@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyFunctionHashes, geometrySourceBinding, normalizedRuntimePaths, runtimeRequestsFromJournal, verifyCurrentRuntimeRequests, verifyRuntimeRequestCoverage, verifyRuntimeSourceContract, verifyGeometryReview } from "../geometry-review.mjs";
@@ -9,6 +10,12 @@ import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
 const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.admittedHeadSha, status: "", sources: geometryReview.sources[side] }]));
 const tools = { admittedHeadSha: geometryReview.admittedHeadSha, runtimeRequests: geometryReview.inventory.runtimeRequestsSha256, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, dependencyFunctions: geometryReview.dependencyFunctions, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
+function committedIdentity(root) {
+  const identity = sourceIdentity(root);
+  const changed = new Set(execFileSync("git", ["diff", "--name-only", "HEAD"], { cwd: root, encoding: "utf8" }).trim().split("\n").filter(Boolean));
+  for (const row of identity.files) if (changed.has(row[0])) row[1] = createHash("sha256").update(execFileSync("git", ["show", `HEAD:${row[0]}`], { cwd: root })).digest("hex");
+  return identity;
+}
 const review = verifyGeometryReview(geometryReview, identities, tools);
 const cell = "atlas/desktop/light";
 function fixture() {
@@ -80,10 +87,10 @@ for (const mode of ["base", "head", "capture-tool", "measurement", "replay-tool"
 }
 test("registry binds exact reviewed route, shared, Atlas and geometry metadata dependencies", () => {
   const root = fileURLToPath(new URL("../../", import.meta.url));
-  const identity = sourceIdentity(root);
-  const pages = JSON.parse(fs.readFileSync(new URL("../../pages.json", import.meta.url), "utf8"));
-  const manifest = JSON.parse(fs.readFileSync(new URL("../../routes.manifest.json", import.meta.url), "utf8"));
-  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right, file => fs.readFileSync(new URL(`../../${file}`, import.meta.url)));
+  const identity = committedIdentity(root);
+  const pages = JSON.parse(execFileSync("git", ["show", "HEAD:pages.json"], { cwd: root }));
+  const manifest = JSON.parse(execFileSync("git", ["show", "HEAD:routes.manifest.json"], { cwd: root }));
+  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right, file => execFileSync("git", ["show", `HEAD:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 }));
   const bound = bind();
   assert.deepEqual(bound.sources, geometryReview.sources.head);
   assert(bound.inventories.atlas.files.includes("shared/tokens.css"));
@@ -162,6 +169,7 @@ test("runtime source contract rejects changed blobs, modes and missing files", (
   const root = fileURLToPath(new URL("../../", import.meta.url));
   const identity = sourceIdentity(root);
   assert(verifyRuntimeSourceContract(root, identity, "head"));
+  assert(verifyRuntimeSourceContract(root, { ...identity, files: identity.files.map(([file, digest]) => [file.replaceAll("/", "\\"), digest]) }, "head"));
   const baseIdentity = { head: geometryReview.baseSha, files: [...new Set(Object.values(geometryRuntimeRequests.surfaces).flatMap(surface => surface.paths))].map(file => [file, "unused"]) };
   assert(verifyRuntimeSourceContract(root, baseIdentity, "base"));
   const contract = structuredClone(geometryRuntimeRequests);

@@ -74,7 +74,7 @@ export function sourceIdentity(root) {
       const full = path.join(directory, entry.name);
       assert(!entry.isSymbolicLink(), `Unidentified source symlink: ${full}`);
       if (entry.isDirectory()) walk(full);
-      else if (entry.isFile()) files.push([path.relative(root, full), hash(fs.readFileSync(full))]);
+      else if (entry.isFile()) files.push([path.relative(root, full).replaceAll("\\", "/"), hash(fs.readFileSync(full))]);
     }
   }
   walk(root);
