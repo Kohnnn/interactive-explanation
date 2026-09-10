@@ -12,7 +12,7 @@ import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEv
 import { createSmokeServer, createSwitchableSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
-import { geometryReview, geometrySourceBinding, geometryFunctionHashes, functionSourceHashes, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
+import { geometryReview, geometrySourceBinding, geometryFunctionHashes, dependencyFunctionHashes, functionSourceHashes, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
 import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
@@ -256,11 +256,13 @@ export async function main(args = process.argv.slice(2)) {
     const gitBytes = (root, revision, file) => execFileSync("git", ["show", `${revision}:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 });
     const reviewedGeometry = verifyGeometryReview(
       geometryReview,
-      Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest)])),
+      Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest, file => fs.readFileSync(path.join(options[side], file)))])),
       {
         admittedHeadSha: geometryReview.admittedHeadSha,
+        runtimeRequests: createHash("sha256").update(fs.readFileSync(path.join(options.head, "tools/geometry-runtime-requests.json"))).digest("hex"),
         capture: Object.fromEntries(Object.keys(geometryReview.captureTools).map(file => [file, createHash("sha256").update(gitBytes(options.head, geometryReview.capturedHeadSha, file)).digest("hex")])),
         measurementFunctions: geometryFunctionHashes(fs.readFileSync(path.join(options.head, "tools/smoke-bundle.mjs"), "utf8")),
+        dependencyFunctions: dependencyFunctionHashes(),
         replay: Object.fromEntries(Object.keys(geometryReview.replayTools).map(file => [file, createHash("sha256").update(gitBytes(options.head, geometryReview.admittedHeadSha, file)).digest("hex")])),
         replayFunctions: {
           ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/diagnose-baseline.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/diagnose-baseline.mjs"]),

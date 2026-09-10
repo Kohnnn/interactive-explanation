@@ -9,42 +9,42 @@
   "inventory": {
     "atlas": ["index.html"],
     "routes": ["covid-19", "decision-tree", "exponentiation", "public-private-keys", "reading-qr-codes-without-a-computer", "ableton-learning-synths-get-started", "ableton-learning-synths-how-synths-make-sound", "ableton-learning-synths-filter-resonance", "ableton-learning-synths-modulating-amplitude-with-envelopes", "ableton-learning-synths-matching-envelopes", "ableton-learning-synths-recipes", "linear-regression", "train-test-validation", "blockchain-101-combined-flow"],
-    "shared": ["shared/ableton-learning-synths-archive.js", "shared/ableton-learning-synths-musiclab.js", "shared/ableton-learning-synths-react-dom.production.min.js", "shared/ableton-learning-synths-react.production.min.js", "shared/empty-svg-hidden.js", "shared/engineering-sandbox.css", "shared/engineering-sandbox.js", "shared/fonts/be-vietnam-pro-400.ttf", "shared/fonts/be-vietnam-pro-500.ttf", "shared/fonts/be-vietnam-pro-600.ttf", "shared/fonts/be-vietnam-pro-700.ttf", "shared/fonts/ibm-plex-mono-400.ttf", "shared/fonts/ibm-plex-mono-500.ttf", "shared/fonts/ibm-plex-mono-600.ttf", "shared/prototype-visual.css", "shared/public-footer.css", "shared/public-footer.js", "shared/readout-slider-labels.js", "shared/route-families.js", "shared/site.css", "shared/site.js", "shared/theme-init.js"]
+    "runtimeRequestsSha256": "0a1e5811526517b1be281b748c02ffc4a4912abead481ba66b152eb307a9faeb"
   },
   "sources": {
     "base": {
-      "atlas": "fecaff837ba45aa9c50308ac57c18b65942bea3ed0bff1399a5f6fae5dbf89a4",
-      "covid-19": "7fbbd621662a87bb53d5def5eab9eb98cab944a7c555dd5c70a4bc5d00182b81",
-      "decision-tree": "608600f5982fe9f192ddd00a9701772338693cda17146519199149036cf18531",
-      "exponentiation": "2c597ab17fb0a5af95b4eb8e4241a60c94b47563ec76a87b9dbab68d1643ae3b",
-      "public-private-keys": "b030deb089f0fb8f18908eda2d3773285ce64956e25bbbfd2e92938dbc83f817",
-      "reading-qr-codes-without-a-computer": "1dea93526fc773dd0f7a7d7241529c5602dc9e3a02ec7f627dfbd05488df51d7",
-      "ableton-learning-synths-get-started": "69ae76445692bc57c5fa95ba9d051eedfd583c547e422d4c7fa89f87c24ddc65",
-      "ableton-learning-synths-how-synths-make-sound": "fa5c1431d004a3348392ca852316972bf6d0142b66fca51431c11ab667a6fdaf",
-      "ableton-learning-synths-filter-resonance": "319ca33158fa40e522bbe680815043d86239046865b654d188f1786b58c14b5d",
-      "ableton-learning-synths-modulating-amplitude-with-envelopes": "b169c9f115408f2c6d794e36e04a45b228fed4b82fbd2a4f534e72ddfc0f3bb3",
-      "ableton-learning-synths-matching-envelopes": "8faa016a4244e0db6413d6930ed02b2dab65f50800b1a82751a82e3055697f44",
-      "ableton-learning-synths-recipes": "33a3a5e986fe55b8930ddf308504fefb6e1378e6952af782f6e2cac1e18c727f",
-      "linear-regression": "97f2b377f9b79266bdc720cb350ca9361102ee732f14e3b65f1dc5b2a11fd096",
-      "train-test-validation": "d85d4cd7c08fc5ae6a7c45d9a814ed18769b922fd3aed5ba313c9e477dc8b5e0",
-      "blockchain-101-combined-flow": "2020cec7cae7f0e697dae337157965c6f295058ea61afef72cb34c8c83eaf257"
+      "atlas": "12639593da5bb9535f717523d915274cd64035b4e015f32159fe02e3d0e41019",
+      "covid-19": "c94e45191b6e958075a88dbd211de215b9658583631d1260fae650cb26f01e55",
+      "decision-tree": "389f9ee61aef0b8de74e1ebb54bba4964ed53d68db7f9519f70c0d7c7964ebeb",
+      "exponentiation": "75ef2b5f62b160ff6766724a6ab27d730fc42d351965e1f2d839388d2f568539",
+      "public-private-keys": "0903e6c98debe1a238cf8c936eafca4de89a70c918363006e37f8d4c5ab798ec",
+      "reading-qr-codes-without-a-computer": "f4524ec112e48706ddf7259b08aba35457675fb4874790827cbe7e46d755d1bb",
+      "ableton-learning-synths-get-started": "161bab6c7a1581dfba11c12f0a66af680edee2e5dd23a10180e6240e4d416bb8",
+      "ableton-learning-synths-how-synths-make-sound": "a2d6abe747095cf08ab17bc1f96d3a5a96310b609d9388a9f59317e28af0fa99",
+      "ableton-learning-synths-filter-resonance": "0a1bf063d5d36ca026d85ba53e43214b6855b80ad17ec94f27116e7c89bbd51d",
+      "ableton-learning-synths-modulating-amplitude-with-envelopes": "f989c8cf2011257f6dd9f2f0232c17bedd56aade459780e536270ef1433ea0b2",
+      "ableton-learning-synths-matching-envelopes": "34e31b6bf11f87ccc9625f826d0161bfa61f0b67217ab02418c852296ab774c9",
+      "ableton-learning-synths-recipes": "7389b7d9b7e390f61578dab21c16ea1645f8fb651ec308e1a0f87252f3c05695",
+      "linear-regression": "ee8138799d1c9fff14cac130e4e2aee4c248061c53e2e0ad8f8dd9e0a52dbe8a",
+      "train-test-validation": "b314a23e2600a3e76b95465be5f500a292d741a7880ad8e48fb841d25f527511",
+      "blockchain-101-combined-flow": "92a9b34b06774cd55b9660fff4121476a2a11e22884820ab2ca91003e4acccb4"
     },
     "head": {
-      "atlas": "5c6a08a8af7e31dee8c06b16ce5b8853b1882b119f9986291c79bc03d62a12a2",
-      "covid-19": "cc09b3372cde8ed0eca535ee4645db4fc1f0ab1b54ab87b3197c953da8364244",
-      "decision-tree": "4b7b004e18cb60b49eb2e7dccb7b7d32ec78f48bc40dce161b8f2c2a0c47f7db",
-      "exponentiation": "b26e562689824912eb2757b51a3c06579b38d5600ae6c6b651c2d2ec999fb5d1",
-      "public-private-keys": "c6be8b8ae54e0bcb4cdade92f341d2e285549a3f8e13aa062de4766110928b1f",
-      "reading-qr-codes-without-a-computer": "27f5d3842173d867fb769eae469e4bede2dea946cf095933825c005b0a06defe",
-      "ableton-learning-synths-get-started": "37b3a347c6b2947d85680efd9411e9524c20902037cbecd9345b0254f12676e2",
-      "ableton-learning-synths-how-synths-make-sound": "a83cf03d443a5eb204c5ebe3224cd62175f6b1776afcd2ca757a375abec12b4d",
-      "ableton-learning-synths-filter-resonance": "4b88e5a34dc666ca6753ba7f03d8ca16bf9a4df1d0d5bee29bcfbcac5ba97115",
-      "ableton-learning-synths-modulating-amplitude-with-envelopes": "44be775eb15c9a19a5067c4cd383a359bcc1b2a3589a31ae06323975d4650519",
-      "ableton-learning-synths-matching-envelopes": "0ce3214da70b9e894fc8c7ac8e41403fe4b628532fe54b381ee69fb9a9ebd9b2",
-      "ableton-learning-synths-recipes": "4fa1ccf9825b849cd033c4ee90911b451657516fa455d1ac0cd13ecde6155c6f",
-      "linear-regression": "fc4aaf784be8c9b39b91abf2116cc39be830f648005ba555613165d2ff225b47",
-      "train-test-validation": "d24588e2aa0f8fa91e898f14cfc1d4f16f302b735a80b06f30bf6d04e9b9ca2a",
-      "blockchain-101-combined-flow": "987f873e24d15ed738d08b4bc4b28d8ce247aa7e7575864d936cc25cb66aba78"
+      "atlas": "a658618518ceb03dc8a58941b91a4fa4f2522ba9fb7621342b5de06158befb0f",
+      "covid-19": "1356397d4d236f1de2529579fe0ec77d455be5dfed30734925e2c0df4a9d27c0",
+      "decision-tree": "fefa8f6903e1f92bcc8ce7a2e1f305a561ebe10e56e83852d05e7115bb99a34d",
+      "exponentiation": "2b758c5650b2d1f7697300650e871f77c92f12d23619736ef02ed470ca01e778",
+      "public-private-keys": "3edb1d8418ab465c97d8986ecd58aeaccbca21bf550b7663df45e1c7a4aa8bbc",
+      "reading-qr-codes-without-a-computer": "91a0b428c897fd0ac832ef894eee31b29c8a01286521fc5cfe2db2948fe91ae9",
+      "ableton-learning-synths-get-started": "9bffdbb4dcb6e73efb9ffbc88028eaef9ef62a73e32685e52387d3b110052102",
+      "ableton-learning-synths-how-synths-make-sound": "79936d6c4244b7a1d23175d0c608b11531e7a56759a2da07da031f4a7d8340b8",
+      "ableton-learning-synths-filter-resonance": "dd88bab3efa66f6b7cab5bbc4631de7a7ad6415eba7878838ec8e9d14fe664b2",
+      "ableton-learning-synths-modulating-amplitude-with-envelopes": "6e726efb64e25ae6e163db72a09a0025a6a7ce539ec60069870eb78cce85ab5d",
+      "ableton-learning-synths-matching-envelopes": "2a57e3013277c3460d3404b9f2780d0cce16ab4eedf5e76f025c892f1836ff05",
+      "ableton-learning-synths-recipes": "12e61dcc220432c369e7d52600394aadcc728cdc77377bfcb47d640b8992ec44",
+      "linear-regression": "f357001986d4259763eb7e70c48d72c4db8f7a6e203246591ff1865950cb9dbd",
+      "train-test-validation": "e9d731060acecc2c0ffc96af77f8ef29043c55e6e2e3e8b0de33923407fb0ca3",
+      "blockchain-101-combined-flow": "98d33a26c50358a5e09e4d6522c22a55978f8b6a0959da4588e86738a3a2d56e"
     }
   },
   "captureTools": {
@@ -62,6 +62,14 @@
       "scrollPrimarySurfaceIntoView": "45442478c3ef69367413811aa4312e40af71a0c26e633425c00c4ef79d02e713"
     }
   },
+  "dependencyFunctions": {
+    "localReferences": "22ac22b9754bf61a6819dde367c3ed898ab9e4e1e36777f80ec60ac27d45dd07",
+    "resolveLocalReference": "966ee8ba42a41dc5b39fb6121b8ebb9bcad0f15127afcf5535a566290f4dd6fa",
+    "dependencyClosure": "b94ea1536109bd8f8fee23453af148bd70a8db558e0b9ceb0f67f8b9494dee61",
+    "geometrySourceBinding": "360b15994888ab5cfe005bcb92250ebcf0714b8d3d77f497fa1011c1ff203c30",
+    "runtimeRequestsFromJournal": "7de56fdc3763d8ddb2adacd5f156afb488f7e7f5133451f4ed92c02684f5a64f",
+    "verifyRuntimeRequestCoverage": "b5c8816e62a549d360b7f42e437167200fc7be193d4e2f761424b73e0f38f436"
+  },
   "replayTools": {
     "tools/qualify-pr.mjs": "1e2bacb34c22b3b7243611dad143ed6c16377b6726ca1fd2aae7453219d827fa",
     "tools/geometry-review.mjs": "507f62cd6b980ab88acce0590df678334d68c23b1cb5b67b4c17c16f8902fb68",
@@ -77,9 +85,9 @@
     "hashes": {
       "geometryChanges": "48b16d75711ebb5c906db49cff0c2ff2cf14348e3489280be22762e670098e18",
       "compareGeometry": "54a9870bfdeb99ea0067e715cd2e8de7c94c8c8e63b3a7c93c6a384226d73e72",
-      "geometrySourceBinding": "e65ded808159e0fd9544b53a38979e0bc226412fe68015cf8ee09d363b3c8fe0",
+      "geometrySourceBinding": "360b15994888ab5cfe005bcb92250ebcf0714b8d3d77f497fa1011c1ff203c30",
       "functionSourceHashes": "62f35af7994aebb89cfda5a674b124e4e6bf304da090ca4b8e29a5254d5abc50",
-      "verifyGeometryReview": "8981bf368c4fa0355cca420d541b12a6707a0cca7ba26ad084a77806c1c01441",
+      "verifyGeometryReview": "66e72935550a68a99e73bb2f8da2e9563bbf04b2811bf1e283598ec6b7d0f8d1",
       "admitGeometryReview": "636046a283556c7ccce819bad2efaa9223a1222c603b626e6bd8ed428e568221",
       "validateGeometryEvidence": "28b920506e74ed00c05c20a24fa8e0bc67a0485cfa9c85cc1bd7cde8d14a3504"
     }

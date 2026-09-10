@@ -1,13 +1,14 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
-import { geometryReview, geometrySourceBinding, verifyGeometryReview } from "../geometry-review.mjs";
+import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyFunctionHashes, geometrySourceBinding, runtimeRequestsFromJournal, verifyRuntimeRequestCoverage, verifyGeometryReview } from "../geometry-review.mjs";
 import { sourceIdentity } from "../diagnose-baseline.mjs";
 import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
 const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.admittedHeadSha, status: "", sources: geometryReview.sources[side] }]));
-const tools = { admittedHeadSha: geometryReview.admittedHeadSha, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
+const tools = { admittedHeadSha: geometryReview.admittedHeadSha, runtimeRequests: geometryReview.inventory.runtimeRequestsSha256, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, dependencyFunctions: geometryReview.dependencyFunctions, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
 const review = verifyGeometryReview(geometryReview, identities, tools);
 const cell = "atlas/desktop/light";
 function fixture() {
@@ -82,8 +83,11 @@ test("registry binds exact reviewed route, shared, Atlas and geometry metadata d
   const identity = sourceIdentity(root);
   const pages = JSON.parse(fs.readFileSync(new URL("../../pages.json", import.meta.url), "utf8"));
   const manifest = JSON.parse(fs.readFileSync(new URL("../../routes.manifest.json", import.meta.url), "utf8"));
-  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right);
-  assert.deepEqual(bind().sources, geometryReview.sources.head);
+  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right, file => fs.readFileSync(new URL(`../../${file}`, import.meta.url)));
+  const bound = bind();
+  assert.deepEqual(bound.sources, geometryReview.sources.head);
+  assert(bound.inventories.atlas.files.includes("shared/tokens.css"));
+  assert.deepEqual(bound.inventories.exponentiation.files.filter(file => file.startsWith("ev/")), ["ev/img/setosa.png", "ev/resources/fonts/stix/STIX-Regular.otf", "ev/scripts/angular.js", "ev/scripts/common.js", "ev/scripts/d3.js", "ev/styles/style.css"]);
   for (const file of ["covid-19/index.html", "shared/site.css", "index.html"]) {
     const changed = structuredClone(identity);
     changed.files.find(([path]) => path === file)[1] = "0".repeat(64);
@@ -101,6 +105,59 @@ test("registry binds exact reviewed route, shared, Atlas and geometry metadata d
   sim.files.find(([path]) => path === "sim/index.html")[1] = "0".repeat(64);
   assert.deepEqual(bind(sim).sources, geometryReview.sources.head);
   assert.throws(() => bind({ ...identity, files: [...identity.files, identity.files[0]] }));
+});
+test("dependency closure follows nested local rendering and module assets", () => {
+  const source = {
+    "route/index.html": '<link href="../shared/a.css"><script type="module" src="./main.js"></script><img src="image.png" srcset="small.png 1x, /interactive-explanation/large.png 2x"><img src="data:image/png,x">',
+    "shared/a.css": '@import url("./b.css");',
+    "shared/b.css": '@font-face{src:url("./font.woff2")} .x{background:url(https://example.com/a.png)}',
+    "shared/font.woff2": "font",
+    "route/main.js": 'import "../module.js"; import("../lazy.js"); new Worker(new URL("../worker.js", import.meta.url)); new URL("../asset.bin", import.meta.url);',
+    "module.js": "export const x = 1;",
+    "lazy.js": "export default 1;",
+    "worker.js": "self.close();",
+    "asset.bin": "asset",
+    "route/image.png": "image",
+    "route/small.png": "small",
+    "large.png": "large",
+  };
+  const identity = { files: Object.entries(source).map(([file, value]) => [file, value]), readFile: file => Buffer.from(source[file]) };
+  assert.deepEqual(dependencyClosure(identity, ["route/index.html"]).files.map(([file]) => file), Object.keys(source).sort());
+  assert.deepEqual(dependencyClosure(identity, ["route/index.html"]).ignored.map(({ value }) => value), ["data:image/png,x", "https://example.com/a.png"]);
+});
+test("dependency closure rejects traversal, missing files and dependency changes", () => {
+  const fixture = reference => ({ files: [["route/index.html", "entry"], ["route/asset.css", "asset"]], readFile: file => Buffer.from(file === "route/index.html" ? `<link href="${reference}">` : "body{}") });
+  assert.throws(() => dependencyClosure(fixture("../../secret.css"), ["route/index.html"]), /escapes repository/);
+  assert.throws(() => dependencyClosure(fixture("missing.css"), ["route/index.html"]), /Missing geometry dependency/);
+  const before = dependencyClosure(fixture("asset.css"), ["route/index.html"]).files;
+  const changed = fixture("asset.css");
+  changed.files[1][1] = "changed";
+  assert.notDeepEqual(dependencyClosure(changed, ["route/index.html"]).files, before);
+});
+test("runtime request extraction normalizes local paths and records transient schemes", () => {
+  const row = { type: "sample", slug: "atlas", events: [
+    { type: "request", url: "http://127.0.0.1:4173/interactive-explanation/" },
+    { type: "request", url: "http://127.0.0.1:4173/interactive-explanation/shared/site.css?v=1" },
+    { type: "request", url: "https://example.com/external.js" },
+    { type: "request", url: "blob:http://127.0.0.1/id" },
+  ] };
+  assert.deepEqual(runtimeRequestsFromJournal(`${JSON.stringify(row)}\n`), {
+    paths: { atlas: ["index.html", "shared/site.css"] },
+    ignoredSchemes: { atlas: ["blob:"] },
+  });
+});
+test("runtime request coverage rejects unbound local requests", () => {
+  const paths = { route: ["route/index.html", "route/runtime.bin"] };
+  const inventories = { route: { files: [...paths.route] } };
+  const contract = structuredClone(geometryRuntimeRequests);
+  contract.surfaces = { route: { count: 2, sha256: "" } };
+  contract.ignoredSchemes = {};
+  contract.surfaces.route.sha256 = createHash("sha256").update(JSON.stringify(paths.route)).digest("hex");
+  contract.uniqueLocalFiles = 2;
+  contract.inventorySha256 = createHash("sha256").update(JSON.stringify(paths)).digest("hex");
+  assert(verifyRuntimeRequestCoverage(paths, inventories, {}, contract));
+  inventories.route.files.pop();
+  assert.throws(() => verifyRuntimeRequestCoverage(paths, inventories, {}, contract), /Uncovered runtime geometry dependency/);
 });
 test("geometry approval cannot override independent performance failure or functional geometry gate", () => {
   assert.equal(result(fixture()).status, "passed-reviewed");

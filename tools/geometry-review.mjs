@@ -1,8 +1,10 @@
 import fs from "node:fs";
+import path from "node:path";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 
 export const geometryReview = JSON.parse(fs.readFileSync(new URL("./geometry-review.json", import.meta.url), "utf8"));
+export const geometryRuntimeRequests = JSON.parse(fs.readFileSync(new URL("./geometry-runtime-requests.json", import.meta.url), "utf8"));
 const verified = new WeakMap();
 const hash = value => createHash("sha256").update(value).digest("hex");
 const sortRows = rows => rows.sort(([left], [right]) => left < right ? -1 : left > right ? 1 : 0);
@@ -21,32 +23,92 @@ function routeMetadata(manifest, slug) {
   };
 }
 
-export function geometrySourceBinding(identity, pages, manifest) {
+function localReferences(file, bytes) {
+  if (bytes.includes(0)) return [];
+  const source = bytes.toString("utf8");
+  const references = [];
+  const add = (kind, value) => references.push({ kind, value: value.trim() });
+  if (/\.html?$/.test(file)) {
+    for (const match of source.matchAll(/\bsrc\s*=\s*["']([^"']+)["']/gi)) add("html-src", match[1]);
+    for (const tag of source.matchAll(/<link\b[^>]*>/gi)) {
+      const match = tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
+      if (match) add("html-link", match[1]);
+    }
+    for (const match of source.matchAll(/\bsrcset\s*=\s*["']([^"']+)["']/gi)) for (const candidate of match[1].split(",")) add("html-srcset", candidate.trim().split(/\s+/)[0]);
+  }
+  if (/\.(?:html?|css)$/.test(file)) {
+    for (const match of source.matchAll(/@import\s+(?:url\(\s*)?["']?([^"'\s\)]+)["']?\s*\)?/gi)) add("css-import", match[1]);
+    for (const match of source.matchAll(/url\(\s*["']?([^"'\)]+)["']?\s*\)/gi)) add("css-url", match[1]);
+  }
+  if (/\.(?:m?js)$/.test(file)) {
+    for (const match of source.matchAll(/\b(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']/g)) add("js-import", match[1]);
+    for (const match of source.matchAll(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g)) add("js-dynamic-import", match[1]);
+    for (const match of source.matchAll(/\bnew\s+(?:Shared)?Worker\s*\(\s*(?:new\s+URL\s*\(\s*)?["']([^"']+)["']/g)) add("js-worker", match[1]);
+    for (const match of source.matchAll(/\bnew\s+URL\s*\(\s*["']([^"']+)["']\s*,\s*import\.meta\.url\s*\)/g)) add("js-url", match[1]);
+  }
+  return references;
+}
+
+function resolveLocalReference(file, reference) {
+  const value = reference.value.split("#")[0].split("?")[0];
+  if (!value || value.startsWith("#") || /^(?:data|blob|https?):/i.test(value) || value.startsWith("//")) return { ...reference, ignored: true };
+  const decoded = decodeURIComponent(value.replaceAll("\\", "/"));
+  let resolved = decoded.startsWith("/interactive-explanation/")
+    ? decoded.slice("/interactive-explanation/".length)
+    : decoded.startsWith("/") ? decoded.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), decoded));
+  assert(resolved && resolved !== ".." && !resolved.startsWith("../"), `Geometry dependency escapes repository: ${file} -> ${reference.value}`);
+  if (decoded.endsWith("/") || resolved === ".") resolved = path.posix.join(resolved, "index.html");
+  return { ...reference, path: resolved };
+}
+
+export function dependencyClosure(identity, seeds, runtimePaths = []) {
+  const files = new Map(identity.files.map(([file, digest]) => [file.replaceAll("\\", "/"), digest]));
+  const queue = [...new Set([...seeds, ...runtimePaths])].sort();
+  const consumed = new Set();
+  const ignored = [];
+  while (queue.length) {
+    const file = queue.shift();
+    if (consumed.has(file)) continue;
+    assert(files.has(file), `Missing geometry dependency: ${file}`);
+    consumed.add(file);
+    const bytes = identity.readFile(file);
+    for (const reference of localReferences(file, bytes)) {
+      const resolved = resolveLocalReference(file, reference);
+      if (resolved.ignored) ignored.push({ file, kind: resolved.kind, value: resolved.value });
+      else if (!consumed.has(resolved.path)) queue.push(resolved.path);
+    }
+    queue.sort();
+  }
+  for (const file of runtimePaths) assert(consumed.has(file), `Uncovered runtime geometry dependency: ${file}`);
+  return { files: sortRows([...consumed].map(file => [file, files.get(file)])), ignored: ignored.sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right))) };
+}
+
+export function geometrySourceBinding(identity, pages, manifest, readFile = identity.readFile) {
   const files = identity.files.map(([file, digest]) => [file.replaceAll("\\", "/"), digest]);
   assert.equal(new Set(files.map(([file]) => file)).size, files.length, "Duplicate source file");
   assert.deepEqual(pages, manifest, "Geometry metadata copies differ");
-  const byPath = new Map(files);
-  const required = file => {
-    assert(byPath.has(file), `Missing geometry dependency: ${file}`);
-    return [file, byPath.get(file)];
-  };
-  const shared = geometryReview.inventory.shared.map(required);
+  assert.equal(typeof readFile, "function", "Geometry dependency reader required");
+  const source = { ...identity, readFile };
   const sources = {};
+  const inventories = {};
   for (const slug of geometryReview.inventory.routes) {
     const route = files.filter(([file]) => file.startsWith(`${slug}/`));
     assert(route.length, `Empty geometry route dependency inventory: ${slug}`);
-    sources[slug] = hash(JSON.stringify(sortRows([
-      ...route,
-      ...shared,
+    const closure = dependencyClosure(source, [`${slug}/index.html`, "pages.json", "routes.manifest.json"], geometryRuntimeRequests.supplements[slug]);
+    const dependencies = sortRows([...new Map([...route, ...closure.files]).entries()]);
+    inventories[slug] = { files: dependencies.map(([file]) => file), ignored: closure.ignored };
+    sources[slug] = hash(JSON.stringify([
+      ...dependencies,
       ["routes.manifest.json#geometry", hash(JSON.stringify(routeMetadata(manifest, slug)))],
-    ])));
+    ]));
   }
-  sources.atlas = hash(JSON.stringify(sortRows([
-    ...geometryReview.inventory.atlas.map(required),
-    ...shared,
+  const atlas = dependencyClosure(source, [...geometryReview.inventory.atlas, "pages.json", "routes.manifest.json"], geometryRuntimeRequests.supplements.atlas);
+  inventories.atlas = { files: atlas.files.map(([file]) => file), ignored: atlas.ignored };
+  sources.atlas = hash(JSON.stringify([
+    ...atlas.files,
     ["pages.json#atlas-rendered", hash(JSON.stringify(atlasMetadata(pages)))],
-  ])));
-  return { head: identity.head, status: identity.status, sources };
+  ]));
+  return { head: identity.head, status: identity.status, sources, inventories };
 }
 
 export function functionSourceHashes(source, names) {
@@ -95,6 +157,51 @@ export function geometryFunctionHashes(source) {
   return functionSourceHashes(source, geometryReview.measurementFunctions.names);
 }
 
+export function dependencyFunctionHashes() {
+  return Object.fromEntries([localReferences, resolveLocalReference, dependencyClosure, geometrySourceBinding, runtimeRequestsFromJournal, verifyRuntimeRequestCoverage].map(fn => [fn.name, hash(fn.toString())]));
+}
+
+export function runtimeRequestsFromJournal(source) {
+  const paths = {};
+  const schemes = {};
+  for (const line of source.split("\n")) {
+    if (!line.includes('"type":"sample"')) continue;
+    const row = JSON.parse(line);
+    if (!geometryReview.inventory.routes.includes(row.slug) && row.slug !== "atlas") continue;
+    const requested = paths[row.slug] ??= new Set();
+    const ignored = schemes[row.slug] ??= new Set();
+    for (const event of row.events ?? []) {
+      if (event.type !== "request") continue;
+      if (event.url.startsWith("blob:")) { ignored.add("blob:"); continue; }
+      const url = new URL(event.url);
+      if (!url.pathname.startsWith("/interactive-explanation/")) continue;
+      let file = decodeURIComponent(url.pathname.slice("/interactive-explanation/".length));
+      if (!file || file.endsWith("/")) file += "index.html";
+      requested.add(file);
+    }
+  }
+  return {
+    paths: Object.fromEntries(Object.entries(paths).sort().map(([slug, files]) => [slug, [...files].sort()])),
+    ignoredSchemes: Object.fromEntries(Object.entries(schemes).filter(([, values]) => values.size).map(([slug, values]) => [slug, [...values].sort()])),
+  };
+}
+
+export function verifyRuntimeRequestCoverage(paths, inventories, ignoredSchemes = {}, contract = geometryRuntimeRequests) {
+  const surfaces = {};
+  for (const [slug, requested] of Object.entries(paths)) {
+    assert.equal(new Set(requested).size, requested.length, `Duplicate runtime request: ${slug}`);
+    const covered = new Set(inventories[slug]?.files);
+    assert(covered.size, `Missing runtime inventory: ${slug}`);
+    for (const file of requested) assert(covered.has(file), `Uncovered runtime geometry dependency: ${slug}/${file}`);
+    surfaces[slug] = { count: requested.length, sha256: hash(JSON.stringify(requested)) };
+  }
+  assert.deepEqual(surfaces, contract.surfaces, "Runtime geometry request sets differ");
+  assert.deepEqual(ignoredSchemes, contract.ignoredSchemes, "Runtime ignored schemes differ");
+  assert.equal(new Set(Object.values(paths).flat()).size, contract.uniqueLocalFiles, "Runtime local request count differs");
+  assert.equal(hash(JSON.stringify(paths)), contract.inventorySha256, "Runtime request inventory differs");
+  return true;
+}
+
 export function verifyGeometryReview(contract, identities, tools) {
   assert.deepEqual(contract, geometryReview, "Unknown geometry review contract");
   assert.equal(contract.version, 2);
@@ -104,8 +211,10 @@ export function verifyGeometryReview(contract, identities, tools) {
     assert.equal(identities[side].status, "", "Geometry review source must be clean");
     assert.deepEqual(identities[side].sources, contract.sources[side], `Geometry review sources differ: ${side}`);
   }
+  assert.equal(tools.runtimeRequests, contract.inventory.runtimeRequestsSha256, "Geometry runtime request contract differs");
   assert.deepEqual(tools.capture, contract.captureTools, "Geometry capture tools differ");
   assert.deepEqual(tools.measurementFunctions, contract.measurementFunctions.hashes, "Geometry measurement functions differ");
+  assert.deepEqual(tools.dependencyFunctions, contract.dependencyFunctions, "Geometry dependency functions differ");
   assert.deepEqual(tools.replay, contract.replayTools, "Geometry replay tools differ");
   assert.deepEqual(tools.replayFunctions, contract.replayFunctions.hashes, "Geometry replay functions differ");
   const token = {};
