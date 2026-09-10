@@ -256,13 +256,20 @@ export function verifyRuntimeRequestCoverage(paths, inventories, ignoredSchemes 
   return true;
 }
 
-export function verifyGeometryReview(contract, identities, tools) {
+export function verifyGeometryReview(contract, identities, tools, isAncestor) {
+  assert.equal(typeof isAncestor, "function", "Geometry review ancestry verifier required");
   assert.deepEqual(contract, geometryReview, "Unknown geometry review contract");
   assert.equal(contract.version, 2);
-  assert.equal(contract.status, "withdrawn", "Geometry review status differs");
-  assert.deepEqual(contract.cells, {}, "Withdrawn geometry review must be empty");
+  assert.equal(contract.status, "active", "Geometry review status differs");
+  assert.deepEqual(Object.keys(contract.admissions).sort(), ["cells", "leaves"], "Geometry admission totals differ");
+  assert.equal(Object.keys(contract.cells).length, contract.admissions.cells, "Geometry review cell count differs");
+  assert.equal(Object.values(contract.cells).flat().length, contract.admissions.leaves, "Geometry review leaf count differs");
+  assert.deepEqual(Object.keys(contract.visualReview).sort(), ["path", "sha256", "status"], "Geometry visual review identity differs");
+  assert.equal(contract.visualReview.status, "agent-reviewed", "Geometry visual review status differs");
+  assert.equal(tools.visualReview, contract.visualReview.sha256, "Geometry visual review receipt differs");
   assert.equal(identities.base.head, contract.baseSha, "Geometry review base differs");
-  assert.equal(tools.admittedHeadSha, contract.admittedHeadSha, "Geometry review admitted head differs");
+  assert.equal(isAncestor(contract.capturedHeadSha, contract.admittedHeadSha), true, "Geometry captured head is not an admitted-head ancestor");
+  assert.equal(isAncestor(contract.admittedHeadSha, identities.head.head), true, "Geometry admitted head is not a measured-head ancestor");
   for (const side of ["base", "head"]) {
     assert.equal(identities[side].status, "", "Geometry review source must be clean");
     assert.deepEqual(identities[side].sources, contract.sources[side], `Geometry review sources differ: ${side}`);
@@ -273,7 +280,9 @@ export function verifyGeometryReview(contract, identities, tools) {
   assert.deepEqual(tools.dependencyFunctions, contract.dependencyFunctions, "Geometry dependency functions differ");
   assert.deepEqual(tools.replay, contract.replayTools, "Geometry replay tools differ");
   assert.deepEqual(tools.replayFunctions, contract.replayFunctions.hashes, "Geometry replay functions differ");
-  return undefined;
+  const token = {};
+  verified.set(token, structuredClone(contract));
+  return token;
 }
 
 export function admitGeometryReview(review, cell, before, after, changes) {

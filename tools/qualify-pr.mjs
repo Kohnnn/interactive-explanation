@@ -14,13 +14,14 @@ import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 import { geometryReview, geometrySourceBinding, geometryFunctionHashes, dependencyFunctionHashes, functionSourceHashes, verifyCurrentRuntimeRequests, verifyGeometryReview, verifyRuntimeSourceContract, admitGeometryReview } from "./geometry-review.mjs";
 import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
-import { resourceUrl } from "./network-handoff.mjs";
+import { resourceIdentityUrl } from "./network-handoff.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
-import { emitGeometry, environmentIdentity } from "./geometry-output.mjs";
+import { balancedSchedule, emitGeometry, environmentIdentity } from "./geometry-output.mjs";
 
 const require = createRequire(import.meta.url);
 const timings = ["domContentLoadedMs", "loadMs"];
+export { balancedSchedule };
 
 export function assertIdentity(actual, expectedSha, previous) {
   assert(/^[a-f0-9]{40}$/.test(expectedSha), "Expected immutable 40-character SHA");
@@ -74,6 +75,10 @@ export function compareCell(control, before, after) {
   return result;
 }
 
+export function isGeometryQualified(result) {
+  return ["passed", "passed-reviewed"].includes(result.status);
+}
+
 export function compareGeometry(control, before, after, review, cell) {
   try {
     for (const samples of [control, before, after]) {
@@ -96,22 +101,9 @@ export function compareGeometry(control, before, after, review, cell) {
   return { status: changes.length ? "blocked" : "passed", changes, reason: changes.length ? "Same-environment source changes require specific review; replacement routes need independent acceptance" : "Same-environment geometry unchanged; not approval of legacy baseline provenance" };
 }
 
-export function balancedSchedule(baseSha, headSha, cellKey, groups = ["base-control", "base", "head"]) {
-  assert.equal(groups.length, 3, "Comparison schedule requires a triplet");
-  assert.equal(new Set(groups).size, 3, "Comparison groups must be distinct");
-  const seed = createHash("sha256").update(`${baseSha}:${headSha}:${cellKey}`).digest().readUInt32BE(0);
-  const start = seed % groups.length;
-  const first = groups.map((_, index) => groups[(start + index) % groups.length]);
-  return Array.from({ length: 3 }, (_, round) => first.map((_, ordinal) => first[(ordinal + round) % first.length]));
-}
-
 export function normalizedUrlMultiset(sample, identity = false) {
   const names = [...(sample.raw?.navigation || []), ...(sample.raw?.resources || [])].map(entry => entry.name);
-  const values = identity ? names.map(name => {
-    const url = new URL(name);
-    if (/^\?cache=\d+$/.test(url.search) || /^\?\d+=$/.test(url.search)) url.search = "";
-    return resourceUrl(url.href);
-  }) : names;
+  const values = identity ? names.map(name => resourceIdentityUrl(name, new URL(baseUrl).origin)) : names;
   return Object.fromEntries([...new Set(values)].sort().map(name => [name, values.filter(value => value === name).length]));
 }
 
@@ -130,9 +122,9 @@ export function compareUrlContracts(groups) {
   return { status: Object.keys(unstable).length || !exactBase || !exactHead ? "review-required" : "stable", groups: names, contracts, unstable, exactBase, exactHead, additions, removals };
 }
 
-export function reviewResourceUrls(urls, review, cell) {
+export function reviewResourceUrls(urls, review, cell, samples) {
   if (urls.status === "stable") return urls;
-  try { return admitResourceReview(review, cell, urls); }
+  try { return admitResourceReview(review, cell, urls, samples); }
   catch (error) { return { ...urls, reason: error.message }; }
 }
 
@@ -278,14 +270,20 @@ export async function main(args = process.argv.slice(2)) {
       manifest: manifest(options[side]),
     }]));
     const gitBytes = (root, revision, file) => execFileSync("git", ["show", `${revision}:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 });
+    const isAncestor = (ancestor, descendant) => {
+      try {
+        execFileSync("git", ["merge-base", "--is-ancestor", ancestor, descendant], { cwd: options.head, stdio: "ignore" });
+        return true;
+      } catch { return false; }
+    };
     const geometryBindings = Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest, file => fs.readFileSync(path.join(options[side], file)))]));
     for (const side of ["base", "head"]) verifyRuntimeSourceContract(options[side], identities[side], side);
     const reviewedGeometry = verifyGeometryReview(
       geometryReview,
       geometryBindings,
       {
-        admittedHeadSha: geometryReview.admittedHeadSha,
         runtimeRequests: createHash("sha256").update(fs.readFileSync(path.join(options.head, "tools/geometry-runtime-requests.json"))).digest("hex"),
+        visualReview: createHash("sha256").update(fs.readFileSync(path.join(options.head, geometryReview.visualReview.path))).digest("hex"),
         capture: Object.fromEntries(Object.keys(geometryReview.captureTools).map(file => [file, createHash("sha256").update(gitBytes(options.head, geometryReview.capturedHeadSha, file)).digest("hex")])),
         measurementFunctions: geometryFunctionHashes(fs.readFileSync(path.join(options.head, "tools/smoke-bundle.mjs"), "utf8")),
         dependencyFunctions: dependencyFunctionHashes(),
@@ -294,13 +292,15 @@ export async function main(args = process.argv.slice(2)) {
           ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/diagnose-baseline.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/diagnose-baseline.mjs"]),
           ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/qualify-pr.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/qualify-pr.mjs"]),
           ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/geometry-review.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/geometry-review.mjs"]),
+          ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/geometry-output.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/geometry-output.mjs"]),
           ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/experience-baseline.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/experience-baseline.mjs"]),
         },
       },
+      isAncestor,
     );
-    const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, metadata.head.manifest);
+    const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, metadata.head.manifest, isAncestor);
     journal.append({ type: "geometry-review-contract", status: geometryReview.status, reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, activeAdmissions: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
-    journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
+    journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.flatMap(review => review.cells), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {
       verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
       journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
@@ -315,7 +315,7 @@ export async function main(args = process.argv.slice(2)) {
     const key = cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`;
     assert.deepEqual(baseCells.map(key), cells.map(key), "Route matrix changed; requires qualification contract review");
     assert.equal(cells.length, 504, "Expected 83 routes plus Atlas, three viewports, two themes");
-    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and otherwise preserved; exact stable base-control/base multisets required; head changes require exact cell-, SHA-, and blob-bound resource-review registry admission; transfer/count budgets remain independent", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
+    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and retained in raw contracts; numeric local cache-buster-only queries compare by origin/path identity; exact stable base-control/base multisets required; head changes require exact cell-, SHA-, and blob-bound resource-review registry admission; transfer/count budgets remain independent", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
     environment = environmentIdentity();
     journal.append({ type: "environment", identity: environment });
     browser = await chromium.launch({ headless: true });
@@ -355,7 +355,7 @@ export async function main(args = process.argv.slice(2)) {
         const rawUrls = compareUrlContracts(rigid
           ? { "original-control": control, "original-reference": before, "original-head": after }
           : { "base-control": control, base: before, head: after });
-        const urls = rigid ? rawUrls : reviewResourceUrls(rawUrls, reviewedResources, key(cells[index]));
+        const urls = rigid ? rawUrls : reviewResourceUrls(rawUrls, reviewedResources, key(cells[index]), { base: before, head: after });
         journal.append({ type: "resource-urls", cell: key(cells[index]), status: urls.status, urls });
         const performance = compareCell(control, before, after);
         if (!["stable", "passed-reviewed-resource"].includes(urls.status)) {
@@ -381,7 +381,7 @@ export async function main(args = process.argv.slice(2)) {
         geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
         journal.append({ type: "cell", cell: key(cells[index]), performance, geometry, urls });
         for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
-        if (performance.status !== "passed" || geometry.status !== "passed") failed = true;
+        if (performance.status !== "passed" || !isGeometryQualified(geometry)) failed = true;
         completed++;
       } finally {
         await cellServer.close();
@@ -401,7 +401,7 @@ export async function main(args = process.argv.slice(2)) {
       } catch (error) { failed = true; sourcesVerified = false; journal.append({ type: "source-end", side, unchanged: false, message: error.message }); }
     }
     if (completed !== 504) failed = true;
-    const geometryQualified = completed === 504 && sourcesVerified && nativeSim === "passed" && geometryRows.every(row => row.geometry.status === "passed");
+    const geometryQualified = completed === 504 && sourcesVerified && nativeSim === "passed" && geometryRows.every(row => isGeometryQualified(row.geometry));
     journal.append({ type: "complete", status: failed ? "failed-or-inconclusive" : "qualified", completed, totals, geometryQualified, legacyGeometryApproval: "not granted", finishedAt: new Date().toISOString() });
     journal.close();
     if (options["geometry-output"] && geometryQualified) {

@@ -18,8 +18,20 @@ export function diagnosticUrl(value) {
   } catch { return "[invalid URL]"; }
 }
 
+export function resourceIdentityUrl(value, localOrigin) {
+  const normalized = resourceUrl(value);
+  try {
+    const url = new URL(normalized);
+    if (url.origin === localOrigin && (/^\?cache=\d+$/.test(url.search) || /^\?\d+=$/.test(url.search))) url.search = "";
+    return resourceUrl(url.href);
+  } catch { return normalized; }
+}
+
 function sameResource(value, expected) {
-  return diagnosticUrl(value) === diagnosticUrl(expected);
+  try {
+    const origin = new URL(expected).origin;
+    return resourceIdentityUrl(value, origin) === resourceIdentityUrl(expected, origin);
+  } catch { return false; }
 }
 
 function nativeEditorPredicate() {

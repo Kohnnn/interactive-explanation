@@ -4,8 +4,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { geometryBaseline, emitGeometry } from "../geometry-output.mjs";
-import { compareGeometry, compareCell } from "../qualify-pr.mjs";
+import { geometryBaseline, geometryReceiptCells, geometryRowsFromJournal, readGeometryJournal, verifyGeometryReceiptCells, emitGeometry } from "../geometry-output.mjs";
+import { geometryReview } from "../geometry-review.mjs";
+import { balancedSchedule, compareGeometry, compareCell } from "../qualify-pr.mjs";
 import { planCells } from "../diagnose-baseline.mjs";
 import { runFunctional, strictRoutes } from "../functional-qualified.mjs";
 import { simReferenceSha, simSource, verifySimSources } from "../sim-reference.mjs";
@@ -31,13 +32,85 @@ test("all 504 cells yield version 2 light-only geometry with untouched historica
   }
 });
 
-for (const kind of ["missing", "duplicate", "unknown", "blocked", "inconclusive", "unapproved", "passed-reviewed", "changed", "invalid-geometry", "atlas-blocked"]) {
+test("geometry journal reconstruction requires exact stable source groups and schedule positions", () => {
+  const input = rows();
+  const baseSha = "a".repeat(40);
+  const headSha = "b".repeat(40);
+  const records = input.flatMap(row => {
+    const slug = row.cell.split("/")[0];
+    const groups = slug === "rigid-body-collisions"
+      ? ["original-control", "original-reference", "original-head"]
+      : slug === "sim" ? ["sim-fixed-control", "sim-fixed-reference", "sim-fixed-head"] : ["base-control", "base", "head"];
+    const schedule = balancedSchedule(baseSha, headSha, row.cell, groups);
+    return [
+      ...schedule.flatMap((round, roundIndex) => round.map((group, ordinal) => ({ type: "sample", cell: row.cell, group, round: roundIndex + 1, ordinal: ordinal + 1, ...sample() }))),
+      { type: "cell", cell: row.cell, geometry: row.geometry },
+    ];
+  });
+  assert.deepEqual(geometryRowsFromJournal(records, baseSha, headSha), input);
+  const replayed = records.map(row => structuredClone(row));
+  const first = replayed.find(row => row.type === "sample");
+  const duplicate = replayed.find(row => row.type === "sample" && row.cell === first.cell && row.group === first.group && row !== first);
+  duplicate.round = first.round;
+  duplicate.ordinal = first.ordinal;
+  assert.throws(() => geometryRowsFromJournal(replayed, baseSha, headSha));
+  records.find(row => row.type === "sample" && row.group.endsWith("head")).geometry.rect.top++;
+  assert.throws(() => geometryRowsFromJournal(records, baseSha, headSha));
+});
+
+test("geometry journal reader retains only proof-bearing records", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "geometry-journal-reader-"));
+  try {
+    const file = path.join(dir, "journal.jsonl");
+    fs.writeFileSync(file, [
+      { type: "source", identity: { large: "x".repeat(70000) } },
+      { type: "sample", cell: "atlas/desktop/light", group: "head", round: 1, ordinal: 2, status: "measured", ready: true, errors: [], geometry },
+      { type: "cell", cell: "atlas/desktop/light", geometry: { status: "passed" } },
+      { type: "complete", completed: 504 },
+    ].map(JSON.stringify).join("\n"));
+    assert.deepEqual(readGeometryJournal(file), [
+      { type: "source", identity: { large: "x".repeat(70000) } },
+      { type: "sample", cell: "atlas/desktop/light", group: "head", round: 1, ordinal: 2, status: "measured", ready: true, errors: [], geometry },
+      { type: "cell", cell: "atlas/desktop/light", geometry: { status: "passed" } },
+      { type: "complete", completed: 504 },
+    ]);
+  } finally { fs.rmSync(dir, { recursive: true }); }
+});
+
+test("geometry generation and proof accept exact reviewed rows only", () => {
+  const input = rows();
+  const reviewed = input.find(row => Object.hasOwn(geometryReview.cells, row.cell));
+  const expected = geometryReview.cells[reviewed.cell];
+  reviewed.geometry = {
+    status: "passed-reviewed",
+    changes: expected.map(([path, before, after]) => ({ path, before, after, review: "reviewed" })),
+    acceptedLeaves: expected.length,
+    reviewSha256: geometryReview.reviewSha256,
+  };
+  assert.doesNotThrow(() => geometryBaseline(manifest, inherited, input));
+  const cells = geometryReceiptCells(input);
+  const matrix = input.map(row => row.cell);
+  assert.equal(verifyGeometryReceiptCells(cells, matrix), true);
+  for (const mutate of [
+    value => { value.find(row => row.status === "passed-reviewed").acceptedLeaves++; },
+    value => { value.find(row => row.status === "passed-reviewed").reviewSha256 = "0".repeat(64); },
+    value => { value.find(row => row.status === "passed-reviewed").changes[0][2] = "changed"; },
+    value => { delete value.find(row => row.status === "passed-reviewed").changes; },
+    value => { value[1] = structuredClone(value[0]); },
+  ]) {
+    const changed = structuredClone(cells);
+    mutate(changed);
+    assert.throws(() => verifyGeometryReceiptCells(changed, matrix));
+  }
+});
+
+for (const kind of ["missing", "duplicate", "unknown", "blocked", "inconclusive", "unapproved", "changed", "invalid-geometry", "atlas-blocked"]) {
   test(`geometry generation rejects ${kind}`, () => {
     const input = rows();
     if (kind === "missing") input.pop();
     if (kind === "duplicate") input[1] = input[0];
     if (kind === "unknown") input[1].cell = "unknown/mobile/light";
-    if (["blocked", "inconclusive", "unapproved", "passed-reviewed"].includes(kind)) input[1].geometry.status = kind;
+    if (["blocked", "inconclusive", "unapproved"].includes(kind)) input[1].geometry.status = kind;
     if (kind === "changed") input[1].geometry.changes = [{ path: "/rect/height", before: 100, after: 101 }];
     if (kind === "invalid-geometry") input[1].headGeometry = null;
     if (kind === "atlas-blocked") input.find(row => row.cell.startsWith("atlas/")).geometry.status = "blocked";

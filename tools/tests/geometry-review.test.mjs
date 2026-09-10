@@ -10,7 +10,7 @@ import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyF
 import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
 const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.admittedHeadSha, status: "", sources: geometryReview.sources[side] }]));
-const tools = { admittedHeadSha: geometryReview.admittedHeadSha, runtimeRequests: geometryReview.inventory.runtimeRequestsSha256, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, dependencyFunctions: geometryReview.dependencyFunctions, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
+const tools = { runtimeRequests: geometryReview.inventory.runtimeRequestsSha256, visualReview: geometryReview.visualReview.sha256, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, dependencyFunctions: geometryReview.dependencyFunctions, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
 function parseTreeRow(row) {
   const separator = row.indexOf("\t");
   assert.notEqual(separator, -1, "Invalid Git tree row");
@@ -45,7 +45,7 @@ function committedIdentity(root) {
     files,
   };
 }
-const review = verifyGeometryReview(geometryReview, identities, tools);
+const review = verifyGeometryReview(geometryReview, identities, tools, () => true);
 const cell = "atlas/desktop/light";
 function hash(value) {
   return createHash("sha256").update(value).digest("hex");
@@ -87,7 +87,14 @@ function runtimeContractFixture() {
 function fixture() {
   const before = { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] };
   const after = structuredClone(before);
-  after.rect.height = 101;
+  for (const [pointer, left, right] of geometryReview.cells[cell]) {
+    for (const [geometry, value] of [[before, left], [after, right]]) {
+      const parts = pointer.slice(1).split("/");
+      const key = parts.pop();
+      const parent = parts.reduce((object, part) => object[part] ??= {}, geometry);
+      parent[key] = value;
+    }
+  }
   const samples = geometry => Array.from({ length: 3 }, () => ({ status: "measured", ready: true, errors: [], geometry: structuredClone(geometry) }));
   return [samples(before), samples(before), samples(after)];
 }
@@ -99,37 +106,56 @@ test("Git tree parsing preserves legal special-character paths", () => {
     blob: "0123456789abcdef",
   });
 });
-test("committed review is withdrawn with zero active admissions", () => {
-  assert.equal(geometryReview.status, "withdrawn");
-  assert.deepEqual(geometryReview.cells, {});
-  assert.equal(review, undefined);
-  assert.equal(compareGeometry(...fixture(), review, cell).status, "blocked");
+test("committed review has exactly 62 cells and 1590 leaves, no rigid, Sim, or Markov admissions", () => {
+  assert.equal(geometryReview.status, "active");
+  assert.equal(Object.keys(geometryReview.cells).length, 62);
+  assert.equal(Object.values(geometryReview.cells).flat().length, 1590);
+  assert(!Object.keys(geometryReview.cells).some(value => /^(rigid-body-collisions|sim|markov-chains)\//.test(value)));
+  for (const leaves of Object.values(geometryReview.cells)) assert.equal(new Set(leaves.map(([pointer]) => pointer)).size, leaves.length);
+  assert.equal(compareGeometry(...fixture(), review, cell).status, "passed-reviewed");
+  assert.equal(compareGeometry(...fixture()).status, "blocked");
 });
-test("withdrawn review rejects a stale old map", () => {
-  const contract = structuredClone(geometryReview);
-  contract.cells[cell] = [["/rect/height", 100, 101]];
-  assert.throws(() => verifyGeometryReview(contract, identities, tools), /Unknown geometry review contract|must be empty/);
+test("unknown cell or unverified review cannot admit geometry", () => {
+  assert.equal(compareGeometry(...fixture(), review, "atlas/desktop/unknown").status, "blocked");
+  assert.equal(compareGeometry(...fixture(), {}, cell).status, "blocked");
 });
-for (const slug of ["atlas", ...geometryReview.inventory.routes]) {
-  test(`withdrawn review blocks changed ${slug} geometry`, () => {
-    assert.equal(compareGeometry(...fixture(), review, `${slug}/desktop/light`).status, "blocked");
+for (const mode of ["unknown-path", "empty-object", "before", "extra", "missing", "protected", "missing-control", "extra-control", "aa", "unstable-control", "unstable-before", "unstable-after", "failed", "not-ready"]) {
+  test(`review rejects ${mode}`, () => {
+    const groups = fixture();
+    if (mode === "empty-object") for (const sample of groups[2]) sample.geometry.rect = { ...sample.geometry.rect, unknown: {} };
+    if (mode === "unknown-path") for (const sample of groups[2]) sample.geometry.unknown = 1;
+    if (mode === "before") for (const group of groups.slice(0, 2)) for (const sample of group) sample.geometry.rect.height++;
+    if (mode === "extra") for (const sample of groups[2]) sample.geometry.rect.width = 7;
+    if (mode === "missing") for (const sample of groups[2]) sample.geometry.rect.height = groups[1][0].geometry.rect.height;
+    if (mode === "protected") for (const sample of groups[2]) sample.geometry.intrinsic.push({ naturalWidth: 100 });
+    if (mode === "missing-control") groups[0].pop();
+    if (mode === "extra-control") groups[0].push(structuredClone(groups[0][0]));
+    if (mode === "aa") for (const sample of groups[0]) sample.geometry.rect.height++;
+    if (mode.startsWith("unstable-")) groups[{ "unstable-control": 0, "unstable-before": 1, "unstable-after": 2 }[mode]][1].geometry.rect.height++;
+    if (mode === "failed") groups[2][1].errors.push("capture failed");
+    if (mode === "not-ready") groups[1][1].ready = false;
+    assert.equal(compareGeometry(...groups, review, cell).status, "blocked");
   });
 }
-for (const mode of ["base", "head", "capture-tool", "measurement", "replay-tool", "replay-function", "revision", "admitted-revision", "dirty", "status"]) {
+for (const mode of ["base", "head", "visual-review", "capture-tool", "measurement", "replay-tool", "replay-function", "revision", "captured-ancestry", "admitted-ancestry", "dirty", "status", "admission-count"]) {
   test(`source verification rejects ${mode} drift`, () => {
     const actual = structuredClone(identities);
     const actualTools = structuredClone(tools);
     const contract = structuredClone(geometryReview);
     if (mode === "base" || mode === "head") actual[mode].sources.atlas = "0".repeat(64);
+    if (mode === "visual-review") actualTools.visualReview = "0".repeat(64);
     if (mode === "capture-tool") actualTools.capture["tools/diagnose-baseline.mjs"] = "0".repeat(64);
     if (mode === "measurement") actualTools.measurementFunctions.measureRuntimeSurface = "0".repeat(64);
     if (mode === "replay-tool") actualTools.replay["tools/qualify-pr.mjs"] = "0".repeat(64);
     if (mode === "replay-function") actualTools.replayFunctions.compareGeometry = "0".repeat(64);
     if (mode === "revision") actual.base.head = "0".repeat(40);
-    if (mode === "admitted-revision") actualTools.admittedHeadSha = "0".repeat(40);
     if (mode === "dirty") actual.head.status = "M pages.json";
-    if (mode === "status") contract.status = "active";
-    assert.throws(() => verifyGeometryReview(contract, actual, actualTools));
+    if (mode === "status") contract.status = "withdrawn";
+    if (mode === "admission-count") contract.admissions.cells++;
+    const isAncestor = (ancestor, descendant) => mode === "captured-ancestry"
+      ? ancestor !== contract.capturedHeadSha
+      : mode === "admitted-ancestry" ? ancestor !== contract.admittedHeadSha : true;
+    assert.throws(() => verifyGeometryReview(contract, actual, actualTools, isAncestor));
   });
 }
 test("registry binds exact reviewed route, shared, Atlas and geometry metadata dependencies", () => {
@@ -257,8 +283,8 @@ test("runtime request coverage rejects unbound or omitted artifact paths", () =>
   inventories.route.files.push("route/runtime.bin");
   assert.throws(() => verifyRuntimeRequestCoverage({ route: ["route/index.html"] }, inventories, {}, contract), /request sets differ/);
 });
-test("withdrawn geometry review cannot override independent performance failure or functional geometry gate", () => {
-  assert.equal(compareGeometry(...fixture(), review, cell).status, "blocked");
+test("geometry review cannot override independent performance failure or functional geometry gate", () => {
+  assert.equal(compareGeometry(...fixture(), review, cell).status, "passed-reviewed");
   assert.equal(compareCell(...fixture()).status, "inconclusive");
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert(!workflow.includes("--skip-geometry"));

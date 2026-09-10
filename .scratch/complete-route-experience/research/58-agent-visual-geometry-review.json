@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "kind": "agent-visual-geometry-review",
+  "registryReviewSha256": "23054c887be2a6a0df0fc18822246811b711efe69ccdbff72f97f75c37f0f776",
+  "source": {
+    "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
+    "headSha": "0bd328460bbbea8ba7677dd0d66700defa41d870",
+    "baseStatus": "",
+    "headServedProductDiff": [],
+    "headDirtyScope": "Admission tooling, tests, geometry/resource registries, and the W0 checkpoint only; no served product files differed from HEAD."
+  },
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.20.0",
+    "playwright": "1.60.0",
+    "browser": "Chromium 148.0.7778.96",
+    "executable": "/home/compute_01/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome"
+  },
+  "fixture": {
+    "mountPath": "/interactive-explanation/",
+    "servers": "Separate loopback no-store static servers for immutable base and HEAD product trees.",
+    "cells": 62,
+    "sides": ["base", "head"],
+    "captures": 124,
+    "themes": ["light", "dark"],
+    "viewports": {
+      "desktop": { "width": 1400, "height": 1000 },
+      "mobile": { "width": 390, "height": 844 },
+      "narrow": { "width": 320, "height": 844 }
+    },
+    "readiness": "HTTP load completion, manifest primary-surface visibility when declared, document.fonts.ready, then two animation frames.",
+    "capture": "Fresh browser context per source/cell with stored theme, full-page screenshot, animations disabled, and page/console error collection.",
+    "selection": "Exact active geometry registry membership; no sampled or omitted admitted cells."
+  },
+  "procedure": {
+    "comparison": "Ten causal-group contact sheets place base and head full-page captures side by side with exact cell labels.",
+    "reference": "/tmp/opencode/w0-ci-first-run/source-bound-geometry-report.md",
+    "reviewed": "All ten contact sheets covering all 62 admitted cells were inspected against the documented source-cause table.",
+    "criteria": [
+      "No clipping or missing content",
+      "No unexplained reflow",
+      "No altered intrinsic canvas or media dimensions",
+      "Expected source-caused movement or wrapping only"
+    ]
+  },
+  "outcome": {
+    "status": "agent-reviewed",
+    "cellsReviewed": 62,
+    "capturesReviewed": 124,
+    "captureErrorCount": 0,
+    "unexpectedVisualFindings": 0
+  },
+  "evidence": {
+    "capture": "capture.json",
+    "screenshots": 124,
+    "contactSheets": 10,
+    "preReceiptFiles": 135,
+    "preReceiptInventorySha256": "506b6c5ce5e6bd1ae5a5be62130e426108033f3f504165a0baec0d4d1134ad82"
+  },
+  "limitations": [
+    "Agent visual and source review, not human or independent approval.",
+    "Not interaction, accessibility, assistive-technology, real-device, cross-browser, performance, or learner-outcome certification.",
+    "Local screenshots do not replace fresh same-runner CI reproduction of every exact reviewed cell.",
+    "The external evidence directory is retained locally and is not an application baseline."
+  ]
+}

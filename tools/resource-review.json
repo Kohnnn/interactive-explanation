@@ -1,4 +1,52 @@
 {
-  "version": 1,
-  "reviews": []
+  "version": 2,
+  "reviews": [
+    {
+      "cells": [
+        "wbwwb/desktop/light",
+        "wbwwb/desktop/dark",
+        "wbwwb/mobile/light",
+        "wbwwb/mobile/dark",
+        "wbwwb/narrow/light",
+        "wbwwb/narrow/dark"
+      ],
+      "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
+      "headSha": "0bd328460bbbea8ba7677dd0d66700defa41d870",
+      "purpose": "Remove the misidentified unlicensed B Kamran Bold font while preserving the fixed-source sans-serif remediation.",
+      "additions": {},
+      "removals": {
+        "http://127.0.0.1:4173/interactive-explanation/wbwwb/css/Cairo-Regular.ttf": 1
+      },
+      "implications": {
+        "scope": "Top-document same-origin Resource Timing at declared route readiness; unfinished and child requests are not claimed.",
+        "requestCount": {
+          "base": 161,
+          "head": 160,
+          "delta": -1
+        },
+        "sameOriginTransferBytes": {
+          "base": 6139957,
+          "head": 6081234,
+          "delta": -58723
+        },
+        "childRuntime": "No child frame or separate runtime process exists; the removed request is the route-local CSS font dependency only."
+      },
+      "sources": {
+        "base": {
+          "wbwwb/css/game.css": "19dea99052c057f0c11cf042b003e0a69d1151a3b3491da675733e8eefd70f15"
+        },
+        "head": {
+          "wbwwb/css/game.css": "c5eda255831ae47c2109cabf64b168e0ba7634d1e79b3b7f68864d06f26fd1c9"
+        }
+      },
+      "dependencies": {
+        "base": {
+          "wbwwb/index.html": "167fc3f3383dee5ae1ff27a58bc593d10478cc113775c1c34788d2529d349699"
+        },
+        "head": {
+          "wbwwb/index.html": "b48432a10f520e26b0a0d06205cf96b91fbe73c09738dea798bd5f905ca8c1d1"
+        }
+      }
+    }
+  ]
 }

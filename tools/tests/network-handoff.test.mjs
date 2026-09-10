@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { EventEmitter } from "node:events";
 import vm from "node:vm";
-import { classifyNetwork, resourceUrl } from "../network-handoff.mjs";
+import { classifyNetwork, resourceIdentityUrl, resourceUrl } from "../network-handoff.mjs";
 import { assertOnlyAllowedRemoteRequests, createRemoteRequestMonitor, createRuntimeMonitor } from "../smoke-bundle.mjs";
 import { capture } from "../diagnose-baseline.mjs";
 
@@ -25,11 +25,13 @@ test("only the completed same-child native Markov handoff is classified; evidenc
   assert.equal(JSON.stringify(events), before);
 });
 
-test("completed Markov handoff permits cache queries without hiding destination changes", () => {
+test("completed Markov handoff permits only numeric cache queries without hiding destination or query changes", () => {
   const events = fixture().map(event => event.url ? { ...event, url: `${event.url}?cache=123` } : event);
   assert.equal(classifyNetwork(events, base)[0].classification, "validated-markov-child-handoff");
   events[1].url = `${base}other/playground.html?cache=123`;
   assert.equal(classifyNetwork(events, base)[0].classification, "unknown-failure");
+  const semantic = fixture().map(event => event.url ? { ...event, url: `${event.url}?state=changed` } : event);
+  assert.equal(classifyNetwork(semantic, base)[0].classification, "unknown-failure");
 });
 for (const [name, mutate] of [
   ["wrong frame", (e) => { e[1].frameId = "f3"; }],
@@ -78,11 +80,11 @@ test("completed exact directory repeat is allowed, unfinished repeat is not", ()
   events.splice(2, 1);
   assert.equal(classifyNetwork(events, base)[0].classification, "unknown-failure");
 });
-for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remove-pane", "pageerror", "console-error", "valid"]) {
+for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remove-pane", "pageerror", "console-error", "valid", "query"]) {
   for (const abort of [false, true]) test(`monitor and capture validate current native final: ${mode}, abort=${abort}`, async () => {
     function mockPage() {
       const page = new EventEmitter();
-      let url = final;
+      let url = mode === "query" ? `${final}?cache=123` : final;
       let detached = false;
       let pane = true;
       let valid = mode !== "wrong-state";
@@ -94,7 +96,7 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
       const request = target => ({ frame: () => frame, url: () => target, resourceType: () => "document", isNavigationRequest: () => true, method: () => "GET", failure: () => ({ errorText: "net::ERR_ABORTED" }) });
       page.start = async () => {
         if (abort) { const first = request(directory); page.emit("request", first); page.emit("requestfailed", first); }
-        const last = request(final);
+        const last = request(url);
         page.emit("request", last);
         page.emit("response", { request: () => last, status: () => 200, url: () => final });
         page.emit("framenavigated", frame);
@@ -111,7 +113,8 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
     const page = mockPage();
     const clean = createRuntimeMonitor(page);
     await page.start();
-    if (mode === "valid") await clean("native");
+        if (["valid", "query"].includes(mode)) await clean("native");
+
     else await assert.rejects(clean("native"));
     const capturedPage = mockPage();
     Object.assign(capturedPage, {
@@ -122,13 +125,17 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
     });
     const browser = { newContext: async () => ({ addInitScript: async () => {}, newPage: async () => capturedPage, close: async () => {} }) };
     const result = await capture(browser, { route: { slug: "markov-chains", experience: { networkPolicy: { mode: "local-only" }, primarySurface: "main" } }, viewport: { width: 100, height: 100 }, theme: "light" });
-    assert.equal(result.errors.some(error => error.phase === "runtime"), mode !== "valid");
+    assert.equal(result.errors.some(error => error.phase === "runtime"), !["valid", "query"].includes(mode));
   });
 }
 
 test("resource URLs exclude credentials and fragments while preserving sorted queries", () => {
   assert.equal(resourceUrl("https://user:secret@example.invalid/a?z=2&a=1#secret"), "https://example.invalid/a?a=1&z=2");
   assert.equal(resourceUrl("data:text/plain,secret"), "data:[redacted]");
+  assert.equal(resourceIdentityUrl(`${final}?cache=123`, new URL(base).origin), final);
+  assert.equal(resourceIdentityUrl(`${final}?123=`, new URL(base).origin), final);
+  assert.equal(resourceIdentityUrl(`${final}?state=changed`, new URL(base).origin), `${final}?state=changed`);
+  assert.equal(resourceIdentityUrl("https://example.invalid/a?cache=123", new URL(base).origin), "https://example.invalid/a?cache=123");
 });
 
 test("only a live Musicmap YouTube frame validates its exact QoE cancellation", () => {
