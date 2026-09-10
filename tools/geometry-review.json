@@ -1,23 +1,88 @@
 {
-  "version": 1,
+  "version": 2,
   "reviewSha256": "23054c887be2a6a0df0fc18822246811b711efe69ccdbff72f97f75c37f0f776",
   "rawSha256": "951a010e8965261cb10fb5162608dd05f586af0e1585abfed031646d9f071926",
   "rawCells": 504,
   "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
-  "capturedHeadSha": "9618d8b9d6d03ec0ed27dd1c0c4c2775bbd9f3d3",
-  "sources": {
-    "base": "8a0a3bdb579289e1bba1a62ce12eedd38204da1cf5fa94d4614b41c146cbd299",
-    "head": "e3d6a2c2feb9eab8bdd3594037bac93c2c8f0e472ee00738073145c923c3045d"
+  "capturedHeadSha": "542b16ada9dfcac0edb1e6ce9f3f29e2e1122d23",
+  "admittedHeadSha": "9618d8b9d6d03ec0ed27dd1c0c4c2775bbd9f3d3",
+  "inventory": {
+    "atlas": ["index.html"],
+    "routes": ["covid-19", "decision-tree", "exponentiation", "public-private-keys", "reading-qr-codes-without-a-computer", "ableton-learning-synths-get-started", "ableton-learning-synths-how-synths-make-sound", "ableton-learning-synths-filter-resonance", "ableton-learning-synths-modulating-amplitude-with-envelopes", "ableton-learning-synths-matching-envelopes", "ableton-learning-synths-recipes", "linear-regression", "train-test-validation", "blockchain-101-combined-flow"],
+    "shared": ["shared/ableton-learning-synths-archive.js", "shared/ableton-learning-synths-musiclab.js", "shared/ableton-learning-synths-react-dom.production.min.js", "shared/ableton-learning-synths-react.production.min.js", "shared/empty-svg-hidden.js", "shared/engineering-sandbox.css", "shared/engineering-sandbox.js", "shared/fonts/be-vietnam-pro-400.ttf", "shared/fonts/be-vietnam-pro-500.ttf", "shared/fonts/be-vietnam-pro-600.ttf", "shared/fonts/be-vietnam-pro-700.ttf", "shared/fonts/ibm-plex-mono-400.ttf", "shared/fonts/ibm-plex-mono-500.ttf", "shared/fonts/ibm-plex-mono-600.ttf", "shared/prototype-visual.css", "shared/public-footer.css", "shared/public-footer.js", "shared/readout-slider-labels.js", "shared/route-families.js", "shared/site.css", "shared/site.js", "shared/theme-init.js"]
   },
-  "dependencies": {
-    "package.json": "212ec481ebff5d0952b6ffc07df25a5bd3d123330e2dbe25a911f6e8085bc4cc",
-    "pages.json": "5b7ba62e8ff1a5beb1370579448ef6c10eb1eace176a5c603fa45eb9dbe7dde9",
-    "routes.manifest.json": "5b7ba62e8ff1a5beb1370579448ef6c10eb1eace176a5c603fa45eb9dbe7dde9",
-    "tools/diagnose-baseline.mjs": "994a54595119150844248c32f6b4e90861a7abc4b37711aa01fa99558baa8d55",
+  "sources": {
+    "base": {
+      "atlas": "fecaff837ba45aa9c50308ac57c18b65942bea3ed0bff1399a5f6fae5dbf89a4",
+      "covid-19": "7fbbd621662a87bb53d5def5eab9eb98cab944a7c555dd5c70a4bc5d00182b81",
+      "decision-tree": "608600f5982fe9f192ddd00a9701772338693cda17146519199149036cf18531",
+      "exponentiation": "2c597ab17fb0a5af95b4eb8e4241a60c94b47563ec76a87b9dbab68d1643ae3b",
+      "public-private-keys": "b030deb089f0fb8f18908eda2d3773285ce64956e25bbbfd2e92938dbc83f817",
+      "reading-qr-codes-without-a-computer": "1dea93526fc773dd0f7a7d7241529c5602dc9e3a02ec7f627dfbd05488df51d7",
+      "ableton-learning-synths-get-started": "69ae76445692bc57c5fa95ba9d051eedfd583c547e422d4c7fa89f87c24ddc65",
+      "ableton-learning-synths-how-synths-make-sound": "fa5c1431d004a3348392ca852316972bf6d0142b66fca51431c11ab667a6fdaf",
+      "ableton-learning-synths-filter-resonance": "319ca33158fa40e522bbe680815043d86239046865b654d188f1786b58c14b5d",
+      "ableton-learning-synths-modulating-amplitude-with-envelopes": "b169c9f115408f2c6d794e36e04a45b228fed4b82fbd2a4f534e72ddfc0f3bb3",
+      "ableton-learning-synths-matching-envelopes": "8faa016a4244e0db6413d6930ed02b2dab65f50800b1a82751a82e3055697f44",
+      "ableton-learning-synths-recipes": "33a3a5e986fe55b8930ddf308504fefb6e1378e6952af782f6e2cac1e18c727f",
+      "linear-regression": "97f2b377f9b79266bdc720cb350ca9361102ee732f14e3b65f1dc5b2a11fd096",
+      "train-test-validation": "d85d4cd7c08fc5ae6a7c45d9a814ed18769b922fd3aed5ba313c9e477dc8b5e0",
+      "blockchain-101-combined-flow": "2020cec7cae7f0e697dae337157965c6f295058ea61afef72cb34c8c83eaf257"
+    },
+    "head": {
+      "atlas": "5c6a08a8af7e31dee8c06b16ce5b8853b1882b119f9986291c79bc03d62a12a2",
+      "covid-19": "cc09b3372cde8ed0eca535ee4645db4fc1f0ab1b54ab87b3197c953da8364244",
+      "decision-tree": "4b7b004e18cb60b49eb2e7dccb7b7d32ec78f48bc40dce161b8f2c2a0c47f7db",
+      "exponentiation": "b26e562689824912eb2757b51a3c06579b38d5600ae6c6b651c2d2ec999fb5d1",
+      "public-private-keys": "c6be8b8ae54e0bcb4cdade92f341d2e285549a3f8e13aa062de4766110928b1f",
+      "reading-qr-codes-without-a-computer": "27f5d3842173d867fb769eae469e4bede2dea946cf095933825c005b0a06defe",
+      "ableton-learning-synths-get-started": "37b3a347c6b2947d85680efd9411e9524c20902037cbecd9345b0254f12676e2",
+      "ableton-learning-synths-how-synths-make-sound": "a83cf03d443a5eb204c5ebe3224cd62175f6b1776afcd2ca757a375abec12b4d",
+      "ableton-learning-synths-filter-resonance": "4b88e5a34dc666ca6753ba7f03d8ca16bf9a4df1d0d5bee29bcfbcac5ba97115",
+      "ableton-learning-synths-modulating-amplitude-with-envelopes": "44be775eb15c9a19a5067c4cd383a359bcc1b2a3589a31ae06323975d4650519",
+      "ableton-learning-synths-matching-envelopes": "0ce3214da70b9e894fc8c7ac8e41403fe4b628532fe54b381ee69fb9a9ebd9b2",
+      "ableton-learning-synths-recipes": "4fa1ccf9825b849cd033c4ee90911b451657516fa455d1ac0cd13ecde6155c6f",
+      "linear-regression": "fc4aaf784be8c9b39b91abf2116cc39be830f648005ba555613165d2ff225b47",
+      "train-test-validation": "d24588e2aa0f8fa91e898f14cfc1d4f16f302b735a80b06f30bf6d04e9b9ca2a",
+      "blockchain-101-combined-flow": "987f873e24d15ed738d08b4bc4b28d8ce247aa7e7575864d936cc25cb66aba78"
+    }
+  },
+  "captureTools": {
+    "tools/diagnose-baseline.mjs": "4b387489f42602bf653981e8c391fe1e4258132b2bc10168e1387b417178d950",
     "tools/experience-baseline.mjs": "9f8edb47ba512f9ac42028ac2ef8be7da3ad0123e73e0978cc23d259dbced468",
-    "tools/smoke/server.mjs": "5681cc79219957e61859fddd4d8de2ea59e0ea9c7742b3eba4f25390bb6ba610",
-    "tools/smoke-bundle.mjs": "9fefd7bf033a99605611f37e89203572cbc58f502b9ec9ce7c2ff98bd147d14c",
+    "tools/smoke/server.mjs": "5ccc906a3ebfe15cef5e86e7eb04805edecd7503815295241aff46feb8c57e16",
+    "tools/smoke-bundle.mjs": "560719ce93ddfc9394c38e74e3d91faa7e091fe0a19c735cb7241e91cb43bb00"
+  },
+  "measurementFunctions": {
+    "names": ["waitForDocumentLayout", "waitForManifestRouteReady", "measureRuntimeSurface", "scrollPrimarySurfaceIntoView"],
+    "hashes": {
+      "waitForDocumentLayout": "0b957f131b1d18b3681c40ecf5eba3a424706535eb9d048787cd6c16c5a5ae74",
+      "waitForManifestRouteReady": "84f39d3a1fab56865afff9a323fa0bc218ec819cb623c5dd6471034c2bd2932d",
+      "measureRuntimeSurface": "1b6cceb1da43d1ac6a45fee0657d6165e0762d931823bceea2f951e88d7381c8",
+      "scrollPrimarySurfaceIntoView": "45442478c3ef69367413811aa4312e40af71a0c26e633425c00c4ef79d02e713"
+    }
+  },
+  "replayTools": {
+    "tools/qualify-pr.mjs": "1e2bacb34c22b3b7243611dad143ed6c16377b6726ca1fd2aae7453219d827fa",
+    "tools/geometry-review.mjs": "507f62cd6b980ab88acce0590df678334d68c23b1cb5b67b4c17c16f8902fb68",
     "tools/network-handoff.mjs": "94b7e584fb57e60fb313fc811729087181f66b10319a53e55b9fedd84ea89283"
+  },
+  "replayFunctions": {
+    "files": {
+      "tools/diagnose-baseline.mjs": ["geometryChanges"],
+      "tools/qualify-pr.mjs": ["compareGeometry"],
+      "tools/geometry-review.mjs": ["geometrySourceBinding", "functionSourceHashes", "verifyGeometryReview", "admitGeometryReview"],
+      "tools/experience-baseline.mjs": ["validateGeometryEvidence"]
+    },
+    "hashes": {
+      "geometryChanges": "48b16d75711ebb5c906db49cff0c2ff2cf14348e3489280be22762e670098e18",
+      "compareGeometry": "54a9870bfdeb99ea0067e715cd2e8de7c94c8c8e63b3a7c93c6a384226d73e72",
+      "geometrySourceBinding": "e65ded808159e0fd9544b53a38979e0bc226412fe68015cf8ee09d363b3c8fe0",
+      "functionSourceHashes": "62f35af7994aebb89cfda5a674b124e4e6bf304da090ca4b8e29a5254d5abc50",
+      "verifyGeometryReview": "8981bf368c4fa0355cca420d541b12a6707a0cca7ba26ad084a77806c1c01441",
+      "admitGeometryReview": "636046a283556c7ccce819bad2efaa9223a1222c603b626e6bd8ed428e568221",
+      "validateGeometryEvidence": "28b920506e74ed00c05c20a24fa8e0bc67a0485cfa9c85cc1bd7cde8d14a3504"
+    }
   },
   "cells": {
     "atlas/desktop/light": [

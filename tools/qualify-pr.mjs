@@ -12,7 +12,7 @@ import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEv
 import { createSmokeServer, createSwitchableSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
-import { geometryReview, geometrySourceBinding, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
+import { geometryReview, geometrySourceBinding, geometryFunctionHashes, functionSourceHashes, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
 import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
@@ -249,8 +249,28 @@ export async function main(args = process.argv.slice(2)) {
       const verified = verifySourceFixture(options[side], options[side], options[`${side}-sha`], "");
       journal.append({ type: "source", side, identity: identities[side], verified });
     }
-    const reviewedGeometry = verifyGeometryReview(geometryReview, Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side])])));
-    const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, manifest(options.head));
+    const metadata = Object.fromEntries(["base", "head"].map(side => [side, {
+      pages: JSON.parse(fs.readFileSync(path.join(options[side], "pages.json"), "utf8")),
+      manifest: manifest(options[side]),
+    }]));
+    const gitBytes = (root, revision, file) => execFileSync("git", ["show", `${revision}:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 });
+    const reviewedGeometry = verifyGeometryReview(
+      geometryReview,
+      Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest)])),
+      {
+        admittedHeadSha: geometryReview.admittedHeadSha,
+        capture: Object.fromEntries(Object.keys(geometryReview.captureTools).map(file => [file, createHash("sha256").update(gitBytes(options.head, geometryReview.capturedHeadSha, file)).digest("hex")])),
+        measurementFunctions: geometryFunctionHashes(fs.readFileSync(path.join(options.head, "tools/smoke-bundle.mjs"), "utf8")),
+        replay: Object.fromEntries(Object.keys(geometryReview.replayTools).map(file => [file, createHash("sha256").update(gitBytes(options.head, geometryReview.admittedHeadSha, file)).digest("hex")])),
+        replayFunctions: {
+          ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/diagnose-baseline.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/diagnose-baseline.mjs"]),
+          ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/qualify-pr.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/qualify-pr.mjs"]),
+          ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/geometry-review.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/geometry-review.mjs"]),
+          ...functionSourceHashes(fs.readFileSync(path.join(options.head, "tools/experience-baseline.mjs"), "utf8"), geometryReview.replayFunctions.files["tools/experience-baseline.mjs"]),
+        },
+      },
+    );
+    const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, metadata.head.manifest);
     journal.append({ type: "geometry-review-contract", reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, cells: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
     journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {

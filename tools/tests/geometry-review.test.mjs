@@ -1,12 +1,14 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import { geometryReview, geometrySourceBinding, verifyGeometryReview } from "../geometry-review.mjs";
+import { sourceIdentity } from "../diagnose-baseline.mjs";
 import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
-const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.capturedHeadSha, status: "", product: geometryReview.sources[side], dependencies: geometryReview.dependencies }]));
-const review = verifyGeometryReview(geometryReview, identities);
+const identities = Object.fromEntries(["base", "head"].map(side => [side, { head: side === "base" ? geometryReview.baseSha : geometryReview.admittedHeadSha, status: "", sources: geometryReview.sources[side] }]));
+const tools = { admittedHeadSha: geometryReview.admittedHeadSha, capture: geometryReview.captureTools, measurementFunctions: geometryReview.measurementFunctions.hashes, replay: geometryReview.replayTools, replayFunctions: geometryReview.replayFunctions.hashes };
+const review = verifyGeometryReview(geometryReview, identities, tools);
 const cell = "atlas/desktop/light";
 function fixture() {
   const before = { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] };
@@ -58,49 +60,47 @@ for (const mode of ["unknown-path", "empty-object", "before", "extra", "missing"
     assert.equal(result(groups).status, "blocked");
   });
 }
-for (const mode of ["base", "head", "dependency", "revision", "dirty", "contract"]) {
+for (const mode of ["base", "head", "capture-tool", "measurement", "replay-tool", "replay-function", "revision", "admitted-revision", "dirty", "contract"]) {
   test(`source verification rejects ${mode} drift`, () => {
     const actual = structuredClone(identities);
+    const actualTools = structuredClone(tools);
     const contract = structuredClone(geometryReview);
-    if (mode === "base" || mode === "head") actual[mode].product = "0".repeat(64);
-    if (mode === "dependency") actual.head.dependencies["tools/diagnose-baseline.mjs"] = "0".repeat(64);
+    if (mode === "base" || mode === "head") actual[mode].sources.atlas = "0".repeat(64);
+    if (mode === "capture-tool") actualTools.capture["tools/diagnose-baseline.mjs"] = "0".repeat(64);
+    if (mode === "measurement") actualTools.measurementFunctions.measureRuntimeSurface = "0".repeat(64);
+    if (mode === "replay-tool") actualTools.replay["tools/qualify-pr.mjs"] = "0".repeat(64);
+    if (mode === "replay-function") actualTools.replayFunctions.compareGeometry = "0".repeat(64);
     if (mode === "revision") actual.base.head = "0".repeat(40);
+    if (mode === "admitted-revision") actualTools.admittedHeadSha = "0".repeat(40);
     if (mode === "dirty") actual.head.status = "M pages.json";
     if (mode === "contract") contract.cells[cell].push(["/unknown", 1, 2]);
-    assert.throws(() => verifyGeometryReview(contract, actual));
+    assert.throws(() => verifyGeometryReview(contract, actual, actualTools));
   });
 }
-test("tooling-only head revision is not a registry self-loop", () => {
-  const actual = structuredClone(identities);
-  actual.head.head = "1a2abf9b53e698dd397eff621abcbe5f9287c2c0";
-  assert(verifyGeometryReview(geometryReview, actual));
-});
-test("product binding includes Atlas, metadata, shared dependencies and exact inventory, excludes registry", () => {
-  const files = ["index.html", "pages.json", "routes.manifest.json", "shared/site.css", "shared/fonts/font.woff", "covid-19/index.html", "sim/index.html", "package-lock.json"].map(file => [file, "a".repeat(64)]);
-  const binding = rows => geometrySourceBinding({ files: rows, head: "h", status: "" }).product;
-  assert.equal(binding(files), createHash("sha256").update(JSON.stringify([...files].sort(([a], [b]) => a < b ? -1 : 1))).digest("hex"));
-  for (let index = 0; index < files.length; index++) {
-    const changed = structuredClone(files);
-    changed[index][1] = "b".repeat(64);
-    assert.notEqual(binding(changed), binding(files));
-    assert.notEqual(binding(files.filter((_, position) => position !== index)), binding(files));
+test("registry binds exact reviewed route, shared, Atlas and geometry metadata dependencies", () => {
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const identity = sourceIdentity(root);
+  const pages = JSON.parse(fs.readFileSync(new URL("../../pages.json", import.meta.url), "utf8"));
+  const manifest = JSON.parse(fs.readFileSync(new URL("../../routes.manifest.json", import.meta.url), "utf8"));
+  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right);
+  assert.deepEqual(bind().sources, geometryReview.sources.head);
+  for (const file of ["covid-19/index.html", "shared/site.css", "index.html"]) {
+    const changed = structuredClone(identity);
+    changed.files.find(([path]) => path === file)[1] = "0".repeat(64);
+    assert.notDeepEqual(bind(changed).sources, geometryReview.sources.head);
   }
-  assert.notEqual(binding([...files, ["shared/new.css", "a".repeat(64)]]), binding(files));
-  assert.equal(binding([...files, ["tools/geometry-review.json", "x"]]), binding(files));
-  assert.throws(() => binding([...files, files[0]]));
-  const exact = ["package.json", "pages.json", "routes.manifest.json"].map(file => [file, createHash("sha256").update(fs.readFileSync(new URL(`../../${file}`, import.meta.url))).digest("hex")]);
-  const bind = rows => geometrySourceBinding({ files: rows, head: geometryReview.capturedHeadSha, status: "" });
-  assert.deepEqual(bind(exact).dependencies, Object.fromEntries(exact));
-  for (const file of ["pages.json", "routes.manifest.json"]) {
-    for (const field of ["title", "summary"]) {
-      const metadata = JSON.parse(fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8"));
-      metadata.find(page => page.slug === "musicmap")[field] += " changed";
-      const changed = structuredClone(exact);
-      changed.find(([path]) => path === file)[1] = createHash("sha256").update(`${JSON.stringify(metadata, null, 2)}\n`).digest("hex");
-      assert.notDeepEqual(bind(changed).dependencies, geometryReview.dependencies);
-      assert.throws(() => verifyGeometryReview(geometryReview, { ...identities, head: bind(changed) }));
-    }
+  for (const field of ["title", "summary"]) {
+    const changed = structuredClone(pages);
+    changed.find(page => page.slug === "musicmap")[field] += " changed";
+    assert.notEqual(bind({ ...identity, files: identity.files.map(row => [...row]) }, changed, changed).sources.atlas, geometryReview.sources.head.atlas);
   }
+  const selector = structuredClone(manifest);
+  selector.find(route => route.slug === "covid-19").experience.runtimeSurface += " changed";
+  assert.notEqual(bind({ ...identity, files: identity.files.map(row => [...row]) }, selector, selector).sources["covid-19"], geometryReview.sources.head["covid-19"]);
+  const sim = structuredClone(identity);
+  sim.files.find(([path]) => path === "sim/index.html")[1] = "0".repeat(64);
+  assert.deepEqual(bind(sim).sources, geometryReview.sources.head);
+  assert.throws(() => bind({ ...identity, files: [...identity.files, identity.files[0]] }));
 });
 test("geometry approval cannot override independent performance failure or functional geometry gate", () => {
   assert.equal(result(fixture()).status, "passed-reviewed");
