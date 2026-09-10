@@ -31,7 +31,7 @@ export const contentTypes = {
   ".woff2": "font/woff2",
 };
 
-export function createSmokeServer({ rootDir, host, port, mountPath }) {
+export function createSmokeServer({ rootDir, host, port, mountPath, closeConnections = false }) {
   function serveFile(req, res) {
     const requestUrl = new URL(req.url, `http://${host}:${port}`);
 
@@ -52,8 +52,9 @@ export function createSmokeServer({ rootDir, host, port, mountPath }) {
       relativePath = `${relativePath}index.html`;
     }
 
-    const fullPath = path.resolve(rootDir, relativePath);
-    if (!fullPath.startsWith(rootDir)) {
+    const activeRoot = path.resolve(typeof rootDir === "function" ? rootDir() : rootDir);
+    const fullPath = path.resolve(activeRoot, relativePath);
+    if (!fullPath.startsWith(activeRoot)) {
       res.writeHead(403);
       res.end("Forbidden");
       return;
@@ -68,6 +69,7 @@ export function createSmokeServer({ rootDir, host, port, mountPath }) {
     const ext = path.extname(fullPath).toLowerCase();
     res.writeHead(200, {
       "Cache-Control": "no-store",
+      "Connection": closeConnections ? "close" : "keep-alive",
       "Content-Type": contentTypes[ext] || "application/octet-stream",
     });
     fs.createReadStream(fullPath).pipe(res);
@@ -81,4 +83,29 @@ export function createSmokeServer({ rootDir, host, port, mountPath }) {
   }
 
   return { serveFile, start };
+}
+
+export async function createSwitchableSmokeServer(options) {
+  let rootDir = path.resolve(options.rootDir);
+  let switching = Promise.resolve();
+  const server = await createSmokeServer({ ...options, rootDir: () => rootDir, closeConnections: true }).start();
+  return {
+    server,
+    async switchRoot(nextRoot) {
+      switching = switching.then(async () => {
+        server.closeIdleConnections();
+        server.closeAllConnections();
+        await new Promise(resolve => setImmediate(resolve));
+        rootDir = path.resolve(nextRoot);
+      });
+      await switching;
+    },
+    async close() {
+      await switching;
+      server.closeIdleConnections();
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+    },
+    root() { return rootDir; },
+  };
 }

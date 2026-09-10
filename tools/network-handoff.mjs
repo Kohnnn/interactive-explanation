@@ -1,7 +1,12 @@
 export function resourceUrl(value) {
   try {
     const url = new URL(value);
-    return ["http:", "https:"].includes(url.protocol) ? `${url.origin}${url.pathname}` : `${url.protocol}[redacted]`;
+    if (!["http:", "https:"].includes(url.protocol)) return `${url.protocol}[redacted]`;
+    url.username = "";
+    url.password = "";
+    url.hash = "";
+    url.searchParams.sort();
+    return url.href;
   } catch { return "[invalid URL]"; }
 }
 

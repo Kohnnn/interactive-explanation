@@ -2,13 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
-import { rigidAdmission, verifyRigidAdmission, collectRigidAdmission, compareCell, compareGeometry } from "../qualify-pr.mjs";
+import { rigidAdmission, verifyRigidAdmission, collectRigidAdmission, compareCell, compareGeometry, compareUrlContracts } from "../qualify-pr.mjs";
 
-const options = { base: "/base", head: "/head", reference: "/reference", "base-sha": rigidAdmission.baseSha };
+const options = { base: "/base", head: "/head", reference: "/reference", "base-sha": rigidAdmission.baseSha, "head-sha": "b".repeat(40) };
 const resolve = (_root, file) => rigidAdmission.sources[file];
-const runs = (loadMs = 1000) => Array.from({ length: 3 }, () => ({
+const runs = (loadMs = 1000, url = "http://local/original.js") => Array.from({ length: 3 }, () => ({
   status: "measured", ready: true, errors: [], geometry: { rect: { top: 0, right: 100, bottom: 100, left: 0, width: 100, height: 100 }, css: { width: "100px", height: "100px", transform: "none", touchAction: "auto", pointerEvents: "auto" }, aspectRatio: 1, intrinsic: [] },
   performance: { domContentLoadedMs: 1000, loadMs, resourceCount: 10, resourceCountDelta: 0, sameOriginTransfer: { status: "supported", bytes: 1000 }, longestLocalResource: null },
+  raw: { navigation: [{ name: "http://local/rigid/" }], resources: [{ name: url }] },
 }));
 
 test("original admission is exact, source-bound and only for the authorized base", () => {
@@ -36,19 +37,27 @@ test("contract pins all four route files and complete shared dependency tree wit
 
 test("archived failure is retained without passing legacy equivalence; original groups are fresh", async () => {
   const failed = runs().map(sample => ({ ...sample, status: "failed", ready: false, geometry: null }));
-  const legacy = { control: failed, before: failed, after: runs() };
+  const legacy = { control: failed, before: failed, after: runs(1000, "http://local/legacy-head.js") };
   const cell = { route: { slug: rigidAdmission.slug }, viewport: { name: "desktop" }, theme: "light" };
   const calls = [];
   const records = [];
-  const collect = async (root, _cell, group) => { calls.push([root, group]); return runs(); };
+  const collect = async (root, _cell, group, position) => { calls.push([root, group, position]); return position.warmup ? [] : [runs()[0]]; };
   const result = await collectRigidAdmission(options, cell, cell, collect, { append: record => records.push(record) }, legacy);
-  assert.deepEqual(calls, [["/reference", "original-control"], ["/reference", "original-reference"], ["/head", "original-head"]]);
+  assert.deepEqual(calls.slice(0, 3).map(([root, group]) => [root, group]), [["/reference", "original-control"], ["/reference", "original-reference"], ["/head", "original-head"]]);
+  assert(calls.slice(0, 3).every(([, , position]) => position.warmup));
+  for (const group of ["original-control", "original-reference", "original-head"]) assert.equal(calls.filter(([, value, position]) => value === group && !position.warmup).length, 3);
   assert.equal(records[0].performance.status, "inconclusive");
   assert.equal(records[0].geometry.status, "blocked");
+  assert.equal(records[0].urls.status, "review-required");
   assert.match(records[0].equivalence, /not claimed/);
   assert.equal(compareCell(result.control, result.before, result.after).status, "passed");
   assert.equal(compareGeometry(result.control, result.before, result.after).status, "passed");
   await assert.rejects(collectRigidAdmission(options, cell, { ...cell, route: { slug: "atlas" } }, collect, { append() {} }, legacy));
+});
+
+test("rigid resource admission compares only exact original controls and head", () => {
+  assert.equal(compareUrlContracts({ "original-control": runs(), "original-reference": runs(), "original-head": runs() }).status, "stable");
+  assert.equal(compareUrlContracts({ "original-control": runs(), "original-reference": runs(), "original-head": runs(1000, "http://local/different.js") }).status, "review-required");
 });
 
 test("original acceptance rejects noisy, failed and geometrically changed reference evidence", () => {

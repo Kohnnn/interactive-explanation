@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-import { createSmokeServer, contentTypes } from "../smoke/server.mjs";
+import { createSmokeServer, createSwitchableSmokeServer, contentTypes } from "../smoke/server.mjs";
 
 const host = "127.0.0.1";
 const mountPath = "/interactive-explanation/";
@@ -73,6 +73,24 @@ test("serves nested route files with the right content type", async () => {
     assert.equal(res.status, 200);
     assert.match(await res.text(), /demo/);
   });
+});
+
+test("switchable server keeps one origin and closes old connections before changing roots", async () => {
+  const first = makeRoot();
+  const second = makeRoot();
+  fs.writeFileSync(path.join(second, "index.html"), "<!doctype html><title>second</title>");
+  const handle = await createSwitchableSmokeServer({ rootDir: first, host, port: 0, mountPath });
+  const origin = `http://${host}:${handle.server.address().port}`;
+  try {
+    assert.match(await (await fetch(`${origin}${mountPath}`)).text(), /atlas/);
+    await handle.switchRoot(second);
+    assert.match(await (await fetch(`${origin}${mountPath}`)).text(), /second/);
+    assert.equal(handle.root(), path.resolve(second));
+  } finally {
+    await handle.close();
+    fs.rmSync(first, { recursive: true });
+    fs.rmSync(second, { recursive: true });
+  }
 });
 
 test("content-type table covers common static assets", () => {

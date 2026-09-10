@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifySamples, compareCell, compareGeometry, collectCellPair, assertIdentity, parseOptions } from "../qualify-pr.mjs";
+import { classifySamples, compareCell, compareGeometry, collectCellPair, balancedSchedule, compareUrlContracts, reviewResourceUrls, assertIdentity, parseOptions } from "../qualify-pr.mjs";
+import { verifyResourceReview } from "../resource-review.mjs";
 import { planCells } from "../diagnose-baseline.mjs";
 
 const sample = (overrides = {}) => ({
@@ -18,24 +19,98 @@ test("paired capture uses each source's selectors and network policy for the sam
   const calls = [];
   const journal = [];
   const failed = runs().map(value => ({ ...value, status: "failed", ready: false, geometry: null, performance: null, errors: [{ phase: "readiness", message: "Old runtime unavailable" }] }));
-  const collect = async (root, cell, group) => {
-    calls.push({ root, cell, group });
-    if (group === "head") assert.equal(journal[0].type, "calibration");
-    return group === "head" ? runs() : failed;
+  const collect = async (root, cell, group, position) => {
+    calls.push({ root, cell, group, position });
+    if (position.warmup) return [];
+    return [group === "head" ? runs()[0] : failed[0]];
   };
-  const result = await collectCellPair({ base: "/base", head: "/head" }, baseCell, headCell, collect, { append: value => journal.push(value) });
-  assert.deepEqual(calls.map(({ root, group }) => ({ root, group })), [
-    { root: "/base", group: "base-control" }, { root: "/base", group: "base" }, { root: "/head", group: "head" },
+  const sha = "a".repeat(40);
+  const result = await collectCellPair({ "base-control": "/base-control", base: "/base", head: "/head", "base-sha": sha, "head-sha": "b".repeat(40) }, baseCell, headCell, collect, { append: value => journal.push(value) });
+  assert.equal(calls.length, 12);
+  assert.deepEqual(calls.slice(0, 3).map(({ root, group, position }) => ({ root, group, warmup: position.warmup })), [
+    { root: "/base-control", group: "base-control", warmup: true }, { root: "/base", group: "base", warmup: true }, { root: "/head", group: "head", warmup: true },
   ]);
-  assert.equal(calls[0].cell, baseCell);
-  assert.equal(calls[1].cell, baseCell);
-  assert.equal(calls[2].cell, headCell);
-  assert.equal(calls[0].cell.route.experience.networkPolicy, route.experience.networkPolicy);
-  assert.equal(calls[2].cell.route.experience.networkPolicy, replacement.experience.networkPolicy);
-  assert.equal(journal[0].result.status, "inconclusive");
+  assert.equal(calls.filter(call => !call.position.warmup && call.group === "base-control").length, 3);
+  assert.equal(calls.find(call => call.group === "base-control").cell, baseCell);
+  assert.equal(calls.find(call => call.group === "head").cell, headCell);
+  assert.equal(calls.find(call => call.group === "base-control").cell.route.experience.networkPolicy, route.experience.networkPolicy);
+  assert.equal(calls.find(call => call.group === "head").cell.route.experience.networkPolicy, replacement.experience.networkPolicy);
+  assert.equal(journal.find(entry => entry.type === "calibration").result.status, "inconclusive");
   assert.equal(classifySamples(result.after).status, "admissible");
   assert.equal(compareCell(result.control, result.before, result.after).status, "inconclusive");
   assert.equal(compareGeometry(result.control, result.before, result.after).status, "blocked");
+});
+
+test("deterministic schedule balances every group across every ordinal", () => {
+  const groups = ["base-control", "base", "head"];
+  const args = ["a".repeat(40), "b".repeat(40), "route/desktop/light", groups];
+  const schedule = balancedSchedule(...args);
+  assert.deepEqual(balancedSchedule(...args), schedule);
+  for (const group of groups) {
+    assert.deepEqual(schedule.flat().filter(value => value === group), [group, group, group]);
+    assert.deepEqual(schedule.map(round => round.indexOf(group)).sort(), [0, 1, 2]);
+  }
+});
+
+test("URL multisets require stable exact controls and explicit head source review", () => {
+  const raw = names => ({ raw: { navigation: [{ name: names[0] }], resources: names.slice(1).map(name => ({ name })) } });
+  const stable = [raw(["http://local/route/", "http://local/a.js?x=1", "http://local/a.js?x=1"])];
+  stable.push(stable[0], stable[0]);
+  assert.equal(compareUrlContracts({ "base-control": stable, base: stable, head: stable }).status, "stable");
+  const changed = stable.map(() => raw(["http://local/route/", "http://local/b.js"]));
+  const result = compareUrlContracts({ "base-control": stable, base: stable, head: changed });
+  assert.equal(result.status, "review-required");
+  assert.equal(result.exactBase, true);
+  assert.deepEqual(result.additions, { "http://local/b.js": 1 });
+  assert.deepEqual(result.removals, { "http://local/a.js?x=1": 2 });
+  const unstable = compareUrlContracts({ "base-control": stable, base: [stable[0], changed[0], stable[0]], head: stable });
+  assert.equal(unstable.status, "review-required");
+  assert(Object.hasOwn(unstable.unstable, "base"));
+});
+
+test("resource review admits only exact stable multiset changes bound to exact sources", () => {
+  const digest = value => value.repeat(64);
+  const identities = {
+    base: { head: "a".repeat(40), files: [["route/index.html", digest("1")], ["shared/site.js", digest("2")]] },
+    head: { head: "b".repeat(40), files: [["route/index.html", digest("3")], ["shared/site.js", digest("4")]] },
+  };
+  const entry = {
+    cell: "route/desktop/light", baseSha: identities.base.head, headSha: identities.head.head,
+    additions: { "http://local/new.js": 1 }, removals: { "http://local/old.js": 2 },
+    sources: { base: { "route/index.html": digest("1") }, head: { "route/index.html": digest("3") } },
+    dependencies: { base: { "shared/site.js": digest("2") }, head: { "shared/site.js": digest("4") } },
+  };
+  const contract = { version: 1, reviews: [entry] };
+  const token = verifyResourceReview(contract, identities, [{ slug: "route" }]);
+  const urls = { status: "review-required", unstable: {}, exactBase: true, additions: entry.additions, removals: entry.removals };
+  assert.equal(reviewResourceUrls(urls, token, entry.cell).status, "passed-reviewed-resource");
+  assert.equal(reviewResourceUrls({ ...urls, unstable: { head: [] } }, token, entry.cell).status, "review-required");
+  assert.equal(compareCell(runs(), runs(), runs({ resourceCount: 11 })).status, "regression");
+  assert.equal(compareCell(runs(), runs(), runs({ sameOriginTransfer: { status: "supported", bytes: 257001 } })).status, "regression");
+  for (const patch of [
+    { additions: { ...entry.additions, "http://local/extra.js": 1 } },
+    { additions: {} },
+    { additions: { "http://local/new.js": 2 } },
+  ]) assert.equal(reviewResourceUrls({ ...urls, ...patch }, token, entry.cell).status, "review-required");
+  for (const mutate of [
+    value => { value.reviews[0].cell = "unknown/desktop/light"; },
+    value => { value.reviews[0].cell = "route/*/light"; },
+    value => { value.reviews.push(structuredClone(value.reviews[0])); },
+    value => { delete value.reviews[0].removals; },
+    value => { value.reviews[0].headSha = "c".repeat(40); },
+    value => { value.reviews[0].sources.head["route/index.html"] = digest("0"); },
+  ]) {
+    const changed = structuredClone(contract);
+    mutate(changed);
+    assert.throws(() => verifyResourceReview(changed, identities, [{ slug: "route" }]));
+  }
+});
+
+test("readyMs remains journal-only and cannot excuse DCL or load regression", () => {
+  const before = runs().map((value, index) => ({ ...value, readyMs: 10 + index }));
+  const after = runs({ loadMs: 1251 }).map((value, index) => ({ ...value, readyMs: 1 + index }));
+  assert.equal(compareCell(before, before, after).status, "regression");
+  assert.equal(Object.hasOwn(classifySamples(before).metrics, "readyMs"), false);
 });
 
 test("paired qualification admits stable three-run groups and preserves raw ranges", () => {
