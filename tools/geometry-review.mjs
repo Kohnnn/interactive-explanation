@@ -198,8 +198,8 @@ export function verifyRuntimeSourceContract(root, identity, side, contract = geo
   const expectedSurfaces = ["atlas", ...geometryReview.inventory.routes].sort();
   assert.deepEqual(Object.keys(contract.surfaces).sort(), expectedSurfaces, "Runtime request surfaces differ");
   for (const [slug, surface] of Object.entries(contract.surfaces)) {
-    const expectedCells = Object.keys(geometryReview.cells).filter(cell => cell.startsWith(`${slug}/`)).sort();
-    assert.deepEqual(surface.cells, expectedCells, `Runtime request cells differ: ${slug}`);
+    assert.equal(new Set(surface.cells).size, surface.cells.length, `Duplicate runtime request cell: ${slug}`);
+    assert(surface.cells.every(cell => cell.startsWith(`${slug}/`)), `Runtime request cells differ: ${slug}`);
     assert.equal(surface.paths.length, surface.count, `Runtime path count differs: ${slug}`);
     assert.equal(hash(JSON.stringify(surface.paths)), surface.sha256, `Runtime path set differs: ${slug}`);
     assert.equal(new Set(surface.paths).size, surface.paths.length, `Duplicate runtime path: ${slug}`);
@@ -259,6 +259,8 @@ export function verifyRuntimeRequestCoverage(paths, inventories, ignoredSchemes 
 export function verifyGeometryReview(contract, identities, tools) {
   assert.deepEqual(contract, geometryReview, "Unknown geometry review contract");
   assert.equal(contract.version, 2);
+  assert.equal(contract.status, "withdrawn", "Geometry review status differs");
+  assert.deepEqual(contract.cells, {}, "Withdrawn geometry review must be empty");
   assert.equal(identities.base.head, contract.baseSha, "Geometry review base differs");
   assert.equal(tools.admittedHeadSha, contract.admittedHeadSha, "Geometry review admitted head differs");
   for (const side of ["base", "head"]) {
@@ -271,9 +273,7 @@ export function verifyGeometryReview(contract, identities, tools) {
   assert.deepEqual(tools.dependencyFunctions, contract.dependencyFunctions, "Geometry dependency functions differ");
   assert.deepEqual(tools.replay, contract.replayTools, "Geometry replay tools differ");
   assert.deepEqual(tools.replayFunctions, contract.replayFunctions.hashes, "Geometry replay functions differ");
-  const token = {};
-  verified.set(token, structuredClone(contract));
-  return token;
+  return undefined;
 }
 
 export function admitGeometryReview(review, cell, before, after, changes) {

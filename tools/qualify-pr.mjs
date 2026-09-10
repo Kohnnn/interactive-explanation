@@ -275,7 +275,7 @@ export async function main(args = process.argv.slice(2)) {
       },
     );
     const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, metadata.head.manifest);
-    journal.append({ type: "geometry-review-contract", reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, cells: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
+    journal.append({ type: "geometry-review-contract", status: geometryReview.status, reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, activeAdmissions: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
     journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {
       verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
@@ -357,7 +357,7 @@ export async function main(args = process.argv.slice(2)) {
         geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
         journal.append({ type: "cell", cell: key(cells[index]), performance, geometry, urls });
         for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
-        if (performance.status !== "passed" || !["passed", "passed-reviewed"].includes(geometry.status)) failed = true;
+        if (performance.status !== "passed" || geometry.status !== "passed") failed = true;
         completed++;
       } finally {
         await cellServer.close();
@@ -377,7 +377,7 @@ export async function main(args = process.argv.slice(2)) {
       } catch (error) { failed = true; sourcesVerified = false; journal.append({ type: "source-end", side, unchanged: false, message: error.message }); }
     }
     if (completed !== 504) failed = true;
-    const geometryQualified = completed === 504 && sourcesVerified && nativeSim === "passed" && geometryRows.every(row => ["passed", "passed-reviewed"].includes(row.geometry.status));
+    const geometryQualified = completed === 504 && sourcesVerified && nativeSim === "passed" && geometryRows.every(row => row.geometry.status === "passed");
     journal.append({ type: "complete", status: failed ? "failed-or-inconclusive" : "qualified", completed, totals, geometryQualified, legacyGeometryApproval: "not granted", finishedAt: new Date().toISOString() });
     journal.close();
     if (options["geometry-output"] && geometryQualified) {

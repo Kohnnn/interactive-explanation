@@ -25,7 +25,8 @@ export function geometryBaseline(manifest, inherited, rows) {
   assert.deepEqual(Object.keys(inherited.routes).sort(), manifest.map(route => route.slug).sort());
   const baseline = structuredClone(inherited);
   for (const row of rows) {
-    assert(["passed", "passed-reviewed"].includes(row.geometry.status), `Unapproved geometry: ${row.cell}`);
+    assert.equal(row.geometry.status, "passed", `Unapproved geometry: ${row.cell}`);
+    assert.equal(row.geometry.changes?.length ?? 0, 0, `Changed geometry: ${row.cell}`);
     validateGeometryEvidence(row.headGeometry);
     const [slug, viewport, theme] = row.cell.split("/");
     if (slug !== "atlas" && theme === "light") baseline.routes[slug].geometry[viewport] = structuredClone(row.headGeometry);
@@ -62,7 +63,7 @@ export function verifyGeneratedGeometry(output, root) {
   const expected = planCells(JSON.parse(fs.readFileSync(`${root}/routes.manifest.json`)), []).map(cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`).sort();
   assert.equal(proof.cells.length, 504);
   assert.deepEqual(proof.cells.map(row => row.cell).sort(), expected);
-  assert(proof.cells.every(row => ["passed", "passed-reviewed"].includes(row.status)));
+  assert(proof.cells.every(row => row.status === "passed"));
   const complete = JSON.parse(fs.readFileSync(proof.journal, "utf8").trim().split("\n").at(-1));
   assert.equal(complete.type, "complete");
   assert.equal(complete.completed, 504);

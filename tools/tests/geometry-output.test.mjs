@@ -31,13 +31,14 @@ test("all 504 cells yield version 2 light-only geometry with untouched historica
   }
 });
 
-for (const kind of ["missing", "duplicate", "unknown", "blocked", "inconclusive", "unapproved", "invalid-geometry", "atlas-blocked"]) {
+for (const kind of ["missing", "duplicate", "unknown", "blocked", "inconclusive", "unapproved", "passed-reviewed", "changed", "invalid-geometry", "atlas-blocked"]) {
   test(`geometry generation rejects ${kind}`, () => {
     const input = rows();
     if (kind === "missing") input.pop();
     if (kind === "duplicate") input[1] = input[0];
     if (kind === "unknown") input[1].cell = "unknown/mobile/light";
-    if (["blocked", "inconclusive", "unapproved"].includes(kind)) input[1].geometry.status = kind;
+    if (["blocked", "inconclusive", "unapproved", "passed-reviewed"].includes(kind)) input[1].geometry.status = kind;
+    if (kind === "changed") input[1].geometry.changes = [{ path: "/rect/height", before: 100, after: 101 }];
     if (kind === "invalid-geometry") input[1].headGeometry = null;
     if (kind === "atlas-blocked") input.find(row => row.cell.startsWith("atlas/")).geometry.status = "blocked";
     assert.throws(() => geometryBaseline(manifest, inherited, input));
