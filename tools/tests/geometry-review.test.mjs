@@ -88,6 +88,19 @@ test("product binding includes Atlas, metadata, shared dependencies and exact in
   assert.notEqual(binding([...files, ["shared/new.css", "a".repeat(64)]]), binding(files));
   assert.equal(binding([...files, ["tools/geometry-review.json", "x"]]), binding(files));
   assert.throws(() => binding([...files, files[0]]));
+  const exact = ["package.json", "pages.json", "routes.manifest.json"].map(file => [file, createHash("sha256").update(fs.readFileSync(new URL(`../../${file}`, import.meta.url))).digest("hex")]);
+  const bind = rows => geometrySourceBinding({ files: rows, head: geometryReview.capturedHeadSha, status: "" });
+  assert.deepEqual(bind(exact).dependencies, Object.fromEntries(exact));
+  for (const file of ["pages.json", "routes.manifest.json"]) {
+    for (const field of ["title", "summary"]) {
+      const metadata = JSON.parse(fs.readFileSync(new URL(`../../${file}`, import.meta.url), "utf8"));
+      metadata.find(page => page.slug === "musicmap")[field] += " changed";
+      const changed = structuredClone(exact);
+      changed.find(([path]) => path === file)[1] = createHash("sha256").update(`${JSON.stringify(metadata, null, 2)}\n`).digest("hex");
+      assert.notDeepEqual(bind(changed).dependencies, geometryReview.dependencies);
+      assert.throws(() => verifyGeometryReview(geometryReview, { ...identities, head: bind(changed) }));
+    }
+  }
 });
 test("geometry approval cannot override independent performance failure or functional geometry gate", () => {
   assert.equal(result(fixture()).status, "passed-reviewed");

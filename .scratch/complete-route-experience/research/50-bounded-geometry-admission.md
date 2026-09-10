@@ -23,3 +23,7 @@ Read-only streaming replay of the authoritative raw journal verified its complet
 Remaining: four unstable Sim cells, six failed Markov cells, six separately handled original rigid cells. The additional 57 legacy/environment bridge cells remain unapproved; the functional gate still uses and enforces its legacy baseline and remains blocked until separate bounded bridge review. No smoke/diagnostic functions, existing qualify tests, workflow, route products or legacy baseline were edited.
 
 Standards/spec self-review found and closed an empty-object structural-diff loophole with full reconstructed-after equality and a negative test. No independent sub-agent facility was available; this is implementation self-review, not a new independent source review.
+
+## Exact source-binding successor — 2026-09-10
+
+Research 56 rebinds this unchanged 62-cell/1,590-leaf review from product digest `40d2e69bf997353eda8f00ed8e560a84164fbb7a9132fc0c1968cb0ecdf16de8` to `e3d6a2c2feb9eab8bdd3594037bac93c2c8f0e472ee00738073145c923c3045d` at source head `9618d8b9d6d03ec0ed27dd1c0c4c2775bbd9f3d3`. The raw and reviewed artifact hashes remain exact. This is a source/dependency rebind only, not new geometry approval; see [exact evidence and fail-closed blob contract](56-exact-source-rebinding.md).

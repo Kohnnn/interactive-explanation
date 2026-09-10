@@ -4,17 +4,20 @@
   "rawSha256": "951a010e8965261cb10fb5162608dd05f586af0e1585abfed031646d9f071926",
   "rawCells": 504,
   "baseSha": "db191963fd9a061ca063b9e73fd460b1dc77d4b0",
-  "capturedHeadSha": "542b16ada9dfcac0edb1e6ce9f3f29e2e1122d23",
+  "capturedHeadSha": "9618d8b9d6d03ec0ed27dd1c0c4c2775bbd9f3d3",
   "sources": {
     "base": "8a0a3bdb579289e1bba1a62ce12eedd38204da1cf5fa94d4614b41c146cbd299",
-    "head": "40d2e69bf997353eda8f00ed8e560a84164fbb7a9132fc0c1968cb0ecdf16de8"
+    "head": "e3d6a2c2feb9eab8bdd3594037bac93c2c8f0e472ee00738073145c923c3045d"
   },
   "dependencies": {
-    "tools/diagnose-baseline.mjs": "92ae297975347c2377cce5cc69a7d7ece577b6400b68095a88c4adba63f7c5b8",
+    "package.json": "212ec481ebff5d0952b6ffc07df25a5bd3d123330e2dbe25a911f6e8085bc4cc",
+    "pages.json": "5b7ba62e8ff1a5beb1370579448ef6c10eb1eace176a5c603fa45eb9dbe7dde9",
+    "routes.manifest.json": "5b7ba62e8ff1a5beb1370579448ef6c10eb1eace176a5c603fa45eb9dbe7dde9",
+    "tools/diagnose-baseline.mjs": "994a54595119150844248c32f6b4e90861a7abc4b37711aa01fa99558baa8d55",
     "tools/experience-baseline.mjs": "9f8edb47ba512f9ac42028ac2ef8be7da3ad0123e73e0978cc23d259dbced468",
-    "tools/smoke/server.mjs": "5ccc906a3ebfe15cef5e86e7eb04805edecd7503815295241aff46feb8c57e16",
-    "tools/smoke-bundle.mjs": "2c8f8debd10fedf24cd792bb1719011885bc9ed80a7237cfce30591065c18a58",
-    "tools/network-handoff.mjs": "972f20e4a2aca957c1a304864dfde3e593aa7ffaede670630692b0c4daa4d845"
+    "tools/smoke/server.mjs": "5681cc79219957e61859fddd4d8de2ea59e0ea9c7742b3eba4f25390bb6ba610",
+    "tools/smoke-bundle.mjs": "9fefd7bf033a99605611f37e89203572cbc58f502b9ec9ce7c2ff98bd147d14c",
+    "tools/network-handoff.mjs": "94b7e584fb57e60fb313fc811729087181f66b10319a53e55b9fedd84ea89283"
   },
   "cells": {
     "atlas/desktop/light": [
