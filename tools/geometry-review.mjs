@@ -195,7 +195,11 @@ export function verifyRuntimeSourceContract(root, identity, side, contract = geo
     const [mode, type, blob] = metadata.split(" ");
     return [file, { mode, type, blob }];
   }));
+  const expectedSurfaces = ["atlas", ...geometryReview.inventory.routes].sort();
+  assert.deepEqual(Object.keys(contract.surfaces).sort(), expectedSurfaces, "Runtime request surfaces differ");
   for (const [slug, surface] of Object.entries(contract.surfaces)) {
+    const expectedCells = Object.keys(geometryReview.cells).filter(cell => cell.startsWith(`${slug}/`)).sort();
+    assert.deepEqual(surface.cells, expectedCells, `Runtime request cells differ: ${slug}`);
     assert.equal(surface.paths.length, surface.count, `Runtime path count differs: ${slug}`);
     assert.equal(hash(JSON.stringify(surface.paths)), surface.sha256, `Runtime path set differs: ${slug}`);
     assert.equal(new Set(surface.paths).size, surface.paths.length, `Duplicate runtime path: ${slug}`);

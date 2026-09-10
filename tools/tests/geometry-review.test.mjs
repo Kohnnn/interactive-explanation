@@ -167,6 +167,12 @@ test("runtime source contract rejects changed blobs, modes and missing files", (
   const contract = structuredClone(geometryRuntimeRequests);
   const slug = "atlas";
   const file = contract.surfaces[slug].paths[0];
+  delete contract.surfaces["covid-19"];
+  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /surfaces differ/);
+  contract.surfaces["covid-19"] = structuredClone(geometryRuntimeRequests.surfaces["covid-19"]);
+  contract.surfaces[slug].cells.pop();
+  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /cells differ/);
+  contract.surfaces[slug].cells = structuredClone(geometryRuntimeRequests.surfaces[slug].cells);
   contract.surfaces[slug].sources.head[file].blob = "0".repeat(40);
   assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /source contract differs/);
   contract.surfaces[slug].sources.head[file] = structuredClone(geometryRuntimeRequests.surfaces[slug].sources.head[file]);
