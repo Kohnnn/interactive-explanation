@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifySamples, compareCell, compareGeometry, collectCellPair, balancedSchedule, compareUrlContracts, assertIdentity, parseOptions } from "../qualify-pr.mjs";
+import { classifySamples, compareCell, compareGeometry, collectCellPair, balancedSchedule, compareUrlContracts, reviewResourceUrls, assertIdentity, parseOptions } from "../qualify-pr.mjs";
+import { verifyResourceReview } from "../resource-review.mjs";
 import { planCells } from "../diagnose-baseline.mjs";
 
 const sample = (overrides = {}) => ({
@@ -60,10 +61,49 @@ test("URL multisets require stable exact controls and explicit head source revie
   const result = compareUrlContracts({ "base-control": stable, base: stable, head: changed });
   assert.equal(result.status, "review-required");
   assert.equal(result.exactBase, true);
-  assert(result.additionsRemovals.length > 0);
+  assert.deepEqual(result.additions, { "http://local/b.js": 1 });
+  assert.deepEqual(result.removals, { "http://local/a.js?x=1": 2 });
   const unstable = compareUrlContracts({ "base-control": stable, base: [stable[0], changed[0], stable[0]], head: stable });
   assert.equal(unstable.status, "review-required");
   assert(Object.hasOwn(unstable.unstable, "base"));
+});
+
+test("resource review admits only exact stable multiset changes bound to exact sources", () => {
+  const digest = value => value.repeat(64);
+  const identities = {
+    base: { head: "a".repeat(40), files: [["route/index.html", digest("1")], ["shared/site.js", digest("2")]] },
+    head: { head: "b".repeat(40), files: [["route/index.html", digest("3")], ["shared/site.js", digest("4")]] },
+  };
+  const entry = {
+    cell: "route/desktop/light", baseSha: identities.base.head, headSha: identities.head.head,
+    additions: { "http://local/new.js": 1 }, removals: { "http://local/old.js": 2 },
+    sources: { base: { "route/index.html": digest("1") }, head: { "route/index.html": digest("3") } },
+    dependencies: { base: { "shared/site.js": digest("2") }, head: { "shared/site.js": digest("4") } },
+  };
+  const contract = { version: 1, reviews: [entry] };
+  const token = verifyResourceReview(contract, identities, [{ slug: "route" }]);
+  const urls = { status: "review-required", unstable: {}, exactBase: true, additions: entry.additions, removals: entry.removals };
+  assert.equal(reviewResourceUrls(urls, token, entry.cell).status, "passed-reviewed-resource");
+  assert.equal(reviewResourceUrls({ ...urls, unstable: { head: [] } }, token, entry.cell).status, "review-required");
+  assert.equal(compareCell(runs(), runs(), runs({ resourceCount: 11 })).status, "regression");
+  assert.equal(compareCell(runs(), runs(), runs({ sameOriginTransfer: { status: "supported", bytes: 257001 } })).status, "regression");
+  for (const patch of [
+    { additions: { ...entry.additions, "http://local/extra.js": 1 } },
+    { additions: {} },
+    { additions: { "http://local/new.js": 2 } },
+  ]) assert.equal(reviewResourceUrls({ ...urls, ...patch }, token, entry.cell).status, "review-required");
+  for (const mutate of [
+    value => { value.reviews[0].cell = "unknown/desktop/light"; },
+    value => { value.reviews[0].cell = "route/*/light"; },
+    value => { value.reviews.push(structuredClone(value.reviews[0])); },
+    value => { delete value.reviews[0].removals; },
+    value => { value.reviews[0].headSha = "c".repeat(40); },
+    value => { value.reviews[0].sources.head["route/index.html"] = digest("0"); },
+  ]) {
+    const changed = structuredClone(contract);
+    mutate(changed);
+    assert.throws(() => verifyResourceReview(changed, identities, [{ slug: "route" }]));
+  }
 });
 
 test("readyMs remains journal-only and cannot excuse DCL or load regression", () => {

@@ -13,6 +13,7 @@ import { createSmokeServer, createSwitchableSmokeServer } from "./smoke/server.m
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 import { geometryReview, geometrySourceBinding, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
+import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
 import { emitGeometry, environmentIdentity } from "./geometry-output.mjs";
@@ -109,11 +110,23 @@ export function normalizedUrlMultiset(sample) {
 }
 
 export function compareUrlContracts(groups) {
+  const names = Object.keys(groups);
+  assert.equal(names.length, 3, "Resource comparison requires three groups");
   const contracts = Object.fromEntries(Object.entries(groups).map(([group, samples]) => [group, samples.map(normalizedUrlMultiset)]));
   const unstable = Object.fromEntries(Object.entries(contracts).filter(([, values]) => values.some(value => JSON.stringify(value) !== JSON.stringify(values[0]))));
-  const exactBase = contracts["base-control"] && contracts.base && JSON.stringify(contracts["base-control"][0]) === JSON.stringify(contracts.base[0]);
-  const reviewed = contracts.head && contracts.base ? JSON.stringify(contracts.head[0]) === JSON.stringify(contracts.base[0]) : true;
-  return { status: Object.keys(unstable).length || !exactBase || !reviewed ? "review-required" : "stable", contracts, unstable, exactBase, additionsRemovals: reviewed ? [] : geometryChanges(contracts.base[0], contracts.head[0]) };
+  const exactBase = JSON.stringify(contracts[names[0]][0]) === JSON.stringify(contracts[names[1]][0]);
+  const exactHead = JSON.stringify(contracts[names[1]][0]) === JSON.stringify(contracts[names[2]][0]);
+  const before = contracts[names[1]][0];
+  const after = contracts[names[2]][0];
+  const additions = Object.fromEntries(Object.keys(after).filter(url => (after[url] || 0) > (before[url] || 0)).map(url => [url, after[url] - (before[url] || 0)]));
+  const removals = Object.fromEntries(Object.keys(before).filter(url => (before[url] || 0) > (after[url] || 0)).map(url => [url, before[url] - (after[url] || 0)]));
+  return { status: Object.keys(unstable).length || !exactBase || !exactHead ? "review-required" : "stable", groups: names, contracts, unstable, exactBase, exactHead, additions, removals };
+}
+
+export function reviewResourceUrls(urls, review, cell) {
+  if (urls.status === "stable") return urls;
+  try { return admitResourceReview(review, cell, urls); }
+  catch (error) { return { ...urls, reason: error.message }; }
 }
 
 export async function collectComparison(options, cells, groups, collect, journal) {
@@ -162,7 +175,8 @@ export function verifyRigidAdmission(contract, options, resolveSource) {
 export async function collectRigidAdmission(options, referenceCell, headCell, collect, journal, legacy) {
   assert.equal(headCell.route.slug, rigidAdmission.slug, "Unauthorized original route");
   assert.equal(referenceCell.route.slug, rigidAdmission.slug, "Unauthorized original reference");
-  journal.append({ type: "legacy-original-evidence", cell: `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`, performance: compareCell(legacy.control, legacy.before, legacy.after), geometry: compareGeometry(legacy.control, legacy.before, legacy.after), equivalence: "not claimed; archived engine is not the original admission reference" });
+  const cell = `${headCell.route.slug}/${headCell.viewport.name}/${headCell.theme}`;
+  journal.append({ type: "legacy-original-evidence", cell, performance: compareCell(legacy.control, legacy.before, legacy.after), geometry: compareGeometry(legacy.control, legacy.before, legacy.after), urls: compareUrlContracts({ "base-control": legacy.control, base: legacy.before, head: legacy.after }), equivalence: "not claimed; archived engine is not the original admission reference" });
   const groups = ["original-control", "original-reference", "original-head"];
   const samples = await collectComparison(
     { ...options, "original-control": options.reference, "original-reference": options.reference, "original-head": options.head },
@@ -236,7 +250,9 @@ export async function main(args = process.argv.slice(2)) {
       journal.append({ type: "source", side, identity: identities[side], verified });
     }
     const reviewedGeometry = verifyGeometryReview(geometryReview, Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side])])));
+    const reviewedResources = verifyResourceReview(resourceReview, { base: identities.base, head: identities.head }, manifest(options.head));
     journal.append({ type: "geometry-review-contract", reviewSha256: geometryReview.reviewSha256, rawSha256: geometryReview.rawSha256, cells: Object.keys(geometryReview.cells).length, legacyGeometryApproval: "not granted" });
+    journal.append({ type: "resource-review-contract", version: resourceReview.version, cells: resourceReview.reviews.map(review => review.cell), state: resourceReview.reviews.length ? "reviewed entries present" : "empty; no resource differences admitted" });
     if (options.reference) {
       verifyRigidAdmission(rigidAdmission, options, (root, file) => execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim());
       journal.append({ type: "original-admission-contract", contract: rigidAdmission, equivalence: "not claimed", budgets: "unchanged; compared only with pinned original reference" });
@@ -251,7 +267,7 @@ export async function main(args = process.argv.slice(2)) {
     const key = cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`;
     assert.deepEqual(baseCells.map(key), cells.map(key), "Route matrix changed; requires qualification contract review");
     assert.equal(cells.length, 504, "Expected 83 routes plus Atlas, three viewports, two themes");
-    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and otherwise preserved; exact stable base-control/base multisets required; head changes require declared source review", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
+    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and otherwise preserved; exact stable base-control/base multisets required; head changes require exact cell-, SHA-, and blob-bound resource-review registry admission; transfer/count budgets remain independent", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
     environment = environmentIdentity();
     journal.append({ type: "environment", identity: environment });
     browser = await chromium.launch({ headless: true });
@@ -284,20 +300,18 @@ export async function main(args = process.argv.slice(2)) {
       cellServer = await createSwitchableSmokeServer({ rootDir: options.base, host, port, mountPath });
       try {
         let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
-        const baseUrls = compareUrlContracts({ "base-control": pair.control, base: pair.before, head: pair.after });
-        if (options.reference && cells[index].route.slug === rigidAdmission.slug) {
-          pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
-        }
+        const rigid = options.reference && cells[index].route.slug === rigidAdmission.slug;
+        if (rigid) pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
         const { control, before, after } = pair;
-        const urls = compareUrlContracts({ "base-control": control, base: before, head: after });
-        if (baseUrls.status !== "stable") {
-          urls.status = "review-required";
-          urls.legacyBase = baseUrls;
-        }
+        const rawUrls = compareUrlContracts(rigid
+          ? { "original-control": control, "original-reference": before, "original-head": after }
+          : { "base-control": control, base: before, head: after });
+        const urls = rigid ? rawUrls : reviewResourceUrls(rawUrls, reviewedResources, key(cells[index]));
+        journal.append({ type: "resource-urls", cell: key(cells[index]), status: urls.status, urls });
         const performance = compareCell(control, before, after);
-        if (urls.status !== "stable") {
+        if (!["stable", "passed-reviewed-resource"].includes(urls.status)) {
           performance.status = "inconclusive";
-          performance.reasons.push("Requested URL multiset changed or was unstable; declared source review required");
+          performance.reasons.push("Requested URL multiset changed or was unstable; exact source-bound review required");
         }
         let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
         let headGeometry = after[0]?.geometry;
