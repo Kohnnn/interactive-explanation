@@ -13,7 +13,7 @@ import {
   validateExperienceBaseline,
 } from "./experience-baseline.mjs";
 import { createSmokeServer } from "./smoke/server.mjs";
-import { captureNetwork, resourceUrl } from "./network-handoff.mjs";
+import { captureNetwork, diagnosticUrl, resourceUrl } from "./network-handoff.mjs";
 
 const RouteFamilies = globalThis.RouteFamilies;
 
@@ -833,7 +833,7 @@ function createRuntimeMonitor(page, options = {}) {
     const requestUrl = request.url();
     const isLocalBlob = requestUrl.startsWith(`blob:${baseOrigin}/`);
     if (rejectInitialOffOriginRequests && !requestUrl.startsWith(baseUrl) && !isLocalBlob) {
-      issues.push(`off-origin request: ${resourceUrl(requestUrl)}`);
+      issues.push(`off-origin request: ${diagnosticUrl(requestUrl)}`);
     }
   });
 
@@ -842,7 +842,7 @@ function createRuntimeMonitor(page, options = {}) {
       return;
     }
 
-    issues.push(`response ${response.status()}: ${resourceUrl(response.url())}`);
+    issues.push(`response ${response.status()}: ${diagnosticUrl(response.url())}`);
   });
 
   const assertRuntimeClean = async function (label) {
@@ -851,7 +851,7 @@ function createRuntimeMonitor(page, options = {}) {
     const allIssues = [
       ...issues,
       ...network.nativeFailures(),
-      ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} ${entry.resourceType} navigation=${entry.navigation} childFrame=${entry.childFrame} ${entry.error} ${entry.url} unknown-failure`),
+      ...failures.map((entry) => `requestfailed: ${entry.requestId} ${entry.frameId} ${entry.resourceType} navigation=${entry.navigation} childFrame=${entry.childFrame} ${entry.error} ${diagnosticUrl(entry.url)} unknown-failure`),
     ].filter(Boolean);
     assert(allIssues.length === 0, `${label} had runtime issues:\n${allIssues.join("\n")}`);
   };
@@ -2018,7 +2018,7 @@ function assertOnlyAllowedRemoteRequests(requestUrls, allowedHosts, label, allow
 
   assert(
     disallowed.length === 0,
-    `${label} made disallowed remote requests:\n${disallowed.map(resourceUrl).join("\n")}`,
+    `${label} made disallowed remote requests:\n${disallowed.map(diagnosticUrl).join("\n")}`,
   );
 }
 

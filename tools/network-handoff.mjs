@@ -10,6 +10,14 @@ export function resourceUrl(value) {
   } catch { return "[invalid URL]"; }
 }
 
+export function diagnosticUrl(value) {
+  try {
+    const url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol)) return `${url.protocol}[redacted]`;
+    return `${url.origin}${url.pathname}`;
+  } catch { return "[invalid URL]"; }
+}
+
 function nativeEditorPredicate() {
   const scope = window.angular?.element(document.body).scope();
   return Boolean(document.readyState === "complete" && document.querySelector(".matrixInput textarea") && scope?.validTransitionMatrix === true && Array.isArray(scope.states) && scope.states.length > 0 && document.querySelector("svg"));
