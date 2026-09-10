@@ -68,6 +68,16 @@ test("URL multisets require stable exact controls and explicit head source revie
   assert(Object.hasOwn(unstable.unstable, "base"));
 });
 
+test("resource identity ignores cache queries while raw contracts retain them", () => {
+  const raw = cache => ({ raw: { navigation: [{ name: "http://local/route/" }], resources: [{ name: `http://local/a.js?cache=${cache}` }] } });
+  const groups = { "base-control": [raw(1), raw(2), raw(3)], base: [raw(4), raw(5), raw(6)], head: [raw(7), raw(8), raw(9)] };
+  const result = compareUrlContracts(groups);
+  assert.equal(result.status, "stable");
+  assert.equal(result.contracts.base[0]["http://local/a.js?cache=4"], 1);
+  const meaningful = { ...groups, head: [raw("other"), raw("other"), raw("other")] };
+  assert.equal(compareUrlContracts(meaningful).status, "review-required");
+});
+
 test("resource review admits only exact stable multiset changes bound to exact sources", () => {
   const digest = value => value.repeat(64);
   const identities = {
@@ -82,6 +92,9 @@ test("resource review admits only exact stable multiset changes bound to exact s
   };
   const contract = { version: 1, reviews: [entry] };
   const token = verifyResourceReview(contract, identities, [{ slug: "route" }]);
+  const successor = structuredClone(identities);
+  successor.head.head = "c".repeat(40);
+  assert.doesNotThrow(() => verifyResourceReview(contract, successor, [{ slug: "route" }]));
   const urls = { status: "review-required", unstable: {}, exactBase: true, additions: entry.additions, removals: entry.removals };
   assert.equal(reviewResourceUrls(urls, token, entry.cell).status, "passed-reviewed-resource");
   assert.equal(reviewResourceUrls({ ...urls, unstable: { head: [] } }, token, entry.cell).status, "review-required");
@@ -92,12 +105,15 @@ test("resource review admits only exact stable multiset changes bound to exact s
     { additions: {} },
     { additions: { "http://local/new.js": 2 } },
   ]) assert.equal(reviewResourceUrls({ ...urls, ...patch }, token, entry.cell).status, "review-required");
+  const changedSuccessor = structuredClone(successor);
+  changedSuccessor.head.files.find(([file]) => file === "route/index.html")[1] = digest("0");
+  assert.throws(() => verifyResourceReview(contract, changedSuccessor, [{ slug: "route" }]));
   for (const mutate of [
     value => { value.reviews[0].cell = "unknown/desktop/light"; },
     value => { value.reviews[0].cell = "route/*/light"; },
     value => { value.reviews.push(structuredClone(value.reviews[0])); },
     value => { delete value.reviews[0].removals; },
-    value => { value.reviews[0].headSha = "c".repeat(40); },
+    value => { value.reviews[0].headSha = "invalid"; },
     value => { value.reviews[0].sources.head["route/index.html"] = digest("0"); },
   ]) {
     const changed = structuredClone(contract);

@@ -18,6 +18,10 @@ export function diagnosticUrl(value) {
   } catch { return "[invalid URL]"; }
 }
 
+function sameResource(value, expected) {
+  return diagnosticUrl(value) === diagnosticUrl(expected);
+}
+
 function nativeEditorPredicate() {
   const scope = window.angular?.element(document.body).scope();
   return Boolean(document.readyState === "complete" && document.querySelector(".matrixInput textarea") && scope?.validTransitionMatrix === true && Array.isArray(scope.states) && scope.states.length > 0 && document.querySelector("svg"));
@@ -27,16 +31,16 @@ function validatedNativeFinal(events, request, final) {
   const latest = events.filter(event => event.frameId === request.frameId && event.type === "nativeeditorvalidated").at(-1);
   const completed = events.find(event => event.type === "requestfinished" && event.requestId === request.requestId && event.seq > request.seq);
   const ready = events.filter(event => event.type === "nativeeditorready" && event.requestId === request.requestId).at(-1);
-  const navigation = events.find(event => event.type === "framenavigated" && event.frameId === request.frameId && event.url === final && event.seq > request.seq);
-  return Boolean(completed && navigation && latest?.requestId === request.requestId && latest.url === final && latest.connected === true && latest.nativeReady === true && latest.seq > completed.seq &&
+  const navigation = events.find(event => event.type === "framenavigated" && event.frameId === request.frameId && sameResource(event.url, final) && event.seq > request.seq);
+  return Boolean(completed && navigation && latest?.requestId === request.requestId && sameResource(latest.url, final) && latest.connected === true && latest.nativeReady === true && latest.seq > completed.seq &&
     events.some(event => event.type === "response" && event.requestId === request.requestId && event.status === 200) &&
-    events.some(event => event.type === "framenavigated" && event.frameId === request.frameId && event.url === final && event.seq > request.seq) &&
-    !events.some(event => event.frameId === request.frameId && event.seq > request.seq && (event.type === "framedetached" || (event.type === "framenavigated" && (event.url !== final || event.seq > (ready?.seq ?? navigation.seq))) || (event.type === "request" && event.navigation && event.requestId !== request.requestId))));
+    events.some(event => event.type === "framenavigated" && event.frameId === request.frameId && sameResource(event.url, final) && event.seq > request.seq) &&
+    !events.some(event => event.frameId === request.frameId && event.seq > request.seq && (event.type === "framedetached" || (event.type === "framenavigated" && (!sameResource(event.url, final) || event.seq > (ready?.seq ?? navigation.seq))) || (event.type === "request" && event.navigation && event.requestId !== request.requestId))));
 }
 
 export function nativeValidationFailures(events, baseUrl) {
   const final = `${baseUrl}markov-chains/playground/playground.html`;
-  const targets = events.filter(event => event.type === "request" && event.navigation && event.childFrame && event.url === final);
+  const targets = events.filter(event => event.type === "request" && event.navigation && event.childFrame && sameResource(event.url, final));
   const frames = new Set(targets.map(event => event.frameId));
   return [...frames].filter(frameId => events.some(event => ["pageerror", "console-error"].includes(event.type)) || !validatedNativeFinal(events, targets.filter(event => event.frameId === frameId).at(-1), final)).map(frameId => `nativeeditor-not-ready: ${frameId}`);
 }
@@ -46,19 +50,20 @@ export function classifyNetwork(events, baseUrl) {
   const final = `${directory}playground.html`;
   return events.filter((event) => event.type === "requestfailed").map((failure) => {
     const subsequent = events.filter((event) => event.type === "request" && event.seq > failure.seq && event.frameId === failure.frameId && event.navigation);
-    const next = subsequent.find((event) => event.url !== directory);
+    const next = subsequent.find((event) => !sameResource(event.url, directory));
     const intermediates = subsequent.filter((event) => event.seq < next?.seq);
-    const directoryOnly = intermediates.every((event) => event.url === directory && events.some((end) => end.type === "requestfinished" && end.requestId === event.requestId));
+    const directoryOnly = intermediates.every((event) => sameResource(event.url, directory) && events.some((end) => end.type === "requestfinished" && end.requestId === event.requestId));
     const completed = next && events.find((event) => event.type === "requestfinished" && event.requestId === next.requestId && event.seq > next.seq);
     const response = next && events.find((event) => event.type === "response" && event.requestId === next.requestId && event.status === 200);
-    const navigation = completed && events.find((event) => event.type === "framenavigated" && event.frameId === failure.frameId && event.url === final && event.seq > next.seq);
-    const ready = completed && events.find((event) => event.type === "nativeeditorready" && event.requestId === next.requestId && event.frameId === failure.frameId && event.url === final && event.seq > completed.seq);
-    const finalDocument = ready && !events.some((event) => event.frameId === failure.frameId && event.seq > next.seq && ((event.type === "request" && event.navigation && event.requestId !== next.requestId) || (event.type === "framenavigated" && event.url !== final)) && event.seq < ready.seq);
+    const navigation = completed && events.find((event) => event.type === "framenavigated" && event.frameId === failure.frameId && sameResource(event.url, final) && event.seq > next.seq);
+    const ready = completed && events.find((event) => event.type === "nativeeditorready" && event.requestId === next.requestId && event.frameId === failure.frameId && sameResource(event.url, final) && event.seq > completed.seq);
+    const finalDocument = ready && !events.some((event) => event.frameId === failure.frameId && event.seq > next.seq && ((event.type === "request" && event.navigation && event.requestId !== next.requestId) || (event.type === "framenavigated" && !sameResource(event.url, final))) && event.seq < ready.seq);
     const nativeError = events.some((event) => ["pageerror", "console-error"].includes(event.type));
-    const finalRequest = subsequent.filter(event => event.url === final).at(-1);
+    const finalRequest = subsequent.filter(event => sameResource(event.url, final)).at(-1);
     const checkpoint = next && events.find(event => event.type === "nativeeditorvalidated" && event.requestId === next.requestId);
     const validated = next && (validatedNativeFinal(events, next, final) || (checkpoint && finalRequest !== next && validatedNativeFinal(events.filter(event => event.seq <= checkpoint.seq), next, final) && validatedNativeFinal(events, finalRequest, final)));
-    const known = Boolean(failure.requestId && failure.frameId) && directoryOnly && failure.url === directory && failure.error === "net::ERR_ABORTED" && failure.resourceType === "document" && failure.navigation && failure.childFrame && next?.url === final && next.resourceType === "document" && response && navigation && ready && finalDocument && validated && !nativeError;
+    const known = Boolean(failure.requestId && failure.frameId) && directoryOnly && sameResource(failure.url, directory) && failure.error === "net::ERR_ABORTED" && failure.resourceType === "document" && failure.navigation && failure.childFrame && sameResource(next?.url, final) && next.resourceType === "document" && response && navigation && ready && finalDocument && validated && !nativeError;
+
     const embed = events.find((event) => event.type === "musicmapembedvalidated" && event.frameId === failure.frameId && event.seq > failure.seq);
     const validatedYouTubeQoe = failure.url === "https://www.youtube-nocookie.com/api/stats/qoe" &&
       failure.error === "net::ERR_ABORTED" && failure.resourceType === "fetch" && !failure.navigation && failure.childFrame &&
@@ -103,7 +108,7 @@ export function captureNetwork(page, baseUrl, events = []) {
   page.on("requestfinished", (request) => {
     const data = details(request);
     emit("requestfinished", data);
-    if (!data.navigation || data.url !== `${baseUrl}markov-chains/playground/playground.html`) return;
+    if (!data.navigation || !sameResource(data.url, `${baseUrl}markov-chains/playground/playground.html`)) return;
     const frame = request.frame();
     const task = (async () => {
       try {
@@ -133,7 +138,7 @@ export function captureNetwork(page, baseUrl, events = []) {
   const ready = async () => {
     await Promise.all([...pending]);
     for (const [frame, id] of frames) {
-      const target = [...requests.values()].filter(entry => entry.frameId === id && entry.childFrame && entry.navigation && entry.url === `${baseUrl}markov-chains/playground/playground.html`).at(-1);
+      const target = [...requests.values()].filter(entry => entry.frameId === id && entry.childFrame && entry.navigation && sameResource(entry.url, `${baseUrl}markov-chains/playground/playground.html`)).at(-1);
       if (!target) continue;
       let nativeReady = false;
       try { nativeReady = await frame.evaluate(nativeEditorPredicate); } catch {}

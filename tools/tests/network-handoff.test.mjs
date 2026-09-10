@@ -24,6 +24,13 @@ test("only the completed same-child native Markov handoff is classified; evidenc
   assert.equal(classifyNetwork(events, base)[0].classification, "validated-markov-child-handoff");
   assert.equal(JSON.stringify(events), before);
 });
+
+test("completed Markov handoff permits cache queries without hiding destination changes", () => {
+  const events = fixture().map(event => event.url ? { ...event, url: `${event.url}?cache=123` } : event);
+  assert.equal(classifyNetwork(events, base)[0].classification, "validated-markov-child-handoff");
+  events[1].url = `${base}other/playground.html?cache=123`;
+  assert.equal(classifyNetwork(events, base)[0].classification, "unknown-failure");
+});
 for (const [name, mutate] of [
   ["wrong frame", (e) => { e[1].frameId = "f3"; }],
   ["wrong destination", (e) => { e[1].url += "other"; }],

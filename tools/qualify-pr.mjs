@@ -14,6 +14,7 @@ import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
 import { geometryReview, geometrySourceBinding, geometryFunctionHashes, dependencyFunctionHashes, functionSourceHashes, verifyCurrentRuntimeRequests, verifyGeometryReview, verifyRuntimeSourceContract, admitGeometryReview } from "./geometry-review.mjs";
 import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
+import { resourceUrl } from "./network-handoff.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
 import { emitGeometry, environmentIdentity } from "./geometry-output.mjs";
@@ -104,20 +105,26 @@ export function balancedSchedule(baseSha, headSha, cellKey, groups = ["base-cont
   return Array.from({ length: 3 }, (_, round) => first.map((_, ordinal) => first[(ordinal + round) % first.length]));
 }
 
-export function normalizedUrlMultiset(sample) {
+export function normalizedUrlMultiset(sample, identity = false) {
   const names = [...(sample.raw?.navigation || []), ...(sample.raw?.resources || [])].map(entry => entry.name);
-  return Object.fromEntries([...new Set(names)].sort().map(name => [name, names.filter(value => value === name).length]));
+  const values = identity ? names.map(name => {
+    const url = new URL(name);
+    if (/^\?cache=\d+$/.test(url.search) || /^\?\d+=$/.test(url.search)) url.search = "";
+    return resourceUrl(url.href);
+  }) : names;
+  return Object.fromEntries([...new Set(values)].sort().map(name => [name, values.filter(value => value === name).length]));
 }
 
 export function compareUrlContracts(groups) {
   const names = Object.keys(groups);
   assert.equal(names.length, 3, "Resource comparison requires three groups");
-  const contracts = Object.fromEntries(Object.entries(groups).map(([group, samples]) => [group, samples.map(normalizedUrlMultiset)]));
-  const unstable = Object.fromEntries(Object.entries(contracts).filter(([, values]) => values.some(value => JSON.stringify(value) !== JSON.stringify(values[0]))));
-  const exactBase = JSON.stringify(contracts[names[0]][0]) === JSON.stringify(contracts[names[1]][0]);
-  const exactHead = JSON.stringify(contracts[names[1]][0]) === JSON.stringify(contracts[names[2]][0]);
-  const before = contracts[names[1]][0];
-  const after = contracts[names[2]][0];
+  const contracts = Object.fromEntries(Object.entries(groups).map(([group, samples]) => [group, samples.map(sample => normalizedUrlMultiset(sample, false))]));
+  const identities = Object.fromEntries(Object.entries(groups).map(([group, samples]) => [group, samples.map(sample => normalizedUrlMultiset(sample, true))]));
+  const unstable = Object.fromEntries(Object.entries(identities).filter(([, values]) => values.some(value => JSON.stringify(value) !== JSON.stringify(values[0]))));
+  const exactBase = JSON.stringify(identities[names[0]][0]) === JSON.stringify(identities[names[1]][0]);
+  const exactHead = JSON.stringify(identities[names[1]][0]) === JSON.stringify(identities[names[2]][0]);
+  const before = identities[names[1]][0];
+  const after = identities[names[2]][0];
   const additions = Object.fromEntries(Object.keys(after).filter(url => (after[url] || 0) > (before[url] || 0)).map(url => [url, after[url] - (before[url] || 0)]));
   const removals = Object.fromEntries(Object.keys(before).filter(url => (before[url] || 0) > (after[url] || 0)).map(url => [url, before[url] - (after[url] || 0)]));
   return { status: Object.keys(unstable).length || !exactBase || !exactHead ? "review-required" : "stable", groups: names, contracts, unstable, exactBase, exactHead, additions, removals };

@@ -48,7 +48,6 @@ export function verifyResourceReview(contract, identities, manifest) {
     seen.add(entry.cell);
     assert(shaPattern.test(entry.baseSha) && shaPattern.test(entry.headSha), `Invalid resource review SHA: ${entry.cell}`);
     assert.equal(entry.baseSha, identities.base.head, `Resource review base differs: ${entry.cell}`);
-    assert.equal(entry.headSha, identities.head.head, `Resource review head differs: ${entry.cell}`);
     validateCounts(entry.additions, `${entry.cell} additions`);
     validateCounts(entry.removals, `${entry.cell} removals`);
     assert(Object.keys(entry.additions).length + Object.keys(entry.removals).length > 0, `Empty resource review: ${entry.cell}`);
