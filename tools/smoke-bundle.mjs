@@ -8043,6 +8043,7 @@ async function smokeMusicmap(context) {
   assert((zoomAfter?.k || 1) > (zoomBefore?.k || 1), "musicmap route did not zoom into the selected genre");
   console.log("OK musicmap zoom and pan path");
 
+  remoteRequests.assertSince(0, [], "musicmap YouTube page before deferred action");
   const remoteBeforeYouTubeEmbed = remoteRequests.checkpoint();
   await page.click(youtubeAction.selector, { force: true });
   await page.waitForFunction(() => {
@@ -8081,6 +8082,7 @@ async function smokeMusicmap(context) {
       Boolean(document.querySelector("#search-toggle-button"));
   }, null, { timeout: 30000 });
   await openMusicmapGenreFromSearch(spotifyPage, "shoegaze", 1);
+  spotifyRemoteRequests.assertSince(0, [], "musicmap Spotify page before deferred action");
   const remoteBeforeSpotifyEmbed = spotifyRemoteRequests.checkpoint();
   await spotifyPage.click(spotifyAction.selector, { force: true });
   await spotifyPage.waitForFunction(() => {

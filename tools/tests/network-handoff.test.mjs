@@ -167,6 +167,19 @@ test("remote policy permits only verified local blobs and failures omit URL secr
   );
 });
 
+for (const phase of ["YouTube", "Spotify"]) {
+  test(`remote collector rejects ${phase} pre-action requests before checkpoint`, () => {
+    const page = new EventEmitter();
+    const monitor = createRemoteRequestMonitor(page);
+    page.emit("request", { url: () => `${base}musicmap/master-genrelist.json` });
+    page.emit("request", { url: () => "https://blocked.invalid/pre-action" });
+    assert.throws(() => monitor.assertSince(0, [], `${phase} pre-action`), /https:\/\/blocked\.invalid\/pre-action/);
+    const actionCheckpoint = monitor.checkpoint();
+    page.emit("request", { url: () => "https://allowed.invalid/action" });
+    assert.doesNotThrow(() => monitor.assertSince(actionCheckpoint, ["allowed.invalid"], `${phase} action`));
+  });
+}
+
 test("remote collector retains late requests through page close", () => {
   const page = new EventEmitter();
   const monitor = createRemoteRequestMonitor(page);
