@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 
 export const geometryReview = JSON.parse(fs.readFileSync(new URL("./geometry-review.json", import.meta.url), "utf8"));
 export const geometryRuntimeRequests = JSON.parse(fs.readFileSync(new URL("./geometry-runtime-requests.json", import.meta.url), "utf8"));
@@ -158,7 +159,7 @@ export function geometryFunctionHashes(source) {
 }
 
 export function dependencyFunctionHashes() {
-  return Object.fromEntries([localReferences, resolveLocalReference, dependencyClosure, geometrySourceBinding, runtimeRequestsFromJournal, verifyRuntimeRequestCoverage].map(fn => [fn.name, hash(fn.toString())]));
+  return Object.fromEntries([localReferences, resolveLocalReference, dependencyClosure, geometrySourceBinding, runtimeRequestsFromJournal, verifyRuntimeSourceContract, normalizedRuntimePaths, verifyCurrentRuntimeRequests, verifyRuntimeRequestCoverage].map(fn => [fn.name, hash(fn.toString())]));
 }
 
 export function runtimeRequestsFromJournal(source) {
@@ -186,6 +187,55 @@ export function runtimeRequestsFromJournal(source) {
   };
 }
 
+export function verifyRuntimeSourceContract(root, identity, side, contract = geometryRuntimeRequests) {
+  assert(["base", "head"].includes(side), `Unknown runtime source side: ${side}`);
+  const identityFiles = new Map(identity.files);
+  const tree = new Map(execFileSync("git", ["ls-tree", "-r", identity.head], { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim().split("\n").map(row => {
+    const [metadata, file] = row.split("\t");
+    const [mode, type, blob] = metadata.split(" ");
+    return [file, { mode, type, blob }];
+  }));
+  for (const [slug, surface] of Object.entries(contract.surfaces)) {
+    assert.equal(surface.paths.length, surface.count, `Runtime path count differs: ${slug}`);
+    assert.equal(hash(JSON.stringify(surface.paths)), surface.sha256, `Runtime path set differs: ${slug}`);
+    assert.equal(new Set(surface.paths).size, surface.paths.length, `Duplicate runtime path: ${slug}`);
+    for (const file of surface.paths) {
+      assert(identityFiles.has(file), `Missing runtime source file: ${slug}/${file}`);
+      const entry = tree.get(file);
+      assert(entry, `Missing runtime Git blob: ${slug}/${file}`);
+      assert.equal(entry.type, "blob", `Runtime source is not a blob: ${slug}/${file}`);
+      assert.deepEqual({ mode: entry.mode, blob: entry.blob }, surface.sources[side][file], `Runtime source contract differs: ${side}/${slug}/${file}`);
+    }
+  }
+  const paths = Object.fromEntries(Object.entries(contract.surfaces).map(([slug, surface]) => [slug, surface.paths]));
+  assert.equal(hash(JSON.stringify(paths)), contract.inventorySha256, "Runtime request inventory differs");
+  assert.equal(new Set(Object.values(paths).flat()).size, contract.uniqueLocalFiles, "Runtime local request count differs");
+  return true;
+}
+
+export function normalizedRuntimePaths(events) {
+  const paths = new Set();
+  for (const event of events ?? []) {
+    if (event.type !== "request" || event.url.startsWith("blob:")) continue;
+    const url = new URL(event.url);
+    if (!url.pathname.startsWith("/interactive-explanation/")) continue;
+    let file = decodeURIComponent(url.pathname.slice("/interactive-explanation/".length));
+    if (!file || file.endsWith("/")) file += "index.html";
+    paths.add(file);
+  }
+  return [...paths].sort();
+}
+
+export function verifyCurrentRuntimeRequests(cell, events, inventories, contract = geometryRuntimeRequests) {
+  const slug = cell.split("/")[0];
+  const surface = contract.surfaces[slug];
+  if (!surface) return true;
+  assert(surface.cells.includes(cell), `Runtime request route/group mismatch: ${cell}`);
+  const bound = new Set([...(inventories[slug]?.files ?? []), ...surface.paths]);
+  for (const file of normalizedRuntimePaths(events)) assert(bound.has(file), `Unbound current runtime request: ${cell}/${file}`);
+  return true;
+}
+
 export function verifyRuntimeRequestCoverage(paths, inventories, ignoredSchemes = {}, contract = geometryRuntimeRequests) {
   const surfaces = {};
   for (const [slug, requested] of Object.entries(paths)) {
@@ -195,7 +245,7 @@ export function verifyRuntimeRequestCoverage(paths, inventories, ignoredSchemes 
     for (const file of requested) assert(covered.has(file), `Uncovered runtime geometry dependency: ${slug}/${file}`);
     surfaces[slug] = { count: requested.length, sha256: hash(JSON.stringify(requested)) };
   }
-  assert.deepEqual(surfaces, contract.surfaces, "Runtime geometry request sets differ");
+  assert.deepEqual(surfaces, Object.fromEntries(Object.entries(contract.surfaces).map(([slug, surface]) => [slug, { count: surface.count, sha256: surface.sha256 }])), "Runtime geometry request sets differ");
   assert.deepEqual(ignoredSchemes, contract.ignoredSchemes, "Runtime ignored schemes differ");
   assert.equal(new Set(Object.values(paths).flat()).size, contract.uniqueLocalFiles, "Runtime local request count differs");
   assert.equal(hash(JSON.stringify(paths)), contract.inventorySha256, "Runtime request inventory differs");

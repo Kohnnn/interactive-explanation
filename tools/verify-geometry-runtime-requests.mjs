@@ -8,7 +8,7 @@ import { geometryRuntimeRequests, geometrySourceBinding, runtimeRequestsFromJour
 const [root = ".", journal] = process.argv.slice(2);
 assert(journal, "Usage: node tools/verify-geometry-runtime-requests.mjs <root> <qualification.jsonl>");
 const raw = fs.readFileSync(journal);
-assert.equal(createHash("sha256").update(raw).digest("hex"), geometryRuntimeRequests.rawSha256, "Geometry raw artifact differs");
+assert.equal(createHash("sha256").update(raw).digest("hex"), geometryRuntimeRequests.artifact.rawSha256, "Geometry raw artifact differs");
 const pages = JSON.parse(fs.readFileSync(path.join(root, "pages.json"), "utf8"));
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "routes.manifest.json"), "utf8"));
 const identity = sourceIdentity(root);

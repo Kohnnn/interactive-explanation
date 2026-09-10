@@ -12,7 +12,7 @@ import { summarizePerformanceRuns, performanceRegressions, validatePerformanceEv
 import { createSmokeServer, createSwitchableSmokeServer } from "./smoke/server.mjs";
 import { host, port, mountPath, baseUrl } from "./smoke-bundle.mjs";
 import { verifyRigidBrowser } from "./rigid-body-browser.mjs";
-import { geometryReview, geometrySourceBinding, geometryFunctionHashes, dependencyFunctionHashes, functionSourceHashes, verifyGeometryReview, admitGeometryReview } from "./geometry-review.mjs";
+import { geometryReview, geometrySourceBinding, geometryFunctionHashes, dependencyFunctionHashes, functionSourceHashes, verifyCurrentRuntimeRequests, verifyGeometryReview, verifyRuntimeSourceContract, admitGeometryReview } from "./geometry-review.mjs";
 import { resourceReview, verifyResourceReview, admitResourceReview } from "./resource-review.mjs";
 
 import { simReferenceSha, simCells, simSource, verifySimSources, verifySimNative } from "./sim-reference.mjs";
@@ -254,9 +254,11 @@ export async function main(args = process.argv.slice(2)) {
       manifest: manifest(options[side]),
     }]));
     const gitBytes = (root, revision, file) => execFileSync("git", ["show", `${revision}:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 });
+    const geometryBindings = Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest, file => fs.readFileSync(path.join(options[side], file)))]));
+    for (const side of ["base", "head"]) verifyRuntimeSourceContract(options[side], identities[side], side);
     const reviewedGeometry = verifyGeometryReview(
       geometryReview,
-      Object.fromEntries(["base", "head"].map(side => [side, geometrySourceBinding(identities[side], metadata[side].pages, metadata[side].manifest, file => fs.readFileSync(path.join(options[side], file)))])),
+      geometryBindings,
       {
         admittedHeadSha: geometryReview.admittedHeadSha,
         runtimeRequests: createHash("sha256").update(fs.readFileSync(path.join(options.head, "tools/geometry-runtime-requests.json"))).digest("hex"),
@@ -301,6 +303,7 @@ export async function main(args = process.argv.slice(2)) {
       const kind = position.warmup ? "warmup" : "attempt";
       journal.append({ type: kind, cell: key(cell), group, ...position });
       const result = await capture(browser, cell);
+      if (Object.hasOwn(geometryReview.cells, key(cell))) verifyCurrentRuntimeRequests(key(cell), result.events, geometryBindings[group === "head" ? "head" : "base"].inventories);
       journal.append({ type: position.warmup ? "warmup-sample" : "sample", cell: key(cell), group, ...position, ...result });
       return position.warmup ? [] : [result];
     }

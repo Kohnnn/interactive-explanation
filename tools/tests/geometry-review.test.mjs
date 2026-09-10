@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
-import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyFunctionHashes, geometrySourceBinding, runtimeRequestsFromJournal, verifyRuntimeRequestCoverage, verifyGeometryReview } from "../geometry-review.mjs";
+import { geometryReview, geometryRuntimeRequests, dependencyClosure, dependencyFunctionHashes, geometrySourceBinding, normalizedRuntimePaths, runtimeRequestsFromJournal, verifyCurrentRuntimeRequests, verifyRuntimeRequestCoverage, verifyRuntimeSourceContract, verifyGeometryReview } from "../geometry-review.mjs";
 import { sourceIdentity } from "../diagnose-baseline.mjs";
 import { compareGeometry, compareCell } from "../qualify-pr.mjs";
 
@@ -146,7 +146,37 @@ test("runtime request extraction normalizes local paths and records transient sc
     ignoredSchemes: { atlas: ["blob:"] },
   });
 });
-test("runtime request coverage rejects unbound local requests", () => {
+test("current runtime requests normalize queries and reject extras or route/group mismatch", () => {
+  const cell = geometryRuntimeRequests.surfaces.atlas.cells[0];
+  const inventories = { atlas: { files: ["index.html", "shared/site.css"] } };
+  const events = [
+    { type: "request", url: "http://local/interactive-explanation/?ignored=1" },
+    { type: "request", url: "http://local/interactive-explanation/shared/site.css?v=1#x" },
+  ];
+  assert.deepEqual(normalizedRuntimePaths(events), ["index.html", "shared/site.css"]);
+  assert(verifyCurrentRuntimeRequests(cell, events, inventories));
+  assert.throws(() => verifyCurrentRuntimeRequests(cell, [...events, { type: "request", url: "http://local/interactive-explanation/new.js" }], inventories), /Unbound current runtime request/);
+  assert.throws(() => verifyCurrentRuntimeRequests("atlas/unknown/light", events, inventories), /route\/group mismatch/);
+});
+test("runtime source contract rejects changed blobs, modes and missing files", () => {
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const identity = sourceIdentity(root);
+  assert(verifyRuntimeSourceContract(root, identity, "head"));
+  const baseIdentity = { head: geometryReview.baseSha, files: [...new Set(Object.values(geometryRuntimeRequests.surfaces).flatMap(surface => surface.paths))].map(file => [file, "unused"]) };
+  assert(verifyRuntimeSourceContract(root, baseIdentity, "base"));
+  const contract = structuredClone(geometryRuntimeRequests);
+  const slug = "atlas";
+  const file = contract.surfaces[slug].paths[0];
+  contract.surfaces[slug].sources.head[file].blob = "0".repeat(40);
+  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /source contract differs/);
+  contract.surfaces[slug].sources.head[file] = structuredClone(geometryRuntimeRequests.surfaces[slug].sources.head[file]);
+  contract.surfaces[slug].sources.head[file].mode = "100755";
+  assert.throws(() => verifyRuntimeSourceContract(root, identity, "head", contract), /source contract differs/);
+  const missing = structuredClone(identity);
+  missing.files = missing.files.filter(([path]) => path !== file);
+  assert.throws(() => verifyRuntimeSourceContract(root, missing, "head"), /Missing runtime source file/);
+});
+test("runtime request coverage rejects unbound or omitted artifact paths", () => {
   const paths = { route: ["route/index.html", "route/runtime.bin"] };
   const inventories = { route: { files: [...paths.route] } };
   const contract = structuredClone(geometryRuntimeRequests);
@@ -158,6 +188,8 @@ test("runtime request coverage rejects unbound local requests", () => {
   assert(verifyRuntimeRequestCoverage(paths, inventories, {}, contract));
   inventories.route.files.pop();
   assert.throws(() => verifyRuntimeRequestCoverage(paths, inventories, {}, contract), /Uncovered runtime geometry dependency/);
+  inventories.route.files.push("route/runtime.bin");
+  assert.throws(() => verifyRuntimeRequestCoverage({ route: ["route/index.html"] }, inventories, {}, contract), /request sets differ/);
 });
 test("geometry approval cannot override independent performance failure or functional geometry gate", () => {
   assert.equal(result(fixture()).status, "passed-reviewed");
