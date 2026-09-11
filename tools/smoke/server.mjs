@@ -31,7 +31,7 @@ export const contentTypes = {
   ".woff2": "font/woff2",
 };
 
-export function createSmokeServer({ rootDir, host, port, mountPath, closeConnections = false }) {
+export function createSmokeServer({ rootDir, host, port, mountPath, closeConnections = false, cacheControl = "no-store" }) {
   function serveFile(req, res) {
     const requestUrl = new URL(req.url, `http://${host}:${port}`);
 
@@ -68,7 +68,7 @@ export function createSmokeServer({ rootDir, host, port, mountPath, closeConnect
 
     const ext = path.extname(fullPath).toLowerCase();
     res.writeHead(200, {
-      "Cache-Control": "no-store",
+      "Cache-Control": cacheControl,
       "Connection": closeConnections ? "close" : "keep-alive",
       "Content-Type": contentTypes[ext] || "application/octet-stream",
     });
@@ -88,7 +88,7 @@ export function createSmokeServer({ rootDir, host, port, mountPath, closeConnect
 export async function createSwitchableSmokeServer(options) {
   let rootDir = path.resolve(options.rootDir);
   let switching = Promise.resolve();
-  const server = await createSmokeServer({ ...options, rootDir: () => rootDir, closeConnections: true }).start();
+  const server = await createSmokeServer({ ...options, rootDir: () => rootDir, closeConnections: true, cacheControl: "no-cache" }).start();
   return {
     server,
     async switchRoot(nextRoot) {

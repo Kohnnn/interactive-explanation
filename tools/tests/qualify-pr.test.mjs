@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { classifySamples, compareCell, compareGeometry, collectCellPair, balancedSchedule, compareUrlContracts, reviewResourceUrls, assertIdentity, isGeometryQualified, parseOptions } from "../qualify-pr.mjs";
+import { classifySamples, compareCell, compareGeometry, collectCellPair, balancedSchedule, compareUrlContracts, reviewResourceUrls, assertIdentity, isGeometryQualified, parseOptions, withFreshBrowser } from "../qualify-pr.mjs";
 import { verifyResourceReview } from "../resource-review.mjs";
 import { planCells } from "../diagnose-baseline.mjs";
 
@@ -39,6 +39,23 @@ test("paired capture uses each source's selectors and network policy for the sam
   assert.equal(classifySamples(result.after).status, "admissible");
   assert.equal(compareCell(result.control, result.before, result.after).status, "inconclusive");
   assert.equal(compareGeometry(result.control, result.before, result.after).status, "blocked");
+});
+
+test("fresh browser lifecycle closes one process after success and failure", async () => {
+  for (const fails of [false, true]) {
+    let launches = 0;
+    let closes = 0;
+    const launch = async () => { launches++; return { close: async () => { closes++; } }; };
+    const action = async browser => {
+      assert(browser);
+      if (fails) throw new Error("synthetic cell failure");
+      return "complete";
+    };
+    if (fails) await assert.rejects(() => withFreshBrowser(launch, action), /synthetic cell failure/);
+    else assert.equal(await withFreshBrowser(launch, action), "complete");
+    assert.equal(launches, 1);
+    assert.equal(closes, 1);
+  }
 });
 
 test("deterministic schedule balances every group across every ordinal", () => {

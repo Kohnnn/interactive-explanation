@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 import { readPerformanceEvidence } from "../smoke-bundle.mjs";
-import { parseOptions, planCells, statistics, geometryChanges, openJournal, summarizeCell, capture, verifySourceFixture } from "../diagnose-baseline.mjs";
+import { parseOptions, planCells, statistics, geometryChanges, openJournal, summarizeCell, capture, verifySourceFixture, installCaptureFixture, isTeoriaPianoSample } from "../diagnose-baseline.mjs";
 
 const route = { slug: "polygons", experience: { primarySurface: "main", runtimeSurface: "main", networkPolicy: { mode: "local-only" } } };
 
@@ -161,6 +161,43 @@ test("proposal contains exact geometry paths only, requires three stable success
   assert.equal(summarizeCell([sample, sample, { ...sample, status: "failed" }], before).proposal.length, 0);
   assert.equal(summarizeCell([sample, sample, { ...sample, geometry: before }], before).proposal.length, 0);
   assert.deepEqual(geometryChanges({ "a/b": 1 }, { "a/b": 2 }), [{ path: "/a~1b", before: 1, after: 2, review: "unreviewed" }]);
+});
+
+test("Teoria capture fixture delays only piano samples and releases every queued request", async () => {
+  let handler;
+  let load;
+  const page = {
+    route: async (predicate, value) => {
+      assert.equal(predicate(new URL("http://127.0.0.1:4173/interactive-explanation/teoria-interval-ear-training/res/musika_2024/audio/piano-2021/60.mp3?cache=1")), true);
+      handler = value;
+    },
+    once: (event, value) => { assert.equal(event, "load"); load = value; },
+  };
+  const release = await installCaptureFixture(page, { slug: "teoria-interval-ear-training", shell: { family: "changed-by-source" } });
+  let continued = 0;
+  const pending = handler({ continue: async () => { continued++; } });
+  assert.equal(continued, 0);
+  load();
+  await pending;
+  assert.equal(continued, 1);
+  await handler({ continue: async () => { continued++; } });
+  release();
+  assert.equal(continued, 2);
+  assert.equal(isTeoriaPianoSample(new URL("http://127.0.0.1:4173/interactive-explanation/teoria-interval-ear-training/res/musika_2024/view/img/staff/x.png"), "teoria-interval-ear-training"), false);
+  assert.equal(isTeoriaPianoSample(new URL("https://example.invalid/interactive-explanation/teoria-interval-ear-training/res/musika_2024/audio/piano-2021/60.mp3"), "teoria-interval-ear-training"), false);
+  assert.equal(isTeoriaPianoSample(new URL("http://127.0.0.1:4173/interactive-explanation/other/res/musika_2024/audio/piano-2021/60.mp3"), "teoria-interval-ear-training"), false);
+});
+
+test("non-Teoria capture fixture installs no route", async () => {
+  const release = await installCaptureFixture({ route: () => assert.fail("route must not be installed") }, { slug: "other", shell: { family: "teoria-practice" } });
+  release();
+});
+
+test("Polygons mini render tolerates animation before reset initializes draggables", () => {
+  const source = fs.readFileSync(new URL("../../polygons/play/mini/mini.js", import.meta.url), "utf8");
+  const render = source.match(/function render\(\)\{[\s\S]*?\n\}/)?.[0];
+  assert(render);
+  assert.doesNotThrow(() => vm.runInNewContext(`${render}; render();`, { assetsLeft: 0, draggables: undefined }));
 });
 
 test("a failed context is retained and the next independent capture still executes", async () => {

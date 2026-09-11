@@ -233,7 +233,7 @@ var draggables;
 
 function render(){
 
-	if(assetsLeft>0) return;
+	if(assetsLeft>0 || !draggables) return;
 
 	// Draw
 	Mouse.isOverDraggable = IS_PICKING_UP;

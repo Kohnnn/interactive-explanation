@@ -23,6 +23,12 @@ const require = createRequire(import.meta.url);
 const timings = ["domContentLoadedMs", "loadMs"];
 export { balancedSchedule };
 
+export async function withFreshBrowser(launch, action) {
+  const browser = await launch();
+  try { return await action(browser); }
+  finally { await browser.close(); }
+}
+
 export function assertIdentity(actual, expectedSha, previous) {
   assert(/^[a-f0-9]{40}$/.test(expectedSha), "Expected immutable 40-character SHA");
   assert.equal(actual.head, expectedSha, "Source revision differs");
@@ -315,7 +321,7 @@ export async function main(args = process.argv.slice(2)) {
     const key = cell => `${cell.route.slug}/${cell.viewport.name}/${cell.theme}`;
     assert.deepEqual(baseCells.map(key), cells.map(key), "Route matrix changed; requires qualification contract review");
     assert.equal(cells.length, 504, "Expected 83 routes plus Atlas, three viewports, two themes");
-    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; same no-store server; OS cache uncontrolled", urls: "fragments stripped; HTTP query keys sorted and retained in raw contracts; numeric local cache-buster-only queries compare by origin/path identity; exact stable base-control/base multisets required; head changes require exact cell-, SHA-, and blob-bound resource-review registry admission; transfer/count budgets remain independent", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
+    journal.append({ type: "method", cells: cells.length, warmupsPerGroup: 1, samplesPerGroup: 3, groups: ["base-control", "base", "head"], concurrency: 1, order: "SHA-seeded cyclic triplets; every group occupies every ordinal once", baseUrl, server: "one origin and one race-safe switchable server per cell; connections closed before root switch", cache: "unscored warm-up per source/group URL contract; fresh context per observation; fresh browser process per cell; no-cache revalidation permits same-document request coalescing without cross-observation browser cache reuse; OS cache uncontrolled", fixture: "all Teoria sources queue only exact local piano MP3 requests until window load, then release every request before readiness and resource collection", urls: "fragments stripped; HTTP query keys sorted and retained in raw contracts; numeric local cache-buster-only queries compare by origin/path identity; exact stable base-control/base multisets required; head changes require exact cell-, SHA-, and blob-bound resource-review registry admission; transfer/count budgets remain independent", readiness: "readyMs captured immediately after manifest readiness and retained only in journal; no budget or pass effect", variance: "Timing range and A/A median drift <= half unchanged timing allowance; resource count and bytes stable exactly. No retries or outlier removal.", budgets: "existing performanceRegressions; resourceCountDelta=0", node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch(), cpus: os.cpus().length }, playwright: require("playwright/package.json").version, runner: process.env.RUNNER_NAME, image: process.env.ImageVersion });
     environment = environmentIdentity();
     journal.append({ type: "environment", identity: environment });
     browser = await chromium.launch({ headless: true });
@@ -345,47 +351,59 @@ export async function main(args = process.argv.slice(2)) {
         await new Promise(resolve => server.close(resolve));
       }
     }
+    await browser.close();
+    browser = undefined;
     for (let index = 0; index < cells.length; index++) {
-      cellServer = await createSwitchableSmokeServer({ rootDir: options.base, host, port, mountPath });
       try {
-        let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
-        const rigid = options.reference && cells[index].route.slug === rigidAdmission.slug;
-        if (rigid) pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
-        const { control, before, after } = pair;
-        const rawUrls = compareUrlContracts(rigid
-          ? { "original-control": control, "original-reference": before, "original-head": after }
-          : { "base-control": control, base: before, head: after });
-        const urls = rigid ? rawUrls : reviewResourceUrls(rawUrls, reviewedResources, key(cells[index]), { base: before, head: after });
-        journal.append({ type: "resource-urls", cell: key(cells[index]), status: urls.status, urls });
-        const performance = compareCell(control, before, after);
-        if (!["stable", "passed-reviewed-resource"].includes(urls.status)) {
-          performance.status = "inconclusive";
-          performance.reasons.push("Requested URL multiset changed or was unstable; exact source-bound review required");
-        }
-        let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
-        let headGeometry = after[0]?.geometry;
-        if (options.sim && simCells.includes(key(cells[index]))) {
-          journal.append({ type: "legacy-sim-geometry", cell: key(cells[index]), geometry, performance });
-          const fixedCell = simReferenceCells.find(cell => key(cell) === key(cells[index]));
-          const groups = ["sim-fixed-control", "sim-fixed-reference", "sim-fixed-head"];
-          const fixed = await collectComparison(
-            { ...options, [groups[0]]: options.sim, [groups[1]]: options.sim, [groups[2]]: options.head },
-            { [groups[0]]: fixedCell, [groups[1]]: fixedCell, [groups[2]]: cells[index] }, groups, collect, journal,
-          );
-          const fixedUrls = compareUrlContracts({ "base-control": fixed[groups[0]], base: fixed[groups[1]], head: fixed[groups[2]] });
-          journal.append({ type: "sim-fixed-urls", cell: key(cells[index]), urls: fixedUrls });
-          geometry = compareGeometry(fixed[groups[0]], fixed[groups[1]], fixed[groups[2]]);
-          if (fixedUrls.status !== "stable") geometry = { status: "blocked", reason: "Fixed Sim requested URL multiset changed or was unstable; declared source review required", urls: fixedUrls };
-          headGeometry = fixed[groups[2]][0]?.geometry;
-        }
-        geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
-        journal.append({ type: "cell", cell: key(cells[index]), performance, geometry, urls });
-        for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
-        if (performance.status !== "passed" || !isGeometryQualified(geometry)) failed = true;
-        completed++;
+        await withFreshBrowser(
+          () => chromium.launch({ headless: true }),
+          async freshBrowser => {
+            browser = freshBrowser;
+            cellServer = await createSwitchableSmokeServer({ rootDir: options.base, host, port, mountPath });
+            try {
+              let pair = await collectCellPair(options, baseCells[index], cells[index], collect, journal);
+              const rigid = options.reference && cells[index].route.slug === rigidAdmission.slug;
+              if (rigid) pair = await collectRigidAdmission(options, referenceCells.find(cell => key(cell) === key(cells[index])), cells[index], collect, journal, pair);
+              const { control, before, after } = pair;
+              const rawUrls = compareUrlContracts(rigid
+                ? { "original-control": control, "original-reference": before, "original-head": after }
+                : { "base-control": control, base: before, head: after });
+              const urls = rigid ? rawUrls : reviewResourceUrls(rawUrls, reviewedResources, key(cells[index]), { base: before, head: after });
+              journal.append({ type: "resource-urls", cell: key(cells[index]), status: urls.status, urls });
+              const performance = compareCell(control, before, after);
+              if (!["stable", "passed-reviewed-resource"].includes(urls.status)) {
+                performance.status = "inconclusive";
+                performance.reasons.push("Requested URL multiset changed or was unstable; exact source-bound review required");
+              }
+              let geometry = compareGeometry(control, before, after, Object.hasOwn(geometryReview.cells, key(cells[index])) ? reviewedGeometry : undefined, key(cells[index]));
+              let headGeometry = after[0]?.geometry;
+              if (options.sim && simCells.includes(key(cells[index]))) {
+                journal.append({ type: "legacy-sim-geometry", cell: key(cells[index]), geometry, performance });
+                const fixedCell = simReferenceCells.find(cell => key(cell) === key(cells[index]));
+                const groups = ["sim-fixed-control", "sim-fixed-reference", "sim-fixed-head"];
+                const fixed = await collectComparison(
+                  { ...options, [groups[0]]: options.sim, [groups[1]]: options.sim, [groups[2]]: options.head },
+                  { [groups[0]]: fixedCell, [groups[1]]: fixedCell, [groups[2]]: cells[index] }, groups, collect, journal,
+                );
+                const fixedUrls = compareUrlContracts({ "base-control": fixed[groups[0]], base: fixed[groups[1]], head: fixed[groups[2]] });
+                journal.append({ type: "sim-fixed-urls", cell: key(cells[index]), urls: fixedUrls });
+                geometry = compareGeometry(fixed[groups[0]], fixed[groups[1]], fixed[groups[2]]);
+                if (fixedUrls.status !== "stable") geometry = { status: "blocked", reason: "Fixed Sim requested URL multiset changed or was unstable; declared source review required", urls: fixedUrls };
+                headGeometry = fixed[groups[2]][0]?.geometry;
+              }
+              geometryRows.push({ cell: key(cells[index]), geometry, headGeometry });
+              journal.append({ type: "cell", cell: key(cells[index]), performance, geometry, urls });
+              for (const [gate, result] of Object.entries({ performance, geometry })) totals[gate][result.status] = (totals[gate][result.status] || 0) + 1;
+              if (performance.status !== "passed" || !isGeometryQualified(geometry)) failed = true;
+              completed++;
+            } finally {
+              await cellServer.close();
+              cellServer = undefined;
+            }
+          },
+        );
       } finally {
-        await cellServer.close();
-        cellServer = undefined;
+        browser = undefined;
       }
     }
   } catch (error) {

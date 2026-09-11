@@ -82,7 +82,10 @@ test("switchable server keeps one origin and closes old connections before chang
   const handle = await createSwitchableSmokeServer({ rootDir: first, host, port: 0, mountPath });
   const origin = `http://${host}:${handle.server.address().port}`;
   try {
-    assert.match(await (await fetch(`${origin}${mountPath}`)).text(), /atlas/);
+    const initial = await fetch(`${origin}${mountPath}`);
+    assert.equal(initial.headers.get("cache-control"), "no-cache");
+    assert.equal(initial.headers.get("connection"), "close");
+    assert.match(await initial.text(), /atlas/);
     await handle.switchRoot(second);
     assert.match(await (await fetch(`${origin}${mountPath}`)).text(), /second/);
     assert.equal(handle.root(), path.resolve(second));

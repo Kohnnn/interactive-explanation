@@ -146,10 +146,44 @@ export function planCells(manifest, selected) {
     smoke.experienceViewports.flatMap((viewport) => ["light", "dark"].map((theme) => ({ route, viewport, theme }))));
 }
 
+const teoriaRoutes = new Set([
+  "teoria-interval-ear-training",
+  "teoria-note-ear-training",
+  "teoria-key-and-note-ear-training",
+  "teoria-random-key-and-note-ear-training",
+  "teoria-scale-construction",
+  "teoria-interval-identification-and-inversion",
+]);
+
+export function isTeoriaPianoSample(url, slug) {
+  return teoriaRoutes.has(slug) && url.origin === new URL(smoke.baseUrl).origin && url.pathname === `${new URL(smoke.baseUrl).pathname}${slug}/res/musika_2024/audio/piano-2021/${path.basename(url.pathname)}` && /^\d+\.mp3$/.test(path.basename(url.pathname));
+}
+
+export async function installCaptureFixture(page, route) {
+  if (!teoriaRoutes.has(route.slug)) return () => {};
+  const queued = [];
+  let releasePromise;
+  const release = () => {
+    if (releasePromise) return releasePromise;
+    releasePromise = Promise.all(queued.splice(0).map(async entry => {
+      try { await entry.route.continue(); entry.resolve(); }
+      catch (error) { entry.reject(error); throw error; }
+    }));
+    return releasePromise;
+  };
+  await page.route(url => isTeoriaPianoSample(url, route.slug), routeHandle => {
+    if (releasePromise) return routeHandle.continue();
+    return new Promise((resolve, reject) => queued.push({ route: routeHandle, resolve, reject }));
+  });
+  page.once("load", () => { release().catch(() => {}); });
+  return release;
+}
+
 export async function capture(browser, cell) {
   const { route, viewport, theme } = cell;
   const result = { slug: route.slug, viewport, theme, startedAt: new Date().toISOString(), errors: [], events: [], geometry: null, performance: null };
   let context;
+  let releaseFixture = () => {};
   const attempt = async (phase, action) => {
     try { return await action(); }
     catch (error) { result.errors.push({ phase, message: error.message }); return null; }
@@ -159,6 +193,7 @@ export async function capture(browser, cell) {
     const page = await context.newPage();
     page.setDefaultTimeout(30000);
     page.setDefaultNavigationTimeout(30000);
+    releaseFixture = await installCaptureFixture(page, route);
     const clean = smoke.createRuntimeMonitor(page, { networkPolicy: route.experience.networkPolicy, events: result.events });
     await attempt("navigation", async () => {
       const response = await page.goto(`${smoke.baseUrl}${route.slug === "atlas" ? "" : `${route.slug}/`}`, { waitUntil: "domcontentloaded" });
@@ -166,10 +201,11 @@ export async function capture(browser, cell) {
       await page.waitForSelector(route.slug === "atlas" ? "[data-page-list] .page-card" : "#reference-footer");
     });
     await attempt("readiness", async () => {
+      await page.waitForLoadState("load");
+      await releaseFixture();
       if (route.slug === "atlas") await smoke.waitForDocumentLayout(page);
       else await smoke.waitForManifestRouteReady(page, route);
       result.readyMs = await page.evaluate(() => performance.now());
-      await page.waitForLoadState("load");
       await page.waitForLoadState("networkidle", { timeout: 30000 });
       result.ready = true;
     });
@@ -196,7 +232,10 @@ export async function capture(browser, cell) {
     if (result.networkClassifications.some((entry) => entry.classification === "unknown-failure")) result.errors.push({ phase: "network", message: "Unclassified failed requests; original events retained" });
     if (!result.performance?.loadMs || !result.performance?.domContentLoadedMs || result.performance?.sameOriginTransfer.status !== "supported") result.errors.push({ phase: "performance", message: "Incomplete timing or unsupported transfer" });
   } catch (error) { result.errors.push({ phase: "context", message: error.message }); }
-  finally { if (context) await attempt("cleanup", () => context.close()); }
+  finally {
+    await attempt("fixture-release", releaseFixture);
+    if (context) await attempt("cleanup", () => context.close());
+  }
   result.finishedAt = new Date().toISOString();
   result.status = result.errors.length ? "failed" : "measured";
   return result;
@@ -234,7 +273,7 @@ export async function main(args = process.argv.slice(2)) {
   let browser;
   let failed = false;
   try {
-    journal.append({ type: "identity", root: options.root, source: before, baselineSha256: hash(baselineBytes), command: process.argv, toolSha256: hash(fs.readFileSync(fileURLToPath(import.meta.url))), smokeSha256: hash(fs.readFileSync(new URL("./smoke-bundle.mjs", import.meta.url))), node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch() }, playwright: require("playwright/package.json").version, baseUrl: smoke.baseUrl, concurrency: 1, samplesPerCell: 3, cells: cells.length, cache: "fresh contexts; no-store server; OS cache uncontrolled", network: "existing smoke monitor; no interception", limitations: "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied" });
+    journal.append({ type: "identity", root: options.root, source: before, baselineSha256: hash(baselineBytes), command: process.argv, toolSha256: hash(fs.readFileSync(fileURLToPath(import.meta.url))), smokeSha256: hash(fs.readFileSync(new URL("./smoke-bundle.mjs", import.meta.url))), node: process.version, os: { platform: os.platform(), release: os.release(), arch: os.arch() }, playwright: require("playwright/package.json").version, baseUrl: smoke.baseUrl, concurrency: 1, samplesPerCell: 3, cells: cells.length, cache: "fresh contexts; no-store server; OS cache uncontrolled", network: "existing smoke monitor; Teoria-only exact local piano MP3 requests queue until window load and release before evidence collection", limitations: "diagnostic only; parent intrinsic surfaces, not child interiors or interaction acceptance; URLs in evidence may contain public query strings; no credentials supplied" });
     server = await createSmokeServer({ rootDir: options.root, host: smoke.host, port: smoke.port, mountPath: smoke.mountPath }).start();
     browser = await chromium.launch({ headless: true });
     journal.append({ type: "browser", version: browser.version(), selection: "Playwright default headless shell", browsers: JSON.parse(fs.readFileSync(path.join(path.dirname(require.resolve("playwright-core/package.json")), "browsers.json"), "utf8")) });
