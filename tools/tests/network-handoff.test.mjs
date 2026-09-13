@@ -80,7 +80,7 @@ test("completed exact directory repeat is allowed, unfinished repeat is not", ()
   events.splice(2, 1);
   assert.equal(classifyNetwork(events, base)[0].classification, "unknown-failure");
 });
-for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remove-pane", "pageerror", "console-error", "valid", "query"]) {
+for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remove-pane", "pageerror", "console-error", "valid", "query", "hash", "hash-missing-editor", "hash-error", "hash-query", "hash-origin", "hash-reload"]) {
   for (const abort of [false, true]) test(`monitor and capture validate current native final: ${mode}, abort=${abort}`, async () => {
     function mockPage() {
       const page = new EventEmitter();
@@ -103,6 +103,14 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
         page.emit("requestfinished", last);
         await Promise.resolve();
         if (mode === "wrong-navigation" || mode === "blank") { url = mode === "blank" ? "about:blank" : `${base}other/`; page.emit("framenavigated", frame); }
+        if (mode.startsWith("hash")) {
+          await Promise.resolve();
+          url = mode === "hash-query" ? `${final}?cache=456#matrix` : mode === "hash-origin" ? "https://other.invalid/playground.html#matrix" : `${final}#matrix`;
+          if (mode === "hash-reload") page.emit("request", request(url));
+          page.emit("framenavigated", frame);
+          if (mode === "hash-missing-editor") pane = false;
+          if (mode === "hash-error") page.emit("pageerror", new Error("native error"));
+        }
         if (mode === "detach") { detached = true; page.emit("framedetached", frame); }
         if (mode === "remove-pane") pane = false;
         if (mode === "pageerror") page.emit("pageerror", new Error("native error"));
@@ -113,7 +121,7 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
     const page = mockPage();
     const clean = createRuntimeMonitor(page);
     await page.start();
-        if (["valid", "query"].includes(mode)) await clean("native");
+        if (["valid", "query", "hash"].includes(mode)) await clean("native");
 
     else await assert.rejects(clean("native"));
     const capturedPage = mockPage();
@@ -125,7 +133,7 @@ for (const mode of ["wrong-state", "wrong-navigation", "blank", "detach", "remov
     });
     const browser = { newContext: async () => ({ addInitScript: async () => {}, newPage: async () => capturedPage, close: async () => {} }) };
     const result = await capture(browser, { route: { slug: "markov-chains", experience: { networkPolicy: { mode: "local-only" }, primarySurface: "main" } }, viewport: { width: 100, height: 100 }, theme: "light" });
-    assert.equal(result.errors.some(error => error.phase === "runtime"), !["valid", "query"].includes(mode));
+    assert.equal(result.errors.some(error => error.phase === "runtime"), !["valid", "query", "hash"].includes(mode));
   });
 }
 

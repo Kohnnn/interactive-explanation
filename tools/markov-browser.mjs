@@ -15,10 +15,13 @@ try {
       await page.goto(`${baseUrl}markov-chains/`);
       await page.waitForLoadState("networkidle");
       await clean.ready();
+      assert.deepEqual(events.filter(event => event.type === "request" && event.childFrame && event.navigation && !new URL(event.url).search), [], "Playground loaded before its startup preset was assigned");
       const frame = await page.locator("iframe.playground").elementHandle().then((element) => element.contentFrame());
       assert(frame?.parentFrame() === page.mainFrame());
       assert(new URL(frame.url()).pathname.endsWith("/markov-chains/playground/playground.html"));
       const editor = frame.locator(".matrixInput textarea");
+      assert.deepEqual(JSON.parse(await editor.inputValue()), [[0.3, 0.3, 0.4], [0.3, 0.5, 0.2], [0.4, 0.4, 0.2]]);
+      assert.equal(events.filter(event => event.type === "request" && event.childFrame && event.navigation).length, 1, "Startup must load exactly one child document");
       await editor.fill("[[0.3,0.3,0.4],[0.3,0.5,0.2],[0.4,0.4,0.2]]");
       await frame.waitForFunction(() => angular.element(document.body).scope().validTransitionMatrix && angular.element(document.body).scope().states.length === 3);
       await editor.fill("[[0.5]]");

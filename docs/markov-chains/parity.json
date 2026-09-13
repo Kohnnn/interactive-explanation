@@ -1,5 +1,24 @@
 [
   {
+    "moduleId": "single-navigation-playground-startup",
+    "originalBehavior": "An initial iframe directory navigation could race the startup preset navigation and abort the child before readiness.",
+    "localStatus": "The startup preset now loads the final local playground document once. Native matrix edits retain same-document fragment navigation without weakening editor-readiness or network checks.",
+    "sourceFiles": [
+      "../../markov-chains/index.html",
+      "../../tools/network-handoff.mjs",
+      "../../tools/markov-browser.mjs"
+    ],
+    "notes": [
+      "The initial three-state matrix, preset query/hash state, fullscreen link and intrinsic editor are preserved.",
+      "Historical canceled-navigation evidence remains historical; current startup does not require that cancellation.",
+      "Historical geometry and performance qualification remain unresolved."
+    ],
+    "evidence": [
+      "18/18 Markov browser interaction contexts and 504/504 functional cells passed before this metadata update.",
+      "59 network-handoff tests include rejection of changed origins, queries, reloads, missing editors and runtime errors."
+    ]
+  },
+  {
     "moduleId": "package06-w4-source-review",
     "originalBehavior": "Owned hero introduces parent chain/matrix controls and an independent playground.",
     "localStatus": "Source-reviewed only: transition question, self-transition comparison, probabilistic reasoning and conditional-memory assumption added to existing hero text.",

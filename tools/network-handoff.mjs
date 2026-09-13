@@ -47,7 +47,7 @@ function validatedNativeFinal(events, request, final) {
   return Boolean(completed && navigation && latest?.requestId === request.requestId && sameResource(latest.url, final) && latest.connected === true && latest.nativeReady === true && latest.seq > completed.seq &&
     events.some(event => event.type === "response" && event.requestId === request.requestId && event.status === 200) &&
     events.some(event => event.type === "framenavigated" && event.frameId === request.frameId && sameResource(event.url, final) && event.seq > request.seq) &&
-    !events.some(event => event.frameId === request.frameId && event.seq > request.seq && (event.type === "framedetached" || (event.type === "framenavigated" && (!sameResource(event.url, final) || event.seq > (ready?.seq ?? navigation.seq))) || (event.type === "request" && event.navigation && event.requestId !== request.requestId))));
+    !events.some(event => event.frameId === request.frameId && event.seq > request.seq && (event.type === "framedetached" || (event.type === "framenavigated" && (!sameResource(event.url, final) || (event.seq > (ready?.seq ?? navigation.seq) && !(event.fragmentOnly === true && event.url === request.url && latest.seq > event.seq)))) || (event.type === "request" && event.navigation && event.requestId !== request.requestId))));
 }
 
 export function nativeValidationFailures(events, baseUrl) {
@@ -98,6 +98,7 @@ export function classifyNetwork(events, baseUrl) {
 export function captureNetwork(page, baseUrl, events = []) {
   const requests = new Map();
   const frames = new Map();
+  const frameLocations = new Map();
   const pending = new Set();
   const frameId = (frame) => {
     if (!frames.has(frame)) frames.set(frame, `f${frames.size + 1}`);
@@ -115,7 +116,15 @@ export function captureNetwork(page, baseUrl, events = []) {
   page.on("request", (request) => emit("request", details(request)));
   page.on("response", (response) => emit("response", { ...details(response.request()), status: response.status() }));
   page.on("requestfailed", (request) => emit("requestfailed", { ...details(request), error: request.failure()?.errorText }));
-  page.on("framenavigated", (frame) => emit("framenavigated", { frameId: frameId(frame), childFrame: Boolean(frame.parentFrame()), url: resourceUrl(frame.url()) }));
+  page.on("framenavigated", (frame) => {
+    const location = frame.url();
+    const previous = frameLocations.get(frame);
+    const id = frameId(frame);
+    const latest = [...requests.values()].filter(entry => entry.frameId === id && entry.navigation).at(-1);
+    const fragmentOnly = Boolean(previous && previous.location !== location && previous.location.split("#")[0] === location.split("#")[0] && previous.requestId === latest?.requestId);
+    frameLocations.set(frame, { location, requestId: latest?.requestId });
+    emit("framenavigated", { frameId: id, childFrame: Boolean(frame.parentFrame()), url: resourceUrl(location), fragmentOnly });
+  });
   page.on("framedetached", (frame) => emit("framedetached", { frameId: frameId(frame), url: resourceUrl(frame.url()) }));
   page.on("requestfinished", (request) => {
     const data = details(request);
