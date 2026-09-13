@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-practice",
+    "originalBehavior": "Single-note listening, generated answers and score.",
+    "localStatus": "Existing explanation adds replay/reference comparison and clarifies that this drill does not establish absolute pitch.",
+    "sourceFiles": [
+      "../../teoria-note-ear-training/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: preload/start, replay, attempt, correct/incorrect, score and existing exercise options apply. No generated feedback, score or save logic changed."
+    ],
+    "evidence": [
+      "W3 source review only, not runtime acceptance. Both themes, three viewports, keyboard/touch, audio failure/recovery, reveal/retry availability and state retention require parent probes. Historical evidence below does not certify this revision."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Teoria exercise opens directly into a compact drill shell with minimal framing around the start gate, answer controls, and score panels.",
     "localStatus": "The local route keeps that exercise runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface ahead of the original mounts.",

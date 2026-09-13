@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "The parent essay introduces independently owned neighborhood simulations.",
+    "localStatus": "Source-reviewed only: adapted the first chapter paragraph with a question, drag task, causal interpretation and housing-model limit.",
+    "sourceFiles": [
+      "../../polygons/index.html"
+    ],
+    "notes": [
+      "Existing paragraph only; iframe dimensions, child ownership, scripts, pacing and attribution retained. Authored text may reflow; intrinsic geometry is not measured.",
+      "Applicable: child loading/ready/error, drag/replay, frame focus, themes, narrow/zoom, continuation. Browser and device checks blocked by this task's no-browser boundary; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records exact source identity and static checks; no runtime pass inferred."
+    ]
+  },
+  {
     "moduleId": "narrative-flow",
     "originalBehavior": "The page interleaves long-form explanatory text with intro and outro vignettes, cartoon cues, and embedded playable sections in a fixed narrative order.",
     "localStatus": "Top-level page structure is vendored from upstream; the only top-level additions are metadata updates and the shared reference footer, while the intro translation strip was removed from the public iframe flow and the translator helper was relocated into docs.",

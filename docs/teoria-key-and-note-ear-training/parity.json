@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-practice",
+    "originalBehavior": "Key reference and target-note listening with generated answers and score.",
+    "localStatus": "Existing explanation connects target to tonic, suggests replay after errors and distinguishes score from listening strategy.",
+    "sourceFiles": [
+      "../../teoria-key-and-note-ear-training/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: preload/start, reference replay, attempt, correct/incorrect, score and existing exercise options apply. No generated feedback, score or save logic changed."
+    ],
+    "evidence": [
+      "W3 source review only, not runtime acceptance. Both themes, three viewports, keyboard/touch, audio failure/recovery, reveal/retry availability and state retention require parent probes. Historical evidence below does not certify this revision."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Teoria exercise opens directly into a compact drill shell with minimal framing around the start gate, answer controls, and score panels.",
     "localStatus": "The local route keeps that exercise runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface ahead of the original mounts.",

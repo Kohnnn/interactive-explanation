@@ -65,9 +65,10 @@
         <div>
             <h1 class="story-hero__title">Watch memory management turn from an API call into a spatial problem.</h1>
             <p class="story-hero__summary">
-                This article works best when you treat every allocator rule like a visible tradeoff.
-                Step through the byte grids, fragment the heap on purpose, then compare how each
-                bookkeeping idea changes what “free space” really means.
+                Why can an allocation fail while some memory is still free? Step through the byte
+                grids and compare the holes with the requested block: contiguous space matters, not
+                only the total free bytes. These simplified allocators expose tradeoffs, not the
+                full behavior or performance of a production allocator.
             </p>
             <div class="story-hero__meta">
                 <span class="story-chip">Scrub allocator timelines</span>

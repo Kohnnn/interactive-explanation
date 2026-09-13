@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-question",
+    "originalBehavior": "Interactive load-balancing essay with request simulations and charts.",
+    "localStatus": "Existing summary connects unequal service times to uneven queues and distinguishes simulation comparisons from production benchmarks.",
+    "sourceFiles": [
+      "../../load-balancing/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: chapter links, simulation readiness, request-rate/policy changes and playground controls apply. Audio and new scoring are not applicable to the authored essay. Runtime state and backing dimensions remain owned by existing renderers."
+    ],
+    "evidence": [
+      "W3 source review only; renderer mounts, styles, scripts and article content unchanged. Themes, viewports, keyboard/touch, simulation/reset and geometry await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
     "localStatus": "The local route now adds the shared Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original interactive runtime intact.",

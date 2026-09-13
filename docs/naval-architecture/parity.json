@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero precedes ship, pressure and buoyancy demonstrations.",
+    "localStatus": "Source-reviewed only: hero question/action distinguish floating from restoring torque and exclude seaworthiness calculation claims.",
+    "sourceFiles": [
+      "../../naval-architecture/index.html"
+    ],
+    "notes": [
+      "Existing hero markup/anchors, water scene, sliders, renderer, article and attribution retained.",
+      "Applicable: scene readiness/failure, slider/camera state, chapters, themes, zoom and continuation. Intrinsic geometry, fluid timing and pointer behavior remain unmeasured; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-naval-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and navarch scripts, then initializes many inline ship, fluid, and propeller scenes under one longform page.",
     "localStatus": "The local route keeps the published article structure, shared article styling, route-local ship model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",

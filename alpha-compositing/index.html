@@ -44,9 +44,9 @@
     <p class="story-hero__eyebrow">Engineering Sandbox · interactive engineering notebooks</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Treat every transparent pixel as a negotiation between coverage, color, and order.</h1>
+        <h1 class="story-hero__title">Why can an opaque shape have a partly transparent edge?</h1>
         <p class="story-hero__summary">
-          Begin with the draggable opacity scenes before the formulas. Once you have seen edges soften, layers stack, and color leak through, the alpha math stops feeling like graphics jargon and starts reading like bookkeeping for light.
+          Drag the triangle across the coverage demos and compare the edge pixels. Partial coverage contributes to alpha even when the material is opaque. This pixel-compositing model is not a full simulation of wavelength-dependent transmission through glass.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Drag the first blend</span>
@@ -57,7 +57,7 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">Start with the edge case</span>
         <p>
-          Drag the rose-glasses and coverage demos first. The important shift is noticing that transparency is not one effect but a pipeline: coverage, alpha, then composition. After that, Porter-Duff reads like a design vocabulary instead of a wall of operators.
+          Move the rose glasses across light and dark details to see channel filtering. Then drag the opaque triangle in the binary and sampled coverage scenes: compare flicker with gradual edge changes. Coverage describes how much of a pixel the shape occupies, not how transparent its material is.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#alpha_rose_glasses_container">Start with rose glasses</a>

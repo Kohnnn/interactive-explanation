@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Owned hero introduces parent chain/matrix controls and an independent playground.",
+    "localStatus": "Source-reviewed only: transition question, self-transition comparison, probabilistic reasoning and conditional-memory assumption added to existing hero text.",
+    "sourceFiles": [
+      "../../markov-chains/index.html"
+    ],
+    "notes": [
+      "Angular/D3 bindings, matrix normalization, diagram geometry, scripts, iframe and anchors unchanged.",
+      "Applicable: matrix/speed inputs, stochastic outcomes, child loading/ready/error and focus, chapters, themes and continuation. Child request cancellation remains separately unresolved; parent source review is not child acceptance. No browser or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
     "localStatus": "The local route adds token-driven light and dark styling for shared chrome, authored prose, labels, links, and native controls plus manifest-owned chapter navigation while leaving intrinsic EV runtime output unchanged.",

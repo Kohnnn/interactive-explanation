@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero introduces procedural car scenes and shared lap state.",
+    "localStatus": "Source-reviewed only: aero tradeoff question, component/single-control task, drag reason and non-telemetry model limit.",
+    "sourceFiles": [
+      "../../formula-1-racing/index.html"
+    ],
+    "notes": [
+      "Existing links, controls/readouts, procedural canvases, shared lap state, article and provenance unchanged.",
+      "Applicable: canvas readiness/failure, component/slider state, linked readouts, chapters, themes, zoom and continuation. No runtime, geometry, timing or learning-outcome acceptance; no baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint; not authority for shared visual design."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-longform-shell",
     "originalBehavior": "The route should remain a longform Engineering Sandbox article with a shared hero, generated story rail, and local provenance handling.",
     "localStatus": "The route still uses the shared Engineering Sandbox shell while keeping all public teaching content local to the Formula 1 route.",

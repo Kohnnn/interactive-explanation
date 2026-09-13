@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 1 adapts the existing hero with a class-separation question, Add/Remove entropy comparison, and weighted-child-entropy interpretation. New authored framing distinguishes training impurity from unseen-data performance; retained charts, scripts, mounts, links, metadata and state are unchanged. Source: this route's entropy and information-gain sections. Current W2 visual, timing and modality acceptance remains pending; earlier evidence below is historical.",
       "The mlu-pilot adapter themes only authored HTML and verified controls; compiled scenes, SVG, canvas, images, KaTeX, dimensions, and transforms remain intrinsic.",
       "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs.",
       "W0 prerequisite: the existing 50x46 home image/link moves from the collapsed legacy title to the visible authored hero. Three fresh Chromium 148 contexts in each of six viewport/theme cells verify containment and keyboard navigation. Compiled charts are unchanged; vertical flow changes require separate geometry review. See .scratch/complete-route-experience/research/37-prerequisite-report.md at the repository root."

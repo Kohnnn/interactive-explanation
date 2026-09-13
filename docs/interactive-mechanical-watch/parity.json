@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero introduces shared watch scenes and the separate teardown renderer.",
+    "localStatus": "Source-reviewed only: existing hero asks about transmission/regulation, directs cutaway inspection and limits accuracy/servicing claims.",
+    "sourceFiles": [
+      "../../interactive-mechanical-watch/index.html"
+    ],
+    "notes": [
+      "Movement reference link retained. Both renderers, binary buffers, inspector, state, chapter links and attribution unchanged.",
+      "Applicable: both renderer readiness/failure, camera/cutaway/speed/depth controls, inspector selection, chapters, themes and continuation. Separate renderer/modal/device evidence remains required; no geometry/timing acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-longform-shell",
     "originalBehavior": "The route should be a longform Engineering Sandbox article with a shared hero, generated story rail, mobile chapter navigation, and neutral local provenance handling.",
     "localStatus": "The route uses the shared Engineering Sandbox shell with engineering-longform framing, route-specific compact chapter labels, an immediately reachable after-hero mobile chapter bar, focused chapter destinations, local teaching content, and neutral provenance.",

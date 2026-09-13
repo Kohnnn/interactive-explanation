@@ -73,11 +73,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Fit the line, then watch the optimizer learn how to reach it.</h1>
+        <h1 class="story-hero__title">Which line makes the squared errors smallest?</h1>
         <p class="story-hero__summary">
-          This lesson moves from linear intuition to measurable fit quality, then into gradient
-          descent and coefficient interpretation. The goal is not just to read the formula, but to
-          see how the line, loss, and parameters move together.
+          Change the line's coefficients and compare the residuals with the loss readout.
+          Squaring gives large errors more weight; a line that looks close to most points may
+          still have a large loss. A good fit here does not establish causation or test accuracy.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Probe a prediction</span>
@@ -88,9 +88,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start with the fit story, then jump into the loss controls and the gradient-descent
-          scene once the idea of “best line” feels concrete. The interpretation section is a good
-          final pass once the mechanics are already familiar.
+          In the loss scene, change one coefficient while holding the other fixed and look for
+          a lower loss. Then follow gradient descent: its updates use the loss slope rather than
+          a visual guess. Compare the optimizer's path with your manual adjustments.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#scrolly">Play first: fit the line</a>

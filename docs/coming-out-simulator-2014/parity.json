@@ -1,5 +1,36 @@
 [
   {
+    "moduleId": "package06-shared-orientation",
+    "originalBehavior": "The fixed stage owns dialogue choices, branches and pacing.",
+    "localStatus": "Authored reply question, conversation observation, response explanation and personal-story limitation now appear in a collapsed shared disclosure; the earlier HTML skip remains historical. Copy explicitly imposes no requirement to come out.",
+    "sourceFiles": [
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css",
+      "../../tools/tests/route-html-sync.test.mjs"
+    ],
+    "notes": [
+      "Fixed, height-bounded scrollable details inside existing continuation, outside the conversation stage. No runtime, body sizing, replay/credits, provenance visibility, manifest, branch state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults, preventing window.onclick from advancing dialogue. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+    ],
+    "evidence": [
+      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with choices, scroll reachability, native keyboard choices, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+    ]
+  },
+  {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Runtime-owned menu and branching conversation fill the game stage.",
+    "localStatus": "Skipped HTML adaptation: parent prose is loading/end-state text, not a safe opening orientation seam; a new hero would disturb narrative pacing.",
+    "sourceFiles": [
+      "../../coming-out-simulator-2014/index.html"
+    ],
+    "notes": [
+      "Dialogue/choice mounts, branch state, loading/credits/replay wording, source scripts and license link unchanged.",
+      "Applicable: preload/ready/error, choices and alternate branches, audio, replay, focus, themes, narrow layout and continuation. Existing overflow and device/runtime evidence remain unresolved; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Follow-up reviewed css/game.css:1-28: overflow:hidden body and absolute 360 by 640 stage; parent help is only credits/replay, while the introductory conversation is script-owned. Footer details would not naturally follow the stage. Parent should provide a route-keyed shared nonmodal orientation slot with viewport-preserving placement and explicit keyboard/scroll qualification, without intercepting choices. Suggested copy: What changes when you choose a different reply? Follow the conversation and notice how others respond. This authored personal story is not a guide to predicting a family's reaction or a requirement to come out. No entrypoint changes or acceptance."
+    ]
+  },
+  {
     "moduleId": "menu-framing-and-intro-branches",
     "originalBehavior": "The route opens in a coffeehouse framing scene with branching intro choices that establish tone before the main 2010 story begins.",
     "localStatus": "The coffeehouse menu, choice structure, and branch bookkeeping remain in the original runtime with local wording cleanup in the notes branches.",

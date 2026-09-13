@@ -65,11 +65,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Trade false alarms against misses with the threshold in your hand.</h1>
+        <h1 class="story-hero__title">Which mistakes change when you lower the threshold?</h1>
         <p class="story-hero__summary">
-          Precision and recall only really stick once you can feel the tradeoff. This page turns
-          the confusion matrix, F1 score, and threshold sweep into one connected system instead of
-          three isolated definitions.
+          Lower the cutoff and count newly predicted positives in the confusion matrix.
+          Recall counts recovered positives; precision asks how many positive predictions are right.
+          F1 combines these ratios but does not encode the real cost of a miss or false alarm.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Read the confusion matrix</span>
@@ -80,9 +80,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Begin with the confusion matrix and metric panel, then move into the threshold chart
-          once you can predict how the counts should change. The later sections land best once the
-          tradeoff feels tactile, not verbal.
+          Move the threshold in small steps and track true positives, false positives, and
+          false negatives before reading the ratios. Lowering it cannot remove a predicted positive
+          for fixed scores, but precision need not change monotonically as examples cross it.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#confusion-matrix">Play first: read the matrix</a>

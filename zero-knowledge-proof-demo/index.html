@@ -199,9 +199,9 @@
       <div>
         <h1 class="story-hero__title">Hide the coloring, reveal it, shuffle it, then test whether the map logic still holds.</h1>
         <p class="story-hero__summary">
-          This lab works best when the map stays central. Toggle the hidden color classes on and off,
-          reshuffle the palette, and click regions to test how much information can be revealed
-          without exposing the full partition all at once.
+          What can two revealed regions tell you without showing the whole coloring? Hide the map,
+          select two neighboring states, then compare their colors. Shuffling changes color labels,
+          not the partition. This illustrates selective disclosure, not a secure proof protocol.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Reveal the hidden classes</span>
@@ -253,7 +253,7 @@
           <strong id="zkp-round-count">0</strong>
         </div>
         <div class="zkp-status-card">
-          <span class="story-callout__label">Confidence</span>
+          <span class="story-callout__label">Illustrative confidence</span>
           <strong id="zkp-confidence">0%</strong>
         </div>
         <div class="zkp-status-card">
@@ -265,7 +265,7 @@
         The partition starts hidden. Reveal it once, then hide it again before running local challenge rounds.
       </p>
       <p class="story-shell-caption zkp-status-caption">
-        Confidence here assumes a fresh random challenge each round, so the chance of a bad proof surviving keeps shrinking.
+        The displayed percentage is illustrative: 1 − 2<sup>−rounds</sup> assumes independent challenges with a one-half cheating success rate. This demo counts any pair, does not check adjacency or verify a cryptographic commitment, and does not establish those assumptions. Reset Rounds clears the counter, not the coloring.
         Continue from the <a href="../blockchain-101-combined-flow/">Blockchain Combined Flow</a> when you want the full local path from hashing to privacy.
       </p>
     </section>

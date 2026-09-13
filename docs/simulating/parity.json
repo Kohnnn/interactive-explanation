@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored launcher links to the editor and legacy article.",
+    "localStatus": "Source-reviewed only: adapted existing heading and paragraph with a rules question, route choice, repeated-run comparison and toy-model limit.",
+    "sourceFiles": [
+      "../../simulating/index.html"
+    ],
+    "notes": [
+      "Both local handoffs and launcher structure retained; nested editor/article engines excluded.",
+      "Applicable: link activation, focus, themes, narrow/zoom and continuation. No parent playback/reset/score exists, so those states are not applicable here; nested task acceptance requires separate evidence."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only; browser/device and geometry acceptance remain open."
+    ]
+  },
+  {
     "moduleId": "launcher-shell-and-local-routing",
     "originalBehavior": "The current live simulating route is a lightweight launcher that points readers to the new Emoji Simulator and the old original version.",
     "localStatus": "The local launcher keeps that lightweight two-link behavior while routing to the local top-level <code>sim/</code> route and the nested legacy <code>original/</code> route.",

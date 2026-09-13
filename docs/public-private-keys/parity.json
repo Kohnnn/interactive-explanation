@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Cookie-backed keypair generation and linked signing scenes.",
+    "localStatus": "Existing summary asks how keys relate, distinguishes signature validity from personal identity and warns to use disposable demo keys only.",
+    "sourceFiles": [
+      "../../public-private-keys/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: Random, editable private key, derived disabled public key, cookie retention and native subroute navigation apply. Signing verification requires separate subroute probes. No audio or score applies. Preexisting head whitespace preserved; body text shares its long line with the prior closing-head hunk, but no preexisting bytes were normalized."
+    ],
+    "evidence": [
+      "W3 source review only; crypto, inputs, cookies and scripts unchanged. Themes, viewports, invalid input, keyboard/touch, signing and state retention await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-lab-shell",
     "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
     "localStatus": "The local route now adds the Engineering Sandbox lab shell with local fonts, compact workflow framing, native-nav styling, and a generate-sign-mutate-verify checklist while leaving the original key and signing runtime intact.",

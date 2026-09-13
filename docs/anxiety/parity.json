@@ -1,5 +1,21 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Full-stage branching story owns content notes, progression and option/about dialogs.",
+    "localStatus": "Follow-up adapts one existing content-note paragraph with protection/fear question, warning-choice action/consequence and explicit non-clinical limit; removes an implied therapeutic benefit.",
+    "sourceFiles": [
+      "../../anxiety/index.html",
+      "../../anxiety/styles/game.css"
+    ],
+    "notes": [
+      "Supersedes dialog-based skip under user-authorized existing help-text seam. Paragraph is shorter; content warnings, support link, OK gate, fixed dialog/stage dimensions, choices and script flow unchanged. No added modal or mandatory step.",
+      "Applicable: content-note readability/open/close and button reachability, choice pacing, audio, themes and continuation; actual wrapping in the fixed 300 by 440 content-note box remains unmeasured. No clinical, runtime/device acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 follow-up records source-only tag/script guard and remaining rendered-layout check."
+    ]
+  },
+  {
     "moduleId": "intro-and-content-note-flow",
     "originalBehavior": "The route opens with content notes, loading overlays, click-to-advance hints, and an intro scene before the main branching story begins.",
     "localStatus": "The content-note, loading, pause, and intro flow remain intact, with only the public framing copy neutralized for the local route.",

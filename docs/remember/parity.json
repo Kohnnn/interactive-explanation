@@ -1,5 +1,24 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Positioned comic panels and deferred frames own the opening memory narrative.",
+    "localStatus": "Follow-up implements a collapsed native orientation disclosure after main; opening panels remain untouched. Question, recall/reveal/revisit task, retrieval/spacing explanation and permanent-memory limit.",
+    "sourceFiles": [
+      "../../remember/index.html",
+      "../../remember/css/comic.css",
+      "../../remember/js/comic.js",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "Supersedes the opening-only skip. Normal vertical article flow permits an after-main sibling, outside panel/word/sim selectors. Existing scripts, frame dimensions, anchors, labels and attribution retained; only trailing authored content gains height.",
+      "Applicable: disclosure keyboard/touch/focus, themes and zoom; child practices/retry, deferred readiness, video and continuation remain separately unqualified. No browser, geometry acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 follow-up cites source seams and static subtract-disclosure preimage guard; source judgment, not acceptance."
+    ]
+  },
+  {
     "moduleId": "comic-shell-and-chapter-flow",
     "originalBehavior": "The route opens as a long-form interactive comic with a splash scene, chapter dividers, anchor links, and scroll-driven reveals.",
     "localStatus": "The comic shell, chapter anchors, and splash flow remain intact, with public provenance removed from the visible header and credits surface.",

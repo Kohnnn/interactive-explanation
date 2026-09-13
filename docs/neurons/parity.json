@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Parent description follows the independent animation iframe.",
+    "localStatus": "Source-reviewed only: replaced archive-process copy with a connection-learning question, guided/sandbox comparison and clinical limitation.",
+    "sourceFiles": [
+      "../../neurons/index.html"
+    ],
+    "notes": [
+      "Iframe-first pacing, 960 by 540 frame, chapter/replay/caption controls, background links and attribution unchanged.",
+      "Applicable: child readiness/error, replay, captions, sandbox, frame focus, themes and continuation. Parent source review cannot accept the child or clinical outcomes; browser/device checks remain blocked."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records static checks; no baseline successor or acceptance."
+    ]
+  },
+  {
     "moduleId": "article-and-iframe-shell",
     "originalBehavior": "The route combines a top-level article page with an iframe-hosted interactive animation so descriptive reading and the canvas runtime stay on one page.",
     "localStatus": "The split article-and-iframe structure is preserved, with the public article body reduced to neutral framing, educational links, and the shared footer.",

@@ -41,11 +41,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · static ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Follow the curve past the usual overfitting warning sign.</h1>
+        <h1 class="story-hero__title">Why can test error fall again after interpolation?</h1>
         <p class="story-hero__summary">
-          Double descent feels strange because it asks you to keep going after the classical
-          tradeoff says to stop. This page lets you watch the familiar U-shape break, then rebuild
-          the intuition with an interpolation story you can actually inspect.
+          Compare models on either side of the feature-count threshold. Both larger models may
+          fit the training points yet connect them differently. Double descent describes this
+          example, not a universal complexity curve or a failure of the bias–variance identity.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Watch the second descent appear</span>
@@ -56,9 +56,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start with the opening chart until the interpolation threshold clicks, then jump to the
-          side-by-side experiment and drag the feature-count slider yourself. The gap animation is
-          the payoff: it shows why the models past interpolation do not all behave the same way.
+          Drag the feature-count slider across the interpolation region and compare the fit
+          between samples, not only at them. Use the gap animation to inspect competing fits.
+          Zero training error leaves their behavior on unseen inputs undecided.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#scrolly">Play first: watch the curve break</a>

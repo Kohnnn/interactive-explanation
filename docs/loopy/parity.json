@@ -1,5 +1,36 @@
 [
   {
+    "moduleId": "package06-shared-orientation",
+    "originalBehavior": "The full-viewport editor owns drawing, sidebar and edit/play state.",
+    "localStatus": "Authored feedback question, draw/play/perturb action, returning-influence explanation and qualitative-model limitation now appear in a collapsed shared disclosure; the earlier HTML skip remains historical.",
+    "sourceFiles": [
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css",
+      "../../tools/tests/route-html-sync.test.mjs"
+    ],
+    "notes": [
+      "Fixed, height-bounded scrollable details inside existing continuation, outside canvasses and sidebar. No runtime, body sizing, provenance visibility, manifest, URL/save state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+    ],
+    "evidence": [
+      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with native controls, scroll reachability, drawing shortcuts, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+    ]
+  },
+  {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Runtime constructs sidebar, canvas and edit/play controls from empty mounts.",
+    "localStatus": "Skipped HTML adaptation: no stable authored orientation exists outside the full-viewport editor; injecting sidebar copy would cross engine ownership.",
+    "sourceFiles": [
+      "../../loopy/index.html"
+    ],
+    "notes": [
+      "Mounts, opacity/load handoff, gestures, URL models, save/export and scripts unchanged. Generic main absence is not a primary-surface defect; declared primary is #sidebar.",
+      "Applicable: readiness/error, drawing, edit/play, modal and save/export state, focus, theme chrome and continuation. No runtime/device acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Follow-up reviewed css/loopy.css:1-21,44-58: body overflow:hidden; canvas and transport are viewport-positioned; sidebar/modal prose is generated rather than entrypoint-owned. Parent should provide route-keyed nonmodal orientation through a qualified shared footer/continuation slot outside #canvasses, #sidebar and native keyboard ownership; no generic after-main insertion. Suggested copy: Can a feedback loop amplify a change? Draw a loop, choose positive or negative links, then play and perturb a node. Signs describe qualitative influence, not measured quantities. No entrypoint changes or acceptance."
+    ]
+  },
+  {
     "moduleId": "editor-shell-and-canvas",
     "originalBehavior": "The main route opens an editable systems canvas with toolbars, sidebar controls, modal overlays, and URL-loaded model state.",
     "localStatus": "The upstream v1.1 editor remains intact and now serves as the route root, with only metadata cleanup and the shared footer layered around it.",

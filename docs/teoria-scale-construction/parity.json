@@ -1,5 +1,25 @@
 [
   {
+    "moduleId": "package03-editorial-pilot-partial",
+    "originalBehavior": "The existing shell repeated onboarding in a hero, checklist and hint strip and suggested playback could validate scale spelling.",
+    "localStatus": "Partially implemented, not accepted: concise attempt-first orientation, a major-scale hint, and an optional worked spelling reference surround the unchanged exercise. Historical evidence below does not qualify this revision.",
+    "sourceFiles": [
+      "../../teoria-scale-construction/index.html"
+    ],
+    "notes": [
+      "Adapted the hero and practice header/focus copy; removed repeated checklist, hint strip and hero chips. Clarified that the active scale type controls the pattern and sound alone cannot distinguish enharmonic spelling.",
+      "New native details disclosure after the exercise asks for a separate D-major warm-up before revealing D E F# G A B C# D and W W H W W W H, semitone reasoning, F/C-natural corrections and successive-letter reasons against Gb/Db. This authored aid is not the current randomized prompt or engine feedback; its only state is transient open/closed disclosure.",
+      "Retained init, opts, xml_opts, exe and score mounts, all script tags and inline controller initialization, existing answer/reveal/next/score state, audio preload/playback and save warning. No scoring, audio, persistent Progress or dependency added.",
+      "Applicable and pending: disclosure closed/open and keyboard/pointer/touch parity; exercise loading/ready, options, unanswered/incorrect/correct/reveal/next, score retention, notation and intentional playback/stopped/unavailable audio; six stored-theme viewport cells, system/storage/live theme, focus/contrast/zoom/reduced motion, geometry and paired performance.",
+      "Not applicable to the new worked reference: automatic correctness, score mutation, playback, persistent Progress and reset of engine work, because it is only a native disclosure. Closing it permits another mental/written attempt without resetting the exercise.",
+      "Open: no browser or assistive-technology review establishes generated feedback access, audio recovery, disclosure target sizing, notation dimensions or score continuity after reflow. The reference supplies textual reasoning but does not certify or replace engine-specific correction. User authorized implementation despite historical W0 timing and unavailable review; acceptance remains open."
+    ],
+    "evidence": [
+      "Source-reviewed against the practice pilot: exact major pattern and D-major spelling, attempt before optional reveal, no new exercise logic. This is agent editorial judgment, not human review or learning evidence.",
+      "Static commands and exact script/mount-preservation results are recorded in package 03 checkpoint; parent browser qualification remains pending and no baseline changed."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Teoria exercise opens directly into a compact drill shell with minimal framing around the start gate, answer controls, and score panels.",
     "localStatus": "The local route keeps that exercise runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface ahead of the original mounts.",

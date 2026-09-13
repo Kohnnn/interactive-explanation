@@ -1,5 +1,25 @@
 [
   {
+    "moduleId": "package03-editorial-pilot-partial",
+    "originalBehavior": "The existing framing claimed immutability emerged from links and incorrectly described downstream Prev fields as stale after an edit.",
+    "localStatus": "Partially implemented, not accepted: a task-first hero and one checklist replace redundant onboarding and continuation panels. Historical evidence below does not qualify this revision.",
+    "sourceFiles": [
+      "../../blockchain/index.html"
+    ],
+    "notes": [
+      "Adapted the hero to edit block 1 and compare Hash/Prev; replaced two panels with one edit/compare/recompute workspace brief. Removed duplicate distributed/keys calls to action, retaining native navigation and manifest-owned continuation.",
+      "New explanation follows the retained javascripts/blockchain.js updateChain, updateState and mine behavior: Prev propagates immediately, local validity tests a 0000 prefix, mining is per block with downstream recomputation, chance validity is possible, and nonce search is capped at 500000.",
+      "Explicitly distinguishes real SHA256 inside a toy ledger from consensus, adversarial security, finality and cryptocurrency; local recomputation proves none of those. Recovery describes left-to-right mining and reload discarding this page's unsaved fields.",
+      "Retained five forms, IDs, initial values, handlers, inline setup, script order, hash engine, horizontal row and native links. No sibling HTML, shared hook, runtime or manifest edits.",
+      "Applicable and pending: typed/pasted edits, hash propagation, valid/invalid text, mining busy/completion/exhaustion, reload recovery, horizontal keyboard/touch scrolling, native navigation, theme persistence and state retention, six stored-theme viewport cells, system/storage/live theme, contrast/focus/zoom/reduced motion, geometry and paired performance. Audio, score, reveal and Progress are not applicable: no such state is added.",
+      "Open: keyup-based updates may miss some pointer/paste input paths; exhausted mining can leave validity labels stale because the engine updates state only on success. Copy directs readers to the actual prefix, but does not repair or accept these engine limitations. Independent sibling-page behavior and assistive-technology announcements remain unverified. User authorized implementation despite historical W0 timing and unavailable review; acceptance remains open."
+    ],
+    "evidence": [
+      "Source-reviewed against the lab pilot and retained readable hash runtime, not a browser or human acceptance review.",
+      "Static commands and exact script/handler-preservation results are recorded in package 03 checkpoint; browser work belongs to the parent. No baseline changed."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-lab-shell",
     "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
     "localStatus": "The local route now adds the Engineering Sandbox lab shell with local fonts, a compact briefing hero, native-nav styling, and a short manipulation checklist while leaving the original block editor and mining runtime intact.",

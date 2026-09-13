@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored lab hero precedes the sky canvas, HUD and observing controls.",
+    "localStatus": "Source-reviewed only: horizon question, time/location/altitude comparison, rotation reason and modeled-weather limitation in existing hero.",
+    "sourceFiles": [
+      "../../stargazing-dashboard/index.html",
+      "../../stargazing-dashboard/js/state.js",
+      "../../stargazing-dashboard/js/hud.js",
+      "../../stargazing-dashboard/js/scene.js"
+    ],
+    "notes": [
+      "JS reviewed through targeted weather/state search only, not changed. Hero text only; sky dimensions, catalog, controls, dialogs and focus handling retained.",
+      "Applicable: WebGL/catalog ready/failure, time/location/play, object selection/dialogs, keyboard/pointer, themes, zoom and continuation. No astronomy accuracy, visibility, weather forecast, device or geometry acceptance; no baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint; source weather defaults, control updates and dimming support the scenario limitation."
+    ]
+  },
+  {
     "moduleId": "route-shell",
     "originalBehavior": "The route shell wraps the experience with an Engineering Sandbox lab hero, a neutral provenance footer, and a responsive dashboard layout with a stage area, HUD grid, and control bench.",
     "localStatus": "The route uses the shared Engineering Sandbox lab variant (data-story-shell='engineering-sandbox', data-story-variant='lab', data-story-nav='none') with a night-sky theme in css/stargazing.css. The hero carries a lab contract callout, story chips, and metadata. The public footer uses neutral provenance. All assets are subpath-relative. A route-local mobile override collapses the lab hero grid to a single column at <=920px because the shared lab-variant grid rule has no mobile collapse and out-specifies the generic one.",

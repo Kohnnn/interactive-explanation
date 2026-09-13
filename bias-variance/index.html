@@ -116,27 +116,21 @@
 >
   <main>
     <section class="story-hero story-hero--tight">
-    <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
+    <p class="story-hero__eyebrow">Model error · interactive essay</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Push a model from too simple to too clever, then find the useful middle.</h1>
+        <h1 class="story-hero__title">Why does a new training sample change the prediction?</h1>
         <p class="story-hero__summary">
-          This walkthrough makes the bias-variance tradeoff concrete by letting you watch model
-          realizations, error decomposition, and later hyperparameter sandboxes move together as
-          complexity changes.
+          Compare fitted models at the same input. Their average can miss the target systematically;
+          individual predictions can also scatter around that average. These are different sources of error.
         </p>
-        <div class="story-hero__meta">
-          <span class="story-chip">Watch train and test error separate</span>
-          <span class="story-chip">Read bias and variance together</span>
-          <span class="story-chip">Tune LOESS and KNN yourself</span>
-        </div>
       </div>
       <div class="story-callout story-hero__panel" data-story-callout="play">
-        <span class="story-callout__label">How to use this page</span>
+        <span class="story-callout__label">Compare before interpreting</span>
         <p>
-          Use the opening story to feel underfitting and overfitting first. Then jump into the
-          LOESS and KNN controls to see the same tradeoff show up as a tuning decision instead of
-          an abstract chart.
+          Follow the fitted lines and their error bars. In the LOESS sandbox, hold smoothness fixed
+          and randomize the training data before changing smoothness: separate sample variation
+          from a change in the fitting rule.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#scrolly">Play first: complexity story</a>
@@ -151,15 +145,19 @@
     </div>
 
     <section id="intro">
-      <h1 id="intro__hed">
-        The <span id="bias">Bias</span> <span id="variance">Variance</span> Tradeoff
-      </h1>
-      <h3 id="intro__date">Interactive walkthrough</h3>
+      <h2 id="intro__hed">
+        Separating <span id="bias">Bias</span> and <span id="variance">Variance</span>
+      </h2>
+      <p id="intro__date">The assumptions behind the decomposition</p>
       <p id="intro__dek">
-        Prediction errors can be decomposed into two main subcomponents of interest: error from
-        <span class="bolder">bias</span>, and error from <span class="bolder">variance</span>.
-        The tradeoff between a model's ability to minimize bias and variance is foundational to
-        training machine learning models, so it's worth taking the time to understand the concept.
+        Hold the input x fixed and write a fresh target as Y = f(x) + ε, where f(x) is the
+        conditional mean E[Y | X = x]. Assume finite second moments and zero-mean noise ε
+        independent of the training process at this input. Average squared prediction error
+        over repeated training samples (and any fitting randomness) and independent target noise.
+        It equals <span class="bolder">squared bias + prediction variance + noise variance</span>.
+        Bias compares the average fitted prediction with f(x); variance measures squared spread
+        around that average. Noise variance is irreducible for this fixed input and information set.
+        This identity does not require either bias or variance to change monotonically with complexity.
       </p>
     </section>
 
@@ -258,10 +256,11 @@
             Our test error can come as a result of both under- and over-fitting our data, but how
             do the two relate to each other?
             <br><br>
-            In the general case,
+            Under the fixed-input squared-error assumptions above,
             <span id="decomp-highlight">
-              mean-squared error can be decomposed into three components: error due to bias, error
-              to to variance, and error due to noise.
+              expected prediction error is squared bias plus prediction variance plus noise variance.
+              The expectation averages over training samples and fresh target noise, not just the
+              residuals from one fitted model.
             </span>
             <br><br>
             <span class="katex-bv-text"></span>
@@ -280,7 +279,7 @@
           <p class="step-head">Bias</p>
           <p>
             <span id="bias-def">
-              Bias represents the difference between the average prediction and the true value
+              Bias is the average fitted prediction minus the conditional mean f(x), at the same fixed input
             </span>
             :
             <br><br>
@@ -293,7 +292,7 @@
             These different model realizations are shown in the top chart, while the error
             decomposition (for each point of data) is shown in the bottom chart.
             <br><br>
-            For underfit (low-complexity) models, the majority of our error comes from bias.
+            In this demonstration's low-complexity fit, squared bias is the larger contribution.
           </p>
         </div>
 
@@ -303,34 +302,29 @@
             As with bias, the notion of variance also relates to different realizations of our
             model. Specifically,
             <span id="variance-def">
-              variance measures how much, on average, predictions vary for a given data point
+              prediction variance is the average squared deviation from the mean prediction at a fixed input, across training samples
             </span>
             :
             <br><br>
             <span class="katex-var"></span>
             <br><br>
-            As you can see in the bottom plot, predictions from overfit (high-complexity) models
-            show a lot more error from variance than from bias. It’s easy to imagine that any
-            unseen data points will be predicted with high error.
+            In the displayed high-complexity example, variance contributes more than squared bias.
+            Compare the spread of fitted lines at one input with the corresponding decomposition;
+            this example is not a guarantee about every high-complexity model.
           </p>
         </div>
 
         <div class="step" data-step="9">
           <p class="step-head">Finding A Balance</p>
           <p>
-            To obtain our best results, we should work to find a happy medium between a model that
-            is so basic it fails to learn meaningful patterns in our data, and one that is so
-            complex it fails to generalize to unseen data.
-            <br><br>
-            In other words, we don’t want an underfit model, but we don’t want an overfit model
-            either. We want something in between - something with enough complexity to learn learn
-            the generalizable patterns in our data.
+            Compare the three displayed fits: the middle one captures the trend without following
+            every training point. Its advantage belongs to this example, not to a universal rule
+            that the best model has intermediate complexity.
             <br><br>
             <span id="balance-def">
-              By trading some bias for variance (i.e. increasing the complexity of our model), and
-              without going overboard, we can find a balanced model for our dataset
+              Choose a fitting rule using validation performance, then evaluate it on held-out test
+              data. Complexity alone does not determine bias, variance, or generalization.
             </span>
-            .
           </p>
         </div>
 
@@ -353,20 +347,16 @@
         <div class="step" data-step="11">
           <p class="step-head">The Bias Variance Trade-off</p>
           <p>
-            Repeating this aggregation across our range of model complexities, we can see the
-            relationship between bias and variance in prediction errors manifests itself as a
-            U-shaped curve detailing the trade off between bias and variance.
+            Aggregating over the displayed inputs gives this example's U-shaped error curve.
+            That is an additional average across inputs, distinct from the fixed-input expectation
+            used in the decomposition.
             <br><br>
-            When a model is too simple (i.e. small values along the x-axis), it ignores useful
-            information, and the error is composed mostly of that from bias.
-            <br><br>
-            When a model is too complex (i.e. large values along the x-axis), it memorizes
-            non-general patterns, and the error is composed mostly of that from variance.
+            Here, squared bias dominates the simpler fits and variance dominates the more flexible
+            fits. Other data distributions and fitting procedures can produce different curves.
             <br><br>
             <span id="conclusion">
-              The ideal model aims to minimize both bias and variance. It lies in the sweet spot -
-              not too simple, nor too complex. Achieving such a balance will yield the minimum
-              error.
+              The decomposition explains contributions to expected squared error; it does not prove
+              that increasing complexity always lowers bias, raises variance, or yields a U-shaped curve.
             </span>
           </p>
         </div>
@@ -376,9 +366,9 @@
     <div class="story-callout story-inline-note" data-story-callout="story">
       <span class="story-callout__label">What to watch for</span>
       <p>
-        The key move is not “make the model bigger.” It is “notice which part of the error is
-        growing.” Bias dominates when the model cannot flex; variance dominates when every small
-        wobble in the data reshapes the fit.
+        Keep one input in view as you randomize training samples: does the fitted value move?
+        Then change the fitting rule. A single train/test split does not by itself measure the
+        expectation over repeated training samples.
       </p>
     </div>
 
@@ -403,11 +393,9 @@
           smoothing hyperparameter, which represents the proportion of neighboring data used to
           calculate each local fit.
           <br><br>
-          Thus, the bias variance tradeoff for LOESS may be controlled for via the smoothness
-          parameter. When the smoothness is small, the amount of data we consider is insufficient
-          for an accurate fit, resulting in large variance. However, if we make the smoothness too
-          high (i.e. over-smoothed), we trade local information for global, resulting in large
-          bias.
+          Small neighborhoods can make the fit sensitive to which training points were sampled;
+          large neighborhoods can smooth away local structure. These are tendencies to investigate
+          in this dataset, not guaranteed changes in bias and variance for every smoothing value.
           <br><br>
           Below a LOESS curve is fit to two variables. Randomize the training data to observe the
           effect different model realizations have on variance, and control the smoothness to
@@ -437,14 +425,11 @@
           nearest neighbor. If K = 69, the data point is assigned to the majority class of its
           69-nearest neighbors.
           <br><br>
-          We can observe the bias variance tradeoff in KNN directly by playing with the
-          hyperparameter K. When K is small, only a small number of neighbors are considered
-          during the classification vote. The resulting islands and jagged boundaries are a result
-          of high variance, as classifications are determined by very localized neighborhoods. For
-          large values of K, we see very smoothed regions that deviate sharply from the true
-          decision boundary - go too high and you’ll just obtain a majority vote. This is high
-          bias. On the other hand, for medium values of K, we see smooth the regions that follow
-          along the true decision boundary.
+          Change K to compare local votes with votes over larger neighborhoods. Randomize data
+          at the same K to inspect how the decision regions change across samples. Jagged boundaries
+          alone do not measure variance. This classification view illustrates sensitivity and
+          smoothing; the squared-error identity above is not a decomposition of classification
+          error under zero-one loss.
           <br><br>
           Explore the trade-off for yourself below. The plot on the left shows the training data.
           The plot on the right shows decision regions based on the current value of K. Deeper
@@ -474,9 +459,9 @@
           You may also encounter the phenomenon known as double descent, where the classic
           U-shaped test-error curve is followed by a second dip at higher complexity.
           <br><br>
-          Rather than replacing the core intuition above, it provides another way to think about
-          how model capacity, interpolation, and generalization can interact in modern machine
-          learning systems.
+          This does not contradict the squared-error identity: that identity asserts no universal
+          monotonic relationship between complexity, bias, and variance. The fitting procedure and
+          data distribution determine how those terms behave.
         </p>
         <br>
         <div id="dd-container"></div>

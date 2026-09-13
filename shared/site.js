@@ -161,7 +161,7 @@ function createPageCard(page, maxAddedDate, promoted, pagesBySlug) {
   card.dataset.topics = page.topics.join(" ");
   card.dataset.slug = page.slug;
   card.appendChild(createElement("p", "eyebrow", promoted ? "Recommended path" : page.family.label));
-  const title = createElement("h2", null, page.title);
+  const title = createElement("h3", null, page.title);
   card.appendChild(title);
   card.appendChild(createElement("p", "page-card__intent", page.intent === "guided-path" ? "Guided path" : INTENT_LABELS[page.intent]));
   card.appendChild(createElement("p", "meta-line", page.summary));
@@ -195,7 +195,14 @@ function createPageCard(page, maxAddedDate, promoted, pagesBySlug) {
 }
 
 function renderFamilies(mount, pages, state, onChange) {
-  mount.innerHTML = "";
+  if (mount.children.length) {
+    mount.querySelectorAll("[data-atlas-family]").forEach(function (button) {
+      const active = state.family === button.dataset.atlasFamily;
+      button.setAttribute("aria-pressed", String(active));
+      button.classList.toggle("is-active", active);
+    });
+    return;
+  }
   const counts = new Map();
   pages.forEach(function (page) {
     counts.set(page.familyKey, (counts.get(page.familyKey) || 0) + 1);
@@ -282,7 +289,9 @@ async function initHome() {
     function render(mode) {
       const filtered = applyFilters(pages, state);
       syncHomeState(state, mode);
-      queryInput.value = state.query;
+      if (document.activeElement !== queryInput || mode === "none") {
+        queryInput.value = state.query;
+      }
       topicSelect.value = state.topic;
       sortSelect.value = state.sort;
       intentButtons.forEach(function (button) {
@@ -303,7 +312,7 @@ async function initHome() {
       clearButton.disabled = !active;
       mount.innerHTML = "";
       if (!filtered.length) {
-        mount.appendChild(createElement("div", "empty-state", "No routes match these filters."));
+        mount.appendChild(createElement("div", "empty-state", "No routes match these filters. Change your search or use Clear filters to show all routes."));
         return;
       }
       filtered.forEach(function (page) {
@@ -335,6 +344,7 @@ async function initHome() {
       state.family = "all";
       state.topic = "all";
       render("push");
+      queryInput.focus();
     });
     window.addEventListener("popstate", function () {
       Object.assign(state, readHomeState(topics));

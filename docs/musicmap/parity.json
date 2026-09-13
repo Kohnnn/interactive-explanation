@@ -1,5 +1,21 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Vendored bundle hydrates graph, sidebar and genre/media panes.",
+    "localStatus": "Follow-up adapts the existing Navigate help paragraph: genre-relationship question, choose/arrow/inspect task, influence explanation and non-rigid-boundary limit.",
+    "sourceFiles": [
+      "../../musicmap/index.html",
+      "../../musicmap/main.css"
+    ],
+    "notes": [
+      "Targeted read-only extraction overcame serialized-line truncation and found static Navigate/Search prose. Only the Navigate paragraph changes; graph, fixed pane dimensions, controls, bundle, embed gate, cookies, media exception and notices untouched.",
+      "Applicable: Navigate pane opening, selector/arrow, help wrapping, focus, primary readiness, genre/media panes, themes and continuation. Text length stays approximately the same, but rendering and initial primary-visibility signal remain unqualified; no browser or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 follow-up cites exact extracted help text and CSS fixed-pane rules; tag/script preimage guard distinguishes text from graph markup. No whole-bundle or runtime acceptance."
+    ]
+  },
+  {
     "moduleId": "graph-shell-search-and-genre-pane",
     "originalBehavior": "The published Musicmap page boots a large SVG graph with zoom controls, search, genre navigation, and a right-side genre pane with descriptive copy and playlist context.",
     "localStatus": "The local route keeps the published graph shell, local search payload, zoom-to-genre behavior, and right-side genre pane while moving provenance into the shared footer.",

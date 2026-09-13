@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-orientation",
+    "originalBehavior": "Filter XY lesson mounted inside the React/RNBO app.",
+    "localStatus": "Added a static, initially collapsed details[data-route-orientation] sibling after #app with a cutoff/resonance comparison task, reason and low-volume guidance visible in the summary; the error fallback remains unchanged.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-filter-resonance/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: loading, unsupported/error, gesture playback, filter XY editing and native navigation apply. Scoring is not introduced. Ready-state orientation is authored outside the runtime and hidden reference footer; native details toggling needs no new JS. Shared CSS reuses the fixed disclosure pattern without a full-screen pointer layer. Parent must verify keyboard shortcut isolation and control clearance."
+    ],
+    "evidence": [
+      "P2 static review: orientation is a direct body child after the unchanged mount; scripts and runtime state are unchanged. Shared CSS adds only disclosure/focus selector coverage. No browser run or runtime pass claimed. Both themes, three viewports, input/audio, geometry, timing and review remain pending; older evidence below is historical."
+    ]
+  },
+  {
     "moduleId": "lesson-shell-and-filter-runtime",
     "originalBehavior": "The published filter lesson boots the Learning Synths shell and uses an XY control to reshape the filter response in real time.",
     "localStatus": "The local route keeps that filter lesson shell and XY runtime from shared scripts with route-local lesson assets while adding a family-scoped field-guide boundary and shared Atlas chrome.",

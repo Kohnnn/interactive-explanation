@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 2 adapts hero/callout copy with strict/permissive threshold comparison, ROC denominators and ranking-versus-operating-cost limits. Source: retained threshold/ROC/AUC scenes. New interpretation only; scripts, markup, mounts and state logic retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The mlu-pilot adapter stops at the authored shell and never selects descendants of the compiled #app runtime.",
       "Chapter links are attached after mount from manifest-owned stable top-level selectors so the compiled runtime keeps control of its own internals."
     ],

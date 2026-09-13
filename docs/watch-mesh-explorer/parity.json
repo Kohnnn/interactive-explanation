@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Workbench already supplies lesson question, mechanism, result and part-selection instruction.",
+    "localStatus": "Source-reviewed only: retained runtime-owned lesson orientation and replaced one static legend sentence with an inspection task and servicing limitation.",
+    "sourceFiles": [
+      "../../watch-mesh-explorer/index.html"
+    ],
+    "notes": [
+      "No new hero or wrapper; lesson bindings, viewport, datum, inspector, filters, modes, playback and reset unchanged.",
+      "Applicable: binary readiness/failure, lesson/mode selection, filtering/empty results, playback/reset, themes, focus and continuation. No device, geometry, timing or runtime acceptance; no baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only."
+    ]
+  },
+  {
     "moduleId": "semantic-geometry",
     "originalBehavior": "Original local implementation: meaningful watch assemblies are modeled separately from physical source mesh templates.",
     "localStatus": "The workbench validates 71 unique semantic components against the 85-entry binary mesh table, creates source-backed and procedural geometry, preserves the mainplate as the datum, and restores archived local offsets and ZYX rotation order for 16 pivot-sensitive source meshes.",

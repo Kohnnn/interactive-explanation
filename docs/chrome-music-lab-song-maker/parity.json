@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Owned heading/paragraph orient a body-mounted opaque sequencer.",
+    "localStatus": "Source-reviewed only: note-placement question, paint/play/compare task, pitch/time explanation and audio/microphone/save limits replace archive-process copy.",
+    "sourceFiles": [
+      "../../chrome-music-lab-song-maker/index.html"
+    ],
+    "notes": [
+      "Base URL, runtime mount, canvas geometry, transport, settings, sample banks, mic permission handling and disabled remote saving unchanged.",
+      "Applicable: gesture-start audio, stopped/playing, grid edits, settings, denied/unavailable mic/audio, themes, focus and continuation. No audio/device or intrinsic layout acceptance; no baseline successor. Header visibility after runtime readiness still needs checking."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint only; no browser launched."
+    ]
+  },
+  {
     "moduleId": "song-maker-shell-and-canvas-runtime-handoff",
     "originalBehavior": "The published Song Maker page boots a bundled canvas runtime that mounts the sequencer grid, top bar, bottom transport, and settings surfaces directly into the page body.",
     "localStatus": "The local route keeps that published bundled runtime and mount structure while replacing the broader Chrome shell with route-local metadata and the shared public footer.",

@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Selectable coloring map with reveal/shuffle, pair counter and illustrative percentage.",
+    "localStatus": "Existing summary and nearby percentage caption distinguish selective disclosure from a secure proof; the label now says illustrative confidence.",
+    "sourceFiles": [
+      "../../zero-knowledge-proof-demo/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: hidden/revealed colors, region selection, shuffle, rounds and reset apply. Any selected pair increments rounds; adjacency and cryptographic commitments are not checked. The one-half independent-challenge assumption is not established by this engine. Reset clears rounds, not coloring. Audio, export and scored proof validity are not applicable."
+    ],
+    "evidence": [
+      "W3 source review only; map engine, percentage formula and handlers unchanged. Themes, viewports, keyboard/touch, textual status and state retention await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-lab-shell",
     "originalBehavior": "The published route opened directly inside its original demo or bridge shell without the shared Engineering Sandbox lab framing layer.",
     "localStatus": "The local route now adds the Engineering Sandbox lab shell with local fonts, compact framing, no-nav behavior, and a short manipulation checklist while leaving the original map runtime and state transitions intact.",

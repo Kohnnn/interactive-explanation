@@ -962,6 +962,16 @@
     const slug = getSlug();
     prepareLongformEngineeringArticle(body);
     await applyManifestChapters(slug);
+    if (navMode === "generated" && !document.querySelector("[data-story-chapter]")) {
+      const selector = slug === "remember" ? "main > .divider" : slug === "covid-19" ? "main .section.chapter" : "";
+      if (selector) {
+        document.querySelectorAll(selector).forEach((section) => {
+          const title = section.querySelector(slug === "remember" ? "[id='chapter_name']" : ":scope > div > div");
+          const text = sanitizeChapterTitle(title?.textContent || "");
+          if (text) section.dataset.storyChapter = text;
+        });
+      }
+    }
 
     const sections = Array.from(document.querySelectorAll("[data-story-chapter]"));
     applyRouteChapterNavLabels(slug, sections);

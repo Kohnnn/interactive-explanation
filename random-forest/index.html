@@ -34,11 +34,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Let a crowd of weak trees argue their way to a better answer.</h1>
+        <h1 class="story-hero__title">When does a vote beat a single tree?</h1>
         <p class="story-hero__summary">
-          Random forests work because disagreement can be useful. This walkthrough lets you tune
-          the vote, watch bagging produce different trees, and see why small differences across
-          models can add up to a stronger classifier.
+          Hold tree accuracy at 60% and increase the number of voters in the opening model.
+          Compare the majority's accuracy with one tree, then trace the road-sign predictions.
+          The voting model assumes independent errors; real trees can make correlated mistakes.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Tune vote size and tree accuracy</span>
@@ -49,9 +49,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start with the Condorcet sliders to feel the voting intuition, then scroll into the
-          forest build and click a test sign once the majority-vote scene appears. Save the barcode
-          and prediction panels for the “why disagreement helps” part of the lesson.
+          Scroll until both Condorcet sliders are available. Increase the tree count without
+          changing accuracy, then lower accuracy toward 50%. Notice how the voting benefit
+          shrinks: adding voters cannot rescue chance-level predictions in this model.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#scrolly-condurcet">Play first: ensemble vote</a>
@@ -185,8 +185,9 @@
   <div class="story-callout story-inline-note" data-story-callout="engineering">
     <span class="story-callout__label">Why disagreement helps</span>
     <p>
-      Bagging and feature subsampling are not decoration. They deliberately make the trees
-      disagree so the final vote averages away some of the variance that makes a lone tree brittle.
+      Compare a column in the prediction grid: do the trees miss the same sign? Bagging and
+      feature subsampling can reduce correlation, so aggregation can reduce prediction variance.
+      Shared errors survive a vote; the illustrated forest is not guaranteed to beat every tree.
     </p>
   </div>
 

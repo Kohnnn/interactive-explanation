@@ -47,10 +47,10 @@ test("original admission allows unrelated route metadata changes", () => {
   }), rigidAdmission);
 });
 
-test("contract pins all four route files, route metadata and complete shared dependency tree without a self hash", () => {
+test("historical reference pins all four route files, route metadata and complete shared dependency tree without a self hash", () => {
   const root = fileURLToPath(new URL("../../", import.meta.url));
   for (const [file, hash] of Object.entries(rigidAdmission.sources)) {
-    assert.equal(execFileSync("git", ["rev-parse", `HEAD:${file}`], { cwd: root, encoding: "utf8" }).trim(), hash);
+    assert.equal(execFileSync("git", ["rev-parse", `${rigidAdmission.referenceSha}:${file}`], { cwd: root, encoding: "utf8" }).trim(), hash);
   }
 
   assert.equal(verifyRigidAdmission(rigidAdmission, options, resolve, readMetadata), rigidAdmission);
@@ -58,6 +58,16 @@ test("contract pins all four route files, route metadata and complete shared dep
   assert.ok(rigidAdmission.sources.shared);
   assert.deepEqual(Object.keys(rigidAdmission.projections), ["pages.json", "routes.manifest.json"]);
   assert.ok(!Object.keys(rigidAdmission.sources).some(file => file.startsWith("tools/")));
+});
+
+test("valid reference lineage does not admit a changed current shared tree", () => {
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const historicalSource = (_root, file) => execFileSync("git", ["rev-parse", `${rigidAdmission.referenceSha}:${file}`], { cwd: root, encoding: "utf8" }).trim();
+  const historicalMetadata = (_root, file) => execFileSync("git", ["show", `${rigidAdmission.referenceSha}:${file}`], { cwd: root, encoding: "utf8" });
+  assert.equal(verifyRigidAdmission(rigidAdmission, options, historicalSource, historicalMetadata), rigidAdmission);
+  assert.throws(() => verifyRigidAdmission(rigidAdmission, options, (side, file) => {
+    return side === options.head && file === "shared" ? "0".repeat(40) : historicalSource(side, file);
+  }, historicalMetadata), /Original admission source differs: head\/shared/);
 });
 
 test("archived failure is retained without passing legacy equivalence; original groups are fresh", async () => {

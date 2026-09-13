@@ -12,6 +12,7 @@
     "notes": [
       "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
       "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite.",
+      "W2 slice 6 adapts hero/callout copy with source-size versus position, partial occlusion, perceived brightness and ray-model limits. Source: retained opening shadow and power sections. New interpretation only; scripts, markup and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The shipped shell adds a local hero and reinforced generated chapter navigation without replacing the underlying article runtime."
     ],
     "evidence": [

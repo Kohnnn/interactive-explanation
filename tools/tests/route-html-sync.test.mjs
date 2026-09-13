@@ -42,6 +42,185 @@ test("TTV controls follow engine opacity through the existing observer", () => {
   }
 });
 
+test("opaque orientation stays in continuation chrome with native disclosure and local key isolation", () => {
+  const source = fs.readFileSync(path.resolve(here, "../../shared/public-footer.js"), "utf8");
+  const css = fs.readFileSync(path.resolve(here, "../../shared/public-footer.css"), "utf8");
+  const mount = source.slice(source.indexOf("  function mountRouteOrientation("), source.indexOf("  function mountRouteContinuation(pages)"));
+  const questions = {
+    trust: "When does cooperation pay?",
+    loopy: "Can a feedback loop amplify a change?",
+    sim: "What patterns can local rules create?",
+    wbwwb: "How can a headline feed a cycle of fear?",
+    "coming-out-simulator-2014": "What changes when you choose a different reply?",
+  };
+  let focused;
+  function element(tag) {
+    return {
+      tag, children: [], listeners: {},
+      appendChild(child) { this.children.push(child); child.parent = this; },
+      addEventListener(type, listener) { this.listeners[type] = listener; },
+      querySelector(tag) { return this.children.find(child => child.tag === tag); },
+      contains(target) { return target === this || this.children.some(child => child.contains(target)); },
+      focus() { focused = this; },
+    };
+  }
+  function dispatch(target, type, properties = {}) {
+    const event = {
+      target, stopped: false, defaultPrevented: false, ...properties,
+      stopPropagation() { this.stopped = true; },
+      preventDefault() { this.defaultPrevented = true; },
+    };
+    for (let node = target; node; node = node.parent) {
+      node.listeners[type]?.(event);
+      if (event.stopped) break;
+    }
+    return event;
+  }
+  const synths = ["get-started", "how-synths-make-sound", "filter-resonance", "modulating-amplitude-with-envelopes", "matching-envelopes", "recipes"].map(name => `ableton-learning-synths-${name}`);
+  for (const slug of [...Object.keys(questions), ...synths, "polygons", "toString", undefined]) {
+    const section = element("section");
+    const isStatic = synths.includes(slug);
+    if (isStatic) {
+      const html = fs.readFileSync(path.resolve(here, "../..", slug, "index.html"), "utf8");
+      assert.match(html, /<details\b[^>]*data-route-orientation/);
+      const details = element("details");
+      const summary = element("summary");
+      summary.textContent = "Explore this route";
+      details.appendChild(summary);
+      details.appendChild(element("p"));
+      section.appendChild(details);
+    }
+    const document = {
+      ...element("document"), body: { dataset: { storyRoute: slug } }, createElement: element,
+      querySelectorAll(selector) {
+        assert.equal(selector, "body > details[data-route-orientation]");
+        return isStatic ? section.children : [];
+      },
+    };
+    vm.runInNewContext(`${mount}\ninitRouteOrientations();\nmountRouteOrientation(section);`, { document, section });
+    if (!Object.hasOwn(questions, slug) && !isStatic) {
+      assert.equal(section.children.length, 0);
+      continue;
+    }
+    assert.equal(section.children.length, 1);
+    const details = section.children[0];
+    assert.equal(details.tag, "details");
+    assert.equal(details.open, undefined);
+    assert.equal(details.children[0].tag, "summary");
+    assert.equal(details.children[0].textContent, "Explore this route");
+    if (!isStatic) {
+      assert(details.children[1].textContent.startsWith(questions[slug]));
+      assert.match(details.children[1].textContent, /not /);
+    }
+    const summary = details.children[0];
+    const link = element("a");
+    details.children[1].appendChild(link);
+    let outerClicks = 0;
+    section.addEventListener("click", () => outerClicks++);
+    for (const target of [summary, details.children[1], link]) {
+      for (const detail of [0, 1]) {
+        const event = dispatch(target, "click", { detail });
+        assert.equal(event.stopped, true);
+        assert.equal(event.defaultPrevented, false);
+      }
+    }
+    assert.equal(outerClicks, 0);
+    for (const type of ["keydown", "keyup"]) {
+      for (const key of ["Enter", " ", "Escape", "Tab", "ArrowDown", "a"]) {
+        details.open = false;
+        const event = dispatch(summary, type, { key });
+        assert.equal(event.stopped, ["Enter", " ", "Escape"].includes(key));
+        assert.equal(event.defaultPrevented, false);
+      }
+    }
+    for (const release of ["pointerup", "pointercancel"]) {
+      details.open = true;
+      dispatch(details.children[1], "pointerdown");
+      dispatch(summary, "focusout", { relatedTarget: null });
+      assert.equal(details.open, true);
+      document.listeners[release]();
+      dispatch(summary, "focusout", { relatedTarget: null });
+      assert.equal(details.open, false);
+    }
+    details.open = true;
+    focused = link;
+    dispatch(summary, "focusout", { relatedTarget: link });
+    assert.equal(details.open, true);
+    document.listeners.pointerdown({ target: link });
+    assert.equal(details.open, true);
+    const escape = dispatch(link, "keydown", { key: "Escape" });
+    assert.equal(escape.defaultPrevented, true);
+    assert.equal(details.open, false);
+    assert.equal(focused, summary);
+    focused = link;
+    dispatch(link, "keyup", { key: "Escape" });
+    dispatch(link, "keydown", { key: "Escape" });
+    assert.equal(focused, link);
+    for (const relatedTarget of [section, null]) {
+      details.open = true;
+      focused = relatedTarget;
+      dispatch(link, "focusout", { relatedTarget });
+      assert.equal(details.open, false);
+      assert.equal(focused, relatedTarget);
+    }
+    details.open = true;
+    focused = section;
+    document.listeners.pointerdown({ target: section });
+    assert.equal(details.open, false);
+    assert.equal(focused, section);
+    dispatch(section, "click");
+    assert.equal(outerClicks, 1);
+    assert.deepEqual(Object.keys(document.listeners), ["pointerup", "pointercancel", "pointerdown"]);
+  }
+  assert.match(source, /mountRouteOrientation\(section\);\s+footer.before\(section\)/);
+  assert.match(css, /\.route-continuation > \.route-orientation[^{}]*\{[^}]*position: fixed;[^}]*max-height:[^;]+;[^}]*overflow: auto;/);
+});
+
+test("child continuation uses its manifest parent without changing deep links or duplicating chrome", () => {
+  const source = fs.readFileSync(path.resolve(here, "../../shared/public-footer.js"), "utf8");
+  const mount = source.slice(source.indexOf("  function mountRouteContinuation(pages)"), source.indexOf("  function mountRouteContinuationFallback("));
+  const pages = JSON.parse(fs.readFileSync(path.resolve(here, "../../routes.manifest.json"), "utf8"));
+  const parent = pages.find(page => page.slug === "blockchain");
+  assert(parent);
+  assert.equal(pages.some(page => page.slug === "blockchain-distributed"), false);
+  const target = pages.find(page => page.slug === parent.suggestedNextSlug);
+  for (const prefix of ["/", "/interactive-explanation/", "/nested/site/"]) {
+    for (const child of ["distributed.html", "distributed.html?peer=B#block2", "nested/demo.html"]) {
+      const href = `https://example.test${prefix}blockchain/${child}`;
+      const sections = [];
+      const body = { dataset: { storyRoute: "blockchain-distributed" } };
+      const context = vm.createContext({
+        URL, pages, window: { location: { href } },
+        atlasHref: () => `https://example.test${prefix}index.html`,
+        document: {
+          body,
+          querySelector: selector => selector === "main" ? {} : sections[0],
+          createElement: () => ({ dataset: {} }),
+        },
+        createRouteContinuationSection: () => ({ children: [], appendChild(child) { this.children.push(child); } }),
+        insertRouteContinuation: section => sections.push(section),
+      });
+      vm.runInContext(`${mount}\nmountRouteContinuation(pages);\nmountRouteContinuation(pages);`, context);
+      assert.equal(sections.length, 1);
+      assert.equal(sections[0].children.length, 1);
+      assert.equal(sections[0].children[0].href, `https://example.test${prefix}${target.slug}/`);
+      assert.equal(context.window.location.href, href);
+      assert.equal(body.dataset.storyRoute, "blockchain-distributed");
+      for (const invalid of ["blockchain-other/distributed.html", "unknown/distributed.html", "blockchain/", "blockchain/index.html"]) {
+        sections.length = 0;
+        context.window.location.href = `https://example.test${prefix}${invalid}`;
+        assert.throws(() => vm.runInContext("mountRouteContinuation(pages);", context), /Suggested Next Route unavailable/);
+        assert.equal(sections.length, 0);
+      }
+      sections.length = 0;
+      context.window.location.href = href;
+      body.dataset.storyRoute = parent.slug;
+      vm.runInContext("mountRouteContinuation(pages);", context);
+      assert.equal(sections[0].children[0].href, `https://example.test${prefix}${target.slug}/`);
+    }
+  }
+});
+
 const route = {
   slug: "demo-route",
   title: "Demo route",

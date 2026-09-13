@@ -40,11 +40,11 @@
       <p class="story-hero__eyebrow">Engineering Sandbox rollout · probability essays</p>
       <div class="story-hero__grid">
         <div>
-          <h1 class="story-hero__title">Read a Markov chain as a system that keeps just enough memory to be useful.</h1>
+          <h1 class="story-hero__title">How do transition probabilities shape the next state?</h1>
           <p class="story-hero__summary">
-            The fastest way into this page is to watch state transitions first, then interpret the
-            matrix later. Start with the simple chain, tune the matrix until the behavior changes,
-            and only then move into the weather and playground examples.
+            Watch the two-state chain, then change a transition probability and compare repeated steps.
+            Each row gives the next-state probabilities from the current state. This model assumes
+            earlier history adds no information once the current state is known; real weather need not obey that assumption.
           </p>
           <div class="story-hero__meta">
             <span class="story-chip">Animate a two-state chain</span>
@@ -55,9 +55,9 @@
         <div class="story-callout story-hero__panel" data-story-callout="play">
           <span class="story-callout__label">How to use this page</span>
           <p>
-            Play the two-state demo and the transition matrix before reading the larger examples.
-            Once you can predict how one row affects the next step, the sticky-weather model and
-            fullscreen playground start to feel like extensions instead of new topics.
+            Increase a self-transition probability in the matrix and watch for longer stays in that state.
+            A probability changes the distribution of possible steps, not a guaranteed next outcome.
+            The playground is a separate embedded activity.
           </p>
           <div class="story-hero__actions">
             <a class="story-button" href="#two-state-demo">Play first: run the two-state chain</a>

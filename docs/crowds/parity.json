@@ -1,5 +1,22 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Fixed slideshow and simulation layers own the staged lesson and native chapters.",
+    "localStatus": "Follow-up adapts existing bonus#contagions explanatory prose: connection question, same-network sandbox comparison, reinforcement reason and threshold-model limit.",
+    "sourceFiles": [
+      "../../crowds/index.html",
+      "../../crowds/js/slideshow/Modal.js",
+      "../../crowds/css/index.css"
+    ],
+    "notes": [
+      "Supersedes opening-only skip. Existing Bonus Boxes menu displays this help in its scrollable large modal; no new modal, trigger, scene words or state. Tags, scripts, dimensions, chapter pacing and original sources retained.",
+      "Applicable: existing bonus open/scroll/close, sandbox comparison, modal focus and narrow reading; intrinsic keyboard accessibility, audio, themes and continuation remain unqualified. No browser or baseline successor."
+    ],
+    "evidence": [
+      "Modal.js reads bonus innerHTML and uses Modal.show(true); CSS defines overflow:auto for modal_content_container. Package 06 follow-up records source review, not acceptance."
+    ]
+  },
+  {
     "moduleId": "slideshow-flow",
     "originalBehavior": "A chapter-based slideshow advances through introduction, networks, contagions, bonding, small-world, conclusion, credits, and sandbox sections with scratch transitions and audio cues.",
     "localStatus": "The original slideshow shell remains intact, with metadata cleanup, local-route cross-links, supporters-route removal, and the shared public footer added around it.",

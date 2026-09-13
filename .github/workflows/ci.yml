@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Setup Node
@@ -34,6 +35,45 @@ jobs:
 
       - name: Manifest drift gate
         run: git diff --exit-code pages.json
+
+  functional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install matching Playwright headless shell
+        run: npx playwright install --only-shell --with-deps chromium
+
+      - name: All 83 routes and Atlas across viewports and themes
+        run: node tools/functional-sweep.mjs . "$RUNNER_TEMP/functional-sweep.jsonl"
+
+      - name: Original collision browser acceptance
+        if: always()
+        run: node tools/rigid-body-browser.mjs > "$RUNNER_TEMP/collision.json"
+
+      - name: Retain functional evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: functional-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/functional-sweep.jsonl
+            ${{ runner.temp }}/collision.json
+          if-no-files-found: error
 
   paired-performance:
     if: github.event_name == 'pull_request'

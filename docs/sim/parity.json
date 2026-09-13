@@ -1,5 +1,36 @@
 [
   {
+    "moduleId": "package06-shared-orientation",
+    "originalBehavior": "The viewport grid/editor owns rules, transport and model state.",
+    "localStatus": "Authored local-rule question, single-rule/step comparison, emergent-pattern explanation and forecast limitation now appear in a collapsed shared disclosure; the earlier HTML skip remains historical.",
+    "sourceFiles": [
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css",
+      "../../tools/tests/route-html-sync.test.mjs"
+    ],
+    "notes": [
+      "Fixed, height-bounded scrollable details inside existing continuation, outside grid/editor. No runtime, body sizing, typography adapter, ui/resize, provenance visibility, manifest, save state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+    ],
+    "evidence": [
+      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with native controls, scroll reachability, editor/transport input, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+    ]
+  },
+  {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Viewport-bound grid/editor and native transport launch directly into a model.",
+    "localStatus": "Skipped HTML adaptation: no independent authored orientation paragraph; new chrome would disturb grid/editor geometry or require engine-generated UI edits.",
+    "sourceFiles": [
+      "../../sim/index.html"
+    ],
+    "notes": [
+      "Existing sizing and font-ready ui/resize adapter, model text, controls, save/load and scripts untouched.",
+      "Applicable: model readiness/failure, draw/edit/play/pause/step/reset, speed, save/export, focus, theme chrome and continuation. Prior geometry work is retained, not reaccepted; timing and browser/device evidence remain open. No baseline successor."
+    ],
+    "evidence": [
+      "Follow-up reviewed styles/model.css:1-9,22-27,53-63 plus index.html authored 100vh/grid/font-ready seams. Body overflow:hidden and absolute editor prevent assuming an after-main disclosure is reachable; editor help is generated. Parent should add a route-keyed shared orientation/continuation slot with explicit scroll placement while retaining grid dimensions, ui/resize behavior and editor save state. Suggested copy: What patterns can local rules create? Change one rule, step the model and compare repeated runs. The rules define this toy world, not a forecast of a real population. No entrypoint changes or acceptance."
+    ]
+  },
+  {
     "moduleId": "editor-shell-and-control-bar",
     "originalBehavior": "The relaunched Emoji Simulator opens directly into a grid editor with reset, pause, speed, step, and draw controls above the canvas.",
     "localStatus": "The local route keeps the original control bar, grid mount, and editor sidebar structure with only metadata and footer cleanup at the shell level.",

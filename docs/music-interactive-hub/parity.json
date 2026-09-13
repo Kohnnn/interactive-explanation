@@ -8,6 +8,7 @@
       "../../shared/public-footer.js"
     ],
     "notes": [
+      "W2 slice 8 adapts the existing hero and path introduction to choose hearing, sequencing or synthesis tasks and compare beat/pitch/timbre. New interpretation distinguishes saved navigation from mastery. Five stops, all links, Music continuation and 30-day Progress logic retained; no state added. Browser/geometry/timing/audio qualification pending with parent; earlier evidence is historical.",
       "This route is intentionally a local curation page rather than a direct one-source mirror.",
       "The public body links only to local routes and local docs pages.",
       "Curated multi-source provenance is documented in the local docs instead of a single external original-page link."

@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-question",
+    "originalBehavior": "Interactive allocator essay with byte grids, timelines and puzzle.",
+    "localStatus": "Existing summary asks why free memory may not satisfy an allocation and states the contiguous-space and simplified-model limits.",
+    "sourceFiles": [
+      "../../memory-allocation/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: chapter links, timeline stepping, fragmentation scenes and existing puzzle controls apply. Audio and new scoring are not applicable to the authored essay. Runtime state and backing dimensions remain owned by existing renderers."
+    ],
+    "evidence": [
+      "W3 source review only; renderer mounts, styles, scripts and article content unchanged. Themes, viewports, keyboard/touch, puzzle/reset and geometry await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly inside its original article shell without a separate editorial hero, play-first prompt, or shared chapter navigation layer.",
     "localStatus": "The local route now adds the shared Engineering Sandbox essay shell with local fonts, stronger editorial framing, and generated chapter navigation while leaving the original interactive runtime intact.",

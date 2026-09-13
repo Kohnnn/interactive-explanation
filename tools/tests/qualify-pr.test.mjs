@@ -229,6 +229,29 @@ test("qualification has exact full matrix and rejects CLI injection or filter by
   for (const args of [[], ["--route", "atlas"], ["--base-sha", "main;id"], ["--head", ".", "--head", "."], ["--skip-performance"], ["--output"]]) assert.throws(() => parseOptions(args));
 });
 
+test("CI keeps static and full functional gates independent of historical qualification", () => {
+  const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8").replaceAll("\r\n", "\n");
+  const verify = workflow.split("  verify:\n")[1].split("  functional:\n")[0];
+  const functional = workflow.split("  functional:\n")[1].split("  paired-performance:\n")[0];
+  const qualification = workflow.split("  paired-performance:\n")[1];
+  assert.match(workflow, /on:\s+push:\s+pull_request:\s+workflow_dispatch:/);
+  assert.match(verify, /runs-on: windows-latest/);
+  assert.match(verify, /fetch-depth: 0/);
+  assert.match(verify, /run: npm test/);
+  assert.match(verify, /run: git diff --exit-code pages.json/);
+  assert.doesNotMatch(verify, /needs:|if:|playwright install|functional-sweep/);
+  assert.match(functional, /runs-on: ubuntu-latest/);
+  assert.match(functional, /run: npm ci/);
+  assert.match(functional, /npx playwright install --only-shell --with-deps chromium/);
+  assert.match(functional, /run: node tools\/functional-sweep.mjs \. "\$RUNNER_TEMP\/functional-sweep.jsonl"\r?\n/);
+  assert.match(functional, /Original collision browser acceptance\s+if: always\(\)\s+run: node tools\/rigid-body-browser.mjs > "\$RUNNER_TEMP\/collision.json"/);
+  assert.match(functional, /Retain functional evidence even on failure\s+if: always\(\)/);
+  assert.match(functional, /if-no-files-found: error/);
+  assert.doesNotMatch(functional, /needs:|strategy:|event_name|functional-qualified|--route|--group/);
+  assert.match(qualification, /if: github.event_name == 'pull_request'/);
+  assert.doesNotMatch(workflow, /continue-on-error/);
+});
+
 test("CI uses read-only PR sandbox and same-host independent functional obligations", () => {
   const workflow = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert.match(workflow, /permissions:\r?\n  contents: read/);

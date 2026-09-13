@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 2 adapts hero/callout copy to compare temperature held fixed across thresholds, class flips and log-loss penalties. New interpretation distinguishes decision policy from training and calibration. Source: retained boundary/evaluation scenes. Scripts, markup, mounts and state logic retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The mlu-pilot adapter stops at the authored shell and never selects descendants of the compiled #app runtime.",
       "Chapter links are attached after mount from manifest-owned stable top-level selectors so the compiled runtime keeps control of its own internals."
     ],

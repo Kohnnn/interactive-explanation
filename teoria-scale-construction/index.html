@@ -42,73 +42,43 @@
   data-story-nav="none"
 >
   <section class="story-hero">
-    <p class="story-hero__eyebrow">Engineering Sandbox practice · teoria drills</p>
+    <p class="story-hero__eyebrow">Scale spelling · notation practice</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Build the scale degree by degree instead of recognizing it after the fact.</h1>
+        <h1 class="story-hero__title">Can you build the scale before revealing it?</h1>
         <p class="story-hero__summary">
-          This drill shifts from hearing to construction. The goal is to place the right notes on
-          the staff, hear the result back, and learn whether the pattern really lives in your hands.
+          Read the tonic and scale type, then enter successive letter names with the required
+          accidentals. Attempt the prompt before using the exercise's reveal control.
         </p>
-        <div class="story-hero__meta">
-          <span class="story-chip">Scale spelling practice</span>
-          <span class="story-chip">Staff-based note entry</span>
-          <span class="story-chip">Playback confirms the build</span>
-        </div>
       </div>
       <div class="story-callout story-hero__panel" data-story-callout="play">
-        <span class="story-callout__label">How to use this page</span>
+        <span class="story-callout__label">Major-scale hint</span>
         <p>
-          Start by reading the requested scale carefully, place notes one degree at a time, then
-          replay the finished line to check whether the construction sounds as stable as it looks.
+          Use <strong>W W H W W W H</strong>: W is a whole step (two semitones), H a half step
+          (one semitone). Use each letter once before repeating the tonic at the octave.
+          Other scale types have different patterns; follow the active prompt.
         </p>
         <div class="story-hero__actions">
-          <a class="story-button" href="#init">Play first: start scale building</a>
-          <a class="story-button story-button--secondary" href="#exe">Jump to the construction surface</a>
+          <a class="story-button" href="#init">Start scale construction</a>
         </div>
       </div>
     </div>
   </section>
-
-  <section class="story-callout story-practice-callout" data-story-callout="story">
-    <div class="story-practice-grid">
-      <div class="story-practice-panel">
-        <p class="story-practice-kicker">Quick start</p>
-        <ol class="story-practice-checklist">
-          <li><span class="story-practice-checklist__step">1</span><div><strong>Read the prompt</strong>Notice the tonic and the target scale quality before placing any notes.</div></li>
-          <li><span class="story-practice-checklist__step">2</span><div><strong>Build deliberately</strong>Place degrees in order and use the staff view to confirm each accidental or step pattern.</div></li>
-          <li><span class="story-practice-checklist__step">3</span><div><strong>Listen back</strong>Use playback and score feedback together to check both notation and sound.</div></li>
-        </ol>
-      </div>
-      <div class="story-callout story-practice-panel">
-        <span class="story-callout__label">Why this drill matters</span>
-        <p>
-          Construction drills convert theory labels into muscle memory. If you can build the scale,
-          you are much closer to hearing and using it in real music.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="story-practice-strip" aria-label="Practice hints">
-    <span class="story-practice-hint"><strong>Read:</strong> identify tonic and scale quality first.</span>
-    <span class="story-practice-hint"><strong>Place:</strong> build one degree at a time on the staff.</span>
-    <span class="story-practice-hint"><strong>Replay:</strong> use playback to validate the finished pattern.</span>
-  </div>
 
   <main class="teoria-route-shell story-practice-main">
     <div class="page-header">
-      <h3>Scale Construction</h3>
+      <h2>Construct the requested scale</h2>
       <p class="lead">
-        Local replica of Teoria's official scale-construction exercise with route-local notation, note-entry controls, and piano playback for scale-building practice. The exercise runtime is preserved while the surrounding Teoria site shell
-        and promo surfaces are removed.
+        Check the exercise's written feedback and score after your attempt. Compare letter names
+        as well as pitches; playback alone cannot distinguish enharmonic spellings.
       </p>
     </div>
     <section class="story-practice-focus" data-primary-control>
       <div class="story-practice-focus__label">
         <div>
-          <strong>Primary practice surface</strong>
-          Start the scale prompt, place notes in the construction panel, then check playback and score before moving on.
+          <strong>Attempt, check, try another</strong>
+          Use the exercise's answer, reveal, and next controls. Its score belongs to the exercise;
+          the worked example below does not submit an answer or change that score.
         </div>
         <a class="story-button story-button--secondary" href="#score">Jump to score</a>
       </div>
@@ -119,6 +89,21 @@
         <div id="exe">&nbsp;</div>
         <div id="score">&nbsp;</div>
       </div>
+    </section>
+    <section class="story-callout story-practice-callout" aria-labelledby="major-spelling">
+      <h2 id="major-spelling">Check the spelling, not just the sound</h2>
+      <p>Separate warm-up: write D major through the octave before opening the worked answer.</p>
+      <details>
+        <summary>Reveal the D-major spelling and reasoning</summary>
+        <p><strong>D E F# G A B C# D</strong> follows <strong>W W H W W W H</strong>.
+          D–E and E–F# are whole steps; F#–G is a half step. G–A, A–B, and B–C# are whole
+          steps; C#–D is the final half step.</p>
+        <p>If you used F or C natural, check the E–F and B–C gaps: those are half steps where
+          this scale needs whole steps. Gb and Db may sound like F# and C# in equal temperament,
+          but repeat G and D while skipping F and C. Successive letter names require F# and C#.</p>
+      </details>
+      <p>Close the answer to try this warm-up again, or continue with the exercise's next prompt.
+        This reference adds no score, audio, or saved Progress.</p>
     </section>
   </main>
   <script src="./res/bs_341/js/bootstrap.min.js"></script>

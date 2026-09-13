@@ -38,11 +38,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Build a tree by making one useful split at a time.</h1>
+        <h1 class="story-hero__title">Which split makes the classes easier to separate?</h1>
         <p class="story-hero__summary">
-          This page starts with a tiny classification problem, then turns it into a hands-on
-          lesson about entropy, information gain, and why a tree that keeps chasing perfect purity
-          can stop generalizing.
+          Separate apple, cherry, and oak samples by trunk diameter and height. Compare the
+          class mixture before and after a cut: information gain measures the reduction in
+          weighted entropy, not how well the tree will predict unseen trees.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Play with split building</span>
@@ -53,9 +53,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start by jumping straight to the entropy sandbox or by scrolling through the first tree
-          build. Watch the partition chart and the tree diagram together, then come back to the
-          gain and perturbation sections once the split logic feels intuitive.
+          In the entropy sandbox, use Add and Remove to compare a single-class bubble with an
+          even mixture. Watch entropy fall to zero for the pure bubble. Then move the diameter
+          boundary in the gain section: a useful cut reduces the sample-weighted child entropy.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#splits">Play first: entropy sandbox</a>

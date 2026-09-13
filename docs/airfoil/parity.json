@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero introduces flow and pressure scenes.",
+    "localStatus": "Source-reviewed only: hero title, summary and task now ask about lift, compare angle/pressure and state the cross-section model limit.",
+    "sourceFiles": [
+      "../../airfoil/index.html"
+    ],
+    "notes": [
+      "Opening prompt, flow scenes, slider roots, binary data, scientific palettes, article and anchors retained.",
+      "Applicable: flow readiness/failure, slider state, camera where supported, chapters, themes, zoom and continuation. No browser validation of geometry, timing or pointer mapping; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 static checkpoint; moving markers are not presented as a lift measurement."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-airfoil-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and airfoil scripts, then initializes many inline flow-visualization, particle, pressure, viscosity, and airfoil scenes under one longform page.",
     "localStatus": "The local route keeps the published article structure, shared article styling, route-local model data, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",

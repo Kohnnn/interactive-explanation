@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 3 adapts hero/callout copy around six noiseless quadratic samples, threshold versus spline limit, and minimum-norm/knot assumptions. New framing does not generalize the limit to every regularizer. Source: retained model definition and mathematical diagrams. Scripts, tags and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The mlu-pilot adapter themes only authored HTML; KaTeX, chart mounts, SVG, dimensions, and transforms remain intrinsic.",
       "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs."
     ],

@@ -11,6 +11,7 @@
     ],
     "notes": [
       "The public body no longer exposes the upstream author banner, blog navigation, analytics, or footer supporter prompt.",
+      "W2 slice 7 adapts hero/callout copy with date-versus-time comparisons, opposite polar daylight, axial tilt and UTC/weather limits. Source: retained globe and seasonal sections. New interpretation only; scripts, markup and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The route keeps the original longform article structure instead of condensing the content into a custom local rewrite.",
       "The shipped shell adds a local hero, reinforced generated chapter navigation, and an opening date-versus-time comparison cue without replacing the underlying article runtime."
     ],

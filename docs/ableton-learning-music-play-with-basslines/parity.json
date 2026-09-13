@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Bass grid with synchronized drums.",
+    "localStatus": "Existing summary compares timing/duration against the kick and frames matching as a stylistic option.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-basslines/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: sample readiness, gesture playback, note timing/length edits, play/stop and existing export/state paths apply. Scoring is not applicable to creation."
+    ],
+    "evidence": [
+      "W3 source review only; widgets, scripts and settings unchanged. Themes, viewports, input/audio, exports, continuation and state retention await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Ableton lesson opens directly into the archived widget lesson shell with only the lesson copy and interactive controls framing the first action.",
     "localStatus": "The local route keeps that lesson runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first lesson surface around the archived widgets.",

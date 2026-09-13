@@ -46,11 +46,11 @@
       <p class="story-hero__eyebrow">Engineering Sandbox rollout · data essays</p>
       <div class="story-hero__grid">
         <div>
-          <h1 class="story-hero__title">Use PCA as a way to rotate your attention, not just your axes.</h1>
+          <h1 class="story-hero__title">Which direction preserves the most variation?</h1>
           <p class="story-hero__summary">
-            This route gets better once you stop thinking about dimensionality reduction as a purely
-            symbolic trick. Drag the points, rotate the view, and watch which directions keep the
-            variation that matters before you move into the higher-dimensional examples.
+            Drag the 2D samples into an elongated cloud and watch PC1 turn along its spread.
+            Compare the one-dimensional projections: PCA maximizes variance along the first axis.
+            High variance need not mean useful information, and changing feature units can change PCA.
           </p>
           <div class="story-hero__meta">
             <span class="story-chip">Drag 2D samples</span>
@@ -61,9 +61,9 @@
         <div class="story-callout story-hero__panel" data-story-callout="play">
           <span class="story-callout__label">How to use this page</span>
           <p>
-            Start in 2D and physically move the points until the first principal component feels
-            inevitable. Then rotate the 3D cloud and only afterwards jump into the UK food example,
-            where the meaning comes from the separation you have already learned to see.
+            Move one 2D point away from the cloud and watch the axes respond. In 3D, compare
+            your chosen view with Show PCA, then use reset to restore the view.
+            Dropping the least-variable axis still discards information; inspect what overlaps.
           </p>
           <div class="story-hero__actions">
             <a class="story-button" href="#pca-2d">Play first: drag the 2D points</a>

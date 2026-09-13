@@ -1,5 +1,24 @@
 [
   {
+    "moduleId": "package03-editorial-pilot-partial",
+    "originalBehavior": "The existing hero promised a useful middle; several retained paragraphs implied a universal monotonic complexity tradeoff.",
+    "localStatus": "Partially implemented, not accepted: authored question, assumptions, comparisons, and interpretation now follow the essay pilot contract. Historical evidence below does not qualify this revision.",
+    "sourceFiles": [
+      "../../bias-variance/index.html"
+    ],
+    "notes": [
+      "Adapted existing hero and intro; removed hero chips and demoted the duplicate intro h1. Added fixed-input conditional-mean, independent zero-mean target-noise, finite-second-moment, training-sample/fitting-randomness expectation assumptions before the scenes.",
+      "Revised decomposition, bias, variance, balance, aggregate-complexity, LOESS, KNN and double-descent explanations; distinguished classification zero-one loss from squared error and removed universal monotonic claims. Existing references provide retained source context; no new scientific engine or diagram.",
+      "Retained all runtime scripts, inline adapter, mounts, step attributes, equation targets, controls, local paths and manifest continuation. Shared Editorial CSS is parent-owned and unchanged by this slice.",
+      "Applicable and pending: scene readiness and transitions, randomization and sliders, generated navigation, fallback, both stored themes at 1400x1000/390x844/320x844, system/storage/live theme, keyboard/pointer/touch, focus/contrast/zoom/reduced motion, geometry and paired performance. Audio, score, answer/reveal and new persistent Progress are not applicable: this essay adds none.",
+      "Open: shorter prose changes scroll geometry and requires paired browser evidence; intrinsic SVG/KaTeX and hover-only KNN access are not certified. Legacy scene heuristics remain illustrative, not empirical proof of the expectation identity. User authorized implementation despite historical W0 timing and unavailable review; acceptance remains open."
+    ],
+    "evidence": [
+      "Source-reviewed against master spec lines 99–105; review is agent editorial judgment, not human approval or measured learning gains.",
+      "Static commands and exact script-preservation results are recorded in package 03 checkpoint; browser qualification is deferred to the parent, with no baseline replacement."
+    ]
+  },
+  {
     "moduleId": "engineering-sandbox-story-shell",
     "originalBehavior": "The published route opened directly into the bias-variance story shell without a separate editorial hero, chapter rail, or play-first framing layer.",
     "localStatus": "The local route adds token-driven light and dark styling for shared chrome, authored prose, and verified controls plus manifest-owned chapter navigation and a Route-owned cold-jump compatibility adapter while leaving compiled charts, KaTeX, and intrinsic media unchanged.",

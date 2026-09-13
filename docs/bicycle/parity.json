@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero precedes the rider and force demonstrations.",
+    "localStatus": "Source-reviewed only: revised hero title, summary and task paragraph; force question, slider/camera action, velocity comparison and safety/design limit.",
+    "sourceFiles": [
+      "../../bicycle/index.html"
+    ],
+    "notes": [
+      "Hero structure and anchors retained; binary geometry, renderer, controls, scientific colors and article untouched.",
+      "Applicable: model readiness/failure, slider/camera state, generated chapters, themes, zoom and continuation. Authored copy may reflow; intrinsic viewport, pointer and timing preservation require browser evidence. No baseline successor or acceptance."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records source identity and static checks."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-bicycle-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and bicycle scripts, then initializes many inline rider, force, wheel, stability, and frame sections under one longform page.",
     "localStatus": "The local route keeps the published article structure, shared article styling, route-local model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",

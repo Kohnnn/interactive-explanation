@@ -1,5 +1,36 @@
 [
   {
+    "moduleId": "package06-shared-orientation",
+    "originalBehavior": "The fixed slideshow owns pacing, chapters and runtime geometry.",
+    "localStatus": "Authored cooperation question, repeated-round action, incentive explanation and relationship-model limitation now appear in a collapsed shared disclosure; the earlier HTML skip remains historical.",
+    "sourceFiles": [
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css",
+      "../../tools/tests/route-html-sync.test.mjs"
+    ],
+    "notes": [
+      "Fixed, height-bounded scrollable details inside existing continuation, outside main and native footer. No runtime, body sizing, provenance visibility, manifest, state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+    ],
+    "evidence": [
+      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with native controls, scroll reachability, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+    ]
+  },
+  {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Fixed slideshow owns opening words, chapters, timing and audio.",
+    "localStatus": "Skipped HTML adaptation: no existing owned visible orientation paragraph outside the runtime. A new hero would alter stage placement or pacing.",
+    "sourceFiles": [
+      "../../trust/index.html"
+    ],
+    "notes": [
+      "Source-reviewed mount/preloader and script handoff only; engine and HTML unchanged.",
+      "Applicable: preload/ready/error, native chapters, strategy/sandbox state, audio, theme chrome, focus and continuation. All runtime/device evidence remains open; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Follow-up reviewed css/slides.css:7-48: full-height body with overflow:hidden, percentage-height main and absolute native footer. Ordinary after-runtime details would be clipped or share native footer space. shared/public-footer.js:264-328 hides generated reference content unless explicitly enabled and offers no orientation slot. Parent should add a route-keyed, separately positioned nonmodal orientation slot beside continuation, preserving #main height and #footer position, then qualify scrolling/input. Suggested copy: When does cooperation pay? Compare choices across repeated rounds; future encounters change incentives. This payoff model is not a prediction of real relationships. No entrypoint changes or acceptance."
+    ]
+  },
+  {
     "moduleId": "slideshow-flow",
     "originalBehavior": "Chapter-based slideshow progression with scratch transitions, sound controls, slide selection, and the original pacing across intro, one-off, iterated, tournament, distrust, noise, sandbox, conclusion, credits, and footnotes.",
     "localStatus": "Vendored from upstream and kept structurally intact; metadata, share URL handling, footer-only reference links, and public comment cleanup were applied around the runtime.",

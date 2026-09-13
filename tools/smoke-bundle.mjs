@@ -925,10 +925,12 @@ async function createThemeContext(browser, options) {
       }
       return originalSetAttribute.call(this, name, value);
     };
-    if (useStoredTheme) {
-      window.localStorage.setItem("theme", expectedTheme);
-    } else {
-      window.localStorage.removeItem("theme");
+    if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+      if (useStoredTheme) {
+        window.localStorage.setItem("theme", expectedTheme);
+      } else {
+        window.localStorage.removeItem("theme");
+      }
     }
     document.addEventListener("focusin", (event) => {
       if (event.target?.closest?.("[data-route-continuation]")) {
@@ -8240,8 +8242,8 @@ async function assertAtlasContinuations(page, selector, label) {
   assert(focusState.progressUnchanged, `${label} continuation wrote Guided Path Progress`);
 }
 
-async function smokeAtlas(context) {
-  const page = await context.newPage();
+async function smokeAtlas(context, existingPage) {
+  const page = existingPage || await context.newPage();
   await assertRoute(page, "", "[data-page-list]");
   await page.waitForFunction(() => document.querySelectorAll("[data-page-list] [data-intent]").length > 0, null, { timeout: 15000 });
   const guidedPathCount = routeManifest.filter((route) => route.intent === "guided-path").length;
@@ -8316,11 +8318,11 @@ async function smokeAtlas(context) {
   }, null, { timeout: 15000 });
   assert(await page.locator("[data-sort-select]").inputValue() === "title", "atlas did not restore sort state from the URL");
   await assertViewportUsable(page, "atlas desktop");
-  await page.setViewportSize({ width: 390, height: 844 });
+  if (!existingPage) await page.setViewportSize({ width: 390, height: 844 });
   assert(await page.locator("[data-guided-path-list]").isVisible(), "atlas guided paths were hidden on mobile");
   assert(await page.locator("[data-topic-select]").isVisible(), "atlas topic selector was hidden on mobile");
   await assertViewportUsable(page, "atlas mobile");
-  await page.close();
+  if (!existingPage) await page.close();
 }
 
 async function smokeMusicInteractiveHub(context) {
@@ -9118,8 +9120,8 @@ async function smokeBiasVariance(context) {
       document.querySelector("#dd-container svg");
   }, null, { timeout: 30000 });
 
-  for (const y of [1200, 2200, 3200, 4200, 5200, 6200]) {
-    await page.evaluate((nextY) => window.scrollTo(0, nextY), y);
+  for (const step of (await page.locator("#scrolly .step").all()).slice(0, 6)) {
+    await step.evaluate((element) => element.scrollIntoView({ block: "center" }));
     await page.waitForTimeout(350);
   }
   await page.waitForFunction(() => {
@@ -10110,6 +10112,8 @@ export {
   waitForDocumentLayout, waitForManifestRouteReady, assertDocumentTheme,
   scrollPrimarySurfaceIntoView, measureRuntimeSurface, readPerformanceEvidence,
   assertRuntimeGeometry, createRuntimeMonitor, createRemoteRequestMonitor, assertOnlyAllowedRemoteRequests,
+  assertRouteContinuation, assertManifestNavigation, assertReadOnlyProbe, assertRouteAccessibility,
+  assertViewportUsable, smokeAtlas, smokeBiasVariance, smokeBlockchain, smokeTeoriaScaleConstruction,
 };
 
 if (isMain) {

@@ -10,6 +10,7 @@
       "../../shared/public-footer.js"
     ],
     "notes": [
+      "W2 slice 8 adapts the existing hero and Start here note with systems/story/playground choices, a repeated-game comparison and real-person prediction limits. Source: retained cluster cards and Trust handoff. New interpretation only; unnumbered navigation, links, markup and no-Progress semantics retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The route is intentionally a local curation page rather than a replica of one repository listing view.",
       "The public body links only to local routes and local docs pages.",
       "Ticket 15 keeps this guided-path hub editorial and unnumbered: it has no data-learning-progress-slug, Start/Resume controls, numbered steps, or Progress write."

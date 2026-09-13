@@ -53,11 +53,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Sweep the threshold and watch a whole classifier trace out its story.</h1>
+        <h1 class="story-hero__title">How does one threshold become a point on the ROC curve?</h1>
         <p class="story-hero__summary">
-          ROC and AUC are easiest to understand when the threshold movement, the scatter updates,
-          and the curve all stay visible at the same time. This route keeps the sweep tactile and
-          then uses the area view to summarize what the classifier family is doing.
+          Follow the threshold sweep and compare true-positive and false-positive rates.
+          Each cutoff contributes a point; the full curve describes the ranking across cutoffs.
+          AUC summarizes that ranking, not the accuracy or cost of a chosen operating threshold.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Sweep the threshold</span>
@@ -68,9 +68,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start with the threshold scene until the true-positive and false-positive tradeoff feels
-          obvious, then move to the ROC and AUC sections to see how the whole sweep compresses into
-          one curve and one summary score.
+          Compare a strict cutoff with a permissive one in the threshold scene. Track recovered
+          positives and newly admitted negatives, then locate those rates on the ROC axes.
+          The denominators are actual positives and actual negatives, not predicted positives.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#first-threshold">Play first: sweep the threshold</a>

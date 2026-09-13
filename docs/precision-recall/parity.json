@@ -10,6 +10,7 @@
     ],
     "notes": [
       "Research39 bounds the existing F1 chart-and-legend container with named keyboard scrolling, preserving chart, legend, and resize-listener dimensions. Rejected stacked-layout captures are retained separately. Final paired six-cell captures are stable and 18 keyboard contexts pass; successor003 focused gates stop at narrow authored geometry.",
+      "W2 slice 2 adapts hero/callout copy with threshold-driven confusion counts, metric denominators, non-monotonic precision and F1 cost limits. Source: retained confusion-matrix/threshold scenes. New interpretation only; scripts, markup, mounts and state logic retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "Chapter links are attached after mount from manifest-owned stable top-level selectors so the compiled runtime keeps control of its own internals."
     ],
     "evidence": [

@@ -42,11 +42,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · static ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Keep the picture from part one, then tighten the math around it.</h1>
+        <h1 class="story-hero__title">Which interpolating solution does the model select?</h1>
         <p class="story-hero__summary">
-          Part two trades intuition for structure. It walks through a concrete piecewise-linear
-          model, shows why the interpolation threshold can be rigid and bad, and then explains why
-          the infinite-model limit opens the door to much smoother solutions.
+          Follow a piecewise-linear fit to six noiseless quadratic samples, from the threshold
+          to the many-knot limit. The minimum-norm choice matters when multiple fits exist.
+          This argument depends on the stated knot distribution and norm, not model size alone.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Track the model definition</span>
@@ -57,9 +57,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Read this one like a technical essay with checkpoints. The charts break up the argument,
-          so pause at each diagram before moving on. If the notation starts to feel abstract,
-          revisit part one and then come back to the threshold and infinity sections.
+          Compare the threshold diagram with the limiting spline argument. Track what stays
+          fixed: the six samples and the fitting rule. More knots supply additional solutions;
+          the norm selects among them. Do not infer the same limit for a different regularizer.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#intro">Start with the setup</a>

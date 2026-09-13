@@ -44,9 +44,9 @@
     <p class="story-hero__eyebrow">Engineering Sandbox · interactive engineering notebooks</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Move between pickers first, then let the math explain why the same numbers stop matching.</h1>
+        <h1 class="story-hero__title">Can identical RGB numbers describe different colors?</h1>
         <p class="story-hero__summary">
-          This route works like a calibration exercise. Compare early pickers, watch gamma distort intuition, and carry that mismatch into chromaticity and gamut plots so every later diagram answers a surprise you already felt.
+          Match slider positions in the first two pickers and compare their colors. A color space assigns meaning to the numbers through its primaries and encoding. These displayed comparisons illustrate that mapping; they cannot calibrate your screen or show colors outside its gamut.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Compare RGB pickers</span>
@@ -57,7 +57,7 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">Start with the mismatch</span>
         <p>
-          Drag the first picker until two controls that look equivalent stop agreeing. That surprise is the engine for the whole article. Once you feel it, intensity, chromaticity, and gamut sections become explanations of a broken assumption instead of isolated definitions.
+          Set the same intermediate channel values in both pickers, then inspect the intensity-mismatch plates. Endpoints can agree while midtones differ because encoded values need not be proportional to light intensity. Distinguish a changed encoding from a changed RGB primary.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#color_plain_srgb_slider_container">Start with the pickers</a>

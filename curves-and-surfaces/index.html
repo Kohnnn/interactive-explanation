@@ -44,9 +44,9 @@
     <p class="story-hero__eyebrow">Engineering Sandbox · interactive engineering notebooks</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Reshape the surface first, then let control points and interpolation explain the smoothness.</h1>
+        <h1 class="story-hero__title">How can a few handles steer a smooth surface?</h1>
         <p class="story-hero__summary">
-          Start by dragging the opening form until the surface feels editable. After that, control points, interpolation, splines, and subdivision read as progressively deeper answers to one question: how do you steer curvature without drawing every point by hand?
+          Drag one handle on the mask and inspect which surrounding parts move. Then compare the curve's control points with the curve itself: weighted constructions turn a small control set into many positions. A handle need not lie on the surface, and different constructions give different influence.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Reshape the first surface</span>
@@ -57,7 +57,7 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">Start with the shape</span>
         <p>
-          Work the opening surface before you read. The article is much cleaner once you already trust that a few handles can steer a richer form, because every later section is unpacking how that promise is actually delivered.
+          Move one mask handle, then select and drag a point in the curve-influence demo. Compare moving regions with regions that stay still. Follow the weight plots to explain the difference; visual smoothness alone does not establish a particular degree of derivative continuity.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#cs_subdiv_hero">Reshape the surface</a>

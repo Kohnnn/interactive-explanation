@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-practice",
+    "originalBehavior": "Interval identification/inversion drill with generated notation, answers and score.",
+    "localStatus": "Existing explanation states simple-interval inversion number and quality rules and encourages spelling checks after errors.",
+    "sourceFiles": [
+      "../../teoria-interval-identification-and-inversion/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: start, notation, attempt, correct/incorrect, score and exercise options apply; playback coverage depends on enabled mode. Generated feedback, save and score logic unchanged."
+    ],
+    "evidence": [
+      "W3 source review only. Themes, viewports, keyboard/touch, audio recovery, reveal/retry availability and state retention await parent probes. Historical evidence below is not this revision's runtime acceptance."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Teoria exercise opens directly into a compact drill shell with minimal framing around the start gate, answer controls, and score panels.",
     "localStatus": "The local route keeps that exercise runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first exercise surface ahead of the original mounts.",

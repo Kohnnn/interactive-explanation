@@ -349,7 +349,76 @@
     if (!footer) {
       throw new Error("Reference footer unavailable");
     }
+    mountRouteOrientation(section);
     footer.before(section);
+  }
+
+  function mountRouteOrientation(section) {
+    const copy = {
+      trust: "When does cooperation pay? Compare choices across repeated rounds; future encounters change incentives. This payoff model is not a prediction of real relationships.",
+      loopy: "Can a feedback loop amplify a change? Draw a loop, choose positive or negative links, then play and perturb a node to see how influence returns through the loop. Signs describe qualitative influence, not measured quantities.",
+      sim: "What patterns can local rules create? Change one rule, step the model and compare repeated runs to see how local interactions build larger patterns. The rules define this toy world, not a forecast of a real population.",
+      wbwwb: "How can a headline feed a cycle of fear? Photograph a moment and watch the crowd respond to its broadcast; what gets shown shapes the next reaction. This scripted satire is not an empirical model of media effects.",
+      "coming-out-simulator-2014": "What changes when you choose a different reply? Follow the conversation and notice how each reply shapes others' responses. This authored personal story is not a guide to predicting a family's reaction or a requirement to come out.",
+    }[document.body?.dataset.storyRoute];
+    if (typeof copy !== "string") {
+      return;
+    }
+    const details = document.createElement("details");
+    details.className = "route-orientation";
+    const summary = document.createElement("summary");
+    summary.textContent = "Explore this route";
+    const paragraph = document.createElement("p");
+    paragraph.textContent = copy;
+    details.appendChild(summary);
+    details.appendChild(paragraph);
+    wireRouteOrientation(details);
+    section.appendChild(details);
+  }
+
+  function wireRouteOrientation(details) {
+    const summary = details.querySelector("summary");
+    if (!summary) {
+      return;
+    }
+    details.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+    ["keydown", "keyup"].forEach(function (type) {
+      details.addEventListener(type, function (event) {
+        if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+          event.stopPropagation();
+        }
+        if (type === "keydown" && event.key === "Escape" && details.open) {
+          event.preventDefault();
+          details.open = false;
+          summary.focus();
+        }
+      });
+    });
+    let internalPointer = false;
+    details.addEventListener("pointerdown", function () {
+      internalPointer = true;
+    });
+    ["pointerup", "pointercancel"].forEach(function (type) {
+      document.addEventListener(type, function () {
+        internalPointer = false;
+      });
+    });
+    details.addEventListener("focusout", function (event) {
+      if (!internalPointer && !details.contains(event.relatedTarget)) {
+        details.open = false;
+      }
+    });
+    document.addEventListener("pointerdown", function (event) {
+      if (details.open && !details.contains(event.target)) {
+        details.open = false;
+      }
+    }, true);
+  }
+
+  function initRouteOrientations() {
+    document.querySelectorAll("body > details[data-route-orientation]").forEach(wireRouteOrientation);
   }
 
   function mountRouteContinuation(pages) {
@@ -365,6 +434,13 @@
 
     const current = pages.find(function (page) {
       return page.slug === slug;
+    }) || pages.find(function (page) {
+      const routeUrl = new URL(page.slug + "/", atlasHref());
+      const location = new URL(window.location.href);
+      return location.origin === routeUrl.origin &&
+        location.pathname.startsWith(routeUrl.pathname) &&
+        location.pathname !== routeUrl.pathname &&
+        location.pathname !== routeUrl.pathname + "index.html";
     });
     const target = pages.find(function (page) {
       return page.slug === current?.suggestedNextSlug;
@@ -669,6 +745,7 @@
 
   function boot() {
     initFooter();
+    initRouteOrientations();
     initRouteContinuation();
     initTopBar();
     initHomeThemeToggle();

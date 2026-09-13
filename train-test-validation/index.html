@@ -77,11 +77,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox pilot · easy-first ML</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Treat data splitting like a workflow decision, not vocabulary.</h1>
+        <h1 class="story-hero__title">Which data may influence your next model choice?</h1>
         <p class="story-hero__summary">
-          This route turns train, validation, and test sets into a concrete sequence: split the
-          data, fit a boundary, drag examples around, compare models honestly, and resist the urge
-          to optimize against the final score.
+          Move a training pet and compare the boundary with the validation results. Training
+          data fits the model; validation guides choices; the test set estimates the final result.
+          Repeatedly choosing models from test scores turns that test set into selection data.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Drag the training examples</span>
@@ -92,9 +92,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Jump to the model scene first if you want a hands-on entry point. Drag a pet, switch the
-          active features, then keep scrolling so the validation and test tables explain why that
-          interaction belongs in the middle of the workflow rather than at the end.
+          In the model scene, drag one pet and watch the boundary respond. Compare feature
+          choices using the validation table before visiting the test section. This toy split
+          illustrates roles; real splits must also prevent leakage across related or future data.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#model">Play first: move the boundary</a>

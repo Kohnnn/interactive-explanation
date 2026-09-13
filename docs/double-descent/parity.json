@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 3 adapts hero/callout copy to compare feature counts and between-sample fits; new framing rejects a universal complexity curve and distinguishes interpolation from generalization. Source: retained slider and gap animation. Scripts, tags and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The mlu-pilot adapter themes only authored HTML; the injected slider, SVG scenes, GIF, dimensions, and transforms remain intrinsic.",
       "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs."
     ],

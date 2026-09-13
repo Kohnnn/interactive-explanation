@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Historical article introduces independently embedded epidemic scenarios.",
+    "localStatus": "Source-reviewed only: adapted the first paragraph with a contacts/immunity question, single-setting comparison, transmission reason and May 2020 limitation.",
+    "sourceFiles": [
+      "../../covid-19/index.html"
+    ],
+    "notes": [
+      "Scenario sequence, iframe geometry, dated evidence, footnotes, controls and credits retained; no current forecast or medical guidance claimed.",
+      "Applicable: child start/replay/settings, loading/error, frame focus, generated navigation, themes, zoom and continuation. Child behavior and existing overflow signal remain unqualified; no browsers or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records source identity and static checks only."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-stage-map",
     "originalBehavior": "The live page is a long-form article with a splash banner, embedded simulation stages, inline diagrams, and footnotes that support the learning flow.",
     "localStatus": "The article shell, embedded stage iframes, splash banner, and littlefoot-driven footnotes remain intact while translation, share, and supporter UI were removed from the public shell.",

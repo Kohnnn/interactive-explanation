@@ -1,5 +1,35 @@
 @import "./tokens.css";
 
+:root {
+  --ie-editorial-page: light-dark(#f5f7fa, #0b1018);
+  --ie-editorial-surface: light-dark(#ffffff, #141d2a);
+  --ie-editorial-ink: light-dark(#17202d, #eef3f8);
+  --ie-editorial-muted: light-dark(#526174, #b2bfd0);
+  --ie-editorial-rule: light-dark(#748297, #718299);
+  --ie-editorial-action: light-dark(#a33d00, #ff9b55);
+  --ie-editorial-on-action: light-dark(#ffffff, #0b1018);
+  --ie-editorial-data: light-dark(#185abd, #81b6ff);
+  --ie-editorial-sans: system-ui, "Segoe UI", sans-serif;
+  --ie-editorial-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --ie-editorial-mono: ui-monospace, Consolas, monospace;
+}
+
+.top-bar,
+.route-continuation,
+.public-footer {
+  --topbar-bg: var(--ie-editorial-surface);
+  --topbar-ink: var(--ie-editorial-ink);
+  --topbar-line: var(--ie-editorial-rule);
+  --topbar-hover: var(--ie-editorial-action);
+  --footer-bg: var(--ie-editorial-page);
+  --footer-ink: var(--ie-editorial-ink);
+  --footer-line: var(--ie-editorial-rule);
+  --footer-label: var(--ie-editorial-muted);
+  --footer-note: var(--ie-editorial-muted);
+  --footer-hover: var(--ie-editorial-action);
+  --footer-divider: var(--ie-editorial-rule);
+}
+
 body.has-top-bar {
   padding-top: var(--topbar-height);
 }
@@ -36,7 +66,7 @@ body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
   max-width: calc(100vw - 32px);
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 9px 16px;
+  padding: 1.5px 16px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -46,7 +76,7 @@ body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--ie-editorial-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -71,7 +101,7 @@ body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
   margin-right: auto;
   overflow: hidden;
   color: inherit;
-  font-family: "Be Vietnam Pro", sans-serif;
+  font-family: var(--ie-editorial-sans);
   font-size: 0.9rem;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -80,7 +110,7 @@ body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
 
 .top-bar__docs {
   color: inherit;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--ie-editorial-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   text-decoration-thickness: 1px;
@@ -116,13 +146,13 @@ body.has-top-bar[data-story-shell="engineering-sandbox"] .story-rail {
   border-block: 1px solid var(--footer-line);
   background: color-mix(in srgb, var(--footer-bg) 92%, transparent);
   color: var(--footer-ink);
-  font-family: "Be Vietnam Pro", sans-serif;
+  font-family: var(--ie-editorial-sans);
 }
 
 .route-continuation__heading {
   margin: 0;
   color: var(--footer-label);
-  font: 700 0.78rem/1.4 "IBM Plex Mono", monospace;
+  font: 700 0.78rem/1.4 var(--ie-editorial-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -183,7 +213,7 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
   border-top: 1px solid var(--footer-line);
   background: color-mix(in srgb, var(--footer-bg) 92%, transparent);
   color: var(--footer-ink);
-  font-family: "Be Vietnam Pro", sans-serif;
+  font-family: var(--ie-editorial-sans);
 }
 
 .public-footer__inner {
@@ -235,6 +265,89 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
   color: var(--footer-divider);
 }
 
+.top-bar,
+.route-continuation,
+.public-footer {
+  background: var(--ie-editorial-page);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.top-bar--overlay,
+.top-bar__theme {
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.top-bar__inner {
+  width: min(1200px, 100%);
+}
+
+.top-bar__back,
+.top-bar__docs,
+.top-bar__theme,
+.public-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--ie-editorial-action);
+}
+
+.route-continuation__link {
+  color: var(--ie-editorial-action);
+}
+
+body[data-story-family="ableton-synths"] .route-continuation {
+  margin-bottom: calc(6rem + env(safe-area-inset-bottom));
+}
+
+body[data-story-route="loopy"] .route-continuation {
+  position: relative;
+  z-index: 1100;
+}
+
+:is(.top-bar, .route-continuation, .public-footer) :focus-visible,
+body[data-story-family="ableton-synths"] > details[data-route-orientation] :focus-visible {
+  outline: 3px solid var(--ie-editorial-data);
+  outline-offset: 4px;
+}
+
+:is(.route-continuation > .route-orientation, body[data-story-family="ableton-synths"] > details[data-route-orientation]) {
+  position: fixed;
+  right: 8px;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 1200;
+  box-sizing: border-box;
+  width: min(28rem, calc(100vw - 16px));
+  max-height: calc(100dvh - var(--topbar-height) - 32px);
+  overflow: auto;
+  padding: 0 12px;
+  border: 1px solid var(--ie-editorial-rule);
+  background: var(--ie-editorial-page);
+  color: var(--ie-editorial-ink);
+  font: 16px/1.65 var(--ie-editorial-sans);
+  text-align: left;
+  overscroll-behavior: contain;
+}
+
+:is(.route-continuation > .route-orientation, body[data-story-family="ableton-synths"] > details[data-route-orientation]):not([open]) {
+  width: auto;
+  max-width: calc(100vw - 16px);
+}
+
+:is(.route-continuation > .route-orientation, body[data-story-family="ableton-synths"] > details[data-route-orientation]) > summary {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding-block: 9px;
+  color: var(--ie-editorial-action);
+  cursor: pointer;
+}
+
+:is(.route-continuation > .route-orientation, body[data-story-family="ableton-synths"] > details[data-route-orientation]) > p {
+  margin: 8px 0 12px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .top-bar__back,
   .top-bar__theme {
@@ -249,8 +362,9 @@ body[data-story-shell="engineering-sandbox"][data-story-family="engineering-long
   }
 
   .top-bar__inner {
-    max-width: calc(100vw - 20px);
-    padding: 8px 10px;
+    max-width: calc(100vw - 32px);
+    padding: 1.5px 0;
+    gap: 10px;
   }
 
   .public-footer {

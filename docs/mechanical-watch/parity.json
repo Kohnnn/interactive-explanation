@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero introduces the shared watch movement.",
+    "localStatus": "Source-reviewed only: hero asks about spring-powered timing, directs cutaway inspection, distinguishes transmission from regulation and limits accuracy/servicing claims.",
+    "sourceFiles": [
+      "../../mechanical-watch/index.html"
+    ],
+    "notes": [
+      "Shared watch runtime, binary buffers, layers, pause control, article and anchors unchanged.",
+      "Applicable: model readiness/failure, camera/cutaway/pause, generated chapters, themes, zoom and continuation. Shared runtime state and intrinsic geometry not browser-tested; no baseline successor or acceptance."
+    ],
+    "evidence": [
+      "Package 06 source/static checkpoint only."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-shared-watch-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and watch scripts, then initializes many inline watch-movement scenes under one longform page.",
     "localStatus": "The local route keeps the published article structure and layers in a compact engineering-sandbox onboarding shell while loading the watch styles, scripts, helper images, and model assets from the canonical shared runtime.",

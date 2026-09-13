@@ -46,11 +46,11 @@
       <p class="story-hero__eyebrow">Engineering Sandbox rollout · visual computing essays</p>
       <div class="story-hero__grid">
         <div>
-          <h1 class="story-hero__title">Read an image filter as local arithmetic before it feels like magic.</h1>
+          <h1 class="story-hero__title">How do nine weights determine one output pixel?</h1>
           <p class="story-hero__summary">
-            This page is most useful when you move between the tiny matrix and the big visual
-            result. Start by hovering the pixel math, then swap kernels and finally build your own
-            so the effect names map back to the numbers creating them.
+            Choose blur, then sharpen, and inspect the same pixel's weighted neighborhood.
+            Multiplying neighboring brightness values by the kernel and summing explains the change.
+            At image edges this demo supplies black outside pixels; other boundary rules differ.
           </p>
           <div class="story-hero__meta">
             <span class="story-chip">Inspect pixel-by-pixel convolution</span>
@@ -61,9 +61,9 @@
         <div class="story-callout story-hero__panel" data-story-callout="play">
           <span class="story-callout__label">How to use this page</span>
           <p>
-            Start with the matrix walkthrough before the playground. Once you can read how one
-            3×3 neighborhood becomes one output pixel, the larger editor feels like exploration
-            instead of trial and error.
+            Inspect an interior pixel and then a corner with the same preset. Account for each
+            of the nine products before comparing their sums. In the custom editor, change one
+            weight at a time so the output difference has an identifiable numerical cause.
           </p>
           <div class="story-hero__actions">
             <a class="story-button" href="#kernel-basics">Play first: inspect the first convolution</a>

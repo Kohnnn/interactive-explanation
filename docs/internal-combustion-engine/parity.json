@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Authored hero introduces the animated engine and crank article.",
+    "localStatus": "Source-reviewed only: hero question, pressure-to-rotation explanation, camera/pause task and efficiency/emissions/repair limits.",
+    "sourceFiles": [
+      "../../internal-combustion-engine/index.html"
+    ],
+    "notes": [
+      "Camera drag distinguished from time control. Existing global pause, scripts, geometry, anchors, article and attribution unchanged.",
+      "Applicable: binary readiness/failure, animation pause, camera/slider state, chapters, themes, zoom and continuation. Timing, reduced motion and input/geometry checks remain blocked; no acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records static checks and source identity."
+    ]
+  },
+  {
     "moduleId": "article-shell-and-local-engine-runtime-handoff",
     "originalBehavior": "The published article loads through a shared article shell plus the page-local base and ice scripts, then initializes many inline crank, piston, valve, pressure, and starter scenes under one longform page.",
     "localStatus": "The local route keeps the published article structure, shared article styling, route-local engine model assets, and both vendored scripts while rewriting static-hosting metadata and asset paths for the subpath-hosted replica and layering in a compact engineering-sandbox onboarding shell.",

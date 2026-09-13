@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Four synchronized editable tracks under the retained transport.",
+    "localStatus": "Existing summary asks for a one-track comparison and explains shared timing without scoring artistic choices.",
+    "sourceFiles": [
+      "../../ableton-learning-music-playground/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: sample readiness, gesture play/stop, edits during playback, track synchronization and existing export/state paths apply. Correct/incorrect scoring is not applicable to this creation tool. Undo means reversing the edit, not a newly added control."
+    ],
+    "evidence": [
+      "W3 source review only; widget mounts, scripts and settings unchanged. Themes, viewports, keyboard/touch, audio recovery, exports, continuation and state retention await parent probes. Historical evidence below is not this revision's acceptance."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Ableton lesson opens directly into the archived widget lesson shell with only the lesson copy and interactive controls framing the first action.",
     "localStatus": "The local route keeps that lesson runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first lesson surface around the archived widgets.",

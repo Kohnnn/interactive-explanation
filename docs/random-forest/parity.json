@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 1 adapts the hero and disagreement callout with a fixed-accuracy voting task, a chance-level comparison, and correlated-error limits. New authored interpretation uses the retained Condorcet controls and prediction grid; charts, scripts, mounts, links, metadata and state are unchanged. Current W2 visual, timing and modality acceptance remains pending; earlier evidence below is historical.",
       "The mlu-pilot adapter themes only authored HTML and verified controls; compiled scenes, SVG, canvas, images, dimensions, and transforms remain intrinsic.",
       "Chapter links are generated from manifest-owned selectors so the route keeps its original section order and DOM IDs."
     ],

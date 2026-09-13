@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-orientation",
+    "originalBehavior": "Subtractive synth recipes inside the React/RNBO app.",
+    "localStatus": "Added a static, initially collapsed details[data-route-orientation] sibling after #app with a one-setting recipe comparison task, limits and low-volume guidance visible in the summary; the error fallback remains unchanged.",
+    "sourceFiles": [
+      "../../ableton-learning-synths-recipes/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: loading, unsupported/error, gesture playback, synth parameter editing and native navigation apply. No scoring added. Ready-state orientation is authored outside the runtime and hidden reference footer; native details toggling needs no new JS. Shared CSS reuses the fixed disclosure pattern without a full-screen pointer layer. Parent must verify keyboard shortcut isolation and control clearance."
+    ],
+    "evidence": [
+      "P2 static review: orientation is a direct body child after the unchanged mount; scripts and runtime state are unchanged. Shared CSS adds only disclosure/focus selector coverage. No runtime pass claimed. Themes, viewports, input/audio, geometry, timing and review pending; older evidence below is historical."
+    ]
+  },
+  {
     "moduleId": "lesson-shell-and-subtractive-runtime",
     "originalBehavior": "The published Recipes chapter boots the Learning Synths shell and exposes a fuller subtractive-synth panel with multiple controls and preset-style text guidance.",
     "localStatus": "The local route keeps that chapter shell and subtractive-synth runtime from shared scripts with route-local lesson assets while adding a family-scoped field-guide boundary and shared Atlas chrome.",

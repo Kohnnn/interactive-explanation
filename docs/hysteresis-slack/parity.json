@@ -9,6 +9,7 @@
       "../shared/engineering-sandbox.js"
     ],
     "notes": [
+      "W2 slice 9 adapts hero/callout copy with opposite-direction approaches to the same input, rigid versus slack paths, reversal and trajectory history. New interpretation bounds mechanical slack and mood analogies. Source: retained two-machine/trajectory scenes. Scripts, markup and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "The shell is additive and scoped through body data attributes rather than a rewritten layout system.",
       "Chapter links are generated from data-story-chapter markers so the route can keep its original section structure."
     ],

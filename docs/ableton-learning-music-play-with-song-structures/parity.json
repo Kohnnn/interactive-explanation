@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Static arrangement primer, not a playable arranger.",
+    "localStatus": "Existing summary asks for an imagined A-B-A versus A-A-B comparison, limits section-length conventions and labels its anchor as reading.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-song-structures/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: reading, anchors, theme and continuation apply. Playback, recording, answers, score and arranger exports are not applicable: this route mounts no instrument or arranger."
+    ],
+    "evidence": [
+      "W3 source review only; retained scripts and lesson body unchanged. Themes, viewports, keyboard/touch navigation and continuation await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Ableton lesson opens directly into the archived lesson shell with minimal framing around the arrangement primer content.",
     "localStatus": "The local route keeps that lesson shell intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed primer surface around the arrangement content.",

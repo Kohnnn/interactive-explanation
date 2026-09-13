@@ -10,6 +10,7 @@
     ],
     "notes": [
       "The ev-essay adapter selects only authored shell and top-level chapter text or native controls; SVG, canvas, WebGL, iframe, media, MathJax, custom runtime elements, dimensions, and transforms remain intrinsic.",
+      "W2 slice 4 adapts hero/callout copy with a moved 2D sample, projected variance, Show PCA/reset comparison and scale/information-loss limits. Source: retained 2D/3D scenes. New interpretation only; scripts, markup and runtime retained. Browser/geometry/timing qualification pending with parent; earlier evidence is historical.",
       "Chapter links resolve from manifest-owned selectors and preserve existing authored IDs; deterministic IDs are assigned only to ID-less top-level chapter roots."
     ],
     "evidence": [

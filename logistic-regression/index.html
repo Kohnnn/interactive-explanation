@@ -54,11 +54,11 @@
     <p class="story-hero__eyebrow">Engineering Sandbox rollout · bundle-mounted ML essays</p>
     <div class="story-hero__grid">
       <div>
-        <h1 class="story-hero__title">Move the threshold, then see probability turn into classification.</h1>
+        <h1 class="story-hero__title">Can the class change without the probability changing?</h1>
         <p class="story-hero__summary">
-          Logistic regression is easier to trust once you can watch the sigmoid, the boundary, and
-          the classification decision shift together. This route pairs that intuition with loss and
-          coefficient scenes so the model stays connected to its mechanics.
+          Keep the temperature fixed and move the decision threshold past its predicted
+          probability. The class flips because the cutoff changes, not because the model learns.
+          A sigmoid output is a model estimate, not a guarantee of calibrated probabilities.
         </p>
         <div class="story-hero__meta">
           <span class="story-chip">Move the decision boundary</span>
@@ -69,9 +69,9 @@
       <div class="story-callout story-hero__panel" data-story-callout="play">
         <span class="story-callout__label">How to use this page</span>
         <p>
-          Start with the temperature and threshold controls until the prediction flips in a way
-          that feels intuitive. Then scroll into log loss and gradient descent so the probability
-          story connects cleanly to training.
+          Compare two cutoffs for the same temperature, then inspect log loss. Thresholding
+          changes the decision; log loss evaluates the probability assigned to the observed class.
+          A confident wrong probability receives a larger penalty than an uncertain one.
         </p>
         <div class="story-hero__actions">
           <a class="story-button" href="#boundary-scene">Play first: move the boundary</a>

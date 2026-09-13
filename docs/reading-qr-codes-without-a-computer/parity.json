@@ -1,5 +1,23 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Hashed app owns the complete QR reading walkthrough within #app.",
+    "localStatus": "Follow-up implements a collapsed native disclosure after #app: QR question, structure/mask/bits/payload task, mask explanation and decoder/recovery limitation.",
+    "sourceFiles": [
+      "../../reading-qr-codes-without-a-computer/index.html",
+      "../../reading-qr-codes-without-a-computer/assets/index-s1eyThQf.css",
+      "../../shared/public-footer.css",
+      "../../shared/public-footer.js"
+    ],
+    "notes": [
+      "Supersedes the opening-only skip. Source CSS uses normal document flow; disclosure is a sibling, not an app wrapper or child. Compiled assets, #app readiness/error observers, grid, controls and script order unchanged.",
+      "Applicable: native disclosure keyboard/touch/focus, themes/zoom; app module readiness/failure, masking/decoding and continuation remain separately unqualified. Trailing document height changes, not authored intrinsic dimensions; no browser or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 follow-up source review and subtract-disclosure preimage guard; no compiled source edited or runtime acceptance claimed."
+    ]
+  },
+  {
     "moduleId": "html-shell-and-hashed-runtime-handoff",
     "originalBehavior": "The published QR explainer loads through a tiny HTML shell that mounts a bundled app from hashed JS and CSS assets, then renders the full anatomy and decoding walkthrough inside one app root.",
     "localStatus": "The local route keeps the published shell shape and hashed bundle output while rewriting only the subpath-hosting metadata, asset paths, and shared-footer provenance hook for the replica.",

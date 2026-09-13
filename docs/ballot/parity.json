@@ -1,5 +1,20 @@
 [
   {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "Parent prose introduces spatial voter models and counting systems.",
+    "localStatus": "Source-reviewed only: replaced one opening paragraph with a counting-rule question, drag/compare task, vote-splitting reason and spatial-model limit.",
+    "sourceFiles": [
+      "../../ballot/index.html"
+    ],
+    "notes": [
+      "Parent paragraph only; dated context, iframe dimensions, native interactions, scripts and attribution retained. Text reflow is unmeasured.",
+      "Applicable: child readiness/error, voter/candidate dragging, method comparison, frame focus, themes, zoom and continuation. Existing geometry signal remains unresolved; no browser/device acceptance or baseline successor."
+    ],
+    "evidence": [
+      "Package 06 checkpoint records static checks and source identity."
+    ]
+  },
+  {
     "moduleId": "spatial-voter-models",
     "originalBehavior": "Early draggable scenes let users move voters and candidates in issue space to see how proximity changes vote choice and aggregate outcomes.",
     "localStatus": "The one-voter and many-voter diagrams remain in the upstream iframe modules with no wrapper rewrite.",

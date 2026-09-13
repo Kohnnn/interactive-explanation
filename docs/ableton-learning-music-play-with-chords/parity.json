@@ -1,5 +1,19 @@
 [
   {
+    "moduleId": "package05-authored-task",
+    "originalBehavior": "Chord grid with synchronized drum layer.",
+    "localStatus": "Existing summary compares one changed chord tone at fixed rhythm and explains contextual harmony without scoring taste.",
+    "sourceFiles": [
+      "../../ableton-learning-music-play-with-chords/index.html"
+    ],
+    "notes": [
+      "Source-reviewed applicability: sample readiness, gesture playback, chord edits, tonic/scale selection, play/stop and existing export/state paths apply. Scoring is not applicable to this creation tool."
+    ],
+    "evidence": [
+      "W3 source review only; widgets, scripts and settings unchanged. Themes, viewports, keyboard/touch, audio recovery, exports, continuation and state retention await parent probes; older evidence is historical."
+    ]
+  },
+  {
     "moduleId": "practice-shell-and-onboarding-frame",
     "originalBehavior": "The published Ableton lesson opens directly into the archived widget lesson shell with only the lesson copy and interactive controls framing the first action.",
     "localStatus": "The local route keeps that lesson runtime intact while adding the Engineering Sandbox practice shell: a compact onboarding hero, quick-start checklist, hint strip, and framed first lesson surface around the archived widgets.",

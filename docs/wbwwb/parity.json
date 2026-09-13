@@ -1,5 +1,36 @@
 [
   {
+    "moduleId": "package06-shared-orientation",
+    "originalBehavior": "The centered stage owns camera input, pacing and crowd reactions.",
+    "localStatus": "Authored headline question, photograph/observe action, broadcast-reaction explanation and empirical-model limitation now appear in a collapsed shared disclosure; the earlier HTML skip remains historical.",
+    "sourceFiles": [
+      "../../shared/public-footer.js",
+      "../../shared/public-footer.css",
+      "../../tools/tests/route-html-sync.test.mjs"
+    ],
+    "notes": [
+      "Fixed, height-bounded scrollable details inside existing continuation, outside the stage. No runtime, body containing-block sizing, credits, provenance visibility, manifest, state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+    ],
+    "evidence": [
+      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with native controls/credits, cursor and camera input, scroll reachability, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+    ]
+  },
+  {
+    "moduleId": "package06-w4-source-review",
+    "originalBehavior": "PIXI stage owns the camera-driven narrative; parent contains only loading/fallback, pause and credits.",
+    "localStatus": "Skipped HTML adaptation: no ready-state authored orientation seam; loading text is removed by initialization and is not a safe hero substitute.",
+    "sourceFiles": [
+      "../../wbwwb/index.html"
+    ],
+    "notes": [
+      "Stage, init/fallback, credits/licenses link, script order, audio and camera narrative unchanged.",
+      "Applicable: WebGL/preload/failure, camera capture, pause/replay/end state, audio, focus, theme chrome and continuation. No runtime/device or geometry acceptance; no baseline successor."
+    ],
+    "evidence": [
+      "Follow-up reviewed css/game.css:1-48: body height 100% and position:relative centers the absolute stage and overlays using all four edges. A normal-flow post-stage disclosure starts at the top, not below that stage; changing body height to clear it can recenter the game. Parent should add a route-keyed nonmodal shared orientation slot with a qualified below-viewport placement that preserves the original containing block and credits link. Suggested copy: How can a headline feed a cycle of fear? Photograph a moment and watch the crowd respond to its broadcast. This scripted satire is not an empirical model of media effects. No entrypoint changes or acceptance."
+    ]
+  },
+  {
     "moduleId": "camera-capture-loop",
     "originalBehavior": "Players move a camera over the crowd, snap photos of notable moments, and feed those moments back into the TV broadcast loop.",
     "localStatus": "The original camera, director, and TV runtime remain vendored with no structural rewrite.",
