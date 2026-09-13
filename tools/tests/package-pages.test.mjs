@@ -26,6 +26,8 @@ function fixture(t) {
     "docs/research/private.html": "internal",
     ".scratch/private.html": "internal",
     ".github/workflows/ci.yml": "internal",
+    ".gitlab-ci.yml": "internal",
+    ".npm/cache": "internal",
     "tools/private.js": "internal",
     "node_modules/private.js": "internal",
     "AGENTS.md": "internal",
@@ -46,7 +48,7 @@ test("packages tracked public paths unchanged, including underscore runtimes, bu
   const result = packagePages(root, output);
   assert.equal(result.routes, 1);
   for (const [file, value] of Object.entries(files)) {
-    if (/^(?:docs\/research|\.scratch|\.github|tools|node_modules|AGENTS|package\.json)/.test(file)) {
+    if (/^(?:docs\/research|\.scratch|\.github|\.gitlab-ci\.yml|\.npm|tools|node_modules|AGENTS|package\.json)/.test(file)) {
       assert.equal(fs.existsSync(path.join(output, file)), false, file);
     } else {
       assert.equal(fs.readFileSync(path.join(output, file), "utf8"), value, file);
