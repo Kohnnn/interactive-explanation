@@ -17,11 +17,11 @@ function parseTreeRow(row) {
   const [mode, type, blob] = row.slice(0, separator).split(" ");
   return { file: row.slice(separator + 1), mode, type, blob };
 }
-function committedIdentity(root) {
+function committedIdentity(root, revision = "HEAD") {
   const git = (args, options = {}) => execFileSync("git", args, { cwd: root, ...options });
-  const head = git(["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const head = git(["rev-parse", revision], { encoding: "utf8" }).trim();
 
-  const rows = git(["ls-tree", "-rz", "HEAD"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).split("\0").filter(Boolean).map(row => {
+  const rows = git(["ls-tree", "-rz", head], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).split("\0").filter(Boolean).map(row => {
     const { file, blob } = parseTreeRow(row);
     return [file, blob];
   });
@@ -160,12 +160,20 @@ for (const mode of ["base", "head", "visual-review", "capture-tool", "measuremen
 }
 test("registry binds exact reviewed route, shared, Atlas and geometry metadata dependencies", () => {
   const root = fileURLToPath(new URL("../../", import.meta.url));
-  const identity = committedIdentity(root);
-  const pages = JSON.parse(execFileSync("git", ["show", "HEAD:pages.json"], { cwd: root }));
-  const manifest = JSON.parse(execFileSync("git", ["show", "HEAD:routes.manifest.json"], { cwd: root }));
-  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right, file => execFileSync("git", ["show", `HEAD:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 }));
+  const identity = committedIdentity(root, geometryReview.admittedHeadSha);
+  const pages = JSON.parse(execFileSync("git", ["show", `${identity.head}:pages.json`], { cwd: root }));
+  const manifest = JSON.parse(execFileSync("git", ["show", `${identity.head}:routes.manifest.json`], { cwd: root }));
+  const bind = (source = identity, left = pages, right = manifest) => geometrySourceBinding(source, left, right, file => execFileSync("git", ["show", `${source.head}:${file}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 }));
   const bound = bind();
   assert.deepEqual(bound.sources, geometryReview.sources.head);
+  const current = committedIdentity(root);
+  const currentPages = JSON.parse(execFileSync("git", ["show", `${current.head}:pages.json`], { cwd: root }));
+  const currentManifest = JSON.parse(execFileSync("git", ["show", `${current.head}:routes.manifest.json`], { cwd: root }));
+  const currentBound = bind(current, currentPages, currentManifest);
+  assert.throws(() => verifyGeometryReview(geometryReview, {
+    ...identities,
+    head: { ...identities.head, head: current.head, sources: currentBound.sources },
+  }, tools, () => true), /Geometry review sources differ: head/);
   assert(bound.inventories.atlas.files.includes("shared/tokens.css"));
   assert.deepEqual(bound.inventories.exponentiation.files.filter(file => file.startsWith("ev/")), ["ev/img/setosa.png", "ev/resources/fonts/stix/STIX-Regular.otf", "ev/scripts/angular.js", "ev/scripts/common.js", "ev/scripts/d3.js", "ev/styles/style.css"]);
   for (const file of ["covid-19/index.html", "shared/site.css", "index.html"]) {

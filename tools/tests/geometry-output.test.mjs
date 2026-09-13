@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { execFileSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -156,8 +157,15 @@ test("fixed Sim rejects wrong pin and unpinned source inventory", () => {
 });
 
 test("same-source fixed Sim fixture admits exact dependency arrays and entry without reference checkout", () => {
-  const head = simSource(fileURLToPath(new URL("../../", import.meta.url)));
-  const reference = { ...head, revision: simReferenceSha };
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const git = args => execFileSync("git", args, { cwd: root, encoding: "utf8" });
+  const reference = {
+    revision: simReferenceSha,
+    inventory: git(["ls-tree", "-r", simReferenceSha, "--", "sim", "shared", "package-lock.json"]),
+    entry: JSON.parse(git(["show", `${simReferenceSha}:routes.manifest.json`])).find(route => route.slug === "sim"),
+  };
+  const head = structuredClone(reference);
+  assert.throws(() => verifySimSources(reference, simSource(root)), /Sim route\/shared\/lock paths, modes or blobs differ/);
   assert.equal(simReferenceSha, "94bb7ebc9daaf651a59cbbc6a1e9a11220001df1");
   assert.equal(verifySimSources(reference, head).inventorySha256, "c07300985b64ca156abba61602a1c48eb29c69bcd8445d2831031ffe21c551c8");
   assert.equal(verifySimSources(reference, head).cells.length, 4);
