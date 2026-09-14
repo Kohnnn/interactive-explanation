@@ -691,15 +691,13 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
     await mobilePage.setViewportSize({ width: 390, height: 844 });
     await assertRoute(mobilePage, relativePath, "#reference-footer");
     await mobilePage.waitForSelector(readySelector, { timeout: 30000 });
-    await mobilePage.waitForSelector(".story-mobile-bar__nav a", { timeout: 15000 });
+    await mobilePage.waitForSelector(".story-mobile-bar__toggle", { timeout: 15000 });
 
     const mobileState = await mobilePage.evaluate(() => {
       const mobileBar = document.querySelector(".story-mobile-bar");
-      const activeLink = document.querySelector(".story-mobile-bar__link.is-active");
       const toggle = document.querySelector(".story-mobile-bar__toggle");
       const article = document.querySelector(".article");
       const barRect = mobileBar?.getBoundingClientRect();
-      const linkRect = activeLink?.getBoundingClientRect();
       const articleRect = article?.getBoundingClientRect();
       return {
         mobileBarVisible: Boolean(barRect && barRect.height > 0),
@@ -714,12 +712,6 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
         progressVisible: Boolean(document.querySelector(".story-mobile-bar .story-progress")?.getBoundingClientRect().width > 0),
         positionLabel: document.querySelector(".story-mobile-bar__position")?.textContent?.trim() || "",
         toggleVisible: Boolean(toggle && toggle.getBoundingClientRect().width > 0),
-        activeLinkVisible: Boolean(
-          barRect &&
-          linkRect &&
-          linkRect.left >= barRect.left - 1 &&
-          linkRect.right <= barRect.right + 1
-        ),
       };
     });
     assert(mobileState.mobileBarVisible, `${label} did not expose the mobile chapter bar at 390px`);
@@ -729,7 +721,6 @@ async function assertEngineeringSandboxLayout(context, relativePath, label, opti
     assert(mobileState.progressValue.length > 0, `${label} did not expose the mobile story progress label`);
     assert(mobileState.positionLabel.length > 0, `${label} did not expose the mobile chapter position label`);
     assert(mobileState.toggleVisible, `${label} did not expose the mobile chapter tray toggle`);
-    assert(mobileState.activeLinkVisible, `${label} did not keep the active mobile chapter chip in view`);
 
     await mobilePage.locator(".story-mobile-bar__toggle").click();
     await mobilePage.waitForFunction(() => document.querySelector(".story-mobile-sheet")?.open, null, { timeout: 5000 });
@@ -1877,6 +1868,16 @@ async function assertRouteViewportUsable(context, relativePath, selector, readyS
   }
   await page.waitForTimeout(1000);
   await assertViewportUsable(page, label);
+  if (width <= 720) {
+    const topBarTargets = await page.locator(".top-bar__back, .top-bar__docs, .top-bar__theme").evaluateAll((elements) => elements.filter((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    }).map((element) => {
+      const rect = element.getBoundingClientRect();
+      return { width: rect.width, height: rect.height };
+    }));
+    assert(topBarTargets.length === 3 && topBarTargets.every((target) => target.width >= 44 && target.height >= 44), `${label} exposed undersized mobile top-bar targets`);
+  }
   await page.close();
 }
 
@@ -3129,16 +3130,39 @@ async function smokeTrust(context) {
     return {
       slideIndex: slideshow.slideIndex,
       slideId: slideshow.currentSlide.id,
+      headingCount: document.querySelectorAll("h1").length,
       nativeControlsVisible: Boolean(select && getComputedStyle(select).display !== "none"),
     };
   });
   assert(slideState.slideIndex === 1 && slideState.slideId === "intro" && slideState.nativeControlsVisible, "Trust start control did not advance the slideshow and reveal native navigation");
+  assert(slideState.headingCount === 1, "Trust did not expose one semantic page heading");
   await page.locator("#sound").click();
   const soundState = await page.evaluate(() => ({
     control: document.querySelector("#sound")?.getAttribute("sound"),
     muted: Howler._muted,
   }));
   assert(soundState.control === "off" && soundState.muted === true, "Trust sound control did not mute the runtime audio");
+  const shortPage = await context.newPage();
+  await shortPage.setViewportSize({ width: 568, height: 320 });
+  await assertRoute(shortPage, "trust/", "#main");
+  await shortPage.waitForFunction(() => document.querySelector("#main")?.getAttribute("aria-busy") === "false", null, { timeout: 30000 });
+  const shortStage = await shortPage.locator("#slideshow").evaluate((stage) => {
+    const rect = stage.getBoundingClientRect();
+    const topBarBottom = document.querySelector("#top-bar")?.getBoundingClientRect().bottom || 0;
+    return {
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      left: rect.left,
+      topBarBottom,
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+    };
+  });
+  assert(shortStage.top >= shortStage.topBarBottom && shortStage.left >= 0 && shortStage.right <= shortStage.viewportWidth && shortStage.bottom <= shortStage.viewportHeight, "Trust stage did not fit a short viewport");
+  await shortPage.locator("#slideshow .button #hitbox").click();
+  await shortPage.waitForFunction(() => window.slideshow?.slideIndex === 1, null, { timeout: 5000 });
+  await shortPage.close();
   console.log("OK trust slideshow and audio controls");
   await page.close();
 }
@@ -3469,7 +3493,7 @@ async function smokeMarkovChains(context) {
   await page.locator("a").filter({ hasText: "ex1" }).click();
   await page.waitForFunction((previousSrc) => {
     const currentSrc = document.querySelector("iframe.playground")?.getAttribute("src") || "";
-    return currentSrc !== previousSrc && currentSrc.includes("./playground/?");
+    return currentSrc !== previousSrc && currentSrc.startsWith("./playground/playground.html?");
   }, initialSrc, { timeout: 5000 });
 
   const fullscreenHref = await page.locator('a[href="./playground/"]').getAttribute("href");
@@ -3480,6 +3504,16 @@ async function smokeMarkovChains(context) {
   await assertPageRuntimeClean("markov-chains article");
   await assertViewportUsable(page, "markov-chains route");
   await assertEngineeringSandboxLayout(context, "markov-chains/", "markov-chains route", { navMode: "generated" });
+  const mobilePage = await context.newPage();
+  await mobilePage.setViewportSize({ width: 390, height: 844 });
+  await assertRoute(mobilePage, "markov-chains/", "#transition-matrix");
+  await mobilePage.waitForSelector("#transition-matrix .st-diagram svg", { timeout: 20000 });
+  const mobileFlow = await mobilePage.locator("#transition-matrix").evaluate((container) => ({
+    containerBottom: container.getBoundingClientRect().bottom,
+    followingTop: container.nextElementSibling?.getBoundingClientRect().top,
+  }));
+  assert(Number.isFinite(mobileFlow.followingTop) && mobileFlow.followingTop >= mobileFlow.containerBottom, "markov-chains mobile matrix overlapped following prose");
+  await mobilePage.close();
   console.log("OK markov-chains article handoff");
   await page.close();
 
@@ -8158,6 +8192,11 @@ async function smokeWayfinding(context) {
 
   await page.addInitScript(() => localStorage.setItem("theme", "dark"));
   await assertRoute(page, "docs/trust/", ".back-link");
+  await page.waitForFunction(() => document.querySelectorAll("[data-parity-list] .module-card").length > 0, null, { timeout: 15000 });
+  await page.evaluate(() => {
+    window.location.hash = "#source-snapshot";
+  });
+  await page.waitForFunction(() => document.querySelector("#source-snapshot")?.open, null, { timeout: 5000 });
   const docsState = await page.evaluate(() => ({
     label: document.querySelector(".back-link")?.textContent?.trim() || "",
     atlas: document.querySelector(".back-link")?.href || "",
@@ -8170,6 +8209,9 @@ async function smokeWayfinding(context) {
     ogTitle: document.querySelector('meta[property="og:title"]')?.content || "",
     ogDescription: document.querySelector('meta[property="og:description"]')?.content || "",
     ogType: document.querySelector('meta[property="og:type"]')?.content || "",
+    disclosureOpen: document.querySelector("#source-snapshot")?.open,
+    moduleHeadings: document.querySelectorAll("[data-parity-list] .module-card summary h3").length,
+    moduleCount: document.querySelectorAll("[data-parity-list] .module-card").length,
     title: document.title,
   }));
   const docsUrl = "https://kohnnn.github.io/interactive-explanation/docs/trust/";
@@ -8182,6 +8224,18 @@ async function smokeWayfinding(context) {
   assert(docsState.ogTitle === docsState.title, "docs social title did not match its page title");
   assert(docsState.ogDescription === docsState.description, "docs social description did not match its page description");
   assert(docsState.ogType === "website", `docs exposed an unexpected social type: ${docsState.ogType}`);
+  assert(docsState.disclosureOpen, "docs hash target did not open its disclosure");
+  assert(docsState.moduleHeadings === docsState.moduleCount, "docs parity disclosures removed module headings");
+  const malformedHashSafe = await page.evaluate(async () => {
+    let failed = false;
+    window.addEventListener("error", () => {
+      failed = true;
+    }, { once: true });
+    window.location.hash = "#%";
+    await new Promise((resolve) => window.setTimeout(resolve, 50));
+    return !failed;
+  });
+  assert(malformedHashSafe, "docs malformed hash aborted disclosure handling");
   await page.close();
 }
 
@@ -8249,39 +8303,50 @@ async function smokeAtlas(context, existingPage) {
   const guidedPathCount = routeManifest.filter((route) => route.intent === "guided-path").length;
   const initialState = await page.evaluate(() => ({
     cards: document.querySelectorAll("[data-page-list] [data-intent]").length,
+    visibleCards: Array.from(document.querySelectorAll("[data-page-list] [data-intent]")).filter((card) => !card.hidden).length,
+    showMoreVisible: !document.querySelector("[data-show-more]")?.hidden,
     controls: document.querySelectorAll("[data-atlas-intent]").length,
     guidedPaths: document.querySelectorAll("[data-guided-path-list] [data-intent='guided-path']").length,
     guidedPathsInInventory: document.querySelectorAll("[data-page-list] [data-intent='guided-path']").length,
     clearHidden: document.querySelector("[data-clear-filters]")?.hidden,
     topicOptions: document.querySelectorAll("[data-topic-select] option").length,
     routeHref: document.querySelector("[data-page-list] [data-slug='trust'] .action-link")?.getAttribute("href"),
+    titleHref: document.querySelector("[data-page-list] [data-slug='trust'] .page-card__title-link")?.getAttribute("href"),
     docsHref: document.querySelector("[data-page-list] [data-slug='trust'] .action-link.secondary")?.getAttribute("href"),
     url: window.location.search,
   }));
   assert(initialState.controls === 6, `atlas expected All plus five intent buttons, found ${initialState.controls}`);
-  assert(initialState.cards === routeManifest.length, `atlas expected ${routeManifest.length} initial cards, found ${initialState.cards}`);
+  assert(initialState.cards === routeManifest.length, `atlas expected ${routeManifest.length} searchable cards, found ${initialState.cards}`);
+  assert(initialState.visibleCards > 0 && initialState.visibleCards < initialState.cards, "atlas did not progressively disclose its initial inventory");
+  assert(initialState.showMoreVisible, "atlas did not expose the full inventory control");
   assert(initialState.guidedPaths === guidedPathCount, `atlas expected ${guidedPathCount} promoted guided paths, found ${initialState.guidedPaths}`);
   assert(initialState.guidedPathsInInventory === guidedPathCount, "atlas promotion removed guided paths from the complete inventory");
   assert(initialState.topicOptions > 1, "atlas topic selector did not load manifest topics");
   assert(initialState.routeHref === "./trust/", `atlas exposed unexpected route href: ${initialState.routeHref}`);
+  assert(initialState.titleHref === "./trust/", `atlas exposed unexpected title href: ${initialState.titleHref}`);
   assert(initialState.docsHref === "./docs/trust/", `atlas exposed unexpected docs href: ${initialState.docsHref}`);
   assert(initialState.clearHidden, "atlas clear filters control was visible without active filters");
   assert(initialState.url === "", `atlas exposed default URL state: ${initialState.url}`);
   await assertAtlasContinuations(page, "[data-page-list] [data-slug]", "atlas inventory");
   await assertAtlasContinuations(page, "[data-guided-path-list] [data-slug]", "atlas Guided Paths");
 
+  await page.locator("[data-show-more]").click();
+  assert(await page.locator("[data-page-list] .page-card[hidden]").count() === 0, "atlas Show all control did not reveal every route");
+
   await page.locator("[data-atlas-intent='guided-path']").focus();
   await page.keyboard.press("Enter");
   await page.waitForFunction(() => {
     const cards = Array.from(document.querySelectorAll("[data-page-list] [data-intent]"));
-    return cards.length > 0 && cards.every((card) => card.dataset.intent === "guided-path");
+    const visibleCards = cards.filter((card) => !card.hidden);
+    return cards.length > visibleCards.length && visibleCards.length > 0 && visibleCards.every((card) => card.dataset.intent === "guided-path");
   }, null, { timeout: 5000 });
   assert(new URLSearchParams(await page.evaluate(() => window.location.search)).get("intent") === "guided-path", "atlas did not sync keyboard intent state to the URL");
 
   await page.selectOption("[data-topic-select]", "music");
   await page.waitForFunction(() => {
     const cards = Array.from(document.querySelectorAll("[data-page-list] [data-topics]"));
-    return cards.length > 0 && cards.every((card) => card.dataset.topics.split(" ").includes("music"));
+    const visibleCards = cards.filter((card) => !card.hidden);
+    return cards.length > visibleCards.length && visibleCards.length > 0 && visibleCards.every((card) => card.dataset.topics.split(" ").includes("music"));
   }, null, { timeout: 5000 });
   const topicState = await page.evaluate(() => ({
     summary: document.querySelector("[data-page-results]")?.textContent || "",
@@ -8305,16 +8370,22 @@ async function smokeAtlas(context, existingPage) {
   await page.waitForFunction((total) => document.querySelectorAll("[data-page-list] [data-intent]").length === total, routeManifest.length, { timeout: 5000 });
   const resetState = await page.evaluate(() => ({
     clearHidden: document.querySelector("[data-clear-filters]")?.hidden,
+    cards: document.querySelectorAll("[data-page-list] [data-intent]").length,
+    visibleCards: Array.from(document.querySelectorAll("[data-page-list] [data-intent]")).filter((card) => !card.hidden).length,
+    showMoreVisible: !document.querySelector("[data-show-more]")?.hidden,
     url: window.location.search,
   }));
   assert(resetState.clearHidden, "atlas clear filters control remained visible after reset");
+  assert(resetState.cards === routeManifest.length, "atlas removed cards from the DOM after filtering");
+  assert(resetState.visibleCards === initialState.visibleCards && resetState.showMoreVisible, "atlas did not restore collapsed disclosure after reset");
   assert(resetState.url === "", `atlas retained URL state after reset: ${resetState.url}`);
   await assertAtlasContinuations(page, "[data-page-list] [data-slug]", "reset Atlas inventory");
 
   await page.goto(new URL("?intent=explainer&topic=machine-learning&sort=title", baseUrl).href, { waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => {
     const cards = Array.from(document.querySelectorAll("[data-page-list] [data-intent]"));
-    return document.querySelector("[data-topic-select]")?.value === "machine-learning" && cards.length > 0 && cards.every((card) => card.dataset.intent === "explainer" && card.dataset.topics.split(" ").includes("machine-learning"));
+    const visibleCards = cards.filter((card) => !card.hidden);
+    return document.querySelector("[data-topic-select]")?.value === "machine-learning" && cards.length > visibleCards.length && visibleCards.length > 0 && visibleCards.every((card) => card.dataset.intent === "explainer" && card.dataset.topics.split(" ").includes("machine-learning"));
   }, null, { timeout: 15000 });
   assert(await page.locator("[data-sort-select]").inputValue() === "title", "atlas did not restore sort state from the URL");
   await assertViewportUsable(page, "atlas desktop");
@@ -9778,6 +9849,14 @@ async function main() {
         approvedRoute?.geometry,
         !recordBaseline,
       );
+      if (recordBaseline && skipPerformance && approvedRoute) {
+        recordedRoutes[route.slug] = {
+          light: approvedRoute.light,
+          dark: approvedRoute.dark,
+          geometry,
+        };
+        continue;
+      }
       if (experience) {
         await assertManifestRouteExperience(browser, route, recordBaseline ? geometry : approvedRoute.geometry);
       } else {
@@ -9794,6 +9873,12 @@ async function main() {
         ),
         geometry,
       };
+    }
+
+    if (recordBaseline && skipPerformance) {
+      writeExperienceBaseline(mergeExperienceBaseline(approvedBaseline, recordedRoutes));
+      phaseLog(`Recorded experience baseline at ${baselinePath}`);
+      return;
     }
 
     const routePage = await context.newPage();

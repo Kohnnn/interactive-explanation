@@ -89,6 +89,10 @@
 }
 
 @media (max-width: 720px) {
+  #transition-matrix {
+    height: 450px !important;
+  }
+
   .matrix {
     width: 100%;
     position: static;
@@ -99,5 +103,14 @@
   .st-diagram {
     float: none;
     height: 220px;
+  }
+
+  .speedRange,
+  .matrix input[type="range"] {
+    min-height: 44px;
+  }
+
+  .playground {
+    min-height: 560px;
   }
 }

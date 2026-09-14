@@ -133,6 +133,16 @@ test("experience baseline merge replaces selected routes and preserves others", 
   assert.deepEqual(merged.routes.crowds, replacement);
   assert.deepEqual(merged.routes.trust, existing.routes.trust);
   assert.deepEqual(Object.keys(merged.routes), ["crowds", "trust"]);
+
+  const geometryOnly = {
+    light: existing.routes.crowds.light,
+    dark: existing.routes.crowds.dark,
+    geometry: replacement.geometry,
+  };
+  const geometryMerged = mergeExperienceBaseline(existing, { crowds: geometryOnly });
+  assert.deepEqual(geometryMerged.routes.crowds.light, existing.routes.crowds.light);
+  assert.deepEqual(geometryMerged.routes.crowds.dark, existing.routes.crowds.dark);
+  assert.deepEqual(geometryMerged.routes.crowds.geometry, replacement.geometry);
 });
 
 test("experience baseline serialization is stable and newline terminated", () => {

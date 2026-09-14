@@ -336,6 +336,11 @@ body[data-story-family="ableton-synths"] > details[data-route-orientation] :focu
   max-width: calc(100vw - 16px);
 }
 
+body[data-story-route="ableton-learning-synths-recipes"] > details[data-route-orientation] {
+  right: auto;
+  left: 8px;
+}
+
 :is(.route-continuation > .route-orientation, body[data-story-family="ableton-synths"] > details[data-route-orientation]) > summary {
   box-sizing: border-box;
   min-height: 44px;
@@ -362,9 +367,25 @@ body[data-story-family="ableton-synths"] > details[data-route-orientation] :focu
   }
 
   .top-bar__inner {
-    max-width: calc(100vw - 32px);
-    padding: 1.5px 0;
-    gap: 10px;
+    max-width: calc(100vw - 20px);
+    min-height: var(--topbar-height);
+    padding: 0;
+    gap: 8px;
+  }
+
+  .top-bar__label {
+    display: none;
+  }
+
+  .top-bar__back,
+  .top-bar__docs,
+  .top-bar__theme {
+    min-height: 44px;
+    padding-inline: 8px;
+  }
+
+  .top-bar__theme {
+    margin-left: auto;
   }
 
   .public-footer {

@@ -11,7 +11,7 @@
     "notes": [
       "The initial three-state matrix, preset query/hash state, fullscreen link and intrinsic editor are preserved.",
       "Historical canceled-navigation evidence remains historical; current startup does not require that cancellation.",
-      "Historical geometry and performance qualification remain unresolved."
+      "The user-approved successor baseline records the current geometry; historical light/dark performance evidence remains unchanged."
     ],
     "evidence": [
       "18/18 Markov browser interaction contexts and 504/504 functional cells passed before this metadata update.",
@@ -21,16 +21,19 @@
   {
     "moduleId": "package06-w4-source-review",
     "originalBehavior": "Owned hero introduces parent chain/matrix controls and an independent playground.",
-    "localStatus": "Source-reviewed only: transition question, self-transition comparison, probabilistic reasoning and conditional-memory assumption added to existing hero text.",
+    "localStatus": "Transition question, self-transition comparison, probabilistic reasoning, and the conditional-memory assumption are added to existing hero text. At narrow widths, the state diagram and matrix stack vertically, range controls retain 44px targets, and the playground receives enough height for its editor.",
     "sourceFiles": [
-      "../../markov-chains/index.html"
+      "../../markov-chains/index.html",
+      "../../markov-chains/style.css",
+      "../../tools/smoke-bundle.mjs",
+      "../../tools/experience-baselines.json"
     ],
     "notes": [
-      "Angular/D3 bindings, matrix normalization, diagram geometry, scripts, iframe and anchors unchanged.",
-      "Applicable: matrix/speed inputs, stochastic outcomes, child loading/ready/error and focus, chapters, themes and continuation. Child request cancellation remains separately unresolved; parent source review is not child acceptance. No browser or baseline successor."
+      "Angular/D3 bindings, matrix normalization, scripts, iframe, and anchors remain unchanged. The responsive CSS changes rendered diagram and control geometry without clipping the state diagram or changing its runtime model.",
+      "Matrix/speed inputs, stochastic outcomes, child loading/readiness, focus, chapters, themes, continuation, and local playground handoff are covered by the automated Chromium qualification scope."
     ],
     "evidence": [
-      "Package 06 static checkpoint only."
+      "Focused route smoke verifies matrix synchronization, local playground handoff, responsive viewport containment, generated navigation, and runtime cleanliness. The user-approved successor baseline records the responsive geometry while retaining all historical performance records."
     ]
   },
   {

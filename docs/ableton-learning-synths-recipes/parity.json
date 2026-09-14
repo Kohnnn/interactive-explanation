@@ -97,11 +97,12 @@
     ],
     "notes": [
       "The adapter maps only existing custom-property hooks; intrinsic SVG, canvas, model, and audio output remain runtime-owned.",
-      "The visible native TOC toggle owns navigation; opening exposes localized lesson links, while Escape closes the drawer and restores focus."
+      "The visible native TOC toggle owns navigation; opening exposes localized lesson links, while Escape closes the drawer and restores focus.",
+      "The Recipes orientation disclosure is anchored at the lower left instead of the family-default lower right so it does not cover the playback control; its native details behavior and copy are unchanged."
     ],
     "evidence": [
       "Strict experience gates verify stored and system themes, runtime-root contrast, local-only networking, and unchanged approved runtime geometry.",
-      "Family smoke verifies recipe slider, preset, and playback state, local asset inventories, native TOC focus behavior, localized links, responsive layout, and footer-only provenance."
+      "Family smoke verifies recipe slider, preset, and playback state, local asset inventories, native TOC focus behavior, localized links, responsive layout, and footer-only provenance. The 504-cell functional sweep separately verifies orientation behavior and visible-control clearance across three viewports and both themes."
     ]
   },
   {

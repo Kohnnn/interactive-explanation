@@ -952,6 +952,23 @@
     }
   }
 
+  function fitLegacyStage(slug) {
+    if (slug !== "trust") {
+      return;
+    }
+    const stage = document.querySelector("#slideshow");
+    if (!stage) {
+      return;
+    }
+    function resize() {
+      const availableHeight = Math.max(0, window.innerHeight - 108);
+      const scale = Math.min(1, window.innerWidth / 960, availableHeight / 540);
+      stage.style.transform = "scale(" + scale + ")";
+    }
+    resize();
+    window.addEventListener("resize", resize);
+  }
+
   async function initStoryShell() {
     const body = document.body;
     if (!body || body.dataset.storyShell !== "engineering-sandbox") {
@@ -960,6 +977,7 @@
 
     const navMode = body.dataset.storyNav || "generated";
     const slug = getSlug();
+    fitLegacyStage(slug);
     prepareLongformEngineeringArticle(body);
     await applyManifestChapters(slug);
     if (navMode === "generated" && !document.querySelector("[data-story-chapter]")) {

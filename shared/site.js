@@ -34,6 +34,7 @@ const FEATURED_SLUGS = new Set([
 ]);
 
 const NEW_ROUTE_WINDOW_DAYS = 30;
+const INITIAL_ROUTE_COUNT = 8;
 
 function createElement(tagName, className, textContent) {
   const node = document.createElement(tagName);
@@ -161,7 +162,10 @@ function createPageCard(page, maxAddedDate, promoted, pagesBySlug) {
   card.dataset.topics = page.topics.join(" ");
   card.dataset.slug = page.slug;
   card.appendChild(createElement("p", "eyebrow", promoted ? "Recommended path" : page.family.label));
-  const title = createElement("h3", null, page.title);
+  const title = createElement("h3");
+  const titleLink = createElement("a", "page-card__title-link", page.title);
+  titleLink.href = "./" + page.slug + "/";
+  title.appendChild(titleLink);
   card.appendChild(title);
   card.appendChild(createElement("p", "page-card__intent", page.intent === "guided-path" ? "Guided path" : INTENT_LABELS[page.intent]));
   card.appendChild(createElement("p", "meta-line", page.summary));
@@ -224,8 +228,10 @@ function renderFamilies(mount, pages, state, onChange) {
   });
 }
 
-function renderSummary(mount, filtered, total, state) {
-  let text = "Showing " + filtered.length + " of " + total + " routes.";
+function renderSummary(mount, filtered, total, state, visibleCount) {
+  let text = visibleCount < filtered.length
+    ? "Showing " + visibleCount + " routes. " + filtered.length + " available."
+    : "Showing " + filtered.length + " of " + total + " routes.";
   if (state.intent !== "all") {
     text += " " + INTENT_LABELS[state.intent] + ".";
   }
@@ -255,6 +261,10 @@ async function initHome() {
   const advancedFilters = document.querySelector(".advanced-filters");
   const guidedPathMount = document.querySelector("[data-guided-path-list]");
   const clearButton = document.querySelector("[data-clear-filters]");
+  const showMoreButton = document.querySelector("[data-show-more]");
+  if (!results || !queryInput || !topicSelect || !sortSelect || !familyMount || !advancedFilters || !guidedPathMount || !clearButton || !showMoreButton) {
+    return;
+  }
   try {
     const response = await fetch("./pages.json", { cache: "no-store" });
     if (!response.ok) {
@@ -269,6 +279,7 @@ async function initHome() {
       return page.topics;
     }));
     const state = readHomeState(topics);
+    let expanded = Boolean(state.query || state.intent !== "all" || state.family !== "all" || state.topic !== "all");
 
     Array.from(topics).sort(function (left, right) {
       return formatTopic(left).localeCompare(formatTopic(right));
@@ -285,6 +296,17 @@ async function initHome() {
     }).forEach(function (page) {
       guidedPathMount.appendChild(createPageCard(page, maxAddedDate, true, pagesBySlug));
     });
+
+    mount.innerHTML = "";
+    const cardsBySlug = new Map();
+    pages.forEach(function (page) {
+      const card = createPageCard(page, maxAddedDate, false, pagesBySlug);
+      cardsBySlug.set(page.slug, card);
+      mount.appendChild(card);
+    });
+    const emptyState = createElement("div", "empty-state", "No routes match these filters. Change your search or use Clear filters to show all routes.");
+    emptyState.hidden = true;
+    mount.appendChild(emptyState);
 
     function render(mode) {
       const filtered = applyFilters(pages, state);
@@ -306,18 +328,34 @@ async function initHome() {
       if (state.family !== "all") {
         advancedFilters.open = true;
       }
-      renderSummary(results, filtered, pages.length, state);
       const active = Boolean(state.query || state.intent !== "all" || state.family !== "all" || state.topic !== "all");
+      const visibleCount = !expanded && !active ? Math.min(filtered.length, INITIAL_ROUTE_COUNT) : filtered.length;
+      renderSummary(results, filtered, pages.length, state, visibleCount);
       clearButton.hidden = !active;
       clearButton.disabled = !active;
-      mount.innerHTML = "";
-      if (!filtered.length) {
-        mount.appendChild(createElement("div", "empty-state", "No routes match these filters. Change your search or use Clear filters to show all routes."));
-        return;
-      }
+      const collapsed = !expanded && !active;
+      const filteredSlugs = new Set(filtered.map(function (page) {
+        return page.slug;
+      }));
+      const visibleSlugs = new Set(filtered.filter(function (page) {
+        return page.intent !== "guided-path";
+      }).slice(0, INITIAL_ROUTE_COUNT).map(function (page) {
+        return page.slug;
+      }));
       filtered.forEach(function (page) {
-        mount.appendChild(createPageCard(page, maxAddedDate, false, pagesBySlug));
+        mount.appendChild(cardsBySlug.get(page.slug));
       });
+      pages.forEach(function (page) {
+        const card = cardsBySlug.get(page.slug);
+        card.hidden = !filteredSlugs.has(page.slug) || (collapsed && !visibleSlugs.has(page.slug));
+        if (!filteredSlugs.has(page.slug)) {
+          mount.appendChild(card);
+        }
+      });
+      emptyState.hidden = filtered.length > 0;
+      mount.appendChild(emptyState);
+      showMoreButton.hidden = !collapsed || filtered.length <= INITIAL_ROUTE_COUNT;
+      showMoreButton.textContent = "Show all " + filtered.length + " routes";
     }
 
     intentButtons.forEach(function (button) {
@@ -343,11 +381,22 @@ async function initHome() {
       state.intent = "all";
       state.family = "all";
       state.topic = "all";
+      expanded = false;
       render("push");
       queryInput.focus();
     });
+    showMoreButton.addEventListener("click", function () {
+      expanded = true;
+      render("none");
+      const firstRevealedCard = Array.from(mount.querySelectorAll(".page-card")).find(function (card) {
+        return card.dataset.intent === "guided-path";
+      });
+      firstRevealedCard?.querySelector(".page-card__title-link")?.focus({ preventScroll: true });
+      firstRevealedCard?.scrollIntoView({ block: "center" });
+    });
     window.addEventListener("popstate", function () {
       Object.assign(state, readHomeState(topics));
+      expanded = Boolean(state.query || state.intent !== "all" || state.family !== "all" || state.topic !== "all");
       render("none");
     });
     render("replace");
@@ -357,6 +406,49 @@ async function initHome() {
       results.textContent = "Route inventory unavailable.";
     }
   }
+}
+
+function enhanceDocsSections() {
+  const sections = Array.from(document.querySelectorAll(".docs-page .note-grid > .note-section"));
+  sections.forEach(function (section) {
+    const heading = section.querySelector(":scope > h2");
+    if (!heading) {
+      return;
+    }
+    const details = createElement("details", "note-section docs-disclosure");
+    details.open = window.innerWidth > 720;
+    if (section.id) {
+      details.id = section.id;
+    }
+    const summary = createElement("summary", "docs-disclosure__summary");
+    summary.appendChild(heading);
+    const content = createElement("div", "docs-disclosure__content");
+    while (section.firstChild) {
+      content.appendChild(section.firstChild);
+    }
+    details.appendChild(summary);
+    details.appendChild(content);
+    section.replaceWith(details);
+  });
+
+  function openHashTarget() {
+    if (!window.location.hash) {
+      return;
+    }
+    let targetId;
+    try {
+      targetId = decodeURIComponent(window.location.hash.slice(1));
+    } catch (error) {
+      return;
+    }
+    const target = document.getElementById(targetId);
+    if (target?.matches(".docs-disclosure")) {
+      target.open = true;
+    }
+  }
+
+  openHashTarget();
+  window.addEventListener("hashchange", openHashTarget);
 }
 
 async function initParity() {
@@ -373,26 +465,30 @@ async function initParity() {
     }
     mount.innerHTML = "";
     modules.forEach(function (module) {
-      const article = createElement("article", "module-card");
-      article.appendChild(createElement("h3", null, module.moduleId));
+      const article = createElement("details", "module-card");
+      const summary = createElement("summary", "module-card__summary");
+      summary.appendChild(createElement("h3", null, module.moduleId));
+      article.appendChild(summary);
+      const content = createElement("div", "module-card__content");
       [["Original behavior:", module.originalBehavior], ["Local status:", module.localStatus]].forEach(function (item) {
         const paragraph = createElement("p", "meta-line");
         paragraph.appendChild(createElement("strong", null, item[0]));
         paragraph.appendChild(document.createTextNode(" " + item[1]));
-        article.appendChild(paragraph);
+        content.appendChild(paragraph);
       });
       const files = createElement("div", "chip-list");
       module.sourceFiles.forEach(function (file) {
         files.appendChild(createElement("span", "chip", file));
       });
-      article.appendChild(files);
+      content.appendChild(files);
       [module.notes, module.evidence].forEach(function (items) {
         const list = createElement("ul", "plain-list compact");
         items.forEach(function (item) {
           list.appendChild(createElement("li", null, item));
         });
-        article.appendChild(list);
+        content.appendChild(list);
       });
+      article.appendChild(content);
       mount.appendChild(article);
     });
   } catch (error) {
@@ -426,6 +522,7 @@ function enhanceAccessibility() {
 
 document.addEventListener("DOMContentLoaded", function () {
   enhanceAccessibility();
+  enhanceDocsSections();
   initHome();
   initParity();
 });

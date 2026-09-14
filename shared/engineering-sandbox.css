@@ -570,7 +570,7 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__nav::-webkit-scr
 }
 
 body[data-story-shell="engineering-sandbox"] {
-  padding-bottom: 5.5rem;
+  padding-bottom: 4.25rem;
 }
 
 body[data-story-shell="engineering-sandbox"][data-story-nav-open="true"] {
@@ -2313,7 +2313,7 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {
 
 @media (max-width: 720px) {
   body[data-story-shell="engineering-sandbox"] .story-hero {
-    padding-top: 2.6rem;
+    padding: 2.25rem 1rem 1rem;
   }
 
   body[data-story-shell="engineering-sandbox"] .story-hero__title {
@@ -2322,6 +2322,32 @@ body[data-story-shell="engineering-sandbox"] .story-mobile-bar__link {
 
   body[data-story-shell="engineering-sandbox"] .story-hero__summary {
     font-size: 1rem;
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar {
+    padding: 0.35rem 0.7rem calc(0.45rem + env(safe-area-inset-bottom));
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__nav,
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__eyebrow {
+    display: none;
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__header {
+    align-items: center;
+    margin: 0;
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__status {
+    margin-top: 0;
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__progress {
+    margin: 0.25rem 0 0;
+  }
+
+  body[data-story-shell="engineering-sandbox"] .story-mobile-bar__toggle {
+    min-height: 44px;
   }
 
   body[data-story-shell="engineering-sandbox"] .story-callout[data-story-callout] {

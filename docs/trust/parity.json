@@ -9,10 +9,10 @@
       "../../tools/tests/route-html-sync.test.mjs"
     ],
     "notes": [
-      "Fixed, height-bounded scrollable details inside existing continuation, outside main and native footer. No runtime, body sizing, provenance visibility, manifest, state or baseline edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks or link defaults. Only Enter, Space and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary. Existing unit seams cover these boundaries; browser verification remains pending."
+      "Fixed, height-bounded scrollable details inside existing continuation, outside main and native footer. No runtime, body sizing, provenance visibility, manifest, or state edits. Clicks stop at the disclosure boundary without canceling native summary toggles, keyboard-synthesized clicks, or link defaults. Only Enter, Space, and Escape key propagation is isolated. Focus leaving or outside pointerdown closes without moving focus or consuming outside input; Escape inside an open disclosure closes and focuses its summary."
     ],
     "evidence": [
-      "Static check/unit/audit qualification only; browser parent must verify placement, overlap with native controls, scroll reachability, keyboard/pointer/touch, themes, focus/zoom, readiness, continuation, geometry and performance. No full acceptance or successor baseline."
+      "The final functional sweep verifies disclosure placement, pointer and keyboard behavior, continuation access, themes, focus handling, and viewport containment in the automated Chromium scope. The approved successor baseline records the responsive stage geometry separately from retained historical performance evidence."
     ]
   },
   {
@@ -200,17 +200,19 @@
   {
     "moduleId": "complete-route-experience-ticket-24",
     "originalBehavior": "The fixed slideshow runtime owns chapter state, native slide controls, timing, audio, and intrinsic artwork.",
-    "localStatus": "Stored and system themes affect only shared shell chrome; the opaque slideshow and its approved geometry remain unchanged.",
+    "localStatus": "Stored and system themes affect only shared shell chrome. The opaque 960 by 540 slideshow scales down uniformly when the viewport cannot contain its authored stage, while native state, timing, audio, and artwork remain runtime-owned.",
     "sourceFiles": [
+      "../../shared/engineering-sandbox.js",
+      "../../trust/css/slides.css",
       "../../routes.manifest.json",
       "../../tools/smoke-bundle.mjs",
       "../../tools/experience-baselines.json"
     ],
     "notes": [
-      "The Route remains fixed-runtime with native navigation and local-only networking."
+      "The Route remains a fixed-runtime slideshow with native navigation and local-only networking. Responsive fitting changes only the rendered stage scale and preserves the authored aspect ratio and runtime coordinates."
     ],
     "evidence": [
-      "Focused smoke starts the slideshow, reveals native chapter controls, toggles authored audio mute state, verifies failure fallback, and enforces all approved viewport geometry and continuation contracts."
+      "Focused smoke starts the slideshow, reveals native chapter controls, toggles authored audio mute state, verifies failure fallback, and confirms stage containment and interaction at 568 by 320. The user-approved 249-cell successor geometry baseline records this intentional responsive adaptation while all 166 historical light/dark performance records remain unchanged."
     ]
   }
 ]
