@@ -44992,21 +44992,21 @@
         },
         "narrow": {
           "rect": {
-            "top": 102,
-            "right": 360,
-            "bottom": 742,
+            "top": 137.5555419921875,
+            "right": 320,
+            "bottom": 706.4444580078125,
             "left": 0,
-            "width": 360,
-            "height": 640
+            "width": 320,
+            "height": 568.888916015625
           },
           "css": {
             "width": "360px",
             "height": "640px",
-            "transform": "none",
+            "transform": "matrix(0.888889, 0, 0, 0.888889, 0, 0)",
             "touchAction": "auto",
             "pointerEvents": "auto"
           },
-          "aspectRatio": 0.5625,
+          "aspectRatio": 0.5624999731779111,
           "intrinsic": []
         }
       }

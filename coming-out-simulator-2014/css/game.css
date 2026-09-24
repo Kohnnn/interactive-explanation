@@ -263,3 +263,19 @@ body{
     left: 100%;
     border-left-color: inherit;
 }
+
+/* Narrow-viewport reachability: the engine is authored at a fixed 360px stage, and when the
+   viewport is narrower than the stage the primary control surface (#game_container, which the
+   manifest declares as this Route's primary surface) has its right edge beyond the viewport.
+   Scaling the stage to the viewport width keeps the intrinsic 360px coordinate system, backing
+   sizes and renderer untouched: the transform only changes the composited size, so no engine
+   geometry or asset is altered. This mirrors the proven approach already shipped on the sibling
+   `anxiety` Route (anxiety/styles/game.css: `transform: scale(calc(100vw / 360px))`).
+   A previous revision used `overflow-x: auto`, which relaxed scrolling but left the element's own
+   right edge at 360px, so the primary surface stayed clipped and the strict experience gate failed. */
+@media (max-width: 359px) {
+	#game_container {
+		transform: scale(calc(100vw / 360px));
+		transform-origin: left center;
+	}
+}
